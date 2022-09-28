@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        MVN_SETTINGS = credentials('maven_settings')
+    }
     options {
         buildDiscarder(logRotator(numToKeepStr:'5'))
     }
@@ -16,7 +19,7 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'mvn clean install deploy -Prelease'
+                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
         stage('dev sonar') {

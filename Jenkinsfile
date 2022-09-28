@@ -21,7 +21,6 @@ pipeline {
             steps {
                 sh 'gpg --version'
                 sh 'gpg --list-keys'
-                sh 'mvn -s /home/bitnami/settings.xml help:effective-settings'
                 sh 'mvn -s $MVN_SETTINGS help:effective-settings'
             }
         }

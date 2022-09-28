@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        MVN_SETTINGS = credentials('maven_settings')
+        MVN_SETTINGS = credentials('jenkins_maven_settings')
     }
     options {
         buildDiscarder(logRotator(numToKeepStr:'5'))
@@ -22,6 +22,7 @@ pipeline {
                 sh 'gpg --version'
                 sh 'gpg --list-keys'
                 sh 'mvn -s $MVN_SETTINGS help:effective-settings'
+                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
         stage('dev sonar') {

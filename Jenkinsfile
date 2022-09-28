@@ -32,6 +32,14 @@ pipeline {
                 }
             }
         }
+        stage('master build') {
+            when {
+                branch 'master'
+            }
+            steps {
+                sh 'mvn clean'
+            }
+        }
     }
     post {
         always {

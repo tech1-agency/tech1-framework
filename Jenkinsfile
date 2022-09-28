@@ -21,11 +21,12 @@ pipeline {
             steps {
                 sh 'gpg --version'
                 sh 'gpg --list-keys'
+                sh 'mvn -s $MVN_SETTINGS help:effective-settings'
             }
         }
         stage('dev sonar') {
             when {
-                branch 'dev'
+                branch 'master'
             }
             steps {
                 script {

@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 sh 'gpg --version'
-                sh 'gpg --list-keys'
+                sh 'sudo gpg --list-keys'
                 sh 'mvn -s $MVN_SETTINGS help:effective-settings'
                 sh 'mvn -X -s $MVN_SETTINGS install deploy -Prelease'
             }

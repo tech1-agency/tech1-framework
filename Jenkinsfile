@@ -19,6 +19,8 @@ pipeline {
                 branch 'dev'
             }
             steps {
+                sh 'gpg --version'
+                sh 'gpg --list-keys'
                 sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }

@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'gpg --version'
                 sh 'gpg --list-keys'
-                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
+                sh 'mvn -s ~/settings.xml clean install deploy -Prelease'
             }
         }
         stage('dev sonar') {

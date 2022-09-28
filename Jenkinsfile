@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'gpg --version'
                 sh 'gpg --list-keys'
-                sh 'mvn -s /home/bitnami/settings.xml clean install deploy -Prelease'
+                sh 'mvn -s /home/bitnami/settings.xml help:effective-settings'
             }
         }
         stage('dev sonar') {

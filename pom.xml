@@ -24,6 +24,17 @@
         </license>
     </licenses>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <developers>
         <developer>
             <name>Yurii Luchkiv</name>
@@ -61,6 +72,7 @@
         <version.plugin.dependency>3.2.0</version.plugin.dependency>
         <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
         <version.plugin.gpg>3.0.1</version.plugin.gpg>
+        <version.plugin.nexus>1.6.7</version.plugin.nexus>
         <version.plugin.jacoco>0.8.7</version.plugin.jacoco>
         <version.plugin.javadoc>3.3.1</version.plugin.javadoc>
         <version.plugin.source>3.2.1</version.plugin.source>
@@ -164,7 +176,7 @@
                             <execution>
                                 <id>attach-sources</id>
                                 <goals>
-                                    <goal>jar</goal>
+                                    <goal>jar-no-fork</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -181,10 +193,24 @@
                                     <goal>jar</goal>
                                 </goals>
                                 <configuration>
+                                    <quiet>true</quiet>
                                     <doclint>none</doclint>
+                                    <source>${version.java}</source>
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- Nexus -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${version.plugin.nexus}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -290,7 +316,7 @@
                     <execution>
                         <id>attach-sources</id>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -312,6 +338,33 @@
                     <quiet>true</quiet>
                     <doclint>none</doclint>
                     <source>${version.java}</source>
+                </configuration>
+            </plugin>
+            <!-- GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${version.plugin.gpg}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Nexus -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${version.plugin.nexus}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>

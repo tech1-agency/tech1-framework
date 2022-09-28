@@ -16,7 +16,7 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean install deploy -Prelease'
             }
         }
         stage('dev sonar') {

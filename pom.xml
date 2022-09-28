@@ -9,6 +9,36 @@
     <packaging>pom</packaging>
     <version>0.9</version>
 
+    <name>${project.artifactId}</name>
+    <description>Tech1 Framework</description>
+    <url>https://github.com/tech1-io/tech1-framework</url>
+    <inceptionYear>2022</inceptionYear>
+    <organization>
+        <name>Tech1</name>
+        <url>https://github.com/tech1-io</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Yurii Luchkiv</name>
+            <email>yyluchkiv@gmail.com</email>
+            <organization>Tech1</organization>
+            <organizationUrl>http://tech1.io</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:ssh://git@github.com/tech1-io/tech1-framework.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/tech1-io/tech1-framework.git</developerConnection>
+        <url>https://github.com/tech1-io/tech1-framework</url>
+    </scm>
+
     <modules>
         <module>tech1-framework-domain</module>
         <module>tech1-framework-utilities</module>

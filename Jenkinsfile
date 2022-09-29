@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'gpg --list-secret-keys'
                 sh 'mvn -s $MVN_SETTINGS help:effective-settings'
-                sh 'mvn -X -s $MVN_SETTINGS install deploy -Prelease'
+                sh 'mvn -X -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
         stage('dev sonar') {

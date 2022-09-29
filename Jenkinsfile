@@ -1,6 +1,10 @@
 pipeline {
     agent any
     environment {
+        GPG_HOME = "/usr/bin/gpg"
+        PATH = "${GPG_HOME}:${env.PATH}"
+    }
+    environment {
         MVN_SETTINGS = credentials('jenkins_maven_settings')
     }
     options {

@@ -1,8 +1,6 @@
 pipeline {
     agent any
     environment {
-        GPG_HOME = "/usr/bin/gpg"
-        PATH = "${GPG_HOME}:${env.PATH}"
         MVN_SETTINGS = credentials('jenkins_maven_settings')
     }
     options {
@@ -21,9 +19,7 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'gpg --list-secret-keys'
-                sh 'mvn -s $MVN_SETTINGS help:effective-settings'
-                sh 'mvn -X -s $MVN_SETTINGS clean install deploy -Prelease'
+                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
         stage('dev sonar') {

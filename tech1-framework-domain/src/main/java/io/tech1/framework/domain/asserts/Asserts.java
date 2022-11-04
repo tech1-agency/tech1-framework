@@ -3,16 +3,19 @@ package io.tech1.framework.domain.asserts;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
+import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.isNull;
 
 @Slf4j
 @UtilityClass
 public class Asserts {
 
+    // =================================================================================================================
+    // 1 assert complexity
+    // =================================================================================================================
     public static void assertNonNullOrThrow(Object object, String message) {
         if (isNull(object)) {
             throw new IllegalArgumentException(message);
@@ -43,6 +46,16 @@ public class Asserts {
         }
     }
 
+    public static <T> T requireNonNullOrThrow(T object, String message) {
+        if (isNull(object)) {
+            throw new IllegalArgumentException(message);
+        }
+        return object;
+    }
+
+    // =================================================================================================================
+    // 1+ asserts complexity
+    // =================================================================================================================
     public static void assertNonNullNotBlankOrThrow(Object object, String message) {
         assertNonNullOrThrow(object, message);
         assertNonBlankOrThrow(object.toString(), message);
@@ -55,7 +68,7 @@ public class Asserts {
 
     public static void assertZoneIdOrThrow(String zoneId, String message) {
         assertNonNullNotBlankOrThrow(zoneId, message);
-        if (!ZoneId.getAvailableZoneIds().contains(zoneId)) {
+        if (!getAvailableZoneIds().contains(zoneId)) {
             throw new IllegalArgumentException(message);
         }
     }
@@ -63,12 +76,5 @@ public class Asserts {
     public static void assertDateTimePatternOrThrow(String dateTimePattern, String message) {
         assertNonNullNotBlankOrThrow(dateTimePattern, message);
         assertNonNullOrThrow(DateTimeFormatter.ofPattern(dateTimePattern), message);
-    }
-
-    public static <T> T requireNonNullOrThrow(T object, String message) {
-        if (isNull(object)) {
-            throw new IllegalArgumentException(message);
-        }
-        return object;
     }
 }

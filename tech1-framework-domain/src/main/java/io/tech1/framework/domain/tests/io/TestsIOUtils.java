@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.tests.io;
 
+import io.tech1.framework.domain.constants.FileConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -18,7 +19,7 @@ public class TestsIOUtils {
 
     @SneakyThrows
     public static String readFile(String folder, String fileName) {
-        var path = folder + "/" + fileName;
+        var path = folder + FileConstants.PATH_DELIMITER + fileName;
         var resource = TestsIOUtils.class.getClassLoader().getResource(path);
         if (isNull(resource)) {
             throw new IllegalArgumentException("Please check resource exists. Path: `" + path + "`");

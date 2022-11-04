@@ -1,3 +1,3 @@
 # tech1-framework
-Tech1 Framework MVP
+Tech1 Framework 
 

@@ -61,8 +61,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- dependencies, scope == compile -->
+        <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
-        <version.dependency.tomcat.embed>9.0.55</version.dependency.tomcat.embed>
+        <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
         <!-- dependencies, scope == test -->
         <version.dependency.assertj>3.21.0</version.dependency.assertj>
         <version.dependency.jsonpath>2.6.0</version.dependency.jsonpath>
@@ -85,6 +86,20 @@
             <!-- dependencies, scope == compile -->
             <!-- ========================================================================================== -->
 
+            <!-- Spring Boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.dependency.springframework.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- JSONs: Jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${version.dependency.jackson}</version>
+            </dependency>
             <!-- Lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -97,6 +112,13 @@
             <!-- dependencies, scope == test -->
             <!-- ========================================================================================== -->
 
+            <!-- Spring Test -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${version.dependency.springframework.boot}</version>
+                <scope>test</scope>
+            </dependency>
             <!-- JUnit -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

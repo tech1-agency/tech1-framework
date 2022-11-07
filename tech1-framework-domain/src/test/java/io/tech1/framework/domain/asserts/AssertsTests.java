@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.asserts.Asserts.assertNonBlankOrThrow;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,11 +21,35 @@ public class AssertsTests {
         );
     }
 
+    private static Stream<Arguments> assertNonBlankOrThrowTestParameters() {
+        return Stream.of(
+                Arguments.of("not_empty", null),
+                Arguments.of("", "errorMessage"),
+                Arguments.of(" ", "errorMessage")
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("assertNonNullOrThrowTestParameters")
     public void assertNonNullOrThrowTest(Object object, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonNullOrThrow(object, expectedErrorMessage));
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable).hasMessageContaining(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertNonBlankOrThrowTestParameters")
+    public void assertNonBlankOrThrowTest(String object, String expectedErrorMessage) {
+        // Act
+        var throwable = catchThrowable(() -> assertNonBlankOrThrow(object, expectedErrorMessage));
 
         // Assert
         if (isNull(expectedErrorMessage)) {

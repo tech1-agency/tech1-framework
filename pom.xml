@@ -126,6 +126,12 @@
                 <version>${version.dependency.junit}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${version.dependency.junit}</version>
+                <scope>test</scope>
+            </dependency>
             <!-- JSON Path -->
             <dependency>
                 <groupId>com.jayway.jsonpath</groupId>
@@ -153,6 +159,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- JSON Path -->

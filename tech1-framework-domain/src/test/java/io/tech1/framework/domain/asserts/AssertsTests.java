@@ -87,6 +87,25 @@ public class AssertsTests {
         );
     }
 
+    private static Stream<Arguments> assertZoneIdOrThrowTest() {
+        return Stream.of(
+                Arguments.of("", "errorMessage"),
+                Arguments.of("Europe/Kiev1", "errorMessage"),
+                Arguments.of("Europe/Kiev2", "errorMessage"),
+                Arguments.of("Europe/Kiev", null)
+        );
+    }
+
+    private static Stream<Arguments> assertDateTimePatternOrThrowTest() {
+        return Stream.of(
+                Arguments.of("", "errorMessage"),
+                Arguments.of("notFormatter1", "Unknown pattern letter: o"),
+                Arguments.of("Europe/Kiev2", "Unknown pattern letter: r"),
+                Arguments.of("dd.MM.yyyy HH:mm:ss", null),
+                Arguments.of("dd/MM HH.mm", null)
+        );
+    }
+
     // =================================================================================================================
     // 1 assert complexity
     // =================================================================================================================
@@ -216,6 +235,38 @@ public class AssertsTests {
     public void assertNonNullNotEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonNullNotEmptyOrThrow(collection, expectedErrorMessage));
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertZoneIdOrThrowTest")
+    public void assertZoneIdOrThrowTest(String zoneId, String expectedErrorMessage) {
+        // Act
+        var throwable = catchThrowable(() -> assertZoneIdOrThrow(zoneId, expectedErrorMessage));
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertDateTimePatternOrThrowTest")
+    public void assertDateTimePatternOrThrowTest(String dateTimePattern, String expectedErrorMessage) {
+        // Act
+        var throwable = catchThrowable(() -> assertDateTimePatternOrThrow(dateTimePattern, expectedErrorMessage));
 
         // Assert
         if (isNull(expectedErrorMessage)) {

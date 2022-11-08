@@ -56,6 +56,13 @@ public class AssertsTests {
         );
     }
 
+    private static Stream<Arguments> requireNonNullOrThrowTest() {
+        return Stream.of(
+                Arguments.of("not_empty", null),
+                Arguments.of(null, "errorMessage")
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("assertNonNullOrThrowTest")
     public void assertNonNullOrThrowTest(Object object, String expectedErrorMessage) {
@@ -68,7 +75,7 @@ public class AssertsTests {
         } else {
             assertThat(throwable).isNotNull();
             assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable).hasMessageContaining(expectedErrorMessage);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
         }
     }
 
@@ -84,7 +91,7 @@ public class AssertsTests {
         } else {
             assertThat(throwable).isNotNull();
             assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable).hasMessageContaining(expectedErrorMessage);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
         }
     }
 
@@ -100,7 +107,7 @@ public class AssertsTests {
         } else {
             assertThat(throwable).isNotNull();
             assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable).hasMessageContaining(expectedErrorMessage);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
         }
     }
 
@@ -125,6 +132,28 @@ public class AssertsTests {
     public void assertFalseOrThrowTest(boolean flag, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertFalseOrThrow(flag, expectedErrorMessage));
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("requireNonNullOrThrowTest")
+    public void requireNonNullOrThrowTest(Object object, String expectedErrorMessage) {
+        // Act
+        var throwable = catchThrowable(() -> {
+            // Act
+            var actual = requireNonNullOrThrow(object, expectedErrorMessage);
+
+            // Assert
+            assertThat(actual).isEqualTo(object);
+        });
 
         // Assert
         if (isNull(expectedErrorMessage)) {

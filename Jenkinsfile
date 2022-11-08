@@ -14,15 +14,12 @@ pipeline {
         maven 'Maven 3.6.3'
     }
     stages {
-        stage('dev build') {
-            when {
-                branch 'dev'
-            }
+        stage('deploy') {
             steps {
-                sh 'mvn -s $MVN_SETTINGS clean install deploy -Psnapshot'
+                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
-        stage('dev sonar') {
+        stage('sonar') {
             when {
                 branch 'dev'
             }
@@ -33,14 +30,6 @@ pipeline {
                         sh "${scannerHome}/bin/sonar-scanner";
                     }
                 }
-            }
-        }
-        stage('master build') {
-            when {
-                branch 'master'
-            }
-            steps {
-                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
     }

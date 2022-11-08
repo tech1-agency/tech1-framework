@@ -40,7 +40,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'mvn clean'
+                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
     }

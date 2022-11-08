@@ -7,7 +7,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr:'5'))
     }
     triggers {
-        pollSCM('H */1 * * *')
+        pollSCM('H */4 * * *')
     }
     tools {
         jdk 'Java 11'
@@ -19,7 +19,7 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
+                sh 'mvn -s $MVN_SETTINGS clean install deploy -Psnapshot'
             }
         }
         stage('dev sonar') {

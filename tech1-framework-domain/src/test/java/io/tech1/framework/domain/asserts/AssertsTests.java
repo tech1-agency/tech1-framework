@@ -17,6 +17,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 public class AssertsTests {
 
+    // =================================================================================================================
+    // 1 assert complexity
+    // =================================================================================================================
     private static Stream<Arguments> assertNonNullOrThrowTest() {
         return Stream.of(
                 Arguments.of(new Object(), null),
@@ -63,6 +66,30 @@ public class AssertsTests {
         );
     }
 
+    // =================================================================================================================
+    // 1+ asserts complexity
+    // =================================================================================================================
+    private static Stream<Arguments> assertNonNullNotBlankOrThrowTest() {
+        return Stream.of(
+                Arguments.of(new Object(), null),
+                Arguments.of(null, "errorMessage"),
+                Arguments.of("", "errorMessage"),
+                Arguments.of("  ", "errorMessage")
+        );
+    }
+
+    private static Stream<Arguments> assertNonNullNotEmptyOrThrowTest() {
+        return Stream.of(
+                Arguments.of(List.of("not", "empty"), null),
+                Arguments.of(null, "errorMessage"),
+                Arguments.of(emptyList(), "errorMessage"),
+                Arguments.of(emptySet(), "errorMessage")
+        );
+    }
+
+    // =================================================================================================================
+    // 1 assert complexity
+    // =================================================================================================================
     @ParameterizedTest
     @MethodSource("assertNonNullOrThrowTest")
     public void assertNonNullOrThrowTest(Object object, String expectedErrorMessage) {
@@ -154,6 +181,41 @@ public class AssertsTests {
             // Assert
             assertThat(actual).isEqualTo(object);
         });
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+        }
+    }
+
+    // =================================================================================================================
+    // 1+ asserts complexity
+    // =================================================================================================================
+    @ParameterizedTest
+    @MethodSource("assertNonNullNotBlankOrThrowTest")
+    public void assertNonNullNotBlankOrThrowTest(Object object, String expectedErrorMessage) {
+        // Act
+        var throwable = catchThrowable(() -> assertNonNullNotBlankOrThrow(object, expectedErrorMessage));
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertNonNullNotEmptyOrThrowTest")
+    public void assertNonNullNotEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
+        // Act
+        var throwable = catchThrowable(() -> assertNonNullNotEmptyOrThrow(collection, expectedErrorMessage));
 
         // Assert
         if (isNull(expectedErrorMessage)) {

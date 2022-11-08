@@ -7,7 +7,7 @@
     <groupId>io.tech1.framework</groupId>
     <artifactId>tech1-framework</artifactId>
     <packaging>pom</packaging>
-    <version>0.9</version>
+    <version>0.9-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <description>Tech1 Framework</description>

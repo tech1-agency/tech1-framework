@@ -1,4 +1,5 @@
 # Release Notes
 
 ### v0.9
-- TBD
+- Add basic asserts (assertNonNull, assertNonBlank, assertZoneId etc.)
+- Add tuples

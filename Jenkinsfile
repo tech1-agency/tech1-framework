@@ -24,7 +24,7 @@ pipeline {
         }
         stage('dev sonar') {
             when {
-                branch 'master'
+                branch 'dev'
             }
             steps {
                 script {

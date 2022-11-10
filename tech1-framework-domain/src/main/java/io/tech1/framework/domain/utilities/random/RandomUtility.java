@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -24,6 +25,17 @@ public class RandomUtility {
 
     private static final String LETTERS_OR_NUMBERS = "AaBbCcDdEeFfGgHgIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
     private static final SecureRandom RND = new SecureRandom();
+
+    private static final Map<Class<?>, Supplier<?>> PRIMITIVE_WRAPPERS = Map.of(
+            // NOTE: classes should be considered/double-checked in future releases
+            // NOTE: classes - Byte, Character, CharSequence, Float, check Number inheritance tree)
+            Short.class, RandomUtility::randomShort,
+            Boolean.class, RandomUtility::randomBoolean,
+            Integer.class, RandomUtility::randomInteger,
+            Long.class, RandomUtility::randomLong,
+            Double.class, RandomUtility::randomDouble,
+            BigDecimal.class, RandomUtility::randomBigDecimal
+    );
 
     public static Number one(Class<? extends Number> clazz) {
         if (clazz == Short.class) {
@@ -232,6 +244,22 @@ public class RandomUtility {
             throw new IllegalArgumentException("Please check enum: " + enumClazz);
         } else {
             return randomElement(collect);
+        }
+    }
+
+    public static <T> boolean containsPrimitiveWrapper(Class<T> type) {
+        return PRIMITIVE_WRAPPERS.containsKey(type);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> randomListOfPrimitiveWrappers(Class<T> type, int size) {
+        if (PRIMITIVE_WRAPPERS.containsKey(type)) {
+            var supplier = (Supplier<T>) PRIMITIVE_WRAPPERS.get(type);
+            return IntStream.range(0, size)
+                    .mapToObj(i -> supplier.get())
+                    .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
         }
     }
 }

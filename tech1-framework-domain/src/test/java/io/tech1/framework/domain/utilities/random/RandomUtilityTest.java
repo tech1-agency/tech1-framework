@@ -39,6 +39,19 @@ public class RandomUtilityTest {
         );
     }
 
+    private static Stream<Arguments> containsPrimitiveWrapperTest() {
+        return Stream.of(
+                Arguments.of(Short.class, true),
+                Arguments.of(Boolean.class, true),
+                Arguments.of(Integer.class, true),
+                Arguments.of(Long.class, true),
+                Arguments.of(Double.class, true),
+                Arguments.of(BigDecimal.class, true),
+                Arguments.of(Float.class, false),
+                Arguments.of(String.class, false)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("oneTest")
     public void oneTest(Class<? extends Number> clazz, Number expected) {
@@ -589,5 +602,37 @@ public class RandomUtilityTest {
         // Assert
         assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
         assertThat(thrown.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests");
+    }
+
+    @ParameterizedTest
+    @MethodSource("containsPrimitiveWrapperTest")
+    public void containsPrimitiveWrapperTest(Class<?> primitiveWrapper, boolean expected) {
+        // Act
+        var actualContains = containsPrimitiveWrapper(primitiveWrapper);
+
+        // Assert
+        assertThat(actualContains).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("containsPrimitiveWrapperTest")
+    public void randomListOfPrimitiveWrappersTest(Class<?> primitiveWrapper, boolean containsPrimitiveWrrapper) {
+        // Arrange
+        int size = randomIntegerGreaterThanZeroByBounds(2, 5);
+
+        // Act
+        var actual = randomListOfPrimitiveWrappers(primitiveWrapper, size);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        if (containsPrimitiveWrrapper) {
+            actual.forEach(item -> {
+                assertThat(item).isNotNull();
+                assertThat(item.getClass()).isEqualTo(primitiveWrapper);
+            });
+            assertThat(actual).hasSize(size);
+        } else {
+            assertThat(actual).hasSize(0);
+        }
     }
 }

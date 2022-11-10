@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -340,5 +341,41 @@ public class RandomUtilityTest {
 
         var matcher = Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(randomStringLetterOrNumbersOnly);
         assertThat(matcher.find()).isFalse();
+    }
+
+    @Test
+    public void randomStringsAsListTest() {
+        // Arrange
+        var size = randomIntegerGreaterThanZeroByBounds(1, 5);
+        var elementLength = 32;
+
+        // Act
+        var actual = randomStringsAsList(size);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.size()).isEqualTo(size);
+        actual.forEach(element -> {
+            assertThat(element).isNotNull();
+            assertThat(element.length()).isEqualTo(elementLength);
+        });
+    }
+
+    @Test
+    public void randomStringsAsArrayTest() {
+        // Arrange
+        var size = randomIntegerGreaterThanZeroByBounds(1, 5);
+        var elementLength = 32;
+
+        // Act
+        var actual = randomStringsAsArray(size);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.length).isEqualTo(size);
+        asList(actual).forEach(element -> {
+            assertThat(element).isNotNull();
+            assertThat(element.length()).isEqualTo(elementLength);
+        });
     }
 }

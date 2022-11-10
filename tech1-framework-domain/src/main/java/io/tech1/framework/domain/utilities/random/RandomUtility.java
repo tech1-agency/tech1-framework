@@ -7,7 +7,10 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
@@ -146,5 +149,17 @@ public class RandomUtility {
             sb.append(LETTERS_OR_NUMBERS.charAt(index));
         }
         return sb.toString();
+    }
+
+    public static List<String> randomStringsAsList(int size) {
+        return IntStream.range(0, size)
+                .mapToObj(position -> randomString())
+                .collect(Collectors.toList());
+    }
+
+    public static String[] randomStringsAsArray(int size) {
+        return IntStream.range(0, size)
+                .mapToObj(position -> randomString())
+                .toArray(String[]::new);
     }
 }

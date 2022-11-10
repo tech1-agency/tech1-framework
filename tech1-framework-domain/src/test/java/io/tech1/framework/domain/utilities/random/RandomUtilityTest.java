@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -113,8 +114,7 @@ public class RandomUtilityTest {
         assertThat(actual).isNegative();
     }
 
-//    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    @RepeatedTest(1000)
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomIntegerGreaterThanZeroByBounds(50, 75);
@@ -485,5 +485,37 @@ public class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getYear()).isGreaterThanOrEqualTo(2000);
         assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomDateTest() {
+        // Act
+        var actual = randomDate();
+
+        // Assert
+        assertThat(actual).isNotNull();
+
+        var calendar = Calendar.getInstance();
+        calendar.setTime(actual);
+        assertThat(calendar.get(Calendar.YEAR)).isGreaterThanOrEqualTo(2000);
+        assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomDateByBoundsTest() {
+        // Arrange
+        var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
+        var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
+
+        // Act
+        var date = randomDateByBounds(minYear, maxYear);
+
+        // Assert
+        assertThat(date).isNotNull();
+
+        var calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        assertThat(calendar.get(Calendar.YEAR)).isGreaterThanOrEqualTo(2000);
+        assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 }

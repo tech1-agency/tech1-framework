@@ -10,15 +10,13 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
+import static java.time.ZoneId.systemDefault;
 
 @UtilityClass
 public class RandomUtility {
@@ -201,5 +199,13 @@ public class RandomUtility {
         var maxSeconds = 24 * ChronoUnit.HOURS.getDuration().getSeconds();
         var randomSeconds = randomLongGreaterThanZeroByBounds(minSeconds, maxSeconds);
         return LocalDateTime.from(randomLocalDateByBounds(lowerYear, upperYear).atStartOfDay()).plusSeconds(randomSeconds);
+    }
+
+    public static Date randomDate() {
+        return Date.from(randomLocalDateTime().atZone(systemDefault()).toInstant());
+    }
+
+    public static Date randomDateByBounds(int lowerYear, int upperYear) {
+        return Date.from(randomLocalDateTimeByBounds(lowerYear, upperYear).atZone(systemDefault()).toInstant());
     }
 }

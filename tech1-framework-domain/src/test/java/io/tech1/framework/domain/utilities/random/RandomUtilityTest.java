@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.utilities.random;
 
+import io.tech1.framework.domain.tests.constants.TestsConstants;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -71,5 +73,49 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
+    }
+
+    @Test
+    public void randomIntegerTest() {
+        // Act
+        var actual = randomInteger();
+
+        // Assert
+        assertThat(actual).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomIntegerGreaterThanZeroTest() {
+        // Act
+        var actual = randomIntegerGreaterThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isPositive();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomIntegerLessThanZeroTest() {
+        // Act
+        var actual = randomIntegerLessThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isNegative();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomIntegerGreaterThanZeroByBoundsTest() {
+        // Arrange
+        var lowerBound = 50;
+        var upperBound = 100;
+
+        // Act
+        var actual = randomIntegerGreaterThanZeroByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual > lowerBound).isTrue();
+        assertThat(actual < upperBound).isTrue();
     }
 }

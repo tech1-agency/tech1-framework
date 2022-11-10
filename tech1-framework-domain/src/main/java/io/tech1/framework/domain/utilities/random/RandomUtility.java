@@ -40,4 +40,20 @@ public class RandomUtility {
     public static Double randomDouble() {
         return RND.nextDouble();
     }
+
+    public static Integer randomInteger() {
+        return RND.nextInt();
+    }
+
+    public static Integer randomIntegerGreaterThanZero() {
+        return Math.abs(randomInteger());
+    }
+
+    public static Integer randomIntegerLessThanZero() {
+        return -randomIntegerGreaterThanZero();
+    }
+
+    public static Integer randomIntegerGreaterThanZeroByBounds(int lowerBound, int upperBound) {
+        return lowerBound + 1 + RND.nextInt(upperBound - lowerBound - 2);
+    }
 }

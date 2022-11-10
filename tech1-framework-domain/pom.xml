@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>0.9-SNAPSHOT</version>
+        <version>1.1</version>
     </parent>
 
     <artifactId>tech1-framework-domain</artifactId>
@@ -17,6 +17,16 @@
         <!-- dependencies, scope == compile -->
         <!-- ========================================================================================== -->
 
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- JSONs: Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

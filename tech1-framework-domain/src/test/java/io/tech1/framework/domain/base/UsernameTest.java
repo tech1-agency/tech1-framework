@@ -1,13 +1,13 @@
 package io.tech1.framework.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationTest;
+import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UsernameTest extends AbstractSerializationDeserializationTest {
+public class UsernameTest extends AbstractSerializationDeserializationRunner {
     private final static Username USERNAME = Username.of("tech1");
 
     @Override

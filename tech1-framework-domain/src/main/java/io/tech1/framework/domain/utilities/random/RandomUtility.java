@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -68,12 +70,7 @@ public class RandomUtility {
     }
 
     public static Integer randomIntegerGreaterThanZeroByBounds(int lowerBound, int upperBound) {
-        var diff = upperBound - lowerBound - 2;
-        if (diff == 0) {
-            return lowerBound + 1;
-        } else {
-            return lowerBound + 1 + RND.nextInt(diff);
-        }
+        return lowerBound + RND.nextInt(upperBound - lowerBound + 1);
     }
 
     public static Long randomLong() {
@@ -89,12 +86,7 @@ public class RandomUtility {
     }
 
     public static Long randomLongGreaterThanZeroByBounds(long lowerBound, long upperBound) {
-        var diff = upperBound - lowerBound - 2;
-        if (diff == 0) {
-            return lowerBound + 1;
-        } else {
-            return lowerBound + 1 + RND.nextInt((int) diff);
-        }
+        return lowerBound + RND.nextInt((int) (upperBound - lowerBound + 1));
     }
 
     public static BigDecimal randomBigDecimal() {
@@ -110,7 +102,7 @@ public class RandomUtility {
     }
 
     public static BigDecimal randomBigDecimalGreaterThanZeroByBounds(long lowerBound, long upperBound) {
-        var longValue = randomLongGreaterThanZeroByBounds(lowerBound, upperBound);
+        var longValue = randomLongGreaterThanZeroByBounds(lowerBound, upperBound - 2);
         var delta = BigDecimal.valueOf(randomDouble()).add(ONE);
         return new BigDecimal(longValue).add(delta);
     }
@@ -198,5 +190,16 @@ public class RandomUtility {
         var maxDay = LocalDate.of(upperYear, 1, 1).toEpochDay();
         var randomDay = randomLongGreaterThanZeroByBounds(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
+    }
+
+    public static LocalDateTime randomLocalDateTime() {
+        return randomLocalDateTimeByBounds(2000, LocalDate.now().getYear());
+    }
+
+    public static LocalDateTime randomLocalDateTimeByBounds(int lowerYear, int upperYear) {
+        var minSeconds = 0;
+        var maxSeconds = 24 * ChronoUnit.HOURS.getDuration().getSeconds();
+        var randomSeconds = randomLongGreaterThanZeroByBounds(minSeconds, maxSeconds);
+        return LocalDateTime.from(randomLocalDateByBounds(lowerYear, upperYear).atStartOfDay()).plusSeconds(randomSeconds);
     }
 }

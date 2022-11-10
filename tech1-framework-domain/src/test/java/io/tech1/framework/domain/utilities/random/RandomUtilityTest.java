@@ -113,7 +113,8 @@ public class RandomUtilityTest {
         assertThat(actual).isNegative();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+//    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(1000)
     public void randomIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomIntegerGreaterThanZeroByBounds(50, 75);
@@ -124,8 +125,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual > lowerBound).isTrue();
-        assertThat(actual < upperBound).isTrue();
+        assertThat(actual >= lowerBound).isTrue();
+        assertThat(actual <= upperBound).isTrue();
     }
 
     @Test
@@ -168,8 +169,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual > lowerBound).isTrue();
-        assertThat(actual < upperBound).isTrue();
+        assertThat(actual >= lowerBound).isTrue();
+        assertThat(actual <= upperBound).isTrue();
     }
 
     @Test
@@ -212,8 +213,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigDecimal.valueOf(lowerBound));
-        assertThat(actual).isLessThan(BigDecimal.valueOf(upperBound));
+        assertThat(actual).isGreaterThanOrEqualTo(BigDecimal.valueOf(lowerBound));
+        assertThat(actual).isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -227,8 +228,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
-        assertThat(actual).isLessThan(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
+        assertThat(actual).isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
+        assertThat(actual).isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -242,8 +243,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
-        assertThat(actual).isLessThan(BigDecimal.valueOf(upperBound));
+        assertThat(actual).isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
+        assertThat(actual).isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
     @Test
@@ -286,8 +287,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigInteger.valueOf(lowerBound));
-        assertThat(actual).isLessThan(BigInteger.valueOf(upperBound));
+        assertThat(actual).isGreaterThanOrEqualTo(BigInteger.valueOf(lowerBound));
+        assertThat(actual).isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -301,8 +302,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
-        assertThat(actual).isLessThan(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
+        assertThat(actual).isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
+        assertThat(actual).isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -316,8 +317,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
-        assertThat(actual).isLessThan(BigInteger.valueOf(upperBound));
+        assertThat(actual).isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
+        assertThat(actual).isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -457,6 +458,32 @@ public class RandomUtilityTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getYear()).isGreaterThanOrEqualTo(2000);
-        assertThat(actual.getYear()).isLessThanOrEqualTo(2020);
+        assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLocalDateTimeTest() {
+        // Act
+        var actual = randomLocalDateTime();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getYear()).isGreaterThanOrEqualTo(2000);
+        assertThat(actual.getYear()).isLessThanOrEqualTo(LocalDate.now().getYear());
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLocalDateTimeByBoundsTest() {
+        // Arrange
+        var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
+        var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
+
+        // Act
+        var actual = randomLocalDateTimeByBounds(minYear, maxYear);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getYear()).isGreaterThanOrEqualTo(2000);
+        assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
     }
 }

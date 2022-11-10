@@ -3,6 +3,8 @@ package io.tech1.framework.domain.utilities.random;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
+import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
+import io.tech1.framework.domain.tests.enums.EnumUnderTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -508,14 +510,84 @@ public class RandomUtilityTest {
         var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
 
         // Act
-        var date = randomDateByBounds(minYear, maxYear);
+        var actual = randomDateByBounds(minYear, maxYear);
 
         // Assert
-        assertThat(date).isNotNull();
+        assertThat(actual).isNotNull();
 
         var calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        calendar.setTime(actual);
         assertThat(calendar.get(Calendar.YEAR)).isGreaterThanOrEqualTo(2000);
         assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomEnumTest() {
+        // Act
+        var actual = randomEnum(EnumUnderTests.class);
+
+        // Assert
+        assertThat(EnumUnderTests.values()).contains(actual);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomEnumExceptTest() {
+        // Arrange
+        var enumValues = List.of(EnumUnderTests.values());
+        var clazz = EnumUnderTests.class;
+        var randomEnum = randomEnum(clazz);
+
+        // Act
+        var actual = randomEnumExcept(clazz, randomEnum);
+
+        // Assert
+        assertThat(enumValues).contains(randomEnum);
+        assertThat(enumValues).contains(actual);
+        assertThat(actual).isNotEqualTo(randomEnum);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomEnumExceptExceptionTest() {
+        // Act
+        var thrown = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
+
+        // Assert
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+        assertThat(thrown.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests");
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomEnumExceptCaseAsListTest() {
+        // Arrange
+        var enumValues = List.of(EnumUnderTests.values());
+        var clazz = EnumUnderTests.class;
+        var randomEnum1 = randomEnum(clazz);
+        var randomEnum2 = randomEnumExcept(clazz, randomEnum1);
+        var randomEnums = List.of(randomEnum1, randomEnum2);
+
+        // Act
+        var actual = randomEnumExcept(clazz, randomEnums);
+
+        // Assert
+        assertThat(enumValues).contains(randomEnum1);
+        assertThat(enumValues).contains(randomEnum2);
+        assertThat(enumValues).contains(actual);
+        assertThat(actual).isNotEqualTo(randomEnum1);
+        assertThat(actual).isNotEqualTo(randomEnum2);
+        assertThat(randomEnum1).isNotEqualTo(randomEnum2);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomEnumExceptCaseAsListExceptionTest() {
+        // Arrange
+        var clazz = EnumUnderTests.class;
+        var allPossibleEnumValues = List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4);
+
+        // Act
+        var thrown = catchThrowable(() -> randomEnumExcept(clazz, allPossibleEnumValues));
+
+        // Assert
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+        assertThat(thrown.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests");
     }
 }

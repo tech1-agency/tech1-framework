@@ -13,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
@@ -207,5 +208,30 @@ public class RandomUtility {
 
     public static Date randomDateByBounds(int lowerYear, int upperYear) {
         return Date.from(randomLocalDateTimeByBounds(lowerYear, upperYear).atZone(systemDefault()).toInstant());
+    }
+
+    public static <T extends Enum<T>> T randomEnum(Class<T> enumClazz) {
+        var values = enumClazz.getEnumConstants();
+        return values[RND.nextInt(values.length)];
+    }
+
+    public static <T extends Enum<T>> T randomEnumExcept(Class<T> enumClazz, T enumValue) {
+        var values = enumClazz.getEnumConstants();
+        return Stream.of(values)
+                .filter(item -> !item.equals(enumValue))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Please check enum: " + enumClazz));
+    }
+
+    public static <T extends Enum<T>> T randomEnumExcept(Class<T> enumClazz, List<T> enumValues) {
+        var values = enumClazz.getEnumConstants();
+        var collect = Stream.of(values)
+                .filter(item -> !enumValues.contains(item))
+                .collect(Collectors.toList());
+        if (collect.isEmpty()) {
+            throw new IllegalArgumentException("Please check enum: " + enumClazz);
+        } else {
+            return randomElement(collect);
+        }
     }
 }

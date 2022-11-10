@@ -25,14 +25,14 @@ public class Tuple1Test extends AbstractTupleTest {
 
         // Assert
         assertThat(json).isNotNull();
-        assertThat(json).isEqualTo(this.readFile(this.getFileName()));
+        assertThat(json).isEqualTo(this.readFile());
     }
 
     @SneakyThrows
     @Test
     public void deserializeTest() {
         // Arrange
-        var json = this.readFile(this.getFileName());
+        var json = this.readFile();
         var typeReference = new TypeReference<Tuple1<String>>() {};
 
         // Act

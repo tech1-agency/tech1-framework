@@ -674,4 +674,14 @@ public class RandomUtilityTest {
         // Assert
         assertThat(getAvailableZoneIds()).contains(actual.toZoneId().getId());
     }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomUsernameTest() {
+        // Act
+        var username = randomUsername();
+
+        // Assert
+        assertThat(username).isNotNull();
+        assertThat(username.getIdentifier()).isNotNull();
+    }
 }

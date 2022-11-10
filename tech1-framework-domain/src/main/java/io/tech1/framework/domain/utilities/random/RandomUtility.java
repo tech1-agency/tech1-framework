@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.random;
 
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import lombok.experimental.UtilityClass;
@@ -277,5 +278,9 @@ public class RandomUtility {
 
     public static TimeZone randomTimeZone() {
         return TimeZone.getTimeZone(randomZoneId());
+    }
+
+    public static Username randomUsername() {
+        return Username.of(randomString());
     }
 }

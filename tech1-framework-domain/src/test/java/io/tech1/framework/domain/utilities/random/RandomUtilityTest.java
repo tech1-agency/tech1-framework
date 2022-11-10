@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
@@ -312,5 +313,32 @@ public class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual).isGreaterThan(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
         assertThat(actual).isLessThan(BigInteger.valueOf(upperBound));
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomStringTest() {
+        // Act
+        var actual = randomString();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.length()).isEqualTo(32L);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomStringLetterOrNumbersOnlyTest() {
+        // Arrange
+        var regex = "[^a-z0-9 ]";
+        var size = 40;
+
+        // Act
+        var randomStringLetterOrNumbersOnly = randomStringLetterOrNumbersOnly(size);
+
+        // Assert
+        assertThat(randomStringLetterOrNumbersOnly).isNotNull();
+        assertThat(randomStringLetterOrNumbersOnly.length()).isEqualTo(size);
+
+        var matcher = Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(randomStringLetterOrNumbersOnly);
+        assertThat(matcher.find()).isFalse();
     }
 }

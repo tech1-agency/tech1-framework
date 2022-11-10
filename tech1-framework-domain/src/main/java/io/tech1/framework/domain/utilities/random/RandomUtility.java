@@ -1,11 +1,13 @@
 package io.tech1.framework.domain.utilities.random;
 
 import io.tech1.framework.domain.constants.BigDecimalConstants;
+import io.tech1.framework.domain.constants.StringConstants;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.UUID;
 
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
@@ -13,6 +15,7 @@ import static java.math.BigDecimal.ONE;
 @UtilityClass
 public class RandomUtility {
 
+    private static final String LETTERS_OR_NUMBERS = "AaBbCcDdEeFfGgHgIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
     private static final SecureRandom RND = new SecureRandom();
 
     public static Number one(Class<? extends Number> clazz) {
@@ -130,5 +133,18 @@ public class RandomUtility {
         return randomBoolean() ?
                 randomBigIntegerGreaterThanZeroByBounds(lowerBound, upperBound) :
                 randomBigIntegerLessThanZeroByBounds(lowerBound, upperBound);
+    }
+
+    public static String randomString() {
+        return UUID.randomUUID().toString().replace("-", StringConstants.EMPTY);
+    }
+
+    public static String randomStringLetterOrNumbersOnly(int size) {
+        var sb = new StringBuilder();
+        while (sb.length() < size) {
+            var index = randomIntegerGreaterThanZeroByBounds(0, LETTERS_OR_NUMBERS.length() - 1);
+            sb.append(LETTERS_OR_NUMBERS.charAt(index));
+        }
+        return sb.toString();
     }
 }

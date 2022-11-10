@@ -162,4 +162,8 @@ public class RandomUtility {
                 .mapToObj(position -> randomString())
                 .toArray(String[]::new);
     }
+
+    public static String randomEmail() {
+        return randomString() + "@tech1.io";
+    }
 }

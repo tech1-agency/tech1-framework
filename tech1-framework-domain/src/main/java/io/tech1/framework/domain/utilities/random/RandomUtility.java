@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Supplier;
@@ -268,5 +269,13 @@ public class RandomUtility {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public static ZoneId randomZoneId() {
+        return ZoneId.of(randomElement(ZoneId.getAvailableZoneIds()));
+    }
+
+    public static TimeZone randomTimeZone() {
+        return TimeZone.getTimeZone(randomZoneId());
     }
 }

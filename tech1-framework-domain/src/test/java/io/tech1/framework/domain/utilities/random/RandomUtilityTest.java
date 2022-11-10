@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
+import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -654,5 +655,23 @@ public class RandomUtilityTest {
         } else {
             assertThat(actual).hasSize(0);
         }
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomZoneIdTest() {
+        // Act
+        var actual = randomZoneId();
+
+        // Assert
+        assertThat(getAvailableZoneIds()).contains(actual.getId());
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomTimeZoneTest() {
+        // Act
+        var actual = randomTimeZone();
+
+        // Assert
+        assertThat(getAvailableZoneIds()).contains(actual.toZoneId().getId());
     }
 }

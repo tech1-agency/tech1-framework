@@ -5,6 +5,6 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 
 @UtilityClass
-public class NumbersConstants {
+public class BigDecimalConstants {
     public static final BigDecimal MINUS_ONE = BigDecimal.valueOf(-1);
 }

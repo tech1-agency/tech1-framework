@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.utilities.random;
 
+import io.tech1.framework.domain.constants.BigDecimalConstants;
+import io.tech1.framework.domain.constants.BigIntegerConstants;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -8,9 +10,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.NumbersConstants.MINUS_ONE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -219,8 +221,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE));
-        assertThat(actual).isLessThan(BigDecimal.valueOf(lowerBound).multiply(MINUS_ONE));
+        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
+        assertThat(actual).isLessThan(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -234,7 +236,81 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE));
+        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
         assertThat(actual).isLessThan(BigDecimal.valueOf(upperBound));
+    }
+
+    @Test
+    public void randomBigIntegerTest() {
+        // Act
+        var actual = randomBigInteger();
+
+        // Assert
+        assertThat(actual).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigIntegerGreaterThanZeroTest() {
+        // Act
+        var actual = randomBigIntegerGreaterThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigInteger.ZERO);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigIntegerLessThanZeroTestt() {
+        // Act
+        var actual = randomBigIntegerLessThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isLessThan(BigInteger.ZERO);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigIntegerGreaterThanZeroByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomBigIntegerGreaterThanZeroByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigInteger.valueOf(lowerBound));
+        assertThat(actual).isLessThan(BigInteger.valueOf(upperBound));
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigIntegerLessThanZeroByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomBigIntegerLessThanZeroByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
+        assertThat(actual).isLessThan(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigIntegerByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomBigIntegerByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
+        assertThat(actual).isLessThan(BigInteger.valueOf(upperBound));
     }
 }

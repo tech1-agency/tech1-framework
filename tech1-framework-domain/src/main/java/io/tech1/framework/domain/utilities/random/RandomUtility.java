@@ -1,11 +1,12 @@
 package io.tech1.framework.domain.utilities.random;
 
+import io.tech1.framework.domain.constants.BigDecimalConstants;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import static io.tech1.framework.domain.constants.NumbersConstants.MINUS_ONE;
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
 
@@ -86,7 +87,7 @@ public class RandomUtility {
     }
 
     public static BigDecimal randomBigDecimalLessThanZero() {
-        return randomBigDecimalGreaterThanZero().multiply(MINUS_ONE);
+        return randomBigDecimalGreaterThanZero().multiply(BigDecimalConstants.MINUS_ONE);
     }
 
     public static BigDecimal randomBigDecimalGreaterThanZeroByBounds(long lowerBound, long upperBound) {
@@ -96,12 +97,38 @@ public class RandomUtility {
     }
 
     public static BigDecimal randomBigDecimalLessThanZeroByBounds(long lowerBound, long upperBound) {
-        return randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound).multiply(MINUS_ONE);
+        return randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound).multiply(BigDecimalConstants.MINUS_ONE);
     }
 
     public static BigDecimal randomBigDecimalByBounds(long lowerBound, long upperBound) {
         return randomBoolean() ?
                 randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound) :
                 randomBigDecimalLessThanZeroByBounds(lowerBound, upperBound);
+    }
+
+    public static BigInteger randomBigInteger() {
+        return BigInteger.valueOf(randomIntegerGreaterThanZeroByBounds(-90, 90));
+    }
+
+    public static BigInteger randomBigIntegerGreaterThanZero() {
+        return BigInteger.valueOf(randomLongGreaterThanZero());
+    }
+
+    public static BigInteger randomBigIntegerLessThanZero() {
+        return BigInteger.valueOf(randomLongLessThanZero());
+    }
+
+    public static BigInteger randomBigIntegerGreaterThanZeroByBounds(long lowerBound, long upperBound) {
+        return BigInteger.valueOf(randomLongGreaterThanZeroByBounds(lowerBound, upperBound));
+    }
+
+    public static BigInteger randomBigIntegerLessThanZeroByBounds(long lowerBound, long upperBound) {
+        return BigInteger.valueOf(-randomLongGreaterThanZeroByBounds(lowerBound, upperBound));
+    }
+
+    public static BigInteger randomBigIntegerByBounds(long lowerBound, long upperBound) {
+        return randomBoolean() ?
+                randomBigIntegerGreaterThanZeroByBounds(lowerBound, upperBound) :
+                randomBigIntegerLessThanZeroByBounds(lowerBound, upperBound);
     }
 }

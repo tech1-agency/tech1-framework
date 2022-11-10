@@ -5,7 +5,9 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 
+import static io.tech1.framework.domain.constants.NumbersConstants.MINUS_ONE;
 import static java.lang.Math.abs;
+import static java.math.BigDecimal.ONE;
 
 @UtilityClass
 public class RandomUtility {
@@ -26,7 +28,7 @@ public class RandomUtility {
             return 1.0d;
         }
         if (clazz == BigDecimal.class) {
-            return BigDecimal.ONE;
+            return ONE;
         }
         throw new IllegalArgumentException("Unexpected clazz: " + clazz.getName());
     }
@@ -64,14 +66,42 @@ public class RandomUtility {
     }
 
     public static Long randomLongGreaterThanZero() {
-        return abs(RND.nextLong());
+        return abs(randomLong());
     }
 
     public static Long randomLongLessThanZero() {
-        return -abs(RND.nextLong());
+        return -randomLongGreaterThanZero();
     }
 
     public static Long randomLongGreaterThanZeroByBounds(long lowerBound, long upperBound) {
         return lowerBound + 1 + RND.nextInt((int) (upperBound - lowerBound - 2));
+    }
+
+    public static BigDecimal randomBigDecimal() {
+        return BigDecimal.valueOf(randomDouble() * randomIntegerGreaterThanZeroByBounds(-90, 90));
+    }
+
+    public static BigDecimal randomBigDecimalGreaterThanZero() {
+        return BigDecimal.valueOf(randomDouble() * randomIntegerGreaterThanZeroByBounds(10, 90));
+    }
+
+    public static BigDecimal randomBigDecimalLessThanZero() {
+        return randomBigDecimalGreaterThanZero().multiply(MINUS_ONE);
+    }
+
+    public static BigDecimal randomBigDecimalGreaterThanZeroByBounds(long lowerBound, long upperBound) {
+        var longValue = randomLongGreaterThanZeroByBounds(lowerBound, upperBound);
+        var delta = BigDecimal.valueOf(randomDouble()).add(ONE);
+        return new BigDecimal(longValue).add(delta);
+    }
+
+    public static BigDecimal randomBigDecimalLessThanZeroByBounds(long lowerBound, long upperBound) {
+        return randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound).multiply(MINUS_ONE);
+    }
+
+    public static BigDecimal randomBigDecimalByBounds(long lowerBound, long upperBound) {
+        return randomBoolean() ?
+                randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound) :
+                randomBigDecimalLessThanZeroByBounds(lowerBound, upperBound);
     }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.constants.NumbersConstants.MINUS_ONE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -161,5 +162,79 @@ public class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual > lowerBound).isTrue();
         assertThat(actual < upperBound).isTrue();
+    }
+
+    @Test
+    public void randomBigDecimalTest() {
+        // Act
+        var actual = randomBigDecimal();
+
+        // Assert
+        assertThat(actual).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigDecimalGreaterThanZeroTest() {
+        // Act
+        var actual = randomBigDecimalGreaterThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigDecimal.ZERO);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigDecimalLessThanZeroTest() {
+        // Act
+        var actual = randomBigDecimalLessThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isLessThan(BigDecimal.ZERO);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigDecimalGreaterThanZeroByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigDecimal.valueOf(lowerBound));
+        assertThat(actual).isLessThan(BigDecimal.valueOf(upperBound));
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigDecimalLessThanZeroByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomBigDecimalLessThanZeroByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE));
+        assertThat(actual).isLessThan(BigDecimal.valueOf(lowerBound).multiply(MINUS_ONE));
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomBigDecimalByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomBigDecimalByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isGreaterThan(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE));
+        assertThat(actual).isLessThan(BigDecimal.valueOf(upperBound));
     }
 }

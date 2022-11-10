@@ -6,9 +6,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.strings.StringUtility.isNullOrBlank;
-import static io.tech1.framework.domain.utilities.strings.StringUtility.isNullOrEmpty;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.strings.StringUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StringUtilityTest {
@@ -54,6 +53,34 @@ public class StringUtilityTest {
     public void isNullOrBlankTest(String value, boolean expected) {
         // Act
         var actual = isNullOrBlank(value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getShortenValueOrUndefinedTest() {
+        return Stream.of(
+                Arguments.of(null, randomIntegerGreaterThanZero(), "[?]"),
+                Arguments.of(null, randomIntegerLessThanZero(), "[?]"),
+                Arguments.of("nil", 4, "nil"),
+                Arguments.of("nil", 3, "nil"),
+                Arguments.of("nil", 0, "nil"),
+                Arguments.of("nil", -1, "nil"),
+                Arguments.of("null", 4, "null"),
+                Arguments.of("null", 10, "null"),
+                Arguments.of("null", 3, "..."),
+                Arguments.of("null", 2, "..."),
+                Arguments.of("null", 1, "..."),
+                Arguments.of("null", 0, "..."),
+                Arguments.of("null", -1, "...")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getShortenValueOrUndefinedTest")
+    public void getShortenValueOrUndefinedTest(String value, int maxLength, String expected) {
+        // Act
+        var actual = getShortenValueOrUndefined(value, maxLength);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

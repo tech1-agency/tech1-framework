@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -67,7 +68,12 @@ public class RandomUtility {
     }
 
     public static Integer randomIntegerGreaterThanZeroByBounds(int lowerBound, int upperBound) {
-        return lowerBound + 1 + RND.nextInt(upperBound - lowerBound - 2);
+        var diff = upperBound - lowerBound - 2;
+        if (diff == 0) {
+            return lowerBound + 1;
+        } else {
+            return lowerBound + 1 + RND.nextInt(diff);
+        }
     }
 
     public static Long randomLong() {
@@ -83,7 +89,12 @@ public class RandomUtility {
     }
 
     public static Long randomLongGreaterThanZeroByBounds(long lowerBound, long upperBound) {
-        return lowerBound + 1 + RND.nextInt((int) (upperBound - lowerBound - 2));
+        var diff = upperBound - lowerBound - 2;
+        if (diff == 0) {
+            return lowerBound + 1;
+        } else {
+            return lowerBound + 1 + RND.nextInt((int) diff);
+        }
     }
 
     public static BigDecimal randomBigDecimal() {
@@ -176,5 +187,16 @@ public class RandomUtility {
 
     public static <T> T randomElement(Set<T> set) {
         return randomElement(new ArrayList<>(set));
+    }
+
+    public static LocalDate randomLocalDate() {
+        return randomLocalDateByBounds(2000, LocalDate.now().getYear());
+    }
+
+    public static LocalDate randomLocalDateByBounds(int lowerYear, int upperYear) {
+        var minDay = LocalDate.of(lowerYear, 1, 1).toEpochDay();
+        var maxDay = LocalDate.of(upperYear, 1, 1).toEpochDay();
+        var randomDay = randomLongGreaterThanZeroByBounds(minDay, maxDay);
+        return LocalDate.ofEpochDay(randomDay);
     }
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -115,8 +116,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
-        var lowerBound = 50;
-        var upperBound = 100;
+        var lowerBound = randomIntegerGreaterThanZeroByBounds(50, 75);
+        var upperBound = randomIntegerGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomIntegerGreaterThanZeroByBounds(lowerBound, upperBound);
@@ -159,8 +160,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomLongGreaterThanZeroByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        var lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        var upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomLongGreaterThanZeroByBounds(lowerBound, upperBound);
@@ -203,8 +204,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomBigDecimalGreaterThanZeroByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound);
@@ -218,8 +219,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomBigDecimalLessThanZeroByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomBigDecimalLessThanZeroByBounds(lowerBound, upperBound);
@@ -233,8 +234,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomBigDecimalByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomBigDecimalByBounds(lowerBound, upperBound);
@@ -277,8 +278,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomBigIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomBigIntegerGreaterThanZeroByBounds(lowerBound, upperBound);
@@ -292,8 +293,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomBigIntegerLessThanZeroByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomBigIntegerLessThanZeroByBounds(lowerBound, upperBound);
@@ -307,8 +308,8 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomBigIntegerByBoundsTest() {
         // Arrange
-        var lowerBound = 50L;
-        var upperBound = 100L;
+        long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
+        long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
 
         // Act
         var actual = randomBigIntegerByBounds(lowerBound, upperBound);
@@ -431,5 +432,31 @@ public class RandomUtilityTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(set).contains(actual);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLocalDateTest() {
+        // Act
+        var actual = randomLocalDate();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getYear()).isGreaterThanOrEqualTo(2000);
+        assertThat(actual.getYear()).isLessThanOrEqualTo(LocalDate.now().getYear());
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLocalDateByBoundsTest() {
+        // Arrange
+        var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
+        var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
+
+        // Act
+        var actual = randomLocalDateByBounds(minYear, maxYear);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getYear()).isGreaterThanOrEqualTo(2000);
+        assertThat(actual.getYear()).isLessThanOrEqualTo(2020);
     }
 }

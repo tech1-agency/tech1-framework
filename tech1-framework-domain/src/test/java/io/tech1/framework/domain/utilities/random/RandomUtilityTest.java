@@ -361,6 +361,26 @@ public class RandomUtilityTest {
         assertThat(Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(actual).find()).isFalse();
     }
 
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomIpAddressTest() {
+        // Arrange
+        var pattern = Pattern.compile("^"
+                + "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}" // Domain name
+                + "|"
+                + "localhost" // localhost
+                + "|"
+                + "(([0-9]{1,3}\\.){3})[0-9]{1,3})" // IP
+                + ":"
+                + "[0-9]{1,5}$"); // Port
+
+        // Act
+        var actual = randomIpAddress();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(pattern.matcher(actual.split("://")[1]).matches()).isTrue();
+    }
+
     @Test
     public void randomStringsAsListTest() {
         // Arrange

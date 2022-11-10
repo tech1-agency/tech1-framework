@@ -167,6 +167,13 @@ public class RandomUtility {
         return sb.toString();
     }
 
+    public static String randomIpAddress() {
+        var ip = RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
+        var protocol = RND.nextBoolean() ? "http" : "https";
+        int port = 4000 + RND.nextInt(5000);
+        return protocol + "://" + ip + ":" + port;
+    }
+
     public static List<String> randomStringsAsList(int size) {
         return IntStream.range(0, size)
                 .mapToObj(position -> randomString())

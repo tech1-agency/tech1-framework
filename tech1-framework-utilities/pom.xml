@@ -12,16 +12,4 @@
 
     <artifactId>tech1-framework-utilities</artifactId>
 
-    <dependencies>
-        <!-- ========================================================================================== -->
-        <!-- dependencies, scope == compile -->
-        <!-- ========================================================================================== -->
-
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 </project>

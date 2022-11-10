@@ -7,7 +7,9 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -165,5 +167,14 @@ public class RandomUtility {
 
     public static String randomEmail() {
         return randomString() + "@tech1.io";
+    }
+
+    public static <T> T randomElement(List<T> list) {
+        var randomIndex = RND.nextInt(list.size());
+        return list.get(randomIndex);
+    }
+
+    public static <T> T randomElement(Set<T> set) {
+        return randomElement(new ArrayList<>(set));
     }
 }

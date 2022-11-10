@@ -11,9 +11,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
 import static java.util.Arrays.asList;
@@ -333,14 +336,12 @@ public class RandomUtilityTest {
         var size = 40;
 
         // Act
-        var randomStringLetterOrNumbersOnly = randomStringLetterOrNumbersOnly(size);
+        var actual = randomStringLetterOrNumbersOnly(size);
 
         // Assert
-        assertThat(randomStringLetterOrNumbersOnly).isNotNull();
-        assertThat(randomStringLetterOrNumbersOnly.length()).isEqualTo(size);
-
-        var matcher = Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(randomStringLetterOrNumbersOnly);
-        assertThat(matcher.find()).isFalse();
+        assertThat(actual).isNotNull();
+        assertThat(actual.length()).isEqualTo(size);
+        assertThat(Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(actual).find()).isFalse();
     }
 
     @Test
@@ -388,11 +389,47 @@ public class RandomUtilityTest {
         var expected = randomLength + domainLength;
 
         // Act
-        var email = randomEmail();
+        var actual = randomEmail();
 
         // Assert
-        assertThat(email).isNotNull();
-        assertThat(email.length()).isEqualTo(expected);
-        assertThat(email.substring(randomLength)).isEqualTo(domain);
+        assertThat(actual).isNotNull();
+        assertThat(actual.length()).isEqualTo(expected);
+        assertThat(actual.substring(randomLength)).isEqualTo(domain);
+    }
+
+    @Test
+    public void randomElementListTest() {
+        // Arrange
+        var list = List.of(
+                EXAMPLE_1,
+                EXAMPLE_2,
+                EXAMPLE_3,
+                EXAMPLE_4
+        );
+
+        // Act
+        var actual = randomElement(list);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(list).contains(actual);
+    }
+
+    @Test
+    public void randomElementSetTest() {
+        // Arrange
+        var set = Set.of(
+                EXAMPLE_1,
+                EXAMPLE_2,
+                EXAMPLE_3,
+                EXAMPLE_4
+        );
+
+        // Act
+        var actual = randomElement(set);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(set).contains(actual);
     }
 }

@@ -118,4 +118,48 @@ public class RandomUtilityTest {
         assertThat(actual > lowerBound).isTrue();
         assertThat(actual < upperBound).isTrue();
     }
+
+    @Test
+    public void randomLongTest() {
+        // Act
+        var actual = randomLong();
+
+        // Assert
+        assertThat(actual).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLongGreaterThanZeroTest() {
+        // Act
+        var actual = randomLongGreaterThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isPositive();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLongLessThanZeroTest() {
+        // Act
+        var actual = randomLongLessThanZero();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isNegative();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomLongGreaterThanZeroByBoundsTest() {
+        // Arrange
+        var lowerBound = 50L;
+        var upperBound = 100L;
+
+        // Act
+        var actual = randomLongGreaterThanZeroByBounds(lowerBound, upperBound);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual > lowerBound).isTrue();
+        assertThat(actual < upperBound).isTrue();
+    }
 }

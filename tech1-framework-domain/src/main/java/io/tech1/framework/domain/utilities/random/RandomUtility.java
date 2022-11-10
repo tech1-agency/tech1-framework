@@ -5,6 +5,8 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 
+import static java.lang.Math.abs;
+
 @UtilityClass
 public class RandomUtility {
 
@@ -46,7 +48,7 @@ public class RandomUtility {
     }
 
     public static Integer randomIntegerGreaterThanZero() {
-        return Math.abs(randomInteger());
+        return abs(randomInteger());
     }
 
     public static Integer randomIntegerLessThanZero() {
@@ -55,5 +57,21 @@ public class RandomUtility {
 
     public static Integer randomIntegerGreaterThanZeroByBounds(int lowerBound, int upperBound) {
         return lowerBound + 1 + RND.nextInt(upperBound - lowerBound - 2);
+    }
+
+    public static Long randomLong() {
+        return RND.nextLong();
+    }
+
+    public static Long randomLongGreaterThanZero() {
+        return abs(RND.nextLong());
+    }
+
+    public static Long randomLongLessThanZero() {
+        return -abs(RND.nextLong());
+    }
+
+    public static Long randomLongGreaterThanZeroByBounds(long lowerBound, long upperBound) {
+        return lowerBound + 1 + RND.nextInt((int) (upperBound - lowerBound - 2));
     }
 }

@@ -3,6 +3,7 @@ package io.tech1.framework.domain.utilities.random;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
+import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -253,7 +254,7 @@ public class RandomUtility {
         return Stream.of(values)
                 .filter(item -> !item.equals(enumValue))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Please check enum: " + enumClazz));
+                .orElseThrow(() -> new IllegalEnumException(enumClazz));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -262,7 +263,7 @@ public class RandomUtility {
         return (T) Stream.of(values)
                 .filter(item -> !item.equals(enumValue))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Please check enum: " + enumClazz));
+                .orElseThrow(() -> new IllegalEnumException(enumClazz));
     }
 
     public static <T extends Enum<T>> T randomEnumExcept(Class<T> enumClazz, List<T> enumValues) {
@@ -271,7 +272,7 @@ public class RandomUtility {
                 .filter(item -> !enumValues.contains(item))
                 .collect(Collectors.toList());
         if (collect.isEmpty()) {
-            throw new IllegalArgumentException("Please check enum: " + enumClazz);
+            throw new IllegalEnumException(enumClazz);
         } else {
             return randomElement(collect);
         }
@@ -284,7 +285,7 @@ public class RandomUtility {
                 .filter(item -> !enumValues.contains(item))
                 .collect(Collectors.toList());
         if (collect.isEmpty()) {
-            throw new IllegalArgumentException("Please check enum: " + enumClazz);
+            throw new IllegalEnumException(enumClazz);
         } else {
             return (T) randomElement(collect);
         }

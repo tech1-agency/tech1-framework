@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.random;
 
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
+import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
 import io.tech1.framework.domain.tests.enums.EnumUnderTests;
@@ -591,8 +592,8 @@ public class RandomUtilityTest {
         var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
 
         // Assert
-        assertThat(throwable1).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable2).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable1).isInstanceOf(IllegalEnumException.class);
+        assertThat(throwable2).isInstanceOf(IllegalEnumException.class);
         var message = "Please check enum: class io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
@@ -653,8 +654,8 @@ public class RandomUtilityTest {
         var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(clazz, allPossibleEnumValues));
 
         // Assert
-        assertThat(throwable1).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable2).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable1).isInstanceOf(IllegalEnumException.class);
+        assertThat(throwable2).isInstanceOf(IllegalEnumException.class);
         var message = "Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);

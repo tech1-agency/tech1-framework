@@ -576,45 +576,26 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomEnumTest() {
         // Act
-        var actual = randomEnum(EnumUnderTests.class);
+        var actual1 = randomEnum(EnumUnderTests.class);
+        EnumUnderTests actual2 = randomEnumWildcard(EnumUnderTests.class);
 
         // Assert
-        assertThat(EnumUnderTests.values()).contains(actual);
-    }
-
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumWildcardTest() {
-        // Act
-        EnumUnderTests actual = randomEnumWildcard(EnumUnderTests.class);
-
-        // Assert
-        assertThat(EnumUnderTests.values()).contains(actual);
-    }
-
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptTest() {
-        // Arrange
-        var enumValues = List.of(EnumUnderTests.values());
-        var clazz = EnumUnderTests.class;
-        var randomEnum = randomEnum(clazz);
-
-        // Act
-        var actual = randomEnumExcept(clazz, randomEnum);
-
-        // Assert
-        assertThat(enumValues).contains(randomEnum);
-        assertThat(enumValues).contains(actual);
-        assertThat(actual).isNotEqualTo(randomEnum);
+        assertThat(EnumUnderTests.values()).contains(actual1);
+        assertThat(EnumUnderTests.values()).contains(actual2);
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomEnumExceptExceptionTest() {
         // Act
-        var throwable = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
+        var throwable1 = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
+        var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
 
         // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests");
+        assertThat(throwable1).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable2).isInstanceOf(IllegalArgumentException.class);
+        var message = "Please check enum: class io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests";
+        assertThat(throwable1.getMessage()).isEqualTo(message);
+        assertThat(throwable2.getMessage()).isEqualTo(message);
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -625,22 +606,15 @@ public class RandomUtilityTest {
         var randomEnum = randomEnum(clazz);
 
         // Act
-        var actual = randomEnumExceptWildcard(clazz, randomEnum);
+        var actual1 = randomEnumExcept(clazz, randomEnum);
+        var actual2 = randomEnumExceptWildcard(clazz, randomEnum);
 
         // Assert
         assertThat(enumValues).contains(randomEnum);
-        assertThat(enumValues).contains(actual);
-        assertThat(actual).isNotEqualTo(randomEnum);
-    }
-
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptWildcardExceptionTest() {
-        // Act
-        var throwable = catchThrowable(() -> randomEnumExceptWildcard(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests");
+        assertThat(enumValues).contains(actual2);
+        assertThat(enumValues).contains(actual1);
+        assertThat(actual2).isNotEqualTo(randomEnum);
+        assertThat(actual1).isNotEqualTo(randomEnum);
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -653,14 +627,18 @@ public class RandomUtilityTest {
         var randomEnums = List.of(randomEnum1, randomEnum2);
 
         // Act
-        var actual = randomEnumExcept(clazz, randomEnums);
+        var actual1 = randomEnumExcept(clazz, randomEnums);
+        var actual2 = randomEnumExceptWildcard(clazz, randomEnums);
 
         // Assert
         assertThat(enumValues).contains(randomEnum1);
         assertThat(enumValues).contains(randomEnum2);
-        assertThat(enumValues).contains(actual);
-        assertThat(actual).isNotEqualTo(randomEnum1);
-        assertThat(actual).isNotEqualTo(randomEnum2);
+        assertThat(enumValues).contains(actual1);
+        assertThat(enumValues).contains(actual2);
+        assertThat(actual1).isNotEqualTo(randomEnum1);
+        assertThat(actual2).isNotEqualTo(randomEnum1);
+        assertThat(actual1).isNotEqualTo(randomEnum2);
+        assertThat(actual2).isNotEqualTo(randomEnum2);
         assertThat(randomEnum1).isNotEqualTo(randomEnum2);
     }
 
@@ -671,46 +649,15 @@ public class RandomUtilityTest {
         var allPossibleEnumValues = List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4);
 
         // Act
-        var throwable = catchThrowable(() -> randomEnumExcept(clazz, allPossibleEnumValues));
+        var throwable1 = catchThrowable(() -> randomEnumExcept(clazz, allPossibleEnumValues));
+        var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(clazz, allPossibleEnumValues));
 
         // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests");
-    }
-
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptWildcardCaseAsListTest() {
-        // Arrange
-        var enumValues = List.of(EnumUnderTests.values());
-        var clazz = EnumUnderTests.class;
-        var randomEnum1 = randomEnum(clazz);
-        var randomEnum2 = randomEnumExcept(clazz, randomEnum1);
-        var randomEnums = List.of(randomEnum1, randomEnum2);
-
-        // Act
-        var actual = randomEnumExceptWildcard(clazz, randomEnums);
-
-        // Assert
-        assertThat(enumValues).contains(randomEnum1);
-        assertThat(enumValues).contains(randomEnum2);
-        assertThat(enumValues).contains(actual);
-        assertThat(actual).isNotEqualTo(randomEnum1);
-        assertThat(actual).isNotEqualTo(randomEnum2);
-        assertThat(randomEnum1).isNotEqualTo(randomEnum2);
-    }
-
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptWildcardAsListExceptionTest() {
-        // Arrange
-        var clazz = EnumUnderTests.class;
-        var allPossibleEnumValues = List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4);
-
-        // Act
-        var throwable = catchThrowable(() -> randomEnumExceptWildcard(clazz, allPossibleEnumValues));
-
-        // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests");
+        assertThat(throwable1).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable2).isInstanceOf(IllegalArgumentException.class);
+        var message = "Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests";
+        assertThat(throwable1.getMessage()).isEqualTo(message);
+        assertThat(throwable2.getMessage()).isEqualTo(message);
     }
 
     @ParameterizedTest

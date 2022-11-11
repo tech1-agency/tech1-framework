@@ -182,6 +182,12 @@ public class RandomUtility {
                 .collect(Collectors.toList());
     }
 
+    public static Set<String> randomStringsAsSet(int size) {
+        return IntStream.range(0, size)
+                .mapToObj(position -> randomString())
+                .collect(Collectors.toSet());
+    }
+
     public static String[] randomStringsAsArray(int size) {
         return IntStream.range(0, size)
                 .mapToObj(position -> randomString())

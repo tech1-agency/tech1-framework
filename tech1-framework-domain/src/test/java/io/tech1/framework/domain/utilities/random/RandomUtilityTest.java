@@ -393,6 +393,26 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
+        assertThat(actual.getClass()).isEqualTo(List.class);
+        assertThat(actual.size()).isEqualTo(size);
+        actual.forEach(element -> {
+            assertThat(element).isNotNull();
+            assertThat(element.length()).isEqualTo(elementLength);
+        });
+    }
+
+    @Test
+    public void randomStringsAsSetTest() {
+        // Arrange
+        var size = randomIntegerGreaterThanZeroByBounds(1, 5);
+        var elementLength = 32;
+
+        // Act
+        var actual = randomStringsAsSet(size);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getClass()).isEqualTo(Set.class);
         assertThat(actual.size()).isEqualTo(size);
         actual.forEach(element -> {
             assertThat(element).isNotNull();

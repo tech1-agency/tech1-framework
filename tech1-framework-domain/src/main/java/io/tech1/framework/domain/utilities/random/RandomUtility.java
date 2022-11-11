@@ -242,9 +242,24 @@ public class RandomUtility {
         return values[RND.nextInt(values.length)];
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static <T extends Enum> T randomEnumWildcard(Class<?> enumClazz) {
+        var values = enumClazz.getEnumConstants();
+        return (T) values[RND.nextInt(values.length)];
+    }
+
     public static <T extends Enum<T>> T randomEnumExcept(Class<T> enumClazz, T enumValue) {
         var values = enumClazz.getEnumConstants();
         return Stream.of(values)
+                .filter(item -> !item.equals(enumValue))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Please check enum: " + enumClazz));
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static <T extends Enum> T randomEnumExceptWildcard(Class<?> enumClazz, T enumValue) {
+        var values = enumClazz.getEnumConstants();
+        return (T) Stream.of(values)
                 .filter(item -> !item.equals(enumValue))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Please check enum: " + enumClazz));
@@ -259,6 +274,19 @@ public class RandomUtility {
             throw new IllegalArgumentException("Please check enum: " + enumClazz);
         } else {
             return randomElement(collect);
+        }
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked", "SuspiciousMethodCalls"})
+    public static <T extends Enum> T randomEnumExceptWildcard(Class<?> enumClazz, List<T> enumValues) {
+        var values = enumClazz.getEnumConstants();
+        var collect = Stream.of(values)
+                .filter(item -> !enumValues.contains(item))
+                .collect(Collectors.toList());
+        if (collect.isEmpty()) {
+            throw new IllegalArgumentException("Please check enum: " + enumClazz);
+        } else {
+            return (T) randomElement(collect);
         }
     }
 

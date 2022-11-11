@@ -3,8 +3,13 @@ package io.tech1.framework.domain.utilities.collections;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.collections.CollectionUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
@@ -12,6 +17,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class CollectionUtilityTest {
+
+    private static Stream<Arguments> getFirstNElementsTest() {
+        return Stream.of(
+                Arguments.of(List.of(0, 1, 2, 3, 4), 2, List.of(0, 1)),
+                Arguments.of(List.of(0, 1, 2, 3, 4), 10, List.of(0, 1, 2, 3, 4)),
+                Arguments.of(List.of(0, 1, 2, 3, 4), 5, List.of(0, 1, 2, 3, 4)),
+                Arguments.of(List.of(), 5, List.of()),
+                Arguments.of(List.of(0, 1, 2, 3, 4), 0, List.of())
+        );
+    }
+
+    private static Stream<Arguments> getLastNElementsTest() {
+        return Stream.of(
+                Arguments.of(List.of(0, 1, 2, 3, 4), 2, List.of(3, 4)),
+                Arguments.of(List.of(0, 1, 2, 3, 4), 10, List.of(0, 1, 2, 3, 4)),
+                Arguments.of(List.of(0, 1, 2, 3, 4), 5, List.of(0, 1, 2, 3, 4)),
+                Arguments.of(List.of(), 5, List.of()),
+                Arguments.of(List.of(0, 1, 2, 3, 4), 0, List.of())
+        );
+    }
+
+    private static Stream<Arguments> maxOrZeroTest() {
+        return Stream.of(
+                Arguments.of(null, BigDecimal.ZERO),
+                Arguments.of(List.of(), BigDecimal.ZERO),
+                Arguments.of(List.of(new BigDecimal(0)), BigDecimal.ZERO),
+                Arguments.of(List.of(new BigDecimal(-100), new BigDecimal(-1), new BigDecimal(-5)), new BigDecimal(-1)),
+                Arguments.of(List.of(new BigDecimal(4), new BigDecimal(9), new BigDecimal(18)), new BigDecimal(18))
+        );
+    }
+
+    private static Stream<Arguments> minOrZeroTest() {
+        return Stream.of(
+                Arguments.of(null, BigDecimal.ZERO),
+                Arguments.of(List.of(), BigDecimal.ZERO),
+                Arguments.of(List.of(new BigDecimal(0)), BigDecimal.ZERO),
+                Arguments.of(List.of(new BigDecimal(-100), new BigDecimal(-1), new BigDecimal(-5)), new BigDecimal(-100)),
+                Arguments.of(List.of(new BigDecimal(4), new BigDecimal(9), new BigDecimal(18)), new BigDecimal(4))
+        );
+    }
 
     @Test
     public void emptyQueueTest() {
@@ -102,5 +147,69 @@ public class CollectionUtilityTest {
             assertThat(last).isNotNull();
             assertThat(last).isEqualTo(5);
         });
+    }
+
+    @ParameterizedTest
+    @MethodSource("getFirstNElementsTest")
+    public void getFirstNElementsTest(List<Integer> list, int size, List<Integer> expected) {
+        // Act
+        var actual = getFirstNElements(list, size);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void getFirstNElementsExceptionTest() {
+        // Arrange
+        var list = List.of(0, 1, 2, 3, 4);
+
+        // Act
+        var throwable = catchThrowable(() -> getFirstNElements(list, randomIntegerLessThanZero()));
+
+        // Assert
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class).hasMessage("Elements quantity can't be negative");
+    }
+
+    @ParameterizedTest
+    @MethodSource("getLastNElementsTest")
+    public void getLastNElementsTest(List<Integer> list, int size, List<Integer> expected) {
+        // Act
+        var actual = getLastNElements(list, size);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void getLastNElementsExceptionTest() {
+        // Arrange
+        var list = List.of(0, 1, 2, 3, 4);
+
+        // Act
+        var throwable = catchThrowable(() -> getLastNElements(list, randomIntegerLessThanZero()));
+
+        // Assert
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class).hasMessage("Elements quantity can't be negative");
+    }
+
+    @ParameterizedTest
+    @MethodSource("maxOrZeroTest")
+    public void maxOrZeroTest(List<BigDecimal> list, BigDecimal expected) {
+        // Act
+        var actual = maxOrZero(list);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("minOrZeroTest")
+    public void minOrZeroTest(List<BigDecimal> list, BigDecimal expected) {
+        // Act
+        var actual = minOrZero(list);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 }

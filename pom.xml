@@ -64,6 +64,7 @@
         <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
+        <version.dependency.tomcat.embed>9.0.55</version.dependency.tomcat.embed>
         <!-- dependencies, scope == test -->
         <version.dependency.assertj>3.21.0</version.dependency.assertj>
         <version.dependency.jsonpath>2.6.0</version.dependency.jsonpath>
@@ -99,6 +100,12 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${version.dependency.jackson}</version>
+            </dependency>
+            <!-- Tomcat: Cookie, CacheHttpRequests -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>${version.dependency.tomcat.embed}</version>
             </dependency>
             <!-- Lombok -->
             <dependency>

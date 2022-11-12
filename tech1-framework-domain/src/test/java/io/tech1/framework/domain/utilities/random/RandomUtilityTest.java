@@ -714,10 +714,10 @@ public class RandomUtilityTest {
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
     public void randomUsernameTest() {
         // Act
-        var username = randomUsername();
+        var actual = randomUsername();
 
         // Assert
-        assertThat(username).isNotNull();
-        assertThat(username.getIdentifier()).isNotNull();
+        assertThat(actual).isNotNull();
+        assertThat(actual.getIdentifier()).isNotNull();
     }
 }

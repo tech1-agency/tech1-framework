@@ -13,4 +13,9 @@ public class ExceptionsMessagesConstants {
     public static final String ENTITY_ALREADY_USED = "%s is already used";
 
     public static final String ACCESS_DENIED = "Access denied. Username: `%s`, Entity: `%s`. Value: `%s`";
+
+    // =================================================================================================================
+    // Tests
+    // =================================================================================================================
+    public static final String PARAMETRIZED_TEST_CASE = "Execute parametrized test case. Source: `%s`. Actual: `%s`. Expected: `%s`";
 }

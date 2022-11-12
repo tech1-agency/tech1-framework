@@ -1,0 +1,71 @@
+package io.tech1.framework.domain.utilities.collections;
+
+import lombok.experimental.UtilityClass;
+
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static java.math.BigDecimal.ZERO;
+import static java.util.Objects.requireNonNull;
+import static org.springframework.util.CollectionUtils.*;
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+@UtilityClass
+public class CollectionUtility {
+
+    public static <T> Queue<T> emptyQueue() {
+        return new LinkedList<>();
+    }
+
+    public static <T> List<T> union(List<T> one, List<T> second) {
+        List<T> list = new ArrayList<>(one.size() + second.size());
+        list.addAll(one);
+        list.addAll(second);
+        return list;
+    }
+
+    public static <T> Set<T> union(Set<T> one, Set<T> second) {
+        Set<T> list = new HashSet<>(one.size() + second.size());
+        list.addAll(one);
+        list.addAll(second);
+        return list;
+    }
+
+    public static <T> T safeFirstElement(List<T> list) {
+        return requireNonNull(firstElement(list));
+    }
+
+    public static <T> T safeFirstElement(Set<T> set) {
+        return requireNonNull(firstElement(set));
+    }
+
+    public static <T> T safeLastElement(List<T> list) {
+        return requireNonNull(lastElement(list));
+    }
+
+    public static <T> T safeLastElement(Set<T> set) {
+        return requireNonNull(lastElement(set));
+    }
+
+    public static <T> List<T> getFirstNElements(List<T> list, long n) {
+        assertTrueOrThrow(n >= 0, "Elements quantity can't be negative");
+        return list.stream().limit(n).collect(Collectors.toList());
+    }
+
+    public static <T> List<T> getLastNElements(List<T> list, long n) {
+        assertTrueOrThrow(n >= 0, "Elements quantity can't be negative");
+        var remainingCount = list.size() - n;
+        var remainingCountOrZero = (remainingCount >= 0) ? remainingCount : 0;
+        return list.stream().skip(remainingCountOrZero).collect(Collectors.toList());
+    }
+
+    public static BigDecimal maxOrZero(List<BigDecimal> values) {
+        return !isEmpty(values) ? Collections.max(values) : ZERO;
+    }
+
+    public static BigDecimal minOrZero(List<BigDecimal> values) {
+        return !isEmpty(values) ? Collections.min(values) : ZERO;
+    }
+}

@@ -31,4 +31,11 @@ public class ExceptionsMessagesUtility {
     public static String accessDenied(Username username, String entity, String value) {
         return String.format(ACCESS_DENIED, username, entity, value);
     }
+
+    // =================================================================================================================
+    // Tests
+    // =================================================================================================================
+    public static String parametrizedTestCase(Object source, Object actual, Object expected) {
+        return String.format(PARAMETRIZED_TEST_CASE, source, actual, expected);
+    }
 }

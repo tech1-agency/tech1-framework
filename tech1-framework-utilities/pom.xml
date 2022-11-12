@@ -7,21 +7,9 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </parent>
 
     <artifactId>tech1-framework-utilities</artifactId>
 
-    <dependencies>
-        <!-- ========================================================================================== -->
-        <!-- dependencies, scope == compile -->
-        <!-- ========================================================================================== -->
-
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 </project>

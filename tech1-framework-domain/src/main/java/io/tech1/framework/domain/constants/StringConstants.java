@@ -5,6 +5,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class StringConstants {
     public static final String EMPTY = "";
+    public static final String SLASH = "/";
+
     public static final String UNDEFINED = "[?]";
     public static final String UNKNOWN = "Unknown";
 

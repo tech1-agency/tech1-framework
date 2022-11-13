@@ -1,11 +1,13 @@
 package io.tech1.framework.domain.http.requests;
 
+import io.tech1.framework.domain.constants.StringConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import javax.servlet.http.HttpServletRequest;
+
+import static java.util.Objects.isNull;
 
 // Lombok
 @Getter
@@ -15,9 +17,12 @@ public class UserAgentHeader {
     private final String value;
 
     public UserAgentHeader(
-            String value
+            HttpServletRequest request
     ) {
-        assertNonNullOrThrow(value, invalidAttribute("UserAgentDetails.value"));
-        this.value = value;
+        if (isNull(request) || isNull(request.getHeader("User-Agent"))) {
+            this.value = StringConstants.EMPTY;
+        } else {
+            this.value = request.getHeader("User-Agent");
+        }
     }
 }

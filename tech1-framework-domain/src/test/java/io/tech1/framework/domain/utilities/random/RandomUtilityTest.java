@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
@@ -719,5 +720,85 @@ public class RandomUtilityTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getIdentifier()).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void validGeoLocationTest() {
+        // Act
+        var geoLocation = validGeoLocation();
+
+        // Assert
+        assertThat(geoLocation).isNotNull();
+        assertThat(geoLocation.getIpAddr()).isNotNull();
+        assertThat(geoLocation.getCountry()).isEqualTo("Ukraine");
+        assertThat(geoLocation.getCity()).isEqualTo("Lviv");
+        assertThat(geoLocation.getExceptionDetails()).isEqualTo("");
+        assertThat(geoLocation.getWhere()).isEqualTo("Ukraine, Lviv");
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void invalidGeoLocationTest() {
+        // Act
+        var geoLocation = invalidGeoLocation();
+
+        // Assert
+        assertThat(geoLocation).isNotNull();
+        assertThat(geoLocation.getIpAddr()).isNotNull();
+        assertThat(geoLocation.getCountry()).isEqualTo(UNKNOWN);
+        assertThat(geoLocation.getCity()).isEqualTo(UNKNOWN);
+        assertThat(geoLocation.getExceptionDetails()).isEqualTo("Location is unknown");
+        assertThat(geoLocation.getWhere()).isEqualTo("Unknown, Unknown");
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomGeoLocationTest() {
+        // Act
+        var geoLocation = randomGeoLocation();
+
+        // Assert
+        assertThat(geoLocation).isNotNull();
+        assertThat(geoLocation.getIpAddr()).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void validUserAgentDetailsTest() {
+        // Act
+        var userAgentDetails = validUserAgentDetails();
+
+        // Assert
+        assertThat(userAgentDetails).isNotNull();
+        assertThat(userAgentDetails.getBrowser()).isEqualTo("Chrome");
+        assertThat(userAgentDetails.getPlatform()).isEqualTo("macOS");
+        assertThat(userAgentDetails.getDeviceType()).isEqualTo("Desktop");
+        assertThat(userAgentDetails.getExceptionDetails()).isEqualTo("");
+        assertThat(userAgentDetails.getWhat()).isEqualTo("Chrome, macOS on Desktop");
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void invalidUserAgentDetailsTest() {
+        // Act
+        var userAgentDetails = invalidUserAgentDetails();
+
+        // Assert
+        assertThat(userAgentDetails).isNotNull();
+        assertThat(userAgentDetails.getBrowser()).isEqualTo(UNKNOWN);
+        assertThat(userAgentDetails.getPlatform()).isEqualTo(UNKNOWN);
+        assertThat(userAgentDetails.getDeviceType()).isEqualTo(UNKNOWN);
+        assertThat(userAgentDetails.getExceptionDetails()).isEqualTo("User agent details are unknown");
+        assertThat(userAgentDetails.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomUserAgentDetailsTest() {
+        // Act
+        var userAgentDetails = randomUserAgentDetails();
+
+        // Assert
+        assertThat(userAgentDetails).isNotNull();
+        assertThat(userAgentDetails.getBrowser()).isNotNull();
+        assertThat(userAgentDetails.getPlatform()).isNotNull();
+        assertThat(userAgentDetails.getDeviceType()).isNotNull();
+        assertThat(userAgentDetails.getExceptionDetails()).isNotNull();
+        assertThat(userAgentDetails.getWhat()).isNotNull();
     }
 }

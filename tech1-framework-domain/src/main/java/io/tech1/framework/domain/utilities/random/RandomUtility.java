@@ -4,6 +4,8 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
+import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -317,5 +319,42 @@ public class RandomUtility {
 
     public static Username randomUsername() {
         return Username.of(randomString());
+    }
+
+    public static GeoLocation validGeoLocation() {
+        return GeoLocation.processed(
+                randomIpAddress(),
+                "Ukraine",
+                "Lviv"
+        );
+    }
+
+    public static GeoLocation invalidGeoLocation() {
+        return GeoLocation.unknown(
+                randomIpAddress(),
+                "Location is unknown"
+        );
+    }
+
+    public static GeoLocation randomGeoLocation() {
+        return randomBoolean() ? validGeoLocation() : invalidGeoLocation();
+    }
+
+    public static UserAgentDetails validUserAgentDetails() {
+        return UserAgentDetails.processed(
+                "Chrome",
+                "macOS",
+                "Desktop"
+        );
+    }
+
+    public static UserAgentDetails invalidUserAgentDetails() {
+        return UserAgentDetails.unknown(
+                "User agent details are unknown"
+        );
+    }
+
+    public static UserAgentDetails randomUserAgentDetails() {
+        return randomBoolean() ? validUserAgentDetails() : invalidUserAgentDetails();
     }
 }

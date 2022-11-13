@@ -1,8 +1,7 @@
 package io.tech1.framework.domain.tuples;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.tests.io.TestsIOUtils;
-import io.tech1.framework.domain.tests.runners.AbstractObjectMapperRunner;
+import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,9 +9,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TupleRangeTest extends AbstractObjectMapperRunner {
+public class TupleRangeTest extends AbstractFolderSerializationRunner {
+
+    @Override
+    protected String getFolder() {
+        return "tuples";
+    }
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -30,7 +35,7 @@ public class TupleRangeTest extends AbstractObjectMapperRunner {
 
         // Assert
         assertThat(json).isNotNull();
-        assertThat(json).isEqualTo(TestsIOUtils.readFile("tuples", fileName));
+        assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @SneakyThrows
@@ -38,7 +43,7 @@ public class TupleRangeTest extends AbstractObjectMapperRunner {
     @MethodSource("serializeTest")
     public void deserializeTest(TupleRange<?> tupleRange, String fileName) {
         // Arrange
-        var json = TestsIOUtils.readFile("tuples", fileName);
+        var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<TupleRange<?>>() {};
 
         // Act

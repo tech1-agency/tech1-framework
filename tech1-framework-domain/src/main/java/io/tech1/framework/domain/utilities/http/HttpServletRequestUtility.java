@@ -62,7 +62,11 @@ public class HttpServletRequestUtility {
             );
             var userAgentHeader = new UserAgentHeader(request);
             var capabilities = userAgentParser.parse(userAgentHeader.getValue());
-            return UserAgentDetails.processed(capabilities);
+            return UserAgentDetails.processed(
+                    capabilities.getBrowser(),
+                    capabilities.getPlatform(),
+                    capabilities.getDeviceType()
+            );
         } catch (IOException | ParseException ex) {
             return UserAgentDetails.unknown(ex.getMessage());
         }

@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.http.requests;
 
-import com.blueconic.browscap.Capabilities;
+import io.tech1.framework.domain.constants.StringConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -47,18 +47,20 @@ public class UserAgentDetails {
                 UNDEFINED,
                 UNDEFINED,
                 UNDEFINED,
-                ""
+                StringConstants.EMPTY
         );
     }
 
     public static UserAgentDetails processed(
-            Capabilities capabilities
+            String browser,
+            String platform,
+            String deviceType
     ) {
         return new UserAgentDetails(
-                capabilities.getBrowser(),
-                capabilities.getPlatform(),
-                capabilities.getDeviceType(),
-                ""
+                browser,
+                platform,
+                deviceType,
+                StringConstants.EMPTY
         );
     }
 

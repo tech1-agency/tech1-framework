@@ -13,11 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
 
-    @Override
-    protected String getFolder() {
-        return "http/requests";
-    }
-
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(processed("Chrome", "macOS", "Desktop"), "user-agent-details-1.json"),
@@ -27,6 +22,11 @@ public class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
                 Arguments.of(processed("Chrome", null, "Desktop"), "user-agent-details-5.json"),
                 Arguments.of(processed("Chrome", "macOS", null), "user-agent-details-6.json")
         );
+    }
+
+    @Override
+    protected String getFolder() {
+        return "http/requests";
     }
 
     @ParameterizedTest

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotBlankOrThrow;
+import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 // Lombok
@@ -29,5 +30,9 @@ public class Version {
     @Override
     public String toString() {
         return this.value;
+    }
+
+    public static Version unknown() {
+        return new Version(UNKNOWN);
     }
 }

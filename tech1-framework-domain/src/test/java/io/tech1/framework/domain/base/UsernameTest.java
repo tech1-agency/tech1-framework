@@ -43,5 +43,7 @@ public class UsernameTest extends AbstractSerializationDeserializationRunner {
         // Assert
         assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(USERNAME);
+        assertThat(tuple.getIdentifier()).isEqualTo(USERNAME.getIdentifier());
+        assertThat(tuple.toString()).isEqualTo(USERNAME.getIdentifier());
     }
 }

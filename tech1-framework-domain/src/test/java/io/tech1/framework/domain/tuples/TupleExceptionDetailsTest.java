@@ -14,16 +14,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner {
 
-    @Override
-    protected String getFolder() {
-        return "tuples";
-    }
-
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(TupleExceptionDetails.ok(), "tuple-exception-details-ok.json"),
                 Arguments.of(TupleExceptionDetails.exception("tech1"), "tuple-exception-details-exception.json")
         );
+    }
+
+    @Override
+    protected String getFolder() {
+        return "tuples";
     }
 
     @ParameterizedTest

@@ -14,17 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TupleRangeTest extends AbstractFolderSerializationRunner {
 
-    @Override
-    protected String getFolder() {
-        return "tuples";
-    }
-
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(TupleRange.of(100, 200), "tuple-range-integer.json"),
                 Arguments.of(TupleRange.of("-1", "1"), "tuple-range-string.json"),
                 Arguments.of(TupleRange.of(1.23d, 100.0d), "tuple-range-double.json")
         );
+    }
+
+    @Override
+    protected String getFolder() {
+        return "tuples";
     }
 
     @ParameterizedTest

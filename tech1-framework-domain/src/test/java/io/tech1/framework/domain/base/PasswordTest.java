@@ -43,5 +43,7 @@ public class PasswordTest extends AbstractSerializationDeserializationRunner {
         // Assert
         assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(PASSWORD);
+        assertThat(tuple.getValue()).isEqualTo(PASSWORD.getValue());
+        assertThat(tuple.toString()).isEqualTo(PASSWORD.getValue());
     }
 }

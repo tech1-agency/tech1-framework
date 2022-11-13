@@ -16,11 +16,6 @@ import static org.mockito.Mockito.mock;
 
 public class GeoLocationTest extends AbstractFolderSerializationRunner {
 
-    @Override
-    protected String getFolder() {
-        return "geo";
-    }
-
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(processed("127.0.0.1", "Ukraine", "Lviv"), "geo-location-1.json"),
@@ -43,6 +38,11 @@ public class GeoLocationTest extends AbstractFolderSerializationRunner {
                 Arguments.of(processed(randomIpAddress(), "  ", "Lviv"), "Unknown"),
                 Arguments.of(processed(randomIpAddress(), "     ", "Lviv"), "Unknown")
         );
+    }
+
+    @Override
+    protected String getFolder() {
+        return "geo";
     }
 
     @ParameterizedTest

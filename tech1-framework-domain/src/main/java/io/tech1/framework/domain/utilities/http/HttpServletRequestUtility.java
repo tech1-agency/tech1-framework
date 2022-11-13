@@ -51,7 +51,7 @@ public class HttpServletRequestUtility {
         return ip;
     }
 
-    public static UserAgentDetails getUserAgentDetails(HttpServletRequest request) {
+    public static UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
         try {
             var userAgentParser = new UserAgentService().loadParser(
                     List.of(
@@ -60,7 +60,6 @@ public class HttpServletRequestUtility {
                             BrowsCapField.DEVICE_TYPE
                     )
             );
-            var userAgentHeader = new UserAgentHeader(request);
             var capabilities = userAgentParser.parse(userAgentHeader.getValue());
             return UserAgentDetails.processed(
                     capabilities.getBrowser(),

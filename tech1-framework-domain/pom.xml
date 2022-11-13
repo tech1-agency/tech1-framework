@@ -28,6 +28,11 @@
             <groupId>com.blueconic</groupId>
             <artifactId>browscap-java</artifactId>
         </dependency>
+        <!-- Common Codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
         <!-- Tomcat: Cookie, CacheHttpRequests -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

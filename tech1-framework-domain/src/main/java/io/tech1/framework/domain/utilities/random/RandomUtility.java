@@ -6,6 +6,7 @@ import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -356,5 +357,23 @@ public class RandomUtility {
 
     public static UserAgentDetails randomUserAgentDetails() {
         return randomBoolean() ? validUserAgentDetails() : invalidUserAgentDetails();
+    }
+
+    public static UserRequestMetadata validUserRequestMetadata() {
+        return UserRequestMetadata.processed(
+                validGeoLocation(),
+                validUserAgentDetails()
+        );
+    }
+
+    public static UserRequestMetadata invalidUserRequestMetadata() {
+        return UserRequestMetadata.processed(
+                invalidGeoLocation(),
+                invalidUserAgentDetails()
+        );
+    }
+
+    public static UserRequestMetadata randomUserRequestMetadata() {
+        return randomBoolean() ? validUserRequestMetadata() : invalidUserRequestMetadata();
     }
 }

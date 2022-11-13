@@ -12,7 +12,6 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Getter
 @EqualsAndHashCode
 public class Password {
-
     @JsonValue
     private final String value;
 

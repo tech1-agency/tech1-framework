@@ -1,0 +1,28 @@
+{
+  "status" : "STARTED",
+  "geoLocation" : {
+    "ipAddr" : "Unknown",
+    "country" : "[?]",
+    "where" : "[?], [?]"
+  },
+  "userAgentDetails" : {
+    "browser" : "[?]",
+    "platform" : "[?]",
+    "deviceType" : "[?]",
+    "exceptionDetails" : "",
+    "what" : "[?], [?] on [?]"
+  },
+  "whereTuple3" : {
+    "a" : "Unknown",
+    "b" : "[?]",
+    "c" : "Processing...Please wait!"
+  },
+  "whatTuple2" : {
+    "a" : "[?]",
+    "b" : "—"
+  },
+  "exception" : {
+    "ok" : true,
+    "message" : ""
+  }
+}

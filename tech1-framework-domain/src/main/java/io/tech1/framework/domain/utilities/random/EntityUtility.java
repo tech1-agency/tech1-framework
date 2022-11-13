@@ -3,6 +3,7 @@ package io.tech1.framework.domain.utilities.random;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +47,7 @@ public class EntityUtility {
         addConstructorRule(Username.class, clazz -> randomUsername());
         addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());
         addConstructorRule(UserAgentDetails.class, clazz -> randomUserAgentDetails());
+        addConstructorRule(UserRequestMetadata.class, clazz -> randomUserRequestMetadata());
 
         addClassRule(parameterClass -> {
                     var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !containsPrimitiveWrapper(parameterClass);
@@ -94,6 +96,7 @@ public class EntityUtility {
 
         addClassRule(GeoLocation.class::equals, parameterClass -> randomGeoLocation());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> randomUserAgentDetails());
+        addClassRule(UserRequestMetadata.class::equals, parameterClass -> randomUserRequestMetadata());
     }
 
     public static void addConstructorRule(Class<?> constructorClass, Function<Class<?>, Object> constructionFnc) {

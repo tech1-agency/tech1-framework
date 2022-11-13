@@ -1,4 +1,4 @@
-package io.tech1.framework.domain.base;
+package io.tech1.framework.domain.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -11,22 +11,22 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 // Lombok
 @Getter
 @EqualsAndHashCode
-public class Username {
+public class ThrowableTrace {
     @JsonValue
-    private final String identifier;
+    private final String value;
 
     @JsonCreator
-    public Username(String identifier) {
-        assertNonNullNotBlankOrThrow(identifier, invalidAttribute("Username.identifier"));
-        this.identifier = identifier;
+    public ThrowableTrace(String value) {
+        assertNonNullNotBlankOrThrow(value, invalidAttribute("ThrowableTrace.value"));
+        this.value = value;
     }
 
-    public static Username of(String identifier) {
-        return new Username(identifier);
+    public static ThrowableTrace of(String value) {
+        return new ThrowableTrace(value);
     }
 
     @Override
     public String toString() {
-        return this.identifier;
+        return this.value;
     }
 }

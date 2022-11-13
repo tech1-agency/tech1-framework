@@ -13,7 +13,6 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Getter
 @EqualsAndHashCode
 public class Version {
-
     @JsonValue
     private final String value;
 

@@ -1,0 +1,28 @@
+{
+  "status" : "COMPLETED",
+  "geoLocation" : {
+    "ipAddr" : "127.0.0.1",
+    "country" : "Unknown",
+    "where" : "Unknown, Unknown"
+  },
+  "userAgentDetails" : {
+    "browser" : "Chrome",
+    "platform" : "MacOS",
+    "deviceType" : "Mobile",
+    "exceptionDetails" : "",
+    "what" : "Chrome, MacOS on Mobile"
+  },
+  "whereTuple3" : {
+    "a" : "127.0.0.1",
+    "b" : "Unknown",
+    "c" : "Unknown, Unknown"
+  },
+  "whatTuple2" : {
+    "a" : "Chrome",
+    "b" : "Chrome, MacOS on Mobile"
+  },
+  "exception" : {
+    "ok" : false,
+    "message" : "exception details on geo location"
+  }
+}

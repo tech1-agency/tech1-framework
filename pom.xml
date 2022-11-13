@@ -61,6 +61,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- dependencies, scope == compile -->
+        <version.dependency.browscap>1.3.12</version.dependency.browscap>
         <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
@@ -100,6 +101,12 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${version.dependency.jackson}</version>
+            </dependency>
+            <!-- Browser Capabilities -->
+            <dependency>
+                <groupId>com.blueconic</groupId>
+                <artifactId>browscap-java</artifactId>
+                <version>${version.dependency.browscap}</version>
             </dependency>
             <!-- Tomcat: Cookie, CacheHttpRequests -->
             <dependency>

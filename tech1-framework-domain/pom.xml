@@ -23,6 +23,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <!-- Browser Capabilities -->
+        <dependency>
+            <groupId>com.blueconic</groupId>
+            <artifactId>browscap-java</artifactId>
+        </dependency>
         <!-- Tomcat: Cookie, CacheHttpRequests -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

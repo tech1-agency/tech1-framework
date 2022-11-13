@@ -13,7 +13,7 @@ import static org.apache.commons.codec.binary.Hex.encodeHexString;
 
 @UtilityClass
 public class HashingUtility {
-    public static final String EXCEPTION_MESSAGE = "Hashing Failure. Value: `%s`, Hashing Key: `%s`, Algorithm: '%s', Exception: '%s'";
+    private static final String EXCEPTION_MESSAGE = "Hashing Failure. Value: `%s`, Hashing Key: `%s`, Algorithm: '%s', Exception: '%s'";
 
     private static final String ASSERTION_VALUE_MESSAGE = "Hashing Algorithm: '%s'. Argument 'value' is required";
     private static final String ASSERTION_HASHING_KEY_MESSAGE = "Hashing Algorithm: '%s'. Argument 'hashingKey' is required";
@@ -45,13 +45,13 @@ public class HashingUtility {
             var keySpec = new SecretKeySpec(hashingKey.getBytes(UTF_8), algorithm);
             mac.init(keySpec);
             return encodeHexString(mac.doFinal(value.getBytes(UTF_8)));
-        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeyException ex) {
             var message = String.format(
                     EXCEPTION_MESSAGE,
                     value,
                     hashingKey,
                     algorithm,
-                    e.getClass().getSimpleName()
+                    ex.getClass().getSimpleName()
             );
             throw new IllegalArgumentException(message);
         }

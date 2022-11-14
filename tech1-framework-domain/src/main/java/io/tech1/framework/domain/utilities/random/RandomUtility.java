@@ -5,6 +5,7 @@ import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
@@ -173,8 +174,20 @@ public class RandomUtility {
         return sb.toString();
     }
 
-    public static String randomIpAddress() {
-        var ip = RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
+    public static String randomIPv4() {
+        return RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
+    }
+
+    public static IPAddress randomIPAddress() {
+        return new IPAddress(randomIPv4());
+    }
+
+    public static IPAddress localhost() {
+        return new IPAddress("127.0.0.1");
+    }
+
+    public static String randomServerURL() {
+        var ip = randomIPv4();
         var protocol = RND.nextBoolean() ? "http" : "https";
         int port = 4000 + RND.nextInt(5000);
         return protocol + "://" + ip + ":" + port;
@@ -324,7 +337,7 @@ public class RandomUtility {
 
     public static GeoLocation validGeoLocation() {
         return GeoLocation.processed(
-                randomIpAddress(),
+                localhost(),
                 "Ukraine",
                 "Lviv"
         );
@@ -332,7 +345,7 @@ public class RandomUtility {
 
     public static GeoLocation invalidGeoLocation() {
         return GeoLocation.unknown(
-                randomIpAddress(),
+                localhost(),
                 "Location is unknown"
         );
     }

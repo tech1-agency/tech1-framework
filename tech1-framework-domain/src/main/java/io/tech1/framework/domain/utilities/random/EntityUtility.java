@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.random;
 
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
@@ -44,7 +45,11 @@ public class EntityUtility {
         addConstructorRule(Integer.class, clazz -> randomInteger());
         addConstructorRule(Double.class, clazz -> randomDouble());
 
+        addConstructorRule(ZoneId.class, clazz -> randomZoneId());
+        addConstructorRule(TimeZone.class, clazz -> randomTimeZone());
         addConstructorRule(Username.class, clazz -> randomUsername());
+
+        addConstructorRule(IPAddress.class, clazz -> randomIPAddress());
         addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());
         addConstructorRule(UserAgentDetails.class, clazz -> randomUserAgentDetails());
         addConstructorRule(UserRequestMetadata.class, clazz -> randomUserRequestMetadata());
@@ -94,6 +99,7 @@ public class EntityUtility {
         addClassRule(TimeZone.class::equals, parameterClass -> randomTimeZone());
         addClassRule(Username.class::equals, parameterClass -> randomUsername());
 
+        addClassRule(IPAddress.class::equals, parameterClass -> randomIPAddress());
         addClassRule(GeoLocation.class::equals, parameterClass -> randomGeoLocation());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> randomUserAgentDetails());
         addClassRule(UserRequestMetadata.class::equals, parameterClass -> randomUserRequestMetadata());

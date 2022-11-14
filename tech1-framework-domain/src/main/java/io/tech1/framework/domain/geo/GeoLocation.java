@@ -1,14 +1,12 @@
 package io.tech1.framework.domain.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.servlet.http.HttpServletRequest;
-
 import static io.tech1.framework.domain.constants.StringConstants.*;
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;
 
@@ -25,12 +23,12 @@ public class GeoLocation {
     private final String exceptionDetails;
 
     private GeoLocation(
-            String ipAddr,
+            IPAddress ipAddress,
             String country,
             String city,
             String exceptionDetails
     ) {
-        this.ipAddr = nonNull(ipAddr) ? ipAddr : UNKNOWN;
+        this.ipAddr = nonNull(ipAddress) ? ipAddress.getValue() : UNKNOWN;
         if (nonNull(country)) {
             this.country = country.trim();
             this.city = nonNull(city) ? city.trim() : null;
@@ -42,11 +40,11 @@ public class GeoLocation {
     }
 
     public static GeoLocation unknown(
-            String ipAddr,
+            IPAddress ipAddress,
             String exceptionDetails
     ) {
         return new GeoLocation(
-                ipAddr,
+                ipAddress,
                 UNKNOWN,
                 UNKNOWN,
                 exceptionDetails
@@ -54,10 +52,10 @@ public class GeoLocation {
     }
 
     public static GeoLocation processing(
-            HttpServletRequest httpServletRequest
+            IPAddress ipAddress
     ) {
         return new GeoLocation(
-                getClientIpAddr(httpServletRequest),
+                ipAddress,
                 UNDEFINED,
                 UNDEFINED,
                 EMPTY
@@ -65,12 +63,12 @@ public class GeoLocation {
     }
 
     public static GeoLocation processed(
-            String ipAddr,
+            IPAddress ipAddress,
             String country,
             String city
     ) {
         return new GeoLocation(
-                ipAddr,
+                ipAddress,
                 country,
                 city,
                 EMPTY

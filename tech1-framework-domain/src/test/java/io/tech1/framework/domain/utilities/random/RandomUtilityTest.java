@@ -364,7 +364,51 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomIpAddressTest() {
+    public void randomIPv4Test() {
+        // Act
+        var actual = randomIPv4();
+
+        // Assert
+        var ipv4 = List.of(actual.split("\\."));
+        assertThat(ipv4).isNotNull();
+        assertThat(ipv4.size()).isEqualTo(4);
+        ipv4.forEach(element -> {
+            var slot = Integer.valueOf(element);
+            assertThat(slot).isNotNull();
+            assertThat(slot).isGreaterThanOrEqualTo(0);
+            assertThat(slot).isLessThan(256);
+        });
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomIPAddressTest() {
+        // Act
+        var actual = randomIPAddress();
+
+        // Assert
+        var ipv4 = List.of(actual.getValue().split("\\."));
+        assertThat(ipv4).isNotNull();
+        assertThat(ipv4.size()).isEqualTo(4);
+        ipv4.forEach(element -> {
+            var slot = Integer.valueOf(element);
+            assertThat(slot).isNotNull();
+            assertThat(slot).isGreaterThanOrEqualTo(0);
+            assertThat(slot).isLessThan(256);
+        });
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void localhostTest() {
+        // Act
+        var actual = localhost();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getValue()).isEqualTo("127.0.0.1");
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void randomServerURLTest() {
         // Arrange
         var pattern = Pattern.compile("^"
                 + "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}" // Domain name
@@ -376,7 +420,7 @@ public class RandomUtilityTest {
                 + "[0-9]{1,5}$"); // Port
 
         // Act
-        var actual = randomIpAddress();
+        var actual = randomServerURL();
 
         // Assert
         assertThat(actual).isNotNull();
@@ -826,7 +870,8 @@ public class RandomUtilityTest {
         assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Chrome, macOS on Desktop");
         assertThat(actual.getWhatTuple2().getA()).isEqualTo("Chrome");
         assertThat(actual.getWhatTuple2().getB()).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(actual.getWhereTuple3().getA()).startsWith("http");
+        assertThat(actual.getWhereTuple3().getA()).isNotNull();
+        assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
         assertThat(actual.getWhereTuple3().getB()).isEqualTo("Ukraine");
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Ukraine, Lviv");
     }
@@ -851,7 +896,8 @@ public class RandomUtilityTest {
         assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Unknown, Unknown on Unknown");
         assertThat(actual.getWhatTuple2().getA()).isEqualTo("Unknown");
         assertThat(actual.getWhatTuple2().getB()).isEqualTo("Unknown, Unknown on Unknown");
-        assertThat(actual.getWhereTuple3().getA()).startsWith("http");
+        assertThat(actual.getWhereTuple3().getA()).isNotNull();
+        assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
         assertThat(actual.getWhereTuple3().getB()).isEqualTo("Unknown");
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Unknown, Unknown");
     }

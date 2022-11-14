@@ -8,8 +8,6 @@ import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 import lombok.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.ok;
@@ -35,11 +33,11 @@ public class UserRequestMetadata {
     private final UserAgentDetails userAgentDetails;
 
     public static UserRequestMetadata processing(
-            HttpServletRequest httpServletRequest
+            IPAddress ipAddress
     ) {
         return new UserRequestMetadata(
                 Status.STARTED,
-                GeoLocation.processing(httpServletRequest),
+                GeoLocation.processing(ipAddress),
                 UserAgentDetails.processing()
         );
     }

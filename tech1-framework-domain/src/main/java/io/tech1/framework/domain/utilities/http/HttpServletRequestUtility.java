@@ -3,6 +3,7 @@ package io.tech1.framework.domain.utilities.http;
 import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentService;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import lombok.experimental.UtilityClass;
@@ -30,7 +31,7 @@ public class HttpServletRequestUtility {
         return isNull(queryString) ? requestURL.toString() : requestURL.append("?").append(queryString).toString();
     }
 
-    public static String getClientIpAddr(HttpServletRequest request) {
+    public static IPAddress getClientIpAddr(HttpServletRequest request) {
         var unknown = "unknown";
         var ip = request.getHeader("X-Forwarded-For");
         if (!hasLength(ip) || unknown.equalsIgnoreCase(ip)) {
@@ -48,7 +49,7 @@ public class HttpServletRequestUtility {
         if (!hasLength(ip) || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return ip;
+        return new IPAddress(ip);
     }
 
     public static UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {

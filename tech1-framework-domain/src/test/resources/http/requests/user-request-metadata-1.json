@@ -1,7 +1,7 @@
 {
   "status" : "STARTED",
   "geoLocation" : {
-    "ipAddr" : "Unknown",
+    "ipAddr" : "127.0.0.1",
     "country" : "[?]",
     "where" : "[?], [?]"
   },
@@ -13,7 +13,7 @@
     "what" : "[?], [?] on [?]"
   },
   "whereTuple3" : {
-    "a" : "Unknown",
+    "a" : "127.0.0.1",
     "b" : "[?]",
     "c" : "Processing...Please wait!"
   },

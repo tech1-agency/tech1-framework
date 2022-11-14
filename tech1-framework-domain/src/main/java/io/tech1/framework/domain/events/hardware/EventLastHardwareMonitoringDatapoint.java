@@ -13,6 +13,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class EventLastHardwareMonitoringDatapoint {
-    private final Version platformVersion;
+    private final Version version;
     private final HardwareMonitoringDatapoint last;
 }

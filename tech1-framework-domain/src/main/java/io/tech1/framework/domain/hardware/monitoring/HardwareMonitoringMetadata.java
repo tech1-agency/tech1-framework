@@ -13,6 +13,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class HardwareMonitoringMetadata {
-    private final Version platformVersion;
+    private final Version version;
     private final SystemMemories systemMemories;
 }

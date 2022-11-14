@@ -12,6 +12,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class HardwareMonitoringWidget {
-    private final Version platformVersion;
+    private final Version version;
     private final HardwareMonitoringDatapointTableView datapoint;
 }

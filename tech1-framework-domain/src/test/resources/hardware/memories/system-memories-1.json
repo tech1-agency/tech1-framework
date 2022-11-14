@@ -1,0 +1,11 @@
+{
+  "global" : {
+    "available" : 0,
+    "total" : 0,
+    "swapUsed" : 0,
+    "swapTotal" : 0,
+    "virtualUsed" : 0,
+    "virtualTotal" : 0
+  },
+  "cpu" : 0.00
+}

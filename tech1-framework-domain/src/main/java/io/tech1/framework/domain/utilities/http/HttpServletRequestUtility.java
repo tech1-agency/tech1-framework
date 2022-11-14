@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.isNull;
-import static org.springframework.util.StringUtils.hasLength;
 
 @UtilityClass
 public class HttpServletRequestUtility {

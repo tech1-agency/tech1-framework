@@ -11,7 +11,7 @@ import lombok.*;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.ok;
-import static org.springframework.util.StringUtils.hasLength;
+import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 
 // JSON
 @JsonPropertyOrder({

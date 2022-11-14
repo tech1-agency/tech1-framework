@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @UtilityClass
 public class StringUtility {
@@ -14,6 +15,10 @@ public class StringUtility {
 
     public static boolean isNullOrBlank(String value) {
         return isNull(value) || value.isBlank();
+    }
+
+    public static boolean hasLength(String value) {
+        return nonNull(value) && !value.isEmpty();
     }
 
     public static String getShortenValueOrUndefined(String value, int maxLength) {

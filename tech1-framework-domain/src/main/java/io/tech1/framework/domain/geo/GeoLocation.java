@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 import static io.tech1.framework.domain.constants.StringConstants.*;
+import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.nonNull;
-import static org.springframework.util.StringUtils.hasLength;
 
 // Lombok
 @Getter

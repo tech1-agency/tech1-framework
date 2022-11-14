@@ -1,0 +1,333 @@
+package io.tech1.framework.domain.utilities.time;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.stream.Stream;
+
+import static io.tech1.framework.domain.tests.constants.TestsConstants.*;
+import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.*;
+import static java.time.Month.DECEMBER;
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
+import static java.time.format.DateTimeFormatter.ofPattern;
+import static java.time.temporal.ChronoUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@Slf4j
+public class LocalDateTimeUtilityImplTest {
+    private static final LocalDateTime NOW = LocalDateTime.now();
+    private static final LocalDateTime NOW_6_30 = LocalDate.now().atTime(6, 30); // to avoid failures on 59 min
+    private static final LocalDateTime _25_11_2021 = LocalDateTime.of(2021, DECEMBER, 25, 15, 16, 17);
+
+    private static Stream<Arguments> formatTest() {
+        return Stream.of(
+                Arguments.of(_25_11_2021, ISO_DATE_TIME, "2021-12-25T15:16:17"),
+                Arguments.of(_25_11_2021, ofPattern(DEFAULT_DATE_FORMAT_PATTERN), "25.12.2021 15:16:17")
+        );
+    }
+
+    private static Stream<Arguments> parseTest() {
+        return Stream.of(
+                Arguments.of("2021-12-25T15:16:17", ISO_DATE_TIME, _25_11_2021),
+                Arguments.of("25.12.2021 15:16:17", ofPattern(DEFAULT_DATE_FORMAT_PATTERN), _25_11_2021)
+        );
+    }
+
+    private static Stream<Arguments> isBetweenTest() {
+        return Stream.of(
+                Arguments.of(1640438177000L, EET_ZONE_ID, _25_11_2021),
+                Arguments.of(1640445377000L, UTC_ZONE_ID, _25_11_2021),
+                Arguments.of(1324818977000L, EET_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(1324826177000L, UTC_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(1009286177000L, EET_ZONE_ID, _25_11_2021.minusYears(20)),
+                Arguments.of(1009293377000L, UTC_ZONE_ID, _25_11_2021.minusYears(20))
+        );
+    }
+
+    private static Stream<Arguments> convertDateTest() {
+        return Stream.of(
+                Arguments.of(new Date(1640438177000L), EET_ZONE_ID, _25_11_2021),
+                Arguments.of(new Date(1640445377000L), UTC_ZONE_ID, _25_11_2021),
+                Arguments.of(new Date(1324818977000L), EET_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(new Date(1324826177000L), UTC_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(new Date(1009286177000L), EET_ZONE_ID, _25_11_2021.minusYears(20)),
+                Arguments.of(new Date(1009293377000L), UTC_ZONE_ID, _25_11_2021.minusYears(20))
+        );
+    }
+
+    private static Stream<Arguments> getTimestampTest() {
+        return Stream.of(
+                Arguments.of(_25_11_2021, EET_ZONE_ID, 1640438177000L),
+                Arguments.of(_25_11_2021, UTC_ZONE_ID, 1640445377000L),
+                Arguments.of(_25_11_2021.minusYears(10), EET_ZONE_ID, 1324818977000L),
+                Arguments.of(_25_11_2021.minusYears(10), UTC_ZONE_ID, 1324826177000L),
+                Arguments.of(_25_11_2021.minusYears(20), EET_ZONE_ID, 1009286177000L),
+                Arguments.of(_25_11_2021.minusYears(20), UTC_ZONE_ID, 1009293377000L)
+        );
+    }
+
+    private static Stream<Arguments> isParamsEqualsTruncatedBySecondsTest() {
+        return Stream.of(
+                Arguments.of(NOW.plusSeconds(2), NOW.plusSeconds(3), false),
+                Arguments.of(NOW.plusSeconds(2), NOW.plusSeconds(2), true)
+        );
+    }
+
+    private static Stream<Arguments> isParamsEqualsTruncatedByTest() {
+        return Stream.of(
+                Arguments.of(NOW.plusHours(2), NOW.plusHours(3), false),
+                Arguments.of(NOW.plusHours(2), NOW.plusHours(2), true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamAfterTruncatedBySecondsTest() {
+        return Stream.of(
+                Arguments.of(NOW, NOW.plusSeconds(3), false),
+                Arguments.of(NOW.plusSeconds(2), NOW.plusSeconds(2), false),
+                Arguments.of(NOW.plusSeconds(2), NOW, true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamAfterTruncatedByTest() {
+        return Stream.of(
+                Arguments.of(NOW.plusMinutes(2), NOW.plusMinutes(3), false),
+                Arguments.of(NOW, NOW.plusHours(3), false),
+                Arguments.of(NOW.plusHours(2), NOW.plusHours(2), false),
+                Arguments.of(NOW.plusHours(2), NOW, true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamAfterOrEqualTruncatedBySecondsTest() {
+        return Stream.of(
+                Arguments.of(NOW, NOW.plusSeconds(3), false),
+                Arguments.of(NOW.plusMinutes(2), NOW.plusMinutes(2), true),
+                Arguments.of(NOW.plusMinutes(2), NOW, true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamAfterOrEqualTruncatedByTest() {
+        return Stream.of(
+                Arguments.of(NOW_6_30.plusMinutes(2), NOW_6_30.plusMinutes(3), true),
+                Arguments.of(NOW_6_30, NOW_6_30.plusHours(3), false),
+                Arguments.of(NOW_6_30.plusDays(2), NOW_6_30.plusDays(2), true),
+                Arguments.of(NOW_6_30.plusDays(2), NOW_6_30, true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamBeforeTruncatedBySecondsTest() {
+        return Stream.of(
+                Arguments.of(NOW.plusSeconds(3), NOW, false),
+                Arguments.of(NOW.plusMinutes(2), NOW.plusMinutes(2), false),
+                Arguments.of(NOW, NOW.plusMinutes(2), true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamBeforeTruncatedByTest() {
+        return Stream.of(
+                Arguments.of(NOW_6_30.plusMinutes(2), NOW_6_30.plusMinutes(3), false),
+                Arguments.of(NOW_6_30.plusDays(3), NOW_6_30, false),
+                Arguments.of(NOW_6_30.plusDays(2), NOW_6_30.plusDays(2), false),
+                Arguments.of(NOW_6_30, NOW_6_30.plusDays(2), true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamBeforeOrEqualTruncatedBySecondsTest() {
+        return Stream.of(
+                Arguments.of(NOW.plusSeconds(3), NOW, false),
+                Arguments.of(NOW.plusMinutes(2), NOW.plusMinutes(2), true),
+                Arguments.of(NOW, NOW.plusMinutes(2), true)
+        );
+    }
+
+    private static Stream<Arguments> isFirstParamBeforeOrEqualTruncatedByTest() {
+        return Stream.of(
+                Arguments.of(NOW.plusMinutes(2), NOW.plusMinutes(3), true),
+                Arguments.of(NOW.plusDays(3), NOW, false),
+                Arguments.of(NOW.plusDays(2), NOW.plusDays(2), true),
+                Arguments.of(NOW, NOW.plusDays(2), true)
+        );
+    }
+
+    @Test
+    public void nowByTimezoneIncludingDaylightSavingTimeTest() {
+        // Act
+        var actual1 = nowByTimezone(POLAND_TIME_ZONE);
+        var actual2 = nowByTimezone(EET_TIME_ZONE);
+
+        // Assert
+        var actual1Truncated = actual1.truncatedTo(SECONDS);
+        var actual2Truncated = actual2.truncatedTo(SECONDS).minusHours(1);
+        assertThat(actual1Truncated).isEqualTo(actual2Truncated);
+    }
+
+    @Test
+    public void nowByZoneIdIncludingDaylightSavingTimeTest() {
+        // Act
+        var actual1 = nowByZoneId(POLAND_ZONE_ID);
+        var actual2 = nowByZoneId(EET_ZONE_ID);
+
+        // Assert
+        var actual1Truncated = actual1.truncatedTo(SECONDS);
+        var actual2Truncated = actual2.truncatedTo(SECONDS).minusHours(1);
+        assertThat(actual1Truncated).isEqualTo(actual2Truncated);
+    }
+
+    @ParameterizedTest
+    @MethodSource("formatTest")
+    public void formatTest(LocalDateTime localDateTime, DateTimeFormatter formatter, String expected) {
+        // Act
+        var actual = format(localDateTime, formatter);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("parseTest")
+    public void parseTest(String localDateTime, DateTimeFormatter formatter, LocalDateTime expected) {
+        // Act
+        var actual = parse(localDateTime, formatter);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBetweenTest")
+    public void convertTimestampTest(Long timestamp, ZoneId zoneId, LocalDateTime expected) {
+        // Act
+        var actual = convertTimestamp(timestamp, zoneId);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("convertDateTest")
+    public void convertDateTest(Date date, ZoneId zoneId, LocalDateTime expected) {
+        // Act
+        var actual = convertDate(date, zoneId);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getTimestampTest")
+    public void getTimestampTest(LocalDateTime localDateTime, ZoneId zoneId, long expected) {
+        // Act
+        long actual = getTimestamp(localDateTime, zoneId);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isParamsEqualsTruncatedBySecondsTest")
+    public void isParamsEqualsTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isParamsEqualsTruncatedBySeconds(time1, time2);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isParamsEqualsTruncatedByTest")
+    public void isParamsEqualsTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isParamsEqualsTruncatedBy(time1, time2, ChronoUnit.HOURS);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamAfterTruncatedBySecondsTest")
+    public void isFirstParamAfterTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamAfterTruncatedBySeconds(time1, time2);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamAfterTruncatedByTest")
+    public void isFirstParamAfterTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamAfterTruncatedBy(time1, time2, ChronoUnit.HOURS);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamAfterOrEqualTruncatedBySecondsTest")
+    public void isFirstParamAfterOrEqualTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamAfterOrEqualTruncatedBySeconds(time1, time2);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamAfterOrEqualTruncatedByTest")
+    public void isFirstParamAfterOrEqualTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamAfterOrEqualTruncatedBy(time1, time2, ChronoUnit.HOURS);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamBeforeTruncatedBySecondsTest")
+    public void isFirstParamBeforeTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamBeforeTruncatedBySeconds(time1, time2);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamBeforeTruncatedByTest")
+    public void isFirstParamBeforeTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamBeforeTruncatedBy(time1, time2, ChronoUnit.HOURS);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamBeforeOrEqualTruncatedBySecondsTest")
+    public void isFirstParamBeforeOrEqualTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamBeforeOrEqualTruncatedBySeconds(time1, time2);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFirstParamBeforeOrEqualTruncatedByTest")
+    public void isFirstParamBeforeOrEqualTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+        // Act
+        var actual = isFirstParamBeforeOrEqualTruncatedBy(time1, time2, ChronoUnit.HOURS);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+}

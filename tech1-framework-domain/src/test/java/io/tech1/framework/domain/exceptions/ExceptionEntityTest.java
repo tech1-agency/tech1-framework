@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.tech1.framework.domain.constants.ExceptionEntityConstants.ATTRIBUTE_FULL_MESSAGE;
-import static io.tech1.framework.domain.constants.ExceptionEntityConstants.ATTRIBUTE_SHORT_MESSAGE;
 import static io.tech1.framework.domain.exceptions.ExceptionEntityType.ERROR;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,7 +32,7 @@ public class ExceptionEntityTest extends AbstractObjectMapperRunner {
         assertThat(exceptionEntity.get("exceptionEntityType")).isEqualTo(ERROR.toString());
         assertThat(exceptionEntity.get("timestamp")).isNotNull();
         var attributes = (Map<String, Object>) exceptionEntity.get("attributes");
-        assertThat(attributes.get(ATTRIBUTE_SHORT_MESSAGE)).isEqualTo(exceptionMessage);
-        assertThat(attributes.get(ATTRIBUTE_FULL_MESSAGE)).isEqualTo(exceptionMessage);
+        assertThat(attributes.get("shortMessage")).isEqualTo(exceptionMessage);
+        assertThat(attributes.get("fullMessage")).isEqualTo(exceptionMessage);
     }
 }

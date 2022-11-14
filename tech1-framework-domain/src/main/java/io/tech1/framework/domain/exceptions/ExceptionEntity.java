@@ -7,8 +7,6 @@ import lombok.ToString;
 import java.util.Map;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.constants.ExceptionEntityConstants.ATTRIBUTE_FULL_MESSAGE;
-import static io.tech1.framework.domain.constants.ExceptionEntityConstants.ATTRIBUTE_SHORT_MESSAGE;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.lang.System.currentTimeMillis;
 
@@ -17,6 +15,9 @@ import static java.lang.System.currentTimeMillis;
 @EqualsAndHashCode
 @ToString
 public class ExceptionEntity {
+    private static final String ATTRIBUTE_SHORT_MESSAGE = "shortMessage";
+    private static final String ATTRIBUTE_FULL_MESSAGE = "fullMessage";
+
     private final ExceptionEntityType exceptionEntityType;
     private final Map<String, Object> attributes;
     private final long timestamp;

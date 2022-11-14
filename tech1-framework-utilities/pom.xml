@@ -12,4 +12,18 @@
 
     <artifactId>tech1-framework-utilities</artifactId>
 
+    <dependencies>
+        <!-- Tech1 -->
+        <dependency>
+            <groupId>io.tech1.framework</groupId>
+            <artifactId>tech1-framework-domain</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
 </project>

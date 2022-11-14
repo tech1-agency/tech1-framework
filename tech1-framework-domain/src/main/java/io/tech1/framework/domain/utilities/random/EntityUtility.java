@@ -2,6 +2,8 @@ package io.tech1.framework.domain.utilities.random;
 
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -52,6 +54,9 @@ public class EntityUtility {
         addConstructorRule(UserAgentDetails.class, clazz -> randomUserAgentDetails());
         addConstructorRule(UserRequestMetadata.class, clazz -> randomUserRequestMetadata());
 
+        addConstructorRule(HardwareMonitoringThreshold.class, clazz -> randomHardwareMonitoringThreshold());
+        addConstructorRule(HardwareMonitoringThresholds.class, clazz -> randomHardwareMonitoringThresholds());
+
         addClassRule(parameterClass -> {
                     var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !containsPrimitiveWrapper(parameterClass);
                     var isNotEnum = !Enum.class.isAssignableFrom(parameterClass);
@@ -101,6 +106,9 @@ public class EntityUtility {
         addClassRule(GeoLocation.class::equals, parameterClass -> randomGeoLocation());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> randomUserAgentDetails());
         addClassRule(UserRequestMetadata.class::equals, parameterClass -> randomUserRequestMetadata());
+
+        addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> randomHardwareMonitoringThreshold());
+        addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> randomHardwareMonitoringThresholds());
     }
 
     public static void addConstructorRule(Class<?> constructorClass, Function<Class<?>, Object> constructionFnc) {

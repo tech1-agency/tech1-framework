@@ -7,6 +7,7 @@ import io.tech1.framework.domain.hardware.memories.HeapMemory;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -99,6 +100,70 @@ public class HardwareMonitoringDatapointTest extends AbstractFolderSerialization
         assertThat(tableViewDC.read("$.rows[4].timestamp", long.class)).isPositive();
         assertThat(tableViewDC.read("$.rows[4].usage", BigDecimal.class)).isEqualTo(new BigDecimal("70.3"));
         assertThat(tableViewDC.read("$.rows[4].value", String.class)).isEqualTo("16.17 GB of 23.00 GB");
+    }
 
+    @SneakyThrows
+    @Test
+    public void zeroUsageTest() {
+        // Arrange
+        var threshold = new BigDecimal("50");
+        var datapoint = HardwareMonitoringDatapoint.zeroUsage();
+        var thresholds = new HardwareMonitoringThresholds(
+                Map.of(
+                        HardwareName.CPU, threshold,
+                        HardwareName.HEAP, threshold,
+                        HardwareName.SERVER, threshold,
+                        HardwareName.SWAP, threshold,
+                        HardwareName.VIRTUAL, threshold
+                )
+        );
+        var tableView = datapoint.tableView(thresholds);
+
+        // Act
+        var datapointJson = this.writeValueAsString(datapoint);
+        var tableViewJson = this.writeValueAsString(tableView);
+
+        // Assert
+        var datapointDC = JsonPath.parse(datapointJson);
+        assertThat(datapointDC).isNotNull();
+        assertThat(datapointDC.read("$.timestamp", long.class)).isPositive();
+        assertThat(datapointDC.read("$.unit", String.class)).isEqualTo("GB");
+        assertThat(datapointDC.read("$.global.a.value", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
+        assertThat(datapointDC.read("$.global.a.percentage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(datapointDC.read("$.global.b.value", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
+        assertThat(datapointDC.read("$.global.b.percentage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(datapointDC.read("$.global.c.value", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
+        assertThat(datapointDC.read("$.global.c.percentage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(datapointDC.read("$.cpu", BigDecimal.class)).isEqualTo("0.0");
+        assertThat(datapointDC.read("$.heap.value", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
+        assertThat(datapointDC.read("$.heap.percentage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(datapointDC.read("$.maxValues.server", Long.class)).isEqualTo(0L);
+        assertThat(datapointDC.read("$.maxValues.swap", Long.class)).isEqualTo(0L);
+        assertThat(datapointDC.read("$.maxValues.virtual", Long.class)).isEqualTo(0L);
+        assertThat(datapointDC.read("$.maxValues.heap", Long.class)).isEqualTo(0L);
+        var tableViewDC = JsonPath.parse(tableViewJson);
+        assertThat(tableViewDC).isNotNull();
+        assertThat(tableViewDC.read("$.anyPresent", boolean.class)).isTrue();
+        assertThat(tableViewDC.read("$.anyProblem", boolean.class)).isFalse();
+        assertThat(tableViewDC.read("$.rows[0].hardwareName", String.class)).isEqualTo("CPU");
+        assertThat(tableViewDC.read("$.rows[0].timestamp", long.class)).isPositive();
+        assertThat(tableViewDC.read("$.rows[0].usage", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
+        assertThat(tableViewDC.read("$.rows[0].value", String.class)).isEqualTo("");
+        assertThat(tableViewDC.read("$.rows[1].hardwareName", String.class)).isEqualTo("Heap");
+        assertThat(tableViewDC.read("$.rows[1].timestamp", long.class)).isPositive();
+        assertThat(tableViewDC.read("$.rows[1].usage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(tableViewDC.read("$.rows[1].value", String.class)).isEqualTo("0.00 GB of 0.00 GB");
+        assertThat(tableViewDC.read("$.rows[2].hardwareName", String.class)).isEqualTo("Server");
+        assertThat(tableViewDC.read("$.rows[2].timestamp", long.class)).isPositive();
+        assertThat(tableViewDC.read("$.rows[2].usage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(tableViewDC.read("$.rows[2].value", String.class)).isEqualTo("0.00 GB of 0.00 GB");
+        assertThat(tableViewDC.read("$.rows[3].hardwareName", String.class)).isEqualTo("Swap");
+        assertThat(tableViewDC.read("$.rows[3].timestamp", long.class)).isPositive();
+        assertThat(tableViewDC.read("$.rows[3].usage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(tableViewDC.read("$.rows[3].value", String.class)).isEqualTo("0.00 GB of 0.00 GB");
+        assertThat(tableViewDC.read("$.rows[4].hardwareName", String.class)).isEqualTo("Virtual");
+        assertThat(tableViewDC.read("$.rows[4].timestamp", long.class)).isPositive();
+        assertThat(tableViewDC.read("$.rows[4].usage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
+        assertThat(tableViewDC.read("$.rows[4].value", String.class)).isEqualTo("0.00 GB of 0.00 GB");
     }
 }

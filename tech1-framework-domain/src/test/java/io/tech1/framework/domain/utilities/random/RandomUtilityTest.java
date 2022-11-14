@@ -926,4 +926,39 @@ public class RandomUtilityTest {
         assertThat(actual.getWhereTuple3().getB()).isNotNull();
         assertThat(actual.getWhereTuple3().getC()).isNotNull();
     }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomHardwareMonitoringThresholdTest() {
+        // Act
+        var actual = randomHardwareMonitoringThreshold();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getValue()).isGreaterThanOrEqualTo(new BigDecimal("50"));
+        assertThat(actual.getValue()).isLessThanOrEqualTo(new BigDecimal("100"));
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomHardwareMonitoringThresholdsTest() {
+        // Act
+        var actual = randomHardwareMonitoringThresholds();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getThresholds().size()).isEqualTo(5);
+        actual.getThresholds().values().forEach(threshold -> {
+            assertThat(threshold.getValue()).isGreaterThanOrEqualTo(new BigDecimal("50"));
+            assertThat(threshold.getValue()).isLessThanOrEqualTo(new BigDecimal("100"));
+        });
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomHardwareMonitoringDatapointTableRowTest() {
+        // Act
+        var actual = randomHardwareMonitoringDatapointTableRow();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.isThresholdReached()).isFalse();
+    }
 }

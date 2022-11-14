@@ -5,6 +5,10 @@ import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
+import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -388,5 +392,30 @@ public class RandomUtility {
 
     public static UserRequestMetadata randomUserRequestMetadata() {
         return randomBoolean() ? validUserRequestMetadata() : invalidUserRequestMetadata();
+    }
+
+    public static HardwareMonitoringThreshold randomHardwareMonitoringThreshold() {
+        return new HardwareMonitoringThreshold(randomBigDecimalGreaterThanZeroByBounds(50L, 100L));
+    }
+
+    public static HardwareMonitoringThresholds randomHardwareMonitoringThresholds() {
+        var thresholds = Stream.of(HardwareName.values())
+                .collect(
+                        Collectors.toMap(
+                                entry -> entry,
+                                entry -> randomHardwareMonitoringThreshold().getValue()
+                        )
+                );
+        return new HardwareMonitoringThresholds(thresholds);
+    }
+
+    public static HardwareMonitoringDatapointTableRow randomHardwareMonitoringDatapointTableRow() {
+        return new HardwareMonitoringDatapointTableRow(
+                randomEnum(HardwareName.class),
+                randomLongGreaterThanZero(),
+                randomBigDecimalGreaterThanZeroByBounds(10L, 20L),
+                randomString(),
+                randomHardwareMonitoringThresholds()
+        );
     }
 }

@@ -22,7 +22,6 @@ public class JsonNodeUtility {
             return BigDecimal.ZERO;
         }
         var fieldJN = jsonNode.get(fieldName);
-        System.out.println("fieldJN: " + fieldJN);
         if (isNull(fieldJN)) {
             return BigDecimal.ZERO;
         }

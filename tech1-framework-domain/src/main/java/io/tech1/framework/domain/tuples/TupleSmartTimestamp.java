@@ -24,15 +24,10 @@ public class TupleSmartTimestamp {
             ZoneId zoneId,
             String dateTimePattern
     ) {
-        assertNonNullOrThrow(zoneId, invalidAttribute("SmartTimestamp.zoneId"));
-        assertNonNullOrThrow(dateTimePattern, invalidAttribute("SmartTimestamp.dateTimePattern`"));
-
-        var ldt = convertTimestamp(timestamp, zoneId);
-        var formatter = ofPattern(dateTimePattern);
-        var formatted  = ldt.format(formatter);
-
+        assertNonNullOrThrow(zoneId, invalidAttribute("TupleSmartTimestamp.zoneId"));
+        assertNonNullOrThrow(dateTimePattern, invalidAttribute("TupleSmartTimestamp.dateTimePattern"));
         this.timestamp = timestamp;
-        this.formatted = formatted;
+        this.formatted = convertTimestamp(timestamp, zoneId).format(ofPattern(dateTimePattern));
     }
 
     public static TupleSmartTimestamp of(

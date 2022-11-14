@@ -3,7 +3,6 @@ package io.tech1.framework.domain.utilities.reflections;
 import io.tech1.framework.domain.reflections.ClassProperty;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +20,6 @@ import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.uncapitalize;
 
 @SuppressWarnings("unchecked")
-@Slf4j
 @UtilityClass
 public class ReflectionUtility {
 
@@ -73,8 +71,8 @@ public class ReflectionUtility {
             Object value = null;
             try {
                 value = field.get(object);
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed get value from object. Field: {}, Object: {}", field, object);
+            } catch (IllegalAccessException ex) {
+                // ignored
             }
             assert nonNull(value) : "Field " + field.getName() + " is null";
         }
@@ -90,8 +88,8 @@ public class ReflectionUtility {
                 if (isNull(o)) {
                     nullFields.add(field.getName());
                 }
-            } catch (IllegalAccessException e) {
-                LOGGER.error("IllegalAccessException: {}", e.getMessage());
+            } catch (IllegalAccessException ex) {
+                // ignored
             }
         }
         return nullFields;
@@ -126,7 +124,6 @@ public class ReflectionUtility {
                                 getterValue
                         );
                     } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
-                        LOGGER.warn("Getters problems on class: `{}`", className, ex);
                         return null;
                     }
                 })

@@ -6,7 +6,6 @@ import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +29,6 @@ import static java.util.Collections.emptySet;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings({ "unchecked" })
-@Slf4j
 @UtilityClass
 public class EntityUtility {
 
@@ -128,12 +126,10 @@ public class EntityUtility {
                 return createWithDefaultConstructor(type);
             }
         } catch (ReflectiveOperationException ex1) {
-            LOGGER.debug("Cannot initialize object default constructor. Class: `{}`. Message: `{}`", type.getCanonicalName(), ex1.getMessage());
             try {
                 return createNoDefaultConstructor(type);
             } catch (ReflectiveOperationException ex2) {
-                LOGGER.error("Cannot initialize object without constructor. Class: `{}`. Message: `{}", type.getCanonicalName(), ex2.getMessage());
-                throw new IllegalArgumentException("Please add entity construction rules or extend functionality");
+                throw new IllegalArgumentException("Please add entity construction rules or extend functionality. Class: `" + type.getCanonicalName() + "`");
             }
         }
     }
@@ -173,7 +169,6 @@ public class EntityUtility {
                 setter.invoke(instance, getRandomValueByClass(setterClass));
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 var message = "Cannot invoke setter. Unexpected setter signature";
-                LOGGER.error(message, e);
                 throw new ReflectiveOperationException(message);
             }
         }
@@ -190,7 +185,6 @@ public class EntityUtility {
                 return randomValueOpt.get();
             }
         }
-        LOGGER.warn("Please add random value for type: " + rndClass.getCanonicalName());
         return null;
     }
 

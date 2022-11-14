@@ -3,7 +3,6 @@ package io.tech1.framework.domain.concurrent;
 import io.tech1.framework.domain.time.SchedulerConfiguration;
 import io.tech1.framework.domain.time.TimeAmount;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Future;
@@ -11,7 +10,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-@Slf4j
 public abstract class AbstractTimerTask {
     public static final TimeAmount DURATION_FOREVER = TimeAmount.of(1L, ChronoUnit.FOREVER);
 

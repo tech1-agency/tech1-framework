@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.time;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +17,6 @@ import static io.tech1.framework.domain.utilities.time.LocalDateUtility.*;
 import static java.time.Month.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j
 public class LocalDateUtilityImplTest {
     private static final LocalDate _25_11_2021 = LocalDate.of(2021, DECEMBER, 25);
 

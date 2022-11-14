@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.time;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,7 +21,6 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j
 public class LocalDateTimeUtilityImplTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final LocalDateTime NOW_6_30 = LocalDate.now().atTime(6, 30); // to avoid failures on 59 min

@@ -48,7 +48,7 @@ public class EntityUtilityTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please add entity construction rules or extend functionality");
+        assertThat(throwable.getMessage()).isEqualTo("Please add entity construction rules or extend functionality. Class: `io.tech1.framework.domain.tests.classes.ClassPrivateConstructor`");
     }
 
     @Test
@@ -86,7 +86,7 @@ public class EntityUtilityTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please add entity construction rules or extend functionality");
+        assertThat(throwable.getMessage()).isEqualTo("Please add entity construction rules or extend functionality. Class: `io.tech1.framework.domain.tests.classes.ClassPrivateConstructor`");
     }
 
     // =================================================================================================================

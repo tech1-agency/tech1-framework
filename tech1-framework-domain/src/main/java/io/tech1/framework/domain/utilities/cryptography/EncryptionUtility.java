@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.utilities.cryptography;
 
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -17,7 +16,6 @@ import java.util.Base64;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-@Slf4j
 @UtilityClass
 public class EncryptionUtility {
 
@@ -43,13 +41,7 @@ public class EncryptionUtility {
                  InvalidKeyException |
                  BadPaddingException |
                  IllegalBlockSizeException e) {
-            var message = String.format(
-                    "Encryption Failure. Algorithm: AES, 128. Value '%s', Init Vector: '%s', Key: '%s'",
-                    value,
-                    encryptionInitVector,
-                    encryptionKey
-            );
-            LOGGER.error(message, e);
+            var message = String.format("Encryption Failure. Algorithm: AES, 128. Value `%s`", value);
             throw new IllegalArgumentException(message);
         }
     }
@@ -71,13 +63,7 @@ public class EncryptionUtility {
                  InvalidKeyException |
                  BadPaddingException |
                  IllegalBlockSizeException e) {
-            var message = String.format(
-                    "Decryption Failure. Algorithm: AES, 128. Value '%s', Init Vector: '%s', Key: '%s'",
-                    value,
-                    encryptionInitVector,
-                    encryptionKey
-            );
-            LOGGER.error(message, e);
+            var message = String.format("Decryption Failure. Algorithm: AES, 128. Value `%s`", value);
             throw new IllegalArgumentException(message);
         }
     }

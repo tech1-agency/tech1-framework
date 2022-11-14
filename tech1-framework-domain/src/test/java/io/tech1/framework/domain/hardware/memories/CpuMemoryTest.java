@@ -16,9 +16,10 @@ public class CpuMemoryTest extends AbstractMemoriesTest {
 
     private static Stream<Arguments> serializeDeserializeTest() {
         return Stream.of(
-                Arguments.of(new CpuMemory(new BigDecimal("1.234")), "cpu-memories-1.json"),
-                Arguments.of(new CpuMemory(0.2055d), "cpu-memories-2.json"),
-                Arguments.of(CpuMemory.zeroUsage(), "cpu-memories-3.json")
+                Arguments.of(new CpuMemory(new BigDecimal("1.234")), "cpu-memory-1.json"),
+                Arguments.of(new CpuMemory(new BigDecimal("1.23456")), "cpu-memory-1.json"),
+                Arguments.of(new CpuMemory(new BigDecimal("1.2")), "cpu-memory-2.json"),
+                Arguments.of(CpuMemory.zeroUsage(), "cpu-memory-3.json")
         );
     }
 

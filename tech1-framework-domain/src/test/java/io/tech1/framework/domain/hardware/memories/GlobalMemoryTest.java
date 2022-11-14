@@ -22,8 +22,8 @@ public class GlobalMemoryTest extends AbstractMemoriesTest {
                         1773741824L,
                         1073741824L,
                         1673741824L
-                ), "global-memories-1.json"),
-                Arguments.of(GlobalMemory.zeroUsage(), "global-memories-2.json")
+                ), "global-memory-1.json"),
+                Arguments.of(GlobalMemory.zeroUsage(), "global-memory-2.json")
         );
     }
 

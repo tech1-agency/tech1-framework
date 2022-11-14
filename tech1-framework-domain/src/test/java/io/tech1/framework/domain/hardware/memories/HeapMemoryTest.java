@@ -11,19 +11,25 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SystemMemoriesTest extends AbstractMemoriesTest {
+public class HeapMemoryTest extends AbstractMemoriesTest {
 
     private static Stream<Arguments> serializeDeserializeTest() {
         return Stream.of(
-                Arguments.of(new SystemMemories(GlobalMemory.zeroUsage(), CpuMemory.zeroUsage()), "system-memory-1.json")
+                Arguments.of(new HeapMemory(
+                        1073741824L,
+                        573741824L,
+                        1073741824L,
+                        1073741824L
+                ), "heap-memory-1.json"),
+                Arguments.of(HeapMemory.zeroUsage(), "heap-memory-2.json")
         );
     }
 
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void serializeTest(SystemMemories systemMemories, String fileName) {
+    public void serializeTest(HeapMemory heapMemory, String fileName) {
         // Act
-        var json = this.writeValueAsString(systemMemories);
+        var json = this.writeValueAsString(heapMemory);
 
         // Assert
         assertThat(json).isNotNull();
@@ -33,16 +39,16 @@ public class SystemMemoriesTest extends AbstractMemoriesTest {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void deserializeTest(SystemMemories systemMemories, String fileName) {
+    public void deserializeTest(HeapMemory heapMemory, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
-        var typeReference = new TypeReference<SystemMemories>() {};
+        var typeReference = new TypeReference<HeapMemory>() {};
 
         // Act
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
         assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(systemMemories);
+        assertThat(tuple).isEqualTo(heapMemory);
     }
 }

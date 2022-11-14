@@ -22,19 +22,12 @@ public class CpuMemory {
     public CpuMemory(
             BigDecimal value
     ) {
-        this.value = value;
-    }
-
-    public CpuMemory(
-            double value
-    ) {
-        this.value = scale(BigDecimal.valueOf(value * 100), 2);
+        this.value = scale(value, 2);
     }
 
     public static CpuMemory zeroUsage() {
-        var zero = 0d;
         return new CpuMemory(
-                zero
+                BigDecimal.ZERO
         );
     }
 }

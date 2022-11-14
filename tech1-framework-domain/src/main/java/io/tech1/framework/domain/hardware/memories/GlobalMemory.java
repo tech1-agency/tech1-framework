@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.hardware.memories;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.tech1.framework.domain.hardware.bytes.ByteSize;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ public class GlobalMemory {
     private final ByteSize virtualUsed;
     private final ByteSize virtualTotal;
 
+    @JsonCreator
     public GlobalMemory(
             @JsonProperty("available") long available,
             @JsonProperty("total") long total,

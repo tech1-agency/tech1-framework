@@ -2,12 +2,10 @@ package io.tech1.framework.domain.tuples;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j
 public class Tuple5Test extends AbstractTupleTest {
     private final static Tuple5<String, String, String, String, String> TUPLE = Tuple5.of(
             "1st",

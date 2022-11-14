@@ -63,6 +63,7 @@
         <!-- dependencies, scope == compile -->
         <version.dependency.browscap>1.3.12</version.dependency.browscap>
         <version.dependency.common.codec>1.15</version.dependency.common.codec>
+        <version.dependency.feign>10.7.0</version.dependency.feign>
         <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
@@ -97,6 +98,22 @@
                 <version>${version.dependency.springframework.boot}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- HTTP Client: Feign-->
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${version.dependency.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-jackson</artifactId>
+                <version>${version.dependency.feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-slf4j</artifactId>
+                <version>${version.dependency.feign}</version>
             </dependency>
             <!-- JSONs: Jackson -->
             <dependency>

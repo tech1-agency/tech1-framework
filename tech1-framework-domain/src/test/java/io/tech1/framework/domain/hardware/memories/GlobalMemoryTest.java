@@ -47,10 +47,10 @@ public class GlobalMemoryTest extends AbstractMemoriesTest {
         var typeReference = new TypeReference<GlobalMemory>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(globalMemory);
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(globalMemory);
     }
 }

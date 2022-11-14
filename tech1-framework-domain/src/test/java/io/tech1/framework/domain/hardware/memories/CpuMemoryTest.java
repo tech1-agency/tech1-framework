@@ -43,10 +43,10 @@ public class CpuMemoryTest extends AbstractMemoriesTest {
         var typeReference = new TypeReference<CpuMemory>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(cpuMemory);
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(cpuMemory);
     }
 }

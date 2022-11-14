@@ -38,12 +38,12 @@ public class PasswordTest extends AbstractSerializationDeserializationRunner {
         var typeReference = new TypeReference<Password>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(PASSWORD);
-        assertThat(tuple.getValue()).isEqualTo(PASSWORD.getValue());
-        assertThat(tuple.toString()).isEqualTo(PASSWORD.getValue());
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(PASSWORD);
+        assertThat(actual.getValue()).isEqualTo(PASSWORD.getValue());
+        assertThat(actual.toString()).isEqualTo(PASSWORD.getValue());
     }
 }

@@ -1,0 +1,10 @@
+{
+  "git" : {
+    "commit" : {
+      "id" : "[?]",
+      "time" : "[?]"
+    },
+    "branch" : "[?]"
+  },
+  "activeProfiles" : ["dev", "prod"]
+}

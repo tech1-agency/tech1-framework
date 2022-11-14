@@ -83,5 +83,5 @@ public class TuplePercentageTest extends AbstractTupleTest {
         assertThat(json).isEqualTo(this.readFile());
     }
 
-    // deserialized ignored deliberately
+    // deserialization ignored deliberately
 }

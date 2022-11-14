@@ -39,10 +39,10 @@ public class SystemMemoriesTest extends AbstractMemoriesTest {
         var typeReference = new TypeReference<SystemMemories>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(systemMemories);
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(systemMemories);
     }
 }

@@ -47,12 +47,12 @@ public class VersionTest extends AbstractFolderSerializationRunner {
         var typeReference = new TypeReference<Version>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(version);
-        assertThat(tuple.getValue()).isEqualTo(version.getValue());
-        assertThat(tuple.toString()).isEqualTo(version.getValue());
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(version);
+        assertThat(actual.getValue()).isEqualTo(version.getValue());
+        assertThat(actual.toString()).isEqualTo(version.getValue());
     }
 }

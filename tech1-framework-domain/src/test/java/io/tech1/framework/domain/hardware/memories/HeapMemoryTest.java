@@ -45,10 +45,10 @@ public class HeapMemoryTest extends AbstractMemoriesTest {
         var typeReference = new TypeReference<HeapMemory>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(heapMemory);
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(heapMemory);
     }
 }

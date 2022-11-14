@@ -2,7 +2,6 @@ package io.tech1.framework.utilities.environment.base;
 
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,15 +25,26 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.*;
 
-@Slf4j
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseEnvironmentUtilityTest {
 
+    private static Stream<Arguments> isProfilesTest() {
+        return Stream.of(
+                Arguments.of(new String[] { randomString() }, false, false, false),
+                Arguments.of(new String[] { randomString(), randomString() }, false, false, false),
+                Arguments.of(new String[] { "dev", randomString() }, true, false, false),
+                Arguments.of(new String[] { randomString(), "dev" }, false, false, false),
+                Arguments.of(new String[] { "stage", randomString() }, false, true, false),
+                Arguments.of(new String[] { randomString(), "stage" }, false, false, false),
+                Arguments.of(new String[] { "prod", randomString() }, false, false, true),
+                Arguments.of(new String[] { randomString(), "prod" }, false, false, false)
+        );
+    }
+
     @Configuration
     static class ContextConfiguration {
-
         @Bean
         Environment environment() {
             return mock(Environment.class);
@@ -46,6 +56,7 @@ public class BaseEnvironmentUtilityTest {
                     this.environment()
             );
         }
+
     }
 
     private final Environment environment;
@@ -117,19 +128,6 @@ public class BaseEnvironmentUtilityTest {
         // Assert
         verify(this.environment).getActiveProfiles();
         AssertionsForClassTypes.assertThat(actualActiveProfile).isEqualTo(expectedProfile);
-    }
-
-    private static Stream<Arguments> isProfilesTest() {
-        return Stream.of(
-                Arguments.of(new String[] { randomString() }, false, false, false),
-                Arguments.of(new String[] { randomString(), randomString() }, false, false, false),
-                Arguments.of(new String[] { "dev", randomString() }, true, false, false),
-                Arguments.of(new String[] { randomString(), "dev" }, false, false, false),
-                Arguments.of(new String[] { "stage", randomString() }, false, true, false),
-                Arguments.of(new String[] { randomString(), "stage" }, false, false, false),
-                Arguments.of(new String[] { "prod", randomString() }, false, false, true),
-                Arguments.of(new String[] { randomString(), "prod" }, false, false, false)
-        );
     }
 
     @ParameterizedTest

@@ -38,12 +38,12 @@ public class UsernameTest extends AbstractSerializationDeserializationRunner {
         var typeReference = new TypeReference<Username>() {};
 
         // Act
-        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+        var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
-        assertThat(tuple).isEqualTo(USERNAME);
-        assertThat(tuple.getIdentifier()).isEqualTo(USERNAME.getIdentifier());
-        assertThat(tuple.toString()).isEqualTo(USERNAME.getIdentifier());
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(USERNAME);
+        assertThat(actual.getIdentifier()).isEqualTo(USERNAME.getIdentifier());
+        assertThat(actual.toString()).isEqualTo(USERNAME.getIdentifier());
     }
 }

@@ -20,7 +20,7 @@ public class ThrowableUtility {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    public static String getTracedText(Throwable throwable, int length) {
+    private static String getTracedText(Throwable throwable, int length) {
         var message = "Throwable occurred! Please take required actions!\n\n";
         var sw = new StringWriter();
         var pw = new PrintWriter(sw);

@@ -23,12 +23,12 @@ public class GeoLocation {
     private final String exceptionDetails;
 
     private GeoLocation(
-            IPAddress ipAddress,
+            String ipAddr,
             String country,
             String city,
             String exceptionDetails
     ) {
-        this.ipAddr = nonNull(ipAddress) ? ipAddress.getValue() : UNKNOWN;
+        this.ipAddr = ipAddr;
         if (nonNull(country)) {
             this.country = country.trim();
             this.city = nonNull(city) ? city.trim() : null;
@@ -44,7 +44,7 @@ public class GeoLocation {
             String exceptionDetails
     ) {
         return new GeoLocation(
-                ipAddress,
+                getIpAddrOrUnknown(ipAddress),
                 UNKNOWN,
                 UNKNOWN,
                 exceptionDetails
@@ -55,7 +55,7 @@ public class GeoLocation {
             IPAddress ipAddress
     ) {
         return new GeoLocation(
-                ipAddress,
+                getIpAddrOrUnknown(ipAddress),
                 UNDEFINED,
                 UNDEFINED,
                 EMPTY
@@ -68,7 +68,7 @@ public class GeoLocation {
             String city
     ) {
         return new GeoLocation(
-                ipAddress,
+                getIpAddrOrUnknown(ipAddress),
                 country,
                 city,
                 EMPTY
@@ -85,5 +85,12 @@ public class GeoLocation {
             return this.country + ", " + this.city;
         }
         return UNKNOWN;
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    public static String getIpAddrOrUnknown(IPAddress ipAddress) {
+        return nonNull(ipAddress) ? ipAddress.getValue() : UNKNOWN;
     }
 }

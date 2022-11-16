@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
@@ -28,8 +29,12 @@ public class ExceptionEntity {
     ) {
         assertNonNullOrThrow(exceptionEntityType, invalidAttribute("ResponseExceptionEntity.exceptionEntityType"));
         this.exceptionEntityType = exceptionEntityType;
-        this.attributes = attributes;
+        this.attributes = new HashMap<>(attributes);
         this.timestamp = currentTimeMillis();
+    }
+
+    public void addAttribute(String attributeKey, Object value) {
+        this.attributes.put(attributeKey, value);
     }
 
     public static ExceptionEntity of(

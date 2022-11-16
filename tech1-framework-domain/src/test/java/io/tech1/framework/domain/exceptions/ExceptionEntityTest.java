@@ -21,18 +21,23 @@ public class ExceptionEntityTest extends AbstractObjectMapperRunner {
         // Arrange
         var exceptionMessage = randomString();
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
+        var arrangedExceptionEntity = ExceptionEntity.of(new NullPointerException(exceptionMessage));
+        arrangedExceptionEntity.addAttribute("externalAttribute", randomString());
 
         // Act
-        var json = this.writeValueAsString(ExceptionEntity.of(new NullPointerException(exceptionMessage)));
+        var json = this.writeValueAsString(arrangedExceptionEntity);
         HashMap<String, Object> exceptionEntity = OBJECT_MAPPER.readValue(json, typeRef);
 
         // Assert
+        assertThat(exceptionEntity).hasSize(3);
         assertThat(exceptionEntity).hasSize(3);
         assertThat(exceptionEntity).containsKeys("exceptionEntityType", "attributes", "timestamp");
         assertThat(exceptionEntity.get("exceptionEntityType")).isEqualTo(ERROR.toString());
         assertThat(exceptionEntity.get("timestamp")).isNotNull();
         var attributes = (Map<String, Object>) exceptionEntity.get("attributes");
+        assertThat(attributes).hasSize(3);
         assertThat(attributes.get("shortMessage")).isEqualTo(exceptionMessage);
         assertThat(attributes.get("fullMessage")).isEqualTo(exceptionMessage);
+        assertThat(attributes).containsKey("externalAttribute");
     }
 }

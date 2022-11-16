@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getFullURL;
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getUserAgentDetails;
+import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +19,19 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
 
 public class HttpServletRequestUtilityTest {
+
+    private static Stream<Arguments> getBaseURLTest() {
+        return Stream.of(
+                Arguments.of("http://localhost", "http://localhost"),
+                Arguments.of("https://localhost", "https://localhost"),
+                Arguments.of("http://localhost:8080", "http://localhost:8080"),
+                Arguments.of("https://localhost:8080", "https://localhost:8080"),
+                Arguments.of("https://www.tech1.io", "https://www.tech1.io"),
+                Arguments.of("www.tech1.io", "www.tech1.io"),
+                Arguments.of("http://localhost:8080?attr1=value", "http://localhost:8080"),
+                Arguments.of("http://localhost:8080?attr1=value&attr2=value2", "http://localhost:8080")
+        );
+    }
 
     private static Stream<Arguments> getFullURLTest() {
         return Stream.of(
@@ -34,6 +46,17 @@ public class HttpServletRequestUtilityTest {
                 Arguments.of(randomString(), "Default Browser", "Unknown", "Unknown"),
                 Arguments.of("Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0", "Firefox", "MacOSX", "Desktop")
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getBaseURLTest")
+    public void getBaseURLTest(String url, String expected) {
+        // Act
+        var actual = getBaseURL(url);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

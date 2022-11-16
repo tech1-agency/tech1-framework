@@ -19,6 +19,11 @@ import static java.util.Objects.isNull;
 @UtilityClass
 public class HttpServletRequestUtility {
 
+    public static String getBaseURL(String url) {
+        int index = url.indexOf("?");
+        return (index != -1) ? url.substring(0, index) : url;
+    }
+
     public static String getFullURL(HttpServletRequest request) {
         if (isNull(request)) {
             throw new IllegalArgumentException(invalidAttribute("request"));

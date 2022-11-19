@@ -4,7 +4,6 @@ import io.tech1.framework.domain.constants.FileConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -13,7 +12,6 @@ import static java.nio.charset.Charset.defaultCharset;
 import static java.nio.file.Files.readAllLines;
 import static java.util.Objects.isNull;
 
-@Slf4j
 @UtilityClass
 public class TestsIOUtils {
 

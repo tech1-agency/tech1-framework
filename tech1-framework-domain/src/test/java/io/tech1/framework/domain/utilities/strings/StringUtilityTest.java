@@ -56,6 +56,19 @@ public class StringUtilityTest {
         );
     }
 
+    private static Stream<Arguments> hasLengthTest() {
+        return Stream.of(
+                Arguments.of(null, false),
+                Arguments.of("null", true),
+                Arguments.of("", false),
+                Arguments.of(" ", true),
+                Arguments.of("   ", true),
+                Arguments.of("        ", true),
+                Arguments.of("     t1   ", true),
+                Arguments.of(randomString(), true)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("isNullOrEmptyTest")
     public void isNullOrEmptyTest(String value, boolean expected) {
@@ -71,6 +84,16 @@ public class StringUtilityTest {
     public void isNullOrBlankTest(String value, boolean expected) {
         // Act
         var actual = isNullOrBlank(value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("hasLengthTest")
+    public void hasLengthTest(String value, boolean expected) {
+        // Act
+        var actual = hasLength(value);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

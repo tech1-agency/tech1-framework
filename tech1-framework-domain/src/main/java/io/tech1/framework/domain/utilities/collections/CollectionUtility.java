@@ -10,7 +10,6 @@ import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.CollectionUtils.*;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 @UtilityClass
 public class CollectionUtility {

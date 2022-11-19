@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.asserts;
 
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -9,7 +8,6 @@ import java.util.Collection;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.isNull;
 
-@Slf4j
 @UtilityClass
 public class Asserts {
 

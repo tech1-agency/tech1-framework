@@ -4,6 +4,14 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
+import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
+import io.tech1.framework.domain.hardware.monitoring.HardwareName;
+import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -170,8 +178,20 @@ public class RandomUtility {
         return sb.toString();
     }
 
-    public static String randomIpAddress() {
-        var ip = RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
+    public static String randomIPv4() {
+        return RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
+    }
+
+    public static IPAddress randomIPAddress() {
+        return new IPAddress(randomIPv4());
+    }
+
+    public static IPAddress localhost() {
+        return new IPAddress("127.0.0.1");
+    }
+
+    public static String randomServerURL() {
+        var ip = randomIPv4();
         var protocol = RND.nextBoolean() ? "http" : "https";
         int port = 4000 + RND.nextInt(5000);
         return protocol + "://" + ip + ":" + port;
@@ -317,5 +337,85 @@ public class RandomUtility {
 
     public static Username randomUsername() {
         return Username.of(randomString());
+    }
+
+    public static GeoLocation validGeoLocation() {
+        return GeoLocation.processed(
+                localhost(),
+                "Ukraine",
+                "Lviv"
+        );
+    }
+
+    public static GeoLocation invalidGeoLocation() {
+        return GeoLocation.unknown(
+                localhost(),
+                "Location is unknown"
+        );
+    }
+
+    public static GeoLocation randomGeoLocation() {
+        return randomBoolean() ? validGeoLocation() : invalidGeoLocation();
+    }
+
+    public static UserAgentDetails validUserAgentDetails() {
+        return UserAgentDetails.processed(
+                "Chrome",
+                "macOS",
+                "Desktop"
+        );
+    }
+
+    public static UserAgentDetails invalidUserAgentDetails() {
+        return UserAgentDetails.unknown(
+                "User agent details are unknown"
+        );
+    }
+
+    public static UserAgentDetails randomUserAgentDetails() {
+        return randomBoolean() ? validUserAgentDetails() : invalidUserAgentDetails();
+    }
+
+    public static UserRequestMetadata validUserRequestMetadata() {
+        return UserRequestMetadata.processed(
+                validGeoLocation(),
+                validUserAgentDetails()
+        );
+    }
+
+    public static UserRequestMetadata invalidUserRequestMetadata() {
+        return UserRequestMetadata.processed(
+                invalidGeoLocation(),
+                invalidUserAgentDetails()
+        );
+    }
+
+    public static UserRequestMetadata randomUserRequestMetadata() {
+        return randomBoolean() ? validUserRequestMetadata() : invalidUserRequestMetadata();
+    }
+
+    public static HardwareMonitoringThreshold randomHardwareMonitoringThreshold() {
+        return new HardwareMonitoringThreshold(randomBigDecimalGreaterThanZeroByBounds(50L, 100L));
+    }
+
+    public static HardwareMonitoringThresholds randomHardwareMonitoringThresholds() {
+        var thresholds = Stream.of(HardwareName.values())
+                .collect(
+                        Collectors.toMap(
+                                entry -> entry,
+                                entry -> randomHardwareMonitoringThreshold().getValue()
+                        )
+                );
+        return new HardwareMonitoringThresholds(thresholds);
+    }
+
+    public static HardwareMonitoringDatapointTableRow randomHardwareMonitoringDatapointTableRow() {
+        return new HardwareMonitoringDatapointTableRow(
+                randomEnum(HardwareName.class),
+                randomLongGreaterThanZero(),
+                randomBigDecimalGreaterThanZeroByBounds(10L, 20L),
+                randomString(),
+                randomHardwareMonitoringThresholds()
+        );
     }
 }

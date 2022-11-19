@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.2</version>
+        <version>1.3</version>
     </parent>
 
     <artifactId>tech1-framework-domain</artifactId>
@@ -22,6 +22,16 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!-- Browser Capabilities -->
+        <dependency>
+            <groupId>com.blueconic</groupId>
+            <artifactId>browscap-java</artifactId>
+        </dependency>
+        <!-- Common Codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
         <!-- Tomcat: Cookie, CacheHttpRequests -->
         <dependency>

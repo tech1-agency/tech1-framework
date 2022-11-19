@@ -12,7 +12,6 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Getter
 @EqualsAndHashCode
 public class Username {
-
     @JsonValue
     private final String identifier;
 

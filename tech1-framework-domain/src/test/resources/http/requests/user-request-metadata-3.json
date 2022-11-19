@@ -1,0 +1,28 @@
+{
+  "status" : "COMPLETED",
+  "geoLocation" : {
+    "ipAddr" : "127.0.0.1",
+    "country" : "Unknown",
+    "where" : "Unknown, Unknown"
+  },
+  "userAgentDetails" : {
+    "browser" : "Unknown",
+    "platform" : "Unknown",
+    "deviceType" : "Unknown",
+    "exceptionDetails" : "exception details on user agent",
+    "what" : "Unknown, Unknown on Unknown"
+  },
+  "whereTuple3" : {
+    "a" : "127.0.0.1",
+    "b" : "Unknown",
+    "c" : "Unknown, Unknown"
+  },
+  "whatTuple2" : {
+    "a" : "Unknown",
+    "b" : "Unknown, Unknown on Unknown"
+  },
+  "exception" : {
+    "ok" : false,
+    "message" : "exception details on geo location. exception details on user agent"
+  }
+}

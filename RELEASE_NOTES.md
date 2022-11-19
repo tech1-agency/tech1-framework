@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.4
+- TBD
+
 ### v1.3
 - Add geo-based and user-agent-based functionality for user sessions and user incidents
 - Add hardware functionality for hardware widget (CPU, ***Memories, Heap)

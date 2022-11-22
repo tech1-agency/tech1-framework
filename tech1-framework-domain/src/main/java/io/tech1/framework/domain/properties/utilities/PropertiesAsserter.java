@@ -4,7 +4,7 @@ import io.tech1.framework.domain.asserts.Asserts;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
-import io.tech1.framework.domain.reflections.ClassProperty;
+import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -31,20 +31,20 @@ import static org.springframework.util.StringUtils.uncapitalize;
 @UtilityClass
 public class PropertiesAsserter {
 
-    private static final Map<Function<Class<?>, Boolean>, Consumer<ClassProperty>> ACTIONS = new HashMap<>();
+    private static final Map<Function<Class<?>, Boolean>, Consumer<ReflectionProperty>> ACTIONS = new HashMap<>();
 
     static {
-        ACTIONS.put(Date.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(LocalDate.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(LocalDateTime.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(ChronoUnit.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(Boolean.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(Short.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(Integer.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(Long.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(BigInteger.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(BigDecimal.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(String.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(Date.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(LocalDate.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(LocalDateTime.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(ChronoUnit.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Boolean.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Short.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Integer.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Long.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(BigInteger.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(BigDecimal.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(String.class::equals, Asserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), invalidAttribute(cp.getPropertyName())));
     }
 
@@ -85,9 +85,8 @@ public class PropertiesAsserter {
                 .map(Map.Entry::getValue)
                 .findFirst();
         if (consumerOpt.isPresent()) {
-            var assertFieldConsumer = consumerOpt.get();
-            var assertField = ClassProperty.of(propertyClass, attributeName, property);
-            assertFieldConsumer.accept(assertField);
+            var reflectionProperty = ReflectionProperty.of(propertyClass.getSimpleName(), attributeName, property);
+            consumerOpt.get().accept(reflectionProperty);
         } else {
             var getters = getGetters(property, attributeName, projection);
             verifyProperties(getters, property, attributeName, projection);

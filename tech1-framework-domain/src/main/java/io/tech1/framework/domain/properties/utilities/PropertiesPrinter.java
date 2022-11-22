@@ -1,11 +1,11 @@
 package io.tech1.framework.domain.properties.utilities;
 
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
-import io.tech1.framework.domain.reflections.ClassProperty;
+import io.tech1.framework.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getGettersClassProperties;
+import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullProperties;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.naturalOrder;
 
@@ -20,11 +20,12 @@ public class PropertiesPrinter {
 
     public static void printProperties(String prefix, AbstractPropertiesConfigs abstractPropertiesConfigs) {
         LOGGER.info(INTERPUNCT);
-        var classProperties = getGettersClassProperties(abstractPropertiesConfigs);
-        classProperties.sort(
-                comparing(ClassProperty::getPropertyName, comparing((String s) -> !s.equals("enabled")).thenComparing(naturalOrder()))
+        var parentKey = abstractPropertiesConfigs.getClass().getSimpleName();
+        var properties = getNotNullProperties(abstractPropertiesConfigs, parentKey);
+        properties.sort(
+                comparing(ReflectionProperty::getPropertyName, comparing((String s) -> !s.equals("enabled")).thenComparing(naturalOrder()))
         );
-        classProperties.forEach(property -> LOGGER.info("{} - {}", prefix, property.getReadableValue()));
+        properties.forEach(property -> LOGGER.info("{} - {}", prefix, property.getReadableValue()));
         LOGGER.info(INTERPUNCT);
     }
 }

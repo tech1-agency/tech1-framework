@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.asserts;
 
-import io.tech1.framework.domain.reflections.ClassProperty;
+import io.tech1.framework.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 
 import java.time.format.DateTimeFormatter;
@@ -22,11 +22,11 @@ public class Asserts {
         }
     }
 
-    public static void assertNonNullClassPropertyOrThrow(ClassProperty classProperty) {
-        if (isNull(classProperty)) {
-            throw new IllegalArgumentException("Unknown class property");
+    public static void assertNonNullPropertyOrThrow(ReflectionProperty reflectionProperty) {
+        if (isNull(reflectionProperty)) {
+            throw new IllegalArgumentException("Unknown reflection property");
         }
-        assertNonNullOrThrow(classProperty.getPropertyValue(), invalidAttribute(classProperty.getPropertyName()));
+        assertNonNullOrThrow(reflectionProperty.getPropertyValue(), invalidAttribute(reflectionProperty.getPropertyName()));
     }
 
     public static void assertNonBlankOrThrow(String object, String message) {

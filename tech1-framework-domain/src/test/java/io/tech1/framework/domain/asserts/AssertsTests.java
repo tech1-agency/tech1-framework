@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.asserts;
 
-import io.tech1.framework.domain.reflections.ClassProperty;
+import io.tech1.framework.domain.reflections.ReflectionProperty;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,11 +29,11 @@ public class AssertsTests {
         );
     }
 
-    private static Stream<Arguments> assertNonNullClassPropertyOrThrowTest() {
+    private static Stream<Arguments> assertNonNullPropertyOrThrowTest() {
         return Stream.of(
-                Arguments.of(null, "Unknown class property"),
-                Arguments.of(new ClassProperty(randomString(), "attribute1", null), "Attribute `attribute1` is invalid"),
-                Arguments.of(new ClassProperty(randomString(), "attribute1", new Object()), null)
+                Arguments.of(null, "Unknown reflection property"),
+                Arguments.of(new ReflectionProperty(randomString(), "attribute1", null), "Attribute `attribute1` is invalid"),
+                Arguments.of(new ReflectionProperty(randomString(), "attribute1", new Object()), null)
         );
     }
 
@@ -136,10 +136,10 @@ public class AssertsTests {
     }
 
     @ParameterizedTest
-    @MethodSource("assertNonNullClassPropertyOrThrowTest")
-    public void assertNonNullClassPropertyOrThrowTest(ClassProperty classProperty, String expectedErrorMessage) {
+    @MethodSource("assertNonNullPropertyOrThrowTest")
+    public void assertNonNullPropertyOrThrowTest(ReflectionProperty reflectionProperty, String expectedErrorMessage) {
         // Act
-        var throwable = catchThrowable(() -> assertNonNullClassPropertyOrThrow(classProperty));
+        var throwable = catchThrowable(() -> assertNonNullPropertyOrThrow(reflectionProperty));
 
         // Assert
         if (isNull(expectedErrorMessage)) {

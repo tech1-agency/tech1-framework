@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.utilities.reflections;
 
-import io.tech1.framework.domain.reflections.ClassProperty;
+import io.tech1.framework.domain.reflections.ReflectionProperty;
+import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
 
@@ -104,8 +105,7 @@ public class ReflectionUtility {
                 }).collect(Collectors.toList());
     }
 
-    public static List<ClassProperty> getGettersClassProperties(Object object) {
-        var className = object.getClass().getSimpleName();
+    public static List<ReflectionProperty> getNotNullProperties(Object object, String parentKey) {
         var getters = getGetters(object);
         return getters.stream()
                 .map(getter -> {
@@ -119,8 +119,8 @@ public class ReflectionUtility {
                         if (isNull(propertyValue)) {
                             return null;
                         } else {
-                            return ClassProperty.of(
-                                    className,
+                            return ReflectionProperty.of(
+                                    parentKey,
                                     propertyName,
                                     propertyValue
                             );
@@ -141,7 +141,7 @@ public class ReflectionUtility {
                 });
         if (getterOpt.isPresent()) {
             try {
-                Object value = getterOpt.get().invoke(object);
+                var value = getterOpt.get().invoke(object);
                 return isNull(value) ? null : value;
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new IllegalArgumentException(e.getMessage());

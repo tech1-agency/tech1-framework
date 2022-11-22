@@ -11,7 +11,7 @@ public class MongodbTest {
         // Arrange
         var mongodb = new Mongodb();
         mongodb.setHost("127.0.0.1");
-        mongodb.setPort("27017");
+        mongodb.setPort(27017);
         mongodb.setDatabase("tech1_platform_server");
 
         // Act
@@ -27,7 +27,7 @@ public class MongodbTest {
         // Arrange
         var mongodb = new Mongodb();
         mongodb.setHost("127.0.0.1");
-        mongodb.setPort("27017");
+        mongodb.setPort(27017);
         mongodb.setDatabase("tech1_platform_server");
         mongodb.setUsername("admin");
         mongodb.setPassword("Password123!");

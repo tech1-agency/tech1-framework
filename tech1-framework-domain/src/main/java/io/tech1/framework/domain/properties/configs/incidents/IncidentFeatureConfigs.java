@@ -13,14 +13,14 @@ public class IncidentFeatureConfigs extends AbstractPropertiesToggleConfigs impl
     private boolean enabled;
 
     // NOTE: test-purposes
-    public static IncidentFeatureConfigs enabled() {
+    public static IncidentFeatureConfigs enabledIncidentFeatureConfigs() {
         var instance = new IncidentFeatureConfigs();
         instance.enabled = true;
         return instance;
     }
 
     // NOTE: test-purposes
-    public static IncidentFeatureConfigs disabled() {
+    public static IncidentFeatureConfigs disabledIncidentFeatureConfigs() {
         var instance = new IncidentFeatureConfigs();
         instance.enabled = false;
         return instance;

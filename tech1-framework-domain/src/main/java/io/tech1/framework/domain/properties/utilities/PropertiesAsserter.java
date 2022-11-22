@@ -31,23 +31,29 @@ import static org.springframework.util.StringUtils.uncapitalize;
 @UtilityClass
 public class PropertiesAsserter {
 
-    private static final Map<Function<Class<?>, Boolean>, Consumer<ClassProperty>> ACTIONS = new HashMap<>() {{
-        put(Date.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(LocalDate.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(LocalDateTime.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(ChronoUnit.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(Boolean.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(Short.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(Integer.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(Long.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(BigInteger.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(BigDecimal.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(String.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getValue(), invalidAttribute(cp.getName())));
-    }};
+    private static final Map<Function<Class<?>, Boolean>, Consumer<ClassProperty>> ACTIONS = new HashMap<>();
+
+    static {
+        ACTIONS.put(Date.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(LocalDate.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(LocalDateTime.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(ChronoUnit.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(Boolean.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(Short.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(Integer.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(Long.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(BigInteger.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(BigDecimal.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(String.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
+        ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getValue(), invalidAttribute(cp.getName())));
+    }
 
     public static void assertProperties(AbstractPropertiesConfigs abstractConfigs, String parentName) {
         assertNonNullOrThrow(abstractConfigs, invalidAttribute(parentName));
+        abstractConfigs.assertProperties();
+    }
+
+    public static void assertNotNullProperties(AbstractPropertiesConfigs abstractConfigs, String parentName) {
         var getters = getGetters(abstractConfigs, parentName, emptyList());
         verifyProperties(getters, abstractConfigs, parentName, emptyList());
     }

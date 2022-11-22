@@ -20,7 +20,7 @@ public class PropertiesPrinter {
 
     public static void printProperties(String prefix, AbstractPropertiesConfigs abstractPropertiesConfigs) {
         LOGGER.info(INTERPUNCT);
-        var classProperties = getGettersClassProperties(abstractPropertiesConfigs);
+        var classProperties = getGettersClassProperties(abstractPropertiesConfigs, true);
         classProperties.sort(
                 comparing(ClassProperty::getName, comparing((String s) -> !s.equals("enabled")).thenComparing(naturalOrder()))
         );

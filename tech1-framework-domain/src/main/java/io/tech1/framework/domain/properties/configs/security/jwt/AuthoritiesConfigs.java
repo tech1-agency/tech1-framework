@@ -3,7 +3,6 @@ package io.tech1.framework.domain.properties.configs.security.jwt;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Authority;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
-import io.tech1.framework.domain.properties.configs.AsyncConfigs;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -105,7 +105,7 @@ public class ReflectionUtility {
                 }).collect(Collectors.toList());
     }
 
-    public static List<ClassProperty> getGettersClassProperties(Object object) {
+    public static List<ClassProperty> getGettersClassProperties(Object object, boolean skipNull) {
         var className = object.getClass().getSimpleName();
         var getters = getGetters(object);
         return getters.stream()
@@ -117,12 +117,16 @@ public class ReflectionUtility {
                                 .replace("is", "")
                         );
                         var getterValueObj = getter.invoke(object);
-                        var getterValue = nonNull(getterValueObj) ? getterValueObj : "[null]";
-                        return ClassProperty.of(
-                                className,
-                                propertyName,
-                                getterValue
-                        );
+                        if (isNull(getterValueObj) && skipNull) {
+                            return null;
+                        } else {
+                            var getterValue = nonNull(getterValueObj) ? getterValueObj : "[null]";
+                            return ClassProperty.of(
+                                    className,
+                                    propertyName,
+                                    getterValue
+                            );
+                        }
                     } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
                         return null;
                     }

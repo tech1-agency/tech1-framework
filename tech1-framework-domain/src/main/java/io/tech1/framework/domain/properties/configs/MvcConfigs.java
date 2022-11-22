@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,9 +12,9 @@ import lombok.EqualsAndHashCode;
 public class MvcConfigs extends AbstractPropertiesToggleConfigs {
     @MandatoryProperty
     private boolean enabled;
-    @MandatoryProperty
+    @NonMandatoryProperty
     private String frameworkBasePathPrefix;
-    @MandatoryProperty
+    @NonMandatoryProperty
     private CorsConfigs corsConfigs;
 
     public static MvcConfigs of(

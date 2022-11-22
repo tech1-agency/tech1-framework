@@ -2,6 +2,7 @@ package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.Data;
 
 import java.time.ZoneId;
@@ -10,9 +11,13 @@ import java.util.List;
 // Lombok (property-based)
 @Data
 public class DefaultUser {
+    @MandatoryProperty
     private String username;
+    @MandatoryProperty
     private String password;
+    @MandatoryProperty
     private ZoneId zoneId;
+    @MandatoryProperty
     private List<String> authorities;
 
     // NOTE: test-purposes

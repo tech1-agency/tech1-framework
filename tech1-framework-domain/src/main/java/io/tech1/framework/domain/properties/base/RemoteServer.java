@@ -3,13 +3,17 @@ package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.Data;
 
 // Lombok (property-based)
 @Data
 public class RemoteServer {
+    @MandatoryProperty
     private String baseURL;
+    @MandatoryProperty
     private String username;
+    @MandatoryProperty
     private String password;
 
     // NOTE: test-purposes

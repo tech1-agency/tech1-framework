@@ -1,10 +1,12 @@
 package io.tech1.framework.domain.properties.base;
 
+import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.Data;
 
 // Lombok (property-based)
 @Data
 public class SpringServer {
+    @MandatoryProperty
     private int port;
 
     // NOTE: test-purposes

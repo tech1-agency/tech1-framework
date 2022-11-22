@@ -39,4 +39,16 @@ public class ClassProperty {
                 propertyValue
         );
     }
+
+    public static ClassProperty of(
+            Class<?> className,
+            String propertyName,
+            Object propertyValue
+    ) {
+        return new ClassProperty(
+                className.getSimpleName(),
+                propertyName,
+                propertyValue
+        );
+    }
 }

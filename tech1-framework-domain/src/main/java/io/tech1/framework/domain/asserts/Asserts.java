@@ -1,10 +1,12 @@
 package io.tech1.framework.domain.asserts;
 
+import io.tech1.framework.domain.reflections.ClassProperty;
 import lombok.experimental.UtilityClass;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.isNull;
 
@@ -18,6 +20,13 @@ public class Asserts {
         if (isNull(object)) {
             throw new IllegalArgumentException(message);
         }
+    }
+
+    public static void assertNonNullClassPropertyOrThrow(ClassProperty classProperty) {
+        if (isNull(classProperty)) {
+            throw new IllegalArgumentException("Unknown class property");
+        }
+        assertNonNullOrThrow(classProperty.getValue(), invalidAttribute(classProperty.getName()));
     }
 
     public static void assertNonBlankOrThrow(String object, String message) {

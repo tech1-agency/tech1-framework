@@ -21,9 +21,8 @@ public class ClassProperty {
             String name,
             Object value
     ) {
-        assertNonNullOrThrow(className, invalidAttribute("ReflectionAttribute.className"));
-        assertNonNullOrThrow(name, invalidAttribute("ReflectionAttribute.name"));
-        assertNonNullOrThrow(value, invalidAttribute("ReflectionAttribute.value"));
+        assertNonNullOrThrow(className, invalidAttribute("ClassProperty.className"));
+        assertNonNullOrThrow(name, invalidAttribute("ClassProperty.name"));
         this.name = name;
         this.value = value;
         this.readableValue = String.format("%s.%s: `%s`", className, this.name, this.value);

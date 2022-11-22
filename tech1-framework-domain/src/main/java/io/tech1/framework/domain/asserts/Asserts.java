@@ -26,7 +26,7 @@ public class Asserts {
         if (isNull(classProperty)) {
             throw new IllegalArgumentException("Unknown class property");
         }
-        assertNonNullOrThrow(classProperty.getValue(), invalidAttribute(classProperty.getName()));
+        assertNonNullOrThrow(classProperty.getPropertyValue(), invalidAttribute(classProperty.getPropertyName()));
     }
 
     public static void assertNonBlankOrThrow(String object, String message) {

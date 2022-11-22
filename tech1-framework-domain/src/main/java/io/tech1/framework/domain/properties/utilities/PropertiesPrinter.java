@@ -20,9 +20,9 @@ public class PropertiesPrinter {
 
     public static void printProperties(String prefix, AbstractPropertiesConfigs abstractPropertiesConfigs) {
         LOGGER.info(INTERPUNCT);
-        var classProperties = getGettersClassProperties(abstractPropertiesConfigs, true);
+        var classProperties = getGettersClassProperties(abstractPropertiesConfigs);
         classProperties.sort(
-                comparing(ClassProperty::getName, comparing((String s) -> !s.equals("enabled")).thenComparing(naturalOrder()))
+                comparing(ClassProperty::getPropertyName, comparing((String s) -> !s.equals("enabled")).thenComparing(naturalOrder()))
         );
         classProperties.forEach(property -> LOGGER.info("{} - {}", prefix, property.getReadableValue()));
         LOGGER.info(INTERPUNCT);

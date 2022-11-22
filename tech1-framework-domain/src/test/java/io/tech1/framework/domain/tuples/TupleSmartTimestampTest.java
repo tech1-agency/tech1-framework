@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TupleSmartTimestampTest extends AbstractTupleTest {
-    private final static TupleSmartTimestamp TUPLE = TupleSmartTimestamp.of(
+    private static final TupleSmartTimestamp TUPLE = TupleSmartTimestamp.of(
             1668419401637L,
             TestsConstants.EET_ZONE_ID,
             TestsConstants.DEFAULT_DATE_FORMAT_PATTERN

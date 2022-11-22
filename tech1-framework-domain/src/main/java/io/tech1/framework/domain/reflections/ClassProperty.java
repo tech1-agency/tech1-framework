@@ -12,20 +12,20 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @EqualsAndHashCode
 @ToString
 public class ClassProperty {
-    private final String name;
-    private final Object value;
+    private final String propertyName;
+    private final Object propertyValue;
     private final String readableValue;
 
     public ClassProperty(
             String className,
-            String name,
-            Object value
+            String propertyName,
+            Object propertyValue
     ) {
         assertNonNullOrThrow(className, invalidAttribute("ClassProperty.className"));
-        assertNonNullOrThrow(name, invalidAttribute("ClassProperty.name"));
-        this.name = name;
-        this.value = value;
-        this.readableValue = String.format("%s.%s: `%s`", className, this.name, this.value);
+        assertNonNullOrThrow(propertyName, invalidAttribute("ClassProperty.propertyName"));
+        this.propertyName = propertyName;
+        this.propertyValue = propertyValue;
+        this.readableValue = String.format("%s.%s: `%s`", className, this.propertyName, this.propertyValue);
     }
 
     public static ClassProperty of(

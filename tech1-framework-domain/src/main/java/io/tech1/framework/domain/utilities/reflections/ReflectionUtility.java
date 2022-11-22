@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -105,7 +104,7 @@ public class ReflectionUtility {
                 }).collect(Collectors.toList());
     }
 
-    public static List<ClassProperty> getGettersClassProperties(Object object, boolean skipNull) {
+    public static List<ClassProperty> getGettersClassProperties(Object object) {
         var className = object.getClass().getSimpleName();
         var getters = getGetters(object);
         return getters.stream()
@@ -116,15 +115,14 @@ public class ReflectionUtility {
                                 .replace("get", "")
                                 .replace("is", "")
                         );
-                        var getterValueObj = getter.invoke(object);
-                        if (isNull(getterValueObj) && skipNull) {
+                        var propertyValue = getter.invoke(object);
+                        if (isNull(propertyValue)) {
                             return null;
                         } else {
-                            var getterValue = nonNull(getterValueObj) ? getterValueObj : "[null]";
                             return ClassProperty.of(
                                     className,
                                     propertyName,
-                                    getterValue
+                                    propertyValue
                             );
                         }
                     } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
@@ -132,7 +130,6 @@ public class ReflectionUtility {
                     }
                 })
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ClassProperty::getName))
                 .collect(Collectors.toList());
     }
 

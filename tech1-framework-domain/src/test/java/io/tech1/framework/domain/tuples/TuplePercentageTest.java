@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePerc
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TuplePercentageTest extends AbstractTupleTest {
-    private final static TuplePercentage TUPLE = TuplePercentage.of(new BigDecimal(3L), new BigDecimal(11L), 2, 3);
+    private static final TuplePercentage TUPLE = TuplePercentage.of(new BigDecimal(3L), new BigDecimal(11L), 2, 3);
 
     private static Stream<Arguments> constructorsTest() {
         return Stream.of(

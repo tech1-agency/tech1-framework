@@ -45,7 +45,7 @@ public class PropertiesAsserter {
         ACTIONS.put(BigInteger.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
         ACTIONS.put(BigDecimal.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
         ACTIONS.put(String.class::equals, Asserts::assertNonNullClassPropertyOrThrow);
-        ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getValue(), invalidAttribute(cp.getName())));
+        ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), invalidAttribute(cp.getPropertyName())));
     }
 
     public static void assertProperties(AbstractPropertiesConfigs abstractConfigs, String parentName) {

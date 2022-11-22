@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 
 public abstract class AbstractObjectMapperRunner {
-    protected final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @SneakyThrows
     protected final String writeValueAsString(Object object) {

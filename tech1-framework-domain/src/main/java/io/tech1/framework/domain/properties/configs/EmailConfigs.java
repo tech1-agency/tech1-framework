@@ -14,7 +14,7 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     @NonMandatoryProperty
     private String host;
     @NonMandatoryProperty
-    private String port;
+    private Integer port;
     @NonMandatoryProperty
     private String username;
     @NonMandatoryProperty
@@ -28,7 +28,7 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     public static EmailConfigs of(
             boolean enabled,
             String host,
-            String port,
+            Integer port,
             String username,
             String from,
             String password,

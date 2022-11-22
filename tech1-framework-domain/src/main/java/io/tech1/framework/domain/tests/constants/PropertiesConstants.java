@@ -33,7 +33,7 @@ public class PropertiesConstants {
     public static final EmailConfigs EMAIL_CONFIGS = EmailConfigs.of(
             false,
             "smtp.gmail.com",
-            "587",
+            587,
             "tech1@gmail.com",
             "Tech1",
             "Password123!",

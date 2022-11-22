@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static org.springframework.util.StringUtils.uncapitalize;
 
 // Lombok
 @Getter
@@ -25,7 +26,7 @@ public class ClassProperty {
         assertNonNullOrThrow(propertyName, invalidAttribute("ClassProperty.propertyName"));
         this.propertyName = propertyName;
         this.propertyValue = propertyValue;
-        this.readableValue = String.format("%s.%s: `%s`", className, this.propertyName, this.propertyValue);
+        this.readableValue = String.format("%s.%s: `%s`", uncapitalize(className), this.propertyName, this.propertyValue);
     }
 
     public static ClassProperty of(

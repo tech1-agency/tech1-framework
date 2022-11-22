@@ -18,7 +18,7 @@ import static io.tech1.framework.domain.properties.configs.incidents.IncidentFea
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.enabledIncidentFeatureConfigs;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperties;
-import static io.tech1.framework.domain.tests.constants.PropertiesConstants.*;
+import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -209,6 +209,26 @@ public class PropertiesAsserterAndPrinterTest {
         // Act
         assertProperties(HARDWARE_SERVER_CONFIGS, "hardwareServerConfigs");
         printProperties(HARDWARE_SERVER_CONFIGS);
+
+        // Assert
+        // ignore
+    }
+
+    @Test
+    public void securityJwtConfigsTest() {
+        // Act
+        assertProperties(SECURITY_JWT_CONFIGS, "securityJwtConfigs");
+        printProperties(SECURITY_JWT_CONFIGS);
+
+        // Assert
+        // ignore
+    }
+
+    @Test
+    public void securityJwtWebsocketsConfigsTest() {
+        // Act
+        assertProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS, "securityJwtWebsocketsConfigs");
+        printProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS);
 
         // Assert
         // ignore

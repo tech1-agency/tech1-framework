@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.Data;
 
 import java.util.Collections;
@@ -15,7 +16,7 @@ import static java.util.Objects.nonNull;
 public class DefaultUsers implements AbstractToggleProperty {
     @MandatoryProperty
     private boolean enabled;
-    @MandatoryProperty
+    @NonMandatoryProperty
     private List<DefaultUser> users;
 
     // NOTE: test-purposes

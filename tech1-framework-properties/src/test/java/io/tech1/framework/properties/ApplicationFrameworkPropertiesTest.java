@@ -1,6 +1,6 @@
 package io.tech1.framework.properties;
 
-import io.tech1.framework.properties.tests.contexts.ApplicationPlatformPropertiesContext;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -8,12 +8,12 @@ import java.lang.reflect.InvocationTargetException;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ApplicationPlatformPropertiesTest {
+public class ApplicationFrameworkPropertiesTest {
 
     @Test
     public void assertApplicationPlatformProperties() {
         // Arrange
-        var context = new ApplicationPlatformPropertiesContext();
+        var context = new ApplicationFrameworkPropertiesContext();
         var applicationPlatformProperties = context.applicationPlatformProperties();
 
         // Act

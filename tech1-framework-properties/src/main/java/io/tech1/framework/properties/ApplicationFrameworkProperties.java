@@ -13,7 +13,7 @@ import org.springframework.core.PriorityOrdered;
         ignoreUnknownFields = false
 )
 @Data
-public class ApplicationPlatformProperties implements PriorityOrdered {
+public class ApplicationFrameworkProperties implements PriorityOrdered {
 
     // Separate "Configs"
     private AsyncConfigs asyncConfigs;

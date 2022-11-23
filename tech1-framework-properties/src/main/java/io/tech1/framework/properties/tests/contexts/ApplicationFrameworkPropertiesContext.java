@@ -1,17 +1,17 @@
 package io.tech1.framework.properties.tests.contexts;
 
-import io.tech1.framework.properties.ApplicationPlatformProperties;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.*;
 
 @Configuration
-public class ApplicationPlatformPropertiesContext {
+public class ApplicationFrameworkPropertiesContext {
 
     @Bean
-    public ApplicationPlatformProperties applicationPlatformProperties() {
-        var properties = new ApplicationPlatformProperties();
+    public ApplicationFrameworkProperties applicationPlatformProperties() {
+        var properties = new ApplicationFrameworkProperties();
         properties.setAsyncConfigs(ASYNC_CONFIGS);
         properties.setEventsConfigs(EVENTS_CONFIGS);
         properties.setMvcConfigs(MVC_CONFIGS);

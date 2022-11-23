@@ -1,7 +1,9 @@
 # Release Notes
 
 ### v1.4
-- TBD
+- Migrate domain-based properties 
+- Migrate domain-based exception
+- Add tech1-framework-properties maven module
 
 ### v1.3
 - Add geo-based and user-agent-based functionality for user sessions and user incidents

@@ -27,4 +27,9 @@ public class TimeAmount {
                 this.unit
         );
     }
+
+    @Override
+    public String toString() {
+        return this.amount + " " + this.unit;
+    }
 }

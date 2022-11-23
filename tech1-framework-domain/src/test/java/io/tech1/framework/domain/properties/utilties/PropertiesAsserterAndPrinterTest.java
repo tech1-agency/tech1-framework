@@ -1,18 +1,20 @@
 package io.tech1.framework.domain.properties.utilties;
 
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.properties.base.RemoteServer;
+import io.tech1.framework.domain.properties.base.*;
 import io.tech1.framework.domain.properties.configs.EmailConfigs;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
 import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.domain.properties.configs.MvcConfigs;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
+import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.disabledIncidentFeatureConfigs;
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.enabledIncidentFeatureConfigs;
@@ -24,6 +26,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 public class PropertiesAsserterAndPrinterTest {
+
+    @Test
+    public void notUsedPropertiesConfigsTest() {
+        // Arrange
+        var notUsedPropertiesConfigs = NotUsedPropertiesConfigs.of(
+                ScheduledJob.of(true, SchedulerConfiguration.of(10, 10, TimeUnit.SECONDS)),
+                SpringServer.of(8080),
+                SpringLogging.of("logback-test.xml")
+        );
+
+        // Act
+        assertProperties(notUsedPropertiesConfigs, "notUsedPropertiesConfigs");
+        printProperties(notUsedPropertiesConfigs);
+
+        // Assert
+        // ignore
+    }
 
     @Test
     public void asyncConfigsTest() {

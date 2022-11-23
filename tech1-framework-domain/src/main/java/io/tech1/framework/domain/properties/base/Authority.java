@@ -17,4 +17,9 @@ public class Authority {
         instance.value = value;
         return instance;
     }
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }

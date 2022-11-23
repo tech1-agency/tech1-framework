@@ -35,4 +35,9 @@ public class SchedulerConfiguration {
                 this.unit
         );
     }
+
+    @Override
+    public String toString() {
+        return "[" + this.initialDelay + ", " + this.delay + ", " + this.unit + "]";
+    }
 }

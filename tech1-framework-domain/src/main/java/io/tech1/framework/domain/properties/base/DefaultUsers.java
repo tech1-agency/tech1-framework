@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class DefaultUsers implements AbstractToggleProperty {
     public final Set<String> getDefaultUsersAuthorities() {
         if (nonNull(this.users)) {
             return this.users.stream().map(DefaultUser::getAuthorities)
+                    .filter(Objects::nonNull)
                     .flatMap(List::stream)
                     .collect(Collectors.toSet());
         } else {

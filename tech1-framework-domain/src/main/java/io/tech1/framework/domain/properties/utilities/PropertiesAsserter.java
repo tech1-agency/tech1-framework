@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -38,6 +39,7 @@ public class PropertiesAsserter {
         ACTIONS.put(LocalDate.class::equals, Asserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(LocalDateTime.class::equals, Asserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(ChronoUnit.class::equals, Asserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(TimeUnit.class::equals, Asserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(Boolean.class::equals, Asserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(Short.class::equals, Asserts::assertNonNullPropertyOrThrow);
         ACTIONS.put(Integer.class::equals, Asserts::assertNonNullPropertyOrThrow);

@@ -31,13 +31,13 @@ public class ApplicationMVC implements WebMvcConfigurer {
     }
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings(CorsRegistry corsRegistry) {
         var mvcConfigs = this.applicationFrameworkProperties.getMvcConfigs();
         if (mvcConfigs.isEnabled()) {
             var corsConfigs = mvcConfigs.getCorsConfigs();
 
             var pathPattern = corsConfigs.getPathPattern();
-            var corsRegistration = registry.addMapping(pathPattern);
+            var corsRegistration = corsRegistry.addMapping(pathPattern);
 
             var allowedOrigins = corsConfigs.getAllowedOrigins();
             if (nonNull(allowedOrigins)) {

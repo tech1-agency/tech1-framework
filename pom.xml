@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -54,6 +55,7 @@
         <module>tech1-framework-domain</module>
         <module>tech1-framework-utilities</module>
         <module>tech1-framework-properties</module>
+        <module>tech1-framework-configurations</module>
     </modules>
 
     <properties>
@@ -68,6 +70,7 @@
         <version.dependency.feign>10.7.0</version.dependency.feign>
         <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.jakarta>2.3.2</version.dependency.jakarta>
+        <version.dependency.jasypt>3.0.4</version.dependency.jasypt>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
         <version.dependency.tomcat.embed>9.0.55</version.dependency.tomcat.embed>
@@ -101,6 +104,12 @@
                 <version>${version.dependency.springframework.boot}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- Spring Boot: Secure Sensitive Configurations -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${version.dependency.jasypt}</version>
             </dependency>
             <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
             <dependency>

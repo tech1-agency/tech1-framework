@@ -29,7 +29,6 @@ public class TestsPropertiesConstants {
             true,
             "/platform/security",
             CorsConfigs.of(
-                    true,
                     "/api/**",
                     new String[] { "http://localhost:8080", "http://localhost:8081" },
                     new String[] { "GET", "POST" },

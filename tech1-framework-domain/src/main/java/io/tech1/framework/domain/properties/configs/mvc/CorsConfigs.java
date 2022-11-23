@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.properties.configs.mvc;
 
-import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.Data;
@@ -10,8 +9,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CorsConfigs extends AbstractPropertiesConfigs {
-    @MandatoryProperty
-    private boolean enabled;
     @NonMandatoryProperty
     private String pathPattern;
     @NonMandatoryProperty
@@ -27,7 +24,6 @@ public class CorsConfigs extends AbstractPropertiesConfigs {
 
     // NOTE: test-purposes
     public static CorsConfigs of(
-            boolean enabled,
             String pathPattern,
             String[] allowedOrigins,
             String[] allowedMethods,
@@ -36,7 +32,6 @@ public class CorsConfigs extends AbstractPropertiesConfigs {
             String[] exposedHeaders
     ) {
         var instance = new CorsConfigs();
-        instance.enabled = enabled;
         instance.pathPattern = pathPattern;
         instance.allowedOrigins = allowedOrigins;
         instance.allowedMethods = allowedMethods;

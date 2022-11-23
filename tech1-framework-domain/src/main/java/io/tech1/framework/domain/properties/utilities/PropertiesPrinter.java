@@ -14,10 +14,10 @@ public class PropertiesPrinter {
     private static final String INTERPUNCT = "··································································································";
 
     public static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs) {
-        printProperties("[Configuration]", abstractPropertiesConfigs);
+        printProperties(abstractPropertiesConfigs, "[Configuration]");
     }
 
-    public static void printProperties(String prefix, AbstractPropertiesConfigs abstractPropertiesConfigs) {
+    public static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs, String prefix) {
         LOGGER.info(INTERPUNCT);
         var parentKey = abstractPropertiesConfigs.getClass().getSimpleName();
         var properties = getNotNullPropertiesRecursively(abstractPropertiesConfigs, parentKey);

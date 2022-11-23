@@ -16,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.utilities.exceptions.ThrowableUtility.getTrace;
@@ -44,12 +42,12 @@ public class IncidentConverterImpl implements IncidentConverter {
             incident.add(IncidentAttributes.Keys.METHOD, method.toString());
         }
 
-        List<Object> params = throwableIncident.getParams();
+        var params = throwableIncident.getParams();
         if (nonNull(params) && params.size() > 0) {
             incident.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(", ")));
         }
 
-        Map<String, Object> attributes = throwableIncident.getAttributes();
+        var attributes = throwableIncident.getAttributes();
         if (nonNull(attributes) && attributes.size() > 0) {
             attributes.forEach(incident::add);
         }

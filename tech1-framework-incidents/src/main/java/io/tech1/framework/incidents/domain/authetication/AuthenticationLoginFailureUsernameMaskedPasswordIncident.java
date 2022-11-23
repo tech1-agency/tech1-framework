@@ -6,18 +6,16 @@ import lombok.Data;
 import static io.tech1.framework.domain.utilities.strings.MaskUtility.mask5;
 
 // Lombok
-@Data
+@Data(staticConstructor = "of")
 public class AuthenticationLoginFailureUsernameMaskedPasswordIncident {
     private final Username username;
     private final String password;
 
-    public static AuthenticationLoginFailureUsernameMaskedPasswordIncident of(
+    public AuthenticationLoginFailureUsernameMaskedPasswordIncident(
             Username username,
             String password
     ) {
-        return new AuthenticationLoginFailureUsernameMaskedPasswordIncident(
-                username,
-                mask5(password)
-        );
+        this.username = username;
+        this.password = mask5(password);
     }
 }

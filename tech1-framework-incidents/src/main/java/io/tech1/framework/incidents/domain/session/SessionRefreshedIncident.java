@@ -7,6 +7,6 @@ import lombok.Data;
 // Lombok
 @Data(staticConstructor = "of")
 public class SessionRefreshedIncident {
-    private Username username;
-    private UserRequestMetadata userRequestMetadata;
+    private final Username username;
+    private final UserRequestMetadata userRequestMetadata;
 }

@@ -4,6 +4,10 @@
 - Migrate domain-based properties 
 - Migrate domain-based exception
 - Add tech1-framework-properties maven module
+- Add tech1-framework-configurations maven module
+- Add tech1-framework-emails maven module
+- Add tech1-framework-hardware maven module
+- Add tech1-framework-incidents maven module
 
 ### v1.3
 - Add geo-based and user-agent-based functionality for user sessions and user incidents

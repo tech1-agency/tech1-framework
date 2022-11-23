@@ -1,4 +1,4 @@
-package io.tech1.framework.hardware.configuration;
+package io.tech1.framework.hardware.configurations;
 
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;

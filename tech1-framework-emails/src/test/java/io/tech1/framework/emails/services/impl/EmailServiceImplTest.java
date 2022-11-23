@@ -60,7 +60,7 @@ public class EmailServiceImplTest {
     private final EmailService componentUnderTest;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         reset(
                 this.javaMailSender,
                 this.applicationFrameworkProperties
@@ -68,7 +68,7 @@ public class EmailServiceImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.javaMailSender,
                 this.applicationFrameworkProperties

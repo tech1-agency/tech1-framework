@@ -63,14 +63,14 @@ public class BaseEnvironmentUtilityTest {
     private final EnvironmentUtility componentUnderTest;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         reset(
                 this.environment
         );
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.environment
         );

@@ -14,7 +14,9 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {
+        "timestamp"
+})
 @ToString
 public class HardwareMonitoringDatapointTableRow {
     private final HardwareName hardwareName;

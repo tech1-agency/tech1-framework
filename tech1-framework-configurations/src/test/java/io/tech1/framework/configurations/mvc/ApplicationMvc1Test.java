@@ -1,6 +1,7 @@
 package io.tech1.framework.configurations.mvc;
 
-import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
+import io.tech1.framework.domain.properties.configs.MvcConfigs;
+import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,18 @@ public class ApplicationMvc1Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            var mvcConfigs = TestsPropertiesConstants.MVC_CONFIGS;
-            mvcConfigs.setEnabled(false);
+            var mvcConfigs = MvcConfigs.of(
+                    false,
+                    "/platform/security",
+                    CorsConfigs.of(
+                            "/api/**",
+                            new String[] { "http://localhost:8080", "http://localhost:8081" },
+                            new String[] { "GET", "POST" },
+                            new String[] { "Access-Control-Allow-Origin" },
+                            true,
+                            null
+                    )
+            );
             when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(mvcConfigs);
             return applicationFrameworkProperties;
         }
@@ -42,7 +53,7 @@ public class ApplicationMvc1Test {
     private final ApplicationMVC componentUnderTest;
 
     @Test
-    public void addCorsMappingsDisabled() {
+    public void addCorsMappingsDisabledTest() {
         // Arrange
         var corsRegistry = mock(CorsRegistry.class);
 

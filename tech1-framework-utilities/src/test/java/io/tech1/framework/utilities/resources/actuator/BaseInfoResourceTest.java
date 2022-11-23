@@ -46,14 +46,14 @@ public class BaseInfoResourceTest {
     private final BaseInfoResource componentUnderTest;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         reset(
                 this.environmentUtility
         );
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.environmentUtility
         );

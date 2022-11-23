@@ -62,14 +62,14 @@ public class TestSpringBootClientTest {
     private final TestSpringBootClient componentUnderTest;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         reset(
                 this.springBootClientFeign
         );
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.springBootClientFeign
         );

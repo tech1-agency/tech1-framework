@@ -55,7 +55,7 @@ public class ApplicationMvc2Test {
     private final ApplicationMVC componentUnderTest;
 
     @Test
-    public void addCorsMappingsDisabled() {
+    public void addCorsMappingsEnabledTest() {
         // Arrange
         var corsRegistry = mock(CorsRegistry.class);
         var corsRegistration = mock(CorsRegistration.class);
@@ -65,7 +65,7 @@ public class ApplicationMvc2Test {
         this.componentUnderTest.addCorsMappings(corsRegistry);
 
         // Assert
-        verify(corsRegistry).addMapping(eq("/api/**"));
+        verify(corsRegistry).addMapping("/api/**");
         verify(corsRegistration).allowCredentials(eq(false));
         verifyNoMoreInteractions(
                 corsRegistry,

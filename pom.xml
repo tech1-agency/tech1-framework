@@ -57,6 +57,7 @@
         <module>tech1-framework-properties</module>
         <module>tech1-framework-configurations</module>
         <module>tech1-framework-emails</module>
+        <module>tech1-framework-hardware</module>
     </modules>
 
     <properties>

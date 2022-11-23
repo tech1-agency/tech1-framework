@@ -25,7 +25,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth.undefinedSpringBootActuatorHealth;
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo.undefinedSpringBootActuatorInfo;
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit.undefinedSpringBootActuatorInfoGit;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

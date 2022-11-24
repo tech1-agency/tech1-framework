@@ -4,7 +4,11 @@ import io.tech1.framework.domain.properties.base.RemoteServer;
 import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.utilities.random.EntityUtility;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginIncident;
+import io.tech1.framework.incidents.domain.authetication.*;
+import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
+import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -21,6 +25,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.disabledIncidentFeatureConfigs;
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.enabledIncidentFeatureConfigs;
@@ -118,20 +125,7 @@ public class IncidentPublisherImplTest {
     @Test
     public void publishAuthenticationLoginDisabledTest() {
         // Arrange
-        var incidentConfigs = IncidentConfigs.of(
-                true,
-                EntityUtility.entity(RemoteServer.class),
-                IncidentFeaturesConfigs.of(
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs()
-                )
-        );
+        var incidentConfigs = randomIncidentConfigsBy(0, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
         var incident = entity(AuthenticationLoginIncident.class);
 
@@ -145,20 +139,7 @@ public class IncidentPublisherImplTest {
     @Test
     public void publishAuthenticationLoginEnabledTest() {
         // Arrange
-        var incidentConfigs = IncidentConfigs.of(
-                true,
-                EntityUtility.entity(RemoteServer.class),
-                IncidentFeaturesConfigs.of(
-                        enabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs(),
-                        disabledIncidentFeatureConfigs()
-                )
-        );
+        var incidentConfigs = randomIncidentConfigsBy(0, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
         var incident = entity(AuthenticationLoginIncident.class);
 
@@ -168,5 +149,265 @@ public class IncidentPublisherImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getIncidentConfigs();
         verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishAuthenticationLoginFailureUsernamePasswordDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(1, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLoginFailureUsernamePasswordIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishAuthenticationLoginFailureUsernamePasswordEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(1, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLoginFailureUsernamePasswordIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishAuthenticationLoginFailureUsernameMaskedPasswordDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(2, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLoginFailureUsernameMaskedPasswordIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishAuthenticationLoginFailureUsernameMaskedPasswordEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(2, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLoginFailureUsernameMaskedPasswordIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishAuthenticationLogoutMinDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(3, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLogoutMinIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLogoutMin(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishAuthenticationLogoutMinEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(3, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLogoutMinIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLogoutMin(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishAuthenticationLogoutFullDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(3, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLogoutFullIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLogoutFull(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishAuthenticationLogoutFullEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(3, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(AuthenticationLogoutFullIncident.class);
+
+        // Act
+        this.componentUnderTest.publishAuthenticationLogoutFull(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishSessionRefreshedDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(4, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(SessionRefreshedIncident.class);
+
+        // Act
+        this.componentUnderTest.publishSessionRefreshed(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishSessionRefreshedEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(4, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(SessionRefreshedIncident.class);
+
+        // Act
+        this.componentUnderTest.publishSessionRefreshed(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishSessionExpiredDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(5, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(SessionExpiredIncident.class);
+
+        // Act
+        this.componentUnderTest.publishSessionExpired(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishSessionExpiredEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(5, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(SessionExpiredIncident.class);
+
+        // Act
+        this.componentUnderTest.publishSessionExpired(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishRegistration1DisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(6, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(Register1Incident.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration1(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishRegistration1EnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(6, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(Register1Incident.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration1(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishRegistration1FailureDisabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(7, false);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(Register1FailureIncident.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration1Failure(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    public void publishRegistration1FailureEnabledTest() {
+        // Arrange
+        var incidentConfigs = randomIncidentConfigsBy(7, true);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+        var incident = entity(Register1FailureIncident.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration1Failure(incident);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private static IncidentConfigs randomIncidentConfigsBy(int index, boolean enabled) {
+        var incidentFeatureConfigs = IntStream.range(0, 8)
+                .mapToObj(i -> {
+                    if (index == i && enabled) {
+                        return enabledIncidentFeatureConfigs();
+                    } else {
+                        return disabledIncidentFeatureConfigs();
+                    }
+                }).collect(Collectors.toList());
+        return IncidentConfigs.of(
+                true,
+                EntityUtility.entity(RemoteServer.class),
+                IncidentFeaturesConfigs.of(
+                        incidentFeatureConfigs.get(0),
+                        incidentFeatureConfigs.get(1),
+                        incidentFeatureConfigs.get(2),
+                        incidentFeatureConfigs.get(3),
+                        incidentFeatureConfigs.get(4),
+                        incidentFeatureConfigs.get(5),
+                        incidentFeatureConfigs.get(6),
+                        incidentFeatureConfigs.get(7)
+                )
+        );
     }
 }

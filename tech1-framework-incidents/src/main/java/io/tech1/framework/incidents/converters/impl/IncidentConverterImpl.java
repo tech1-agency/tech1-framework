@@ -1,5 +1,6 @@
 package io.tech1.framework.incidents.converters.impl;
 
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.converters.IncidentConverter;
@@ -111,7 +112,7 @@ public class IncidentConverterImpl implements IncidentConverter {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private Incident convertAuthenticationLoginFailure(Username username, String password) {
+    private Incident convertAuthenticationLoginFailure(Username username, Password password) {
         var incident = this.convertOnlyUsername(AUTHENTICATION_LOGIN_FAILURE, username);
         incident.add(IncidentAttributes.Keys.PASSWORD, password);
         return incident;
@@ -120,7 +121,7 @@ public class IncidentConverterImpl implements IncidentConverter {
     private Incident convertOnlyUsername(String incidentType, Username username) {
         var incident = new Incident();
         incident.add(IncidentAttributes.Keys.TYPE, incidentType);
-        incident.add(IncidentAttributes.Keys.USERNAME, username.getIdentifier());
+        incident.add(IncidentAttributes.Keys.USERNAME, username);
         return incident;
     }
 

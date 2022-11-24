@@ -38,7 +38,6 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
         var invitationCode = requestUserRegistration1.getInvitationCode();
 
         assertNonNullNotBlankOrThrow(username, invalidAttribute("username"));
-        assertNonNullNotBlankOrThrow(zoneId, invalidAttribute("zoneId"));
         assertNonNullNotBlankOrThrow(password, invalidAttribute("password"));
         assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
         assertNonNullNotBlankOrThrow(invitationCode, invalidAttribute("invitationCode"));

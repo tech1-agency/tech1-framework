@@ -28,18 +28,18 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
 
     @Override
     public void validateUserUpdateRequest1(DbUser currentDbUser, RequestUserUpdate1 requestUserUpdate1) {
-        String zoneId = requestUserUpdate1.getZoneId();
+        var zoneId = requestUserUpdate1.getZoneId();
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        String email = requestUserUpdate1.getEmail();
+        var email = requestUserUpdate1.getEmail();
 
-        String invalidEmailMessage = invalidAttribute("email");
+        var invalidEmailMessage = invalidAttribute("email");
         assertNonNullNotBlankOrThrow(email, invalidEmailMessage);
 
         if (!isEmail(email)) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
-        DbUser user = this.userRepository.findByEmail(email);
+        var user = this.userRepository.findByEmail(email);
         // `email` is already used by other user in the system
         if (nonNull(user) && !user.getUsername().equals(currentDbUser.getUsername())) {
             throw new IllegalArgumentException(invalidEmailMessage);
@@ -48,8 +48,8 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
 
     @Override
     public void validateUserChangePasswordRequest1(RequestUserChangePassword1 requestUserChangePassword1) {
-        String newPassword = requestUserChangePassword1.getNewPassword();
-        String confirmPassword = requestUserChangePassword1.getConfirmPassword();
+        var newPassword = requestUserChangePassword1.getNewPassword();
+        var confirmPassword = requestUserChangePassword1.getConfirmPassword();
 
         assertNonNullNotBlankOrThrow(newPassword, invalidAttribute("newPassword"));
         assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));

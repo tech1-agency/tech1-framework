@@ -26,7 +26,6 @@ public class VersionTest extends AbstractFolderSerializationRunner {
         );
     }
 
-
     @ParameterizedTest
     @MethodSource("versionsTests")
     public void serializeTest(Version version, String fileName) {

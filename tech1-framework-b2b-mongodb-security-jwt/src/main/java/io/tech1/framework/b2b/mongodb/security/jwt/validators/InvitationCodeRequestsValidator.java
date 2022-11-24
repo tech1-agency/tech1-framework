@@ -5,5 +5,5 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestNe
 
 public interface InvitationCodeRequestsValidator {
     void validateCreateNewInvitationCode(RequestNewInvitationCodeParams requestNewInvitationCodeParams);
-    void validateDeleteById(DbUser user, String invitationCodeId);
+    void validateDeleteById(DbUser currentUser, String invitationCodeId);
 }

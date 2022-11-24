@@ -34,13 +34,13 @@ public class InvitationCodeRequestsValidatorImpl implements InvitationCodeReques
     }
 
     @Override
-    public void validateDeleteById(DbUser user, String invitationCodeId) {
+    public void validateDeleteById(DbUser currentUser, String invitationCodeId) {
         assertNonNullNotBlankOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
-        assertNonNullOrThrow(user.getUsername(), invalidAttribute("owner"));
+        assertNonNullOrThrow(currentUser.getUsername(), invalidAttribute("owner"));
 
         var invitationCode = invitationCodeRepository.requirePresence(invitationCodeId);
-        if (!user.getUsername().equals(invitationCode.getOwner())) {
-            throw new IllegalArgumentException(accessDenied(user.getUsername(), "InvitationCode", invitationCodeId));
+        if (!currentUser.getUsername().equals(invitationCode.getOwner())) {
+            throw new IllegalArgumentException(accessDenied(currentUser.getUsername(), "InvitationCode", invitationCodeId));
         }
     }
 }

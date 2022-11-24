@@ -1,12 +1,16 @@
-package io.tech1.framework.configurations.async;
+package io.tech1.framework.incidents.configurations;
 
+import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
+import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -20,24 +24,53 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationAsyncTest {
+public class ApplicationAsyncIncidentsTest {
 
     @Configuration
     @Import({
             ApplicationFrameworkPropertiesContext.class,
-            ApplicationAsync.class
+            ApplicationAsyncIncidents.class
     })
     static class ContextConfiguration {
+        @Bean
+        AsyncUncaughtExceptionHandlerPublisher asyncUncaughtExceptionHandlerPublisher() {
+            return mock(AsyncUncaughtExceptionHandlerPublisher.class);
+        }
 
+        @Bean
+        RejectedExecutionHandlerPublisher rejectedExecutionHandlerPublisher() {
+            return mock(RejectedExecutionHandlerPublisher.class);
+        }
     }
 
+    // Exceptions
+    private final AsyncUncaughtExceptionHandlerPublisher asyncUncaughtExceptionHandlerPublisher;
+    private final RejectedExecutionHandlerPublisher rejectedExecutionHandlerPublisher;
+    // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    private final ApplicationAsync componentUnderTest;
+    private final ApplicationAsyncIncidents componentUnderTest;
+
+    @BeforeEach
+    public void beforeEach() {
+        reset(
+                this.asyncUncaughtExceptionHandlerPublisher,
+                this.rejectedExecutionHandlerPublisher
+        );
+    }
+
+    @AfterEach
+    public void afterEach() {
+        verifyNoMoreInteractions(
+                this.asyncUncaughtExceptionHandlerPublisher,
+                this.rejectedExecutionHandlerPublisher
+        );
+    }
 
     @Test
     public void beansTests() {
@@ -71,7 +104,6 @@ public class ApplicationAsyncTest {
         var actual = this.componentUnderTest.getAsyncUncaughtExceptionHandler();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getClass()).isEqualTo(SimpleAsyncUncaughtExceptionHandler.class);
+        assertThat(actual).isEqualTo(this.asyncUncaughtExceptionHandlerPublisher);
     }
 }

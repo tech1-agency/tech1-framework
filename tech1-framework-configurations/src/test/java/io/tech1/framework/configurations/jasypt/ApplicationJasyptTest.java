@@ -12,6 +12,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.lang.reflect.Method;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -29,6 +33,17 @@ public class ApplicationJasyptTest {
     }
 
     private final ApplicationJasypt componentUnderTest;
+
+    @Test
+    public void beansTests() {
+        // Act
+        var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
+                .map(Method::getName)
+                .collect(Collectors.toList());
+
+        // Assert
+        assertThat(methods).hasSize(13);
+    }
 
     @Test
     public void annotationTest() {

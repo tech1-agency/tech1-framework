@@ -15,6 +15,11 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
+import java.lang.reflect.Method;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -53,6 +58,18 @@ public class ApplicationMvc3Test {
     }
 
     private final ApplicationMVC componentUnderTest;
+
+    @Test
+    public void beansTests() {
+        // Act
+        var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
+                .map(Method::getName)
+                .collect(Collectors.toList());
+
+        // Assert
+        assertThat(methods).contains("addCorsMappings");
+        assertThat(methods).hasSize(28);
+    }
 
     @Test
     public void addCorsMappingsEnabledTest() {

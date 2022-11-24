@@ -35,6 +35,13 @@ public class IncidentConfigs extends AbstractPropertiesToggleConfigs implements 
         return instance;
     }
 
+    // NOTE: test-purposes
+    public static IncidentConfigs disabled() {
+        var instance = new IncidentConfigs();
+        instance.enabled = false;
+        return instance;
+    }
+
     @Override
     public void assertProperties() {
         super.assertProperties();

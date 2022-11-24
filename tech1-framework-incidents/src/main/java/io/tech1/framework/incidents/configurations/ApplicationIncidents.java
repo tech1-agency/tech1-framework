@@ -39,8 +39,8 @@ public class ApplicationIncidents {
 
     @Bean
     public IncidentClientDefinition incidentClientDefinition() {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().isEnabled()) {
-            var incidentConfigs = this.applicationFrameworkProperties.getIncidentConfigs();
+        var incidentConfigs = this.applicationFrameworkProperties.getIncidentConfigs();
+        if (incidentConfigs.isEnabled()) {
             var incidentServer = incidentConfigs.getRemoteServer();
             var incidentServerBaseURL = incidentServer.getBaseURL();
             var username = incidentServer.getUsername();

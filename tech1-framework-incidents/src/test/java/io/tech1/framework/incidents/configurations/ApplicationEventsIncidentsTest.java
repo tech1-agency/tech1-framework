@@ -1,10 +1,14 @@
-package io.tech1.framework.configurations.events;
+package io.tech1.framework.incidents.configurations;
 
+import io.tech1.framework.incidents.handlers.ErrorHandlerPublisher;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
@@ -17,22 +21,43 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationEventsTest {
+public class ApplicationEventsIncidentsTest {
 
     @Configuration
     @Import({
             ApplicationFrameworkPropertiesContext.class,
-            ApplicationEvents.class
+            ApplicationEventsIncidents.class
     })
     static class ContextConfiguration {
-
+        @Bean
+        ErrorHandlerPublisher errorHandlerPublisher() {
+            return mock(ErrorHandlerPublisher.class);
+        }
     }
 
-    private final ApplicationEvents componentUnderTest;
+    // Exceptions
+    private final ErrorHandlerPublisher errorHandlerPublisher;
+
+    private final ApplicationEventsIncidents componentUnderTest;
+
+    @BeforeEach
+    public void beforeEach() {
+        reset(
+                this.errorHandlerPublisher
+        );
+    }
+
+    @AfterEach
+    public void afterEach() {
+        verifyNoMoreInteractions(
+                this.errorHandlerPublisher
+        );
+    }
 
     @Test
     public void beansTests() {

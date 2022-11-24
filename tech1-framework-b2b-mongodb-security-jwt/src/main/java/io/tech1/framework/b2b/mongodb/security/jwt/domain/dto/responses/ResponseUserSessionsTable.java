@@ -1,8 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.util.List;
 
@@ -12,9 +10,7 @@ import static java.util.Comparator.comparing;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 public class ResponseUserSessionsTable {
     private final List<ResponseUserSession2> sessions;
     private final boolean anyPresent;

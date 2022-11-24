@@ -3,18 +3,14 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators;
 import io.tech1.framework.domain.base.Username;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 // Lombok
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 public class ResponseServerSessionsTable {
     private final List<ResponseUserSession3> activeSessions;
     private final List<ResponseUserSession3> inactiveSessions;

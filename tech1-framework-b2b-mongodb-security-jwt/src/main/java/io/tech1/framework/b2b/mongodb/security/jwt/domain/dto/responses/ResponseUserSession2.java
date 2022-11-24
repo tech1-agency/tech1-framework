@@ -3,19 +3,13 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 // Lombok
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 public class ResponseUserSession2 {
     private final String id;
 

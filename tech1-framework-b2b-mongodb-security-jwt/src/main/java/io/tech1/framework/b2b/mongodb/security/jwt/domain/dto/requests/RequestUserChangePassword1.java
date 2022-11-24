@@ -1,16 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests;
 
-import lombok.*;
+import lombok.Data;
 
 // Lombok
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 public class RequestUserChangePassword1 {
-    private String newPassword;
-    private String confirmPassword;
+    private final String newPassword;
+    private final String confirmPassword;
 }

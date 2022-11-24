@@ -88,7 +88,7 @@ public class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("Exception")).isEqualTo(NullPointerException.class);
         assertThat(actual.getAttributes().get("Message")).isEqualTo("Tech1");
         assertThat(actual.getAttributes().get("Trace").toString()).startsWith("Throwable occurred! Please take required actions!");
-        assertThat(actual.getAttributes().get("Method")).isEqualTo("public void java.lang.Throwable.printStackTrace()");
+        assertThat(actual.getAttributes().get("Method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
         assertThat(actual.getAttributes().get("Params")).isEqualTo(object + ", param1, 1");
     }
 

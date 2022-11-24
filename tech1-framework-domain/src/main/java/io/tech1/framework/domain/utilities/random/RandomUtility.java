@@ -333,7 +333,7 @@ public class RandomUtility {
     }
 
     public static Method randomMethod() {
-        return Throwable.class.getDeclaredMethods()[0];
+        return Object.class.getDeclaredMethods()[0];
     }
 
     public static ZoneId randomZoneId() {

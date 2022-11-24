@@ -746,7 +746,7 @@ public class RandomUtilityTest {
         var actual = randomMethod();
 
         // Assert
-        assertThat(actual.getName()).isEqualTo("printStackTrace");
+        assertThat(actual.getName()).isEqualTo("finalize");
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)

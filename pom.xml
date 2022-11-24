@@ -59,6 +59,7 @@
         <module>tech1-framework-emails</module>
         <module>tech1-framework-hardware</module>
         <module>tech1-framework-incidents</module>
+        <module>tech1-framework-b2b-mongodb-security-jwt</module>
     </modules>
 
     <properties>
@@ -71,10 +72,12 @@
         <version.dependency.browscap>1.3.12</version.dependency.browscap>
         <version.dependency.common.codec>1.15</version.dependency.common.codec>
         <version.dependency.feign>10.7.0</version.dependency.feign>
+        <version.dependency.geoip2>2.8.0</version.dependency.geoip2>
         <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.jakarta>2.3.2</version.dependency.jakarta>
         <version.dependency.jasypt>3.0.4</version.dependency.jasypt>
         <version.dependency.javax.mail>1.4.7</version.dependency.javax.mail>
+        <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
         <version.dependency.tomcat.embed>9.0.55</version.dependency.tomcat.embed>
@@ -114,6 +117,12 @@
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${version.dependency.jasypt}</version>
+            </dependency>
+            <!-- JWT Security -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${version.dependency.jsonwebtoken}</version>
             </dependency>
             <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
             <dependency>
@@ -159,6 +168,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${version.dependency.apache.collections}</version>
+            </dependency>
+            <!-- GeoIP2 -->
+            <dependency>
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${version.dependency.geoip2}</version>
             </dependency>
             <!-- Browser Capabilities -->
             <dependency>

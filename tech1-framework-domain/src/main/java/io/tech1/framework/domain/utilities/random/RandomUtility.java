@@ -17,6 +17,7 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -329,6 +330,10 @@ public class RandomUtility {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public static Method randomMethod() {
+        return Throwable.class.getDeclaredMethods()[0];
     }
 
     public static ZoneId randomZoneId() {

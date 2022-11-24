@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 // Lombok
@@ -20,7 +19,7 @@ import static java.util.Objects.nonNull;
 @EqualsAndHashCode
 @ToString
 public class Incident {
-    private Map<String, Object> attributes;
+    private final Map<String, Object> attributes;
 
     public Incident() {
         this.attributes = new TreeMap<>();
@@ -29,21 +28,15 @@ public class Incident {
     public static Incident copyOf(Incident incident) {
         assertNonNullOrThrow(incident, invalidAttribute("Incident.incident"));
         var instance = new Incident();
-        incident.getAttributes().forEach(instance::add);
+        instance.addAll(incident.getAttributes());
         return instance;
     }
 
     public void add(String key, Object value) {
-        if (isNull(this.attributes)) {
-            this.attributes = new TreeMap<>();
-        }
         this.attributes.put(key, value);
     }
 
     public void addAll(Map<String, Object> attributes) {
-        if (isNull(this.attributes)) {
-            this.attributes = new TreeMap<>();
-        }
         this.attributes.putAll(attributes);
     }
 

@@ -27,6 +27,17 @@ public class IncidentConfigsTest {
     }
 
     @Test
+    public void disabledTest() {
+        // Act
+        var incidentConfigs = IncidentConfigs.disabled();
+
+        // Assert
+        assertThat(incidentConfigs.isEnabled()).isFalse();
+        assertThat(incidentConfigs.getRemoteServer()).isNull();
+        assertThat(incidentConfigs.getFeatures()).isNull();
+    }
+
+    @Test
     public void ofFeaturesNullTest() {
         // Act
         var incidentConfigs = IncidentConfigs.of(

@@ -47,6 +47,5 @@ public class ThrowableUtilityTest {
         assertThat(actual.getValue()).startsWith("Throwable occurred! Please take required actions!");
         assertThat(actual.getValue()).contains("java.lang.NullPointerException: Tech1");
         assertThat(actual.toString()).contains("java.lang.NullPointerException: Tech1");
-        System.out.println(actual.getValue());
     }
 }

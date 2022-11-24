@@ -741,6 +741,15 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomMethodTest() {
+        // Act
+        var actual = randomMethod();
+
+        // Assert
+        assertThat(actual.getName()).isEqualTo("printStackTrace");
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomZoneIdTest() {
         // Act
         var actual = randomZoneId();

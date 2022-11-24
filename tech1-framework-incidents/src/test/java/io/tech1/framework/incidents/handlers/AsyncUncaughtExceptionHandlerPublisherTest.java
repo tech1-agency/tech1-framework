@@ -16,8 +16,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Arrays;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLong;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -63,7 +62,7 @@ public class AsyncUncaughtExceptionHandlerPublisherTest {
     public void handleUncaughtExceptionTest() {
         // Arrange
         var throwable = mock(Throwable.class);
-        var method = throwable.getClass().getDeclaredMethods()[0];
+        var method = randomMethod();
         var params = new Object[] { randomString(), randomLong() };
 
         // Act

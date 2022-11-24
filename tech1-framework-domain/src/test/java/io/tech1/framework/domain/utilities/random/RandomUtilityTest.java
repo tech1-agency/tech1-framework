@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.random;
 
+import feign.Request;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
 import io.tech1.framework.domain.enums.Status;
@@ -765,6 +766,17 @@ public class RandomUtilityTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getIdentifier()).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomFeignExceptionTest() {
+        // Act
+        var actual = randomFeignException();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.request().httpMethod()).isEqualTo(Request.HttpMethod.GET);
+        assertThat(actual.request().url()).isEqualTo("/endpoint");
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)

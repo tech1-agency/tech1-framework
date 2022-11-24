@@ -1,10 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.base.Username;
-import lombok.*;
+import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;

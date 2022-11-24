@@ -59,9 +59,8 @@ public class DbUser {
     }
 
     public void edit(RequestUserUpdate1 requestUserUpdate1) {
-        var zoneId = requestUserUpdate1.getZoneId();
-        assertZoneIdOrThrow(zoneId, invalidAttribute("DbUser.zoneId"));
-        this.zoneId = ZoneId.of(zoneId);
+        assertZoneIdOrThrow(requestUserUpdate1.getZoneId(), invalidAttribute("DbUser.zoneId"));
+        this.zoneId = ZoneId.of(requestUserUpdate1.getZoneId());
         this.name = requestUserUpdate1.getName();
         this.email = requestUserUpdate1.getEmail();
     }

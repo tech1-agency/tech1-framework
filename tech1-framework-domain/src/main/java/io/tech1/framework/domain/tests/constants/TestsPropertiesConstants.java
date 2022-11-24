@@ -27,7 +27,7 @@ public class TestsPropertiesConstants {
     public static final EventsConfigs EVENTS_CONFIGS = EventsConfigs.of("tech1-events");
     public static final MvcConfigs MVC_CONFIGS = MvcConfigs.of(
             true,
-            "/platform/security",
+            "/framework/security",
             CorsConfigs.of(
                     "/api/**",
                     new String[] { "http://localhost:8080", "http://localhost:8081" },
@@ -108,7 +108,7 @@ public class TestsPropertiesConstants {
                     JwtToken.of("rjwt", TimeAmount.of(12L, HOURS))
             ),
             LoggingConfigs.of(true),
-            Mongodb.of("127.0.0.1", 27017, "tech1_platform_server"),
+            Mongodb.of("127.0.0.1", 27017, "tech1_framework_server"),
             SessionConfigs.of(
                     Cron.of(false, "*/30 * * * * *", "Europe/Kiev")
             )
@@ -118,7 +118,7 @@ public class TestsPropertiesConstants {
             StompEndpointRegistryConfigs.of("/endpoint"),
             MessageBrokerRegistryConfigs.of("/app", "/queue", "/user"),
             WebsocketsFeaturesConfigs.of(
-                    WebsocketsFeatureHardwareConfigs.of(true, "/platform")
+                    WebsocketsFeatureHardwareConfigs.of(true, "/account")
             )
     );
 }

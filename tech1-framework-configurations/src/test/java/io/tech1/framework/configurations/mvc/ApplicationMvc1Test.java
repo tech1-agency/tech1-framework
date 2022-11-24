@@ -33,7 +33,7 @@ public class ApplicationMvc1Test {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
             var mvcConfigs = MvcConfigs.of(
                     false,
-                    "/platform/security",
+                    "/framework/security",
                     CorsConfigs.of(
                             "/api/**",
                             new String[] { "http://localhost:8080", "http://localhost:8081" },

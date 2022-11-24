@@ -37,6 +37,8 @@ public class ApplicationIncidents1Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
+            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(TestsPropertiesConstants.ASYNC_CONFIGS);
+            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(TestsPropertiesConstants.EVENTS_CONFIGS);
             when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(TestsPropertiesConstants.INCIDENT_CONFIGS);
             return applicationFrameworkProperties;
         }

@@ -14,9 +14,9 @@ public class MongodbTest {
 
     private static Stream<Arguments> noAuthenticationTest() {
         return Stream.of(
-                Arguments.of("127.0.0.1", 27017, "tech1_platform_server", null, null),
-                Arguments.of("127.0.0.1", 27017, "tech1_platform_server", randomString(), null),
-                Arguments.of("127.0.0.1", 27017, "tech1_platform_server", null, randomString())
+                Arguments.of("127.0.0.1", 27017, "tech1_framework_server", null, null),
+                Arguments.of("127.0.0.1", 27017, "tech1_framework_server", randomString(), null),
+                Arguments.of("127.0.0.1", 27017, "tech1_framework_server", null, randomString())
         );
     }
 
@@ -36,7 +36,7 @@ public class MongodbTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isEqualTo("mongodb://127.0.0.1:27017/tech1_platform_server");
+        assertThat(actual).isEqualTo("mongodb://127.0.0.1:27017/tech1_framework_server");
     }
 
     @Test
@@ -45,7 +45,7 @@ public class MongodbTest {
         var mongodb = new Mongodb();
         mongodb.setHost("127.0.0.1");
         mongodb.setPort(27017);
-        mongodb.setDatabase("tech1_platform_server");
+        mongodb.setDatabase("tech1_framework_server");
         mongodb.setUsername("admin");
         mongodb.setPassword("Password123!");
 
@@ -54,6 +54,6 @@ public class MongodbTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isEqualTo("mongodb://admin:Password123!@127.0.0.1:27017/tech1_platform_server");
+        assertThat(actual).isEqualTo("mongodb://admin:Password123!@127.0.0.1:27017/tech1_framework_server");
     }
 }

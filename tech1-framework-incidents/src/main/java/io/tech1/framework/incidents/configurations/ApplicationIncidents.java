@@ -21,7 +21,7 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 @Slf4j
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.platform.incidents"
+        "io.tech1.framework.incidents"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class IncidentAttributes {
 
+    @UtilityClass
     public static class Keys {
         public static final String TYPE = "incidentType";
 
@@ -26,6 +27,7 @@ public class IncidentAttributes {
         public static final String WHAT = "What";
     }
 
+    @UtilityClass
     public static class Values {
         public static final String THROWABLE = "Throwable";
         public static final String AUTHENTICATION_LOGIN = "Authentication Login";

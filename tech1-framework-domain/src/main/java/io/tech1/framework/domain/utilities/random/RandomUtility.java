@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.random;
 
 import feign.FeignException;
 import feign.Request;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
@@ -340,6 +341,10 @@ public class RandomUtility {
 
     public static Username randomUsername() {
         return Username.of(randomString());
+    }
+
+    public static Password randomPassword() {
+        return Password.of(randomString());
     }
 
     @SuppressWarnings("deprecation")

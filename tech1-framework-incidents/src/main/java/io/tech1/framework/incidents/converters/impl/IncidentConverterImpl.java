@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.utilities.exceptions.ThrowableUtility.getTrace;
 import static io.tech1.framework.incidents.domain.IncidentAttributes.Values.*;
 import static java.util.Objects.nonNull;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
 @Component
@@ -44,12 +45,12 @@ public class IncidentConverterImpl implements IncidentConverter {
         }
 
         var params = throwableIncident.getParams();
-        if (nonNull(params) && params.size() > 0) {
+        if (!isEmpty(params)) {
             incident.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(", ")));
         }
 
         var attributes = throwableIncident.getAttributes();
-        if (nonNull(attributes) && attributes.size() > 0) {
+        if (!isEmpty(attributes)) {
             attributes.forEach(incident::add);
         }
         return incident;

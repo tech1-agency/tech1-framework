@@ -41,7 +41,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(notUsedPropertiesConfigs);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -51,7 +51,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(ASYNC_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(EVENTS_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -78,7 +78,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(mvcConfigs);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(MVC_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -109,7 +109,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(emailConfigs);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -119,7 +119,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(EMAIL_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
@@ -151,7 +151,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(incidentConfigs);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -191,7 +191,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(INCIDENT_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -220,7 +220,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(HARDWARE_MONITORING_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -230,7 +230,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(HARDWARE_SERVER_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -240,7 +240,7 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(SECURITY_JWT_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 
     @Test
@@ -250,6 +250,6 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS);
 
         // Assert
-        // ignore
+        // no asserts
     }
 }

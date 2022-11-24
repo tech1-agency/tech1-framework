@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.random;
 
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
@@ -48,6 +49,7 @@ public class EntityUtility {
         addConstructorRule(ZoneId.class, clazz -> randomZoneId());
         addConstructorRule(TimeZone.class, clazz -> randomTimeZone());
         addConstructorRule(Username.class, clazz -> randomUsername());
+        addConstructorRule(Password.class, clazz -> randomPassword());
 
         addConstructorRule(IPAddress.class, clazz -> randomIPAddress());
         addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());
@@ -137,7 +139,11 @@ public class EntityUtility {
             try {
                 return createNoDefaultConstructor(type);
             } catch (ReflectiveOperationException ex2) {
-                throw new IllegalArgumentException("Please add entity construction rules or extend functionality. Class: `" + type.getCanonicalName() + "`");
+                try {
+                    return createPrivateDataLombokBasedConstructor(type);
+                } catch (ReflectiveOperationException ex3) {
+                    throw new IllegalArgumentException("Please add entity construction rules or extend functionality. Class: `" + type.getCanonicalName() + "`");
+                }
             }
         }
     }
@@ -217,5 +223,15 @@ public class EntityUtility {
         var instance = (T) constructor.newInstance(args);
         setObjectFields(instance);
         return instance;
+    }
+
+    private static <T> T createPrivateDataLombokBasedConstructor(Class<? extends T> type) throws ReflectiveOperationException {
+        var constructor = type.getDeclaredConstructors()[0];
+        constructor.setAccessible(true);
+        var args = Stream.of(constructor.getParameterTypes())
+                .map(EntityUtility::getRandomValueByClass)
+                .toArray();
+        // ignored setObjectFields() -> @Data constructor construct immutable object
+        return (T) constructor.newInstance(args);
     }
 }

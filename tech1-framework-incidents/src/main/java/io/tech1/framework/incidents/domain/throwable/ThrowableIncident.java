@@ -39,11 +39,11 @@ public class ThrowableIncident {
             Method method,
             List<Object> params
     ) {
-        assertNonNullNotBlankOrThrow(throwable, invalidAttribute("ThrowableIncident.throwable"));
+        var incident = of(
+                throwable
+        );
         assertNonNullNotBlankOrThrow(method, invalidAttribute("ThrowableIncident.method"));
         assertNonNullNotBlankOrThrow(params, invalidAttribute("ThrowableIncident.params"));
-        var incident = new ThrowableIncident();
-        incident.throwable = throwable;
         incident.method = method;
         incident.params = params;
         return incident;
@@ -53,10 +53,10 @@ public class ThrowableIncident {
             Throwable throwable,
             Map<String, Object> attributes
     ) {
-        assertNonNullNotBlankOrThrow(throwable, invalidAttribute("ThrowableIncident.throwable"));
         assertNonNullNotBlankOrThrow(attributes, invalidAttribute("ThrowableIncident.attributes"));
-        var incident = new ThrowableIncident();
-        incident.throwable = throwable;
+        var incident = of(
+                throwable
+        );
         incident.attributes = attributes;
         return incident;
     }

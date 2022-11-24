@@ -11,9 +11,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 
 public interface SecurityJwtTokenUtility {
-    JwtAccessToken createJwtAccessToken(DbUser dbUser);
-    JwtRefreshToken createJwtRefreshToken(DbUser dbUser);
-    String createJwtToken(Username username, List<SimpleGrantedAuthority> authorities, TimeAmount timeAmount);
+    JwtAccessToken createJwtAccessToken(DbUser user);
+    JwtRefreshToken createJwtRefreshToken(DbUser user);
+    String createJwtToken(DbUser user, TimeAmount timeAmount);
     JwtTokenValidatedClaims validate(JwtAccessToken jwtAccessToken);
     JwtTokenValidatedClaims validate(JwtRefreshToken jwtRefreshToken);
     boolean isExpired(JwtTokenValidatedClaims jwtTokenValidatedClaims);

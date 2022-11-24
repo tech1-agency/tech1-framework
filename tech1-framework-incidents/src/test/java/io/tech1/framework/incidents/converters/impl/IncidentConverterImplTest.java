@@ -1,12 +1,17 @@
 package io.tech1.framework.incidents.converters.impl;
 
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.converters.IncidentConverter;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginIncident;
+import io.tech1.framework.incidents.domain.authetication.*;
+import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
+import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -22,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomMethod;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -166,5 +172,212 @@ public class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("IP address")).isEqualTo("127.0.0.1");
         assertThat(actual.getAttributes().get("What")).isEqualTo("—");
         assertThat(actual.getAttributes().get("Where")).isEqualTo("Processing...Please wait!");
+    }
+
+    @Test
+    public void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var password = Password.of("passwordTOP123!");
+        var incident = AuthenticationLoginFailureUsernamePasswordIncident.of(
+                username,
+                password
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(3);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Password");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("Password")).isEqualTo(password);
+    }
+
+    @Test
+    public void convertAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var password = Password.of("passwordTOP123!");
+        var incident = AuthenticationLoginFailureUsernameMaskedPasswordIncident.of(
+                username,
+                password
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(3);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Password");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("Password")).isEqualTo(Password.of("passw**********"));
+    }
+
+    @Test
+    public void convertAuthenticationLogoutMinIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var incident = AuthenticationLogoutMinIncident.of(
+                username
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Logout");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(2);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+    }
+
+    @Test
+    public void convertAuthenticationLogoutFullIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var incident = AuthenticationLogoutFullIncident.of(
+                username,
+                UserRequestMetadata.processed(
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
+                )
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Logout");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(7);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("Browser")).isEqualTo("Mozilla");
+        assertThat(actual.getAttributes().get("Country")).isEqualTo("UK");
+        assertThat(actual.getAttributes().get("IP address")).isEqualTo("2.2.2.2");
+        assertThat(actual.getAttributes().get("What")).isEqualTo("Mozilla, MacOS on Desktop");
+        assertThat(actual.getAttributes().get("Where")).isEqualTo("UK, London");
+    }
+
+    @Test
+    public void convertSessionRefreshedIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var incident = SessionRefreshedIncident.of(
+                username,
+                UserRequestMetadata.processed(
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
+                )
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Session Refreshed");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(7);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Refreshed");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("Browser")).isEqualTo("Mozilla");
+        assertThat(actual.getAttributes().get("Country")).isEqualTo("UK");
+        assertThat(actual.getAttributes().get("IP address")).isEqualTo("2.2.2.2");
+        assertThat(actual.getAttributes().get("What")).isEqualTo("Mozilla, MacOS on Desktop");
+        assertThat(actual.getAttributes().get("Where")).isEqualTo("UK, London");
+    }
+
+    @Test
+    public void convertSessionExpiredIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var incident = SessionExpiredIncident.of(
+                username,
+                UserRequestMetadata.processed(
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
+                )
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Session Expired");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(7);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Expired");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("Browser")).isEqualTo("Mozilla");
+        assertThat(actual.getAttributes().get("Country")).isEqualTo("UK");
+        assertThat(actual.getAttributes().get("IP address")).isEqualTo("2.2.2.2");
+        assertThat(actual.getAttributes().get("What")).isEqualTo("Mozilla, MacOS on Desktop");
+        assertThat(actual.getAttributes().get("Where")).isEqualTo("UK, London");
+    }
+
+    @Test
+    public void convertRegister1IncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var incident = Register1Incident.of(
+                username
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Register1");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(2);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+    }
+
+    @Test
+    public void convertRegister1FailureIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var exception = randomString();
+        var invitationCode = randomString();
+        var incident = Register1FailureIncident.of(
+                username,
+                exception,
+                invitationCode
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Register1 Failure");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(4);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Exception", "Invitation Code");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1 Failure");
+        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("Exception")).isEqualTo(exception);
+        assertThat(actual.getAttributes().get("Invitation Code")).isEqualTo(invitationCode);
     }
 }

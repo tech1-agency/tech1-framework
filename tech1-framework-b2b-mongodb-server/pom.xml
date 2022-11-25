@@ -30,4 +30,8 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>app</finalName>
+    </build>
 </project>

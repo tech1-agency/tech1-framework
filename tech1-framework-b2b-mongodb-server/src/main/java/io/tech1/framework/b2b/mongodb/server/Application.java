@@ -28,7 +28,7 @@ import static io.tech1.framework.domain.enums.Status.COMPLETED;
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(Application.class);
+        var springApplication = new SpringApplication(Application.class);
         springApplication.run(args);
         LOGGER.info(SERVER_CONTAINER, SERVER_NAME, VERSION_RUNTIME, COMPLETED);
     }

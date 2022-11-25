@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 @ComponentScan({
         "io.tech1.framework.b2b.mongodb.security.jwt.handlers"
 })
-public class HandlersContext {
+public class TestsApplicationHandlersContext {
     @Bean
     public IncidentPublisher incidentPublisher() {
         return mock(IncidentPublisher.class);

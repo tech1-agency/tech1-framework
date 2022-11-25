@@ -81,7 +81,7 @@ public class BaseEssenceConstructorTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.invitationCodeRepository,
                 this.userRepository

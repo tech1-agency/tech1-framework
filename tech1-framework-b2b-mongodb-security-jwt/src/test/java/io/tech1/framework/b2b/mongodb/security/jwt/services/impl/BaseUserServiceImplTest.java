@@ -76,7 +76,7 @@ public class BaseUserServiceImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.userRepository,

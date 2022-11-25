@@ -112,7 +112,7 @@ public class TokenServiceImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.jwtUserDetailsAssistant,
                 this.sessionRegistry,

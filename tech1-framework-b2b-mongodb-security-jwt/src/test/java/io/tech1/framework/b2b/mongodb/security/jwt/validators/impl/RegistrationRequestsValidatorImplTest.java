@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.ValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
@@ -35,7 +35,7 @@ public class RegistrationRequestsValidatorImplTest {
 
     @Configuration
     @Import({
-            ValidatorsContext.class
+            TestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 
@@ -57,7 +57,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
                 this.invitationCodeRepository,

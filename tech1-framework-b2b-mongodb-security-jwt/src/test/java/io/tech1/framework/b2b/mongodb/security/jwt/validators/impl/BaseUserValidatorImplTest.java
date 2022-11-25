@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.ValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -50,7 +50,7 @@ public class BaseUserValidatorImplTest {
 
     @Configuration
     @Import({
-            ValidatorsContext.class
+            TestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 
@@ -69,7 +69,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );

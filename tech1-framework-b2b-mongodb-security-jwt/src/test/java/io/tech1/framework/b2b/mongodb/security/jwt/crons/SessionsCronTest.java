@@ -71,7 +71,7 @@ public class SessionsCronTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.userSessionService

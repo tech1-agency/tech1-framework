@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserLogin;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.ValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.AuthenticationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ public class AuthenticationRequestsValidatorImplTest {
 
     @Configuration
     @Import({
-            ValidatorsContext.class
+            TestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 

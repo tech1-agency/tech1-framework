@@ -94,7 +94,7 @@ public class SessionRegistryImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
                 this.securityJwtPublisher,

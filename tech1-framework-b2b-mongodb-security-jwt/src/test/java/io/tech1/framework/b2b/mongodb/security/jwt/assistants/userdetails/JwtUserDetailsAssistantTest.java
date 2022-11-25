@@ -53,7 +53,7 @@ public class JwtUserDetailsAssistantTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );

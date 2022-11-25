@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.HandlersContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -43,7 +43,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
 
     @Configuration
     @Import({
-            HandlersContext.class
+            TestsApplicationHandlersContext.class
     })
     static class ContextConfiguration {
 
@@ -56,7 +56,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     private final JwtAuthenticationEntryPointExceptionHandler componentUnderTest;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         reset(
                 this.incidentPublisher,
                 this.httpRequestUtility
@@ -64,7 +64,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
                 this.httpRequestUtility

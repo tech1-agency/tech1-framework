@@ -52,7 +52,7 @@ public class DefaultStartupEventListenerTest {
     private final DefaultStartupEventListener componentUnderTest;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         reset(
                 this.essenceConstructor,
                 this.environmentUtility
@@ -60,7 +60,7 @@ public class DefaultStartupEventListenerTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.essenceConstructor,
                 this.environmentUtility

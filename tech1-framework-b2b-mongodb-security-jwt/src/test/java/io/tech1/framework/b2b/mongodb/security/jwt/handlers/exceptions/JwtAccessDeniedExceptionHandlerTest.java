@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.HandlersContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ public class JwtAccessDeniedExceptionHandlerTest {
 
     @Configuration
     @Import({
-            HandlersContext.class
+            TestsApplicationHandlersContext.class
     })
     static class ContextConfiguration {
 

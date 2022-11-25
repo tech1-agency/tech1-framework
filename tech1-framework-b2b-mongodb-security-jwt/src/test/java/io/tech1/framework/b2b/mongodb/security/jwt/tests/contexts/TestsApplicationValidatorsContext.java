@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 @Import({
         ApplicationFrameworkPropertiesContext.class
 })
-public class ValidatorsContext {
+public class TestsApplicationValidatorsContext {
 
     // =================================================================================================================
     // Publishers

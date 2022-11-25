@@ -52,7 +52,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher
         );

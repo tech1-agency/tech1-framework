@@ -103,7 +103,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.jwtUserDetailsAssistant,
                 this.userSessionRepository,

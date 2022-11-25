@@ -103,7 +103,7 @@ public class UserSessionServiceImplTest {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
                 this.userSessionRepository,

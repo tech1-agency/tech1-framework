@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "6ab95f49-acb1-4560-90c7-4415b33b3db9",
+		"name": "_T1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "Register1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin777\",\n    \"zoneId\": \"Europe/Kiev\",\n    \"password\": \"Admin23!\",\n    \"confirmPassword\": \"Admin23!\",\n    \"invitationCode\": \"6wqfyVlYTOQiy2OnbjK9W7x3V9BNMzxi1X7GYN8R\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/registration/register1",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"registration",
+								"register1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('ajwt', pm.cookies.get('ajwt'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{defaultUsername}}\",\n    \"password\": \"Admin23!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/authentication/login",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"authentication",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/authentication/logout",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"authentication",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RefreshToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/authentication/refreshToken",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"authentication",
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invitation Codes",
+			"item": [
+				{
+					"name": "Find By OwnerId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/invitationCode",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"invitationCode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/invitationCode/1",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"invitationCode",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Session",
+			"item": [
+				{
+					"name": "Current Client User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/session/current",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"session",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current User Db Sessions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/session/db/table",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"session",
+								"db",
+								"table"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "ChangePassword1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"Admin24!\",\n    \"confirmPassword\": \"Admin24!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/user/changePassword1",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"user",
+								"changePassword1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"zoneId\": \"Africa/Cairo\",\n    \"email\": \"admin23@gmail.com\",\n    \"name\": \"Admin1 Admin2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/user/update1",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"user",
+								"update1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Spring",
+			"item": [
+				{
+					"name": "Actuator",
+					"item": [
+						{
+							"name": "Actuator /info",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverURL}}/actuator/info",
+									"host": [
+										"{{serverURL}}"
+									],
+									"path": [
+										"actuator",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actuator /health",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverURL}}/actuator/health",
+									"host": [
+										"{{serverURL}}"
+									],
+									"path": [
+										"actuator",
+										"health"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actuator /mappings",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serverURL}}/actuator/mappings",
+									"host": [
+										"{{serverURL}}"
+									],
+									"path": [
+										"actuator",
+										"mappings"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SuperAdmin",
+			"item": [
+				{
+					"name": "Invitation Codes - Unused",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/superadmin/invitationCodes/unused",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"superadmin",
+								"invitationCodes",
+								"unused"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessions - Server",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/superadmin/sessions/server",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{platformBasePathPrefix}}",
+								"superadmin",
+								"sessions",
+								"server"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

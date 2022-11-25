@@ -17,3 +17,6 @@ logs/
 
 # Sonar
 .scannerwork
+
+# GEO database
+tech1-framework-b2b-mongodb-server/src/main/resources/GeoLite2-City.mmdb

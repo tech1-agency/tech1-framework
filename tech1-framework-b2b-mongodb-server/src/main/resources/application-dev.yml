@@ -1,0 +1,68 @@
+# Logging
+logging:
+  config: classpath:logback-console.xml
+
+# Tech1 Platform
+tech1:
+  incidentConfigs:
+    enabled: true
+    remoteServer:
+      baseURL: http://localhost:8973
+      username: admin
+      password: admin
+    features:
+      login:
+        enabled: true
+      loginFailureUsernamePassword:
+        enabled: true
+      loginFailureUsernameMaskedPassword:
+        enabled: false
+      logout:
+        enabled: true
+      sessionRefreshed:
+        enabled: true
+      sessionExpired:
+        enabled: true
+      register1:
+        enabled: true
+      register1Failure:
+        enabled: true
+  mvcConfigs:
+    corsConfigs:
+      allowedOrigins:
+        - http://localhost:8686
+        - http://localhost:8787
+  securityJwtConfigs:
+    cookiesConfigs:
+      domain: localhost
+    jwtTokensConfigs:
+      secretKey: ENC(G/ikUUQcuS4+pbN4dj1gPlGwm/Ht2a+8)
+      accessToken:
+        expiration:
+          unit: SECONDS # @java.time.temporal.ChronoUnit
+          amount: 30
+      refreshToken:
+        expiration:
+          unit: SECONDS # @java.time.temporal.ChronoUnit
+          amount: 60
+    loggingConfigs:
+      advancedRequestLoggingEnabled: true
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: tech1_platform_server
+    sessionConfigs:
+      cleanSessionsByExpiredRefreshTokensCron:
+        enabled: true
+        expression: "*/30 * * * * *"
+        zoneId: "Europe/Kiev"
+    essenceConfigs:
+      defaultUsers:
+        enabled: true
+        users:
+          - username: admin11
+            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C" # Admin23!
+            authorities: [ "admin", "invitationCode:write" ]
+            zoneId: "Europe/Kiev" # JavaScript: Intl.DateTimeFormat().resolvedOptions().timeZone
+      invitationCodes:
+        enabled: true

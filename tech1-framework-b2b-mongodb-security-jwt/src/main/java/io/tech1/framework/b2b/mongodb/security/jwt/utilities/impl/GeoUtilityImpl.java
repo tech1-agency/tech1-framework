@@ -13,22 +13,33 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.domain.enums.Status.FAILURE;
+import static io.tech1.framework.domain.enums.Status.SUCCESS;
+
 @Slf4j
 @Component
 public class GeoUtilityImpl implements GeoUtility {
+    private static final String GEO_DATABASE_NAME = "GeoLite2-City.mmdb";
 
     private final DatabaseReader databaseReader;
 
-    // todo [yy] ->
     @Autowired
     public GeoUtilityImpl(ResourceLoader resourceLoader) {
         try {
-            var resource = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
+            var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
             var inputStream = resource.getInputStream();
             this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-            LOGGER.info("[Platform, Utilities] `GeoLite2-City.mmdb` database loading status: Success");
+            LOGGER.info("{} {} database loading status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
         } catch (IOException | RuntimeException ex) {
-            throw new IllegalArgumentException("`GeoLite2-City.mmdb` database loading status: Failure. Exception: " + ex.getMessage());
+            var message = String.format("%s %s database loading status: %s", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE);
+            LOGGER.info(message);
+            LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
+            LOGGER.info("Please visit https://dev.maxmind.com/ to download `GeoLite2-City.mmdb` database");
+            LOGGER.info("Please add `GeoLite2-City.mmdb` database to classpath");
+            LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
+            throw new IllegalArgumentException(message + "." + ex.getMessage());
         }
     }
 

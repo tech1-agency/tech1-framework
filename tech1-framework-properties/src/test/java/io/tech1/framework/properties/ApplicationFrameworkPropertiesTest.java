@@ -11,20 +11,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ApplicationFrameworkPropertiesTest {
 
     @Test
-    public void assertApplicationPlatformProperties() {
+    public void applicationFrameworkPropertiesTest() {
         // Arrange
         var context = new ApplicationFrameworkPropertiesContext();
-        var applicationPlatformProperties = context.applicationPlatformProperties();
+        var applicationFrameworkProperties = context.applicationFrameworkProperties();
 
         // Act
-        var getters = getGetters(applicationPlatformProperties);
+        var getters = getGetters(applicationFrameworkProperties);
 
         // Assert
         assertThat(getters).isNotNull();
         assertThat(getters).hasSize(10);
         getters.forEach(getter -> {
             try {
-                var propertiesConfigs = getter.invoke(applicationPlatformProperties);
+                var propertiesConfigs = getter.invoke(applicationFrameworkProperties);
                 assertThat(propertiesConfigs).isNotNull();
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);

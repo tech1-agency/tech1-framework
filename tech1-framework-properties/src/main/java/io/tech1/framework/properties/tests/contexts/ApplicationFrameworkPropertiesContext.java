@@ -10,7 +10,7 @@ import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants
 public class ApplicationFrameworkPropertiesContext {
 
     @Bean
-    public ApplicationFrameworkProperties applicationPlatformProperties() {
+    public ApplicationFrameworkProperties applicationFrameworkProperties() {
         var properties = new ApplicationFrameworkProperties();
         properties.setAsyncConfigs(ASYNC_CONFIGS);
         properties.setEventsConfigs(EVENTS_CONFIGS);

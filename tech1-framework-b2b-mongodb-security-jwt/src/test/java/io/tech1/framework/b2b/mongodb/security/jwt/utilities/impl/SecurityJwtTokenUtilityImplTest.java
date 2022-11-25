@@ -150,7 +150,7 @@ public class SecurityJwtTokenUtilityImplTest {
         var validatedClaims = this.componentUnderTest.validate(jwtAccessToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
         assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
-        var zoneId = nonNull(user.getZoneId()) ? user.getZoneId() : ZoneId.systemDefault();
+        var zoneId = user.getZoneId();
         var timeAmount = accessToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
@@ -177,7 +177,7 @@ public class SecurityJwtTokenUtilityImplTest {
         var validatedClaims = this.componentUnderTest.validate(jwtRefreshToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
         assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
-        var zoneId = nonNull(user.getZoneId()) ? user.getZoneId() : ZoneId.systemDefault();
+        var zoneId = user.getZoneId();
         var timeAmount = refreshToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),

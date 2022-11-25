@@ -18,13 +18,11 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
-import static java.util.Objects.nonNull;
 
 @Slf4j
 @Component
@@ -60,7 +58,7 @@ public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
     public String createJwtToken(DbUser user, TimeAmount timeAmount) {
         var claims = Jwts.claims().setSubject(user.getUsername().getIdentifier());
         claims.put("authorities", user.getAuthorities());
-        var zoneId = nonNull(user.getZoneId()) ? user.getZoneId() : ZoneId.systemDefault();
+        var zoneId = user.getZoneId();
         var expiration = LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit());
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())

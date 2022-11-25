@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6ab95f49-acb1-4560-90c7-4415b33b3db9",
+		"_postman_id": "52bff66b-cbcf-443f-a859-77772eca007a",
 		"name": "_T1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -23,12 +23,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/registration/register1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/registration/register1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"registration",
 								"register1"
 							]
@@ -67,12 +67,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/authentication/login",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/authentication/login",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"authentication",
 								"login"
 							]
@@ -86,12 +86,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/authentication/logout",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/authentication/logout",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"authentication",
 								"logout"
 							]
@@ -105,12 +105,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/authentication/refreshToken",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/authentication/refreshToken",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"authentication",
 								"refreshToken"
 							]
@@ -129,12 +129,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/invitationCode",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCode",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"invitationCode"
 							]
 						}
@@ -147,12 +147,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/invitationCode/1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCode/1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"invitationCode",
 								"1"
 							]
@@ -181,12 +181,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/session/current",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/session/current",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"session",
 								"current"
 							]
@@ -210,12 +210,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/session/db/table",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/session/db/table",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"session",
 								"db",
 								"table"
@@ -244,12 +244,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/user/changePassword1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/user/changePassword1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"user",
 								"changePassword1"
 							]
@@ -272,12 +272,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/user/update1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/user/update1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"user",
 								"update1"
 							]
@@ -379,12 +379,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/superadmin/invitationCodes/unused",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/invitationCodes/unused",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"superadmin",
 								"invitationCodes",
 								"unused"
@@ -409,12 +409,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{platformBasePathPrefix}}/superadmin/sessions/server",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions/server",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
-								"{{platformBasePathPrefix}}",
+								"{{frameworkBasePathPrefix}}",
 								"superadmin",
 								"sessions",
 								"server"

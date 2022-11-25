@@ -35,7 +35,10 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
             var csrfToken = new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), cookieValue);
             attributes.put(CsrfToken.class.getName(), csrfToken);
             return true;
-        } catch (CookieNotFoundException e) {
+        } catch (CookieNotFoundException ex1) {
+            return false;
+        } catch (RuntimeException ex2) {
+            LOGGER.error("Please check websocket handshake configuration. Exception: `{}`", ex2.getMessage(), ex2);
             return false;
         }
     }

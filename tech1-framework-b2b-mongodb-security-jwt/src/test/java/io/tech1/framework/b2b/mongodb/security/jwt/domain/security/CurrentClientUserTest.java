@@ -79,7 +79,6 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         assertThat(json).isEqualTo(readFile(this.getFolder(), "current-client-user.json"));
     }
 
-
     @ParameterizedTest
     @MethodSource("getAttributeByKeyTest")
     public void getAttributeByKeyTest(String attributeKey, Object expected) {

@@ -114,7 +114,7 @@ public class TestsPropertiesConstants {
             )
     );
     public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = SecurityJwtWebsocketsConfigs.of(
-            CsrfConfigs.of("cookieName", "headerName", "parameterName"),
+            CsrfConfigs.of("csrf-cookie", "csrf-header", "csrf-parameter"),
             StompEndpointRegistryConfigs.of("/endpoint"),
             MessageBrokerRegistryConfigs.of("/app", "/queue", "/user"),
             WebsocketsFeaturesConfigs.of(

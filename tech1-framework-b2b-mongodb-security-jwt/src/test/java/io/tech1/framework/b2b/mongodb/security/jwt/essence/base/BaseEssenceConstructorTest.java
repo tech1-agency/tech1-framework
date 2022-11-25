@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.essense.base;
+package io.tech1.framework.b2b.mongodb.security.jwt.essence.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.constants.SecurityJwtConstants;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.domain.base.Username;

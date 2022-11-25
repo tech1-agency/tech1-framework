@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.essense.base;
+package io.tech1.framework.b2b.mongodb.security.jwt.essence.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -44,7 +44,7 @@ public class BaseEssenceConstructor implements EssenceConstructor {
     public void addDefaultUsers() {
         assertTrueOrThrow(this.isDefaultUsersEnabled(), invalidAttribute("essenceConfigs.defaultUsers.enabled == true"));
         if (this.userRepository.count() == 0L) {
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers`. No users in database. Establish database structure");
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
             var defaultUsers = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers();
             var dbUsers = defaultUsers.stream().map(defaultUser -> {
                 var username = defaultUser.getUsername();
@@ -54,13 +54,13 @@ public class BaseEssenceConstructor implements EssenceConstructor {
                         defaultUser.getZoneId().getId(),
                         defaultUser.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
                 );
-                LOGGER.debug(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers`. Convert default user. Username: {}", username);
+                LOGGER.debug(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Convert default user. Username: {}", username);
                 return dbUser;
             }).collect(Collectors.toList());
             this.userRepository.saveAll(dbUsers);
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers` is completed. Saved dbRecords: `{}`", dbUsers.size());
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", dbUsers.size());
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers`. Users are already saved in database. Please double check");
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Users are already saved in database. Please double check");
         }
     }
 
@@ -76,7 +76,7 @@ public class BaseEssenceConstructor implements EssenceConstructor {
             var username = defaultUser.getUsername();
             var invitationCodes = this.invitationCodeRepository.findByOwner(username);
             if (invitationCodes.size() == 0L) {
-                LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers`. No invitation codes in database. Username: `{}`", username);
+                LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No invitation codes in database. Username: `{}`", username);
                 var dbInvitationCodes = IntStream.range(0, 10)
                         .mapToObj(i ->
                                 new DbInvitationCode(
@@ -86,7 +86,7 @@ public class BaseEssenceConstructor implements EssenceConstructor {
                         ).collect(Collectors.toList());
                 this.invitationCodeRepository.saveAll(dbInvitationCodes);
             } else {
-                LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers`. Invitation codes are already saved in database. Username: `{}`", username);
+                LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Invitation codes are already saved in database. Username: `{}`", username);
             }
         });
     }

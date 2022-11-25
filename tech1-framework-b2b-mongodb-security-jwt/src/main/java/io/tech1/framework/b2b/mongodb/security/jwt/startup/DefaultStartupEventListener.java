@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.startup;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +28,16 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
         this.environmentUtility.verifyProfilesConfiguration();
 
         if (this.essenceConstructor.isDefaultUsersEnabled()) {
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers` is enabled");
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is enabled");
             this.essenceConstructor.addDefaultUsers();
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `defaultUsers` is disabled");
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is disabled");
         }
         if (this.essenceConstructor.isInvitationCodesEnabled()) {
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `invitationCodes` is enabled");
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is enabled");
             this.essenceConstructor.addDefaultUsersInvitationCodes();
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Essence `invitationCodes` is disabled");
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
         }
         LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
     }

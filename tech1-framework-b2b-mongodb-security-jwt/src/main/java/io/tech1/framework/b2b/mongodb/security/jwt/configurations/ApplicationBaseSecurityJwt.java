@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.configurations;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.filters.JwtTokensFilter;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;

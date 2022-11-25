@@ -10,6 +10,6 @@ public class IncidentClientSlf4j implements IncidentClientDefinition {
 
     @Override
     public void registerIncident(Incident incident) {
-        LOGGER.debug(FRAMEWORK_INCIDENT_PREFIX + "IncidentType: `{}`", incident.getType());
+        LOGGER.debug(FRAMEWORK_INCIDENT_PREFIX + " IncidentType: `{}`", incident.getType());
     }
 }

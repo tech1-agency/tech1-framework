@@ -10,6 +10,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.GeoUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.SecurityJwtTokenUtilityImpl;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -33,7 +34,7 @@ import java.util.List;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getUserAgentDetails;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -108,6 +109,78 @@ public class UserSessionServiceImplTest {
                 this.userSessionRepository,
                 this.geoUtility
         );
+    }
+
+    @Test
+    public void findByUsernameTest() {
+        // Arrange
+        var username = randomUsername();
+        var usersSessions = list345(DbUserSession.class);
+        when(this.userSessionRepository.findByUsername(eq(username))).thenReturn(usersSessions);
+
+        // Act
+        var actual = this.componentUnderTest.findByUsername(username);
+
+        // Assert
+        verify(this.userSessionRepository).findByUsername(eq(username));
+        assertThat(actual).isEqualTo(usersSessions);
+    }
+
+    @Test
+    public void findByUsernameInTest() {
+        // Arrange
+        var usernames = set345(Username.class);
+        var usersSessions = list345(DbUserSession.class);
+        when(this.userSessionRepository.findByUsernameIn(eq(usernames))).thenReturn(usersSessions);
+
+        // Act
+        var actual = this.componentUnderTest.findByUsernameIn(usernames);
+
+        // Assert
+        verify(this.userSessionRepository).findByUsernameIn(eq(usernames));
+        assertThat(actual).isEqualTo(usersSessions);
+    }
+
+    @Test
+    public void deleteByIdInTest() {
+        // Arrange
+        var ids = randomStringsAsList(3);
+        var deletedRecords = randomLongGreaterThanZero();
+        when(this.userSessionRepository.deleteByIdIn(eq(ids))).thenReturn(deletedRecords);
+
+        // Act
+        var actual = this.componentUnderTest.deleteByIdIn(ids);
+
+        // Assert
+        verify(this.userSessionRepository).deleteByIdIn(eq(ids));
+        assertThat(actual).isEqualTo(deletedRecords);
+    }
+
+    @Test
+    public void findByRefreshTokenTest() {
+        // Arrange
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var userSession = entity(DbUserSession.class);
+        when(this.userSessionRepository.findByRefreshToken(eq(jwtRefreshToken))).thenReturn(userSession);
+
+        // Act
+        var actual = this.componentUnderTest.findByRefreshToken(jwtRefreshToken);
+
+        // Assert
+        verify(this.userSessionRepository).findByRefreshToken(eq(jwtRefreshToken));
+        assertThat(actual).isEqualTo(userSession);
+    }
+
+    @Test
+    public void deleteByRefreshTokenTest() {
+        // Arrange
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
+
+        // Act
+        this.componentUnderTest.deleteByRefreshToken(jwtRefreshToken);
+
+        // Assert
+        verify(this.userSessionRepository).deleteByRefreshToken(eq(jwtRefreshToken));
     }
 
     @Test

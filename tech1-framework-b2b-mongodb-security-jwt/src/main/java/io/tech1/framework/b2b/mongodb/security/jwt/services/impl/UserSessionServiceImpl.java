@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
@@ -39,6 +40,31 @@ public class UserSessionServiceImpl implements UserSessionService {
     // Utilities
     private final GeoUtility geoUtility;
     private final SecurityJwtTokenUtility securityJwtTokenUtility;
+
+    @Override
+    public List<DbUserSession> findByUsername(Username username) {
+        return this.userSessionRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<DbUserSession> findByUsernameIn(Set<Username> usernames) {
+        return this.userSessionRepository.findByUsernameIn(usernames);
+    }
+
+    @Override
+    public Long deleteByIdIn(List<String> ids) {
+        return this.userSessionRepository.deleteByIdIn(ids);
+    }
+
+    @Override
+    public DbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
+        return this.userSessionRepository.findByRefreshToken(jwtRefreshToken);
+    }
+
+    @Override
+    public void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
+        this.userSessionRepository.deleteByRefreshToken(jwtRefreshToken);
+    }
 
     @Override
     public DbUserSession save(DbUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {

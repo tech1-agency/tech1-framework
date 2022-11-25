@@ -34,10 +34,10 @@ public class GeoUtilityImpl implements GeoUtility {
             LOGGER.info("{} {} database loading status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
         } catch (IOException | RuntimeException ex) {
             var message = String.format("%s %s database loading status: %s", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE);
-            LOGGER.info(message);
+            LOGGER.error(message);
             LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
-            LOGGER.info("Please visit https://dev.maxmind.com/ and download `GeoLite2-City.mmdb` database");
-            LOGGER.info("Please add `GeoLite2-City.mmdb` database to classpath");
+            LOGGER.error("Please visit https://dev.maxmind.com/ and download `GeoLite2-City.mmdb` database");
+            LOGGER.error("Please add `GeoLite2-City.mmdb` database to classpath");
             LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
             throw new IllegalArgumentException(message + ". " + ex.getMessage());
         }

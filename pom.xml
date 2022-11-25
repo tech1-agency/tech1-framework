@@ -60,6 +60,7 @@
         <module>tech1-framework-hardware</module>
         <module>tech1-framework-incidents</module>
         <module>tech1-framework-b2b-mongodb-security-jwt</module>
+        <module>tech1-framework-b2b-mongodb-security-jwt-websockets</module>
     </modules>
 
     <properties>

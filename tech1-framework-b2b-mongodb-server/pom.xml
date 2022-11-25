@@ -38,11 +38,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.dependency.springframework.boot}</version>
             </plugin>
             <!-- Verifier: GIT => `/info` endpoint -->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+                <version>${version.plugin.git.commit}</version>
             </plugin>
         </plugins>
     </build>

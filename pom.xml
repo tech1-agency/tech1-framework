@@ -52,6 +52,7 @@
     </scm>
 
     <modules>
+        <!-- JARs -->
         <module>tech1-framework-domain</module>
         <module>tech1-framework-utilities</module>
         <module>tech1-framework-properties</module>
@@ -61,6 +62,8 @@
         <module>tech1-framework-incidents</module>
         <module>tech1-framework-b2b-mongodb-security-jwt</module>
         <module>tech1-framework-b2b-mongodb-security-jwt-websockets</module>
+        <!-- Servers -->
+        <module>tech1-framework-b2b-mongodb-server</module>
     </modules>
 
     <properties>

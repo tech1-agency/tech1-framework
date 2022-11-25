@@ -11,7 +11,9 @@
     </appender>
 
     <logger name="ch.qos.logback" level="warn" />
+    <logger name="com.ulisesbocchio" level="warn" />
     <logger name="org.apache" level="error" />
+    <logger name="org.mongodb" level="warn" />
     <logger name="org.springframework" level="warn" />
 
     <root level="info">

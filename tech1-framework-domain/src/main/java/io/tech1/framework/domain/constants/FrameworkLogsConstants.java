@@ -5,12 +5,17 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FrameworkLogsConstants {
     // =================================================================================================================
+    // Line Separators
+    // =================================================================================================================
+    public static final String LINE_SEPARATOR_INTERPUNCT = "··································································································";
+
+    // =================================================================================================================
     // Prefixes
     // =================================================================================================================
     public static final String FRAMEWORK_PREFIX = "[Tech1 Framework, ";
     public static final String FRAMEWORK_CORS_PREFIX = FRAMEWORK_PREFIX + "CORS] ";
     public static final String FRAMEWORK_INCIDENT_PREFIX = FRAMEWORK_PREFIX + "Incident] ";
-    public static final String FRAMEWORK_SECURITY_JWT_PREFIX = FRAMEWORK_PREFIX + "SecurityJWT] ";
+    public static final String FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX = FRAMEWORK_PREFIX + "B2B-MongoDb SecurityJWT] ";
     public static final String FRAMEWORK_SESSION_REGISTRY_PREFIX = FRAMEWORK_PREFIX + "SessionRegistry] ";
 
     // =================================================================================================================
@@ -30,13 +35,13 @@ public class FrameworkLogsConstants {
     // =================================================================================================================
     // SecurityJWT
     // =================================================================================================================
-    public static final String SECURITY_JWT_AUTHENTICATION_LOGIN = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}` - Authentication:/login. Username: `{}`";
-    public static final String SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}` - Authentication: login failure. Username: `{}`";
-    public static final String SECURITY_JWT_AUTHENTICATION_LOGOUT = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}`- Authentication:/logout. Username: `{}`";
-    public static final String SECURITY_JWT_REGISTER1 = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}`- Registration:/register1. Username: `{}`";
-    public static final String SECURITY_JWT_SESSION_REFRESHED = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}`- Authentication:/refreshToken. Username: `{}`";
-    public static final String SECURITY_JWT_SESSION_EXPIRED = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}`- Session expired. Username: `{}`";
-    public static final String SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA = FRAMEWORK_SECURITY_JWT_PREFIX + "`{}`- Session add user request metadata. Username: `{}`";
+    public static final String SECURITY_JWT_AUTHENTICATION_LOGIN = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}` - Authentication:/login. Username: `{}`";
+    public static final String SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}` - Authentication: login failure. Username: `{}`";
+    public static final String SECURITY_JWT_AUTHENTICATION_LOGOUT = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}`- Authentication:/logout. Username: `{}`";
+    public static final String SECURITY_JWT_REGISTER1 = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}`- Registration:/register1. Username: `{}`";
+    public static final String SECURITY_JWT_SESSION_REFRESHED = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}`- Authentication:/refreshToken. Username: `{}`";
+    public static final String SECURITY_JWT_SESSION_EXPIRED = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}`- Session expired. Username: `{}`";
+    public static final String SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "`{}`- Session add user request metadata. Username: `{}`";
 
     // =================================================================================================================
     // SessionRegistry

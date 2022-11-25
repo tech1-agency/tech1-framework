@@ -79,7 +79,7 @@ public class BaseUserValidatorImplTest {
     public void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
-        var requestUserUpdate1 = RequestUserUpdate1.of("invalidZoneId", randomString(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomString(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -94,7 +94,7 @@ public class BaseUserValidatorImplTest {
     public void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
-        var requestUserUpdate1 = RequestUserUpdate1.of(randomZoneId().getId(), randomString(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), randomString(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -111,7 +111,7 @@ public class BaseUserValidatorImplTest {
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(null);
-        var requestUserUpdate1 = RequestUserUpdate1.of(randomZoneId().getId(), email, randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -127,7 +127,7 @@ public class BaseUserValidatorImplTest {
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(currentDbUser);
-        var requestUserUpdate1 = RequestUserUpdate1.of(randomZoneId().getId(), email, randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -144,7 +144,7 @@ public class BaseUserValidatorImplTest {
         var currentDbUser = entity(DbUser.class);
         var user = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(user);
-        var requestUserUpdate1 = RequestUserUpdate1.of(randomZoneId().getId(), email, randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));

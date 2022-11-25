@@ -1,0 +1,289 @@
+package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
+
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.mongodb.security.jwt.utilities.GeoUtility;
+import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.SecurityJwtTokenUtilityImpl;
+import io.tech1.framework.domain.enums.Status;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getUserAgentDetails;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+
+@ExtendWith({ SpringExtension.class })
+@ContextConfiguration(loader= AnnotationConfigContextLoader.class)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class UserSessionServiceImplTest {
+
+    @Configuration
+    @Import({
+            ApplicationFrameworkPropertiesContext.class
+    })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+    static class ContextConfiguration {
+        // Properties
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
+        @Bean
+        SecurityJwtPublisher securityJwtPublisher() {
+            return mock(SecurityJwtPublisher.class);
+        }
+
+        @Bean
+        UserSessionRepository userSessionRepository() {
+            return mock(UserSessionRepository.class);
+        }
+
+        @Bean
+        GeoUtility geoUtility() {
+            return mock(GeoUtility.class);
+        }
+
+        @Bean
+        public SecurityJwtTokenUtility securityJwtTokenUtility() {
+            return new SecurityJwtTokenUtilityImpl(
+                    this.applicationFrameworkProperties
+            );
+        }
+
+        @Bean
+        UserSessionService userSessionService() {
+            return new UserSessionServiceImpl(
+                    this.securityJwtPublisher(),
+                    this.userSessionRepository(),
+                    this.geoUtility(),
+                    this.securityJwtTokenUtility()
+            );
+        }
+    }
+
+    private final SecurityJwtPublisher securityJwtPublisher;
+    private final UserSessionRepository userSessionRepository;
+    private final GeoUtility geoUtility;
+
+    private final UserSessionService componentUnderTest;
+
+    @BeforeEach
+    public void beforeEach() {
+        reset(
+                this.securityJwtPublisher,
+                this.userSessionRepository,
+                this.geoUtility
+        );
+    }
+
+    @AfterEach
+    public void after() {
+        verifyNoMoreInteractions(
+                this.securityJwtPublisher,
+                this.userSessionRepository,
+                this.geoUtility
+        );
+    }
+
+    @Test
+    public void saveUserSessionNotNullTest() {
+        // Arrange
+        var ipAddr = randomIPv4();
+        var httpServletRequest = mock(HttpServletRequest.class);
+        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
+        when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
+        var dbUser = entity(DbUser.class);
+        var username = dbUser.getUsername();
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var userSession = new DbUserSession(jwtRefreshToken, username, entity(UserRequestMetadata.class));
+        var savedUserSession = entity(DbUserSession.class);
+        when(this.userSessionRepository.findByRefreshToken(eq(jwtRefreshToken))).thenReturn(userSession);
+        when(this.userSessionRepository.save(any())).thenReturn(savedUserSession);
+
+        // Act
+        this.componentUnderTest.save(dbUser, jwtRefreshToken, httpServletRequest);
+
+        // Assert
+        verify(this.userSessionRepository).findByRefreshToken(eq(jwtRefreshToken));
+        var dbUserSessionAC = ArgumentCaptor.forClass(DbUserSession.class);
+        verify(this.userSessionRepository).save(dbUserSessionAC.capture());
+        var actualDbUserSession = dbUserSessionAC.getValue();
+        assertThat(actualDbUserSession.getUsername()).isEqualTo(username);
+        assertThat(actualDbUserSession.getJwtRefreshToken()).isEqualTo(jwtRefreshToken);
+        var requestMetadata = actualDbUserSession.getRequestMetadata();
+        assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
+        assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
+        var whereTuple3 = requestMetadata.getWhereTuple3();
+        assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
+        assertThat(whereTuple3.getB()).isEqualTo(UNDEFINED);
+        assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
+        var whatTuple2 = requestMetadata.getWhatTuple2();
+        assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.getB()).isEqualTo("—");
+        assertThat(actualDbUserSession.getId()).isNotNull();
+        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.getUsername()).isEqualTo(username);
+        assertThat(event.getUserSession()).isEqualTo(savedUserSession);
+        assertThat(event.isAuthenticationLoginEndpoint()).isEqualTo(true);
+        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isEqualTo(false);
+    }
+
+    @Test
+    public void saveUserSessionNullTest() {
+        // Arrange
+        var ipAddr = randomIPv4();
+        var httpServletRequest = mock(HttpServletRequest.class);
+        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
+        when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
+        var dbUser = entity(DbUser.class);
+        var username = dbUser.getUsername();
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var savedUserSession = entity(DbUserSession.class);
+        when(this.userSessionRepository.save(any())).thenReturn(savedUserSession);
+
+        // Act
+        this.componentUnderTest.save(dbUser, jwtRefreshToken, httpServletRequest);
+
+        // Assert
+        verify(this.userSessionRepository).findByRefreshToken(eq(jwtRefreshToken));
+        var dbUserSessionAC = ArgumentCaptor.forClass(DbUserSession.class);
+        verify(this.userSessionRepository).save(dbUserSessionAC.capture());
+        var actualDbUserSession = dbUserSessionAC.getValue();
+        assertThat(actualDbUserSession.getUsername()).isEqualTo(username);
+        assertThat(actualDbUserSession.getJwtRefreshToken()).isEqualTo(jwtRefreshToken);
+        var requestMetadata = actualDbUserSession.getRequestMetadata();
+        assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
+        assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
+        var whereTuple3 = requestMetadata.getWhereTuple3();
+        assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
+        assertThat(whereTuple3.getB()).isEqualTo(UNDEFINED);
+        assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
+        var whatTuple2 = requestMetadata.getWhatTuple2();
+        assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.getB()).isEqualTo("—");
+        assertThat(actualDbUserSession.getId()).isNotNull();
+        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.getUsername()).isEqualTo(username);
+        assertThat(event.getUserSession()).isEqualTo(savedUserSession);
+        assertThat(event.isAuthenticationLoginEndpoint()).isEqualTo(true);
+        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isEqualTo(false);
+    }
+
+    @Test
+    public void refreshTest() {
+        // Arrange
+        var httpServletRequest = mock(HttpServletRequest.class);
+        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
+        var dbUser = entity(DbUser.class);
+        var username = dbUser.getUsername();
+        var oldJwtRefreshToken = entity(JwtRefreshToken.class);
+        var newJwtRefreshToken = entity(JwtRefreshToken.class);
+        var oldUserSession = new DbUserSession(oldJwtRefreshToken, randomUsername(), entity(UserRequestMetadata.class));
+        when(this.userSessionRepository.findByRefreshToken(eq(oldJwtRefreshToken))).thenReturn(oldUserSession);
+
+        // Act
+        var dbUserSession = this.componentUnderTest.refresh(dbUser, oldJwtRefreshToken, newJwtRefreshToken, httpServletRequest);
+
+        // Assert
+        verify(this.userSessionRepository).findByRefreshToken(eq(oldJwtRefreshToken));
+        var saveCaptor = ArgumentCaptor.forClass(DbUserSession.class);
+        verify(this.userSessionRepository).save(saveCaptor.capture());
+        var newUserSession = saveCaptor.getValue();
+        assertThat(newUserSession.getUsername()).isEqualTo(username);
+        assertThat(newUserSession.getJwtRefreshToken()).isEqualTo(newJwtRefreshToken);
+        assertThat(newUserSession.getRequestMetadata()).isEqualTo(oldUserSession.getRequestMetadata());
+        verify(this.userSessionRepository).delete(eq(oldUserSession));
+        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.getUsername()).isEqualTo(username);
+        assertThat(event.getUserSession()).isEqualTo(newUserSession);
+        assertThat(event.isAuthenticationLoginEndpoint()).isEqualTo(false);
+        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isEqualTo(true);
+        assertThat(dbUserSession).isEqualTo(newUserSession);
+    }
+
+    @Test
+    public void saveUserRequestMetadataTest() {
+        // Arrange
+        var event = entity(EventSessionAddUserRequestMetadata.class);
+        var geoLocation = randomGeoLocation();
+        when(this.geoUtility.getGeoLocation(eq(event.getClientIpAddr()))).thenReturn(geoLocation);
+        var userSessionAC = ArgumentCaptor.forClass(DbUserSession.class);
+
+        // Act
+        this.componentUnderTest.saveUserRequestMetadata(event);
+
+        // Assert
+        verify(this.geoUtility).getGeoLocation(eq(event.getClientIpAddr()));
+        verify(this.userSessionRepository).save(userSessionAC.capture());
+        var userSession = userSessionAC.getValue();
+        assertThat(userSession.getRequestMetadata().getGeoLocation()).isEqualTo(geoLocation);
+        assertThat(userSession.getRequestMetadata().getUserAgentDetails()).isEqualTo(getUserAgentDetails(event.getUserAgentHeader()));
+    }
+
+    @Test
+    public void validateTest() {
+        // Arrange
+        var sessionInvalidUserSession = new DbUserSession(
+                new JwtRefreshToken("<invalid>"),
+                randomUsername(),
+                entity(UserRequestMetadata.class)
+        );
+        var sessionExpiredUserSession = new DbUserSession(
+                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8"),
+                randomUsername(),
+                entity(UserRequestMetadata.class)
+        );
+        var sessionAliveUserSession = new DbUserSession(
+                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY"),
+                randomUsername(),
+                entity(UserRequestMetadata.class)
+        );
+        var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
+
+        // Act
+        var sessionsValidatedTuple2 = this.componentUnderTest.validate(usersSessions);
+
+        // Assert
+        assertThat(sessionsValidatedTuple2).isNotNull();
+        assertThat(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds()).isNotNull();
+        assertThat(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds()).hasSize(2);
+        assertThat(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds()).containsExactlyInAnyOrder(
+                sessionInvalidUserSession.getId(),
+                sessionExpiredUserSession.getId()
+        );
+        assertThat(sessionsValidatedTuple2.getExpiredSessions()).isNotNull();
+        assertThat(sessionsValidatedTuple2.getExpiredSessions()).hasSize(1);
+        assertThat(sessionsValidatedTuple2.getExpiredSessions().get(0).getA().getIdentifier()).isEqualTo("multiuser43");
+    }
+}

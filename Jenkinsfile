@@ -1,7 +1,9 @@
 pipeline {
     agent any
     environment {
+        OPS_HOME = "/home/bitnami/infrastructure-resources-private"
         MVN_SETTINGS = credentials('jenkins_maven_settings')
+        PATH = "${OPS_HOME}/bin:${env.PATH}"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr:'5'))
@@ -29,6 +31,17 @@ pipeline {
                     withSonarQubeEnv('Tech1 SonarQube') {
                         sh "${scannerHome}/bin/sonar-scanner";
                     }
+                }
+            }
+        }
+        stage('docker :dev') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                dir('tech1-framework-b2b-mongodb-server') {
+                    sh 'cp ${OPS_HOME}/docker/java11-v3/Dockerfile .'
+                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_DOCKERHUB_REPOSITORY} dev'
                 }
             }
         }

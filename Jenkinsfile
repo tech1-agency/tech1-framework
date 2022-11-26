@@ -46,7 +46,7 @@ pipeline {
                 }
             }
         }
-        stage('docker :dev') {
+        stage('docker :prod') {
             when {
                 branch 'master'
             }

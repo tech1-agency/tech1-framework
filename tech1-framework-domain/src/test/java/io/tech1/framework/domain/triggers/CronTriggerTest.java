@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CronTriggerTest extends AbstractSerializationDeserializationRunner {
-    private final static CronTrigger CRON_TRIGGER = CronTrigger.of();
+    private static final CronTrigger CRON_TRIGGER = CronTrigger.of();
 
     @Override
     protected String getFileName() {

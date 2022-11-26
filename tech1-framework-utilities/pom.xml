@@ -7,13 +7,13 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.3</version>
+        <version>1.4</version>
     </parent>
 
     <artifactId>tech1-framework-utilities</artifactId>
 
     <dependencies>
-        <!-- Tech1 -->
+        <!-- Tech1: Framework -->
         <dependency>
             <groupId>io.tech1.framework</groupId>
             <artifactId>tech1-framework-domain</artifactId>

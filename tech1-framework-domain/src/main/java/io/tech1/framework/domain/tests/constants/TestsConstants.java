@@ -7,8 +7,8 @@ import java.util.TimeZone;
 
 @UtilityClass
 public class TestsConstants {
-    public final static int SMALL_ITERATIONS_COUNT = 10;
-    public final static int RANDOM_ITERATIONS_COUNT = 100;
+    public static final int SMALL_ITERATIONS_COUNT = 10;
+    public static final int RANDOM_ITERATIONS_COUNT = 100;
 
     // Date Formatters
     public static final String DEFAULT_DATE_FORMAT_PATTERN = "dd.MM.yyyy HH:mm:ss";

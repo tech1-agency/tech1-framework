@@ -1,0 +1,11 @@
+{
+  "username" : "tech1",
+  "email" : "tech1@tech1.io",
+  "name" : "Tech1",
+  "zoneId" : "Europe/Kiev",
+  "authorities" : [ "user", "admin" ],
+  "attributes" : {
+    "key1" : "value1",
+    "key2" : 2
+  }
+}

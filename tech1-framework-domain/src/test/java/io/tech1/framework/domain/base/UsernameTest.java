@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsernameTest extends AbstractSerializationDeserializationRunner {
-    private final static Username USERNAME = Username.of("tech1");
+    private static final Username USERNAME = Username.of("tech1");
 
     @Override
     protected String getFileName() {

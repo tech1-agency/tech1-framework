@@ -1,6 +1,10 @@
 package io.tech1.framework.domain.utilities.reflections;
 
-import io.tech1.framework.domain.reflections.ClassProperty;
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
+import io.tech1.framework.domain.properties.base.TimeAmount;
+import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
 
@@ -8,10 +12,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -105,30 +110,66 @@ public class ReflectionUtility {
                 }).collect(Collectors.toList());
     }
 
-    public static List<ClassProperty> getGettersClassProperties(Object object) {
-        var className = object.getClass().getSimpleName();
+    public static List<ReflectionProperty> getNotNullPropertiesRecursively(Object object, String parentKey) {
+        Predicate<Object> breakoutClassesPredicate = breakoutObj -> {
+            var clazz = breakoutObj.getClass();
+            var isArray = clazz.isArray();
+            var isMap = Map.class.isAssignableFrom(clazz);
+            var isSet = Set.class.isAssignableFrom(clazz);
+            return isArray || isMap || isSet ||
+                    Username.class.equals(clazz) ||
+                    Password.class.equals(clazz) ||
+                    ZoneId.class.equals(clazz) ||
+                    ChronoUnit.class.equals(clazz) ||
+                    TimeUnit.class.equals(clazz) ||
+                    TimeAmount.class.equals(clazz) ||
+                    SchedulerConfiguration.class.equals(clazz) ||
+                    String.class.equals(clazz) ||
+                    boolean.class.equals(clazz) || Boolean.class.equals(clazz) ||
+                    short.class.equals(clazz) || Short.class.equals(clazz) ||
+                    int.class.equals(clazz) || Integer.class.equals(clazz) ||
+                    long.class.equals(clazz) || Long.class.equals(clazz);
+        };
+
+        List<ReflectionProperty> traversedProperties = new ArrayList<>();
+        var properties = getNotNullProperties(object, parentKey);
+        properties.forEach(property -> {
+            if (breakoutClassesPredicate.test(property.getPropertyValue())) {
+                traversedProperties.add(property);
+            } else {
+                var nestedParentKey = property.getParentPropertyName() + "." + property.getPropertyName();
+                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), nestedParentKey));
+            }
+        });
+        return traversedProperties;
+    }
+
+    public static List<ReflectionProperty> getNotNullProperties(Object object, String parentKey) {
         var getters = getGetters(object);
         return getters.stream()
                 .map(getter -> {
                     try {
                         var getterName = getter.getName();
+                        // replace get/is at beginning
                         var propertyName = uncapitalize(getterName
-                                .replace("get", "")
-                                .replace("is", "")
+                                .replaceAll("^get", "")
+                                .replaceAll("^is", "")
                         );
-                        var getterValueObj = getter.invoke(object);
-                        var getterValue = nonNull(getterValueObj) ? getterValueObj : "[null]";
-                        return ClassProperty.of(
-                                className,
-                                propertyName,
-                                getterValue
-                        );
+                        var propertyValue = getter.invoke(object);
+                        if (isNull(propertyValue)) {
+                            return null;
+                        } else {
+                            return ReflectionProperty.of(
+                                    parentKey,
+                                    propertyName,
+                                    propertyValue
+                            );
+                        }
                     } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
                         return null;
                     }
                 })
                 .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ClassProperty::getName))
                 .collect(Collectors.toList());
     }
 
@@ -140,7 +181,7 @@ public class ReflectionUtility {
                 });
         if (getterOpt.isPresent()) {
             try {
-                Object value = getterOpt.get().invoke(object);
+                var value = getterOpt.get().invoke(object);
                 return isNull(value) ? null : value;
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new IllegalArgumentException(e.getMessage());

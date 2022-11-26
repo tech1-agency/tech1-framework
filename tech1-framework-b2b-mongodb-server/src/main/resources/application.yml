@@ -1,0 +1,68 @@
+# Spring Security: actuator endpoints (no security check)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info"]
+
+# Server
+server:
+  servlet:
+    context-path: /api
+
+# Jasypt
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+# Tech1 Platform
+tech1:
+  asyncConfigs:
+    threadNamePrefix: tps1-async
+  eventsConfigs:
+    threadNamePrefix: tps1-events
+  mvcConfigs:
+    enabled: true
+    frameworkBasePathPrefix: /framework/security
+    corsConfigs:
+      pathPattern: /**
+      allowedMethods:
+        - DELETE
+        - GET
+        - POST
+        - PUT
+      allowedHeaders:
+        - Cache-Control
+        - Content-Type
+      allowCredentials: true
+  hardwareMonitoringConfigs:
+    thresholdsConfigs:
+      CPU: 80
+      HEAP: 80
+      SERVER: 85
+      SWAP: 95
+      VIRTUAL: 85
+  securityJwtConfigs:
+    authoritiesConfigs:
+      authorities:
+        - value: superadmin
+        - value: user
+        - value: admin
+        - value: invitationCode:read
+        - value: invitationCode:write
+      packageName: io.tech1.framework.b2b.mongodb.server
+    cookiesConfigs:
+      jwtAccessTokenCookieCreationLatency:
+        unit: SECONDS
+        amount: 5
+    jwtTokensConfigs:
+      accessToken:
+        cookieKey: ajwt
+      refreshToken:
+        cookieKey: rjwt
+
+# App
+app:
+  attribute1: value
+

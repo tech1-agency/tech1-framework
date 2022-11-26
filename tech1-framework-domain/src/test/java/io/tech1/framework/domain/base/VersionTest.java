@@ -14,11 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class VersionTest extends AbstractFolderSerializationRunner {
 
-    @Override
-    protected String getFolder() {
-        return "base";
-    }
-
     private static Stream<Arguments> versionsTests() {
         return Stream.of(
                 Arguments.of(Version.of("1.1"), "version1.json"),
@@ -26,6 +21,10 @@ public class VersionTest extends AbstractFolderSerializationRunner {
         );
     }
 
+    @Override
+    protected String getFolder() {
+        return "base";
+    }
 
     @ParameterizedTest
     @MethodSource("versionsTests")

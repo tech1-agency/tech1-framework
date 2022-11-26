@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.tech1.framework</groupId>
+        <artifactId>tech1-framework</artifactId>
+        <version>1.4</version>
+    </parent>
+
+    <artifactId>tech1-framework-b2b-mongodb-server</artifactId>
+
+    <dependencies>
+        <!-- Tech1: Framework -->
+        <dependency>
+            <groupId>io.tech1.framework</groupId>
+            <artifactId>tech1-framework-b2b-mongodb-security-jwt</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>app</finalName>
+        <plugins>
+            <!-- Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.dependency.springframework.boot}</version>
+            </plugin>
+            <!-- Verifier: GIT => `/info` endpoint -->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${version.plugin.git.commit}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

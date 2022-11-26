@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.random;
 
+import feign.Request;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
 import io.tech1.framework.domain.enums.Status;
@@ -689,7 +690,7 @@ public class RandomUtilityTest {
         assertThat(randomEnum1).isNotEqualTo(randomEnum2);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomEnumExceptCaseAsListExceptionTest() {
         // Arrange
         var clazz = EnumUnderTests.class;
@@ -739,7 +740,16 @@ public class RandomUtilityTest {
         }
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomMethodTest() {
+        // Act
+        var actual = randomMethod();
+
+        // Assert
+        assertThat(actual.getName()).isEqualTo("finalize");
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomZoneIdTest() {
         // Act
         var actual = randomZoneId();
@@ -748,7 +758,7 @@ public class RandomUtilityTest {
         assertThat(getAvailableZoneIds()).contains(actual.getId());
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomTimeZoneTest() {
         // Act
         var actual = randomTimeZone();
@@ -757,7 +767,7 @@ public class RandomUtilityTest {
         assertThat(getAvailableZoneIds()).contains(actual.toZoneId().getId());
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomUsernameTest() {
         // Act
         var actual = randomUsername();
@@ -767,7 +777,28 @@ public class RandomUtilityTest {
         assertThat(actual.getIdentifier()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomPasswordTest() {
+        // Act
+        var actual = randomPassword();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getValue()).isNotNull();
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    public void randomFeignExceptionTest() {
+        // Act
+        var actual = randomFeignException();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.request().httpMethod()).isEqualTo(Request.HttpMethod.GET);
+        assertThat(actual.request().url()).isEqualTo("/endpoint");
+    }
+
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void validGeoLocationTest() {
         // Act
         var actual = validGeoLocation();
@@ -781,7 +812,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void invalidGeoLocationTest() {
         // Act
         var actual = invalidGeoLocation();
@@ -795,7 +826,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhere()).isEqualTo("Unknown, Unknown");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomGeoLocationTest() {
         // Act
         var actual = randomGeoLocation();
@@ -808,7 +839,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhere()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void validUserAgentDetailsTest() {
         // Act
         var actual = validUserAgentDetails();
@@ -822,7 +853,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhat()).isEqualTo("Chrome, macOS on Desktop");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void invalidUserAgentDetailsTest() {
         // Act
         var actual = invalidUserAgentDetails();
@@ -836,7 +867,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomUserAgentDetailsTest() {
         // Act
         var userAgentDetails = randomUserAgentDetails();
@@ -850,7 +881,7 @@ public class RandomUtilityTest {
         assertThat(userAgentDetails.getWhat()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void validUserRequestMetadataTest() {
         // Act
         var actual = validUserRequestMetadata();
@@ -876,7 +907,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Ukraine, Lviv");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void invalidUserRequestMetadataTest() {
         // Act
         var actual = invalidUserRequestMetadata();
@@ -902,7 +933,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Unknown, Unknown");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void randomUserRequestMetadataTest() {
         // Act
         var actual = randomUserRequestMetadata();

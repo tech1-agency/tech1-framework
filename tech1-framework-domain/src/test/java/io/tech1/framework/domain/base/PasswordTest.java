@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PasswordTest extends AbstractSerializationDeserializationRunner {
-    private final static Password PASSWORD = Password.of("admin123!");
+    private static final Password PASSWORD = Password.of("admin123!");
 
     @Override
     protected String getFileName() {

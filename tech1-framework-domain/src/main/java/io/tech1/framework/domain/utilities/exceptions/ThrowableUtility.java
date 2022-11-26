@@ -14,13 +14,17 @@ public class ThrowableUtility {
     }
 
     public static ThrowableTrace getTrace(Throwable throwable, int length) {
-        return new ThrowableTrace(getTracedText(throwable, length));
+        return ThrowableTrace.of(getTracedText(throwable, length));
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
     private static String getTracedText(Throwable throwable, int length) {
+        // failsafe
+        if (length < 200) {
+            length = 200;
+        }
         var message = "Throwable occurred! Please take required actions!\n\n";
         var sw = new StringWriter();
         var pw = new PrintWriter(sw);

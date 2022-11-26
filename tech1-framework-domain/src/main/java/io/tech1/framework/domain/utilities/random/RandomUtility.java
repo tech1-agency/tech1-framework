@@ -1,5 +1,8 @@
 package io.tech1.framework.domain.utilities.random;
 
+import feign.FeignException;
+import feign.Request;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
@@ -14,8 +17,10 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -327,6 +332,10 @@ public class RandomUtility {
         }
     }
 
+    public static Method randomMethod() {
+        return Object.class.getDeclaredMethods()[0];
+    }
+
     public static ZoneId randomZoneId() {
         return ZoneId.of(randomElement(ZoneId.getAvailableZoneIds()));
     }
@@ -337,6 +346,25 @@ public class RandomUtility {
 
     public static Username randomUsername() {
         return Username.of(randomString());
+    }
+
+    public static Password randomPassword() {
+        return Password.of(randomString());
+    }
+
+    @SuppressWarnings("deprecation")
+    public static FeignException randomFeignException() {
+        return new FeignException.InternalServerError(
+                randomString(),
+                Request.create(
+                        Request.HttpMethod.GET,
+                        "/endpoint",
+                        Map.of(),
+                        new byte[] {},
+                        Charset.defaultCharset()
+                ),
+                new byte[] {}
+        );
     }
 
     public static GeoLocation validGeoLocation() {

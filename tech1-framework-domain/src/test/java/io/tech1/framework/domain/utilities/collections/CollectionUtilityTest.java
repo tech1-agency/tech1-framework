@@ -122,7 +122,7 @@ public class CollectionUtilityTest {
         });
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void safeGetters() {
         // Arrange
         var list = List.of(1, 2, 3, 4, 5);

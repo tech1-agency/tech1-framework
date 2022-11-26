@@ -2,7 +2,6 @@ package io.tech1.framework.domain.utilities.random;
 
 import io.tech1.framework.domain.tests.classes.*;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -42,13 +41,12 @@ public class EntityUtilityTest {
         // Arrange
         var size = (int) one(Integer.class);
 
+
         // Act
-        var throwable = AssertionsForClassTypes.catchThrowable(() -> list(ClassPrivateConstructor.class, size));
+        var list = list(ClassPrivateConstructor.class, size);
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please add entity construction rules or extend functionality. Class: `io.tech1.framework.domain.tests.classes.ClassPrivateConstructor`");
+        assertThat(list).hasSize(size);
     }
 
     @Test
@@ -81,12 +79,10 @@ public class EntityUtilityTest {
         var size = (int) one(Integer.class);
 
         // Act
-        var throwable = catchThrowable(() -> set(ClassPrivateConstructor.class, size));
+        var set = set(ClassPrivateConstructor.class, size);
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please add entity construction rules or extend functionality. Class: `io.tech1.framework.domain.tests.classes.ClassPrivateConstructor`");
+        assertThat(set).hasSize(size);
     }
 
     // =================================================================================================================
@@ -173,7 +169,7 @@ public class EntityUtilityTest {
         assertThat(random.getChild2().getNest2Value2()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void list345Test() {
         // Act
         var set = list345(Long.class);
@@ -183,7 +179,7 @@ public class EntityUtilityTest {
         assertThat(set.size()).isBetween(1, 6);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void set345Test() {
         // Act
         var set = set345(Long.class);

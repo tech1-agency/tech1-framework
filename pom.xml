@@ -345,6 +345,25 @@
                             <source>${version.java}</source>
                         </configuration>
                     </plugin>
+                    <!-- https://stackoverflow.com/questions/11329965/how-to-ignore-the-java-source-directory-during-maven-compilation -->
+                    <!-- Lombok -->
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <version>${version.plugin.lombok}</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <addOutputDirectory>false</addOutputDirectory>
+                            <sourceDirectory>src/main/java</sourceDirectory>
+                        </configuration>
+                    </plugin>
                     <!-- GPG -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -384,25 +403,6 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!-- https://stackoverflow.com/questions/11329965/how-to-ignore-the-java-source-directory-during-maven-compilation -->
-                <!-- Lombok -->
-                <plugin>
-                    <groupId>org.projectlombok</groupId>
-                    <artifactId>lombok-maven-plugin</artifactId>
-                    <version>${version.plugin.lombok}</version>
-                    <executions>
-                        <execution>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>delombok</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <addOutputDirectory>false</addOutputDirectory>
-                        <sourceDirectory>src/main/java</sourceDirectory>
-                    </configuration>
-                </plugin>
                 <!-- Spring Boot -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
@@ -475,6 +475,25 @@
                     <quiet>true</quiet>
                     <doclint>none</doclint>
                     <source>${version.java}</source>
+                </configuration>
+            </plugin>
+            <!-- https://stackoverflow.com/questions/11329965/how-to-ignore-the-java-source-directory-during-maven-compilation -->
+            <!-- Lombok -->
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>${version.plugin.lombok}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <addOutputDirectory>false</addOutputDirectory>
+                    <sourceDirectory>src/main/java</sourceDirectory>
                 </configuration>
             </plugin>
             <!-- Compiler -->

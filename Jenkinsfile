@@ -1,8 +1,9 @@
 pipeline {
     agent any
     environment {
-        OPS_HOME = "/home/bitnami/infrastructure-resources-private"
         MVN_SETTINGS = credentials('jenkins_maven_settings')
+        OPS_HOME = "/home/bitnami/infrastructure-resources-private"
+        TECH1_DOCKERHUB_REPOSITORY = "tech1-framework-b2b-mongodb-server"
         PATH = "${OPS_HOME}/bin:${env.PATH}"
     }
     options {

@@ -50,7 +50,7 @@ tech1:
     mongodb:
       host: 127.0.0.1
       port: 27017
-      database: tech1_platform_server
+      database: tech1_b2b_mongodb_server
     sessionConfigs:
       cleanSessionsByExpiredRefreshTokensCron:
         enabled: true
@@ -61,7 +61,7 @@ tech1:
         enabled: true
         users:
           - username: admin11
-            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C" # Admin23!
+            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zoneId: "Europe/Kiev" # JavaScript: Intl.DateTimeFormat().resolvedOptions().timeZone
             authorities: [ "admin", "invitationCode:write" ]
       invitationCodes:

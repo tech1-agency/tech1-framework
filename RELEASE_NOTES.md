@@ -1,6 +1,9 @@
 # Release Notes
 
 ### v1.4
+- TBD
+
+### v1.4
 - Migrate domain-based properties 
 - Migrate domain-based exception
 - Add tech1-framework-properties maven module

@@ -71,6 +71,7 @@
         <version.java>11</version.java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.delombok.output>${project.build.directory}/delombok</project.delombok.output>
         <!-- dependencies, scope == compile -->
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
         <version.dependency.browscap>1.3.12</version.dependency.browscap>
@@ -339,7 +340,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <sourcepath>target/generated-sources/delombok</sourcepath>
+                            <sourcepath>${project.delombok.output}</sourcepath>
                             <quiet>true</quiet>
                             <doclint>none</doclint>
                             <source>${version.java}</source>
@@ -360,8 +361,10 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <addOutputDirectory>false</addOutputDirectory>
                             <sourceDirectory>src/main/java</sourceDirectory>
+                            <addOutputDirectory>false</addOutputDirectory>
+                            <outputDirectory>${project.delombok.output}</outputDirectory>
+                            <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
                     </plugin>
                     <!-- GPG -->
@@ -471,7 +474,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourcepath>target/generated-sources/delombok</sourcepath>
+                    <sourcepath>${project.delombok.output}</sourcepath>
                     <quiet>true</quiet>
                     <doclint>none</doclint>
                     <source>${version.java}</source>
@@ -492,8 +495,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <addOutputDirectory>false</addOutputDirectory>
                     <sourceDirectory>src/main/java</sourceDirectory>
+                    <addOutputDirectory>false</addOutputDirectory>
+                    <outputDirectory>${project.delombok.output}</outputDirectory>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <!-- Compiler -->

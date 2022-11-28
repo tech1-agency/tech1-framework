@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.utilities.http;
 
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -94,7 +93,6 @@ public class HttpServletRequestUtilityTest {
         }
     }
 
-    @Disabled("heavy test, will be enabled on later releases")
     @Test
     public void getUserAgentDetailsExceptionTest() {
         // Arrange
@@ -114,7 +112,6 @@ public class HttpServletRequestUtilityTest {
         assertThat(userAgentDetails.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
     }
 
-    @Disabled("heavy test, will be enabled on later releases")
     @ParameterizedTest
     @MethodSource("getUserAgentDetailsTest")
     public void getUserAgentDetailsTest(String header, String browser, String platform, String deviceType) {

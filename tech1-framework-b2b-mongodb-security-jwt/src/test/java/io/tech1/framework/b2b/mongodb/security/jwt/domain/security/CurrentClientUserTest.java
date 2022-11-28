@@ -17,16 +17,19 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> getAttributeByKeyTest() {
         return Stream.of(
-                Arguments.of("key2", "value2"),
-                Arguments.of("key3", 1L),
-                Arguments.of("key4", null),
-                Arguments.of(randomString(), null)
+                Arguments.of("key2", false, "value2"),
+                Arguments.of("key2", true, null),
+                Arguments.of("key3", false, 1L),
+                Arguments.of("key3", true, null),
+                Arguments.of("key4", false, null),
+                Arguments.of(randomString(), false, null)
         );
     }
 
@@ -81,7 +84,7 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("getAttributeByKeyTest")
-    public void getAttributeByKeyTest(String attributeKey, Object expected) {
+    public void getAttributeByKeyTest(String attributeKey, boolean reflectionHack, Object expected) throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomString(),
@@ -96,6 +99,9 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                         "key3", 1L
                 )
         );
+        if (reflectionHack) {
+            setPrivateField(currentClientUser, "attributes", null);
+        }
 
         // Act
         var actual = currentClientUser.getAttributeByKey(attributeKey);

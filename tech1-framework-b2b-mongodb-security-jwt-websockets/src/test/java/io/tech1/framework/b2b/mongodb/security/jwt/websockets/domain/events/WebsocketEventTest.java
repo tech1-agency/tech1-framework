@@ -19,7 +19,20 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void serializeTest() {
+    public void serialize1Test() {
+        // Arrange
+        var websocketEvent = new WebsocketEvent();
+
+        // Act
+        var json = this.writeValueAsString(websocketEvent);
+
+        // Assert
+        assertThat(json).isNotNull();
+        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-1.json"));
+    }
+
+    @Test
+    public void serialize2Test() {
         // Arrange
         var websocketEvent = new WebsocketEvent(
                 Map.of(
@@ -34,7 +47,7 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
 
         // Assert
         assertThat(json).isNotNull();
-        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event.json"));
+        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-2.json"));
     }
 
     @Test

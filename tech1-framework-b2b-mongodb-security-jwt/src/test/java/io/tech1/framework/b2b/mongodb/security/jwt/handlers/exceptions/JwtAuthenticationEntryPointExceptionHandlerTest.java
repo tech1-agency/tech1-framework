@@ -6,8 +6,8 @@ import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicati
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginFailureUsernameMaskedPasswordIncident;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginFailureUsernamePasswordIncident;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -152,13 +152,13 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
         var username = Username.of(usernameString);
         var password = Password.of(passwordString);
         verify(this.incidentPublisher).publishAuthenticationLoginFailureUsernamePassword(eq(
-                AuthenticationLoginFailureUsernamePasswordIncident.of(
+                IncidentAuthenticationLoginFailureUsernamePassword.of(
                         username,
                         password
                 )
         ));
         verify(this.incidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(eq(
-                AuthenticationLoginFailureUsernameMaskedPasswordIncident.of(
+                IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
                         username,
                         password
                 )

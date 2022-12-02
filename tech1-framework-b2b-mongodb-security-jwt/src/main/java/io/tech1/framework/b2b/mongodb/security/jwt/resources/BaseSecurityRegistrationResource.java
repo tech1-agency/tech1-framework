@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.incidents.domain.registration.Registration1Incident;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +37,6 @@ public class BaseSecurityRegistrationResource {
         this.registrationRequestsValidator.validateRegistrationRequest1(requestUserRegistration1);
         this.registrationService.register1(requestUserRegistration1);
         this.securityJwtPublisher.publishRegistration1(EventRegistration1.of(requestUserRegistration1));
-        this.incidentPublisher.publishRegistration1(Registration1Incident.of(Username.of(requestUserRegistration1.getUsername())));
+        this.incidentPublisher.publishRegistration1(IncidentRegistration1.of(Username.of(requestUserRegistration1.getUsername())));
     }
 }

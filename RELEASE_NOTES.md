@@ -2,6 +2,7 @@
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)
+- Introduce events/incidents policies
 
 ### v1.4
 - Migrate domain-based properties 

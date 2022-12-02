@@ -12,6 +12,8 @@ public class IncidentAttributes {
         public static final String USERNAME = "Username";
         public static final String PASSWORD = "Password";
 
+        public static final String TRIGGER = "_Trigger";
+
         public static final String EXCEPTION = "Exception";
         public static final String TRACE = "Trace";
         public static final String MESSAGE = "Message";
@@ -20,11 +22,12 @@ public class IncidentAttributes {
 
         public static final String INVITATION_CODE = "Invitation Code";
 
-        public static final String IP_ADDRESS = "IP address";
-        public static final String COUNTRY = "Country";
-        public static final String WHERE = "Where";
         public static final String BROWSER = "Browser";
+        public static final String COUNTRY = "Country";
+        public static final String IP_ADDRESS = "IP address";
         public static final String WHAT = "What";
+        public static final String WHEN = "When";
+        public static final String WHERE = "Where";
     }
 
     @UtilityClass

@@ -1,12 +1,12 @@
 package io.tech1.framework.incidents.domain.authetication;
 
-import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.Data;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class AuthenticationLoginFailureUsernamePasswordIncident {
+public class IncidentAuthenticationLogoutFull {
     private final Username username;
-    private final Password password;
+    private final UserRequestMetadata userRequestMetadata;
 }

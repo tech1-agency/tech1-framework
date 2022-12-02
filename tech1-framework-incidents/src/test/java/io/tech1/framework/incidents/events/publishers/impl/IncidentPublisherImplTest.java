@@ -5,11 +5,11 @@ import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.utilities.random.EntityUtility;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Registration1Incident;
-import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
-import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -119,7 +119,7 @@ public class IncidentPublisherImplTest {
         this.componentUnderTest.publishThrowable(throwable);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(ThrowableIncident.of(throwable)));
+        verify(this.applicationEventPublisher).publishEvent(eq(IncidentThrowable.of(throwable)));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(0, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLoginIncident.class);
+        var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
@@ -141,7 +141,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(0, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLoginIncident.class);
+        var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
@@ -156,7 +156,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(1, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLoginFailureUsernamePasswordIncident.class);
+        var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
@@ -170,7 +170,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(1, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLoginFailureUsernamePasswordIncident.class);
+        var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
@@ -185,7 +185,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(2, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLoginFailureUsernameMaskedPasswordIncident.class);
+        var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
@@ -199,7 +199,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(2, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLoginFailureUsernameMaskedPasswordIncident.class);
+        var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
@@ -214,7 +214,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(3, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLogoutMinIncident.class);
+        var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
@@ -228,7 +228,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(3, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLogoutMinIncident.class);
+        var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
@@ -243,7 +243,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(3, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLogoutFullIncident.class);
+        var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
@@ -257,7 +257,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(3, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(AuthenticationLogoutFullIncident.class);
+        var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
@@ -272,7 +272,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(4, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(SessionRefreshedIncident.class);
+        var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
@@ -286,7 +286,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(4, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(SessionRefreshedIncident.class);
+        var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
@@ -301,7 +301,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(5, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(SessionExpiredIncident.class);
+        var incident = entity(IncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
@@ -315,7 +315,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(5, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(SessionExpiredIncident.class);
+        var incident = entity(IncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
@@ -330,7 +330,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(6, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Registration1Incident.class);
+        var incident = entity(IncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
@@ -344,7 +344,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(6, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Registration1Incident.class);
+        var incident = entity(IncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
@@ -359,7 +359,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(7, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Registration1FailureIncident.class);
+        var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
@@ -373,7 +373,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(7, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Registration1FailureIncident.class);
+        var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);

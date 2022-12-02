@@ -8,11 +8,11 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Registration1Incident;
-import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
-import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +49,7 @@ public class IncidentConverterImplTest {
     public void convertThrowableIncident1Test() {
         // Arrange
         var throwable = new NullPointerException("Tech1");
-        var throwableIncident = ThrowableIncident.of(throwable);
+        var throwableIncident = IncidentThrowable.of(throwable);
 
         // Act
         var actual = this.componentUnderTest.convert(throwableIncident);
@@ -73,7 +73,7 @@ public class IncidentConverterImplTest {
         var throwable = new NullPointerException("Tech1");
         var method = randomMethod();
         var params = List.of(object, "param1", 1L);
-        var throwableIncident = ThrowableIncident.of(throwable, method, params);
+        var throwableIncident = IncidentThrowable.of(throwable, method, params);
 
         // Act
         var actual = this.componentUnderTest.convert(throwableIncident);
@@ -98,7 +98,7 @@ public class IncidentConverterImplTest {
         var object = new Object();
         var throwable = new NullPointerException("Tech1");
         var attributes = Map.of("Key1", object);
-        var throwableIncident = ThrowableIncident.of(throwable, attributes);
+        var throwableIncident = IncidentThrowable.of(throwable, attributes);
 
         // Act
         var actual = this.componentUnderTest.convert(throwableIncident);
@@ -120,7 +120,7 @@ public class IncidentConverterImplTest {
     public void convertAuthenticationLoginIncidentExceptionTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = AuthenticationLoginIncident.of(
+        var incident = IncidentAuthenticationLogin.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.unknown(new IPAddress("8.8.8.8"), "exception1"),
@@ -151,7 +151,7 @@ public class IncidentConverterImplTest {
     public void convertAuthenticationLoginIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = AuthenticationLoginIncident.of(
+        var incident = IncidentAuthenticationLogin.of(
                 username,
                 UserRequestMetadata.processing(new IPAddress("127.0.0.1"))
         );
@@ -179,7 +179,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var username = Username.of("tech1");
         var password = Password.of("passwordTOP123!");
-        var incident = AuthenticationLoginFailureUsernamePasswordIncident.of(
+        var incident = IncidentAuthenticationLoginFailureUsernamePassword.of(
                 username,
                 password
         );
@@ -203,7 +203,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var username = Username.of("tech1");
         var password = Password.of("passwordTOP123!");
-        var incident = AuthenticationLoginFailureUsernameMaskedPasswordIncident.of(
+        var incident = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
                 username,
                 password
         );
@@ -226,7 +226,7 @@ public class IncidentConverterImplTest {
     public void convertAuthenticationLogoutMinIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = AuthenticationLogoutMinIncident.of(
+        var incident = IncidentAuthenticationLogoutMin.of(
                 username
         );
 
@@ -247,7 +247,7 @@ public class IncidentConverterImplTest {
     public void convertAuthenticationLogoutFullIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = AuthenticationLogoutFullIncident.of(
+        var incident = IncidentAuthenticationLogoutFull.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
@@ -277,7 +277,7 @@ public class IncidentConverterImplTest {
     public void convertSessionRefreshedIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = SessionRefreshedIncident.of(
+        var incident = IncidentSessionRefreshed.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
@@ -307,7 +307,7 @@ public class IncidentConverterImplTest {
     public void convertSessionExpiredIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = SessionExpiredIncident.of(
+        var incident = IncidentSessionExpired.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
@@ -337,7 +337,7 @@ public class IncidentConverterImplTest {
     public void convertRegister1IncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = Registration1Incident.of(
+        var incident = IncidentRegistration1.of(
                 username
         );
 
@@ -360,7 +360,7 @@ public class IncidentConverterImplTest {
         var username = Username.of("tech1");
         var exception = randomString();
         var invitationCode = randomString();
-        var incident = Registration1FailureIncident.of(
+        var incident = IncidentRegistration1Failure.of(
                 username,
                 exception,
                 invitationCode

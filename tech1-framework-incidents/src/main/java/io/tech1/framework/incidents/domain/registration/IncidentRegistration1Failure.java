@@ -5,6 +5,8 @@ import lombok.Data;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class Registration1Incident {
+public class IncidentRegistration1Failure {
     private final Username username;
+    private final String exception;
+    private final String invitationCode;
 }

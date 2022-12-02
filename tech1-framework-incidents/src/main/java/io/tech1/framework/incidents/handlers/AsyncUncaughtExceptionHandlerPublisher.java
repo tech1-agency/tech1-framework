@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.handlers;
 
-import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -20,7 +20,7 @@ public class AsyncUncaughtExceptionHandlerPublisher implements AsyncUncaughtExce
     @Override
     public void handleUncaughtException(Throwable throwable, Method method, Object... params) {
         this.incidentPublisher.publishThrowable(
-                ThrowableIncident.of(
+                IncidentThrowable.of(
                         throwable,
                         method,
                         Arrays.asList(params)

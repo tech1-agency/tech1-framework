@@ -8,11 +8,11 @@ import static io.tech1.framework.domain.utilities.strings.MaskUtility.mask5;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class AuthenticationLoginFailureUsernameMaskedPasswordIncident {
+public class IncidentAuthenticationLoginFailureUsernameMaskedPassword {
     private final Username username;
     private final Password password;
 
-    public AuthenticationLoginFailureUsernameMaskedPasswordIncident(
+    public IncidentAuthenticationLoginFailureUsernameMaskedPassword(
             Username username,
             Password password
     ) {

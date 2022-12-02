@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         var userSession = this.userSessionService.saveUserRequestMetadata(event);
         if (event.isAuthenticationLoginEndpoint()) {
             this.incidentPublisher.publishAuthenticationLogin(
-                    AuthenticationLoginIncident.of(
+                    IncidentAuthenticationLogin.of(
                             event.getUsername(),
                             userSession.getRequestMetadata()
                     )
@@ -71,7 +71,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         }
         if (event.isAuthenticationRefreshTokenEndpoint()) {
             this.incidentPublisher.publishSessionRefreshed(
-                    SessionRefreshedIncident.of(
+                    IncidentSessionRefreshed.of(
                             event.getUsername(),
                             userSession.getRequestMetadata()
                     )

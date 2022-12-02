@@ -2,34 +2,34 @@ package io.tech1.framework.incidents.events.subscribers;
 
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Registration1Incident;
-import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
-import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import org.springframework.context.event.EventListener;
 
 public interface IncidentSubscriber {
     @EventListener
     void onEvent(Incident incident);
     @EventListener
-    void onEvent(ThrowableIncident throwableIncident);
+    void onEvent(IncidentThrowable incidentThrowable);
     @EventListener
-    void onEvent(AuthenticationLoginIncident authenticationLoginIncident);
+    void onEvent(IncidentAuthenticationLogin incidentAuthenticationLogin);
     @EventListener
-    void onEvent(AuthenticationLoginFailureUsernamePasswordIncident authenticationLoginFailureUsernamePasswordIncident);
+    void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword);
     @EventListener
-    void onEvent(AuthenticationLoginFailureUsernameMaskedPasswordIncident authenticationLoginFailureUsernameMaskedPasswordIncident);
+    void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword);
     @EventListener
-    void onEvent(AuthenticationLogoutMinIncident authenticationLogoutMinIncident);
+    void onEvent(IncidentAuthenticationLogoutMin incidentAuthenticationLogoutMin);
     @EventListener
-    void onEvent(AuthenticationLogoutFullIncident authenticationLogoutFullIncident);
+    void onEvent(IncidentAuthenticationLogoutFull incidentAuthenticationLogoutFull);
     @EventListener
-    void onEvent(SessionRefreshedIncident sessionRefreshedIncident);
+    void onEvent(IncidentSessionRefreshed incidentSessionRefreshed);
     @EventListener
-    void onEvent(SessionExpiredIncident sessionExpiredIncident);
+    void onEvent(IncidentSessionExpired incidentSessionExpired);
     @EventListener
-    void onEvent(Registration1Incident registration1Incident);
+    void onEvent(IncidentRegistration1 incidentRegistration1);
     @EventListener
-    void onEvent(Registration1FailureIncident registration1FailureIncident);
+    void onEvent(IncidentRegistration1Failure incidentRegistration1Failure);
 }

@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -92,7 +92,7 @@ public class RegistrationRequestsValidatorImplTest {
         assertThat(throwable.getMessage()).isEqualTo("Username is already used");
         verify(this.userRepository).findByUsername(eq(username));
         verify(this.incidentPublisher).publishRegistration1Failure(eq(
-                Registration1FailureIncident.of(
+                IncidentRegistration1Failure.of(
                         username,
                         "Username is already used",
                         invitationCode
@@ -129,7 +129,7 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.userRepository).findByUsername(eq(username));
         verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
         verify(this.incidentPublisher).publishRegistration1Failure(eq(
-                Registration1FailureIncident.of(
+                IncidentRegistration1Failure.of(
                         username,
                         "InvitationCode is already used",
                         invitationCode
@@ -165,7 +165,7 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.userRepository).findByUsername(eq(username));
         verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
         verify(this.incidentPublisher).publishRegistration1Failure(eq(
-                Registration1FailureIncident.of(
+                IncidentRegistration1Failure.of(
                         username,
                         "InvitationCode is not found",
                         invitationCode

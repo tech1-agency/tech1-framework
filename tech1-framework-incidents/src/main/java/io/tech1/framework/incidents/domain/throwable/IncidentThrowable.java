@@ -17,7 +17,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Getter
 @EqualsAndHashCode
 @ToString
-public class ThrowableIncident {
+public class IncidentThrowable {
     private Throwable throwable;
 
     private Method method;
@@ -25,16 +25,16 @@ public class ThrowableIncident {
 
     private Map<String, Object> attributes;
 
-    public static ThrowableIncident of(
+    public static IncidentThrowable of(
             Throwable throwable
     ) {
         assertNonNullNotBlankOrThrow(throwable, invalidAttribute("ThrowableIncident.throwable"));
-        var incident = new ThrowableIncident();
+        var incident = new IncidentThrowable();
         incident.throwable = throwable;
         return incident;
     }
 
-    public static ThrowableIncident of(
+    public static IncidentThrowable of(
             Throwable throwable,
             Method method,
             List<Object> params
@@ -49,7 +49,7 @@ public class ThrowableIncident {
         return incident;
     }
 
-    public static ThrowableIncident of(
+    public static IncidentThrowable of(
             Throwable throwable,
             Map<String, Object> attributes
     ) {

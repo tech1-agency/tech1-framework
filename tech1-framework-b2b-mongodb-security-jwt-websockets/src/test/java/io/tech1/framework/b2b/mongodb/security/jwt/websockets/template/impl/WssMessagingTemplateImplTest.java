@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.websockets.template.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.websockets.domain.events.WebsocketEvent;
 import io.tech1.framework.b2b.mongodb.security.jwt.websockets.template.WssMessagingTemplate;
-import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -96,7 +96,7 @@ public class WssMessagingTemplateImplTest {
 
         // Assert
         verify(this.simpMessagingTemplate).convertAndSendToUser(eq(username.getIdentifier()), eq(simpleDestination + destination), eq(websocketEvent));
-        verify(this.incidentPublisher).publishThrowable(eq(ThrowableIncident.of(ex)));
+        verify(this.incidentPublisher).publishThrowable(eq(IncidentThrowable.of(ex)));
         verifyNoMoreInteractions(this.simpMessagingTemplate);
     }
 

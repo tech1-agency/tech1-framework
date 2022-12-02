@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AuthenticationLoginFailureUsernameMaskedPasswordIncidentTest {
+public class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
 
     private static Stream<Arguments> ofTest() {
         return Stream.of(
@@ -29,7 +29,7 @@ public class AuthenticationLoginFailureUsernameMaskedPasswordIncidentTest {
 
 
         // Act
-        var actual = AuthenticationLoginFailureUsernameMaskedPasswordIncident.of(
+        var actual = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
                 username,
                 Password.of(password)
         );

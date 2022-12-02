@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -198,7 +198,7 @@ public class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.incidentPublisher).publishAuthenticationLogin(eq(AuthenticationLoginIncident.of(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.incidentPublisher).publishAuthenticationLogin(eq(IncidentAuthenticationLogin.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 
     @Test
@@ -220,6 +220,6 @@ public class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.incidentPublisher).publishSessionRefreshed(eq(SessionRefreshedIncident.of(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.incidentPublisher).publishSessionRefreshed(eq(IncidentSessionRefreshed.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 }

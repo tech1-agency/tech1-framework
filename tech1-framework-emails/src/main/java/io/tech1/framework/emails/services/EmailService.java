@@ -7,11 +7,11 @@ import java.util.Set;
 
 public interface EmailService {
     @Async
-    void send(String subject, String message);
+    void sendPlain(String subject, String message);
     @Async
-    void send(String[] to, String subject, String message);
+    void sendPlain(String[] to, String subject, String message);
     @Async
-    void send(List<String> to, String subject, String message);
+    void sendPlain(List<String> to, String subject, String message);
     @Async
-    void send(Set<String> to, String subject, String message);
+    void sendPlain(Set<String> to, String subject, String message);
 }

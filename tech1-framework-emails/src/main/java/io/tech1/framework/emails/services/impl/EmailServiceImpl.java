@@ -21,13 +21,13 @@ public class EmailServiceImpl implements EmailService {
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public void send(String subject, String message) {
+    public void sendPlain(String subject, String message) {
         var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
-        this.send(emailConfigs.getTo(), subject, message);
+        this.sendPlain(emailConfigs.getTo(), subject, message);
     }
 
     @Override
-    public void send(String[] to, String subject, String message) {
+    public void sendPlain(String[] to, String subject, String message) {
         var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {
             var from = emailConfigs.getFrom();
@@ -41,12 +41,12 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void send(List<String> to, String subject, String message) {
-        this.send(to.toArray(new String[0]), subject, message);
+    public void sendPlain(List<String> to, String subject, String message) {
+        this.sendPlain(to.toArray(new String[0]), subject, message);
     }
 
     @Override
-    public void send(Set<String> to, String subject, String message) {
-        this.send(to.toArray(new String[0]), subject, message);
+    public void sendPlain(Set<String> to, String subject, String message) {
+        this.sendPlain(to.toArray(new String[0]), subject, message);
     }
 }

@@ -76,7 +76,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void mainSendDisabledTest() {
+    public void mainSendPlainDisabledTest() {
         // Arrange
         var to = randomEmail();
         var subject = randomString();
@@ -86,14 +86,14 @@ public class EmailServiceImplTest {
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
-        this.componentUnderTest.send(new String[] { to }, subject, message);
+        this.componentUnderTest.sendPlain(new String[] { to }, subject, message);
 
         // Assert
         verify(this.applicationFrameworkProperties).getEmailConfigs();
     }
 
     @Test
-    public void mainSendEnabledTest() {
+    public void mainSendPlainEnabledTest() {
         // Arrange
         var to = randomEmail();
         var from = randomEmail();
@@ -105,7 +105,7 @@ public class EmailServiceImplTest {
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
-        this.componentUnderTest.send(new String[] { to }, subject, message);
+        this.componentUnderTest.sendPlain(new String[] { to }, subject, message);
 
         // Assert
         verify(this.applicationFrameworkProperties).getEmailConfigs();
@@ -119,7 +119,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void systemSendEnabledTest() {
+    public void systemSendPlainEnabledTest() {
         // Arrange
         var to1 = randomEmail();
         var to2 = randomEmail();
@@ -133,7 +133,7 @@ public class EmailServiceImplTest {
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
-        this.componentUnderTest.send(subject, message);
+        this.componentUnderTest.sendPlain(subject, message);
 
         // Assert
         verify(this.applicationFrameworkProperties, times(2)).getEmailConfigs();
@@ -147,7 +147,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void listSendEnabledTest() {
+    public void listSendPlainEnabledTest() {
         // Arrange
         var to = randomEmail();
         var from = randomEmail();
@@ -159,7 +159,7 @@ public class EmailServiceImplTest {
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
-        this.componentUnderTest.send(List.of(to), subject, message);
+        this.componentUnderTest.sendPlain(List.of(to), subject, message);
 
         // Assert
         verify(this.applicationFrameworkProperties).getEmailConfigs();
@@ -173,7 +173,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void setSendEnabledTest() {
+    public void setSendPlainEnabledTest() {
         // Arrange
         var to = randomEmail();
         var from = randomEmail();
@@ -185,7 +185,7 @@ public class EmailServiceImplTest {
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
-        this.componentUnderTest.send(Set.of(to), subject, message);
+        this.componentUnderTest.sendPlain(Set.of(to), subject, message);
 
         // Assert
         verify(this.applicationFrameworkProperties).getEmailConfigs();

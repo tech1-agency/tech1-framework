@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.5
-- Migrate EnumUtility methods
+- Migrate EnumUtility methods, TuplePercentage(long, long)
 
 ### v1.4
 - Migrate domain-based properties 

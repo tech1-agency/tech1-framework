@@ -28,12 +28,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onAuthenticationLoginFailureUsernamePassword(EventAuthenticationLoginFailureUsernamePassword event) {
-        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.getUsername());
-    }
-
-    @Override
-    public void onAuthenticationLoginFailureUsernameMaskedPassword(EventAuthenticationLoginFailureUsernameMaskedPassword event) {
+    public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
         LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.getUsername());
     }
 

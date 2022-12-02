@@ -7,9 +7,7 @@ public interface SecurityJwtPublisher {
     @Async
     void publishAuthenticationLogin(EventAuthenticationLogin event);
     @Async
-    void publishAuthenticationLoginFailureUsernamePassword(EventAuthenticationLoginFailureUsernamePassword event);
-    @Async
-    void publishAuthenticationLoginFailureUsernameMaskedPassword(EventAuthenticationLoginFailureUsernameMaskedPassword event);
+    void publishAuthenticationLoginFailure(EventAuthenticationLoginFailure event);
     @Async
     void publishAuthenticationLogout(EventAuthenticationLogout event);
     @Async

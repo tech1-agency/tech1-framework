@@ -2,20 +2,14 @@ package io.tech1.framework.incidents.events.publishers;
 
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import org.springframework.scheduling.annotation.Async;
 
 public interface IncidentPublisher {
-    @Async
-    void publishIncident(Incident incident);
-    @Async
-    void publishThrowable(IncidentThrowable incident);
-    @Async
-    void publishThrowable(Throwable throwable);
     @Async
     void publishAuthenticationLogin(IncidentAuthenticationLogin incident);
     @Async
@@ -34,4 +28,11 @@ public interface IncidentPublisher {
     void publishSessionRefreshed(IncidentSessionRefreshed incident);
     @Async
     void publishSessionExpired(IncidentSessionExpired incident);
+
+    @Async
+    void publishIncident(Incident incident);
+    @Async
+    void publishThrowable(IncidentThrowable incident);
+    @Async
+    void publishThrowable(Throwable throwable);
 }

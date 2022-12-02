@@ -87,24 +87,12 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onAuthenticationLoginFailureUsernamePasswordTest() {
+    public void onAuthenticationLoginFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationLoginFailureUsernamePassword.class);
+        var event = entity(EventAuthenticationLoginFailure.class);
 
         // Act
-        this.componentUnderTest.onAuthenticationLoginFailureUsernamePassword(event);
-
-        // Assert
-        // no asserts
-    }
-
-    @Test
-    public void onAuthenticationLoginFailureUsernameMaskedPasswordTest() {
-        // Arrange
-        var event = entity(EventAuthenticationLoginFailureUsernameMaskedPassword.class);
-
-        // Act
-        this.componentUnderTest.onAuthenticationLoginFailureUsernameMaskedPassword(event);
+        this.componentUnderTest.onAuthenticationLoginFailure(event);
 
         // Assert
         // no asserts

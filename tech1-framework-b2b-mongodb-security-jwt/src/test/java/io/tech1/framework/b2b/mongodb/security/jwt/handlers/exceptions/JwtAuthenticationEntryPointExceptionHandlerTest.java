@@ -2,6 +2,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.base.Password;
@@ -50,6 +52,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     private final IncidentPublisher incidentPublisher;
+    private final SecurityJwtPublisher securityJwtPublisher;
     private final HttpRequestUtility httpRequestUtility;
     private final ObjectMapper objectMapper;
 
@@ -59,6 +62,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     public void beforeEach() {
         reset(
                 this.incidentPublisher,
+                this.securityJwtPublisher,
                 this.httpRequestUtility
         );
     }
@@ -67,6 +71,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     public void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
+                this.securityJwtPublisher,
                 this.httpRequestUtility
         );
     }
@@ -151,6 +156,11 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
         verify(this.httpRequestUtility).getCachedPayload(eq(request));
         var username = Username.of(usernameString);
         var password = Password.of(passwordString);
+        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eq(
+                EventAuthenticationLoginFailure.of(
+                        username
+                )
+        ));
         verify(this.incidentPublisher).publishAuthenticationLoginFailureUsernamePassword(eq(
                 IncidentAuthenticationLoginFailureUsernamePassword.of(
                         username,

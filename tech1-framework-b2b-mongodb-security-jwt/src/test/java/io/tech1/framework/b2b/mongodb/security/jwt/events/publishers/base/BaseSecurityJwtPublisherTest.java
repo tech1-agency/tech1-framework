@@ -71,24 +71,12 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishAuthenticationLoginFailureUsernamePasswordTest() {
+    public void publishAuthenticationLoginFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationLoginFailureUsernamePassword.class);
+        var event = entity(EventAuthenticationLoginFailure.class);
 
         // Act
-        this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(event);
-
-        // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
-    }
-
-    @Test
-    public void publishAuthenticationLoginFailureUsernameMaskedPasswordTest() {
-        // Arrange
-        var event = entity(EventAuthenticationLoginFailureUsernameMaskedPassword.class);
-
-        // Act
-        this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(event);
+        this.componentUnderTest.publishAuthenticationLoginFailure(event);
 
         // Assert
         verify(this.applicationEventPublisher).publishEvent(eq(event));

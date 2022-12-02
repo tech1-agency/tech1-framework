@@ -30,23 +30,6 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public void publishIncident(Incident incident) {
-        LOGGER.debug(INCIDENT, this.getType(), incident.getType());
-        this.applicationEventPublisher.publishEvent(incident);
-    }
-
-    @Override
-    public void publishThrowable(IncidentThrowable incident) {
-        LOGGER.debug(INCIDENT_THROWABLE, this.getType(), incident.getThrowable().getMessage());
-        this.applicationEventPublisher.publishEvent(incident);
-    }
-
-    @Override
-    public void publishThrowable(Throwable throwable) {
-        this.publishThrowable(IncidentThrowable.of(throwable));
-    }
-
-    @Override
     public void publishAuthenticationLogin(IncidentAuthenticationLogin incident) {
         if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getLogin().isEnabled()) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN, this.getType(), incident.getUsername());
@@ -130,5 +113,22 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
         } else {
             LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.SESSION_EXPIRED);
         }
+    }
+
+    @Override
+    public void publishIncident(Incident incident) {
+        LOGGER.debug(INCIDENT, this.getType(), incident.getType());
+        this.applicationEventPublisher.publishEvent(incident);
+    }
+
+    @Override
+    public void publishThrowable(IncidentThrowable incident) {
+        LOGGER.debug(INCIDENT_THROWABLE, this.getType(), incident.getThrowable().getMessage());
+        this.applicationEventPublisher.publishEvent(incident);
+    }
+
+    @Override
+    public void publishThrowable(Throwable throwable) {
+        this.publishThrowable(IncidentThrowable.of(throwable));
     }
 }

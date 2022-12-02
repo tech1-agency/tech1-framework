@@ -7,9 +7,7 @@ public interface SecurityJwtSubscriber {
     @EventListener
     void onAuthenticationLogin(EventAuthenticationLogin event);
     @EventListener
-    void onAuthenticationLoginFailureUsernamePassword(EventAuthenticationLoginFailureUsernamePassword event);
-    @EventListener
-    void onAuthenticationLoginFailureUsernameMaskedPassword(EventAuthenticationLoginFailureUsernameMaskedPassword event);
+    void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event);
     @EventListener
     void onAuthenticationLogout(EventAuthenticationLogout event);
     @EventListener

@@ -2,6 +2,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserLogin;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -26,8 +28,9 @@ import java.io.IOException;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JwtAuthenticationEntryPointExceptionHandler implements AuthenticationEntryPoint {
 
-    // Incidents
+    // Publishers
     private final IncidentPublisher incidentPublisher;
+    private final SecurityJwtPublisher securityJwtPublisher;
     // Utilities
     private final HttpRequestUtility httpRequestUtility;
     // JSONs
@@ -50,6 +53,11 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
 
             var username = Username.of(requestUserLogin.getUsername());
             var password = Password.of(requestUserLogin.getPassword());
+            this.securityJwtPublisher.publishAuthenticationLoginFailure(
+                    EventAuthenticationLoginFailure.of(
+                            username
+                    )
+            );
             this.incidentPublisher.publishAuthenticationLoginFailureUsernamePassword(
                     IncidentAuthenticationLoginFailureUsernamePassword.of(
                             username,

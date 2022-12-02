@@ -77,20 +77,6 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
     }
 
     @Override
-    public void onEvent(IncidentSessionRefreshed incidentSessionRefreshed) {
-        LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incidentSessionRefreshed.getUsername());
-        var incident = this.incidentConverter.convert(incidentSessionRefreshed);
-        this.incidentClient.registerIncident(incident);
-    }
-
-    @Override
-    public void onEvent(IncidentSessionExpired incidentSessionExpired) {
-        LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incidentSessionExpired.getUsername());
-        var incident = this.incidentConverter.convert(incidentSessionExpired);
-        this.incidentClient.registerIncident(incident);
-    }
-
-    @Override
     public void onEvent(IncidentRegistration1 incidentRegistration1) {
         LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incidentRegistration1.getUsername());
         var incident = this.incidentConverter.convert(incidentRegistration1);
@@ -101,6 +87,20 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
     public void onEvent(IncidentRegistration1Failure incidentRegistration1Failure) {
         LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incidentRegistration1Failure.getUsername());
         var incident = this.incidentConverter.convert(incidentRegistration1Failure);
+        this.incidentClient.registerIncident(incident);
+    }
+
+    @Override
+    public void onEvent(IncidentSessionRefreshed incidentSessionRefreshed) {
+        LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incidentSessionRefreshed.getUsername());
+        var incident = this.incidentConverter.convert(incidentSessionRefreshed);
+        this.incidentClient.registerIncident(incident);
+    }
+
+    @Override
+    public void onEvent(IncidentSessionExpired incidentSessionExpired) {
+        LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incidentSessionExpired.getUsername());
+        var incident = this.incidentConverter.convert(incidentSessionExpired);
         this.incidentClient.registerIncident(incident);
     }
 }

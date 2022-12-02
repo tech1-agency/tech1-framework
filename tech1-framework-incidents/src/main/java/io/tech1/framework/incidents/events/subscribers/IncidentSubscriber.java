@@ -25,11 +25,11 @@ public interface IncidentSubscriber {
     @EventListener
     void onEvent(IncidentAuthenticationLogoutFull incidentAuthenticationLogoutFull);
     @EventListener
-    void onEvent(IncidentSessionRefreshed incidentSessionRefreshed);
-    @EventListener
-    void onEvent(IncidentSessionExpired incidentSessionExpired);
-    @EventListener
     void onEvent(IncidentRegistration1 incidentRegistration1);
     @EventListener
     void onEvent(IncidentRegistration1Failure incidentRegistration1Failure);
+    @EventListener
+    void onEvent(IncidentSessionRefreshed incidentSessionRefreshed);
+    @EventListener
+    void onEvent(IncidentSessionExpired incidentSessionExpired);
 }

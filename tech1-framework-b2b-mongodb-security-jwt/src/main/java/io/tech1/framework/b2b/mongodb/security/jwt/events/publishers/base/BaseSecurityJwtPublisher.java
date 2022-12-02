@@ -50,6 +50,12 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
     }
 
     @Override
+    public void publishRegistration1Failure(EventRegistration1Failure event) {
+        LOGGER.debug(SECURITY_JWT_REGISTER1_FAILURE, this.getType(), event.getUsername());
+        this.applicationEventPublisher.publishEvent(event);
+    }
+
+    @Override
     public void publishSessionRefreshed(EventSessionRefreshed event) {
         LOGGER.debug(SECURITY_JWT_SESSION_REFRESHED, this.getType(), event.getSession().getUsername());
         this.applicationEventPublisher.publishEvent(event);

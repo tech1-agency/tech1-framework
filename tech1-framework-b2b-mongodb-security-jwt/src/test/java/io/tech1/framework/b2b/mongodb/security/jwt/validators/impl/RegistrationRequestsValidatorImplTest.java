@@ -3,6 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1Failure;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
@@ -42,6 +44,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     private final IncidentPublisher incidentPublisher;
+    private final SecurityJwtPublisher securityJwtPublisher;
     private final InvitationCodeRepository invitationCodeRepository;
     private final UserRepository userRepository;
 
@@ -51,6 +54,7 @@ public class RegistrationRequestsValidatorImplTest {
     public void beforeEach() {
         reset(
                 this.incidentPublisher,
+                this.securityJwtPublisher,
                 this.invitationCodeRepository,
                 this.userRepository
         );
@@ -60,6 +64,7 @@ public class RegistrationRequestsValidatorImplTest {
     public void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
+                this.securityJwtPublisher,
                 this.invitationCodeRepository,
                 this.userRepository
         );
@@ -91,6 +96,13 @@ public class RegistrationRequestsValidatorImplTest {
         assertThat(throwable).isInstanceOf(RegistrationException.class);
         assertThat(throwable.getMessage()).isEqualTo("Username is already used");
         verify(this.userRepository).findByUsername(eq(username));
+        verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
+                EventRegistration1Failure.of(
+                        username,
+                        "Username is already used",
+                        invitationCode
+                )
+        ));
         verify(this.incidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
@@ -128,6 +140,13 @@ public class RegistrationRequestsValidatorImplTest {
         assertThat(throwable.getMessage()).isEqualTo("InvitationCode is already used");
         verify(this.userRepository).findByUsername(eq(username));
         verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
+        verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
+                EventRegistration1Failure.of(
+                        username,
+                        "InvitationCode is already used",
+                        invitationCode
+                )
+        ));
         verify(this.incidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
@@ -164,6 +183,13 @@ public class RegistrationRequestsValidatorImplTest {
         assertThat(throwable.getMessage()).isEqualTo("InvitationCode is not found");
         verify(this.userRepository).findByUsername(eq(username));
         verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
+        verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
+                EventRegistration1Failure.of(
+                        username,
+                        "InvitationCode is not found",
+                        invitationCode
+                )
+        ));
         verify(this.incidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,

@@ -2,9 +2,10 @@ package io.tech1.framework.incidents.events.publishers.impl;
 
 import io.tech1.framework.domain.pubsub.AbstractEventPublisher;
 import io.tech1.framework.incidents.domain.Incident;
+import io.tech1.framework.incidents.domain.IncidentAttributes;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
@@ -51,7 +52,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Authentication Login");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.AUTHENTICATION_LOGIN);
         }
     }
 
@@ -77,7 +78,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Authentication Logout");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.AUTHENTICATION_LOGOUT);
         }
     }
 
@@ -87,7 +88,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Authentication Logout");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.AUTHENTICATION_LOGOUT);
         }
     }
 
@@ -97,7 +98,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Register1");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.REGISTER1);
         }
     }
 
@@ -107,7 +108,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Register1 Failure");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.REGISTER1_FAILURE);
         }
     }
 
@@ -117,7 +118,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Session Refreshed");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.SESSION_REFRESHED);
         }
     }
 
@@ -127,7 +128,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Session Expired");
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.SESSION_EXPIRED);
         }
     }
 }

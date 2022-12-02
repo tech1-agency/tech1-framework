@@ -15,6 +15,8 @@ public interface SecurityJwtPublisher {
     @Async
     void publishRegistration1(EventRegistration1 event);
     @Async
+    void publishRegistration1Failure(EventRegistration1Failure event);
+    @Async
     void publishSessionRefreshed(EventSessionRefreshed event);
     @Async
     void publishSessionExpired(EventSessionExpired event);

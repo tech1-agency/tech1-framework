@@ -43,8 +43,13 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onRegistrationRegister1(EventRegistration1 event) {
+    public void onRegistration1(EventRegistration1 event) {
         LOGGER.debug(SECURITY_JWT_REGISTER1, this.getType(), event.getRequestUserRegistration1().getUsername());
+    }
+
+    @Override
+    public void onRegistration1Failure(EventRegistration1Failure event) {
+        LOGGER.debug(SECURITY_JWT_REGISTER1_FAILURE, this.getType(), event.getUsername());
     }
 
     @Override

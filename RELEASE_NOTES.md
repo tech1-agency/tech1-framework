@@ -1,7 +1,7 @@
 # Release Notes
 
-### v1.4
-- TBD
+### v1.5
+- Migrate EnumUtility methods
 
 ### v1.4
 - Migrate domain-based properties 

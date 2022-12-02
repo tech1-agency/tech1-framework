@@ -5,8 +5,8 @@ import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.utilities.random.EntityUtility;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -330,7 +330,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(6, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Register1Incident.class);
+        var incident = entity(Registration1Incident.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
@@ -344,7 +344,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(6, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Register1Incident.class);
+        var incident = entity(Registration1Incident.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
@@ -359,7 +359,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(7, false);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Register1FailureIncident.class);
+        var incident = entity(Registration1FailureIncident.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
@@ -373,7 +373,7 @@ public class IncidentPublisherImplTest {
         // Arrange
         var incidentConfigs = randomIncidentConfigsBy(7, true);
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
-        var incident = entity(Register1FailureIncident.class);
+        var incident = entity(Registration1FailureIncident.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);

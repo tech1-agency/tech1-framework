@@ -13,7 +13,7 @@ public interface SecurityJwtPublisher {
     @Async
     void publishAuthenticationLogout(EventAuthenticationLogout event);
     @Async
-    void publishRegistrationRegister1(EventRegistrationRegister1 event);
+    void publishRegistration1(EventRegistration1 event);
     @Async
     void publishSessionRefreshed(EventSessionRefreshed event);
     @Async

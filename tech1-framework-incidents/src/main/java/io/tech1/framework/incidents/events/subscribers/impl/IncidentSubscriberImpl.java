@@ -4,8 +4,8 @@ import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -91,16 +91,16 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
     }
 
     @Override
-    public void onEvent(Register1Incident register1Incident) {
-        LOGGER.debug(INCIDENT_REGISTER1, this.getType(), register1Incident.getUsername());
-        var incident = this.incidentConverter.convert(register1Incident);
+    public void onEvent(Registration1Incident registration1Incident) {
+        LOGGER.debug(INCIDENT_REGISTER1, this.getType(), registration1Incident.getUsername());
+        var incident = this.incidentConverter.convert(registration1Incident);
         this.incidentClient.registerIncident(incident);
     }
 
     @Override
-    public void onEvent(Register1FailureIncident register1FailureIncident) {
-        LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), register1FailureIncident.getUsername());
-        var incident = this.incidentConverter.convert(register1FailureIncident);
+    public void onEvent(Registration1FailureIncident registration1FailureIncident) {
+        LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), registration1FailureIncident.getUsername());
+        var incident = this.incidentConverter.convert(registration1FailureIncident);
         this.incidentClient.registerIncident(incident);
     }
 }

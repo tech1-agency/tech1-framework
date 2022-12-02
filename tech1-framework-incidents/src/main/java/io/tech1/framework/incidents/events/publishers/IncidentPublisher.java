@@ -2,8 +2,8 @@ package io.tech1.framework.incidents.events.publishers;
 
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -27,11 +27,11 @@ public interface IncidentPublisher {
     @Async
     void publishAuthenticationLogoutFull(AuthenticationLogoutFullIncident incident);
     @Async
+    void publishRegistration1(Registration1Incident incident);
+    @Async
+    void publishRegistration1Failure(Registration1FailureIncident incident);
+    @Async
     void publishSessionRefreshed(SessionRefreshedIncident incident);
     @Async
     void publishSessionExpired(SessionExpiredIncident incident);
-    @Async
-    void publishRegistration1(Register1Incident incident);
-    @Async
-    void publishRegistration1Failure(Register1FailureIncident incident);
 }

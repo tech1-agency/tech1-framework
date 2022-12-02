@@ -3,8 +3,8 @@ package io.tech1.framework.incidents.events.publishers.impl;
 import io.tech1.framework.domain.pubsub.AbstractEventPublisher;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -92,6 +92,26 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
     }
 
     @Override
+    public void publishRegistration1(Registration1Incident incident) {
+        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getRegister1().isEnabled()) {
+            LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.getUsername());
+            this.applicationEventPublisher.publishEvent(incident);
+        } else {
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Register1");
+        }
+    }
+
+    @Override
+    public void publishRegistration1Failure(Registration1FailureIncident incident) {
+        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getRegister1Failure().isEnabled()) {
+            LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.getUsername());
+            this.applicationEventPublisher.publishEvent(incident);
+        } else {
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Register1 Failure");
+        }
+    }
+
+    @Override
     public void publishSessionRefreshed(SessionRefreshedIncident incident) {
         if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getSessionRefreshed().isEnabled()) {
             LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incident.getUsername());
@@ -108,26 +128,6 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             this.applicationEventPublisher.publishEvent(incident);
         } else {
             LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Session Expired");
-        }
-    }
-
-    @Override
-    public void publishRegistration1(Register1Incident incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getRegister1().isEnabled()) {
-            LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.getUsername());
-            this.applicationEventPublisher.publishEvent(incident);
-        } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Register1");
-        }
-    }
-
-    @Override
-    public void publishRegistration1Failure(Register1FailureIncident incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getRegister1Failure().isEnabled()) {
-            LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.getUsername());
-            this.applicationEventPublisher.publishEvent(incident);
-        } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, "Register1 Failure");
         }
     }
 }

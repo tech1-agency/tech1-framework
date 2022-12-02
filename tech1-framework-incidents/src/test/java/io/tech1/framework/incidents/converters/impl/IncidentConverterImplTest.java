@@ -8,8 +8,8 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -337,7 +337,7 @@ public class IncidentConverterImplTest {
     public void convertRegister1IncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = Register1Incident.of(
+        var incident = Registration1Incident.of(
                 username
         );
 
@@ -360,7 +360,7 @@ public class IncidentConverterImplTest {
         var username = Username.of("tech1");
         var exception = randomString();
         var invitationCode = randomString();
-        var incident = Register1FailureIncident.of(
+        var incident = Registration1FailureIncident.of(
                 username,
                 exception,
                 invitationCode

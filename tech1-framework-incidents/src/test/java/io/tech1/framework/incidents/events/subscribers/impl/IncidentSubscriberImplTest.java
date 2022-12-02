@@ -2,8 +2,8 @@ package io.tech1.framework.incidents.events.subscribers.impl;
 
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.events.subscribers.IncidentSubscriber;
@@ -210,7 +210,7 @@ public class IncidentSubscriberImplTest {
     public void onEventRegister1IncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var register1Incident = entity(Register1Incident.class);
+        var register1Incident = entity(Registration1Incident.class);
         when(this.incidentConverter.convert(eq(register1Incident))).thenReturn(incident);
 
         // Act
@@ -225,7 +225,7 @@ public class IncidentSubscriberImplTest {
     public void onEventRegister1FailureIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var register1FailureIncident = entity(Register1FailureIncident.class);
+        var register1FailureIncident = entity(Registration1FailureIncident.class);
         when(this.incidentConverter.convert(eq(register1FailureIncident))).thenReturn(incident);
 
         // Act

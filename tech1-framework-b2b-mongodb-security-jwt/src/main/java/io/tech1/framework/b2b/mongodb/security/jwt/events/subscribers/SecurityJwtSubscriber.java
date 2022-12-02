@@ -13,7 +13,7 @@ public interface SecurityJwtSubscriber {
     @EventListener
     void onAuthenticationLogout(EventAuthenticationLogout event);
     @EventListener
-    void onRegistrationRegister1(EventRegistrationRegister1 event);
+    void onRegistrationRegister1(EventRegistration1 event);
     @EventListener
     void onSessionRefreshed(EventSessionRefreshed event);
     @EventListener

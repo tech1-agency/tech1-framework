@@ -2,8 +2,8 @@ package io.tech1.framework.incidents.events.subscribers;
 
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -29,7 +29,7 @@ public interface IncidentSubscriber {
     @EventListener
     void onEvent(SessionExpiredIncident sessionExpiredIncident);
     @EventListener
-    void onEvent(Register1Incident register1Incident);
+    void onEvent(Registration1Incident registration1Incident);
     @EventListener
-    void onEvent(Register1FailureIncident register1FailureIncident);
+    void onEvent(Registration1FailureIncident registration1FailureIncident);
 }

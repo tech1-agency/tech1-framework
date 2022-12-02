@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
         if (nonNull(user)) {
             var exception = entityAlreadyUsed("Username");
             this.incidentPublisher.publishRegistration1Failure(
-                    Register1FailureIncident.of(
+                    Registration1FailureIncident.of(
                             Username.of(username),
                             exception,
                             invitationCode
@@ -62,7 +62,7 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
             if (nonNull(dbInvitationCode.getInvited())) {
                 var exception = entityAlreadyUsed("InvitationCode");
                 this.incidentPublisher.publishRegistration1Failure(
-                        Register1FailureIncident.of(
+                        Registration1FailureIncident.of(
                                 Username.of(username),
                                 exception,
                                 invitationCode
@@ -73,7 +73,7 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
         } else {
             var exception = entityNotFoundShort("InvitationCode");
             this.incidentPublisher.publishRegistration1Failure(
-                    Register1FailureIncident.of(
+                    Registration1FailureIncident.of(
                             Username.of(username),
                             exception,
                             invitationCode

@@ -44,7 +44,7 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
     }
 
     @Override
-    public void publishRegistrationRegister1(EventRegistrationRegister1 event) {
+    public void publishRegistration1(EventRegistration1 event) {
         LOGGER.debug(SECURITY_JWT_REGISTER1, this.getType(), event.getRequestUserRegistration1().getUsername());
         this.applicationEventPublisher.publishEvent(event);
     }

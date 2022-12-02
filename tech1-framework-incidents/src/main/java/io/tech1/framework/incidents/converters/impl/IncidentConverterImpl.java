@@ -7,8 +7,8 @@ import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.IncidentAttributes;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1FailureIncident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
 import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
 import io.tech1.framework.incidents.domain.throwable.ThrowableIncident;
@@ -98,15 +98,15 @@ public class IncidentConverterImpl implements IncidentConverter {
     }
 
     @Override
-    public Incident convert(Register1Incident register1Incident) {
-        return this.convertOnlyUsername(REGISTER1, register1Incident.getUsername());
+    public Incident convert(Registration1Incident registration1Incident) {
+        return this.convertOnlyUsername(REGISTER1, registration1Incident.getUsername());
     }
 
     @Override
-    public Incident convert(Register1FailureIncident register1FailureIncident) {
-        var incident = this.convertOnlyUsername(REGISTER1_FAILURE, register1FailureIncident.getUsername());
-        incident.add(IncidentAttributes.Keys.EXCEPTION, register1FailureIncident.getException());
-        incident.add(IncidentAttributes.Keys.INVITATION_CODE, register1FailureIncident.getInvitationCode());
+    public Incident convert(Registration1FailureIncident registration1FailureIncident) {
+        var incident = this.convertOnlyUsername(REGISTER1_FAILURE, registration1FailureIncident.getUsername());
+        incident.add(IncidentAttributes.Keys.EXCEPTION, registration1FailureIncident.getException());
+        incident.add(IncidentAttributes.Keys.INVITATION_CODE, registration1FailureIncident.getInvitationCode());
         return incident;
     }
 

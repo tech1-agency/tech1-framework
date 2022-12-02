@@ -74,8 +74,8 @@ public class SessionRegistryImpl implements SessionRegistry {
     }
 
     @Override
-    public void renew(Session oldSesssion, Session newSession) {
-        this.sessions.remove(oldSesssion);
+    public void renew(Session oldSession, Session newSession) {
+        this.sessions.remove(oldSession);
         boolean added = this.sessions.add(newSession);
         if (added) {
             var username = newSession.getUsername();

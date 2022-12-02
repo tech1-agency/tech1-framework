@@ -125,7 +125,7 @@ public class BaseSecurityJwtSubscriberTest {
     @Test
     public void onRegistrationRegister1Test() {
         // Arrange
-        var event = entity(EventRegistrationRegister1.class);
+        var event = entity(EventRegistration1.class);
 
         // Act
         this.componentUnderTest.onRegistrationRegister1(event);

@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistrationRegister1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
+import io.tech1.framework.incidents.domain.registration.Registration1Incident;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -72,7 +72,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
         // Assert
         verify(this.registrationRequestsValidator).validateRegistrationRequest1(eq(requestUserRegistration1));
         verify(this.registrationService).register1(eq(requestUserRegistration1));
-        verify(this.securityJwtPublisher).publishRegistrationRegister1(eq(EventRegistrationRegister1.of(requestUserRegistration1)));
-        verify(this.incidentPublisher).publishRegistration1(eq(Register1Incident.of(Username.of(requestUserRegistration1.getUsername()))));
+        verify(this.securityJwtPublisher).publishRegistration1(eq(EventRegistration1.of(requestUserRegistration1)));
+        verify(this.incidentPublisher).publishRegistration1(eq(Registration1Incident.of(Username.of(requestUserRegistration1.getUsername()))));
     }
 }

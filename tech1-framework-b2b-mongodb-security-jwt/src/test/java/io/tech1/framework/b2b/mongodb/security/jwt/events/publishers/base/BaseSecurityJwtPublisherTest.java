@@ -95,12 +95,24 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishRegistrationRegister1Test() {
+    public void publishRegistration1Test() {
         // Arrange
         var event = entity(EventRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(event);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(eq(event));
+    }
+
+    @Test
+    public void publishRegistration1FailureTest() {
+        // Arrange
+        var event = entity(EventRegistration1Failure.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration1Failure(event);
 
         // Assert
         verify(this.applicationEventPublisher).publishEvent(eq(event));

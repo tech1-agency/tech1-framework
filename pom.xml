@@ -81,7 +81,6 @@
         <version.dependency.jackson>2.13.0</version.dependency.jackson>
         <version.dependency.jakarta>2.3.2</version.dependency.jakarta>
         <version.dependency.jasypt>3.0.4</version.dependency.jasypt>
-        <version.dependency.javax.mail>1.4.7</version.dependency.javax.mail>
         <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.6.1</version.dependency.springframework.boot>
@@ -150,12 +149,6 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-slf4j</artifactId>
                 <version>${version.dependency.feign}</version>
-            </dependency>
-            <!-- Emails -->
-            <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>mail</artifactId>
-                <version>${version.dependency.javax.mail}</version>
             </dependency>
             <!-- JSONs: Jackson -->
             <dependency>

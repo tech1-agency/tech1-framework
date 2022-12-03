@@ -97,7 +97,7 @@ public class PropertiesAsserterAndPrinterTest {
         var emailConfigs = EmailConfigs.of(
                 false,
                 null,
-                null,
+                0,
                 null,
                 null,
                 null,

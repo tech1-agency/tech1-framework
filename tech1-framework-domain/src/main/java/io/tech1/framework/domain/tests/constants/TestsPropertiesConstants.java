@@ -41,8 +41,8 @@ public class TestsPropertiesConstants {
             false,
             "smtp.gmail.com",
             587,
-            "tech1@gmail.com",
             "Tech1",
+            "tech1@gmail.com",
             "Password123!",
             new String[] { randomEmail(), randomEmail() }
     );

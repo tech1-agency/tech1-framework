@@ -111,12 +111,24 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onRegistrationRegister1Test() {
+    public void onRegistration1Test() {
         // Arrange
         var event = entity(EventRegistration1.class);
 
         // Act
         this.componentUnderTest.onRegistration1(event);
+
+        // Assert
+        // no asserts
+    }
+
+    @Test
+    public void onRegistration1FailureTest() {
+        // Arrange
+        var event = entity(EventRegistration1Failure.class);
+
+        // Act
+        this.componentUnderTest.onRegistration1Failure(event);
 
         // Assert
         // no asserts

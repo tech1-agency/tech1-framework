@@ -1,5 +1,6 @@
 package io.tech1.framework.emails.services;
 
+import io.tech1.framework.emails.domain.EmailHTML;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
@@ -14,4 +15,7 @@ public interface EmailService {
     void sendPlain(List<String> to, String subject, String message);
     @Async
     void sendPlain(Set<String> to, String subject, String message);
+
+    @Async
+    void sendHTML(EmailHTML emailHTML);
 }

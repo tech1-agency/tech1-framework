@@ -14,11 +14,11 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     @NonMandatoryProperty
     private String host;
     @NonMandatoryProperty
-    private Integer port;
-    @NonMandatoryProperty
-    private String username;
+    private int port;
     @NonMandatoryProperty
     private String from;
+    @NonMandatoryProperty
+    private String username;
     @NonMandatoryProperty
     private String password;
     @NonMandatoryProperty
@@ -28,9 +28,9 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     public static EmailConfigs of(
             boolean enabled,
             String host,
-            Integer port,
-            String username,
+            int port,
             String from,
+            String username,
             String password,
             String[] to
     ) {
@@ -38,10 +38,17 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
         instance.enabled = enabled;
         instance.host = host;
         instance.port = port;
-        instance.username = username;
         instance.from = from;
+        instance.username = username;
         instance.password = password;
         instance.to = to;
+        return instance;
+    }
+
+    // NOTE: test-purposes
+    public static EmailConfigs disabled() {
+        var instance = new EmailConfigs();
+        instance.enabled = false;
         return instance;
     }
 }

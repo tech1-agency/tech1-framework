@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsConstants.POLAND_ZONE_ID;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.*;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,6 +76,36 @@ public class TimestampUtilityTest {
 
         // Assert
         assertThat(actual).isGreaterThanOrEqualTo(expected);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
+        // Act
+        var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
+        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID);
+        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID);
+
+        // Assert
+        assertThat(timestampUTC).isGreaterThan(timestampPoland);
+        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
+        assertThat(timestampUTC - timestampPoland).isEqualTo(3600000L);
+        assertThat(timestampUTC - timestampUkraine).isEqualTo(7200000L);
+        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
+    }
+
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
+        // Act
+        var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
+        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID);
+        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID);
+
+        // Assert
+        assertThat(timestampUTC).isGreaterThan(timestampPoland);
+        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
+        assertThat(timestampUTC - timestampPoland).isEqualTo(3600000L);
+        assertThat(timestampUTC - timestampUkraine).isEqualTo(7200000L);
+        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
     @ParameterizedTest

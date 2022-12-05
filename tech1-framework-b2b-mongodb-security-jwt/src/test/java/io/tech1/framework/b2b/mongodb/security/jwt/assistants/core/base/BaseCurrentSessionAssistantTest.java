@@ -14,9 +14,12 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
+import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,13 +76,19 @@ public class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
+        }
+
+        @Bean
         CurrentSessionAssistant currentSessionAssistant() {
             return new BaseCurrentSessionAssistant(
                     this.sessionRegistry(),
                     this.userSessionService(),
                     this.hardwareMonitoringStore(),
                     this.cookieProvider(),
-                    this.securityPrincipalUtility()
+                    this.securityPrincipalUtility(),
+                    this.applicationFrameworkProperties()
             );
         }
     }
@@ -89,6 +98,7 @@ public class BaseCurrentSessionAssistantTest {
     private final HardwareMonitoringStore hardwareMonitoringStore;
     private final CookieProvider cookieProvider;
     private final SecurityPrincipalUtility securityPrincipalUtility;
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final CurrentSessionAssistant componentUnderTest;
 
@@ -99,7 +109,8 @@ public class BaseCurrentSessionAssistantTest {
                 this.hardwareMonitoringStore,
                 this.userSessionService,
                 this.cookieProvider,
-                this.securityPrincipalUtility
+                this.securityPrincipalUtility,
+                this.applicationFrameworkProperties
         );
     }
 
@@ -110,7 +121,8 @@ public class BaseCurrentSessionAssistantTest {
                 this.hardwareMonitoringStore,
                 this.userSessionService,
                 this.cookieProvider,
-                this.securityPrincipalUtility
+                this.securityPrincipalUtility,
+                this.applicationFrameworkProperties
         );
     }
 
@@ -177,6 +189,7 @@ public class BaseCurrentSessionAssistantTest {
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
         var hardwareMonitoringWidget = mock(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
+        when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(TestsPropertiesConstants.HARDWARE_MONITORING_CONFIGS);
 
         // Act
         var currentClientUser = this.componentUnderTest.getCurrentClientUser();
@@ -184,12 +197,35 @@ public class BaseCurrentSessionAssistantTest {
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
         verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
+        verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
         assertThat(currentClientUser.getName()).isEqualTo(jwtUser.getDbUser().getName());
         assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.getDbUser().getEmail());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).hasSize(1);
         assertThat(currentClientUser.getAttributes()).containsOnlyKeys("hardware");
+    }
+
+    @Test
+    public void getCurrentClientUserNoHardwareTest() {
+        // Arrange
+        var jwtUser = entity(JwtUser.class);
+        when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+        var hardwareMonitoringWidget = mock(HardwareMonitoringWidget.class);
+        when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
+        when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
+
+        // Act
+        var currentClientUser = this.componentUnderTest.getCurrentClientUser();
+
+        // Assert
+        verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
+        verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
+        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
+        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.getDbUser().getName());
+        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.getDbUser().getEmail());
+        assertThat(currentClientUser.getAttributes()).isNotNull();
+        assertThat(currentClientUser.getAttributes()).hasSize(0);
     }
 
     @Test

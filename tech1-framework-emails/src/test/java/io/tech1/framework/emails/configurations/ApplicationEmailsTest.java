@@ -46,8 +46,11 @@ public class ApplicationEmailsTest {
 
         // Assert
         assertThat(methods).contains("javaMailSender");
+        assertThat(methods).contains("springTemplateEngine");
+        assertThat(methods).contains("htmlTemplateResolver");
+        assertThat(methods).contains("emailUtility");
         assertThat(methods).contains("emailService");
-        assertThat(methods).hasSize(16);
+        assertThat(methods).hasSize(19);
     }
 
     @Test

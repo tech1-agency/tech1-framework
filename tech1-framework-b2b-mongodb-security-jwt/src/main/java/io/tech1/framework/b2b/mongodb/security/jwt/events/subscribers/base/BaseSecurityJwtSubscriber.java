@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLoginIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +28,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onAuthenticationLoginFailureUsernamePassword(EventAuthenticationLoginFailureUsernamePassword event) {
-        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.getUsername());
-    }
-
-    @Override
-    public void onAuthenticationLoginFailureUsernameMaskedPassword(EventAuthenticationLoginFailureUsernameMaskedPassword event) {
+    public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
         LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.getUsername());
     }
 
@@ -43,8 +38,13 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onRegistrationRegister1(EventRegistrationRegister1 event) {
+    public void onRegistration1(EventRegistration1 event) {
         LOGGER.debug(SECURITY_JWT_REGISTER1, this.getType(), event.getRequestUserRegistration1().getUsername());
+    }
+
+    @Override
+    public void onRegistration1Failure(EventRegistration1Failure event) {
+        LOGGER.debug(SECURITY_JWT_REGISTER1_FAILURE, this.getType(), event.getUsername());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         var userSession = this.userSessionService.saveUserRequestMetadata(event);
         if (event.isAuthenticationLoginEndpoint()) {
             this.incidentPublisher.publishAuthenticationLogin(
-                    AuthenticationLoginIncident.of(
+                    IncidentAuthenticationLogin.of(
                             event.getUsername(),
                             userSession.getRequestMetadata()
                     )
@@ -71,7 +71,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         }
         if (event.isAuthenticationRefreshTokenEndpoint()) {
             this.incidentPublisher.publishSessionRefreshed(
-                    SessionRefreshedIncident.of(
+                    IncidentSessionRefreshed.of(
                             event.getUsername(),
                             userSession.getRequestMetadata()
                     )

@@ -6,7 +6,7 @@ import lombok.Data;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class AuthenticationLogoutFullIncident {
+public class IncidentAuthenticationLogin {
     private final Username username;
     private final UserRequestMetadata userRequestMetadata;
 }

@@ -9,7 +9,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class ThrowableIncidentTest {
+public class IncidentThrowableTest {
 
     @Test
     public void of1Test() {
@@ -17,7 +17,7 @@ public class ThrowableIncidentTest {
         var throwable = mock(Throwable.class);
 
         // Act
-        var actual = ThrowableIncident.of(throwable);
+        var actual = IncidentThrowable.of(throwable);
 
         // Assert
         assertThat(actual.getThrowable()).isEqualTo(throwable);
@@ -34,7 +34,7 @@ public class ThrowableIncidentTest {
         var params = List.of(new Object(), randomString(), randomLong());
 
         // Act
-        var actual = ThrowableIncident.of(throwable, method, params);
+        var actual = IncidentThrowable.of(throwable, method, params);
 
         // Assert
         assertThat(actual.getThrowable()).isEqualTo(throwable);
@@ -50,7 +50,7 @@ public class ThrowableIncidentTest {
         var attributes = Map.of(randomString(), new Object());
 
         // Act
-        var actual = ThrowableIncident.of(throwable, attributes);
+        var actual = IncidentThrowable.of(throwable, attributes);
 
         // Assert
         assertThat(actual.getThrowable()).isEqualTo(throwable);

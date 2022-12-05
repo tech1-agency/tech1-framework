@@ -42,6 +42,10 @@ public class TuplePercentage {
         return of(value, maxValue, 2, 2);
     }
 
+    public static TuplePercentage progressTuplePercentage(long value, long maxValue) {
+        return progressTuplePercentage(new BigDecimal(value), new BigDecimal(maxValue));
+    }
+
     public static TuplePercentage zero() {
         return progressTuplePercentage(ZERO, ONE_HUNDRED);
     }

@@ -5,6 +5,6 @@ import lombok.Data;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class EventRegistrationRegister1 {
+public class EventRegistration1 {
     private final RequestUserRegistration1 requestUserRegistration1;
 }

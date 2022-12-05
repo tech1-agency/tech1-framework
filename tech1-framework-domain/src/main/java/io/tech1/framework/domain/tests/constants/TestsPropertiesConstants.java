@@ -41,8 +41,8 @@ public class TestsPropertiesConstants {
             false,
             "smtp.gmail.com",
             587,
-            "tech1@gmail.com",
             "Tech1",
+            "tech1@gmail.com",
             "Password123!",
             new String[] { randomEmail(), randomEmail() }
     );
@@ -65,6 +65,7 @@ public class TestsPropertiesConstants {
             )
     );
     public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = HardwareMonitoringConfigs.of(
+            true,
             Map.of(
                     HardwareName.CPU, new BigDecimal("80"),
                     HardwareName.HEAP, new BigDecimal("85"),

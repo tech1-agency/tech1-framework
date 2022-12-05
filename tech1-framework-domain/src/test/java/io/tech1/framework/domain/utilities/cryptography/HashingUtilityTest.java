@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.cryptography;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,6 +9,7 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.cryptography.HashingUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class HashingUtilityTest {
 
@@ -63,5 +65,16 @@ public class HashingUtilityTest {
         assertThat(actual256).isEqualTo(expected256);
         assertThat(actual384).isEqualTo(expected384);
         assertThat(actual512).isEqualTo(expected512);
+    }
+
+    @Test
+    public void shaByAlgorithmExceptionTest() {
+        // Act
+        var throwable = catchThrowable(() -> shaByAlgorithm("value", "hashingKey", "HmacSHA0"));
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Hashing Failure. Value: `value`. Key: `hashingKey`. Algorithm: `HmacSHA0`. Exception: `NoSuchAlgorithmException`");
     }
 }

@@ -71,24 +71,12 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishAuthenticationLoginFailureUsernamePasswordTest() {
+    public void publishAuthenticationLoginFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationLoginFailureUsernamePassword.class);
+        var event = entity(EventAuthenticationLoginFailure.class);
 
         // Act
-        this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(event);
-
-        // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
-    }
-
-    @Test
-    public void publishAuthenticationLoginFailureUsernameMaskedPasswordTest() {
-        // Arrange
-        var event = entity(EventAuthenticationLoginFailureUsernameMaskedPassword.class);
-
-        // Act
-        this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(event);
+        this.componentUnderTest.publishAuthenticationLoginFailure(event);
 
         // Assert
         verify(this.applicationEventPublisher).publishEvent(eq(event));
@@ -107,12 +95,24 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishRegistrationRegister1Test() {
+    public void publishRegistration1Test() {
         // Arrange
-        var event = entity(EventRegistrationRegister1.class);
+        var event = entity(EventRegistration1.class);
 
         // Act
-        this.componentUnderTest.publishRegistrationRegister1(event);
+        this.componentUnderTest.publishRegistration1(event);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(eq(event));
+    }
+
+    @Test
+    public void publishRegistration1FailureTest() {
+        // Arrange
+        var event = entity(EventRegistration1Failure.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration1Failure(event);
 
         // Assert
         verify(this.applicationEventPublisher).publishEvent(eq(event));

@@ -1,5 +1,12 @@
 # Release Notes
 
+### v1.5
+- Migrate EnumUtility methods, TuplePercentage(long, long)
+- Introduce events/incidents policies
+- Add sendHTML method to EmailService (thymeleaf as template-processor)
+- Migrate TimestampUtility methods
+- Add enable/disable option to HardwareMonitoringConfigs
+
 ### v1.4
 - Migrate domain-based properties 
 - Migrate domain-based exception

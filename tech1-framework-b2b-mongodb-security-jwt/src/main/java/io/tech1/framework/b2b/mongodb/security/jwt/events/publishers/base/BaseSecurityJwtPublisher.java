@@ -26,13 +26,7 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
     }
 
     @Override
-    public void publishAuthenticationLoginFailureUsernamePassword(EventAuthenticationLoginFailureUsernamePassword event) {
-        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.getUsername());
-        this.applicationEventPublisher.publishEvent(event);
-    }
-
-    @Override
-    public void publishAuthenticationLoginFailureUsernameMaskedPassword(EventAuthenticationLoginFailureUsernameMaskedPassword event) {
+    public void publishAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
         LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.getUsername());
         this.applicationEventPublisher.publishEvent(event);
     }
@@ -44,8 +38,14 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
     }
 
     @Override
-    public void publishRegistrationRegister1(EventRegistrationRegister1 event) {
+    public void publishRegistration1(EventRegistration1 event) {
         LOGGER.debug(SECURITY_JWT_REGISTER1, this.getType(), event.getRequestUserRegistration1().getUsername());
+        this.applicationEventPublisher.publishEvent(event);
+    }
+
+    @Override
+    public void publishRegistration1Failure(EventRegistration1Failure event) {
+        LOGGER.debug(SECURITY_JWT_REGISTER1_FAILURE, this.getType(), event.getUsername());
         this.applicationEventPublisher.publishEvent(event);
     }
 

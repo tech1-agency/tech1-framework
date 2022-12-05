@@ -55,16 +55,16 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
     }
 
     @Override
-    protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
-        messages.anyMessage().authenticated();
+    protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
+        registry.anyMessage().authenticated();
     }
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
         var broker = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
-        config.setApplicationDestinationPrefixes(broker.getApplicationDestinationPrefix());
-        config.enableSimpleBroker(broker.getSimpleDestination());
-        config.setUserDestinationPrefix(broker.getUserDestinationPrefix());
+        registry.setApplicationDestinationPrefixes(broker.getApplicationDestinationPrefix());
+        registry.enableSimpleBroker(broker.getSimpleDestination());
+        registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());
     }
 
     /**

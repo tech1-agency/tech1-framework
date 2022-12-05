@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -26,6 +27,11 @@ public class TestsApplicationValidatorsContext {
     @Bean
     IncidentPublisher incidentPublisher() {
         return mock(IncidentPublisher.class);
+    }
+
+    @Bean
+    SecurityJwtPublisher securityJwtPublisher() {
+        return mock(SecurityJwtPublisher.class);
     }
 
     // =================================================================================================================

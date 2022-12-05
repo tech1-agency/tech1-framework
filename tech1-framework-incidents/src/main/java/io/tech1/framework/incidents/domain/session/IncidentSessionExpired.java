@@ -6,7 +6,7 @@ import lombok.Data;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class SessionExpiredIncident {
+public class IncidentSessionExpired {
     private final Username username;
     private final UserRequestMetadata userRequestMetadata;
 }

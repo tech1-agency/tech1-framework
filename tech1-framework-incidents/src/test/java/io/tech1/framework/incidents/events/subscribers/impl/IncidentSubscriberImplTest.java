@@ -2,10 +2,10 @@ package io.tech1.framework.incidents.events.subscribers.impl;
 
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.Register1FailureIncident;
-import io.tech1.framework.incidents.domain.registration.Register1Incident;
-import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
-import io.tech1.framework.incidents.domain.session.SessionRefreshedIncident;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.events.subscribers.IncidentSubscriber;
 import io.tech1.framework.incidents.feigns.clients.IncidentClient;
 import lombok.RequiredArgsConstructor;
@@ -105,7 +105,7 @@ public class IncidentSubscriberImplTest {
     public void onEventAuthenticationLoginIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var authenticationLoginIncident = entity(AuthenticationLoginIncident.class);
+        var authenticationLoginIncident = entity(IncidentAuthenticationLogin.class);
         when(this.incidentConverter.convert(eq(authenticationLoginIncident))).thenReturn(incident);
 
         // Act
@@ -120,7 +120,7 @@ public class IncidentSubscriberImplTest {
     public void onEventAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var authenticationLoginFailureUsernamePasswordIncident = entity(AuthenticationLoginFailureUsernamePasswordIncident.class);
+        var authenticationLoginFailureUsernamePasswordIncident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
         when(this.incidentConverter.convert(eq(authenticationLoginFailureUsernamePasswordIncident))).thenReturn(incident);
 
         // Act
@@ -135,7 +135,7 @@ public class IncidentSubscriberImplTest {
     public void onEventAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var authenticationLoginFailureUsernameMaskedPasswordIncident = entity(AuthenticationLoginFailureUsernameMaskedPasswordIncident.class);
+        var authenticationLoginFailureUsernameMaskedPasswordIncident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
         when(this.incidentConverter.convert(eq(authenticationLoginFailureUsernameMaskedPasswordIncident))).thenReturn(incident);
 
         // Act
@@ -150,7 +150,7 @@ public class IncidentSubscriberImplTest {
     public void onEventAuthenticationLogoutMinIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var authenticationLogoutMinIncident = entity(AuthenticationLogoutMinIncident.class);
+        var authenticationLogoutMinIncident = entity(IncidentAuthenticationLogoutMin.class);
         when(this.incidentConverter.convert(eq(authenticationLogoutMinIncident))).thenReturn(incident);
 
         // Act
@@ -165,7 +165,7 @@ public class IncidentSubscriberImplTest {
     public void onEventAuthenticationLogoutFullIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var authenticationLogoutFullIncident = entity(AuthenticationLogoutFullIncident.class);
+        var authenticationLogoutFullIncident = entity(IncidentAuthenticationLogoutFull.class);
         when(this.incidentConverter.convert(eq(authenticationLogoutFullIncident))).thenReturn(incident);
 
         // Act
@@ -180,7 +180,7 @@ public class IncidentSubscriberImplTest {
     public void onEventSessionRefreshedIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var sessionRefreshedIncident = entity(SessionRefreshedIncident.class);
+        var sessionRefreshedIncident = entity(IncidentSessionRefreshed.class);
         when(this.incidentConverter.convert(eq(sessionRefreshedIncident))).thenReturn(incident);
 
         // Act
@@ -195,7 +195,7 @@ public class IncidentSubscriberImplTest {
     public void onEventSessionExpiredIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var sessionExpiredIncident = entity(SessionExpiredIncident.class);
+        var sessionExpiredIncident = entity(IncidentSessionExpired.class);
         when(this.incidentConverter.convert(eq(sessionExpiredIncident))).thenReturn(incident);
 
         // Act
@@ -210,7 +210,7 @@ public class IncidentSubscriberImplTest {
     public void onEventRegister1IncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var register1Incident = entity(Register1Incident.class);
+        var register1Incident = entity(IncidentRegistration1.class);
         when(this.incidentConverter.convert(eq(register1Incident))).thenReturn(incident);
 
         // Act
@@ -225,7 +225,7 @@ public class IncidentSubscriberImplTest {
     public void onEventRegister1FailureIncidentTest() {
         // Arrange
         var incident = randomIncident();
-        var register1FailureIncident = entity(Register1FailureIncident.class);
+        var register1FailureIncident = entity(IncidentRegistration1Failure.class);
         when(this.incidentConverter.convert(eq(register1FailureIncident))).thenReturn(incident);
 
         // Act

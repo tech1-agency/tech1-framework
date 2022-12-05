@@ -1,6 +1,9 @@
 package io.tech1.framework.domain.constants;
 
+import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import lombok.experimental.UtilityClass;
+
+import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
 
 @UtilityClass
 public class ExceptionsMessagesConstants {
@@ -13,6 +16,8 @@ public class ExceptionsMessagesConstants {
     public static final String ENTITY_ALREADY_USED = "%s is already used";
 
     public static final String ACCESS_DENIED = "Access denied. Username: `%s`, Entity: `%s`. Value: `%s`";
+
+    public static final String MISSING_MAPPINGS_KEYS = "Attribute `%s` requirements: `[%s]`, disjunction: `[%s]`";
 
     // =================================================================================================================
     // Tests

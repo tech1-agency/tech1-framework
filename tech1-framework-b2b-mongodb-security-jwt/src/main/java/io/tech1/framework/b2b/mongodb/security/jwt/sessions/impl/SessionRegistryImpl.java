@@ -12,9 +12,9 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.FrameworkLogsConstants;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLogoutFullIncident;
-import io.tech1.framework.incidents.domain.authetication.AuthenticationLogoutMinIncident;
-import io.tech1.framework.incidents.domain.session.SessionExpiredIncident;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,8 +74,8 @@ public class SessionRegistryImpl implements SessionRegistry {
     }
 
     @Override
-    public void renew(Session oldSesssion, Session newSession) {
-        this.sessions.remove(oldSesssion);
+    public void renew(Session oldSession, Session newSession) {
+        this.sessions.remove(oldSession);
         boolean added = this.sessions.add(newSession);
         if (added) {
             var username = newSession.getUsername();
@@ -97,10 +97,10 @@ public class SessionRegistryImpl implements SessionRegistry {
         var dbUserSession = this.userSessionService.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
-            this.incidentPublisher.publishAuthenticationLogoutFull(AuthenticationLogoutFullIncident.of(username, dbUserSession.getRequestMetadata()));
+            this.incidentPublisher.publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull.of(username, dbUserSession.getRequestMetadata()));
             this.userSessionService.deleteByRefreshToken(jwtRefreshToken);
         } else {
-            this.incidentPublisher.publishAuthenticationLogoutMin(AuthenticationLogoutMinIncident.of(username));
+            this.incidentPublisher.publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin.of(username));
         }
     }
 
@@ -115,7 +115,7 @@ public class SessionRegistryImpl implements SessionRegistry {
             LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);
             this.securityJwtPublisher.publishSessionExpired(EventSessionExpired.of(session));
-            this.incidentPublisher.publishSessionExpired(SessionExpiredIncident.of(username, dbUserSession.getRequestMetadata()));
+            this.incidentPublisher.publishSessionExpired(IncidentSessionExpired.of(username, dbUserSession.getRequestMetadata()));
         });
 
         var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds());

@@ -5,6 +5,6 @@ import lombok.Data;
 
 // Lombok
 @Data(staticConstructor = "of")
-public class AuthenticationLogoutMinIncident {
+public class IncidentAuthenticationLogoutMin {
     private final Username username;
 }

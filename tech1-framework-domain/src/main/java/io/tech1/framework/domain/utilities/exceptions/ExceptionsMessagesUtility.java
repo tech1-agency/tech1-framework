@@ -32,6 +32,10 @@ public class ExceptionsMessagesUtility {
         return String.format(ACCESS_DENIED, username, entity, value);
     }
 
+    public static String missingMappingsKeys(String attributeName, String requirements, String disjunction) {
+        return String.format(MISSING_MAPPINGS_KEYS, attributeName, requirements, disjunction);
+    }
+
     // =================================================================================================================
     // Tests
     // =================================================================================================================

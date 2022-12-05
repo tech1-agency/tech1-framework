@@ -1,8 +1,6 @@
 package io.tech1.framework.hardware.monitoring.store.impl;
 
-import io.tech1.framework.domain.base.Version;
 import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
@@ -12,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static io.tech1.framework.domain.base.Version.unknown;
+import static io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint.zeroUsage;
 
 @Slf4j
 @Component
@@ -51,10 +52,7 @@ public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
     // =================================================================================================================
     private EventLastHardwareMonitoringDatapoint getLastOrUnknownEvent() {
         if (this.datapoints.isEmpty()) {
-            return new EventLastHardwareMonitoringDatapoint(
-                    Version.unknown(),
-                    HardwareMonitoringDatapoint.zeroUsage()
-            );
+            return new EventLastHardwareMonitoringDatapoint(unknown(), zeroUsage());
         } else {
             return this.datapoints.get(this.datapoints.size() - 1);
         }

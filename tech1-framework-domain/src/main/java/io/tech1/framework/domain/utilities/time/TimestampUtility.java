@@ -38,6 +38,8 @@ public class TimestampUtility {
         );
     }
 
+    // todo [yy] getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp
+
     public static Tuple2<Long, Long> getPastRange(TimeAmount timeAmount) {
         var currentTimestamp = getCurrentTimestamp();
         var past = currentTimestamp - timeAmount.toMillis();

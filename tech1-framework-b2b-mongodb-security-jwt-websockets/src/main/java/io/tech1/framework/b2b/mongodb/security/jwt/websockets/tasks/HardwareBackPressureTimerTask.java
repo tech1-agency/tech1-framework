@@ -64,8 +64,7 @@ public class HardwareBackPressureTimerTask extends AbstractTimerTask {
 
     public void send() {
         var hardwareConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
-        boolean hardwareConfigsEnabled = hardwareConfigs.isEnabled();
-        if (hardwareConfigsEnabled) {
+        if (hardwareConfigs.isEnabled()) {
             var usernames = this.sessionRegistry.getActiveSessionsUsernames();
             var userDestination = hardwareConfigs.getUserDestination();
             usernames.forEach(username -> this.wssMessagingTemplate.sendEventToUser(

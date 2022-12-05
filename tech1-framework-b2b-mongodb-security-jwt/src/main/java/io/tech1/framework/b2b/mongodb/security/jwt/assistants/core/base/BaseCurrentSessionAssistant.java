@@ -13,6 +13,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUt
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     protected final CookieProvider cookieProvider;
     // Utilities
     protected final SecurityPrincipalUtility securityPrincipalUtility;
+    // Properties
+    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
     public Username getCurrentUsername() {
@@ -65,7 +68,9 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
         var user = currentJwtUser.getDbUser();
 
         var attributes = user.getNotNullAttributes();
-        attributes.put(HARDWARE, this.hardwareMonitoringStore.getHardwareMonitoringWidget());
+        if (this.applicationFrameworkProperties.getHardwareMonitoringConfigs().isEnabled()) {
+            attributes.put(HARDWARE, this.hardwareMonitoringStore.getHardwareMonitoringWidget());
+        }
 
         return new CurrentClientUser(
                 user.getId(),

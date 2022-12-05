@@ -17,6 +17,8 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -46,7 +49,13 @@ import static org.mockito.Mockito.*;
 public class BaseCurrentSessionAssistantTest {
 
     @Configuration
+    @Import({
+            ApplicationFrameworkPropertiesContext.class
+    })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
         @Bean
         SessionRegistry sessionRegistry() {
             return mock(SessionRegistry.class);
@@ -79,7 +88,8 @@ public class BaseCurrentSessionAssistantTest {
                     this.userSessionService(),
                     this.hardwareMonitoringStore(),
                     this.cookieProvider(),
-                    this.securityPrincipalUtility()
+                    this.securityPrincipalUtility(),
+                    this.applicationFrameworkProperties
             );
         }
     }

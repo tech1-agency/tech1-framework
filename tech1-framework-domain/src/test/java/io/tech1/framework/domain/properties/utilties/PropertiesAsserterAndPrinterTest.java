@@ -198,6 +198,7 @@ public class PropertiesAsserterAndPrinterTest {
     public void hardwareMonitoringConfigsExceptionTest() {
         // Arrange
         var hardwareMonitoringConfigs = HardwareMonitoringConfigs.of(
+                true,
                 Map.of(
                         HardwareName.CPU, new BigDecimal("80"),
                         HardwareName.HEAP, new BigDecimal("85")
@@ -210,7 +211,7 @@ public class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `hardwareMonitoringConfigs.thresholdsConfigs` must contains 5 HardwareName elements");
+        assertThat(throwable.getMessage()).isEqualTo("Attribute `hardwareMonitoringConfigs.thresholdsConfigs` requirements: `[CPU, HEAP, SERVER, SWAP, VIRTUAL]`, disjunction: `[SERVER, SWAP, VIRTUAL]`");
     }
 
     @Test

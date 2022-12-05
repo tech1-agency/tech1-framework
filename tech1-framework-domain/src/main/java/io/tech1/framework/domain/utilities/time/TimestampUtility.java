@@ -28,17 +28,23 @@ public class TimestampUtility {
     }
 
     public static long getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC() {
-        return getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC);
+        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(1);
     }
 
     public static long getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId) {
+        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(zoneId, 1);
+    }
+
+    public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(int monthAgo) {
+        return getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC, monthAgo);
+    }
+
+    public static long getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(ZoneId zoneId, int monthAgo) {
         return getTimestamp(
-                LocalDateUtility.now(zoneId).minusMonths(1).withDayOfMonth(1).atStartOfDay(),
+                LocalDateUtility.now(zoneId).minusMonths(monthAgo).withDayOfMonth(1).atStartOfDay(),
                 zoneId
         );
     }
-
-    // todo [yy] getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp
 
     public static Tuple2<Long, Long> getPastRange(TimeAmount timeAmount) {
         var currentTimestamp = getCurrentTimestamp();

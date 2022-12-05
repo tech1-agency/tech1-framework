@@ -108,6 +108,22 @@ public class TimestampUtilityTest {
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
+    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    public void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
+        // Act
+        var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
+        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID, 3);
+        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID, 3);
+
+        // Assert
+        assertThat(timestampUTC).isLessThan(timestampPoland);
+        assertThat(timestampUTC).isLessThan(timestampUkraine);
+        assertThat(timestampPoland).isGreaterThan(timestampUkraine);
+        assertThat(timestampUTC - timestampPoland).isEqualTo(-2671200000L);
+        assertThat(timestampUTC - timestampUkraine).isEqualTo(-2667600000L);
+        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
+    }
+
     @ParameterizedTest
     @MethodSource("isBetweenTest")
     public void isBetweenTest(long past, long future, boolean expected) {

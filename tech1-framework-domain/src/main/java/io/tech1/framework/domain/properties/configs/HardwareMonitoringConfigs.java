@@ -27,9 +27,11 @@ public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
 
     // NOTE: test-purposes
     public static HardwareMonitoringConfigs of(
+            boolean enabled,
             Map<HardwareName, BigDecimal> thresholdsConfigs
     ) {
         var instance = new HardwareMonitoringConfigs();
+        instance.enabled = enabled;
         instance.thresholdsConfigs = thresholdsConfigs;
         return instance;
     }

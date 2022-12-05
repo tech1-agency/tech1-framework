@@ -65,6 +65,7 @@ public class TestsPropertiesConstants {
             )
     );
     public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = HardwareMonitoringConfigs.of(
+            true,
             Map.of(
                     HardwareName.CPU, new BigDecimal("80"),
                     HardwareName.HEAP, new BigDecimal("85"),

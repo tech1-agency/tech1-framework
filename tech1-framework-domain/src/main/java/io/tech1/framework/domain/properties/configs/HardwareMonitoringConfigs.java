@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,6 +35,14 @@ public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
         instance.enabled = enabled;
         instance.thresholdsConfigs = thresholdsConfigs;
         return instance;
+    }
+
+    // NOTE: test-purposes
+    public static HardwareMonitoringConfigs disabled() {
+        return of(
+                false,
+                new EnumMap<>(HardwareName.class)
+        );
     }
 
     @Override

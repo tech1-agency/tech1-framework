@@ -9,12 +9,16 @@ import io.tech1.framework.domain.properties.configs.MvcConfigs;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
+import io.tech1.framework.domain.utilities.collections.CollectorUtility;
+import io.tech1.framework.domain.utilities.enums.EnumUtility;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.disabledIncidentFeatureConfigs;
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.enabledIncidentFeatureConfigs;
@@ -22,6 +26,7 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperties;
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -195,6 +200,21 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
+    public void hardwareMonitoringConfigsDisabledTest() {
+        // Arrange
+        var hardwareMonitoringConfigs = HardwareMonitoringConfigs.disabled();
+
+        // Act
+        assertProperties(hardwareMonitoringConfigs, "hardwareMonitoringConfigs");
+
+        // Assert
+        var thresholdsConfigs = hardwareMonitoringConfigs.getThresholdsConfigs();
+        assertThat(thresholdsConfigs).hasSize(5);
+        assertThat(thresholdsConfigs.keySet()).isEqualTo(EnumUtility.set(HardwareName.class));
+        assertThat(thresholdsConfigs.values().stream().distinct().collect(CollectorUtility.toSingleton())).isEqualTo(ZERO);
+    }
+
+    @Test
     public void hardwareMonitoringConfigsExceptionTest() {
         // Arrange
         var hardwareMonitoringConfigs = HardwareMonitoringConfigs.of(
@@ -221,7 +241,10 @@ public class PropertiesAsserterAndPrinterTest {
         printProperties(HARDWARE_MONITORING_CONFIGS);
 
         // Assert
-        // no asserts
+        var thresholdsConfigs = HARDWARE_MONITORING_CONFIGS.getThresholdsConfigs();
+        assertThat(thresholdsConfigs).hasSize(5);
+        assertThat(thresholdsConfigs.keySet()).isEqualTo(EnumUtility.set(HardwareName.class));
+        assertThat(new HashSet<>(thresholdsConfigs.values())).hasSize(5);
     }
 
     @Test

@@ -108,7 +108,7 @@ public class BaseUserValidatorImplTest {
     @Test
     public void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
-        var email = randomEmail();
+        var email = randomEmailAsValue();
         var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
@@ -124,7 +124,7 @@ public class BaseUserValidatorImplTest {
     @Test
     public void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
-        var email = randomEmail();
+        var email = randomEmailAsValue();
         var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(currentDbUser);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
@@ -140,7 +140,7 @@ public class BaseUserValidatorImplTest {
     @Test
     public void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
-        var email = randomEmail();
+        var email = randomEmailAsValue();
         var currentDbUser = entity(DbUser.class);
         var user = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(user);

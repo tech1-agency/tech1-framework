@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static java.time.temporal.ChronoUnit.*;
@@ -140,7 +140,7 @@ public class SecurityJwtTokenUtilityImplTest {
                 new SimpleGrantedAuthority(TestAuthority.ADMIN.getValue()),
                 new SimpleGrantedAuthority(TestAuthority.USER.getValue())
         );
-        var user = new DbUser(expectedUsername, randomString(), randomZoneId().getId(), authorities);
+        var user = new DbUser(expectedUsername, randomPassword(), randomZoneId().getId(), authorities);
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
 
         // Act
@@ -167,7 +167,7 @@ public class SecurityJwtTokenUtilityImplTest {
                 new SimpleGrantedAuthority(TestAuthority.ADMIN.getValue()),
                 new SimpleGrantedAuthority(TestAuthority.USER.getValue())
         );
-        var user = new DbUser(expectedUsername, randomString(), randomZoneId().getId(), authorities);
+        var user = new DbUser(expectedUsername, randomPassword(), randomZoneId().getId(), authorities);
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act

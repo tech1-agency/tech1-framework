@@ -132,7 +132,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().getIdentifier())))
-                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail())));
+                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().getValue())));
 
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginRequest(eq(requestUserLogin));

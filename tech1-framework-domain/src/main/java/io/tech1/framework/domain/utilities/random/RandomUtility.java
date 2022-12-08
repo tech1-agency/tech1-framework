@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.random;
 
 import feign.FeignException;
 import feign.Request;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
@@ -220,8 +221,12 @@ public class RandomUtility {
                 .toArray(String[]::new);
     }
 
-    public static String randomEmail() {
+    public static String randomEmailAsValue() {
         return randomString() + "@tech1.io";
+    }
+
+    public static Email randomEmail() {
+        return Email.of(randomEmailAsValue());
     }
 
     public static <T> T randomElement(List<T> list) {

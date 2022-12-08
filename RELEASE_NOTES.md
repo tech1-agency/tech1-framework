@@ -6,6 +6,7 @@
 - Add geo countries flags utility (emoji-based)
 - Migrate methods TimestampUtility (toUnixTime)
 - Add properties: serverConfigs
+- Add Password/Email as Java objects (not plain strings) to DbUser (db migration required)
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)

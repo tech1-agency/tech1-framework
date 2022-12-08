@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.domain.base.AbstractAuthority;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +20,7 @@ public class CurrentClientUser {
     @JsonIgnore
     private final String id;
     private final Username username;
-    private final String email;
+    private final Email email;
     private final String name;
     private final ZoneId zoneId;
     private final List<String> authorities;
@@ -28,7 +29,7 @@ public class CurrentClientUser {
     public CurrentClientUser(
             String id,
             Username username,
-            String email,
+            Email email,
             String name,
             ZoneId zoneId,
             List<SimpleGrantedAuthority> authorities,

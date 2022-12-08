@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.security;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.domain.enums.TestAuthority;
 import io.tech1.framework.domain.base.AbstractAuthority;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
@@ -61,7 +62,7 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         var currentClientUser = new CurrentClientUser(
                 randomString(),
                 Username.of("tech1"),
-                "tech1@tech1.io",
+                Email.of("tech1@tech1.io"),
                 "Tech1",
                 TestsConstants.EET_ZONE_ID,
                 List.of(

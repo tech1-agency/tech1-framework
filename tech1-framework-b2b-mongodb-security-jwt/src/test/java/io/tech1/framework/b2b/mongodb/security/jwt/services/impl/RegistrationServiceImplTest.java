@@ -108,7 +108,7 @@ public class RegistrationServiceImplTest {
         verify(this.bCryptPasswordEncoder).encode(eq(requestUserRegistration1.getPassword()));
         verify(this.userRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername().getIdentifier()).isEqualTo(requestUserRegistration1.getUsername());
-        assertThat(dbUserAC.getValue().getPassword()).isEqualTo(hashPassword);
+        assertThat(dbUserAC.getValue().getPassword().getValue()).isEqualTo(hashPassword);
         assertThat(dbUserAC.getValue().getAuthorities()).isEqualTo(dbInvitationCode.getAuthorities());
         verify(this.invitationCodeRepository).save(dbInvitationCodeAC.capture());
         assertThat(dbInvitationCodeAC.getValue().getInvited()).isEqualTo(savedDbUser.getUsername());

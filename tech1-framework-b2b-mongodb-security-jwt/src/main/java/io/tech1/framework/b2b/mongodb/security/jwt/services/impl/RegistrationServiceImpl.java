@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUs
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         var user = new DbUser(
                 Username.of(requestUserRegistration1.getUsername()),
-                hashPassword,
+                Password.of(hashPassword),
                 requestUserRegistration1.getZoneId(),
                 invitationCode.getAuthorities()
         );

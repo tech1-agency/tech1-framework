@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUs
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
+import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class BaseUserServiceImpl implements BaseUserService {
 
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.getNewPassword());
 
-        currentDbUser.changePassword(hashPassword);
+        currentDbUser.changePassword(Password.of(hashPassword));
         this.userRepository.save(currentDbUser);
 
         var authentication = new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());

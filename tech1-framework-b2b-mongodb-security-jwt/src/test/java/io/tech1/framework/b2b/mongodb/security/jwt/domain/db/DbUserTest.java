@@ -16,7 +16,7 @@ public class DbUserTest {
         // Arrange
         var user = new DbUser(
                 randomUsername(),
-                randomPassword().getValue(),
+                randomPassword(),
                 randomZoneId().getId(),
                 List.of(
                         new SimpleGrantedAuthority("admin123")
@@ -36,7 +36,7 @@ public class DbUserTest {
         // Arrange
         var user = new DbUser(
                 randomUsername(),
-                randomPassword().getValue(),
+                randomPassword(),
                 randomZoneId().getId(),
                 List.of(
                         new SimpleGrantedAuthority("admin123")

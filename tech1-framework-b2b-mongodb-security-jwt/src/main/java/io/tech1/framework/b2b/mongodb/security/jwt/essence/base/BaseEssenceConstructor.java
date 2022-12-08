@@ -46,19 +46,19 @@ public class BaseEssenceConstructor implements EssenceConstructor {
         if (this.userRepository.count() == 0L) {
             LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
             var defaultUsers = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers();
-            var dbUsers = defaultUsers.stream().map(defaultUser -> {
+            var users = defaultUsers.stream().map(defaultUser -> {
                 var username = defaultUser.getUsername();
-                var dbUser = new DbUser(
+                var user = new DbUser(
                         username,
-                        defaultUser.getPassword().getValue(),
+                        defaultUser.getPassword(),
                         defaultUser.getZoneId().getId(),
                         defaultUser.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
                 );
                 LOGGER.debug(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Convert default user. Username: {}", username);
-                return dbUser;
+                return user;
             }).collect(Collectors.toList());
-            this.userRepository.saveAll(dbUsers);
-            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", dbUsers.size());
+            this.userRepository.saveAll(users);
+            LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", users.size());
         } else {
             LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Users are already saved in database. Please double check");
         }

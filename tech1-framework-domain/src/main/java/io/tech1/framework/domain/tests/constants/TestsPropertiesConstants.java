@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmail;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
@@ -45,7 +45,7 @@ public class TestsPropertiesConstants {
             "Tech1",
             "tech1@gmail.com",
             "Password123!",
-            new String[] { randomEmail(), randomEmail() }
+            new String[] { randomEmailAsValue(), randomEmailAsValue() }
     );
     public static final IncidentConfigs INCIDENT_CONFIGS = IncidentConfigs.of(
             true,

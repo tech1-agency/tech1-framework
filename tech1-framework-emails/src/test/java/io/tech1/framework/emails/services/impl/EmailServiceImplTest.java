@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmail;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -118,7 +118,7 @@ public class EmailServiceImplTest {
     @Test
     public void mainSendPlainDisabledTest() {
         // Arrange
-        var to = randomEmail();
+        var to = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
         var emailConfigs = EmailConfigs.disabled();
@@ -134,8 +134,8 @@ public class EmailServiceImplTest {
     @Test
     public void mainSendPlainEnabledTest() {
         // Arrange
-        var to = randomEmail();
-        var from = randomEmail();
+        var to = randomEmailAsValue();
+        var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
         var emailConfigs = new EmailConfigs();
@@ -160,9 +160,9 @@ public class EmailServiceImplTest {
     @Test
     public void systemSendPlainEnabledTest() {
         // Arrange
-        var to1 = randomEmail();
-        var to2 = randomEmail();
-        var from = randomEmail();
+        var to1 = randomEmailAsValue();
+        var to2 = randomEmailAsValue();
+        var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
         var emailConfigs = new EmailConfigs();
@@ -188,8 +188,8 @@ public class EmailServiceImplTest {
     @Test
     public void listSendPlainEnabledTest() {
         // Arrange
-        var to = randomEmail();
-        var from = randomEmail();
+        var to = randomEmailAsValue();
+        var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
         var emailConfigs = new EmailConfigs();
@@ -214,8 +214,8 @@ public class EmailServiceImplTest {
     @Test
     public void setSendPlainEnabledTest() {
         // Arrange
-        var to = randomEmail();
-        var from = randomEmail();
+        var to = randomEmailAsValue();
+        var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
         var emailConfigs = new EmailConfigs();
@@ -254,7 +254,7 @@ public class EmailServiceImplTest {
     @Test
     public void sendHTMLEnabledExceptionTest() throws MessagingException {
         // Arrange
-        var from = randomEmail();
+        var from = randomEmailAsValue();
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = new EmailConfigs();
         emailConfigs.setEnabled(true);
@@ -273,7 +273,7 @@ public class EmailServiceImplTest {
     @Test
     public void sendHTMLEnabledTest() throws MessagingException {
         // Arrange
-        var from = randomEmail();
+        var from = randomEmailAsValue();
         Map<String, Object> templateVariables = Map.of(
                 "param1", "key2",
                 "param2", 2L

@@ -36,10 +36,10 @@ public class DefaultUser {
     }
 
     public Username getUsername() {
-        return new Username(this.username);
+        return Username.of(this.username);
     }
 
     public Password getPassword() {
-        return new Password(this.password);
+        return Password.of(this.password);
     }
 }

@@ -3,6 +3,7 @@
 ### v1.6
 - Add "countryCode" -> GeoLocation
 - Add geo location facade utility (ipapi + mindmax as failsafe)
+- Add geo countries flags utility (emoji-based)
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)

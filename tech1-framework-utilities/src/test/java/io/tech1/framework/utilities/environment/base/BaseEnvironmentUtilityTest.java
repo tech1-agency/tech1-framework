@@ -86,6 +86,7 @@ public class BaseEnvironmentUtilityTest {
 
         // Assert
         verify(this.environment).getActiveProfiles();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo("Base Environment Utility contains ONLY one active profile");
     }
 

@@ -36,7 +36,7 @@ public class ResponseUserSessionsTableTest {
                 new JwtRefreshToken("token1"),
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
                         randomUserAgentDetails()
                 )
         );
@@ -44,7 +44,7 @@ public class ResponseUserSessionsTableTest {
                 new JwtRefreshToken("token2"),
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "New York"),
+                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", "New York"),
                         validUserAgentDetails()
                 )
         );
@@ -52,7 +52,7 @@ public class ResponseUserSessionsTableTest {
                 new JwtRefreshToken("token3"),
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "Liverpool"),
+                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", "Liverpool"),
                         invalidUserAgentDetails()
                 )
         );

@@ -250,7 +250,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentAuthenticationLogoutFull.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -280,7 +280,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentSessionRefreshed.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -310,7 +310,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentSessionExpired.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );

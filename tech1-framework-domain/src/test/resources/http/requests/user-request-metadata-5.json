@@ -3,6 +3,7 @@
   "geoLocation" : {
     "ipAddr" : "127.0.0.1",
     "country" : "Unknown",
+    "countryCode" : "Unknown",
     "where" : "Unknown, Unknown"
   },
   "userAgentDetails" : {

@@ -16,7 +16,9 @@ import static java.util.Objects.nonNull;
 @ToString
 public class GeoLocation {
     private final String ipAddr;
+    // MIGRATION: v1.7 -> add @JsonIgnore
     private final String country;
+    private final String countryCode;
     @JsonIgnore
     private final String city;
     @JsonIgnore
@@ -25,10 +27,16 @@ public class GeoLocation {
     private GeoLocation(
             String ipAddr,
             String country,
+            String countryCode,
             String city,
             String exceptionDetails
     ) {
         this.ipAddr = ipAddr;
+        if (nonNull(countryCode)) {
+            this.countryCode = countryCode;
+        } else {
+            this.countryCode = UNKNOWN;
+        }
         if (nonNull(country)) {
             this.country = country.trim();
             this.city = nonNull(city) ? city.trim() : null;
@@ -47,6 +55,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 UNKNOWN,
                 UNKNOWN,
+                UNKNOWN,
                 exceptionDetails
         );
     }
@@ -58,6 +67,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 UNDEFINED,
                 UNDEFINED,
+                UNDEFINED,
                 EMPTY
         );
     }
@@ -65,11 +75,13 @@ public class GeoLocation {
     public static GeoLocation processed(
             IPAddress ipAddress,
             String country,
+            String countryCode,
             String city
     ) {
         return new GeoLocation(
                 getIpAddrOrUnknown(ipAddress),
                 country,
+                countryCode,
                 city,
                 EMPTY
         );

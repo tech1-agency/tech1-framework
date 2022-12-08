@@ -371,6 +371,7 @@ public class RandomUtility {
         return GeoLocation.processed(
                 localhost(),
                 "Ukraine",
+                "UA",
                 "Lviv"
         );
     }

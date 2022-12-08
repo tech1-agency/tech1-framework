@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.6
+- Add "countryCode" -> GeoLocation
+
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)
 - Introduce events/incidents policies

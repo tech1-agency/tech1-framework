@@ -49,10 +49,12 @@ public class GeoUtilityImpl implements GeoUtility {
             var inetAddress = InetAddress.getByName(ipAddress.getValue());
             var response = this.databaseReader.city(inetAddress);
             var country = response.getCountry().getName();
+            var countryCode = response.getCountry().getIsoCode();
             var city = response.getCity().getName();
             return GeoLocation.processed(
                     ipAddress,
                     country,
+                    countryCode,
                     city
             );
         } catch (IOException | GeoIp2Exception ex) {

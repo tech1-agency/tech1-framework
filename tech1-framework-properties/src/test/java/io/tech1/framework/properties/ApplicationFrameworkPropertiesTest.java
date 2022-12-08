@@ -21,7 +21,7 @@ public class ApplicationFrameworkPropertiesTest {
 
         // Assert
         assertThat(getters).isNotNull();
-        assertThat(getters).hasSize(10);
+        assertThat(getters).hasSize(11);
         getters.forEach(getter -> {
             try {
                 var propertiesConfigs = getter.invoke(applicationFrameworkProperties);

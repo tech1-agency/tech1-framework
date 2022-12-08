@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PasswordTest extends AbstractSerializationDeserializationRunner {
-    private static final Password PASSWORD = Password.of("admin123!");
+public class EmailTest extends AbstractSerializationDeserializationRunner {
+    private static final Email EMAIL = Email.of("info@tech1.io");
 
     @Override
     protected String getFileName() {
-        return "password-1.json";
+        return "email-1.json";
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PasswordTest extends AbstractSerializationDeserializationRunner {
     @Test
     public void serializeTest() {
         // Act
-        var json = this.writeValueAsString(PASSWORD);
+        var json = this.writeValueAsString(EMAIL);
 
         // Assert
         assertThat(json).isNotNull();
@@ -35,15 +35,15 @@ public class PasswordTest extends AbstractSerializationDeserializationRunner {
     public void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<Password>() {};
+        var typeReference = new TypeReference<Email>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual).isEqualTo(PASSWORD);
-        assertThat(actual.getValue()).isEqualTo(PASSWORD.getValue());
-        assertThat(actual.toString()).isEqualTo(PASSWORD.getValue());
+        assertThat(actual).isEqualTo(EMAIL);
+        assertThat(actual.getValue()).isEqualTo(EMAIL.getValue());
+        assertThat(actual.toString()).isEqualTo(EMAIL.getValue());
     }
 }

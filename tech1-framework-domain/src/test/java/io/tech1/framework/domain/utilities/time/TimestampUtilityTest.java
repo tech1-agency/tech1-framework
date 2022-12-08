@@ -24,6 +24,16 @@ public class TimestampUtilityTest {
 
     private static final long _5_SECONDS = TimeAmount.of(5L, SECONDS).toMillis();
 
+    private static Stream<Arguments> toUnixTimeTest() {
+        return Stream.of(
+                Arguments.of(1670526412123L, 1670526412L),
+                Arguments.of(1670526412456L, 1670526412L),
+                Arguments.of(1670526412789L, 1670526412L),
+                Arguments.of(1670526412999L, 1670526412L),
+                Arguments.of(1670526413001L, 1670526413L)
+        );
+    }
+
     private static Stream<Arguments> isBetweenTest() {
         return Stream.of(
                 Arguments.of(_5_MINUTES_AGO, _1_HOUR_FUTURE, true),
@@ -76,6 +86,16 @@ public class TimestampUtilityTest {
 
         // Assert
         assertThat(actual).isGreaterThanOrEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("toUnixTimeTest")
+    public void toUnixTimeTest(long timestamp, long expected) {
+        // Act
+        var actual = toUnixTime(timestamp);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)

@@ -4,6 +4,7 @@
 - Add "countryCode" -> GeoLocation
 - Add geo location facade utility (ipapi + mindmax as failsafe)
 - Add geo countries flags utility (emoji-based)
+- Migrate methods TimestampUtility (toUnixTime)
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)

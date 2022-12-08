@@ -1,5 +1,6 @@
 package io.tech1.framework.configurations.server;
 
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,8 @@ public class ApplicationSpringBootServerTest {
 
     @Configuration
     @Import({
-            ApplicationSpringBootServer.class
+            ApplicationSpringBootServer.class,
+            ApplicationFrameworkPropertiesContext.class
     })
     static class ContextConfiguration {
         @Bean
@@ -47,6 +49,6 @@ public class ApplicationSpringBootServerTest {
         // Assert
         assertThat(methods).contains("environmentUtility");
         assertThat(methods).contains("baseInfoResource");
-        assertThat(methods).hasSize(15);
+        assertThat(methods).hasSize(16);
     }
 }

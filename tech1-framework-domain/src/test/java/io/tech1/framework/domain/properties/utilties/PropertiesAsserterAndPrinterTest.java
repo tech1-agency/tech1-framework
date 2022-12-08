@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.disabledIncidentFeatureConfigs;
 import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.enabledIncidentFeatureConfigs;
@@ -44,6 +43,16 @@ public class PropertiesAsserterAndPrinterTest {
         // Act
         assertProperties(notUsedPropertiesConfigs, "notUsedPropertiesConfigs");
         printProperties(notUsedPropertiesConfigs);
+
+        // Assert
+        // no asserts
+    }
+
+    @Test
+    public void serverConfigsTest() {
+        // Act
+        assertProperties(SERVER_CONFIGS, "serverConfigs");
+        printProperties(SERVER_CONFIGS);
 
         // Assert
         // no asserts

@@ -18,6 +18,8 @@ jasypt:
 
 # Tech1 Platform
 tech1:
+  serverConfigs:
+    name: tech1-framework-b2b-mongodb-server
   asyncConfigs:
     threadNamePrefix: tps1-async
   eventsConfigs:

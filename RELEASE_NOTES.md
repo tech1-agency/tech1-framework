@@ -5,6 +5,7 @@
 - Add geo location facade utility (ipapi + mindmax as failsafe)
 - Add geo countries flags utility (emoji-based)
 - Migrate methods TimestampUtility (toUnixTime)
+- Add properties: serverConfigs
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)

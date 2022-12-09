@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistrati
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -37,6 +36,6 @@ public class BaseSecurityRegistrationResource {
         this.registrationRequestsValidator.validateRegistrationRequest1(requestUserRegistration1);
         this.registrationService.register1(requestUserRegistration1);
         this.securityJwtPublisher.publishRegistration1(EventRegistration1.of(requestUserRegistration1));
-        this.incidentPublisher.publishRegistration1(IncidentRegistration1.of(Username.of(requestUserRegistration1.getUsername())));
+        this.incidentPublisher.publishRegistration1(IncidentRegistration1.of(requestUserRegistration1.getUsername()));
     }
 }

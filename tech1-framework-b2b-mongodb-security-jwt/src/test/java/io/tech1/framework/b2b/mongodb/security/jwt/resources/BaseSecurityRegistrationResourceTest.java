@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +72,6 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
         verify(this.registrationRequestsValidator).validateRegistrationRequest1(eq(requestUserRegistration1));
         verify(this.registrationService).register1(eq(requestUserRegistration1));
         verify(this.securityJwtPublisher).publishRegistration1(eq(EventRegistration1.of(requestUserRegistration1)));
-        verify(this.incidentPublisher).publishRegistration1(eq(IncidentRegistration1.of(Username.of(requestUserRegistration1.getUsername()))));
+        verify(this.incidentPublisher).publishRegistration1(eq(IncidentRegistration1.of(requestUserRegistration1.getUsername())));
     }
 }

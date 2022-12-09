@@ -85,16 +85,16 @@ public class RegistrationServiceImplTest {
     public void register1Test() {
         // Arrange
         var requestUserRegistration1 = new RequestUserRegistration1(
-                randomUsername().getIdentifier(),
-                randomPassword().getValue(),
-                randomPassword().getValue(),
+                randomUsername(),
+                randomPassword(),
+                randomPassword(),
                 randomZoneId().getId(),
                 randomString()
         );
         var dbInvitationCode = entity(DbInvitationCode.class);
         when(this.invitationCodeRepository.findByValue(eq(requestUserRegistration1.getInvitationCode()))).thenReturn(dbInvitationCode);
         var hashPassword = randomString();
-        when(this.bCryptPasswordEncoder.encode(eq(requestUserRegistration1.getPassword()))).thenReturn(hashPassword);
+        when(this.bCryptPasswordEncoder.encode(eq(requestUserRegistration1.getPassword().getValue()))).thenReturn(hashPassword);
         var dbUserAC = ArgumentCaptor.forClass(DbUser.class);
         var savedDbUser = entity(DbUser.class);
         when(this.userRepository.save(any())).thenReturn(savedDbUser);
@@ -105,9 +105,9 @@ public class RegistrationServiceImplTest {
 
         // Assert
         verify(this.invitationCodeRepository).findByValue(eq(requestUserRegistration1.getInvitationCode()));
-        verify(this.bCryptPasswordEncoder).encode(eq(requestUserRegistration1.getPassword()));
+        verify(this.bCryptPasswordEncoder).encode(eq(requestUserRegistration1.getPassword().getValue()));
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername().getIdentifier()).isEqualTo(requestUserRegistration1.getUsername());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(requestUserRegistration1.getUsername());
         assertThat(dbUserAC.getValue().getPassword().getValue()).isEqualTo(hashPassword);
         assertThat(dbUserAC.getValue().getAuthorities()).isEqualTo(dbInvitationCode.getAuthorities());
         verify(this.invitationCodeRepository).save(dbInvitationCodeAC.capture());

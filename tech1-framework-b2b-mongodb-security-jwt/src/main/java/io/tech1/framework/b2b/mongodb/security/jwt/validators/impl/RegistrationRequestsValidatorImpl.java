@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -15,8 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotBlankOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertZoneIdOrThrow;
+import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 import static java.util.Objects.nonNull;
 
@@ -34,20 +32,19 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
-        var usernameStr = requestUserRegistration1.getUsername();
+        var username = requestUserRegistration1.getUsername();
         var zoneId = requestUserRegistration1.getZoneId();
         var password = requestUserRegistration1.getPassword();
         var confirmPassword = requestUserRegistration1.getConfirmPassword();
         var invitationCode = requestUserRegistration1.getInvitationCode();
 
-        assertNonNullNotBlankOrThrow(usernameStr, invalidAttribute("username"));
-        assertNonNullNotBlankOrThrow(password, invalidAttribute("password"));
-        assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
+        assertNonNullOrThrow(username, invalidAttribute("username"));
+        assertNonNullOrThrow(password, invalidAttribute("password"));
+        assertNonNullOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
         assertNonNullNotBlankOrThrow(invitationCode, invalidAttribute("invitationCode"));
 
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        var username = Username.of(usernameStr);
         var user = this.userRepository.findByUsername(username);
         if (nonNull(user)) {
             var exception = entityAlreadyUsed("Username");

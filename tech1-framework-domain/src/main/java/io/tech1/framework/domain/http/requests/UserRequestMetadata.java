@@ -8,7 +8,7 @@ import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 import lombok.*;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.constants.StringConstants.NO_FLAG;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.ok;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
@@ -55,9 +55,9 @@ public class UserRequestMetadata {
 
     public Tuple3<String, String, String> getWhereTuple3() {
         if (this.status.isCompleted()) {
-            return Tuple3.of(this.geoLocation.getIpAddr(), this.geoLocation.getCountry(), this.geoLocation.getWhere());
+            return Tuple3.of(this.geoLocation.getIpAddr(), this.geoLocation.getCountryFlag(), this.geoLocation.getWhere());
         } else {
-            return Tuple3.of(this.geoLocation.getIpAddr(), UNDEFINED, "Processing...Please wait!");
+            return Tuple3.of(this.geoLocation.getIpAddr(), NO_FLAG, "Processing...Please wait!");
         }
     }
 

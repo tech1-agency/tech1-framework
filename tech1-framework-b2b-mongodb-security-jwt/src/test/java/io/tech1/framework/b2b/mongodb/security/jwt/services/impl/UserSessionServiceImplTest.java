@@ -10,6 +10,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.SecurityJwtTokenUtilityImpl;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -213,7 +214,7 @@ public class UserSessionServiceImplTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.getB()).isEqualTo(UNDEFINED);
+        assertThat(whereTuple3.getB()).isEqualTo(StringConstants.NO_FLAG);
         assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
@@ -256,7 +257,7 @@ public class UserSessionServiceImplTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.getB()).isEqualTo(UNDEFINED);
+        assertThat(whereTuple3.getB()).isEqualTo(StringConstants.NO_FLAG);
         assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);

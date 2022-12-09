@@ -9,6 +9,8 @@
 - Add Password/Email as Java objects (not plain strings) to DbUser (db migration required)
 - Add endpoint /user/update2 (authenticated()) (fields: zoneId, name)
 - Add email notification -> user (email is present + checkbox config is enabled)
+- Change user request metadata tuple3 -> { ipAddress, countryFlag, where }
+- Change incidents key/values to camel-case-based strings
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)

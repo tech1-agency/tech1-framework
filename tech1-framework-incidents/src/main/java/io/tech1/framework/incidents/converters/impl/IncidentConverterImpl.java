@@ -7,8 +7,8 @@ import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.IncidentAttributes;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.utilities.exceptions.ThrowableUtility.getTrace;
-import static io.tech1.framework.incidents.domain.IncidentAttributes.Values.*;
+import static io.tech1.framework.incidents.domain.IncidentAttributes.IncidentsTypes.*;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -32,7 +32,7 @@ public class IncidentConverterImpl implements IncidentConverter {
     @Override
     public Incident convert(IncidentThrowable incidentThrowable) {
         var incident = new Incident();
-        incident.add(IncidentAttributes.Keys.TYPE, IncidentAttributes.Values.THROWABLE);
+        incident.add(IncidentAttributes.Keys.TYPE, IncidentAttributes.IncidentsTypes.THROWABLE);
 
         var throwable = incidentThrowable.getThrowable();
         incident.add(IncidentAttributes.Keys.EXCEPTION, throwable.getClass());
@@ -136,7 +136,7 @@ public class IncidentConverterImpl implements IncidentConverter {
 
         var whereTuple3 = userRequestMetadata.getWhereTuple3();
         incident.add(IncidentAttributes.Keys.IP_ADDRESS, whereTuple3.getA());
-        incident.add(IncidentAttributes.Keys.COUNTRY, whereTuple3.getB());
+        incident.add(IncidentAttributes.Keys.COUNTRY_FLAG, whereTuple3.getB());
         incident.add(IncidentAttributes.Keys.WHERE, whereTuple3.getC());
 
         var whatTuple2 = userRequestMetadata.getWhatTuple2();

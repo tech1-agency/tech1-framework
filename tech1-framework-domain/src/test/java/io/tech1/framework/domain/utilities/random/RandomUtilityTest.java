@@ -922,7 +922,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhatTuple2().getB()).isEqualTo("Chrome, macOS on Desktop");
         assertThat(actual.getWhereTuple3().getA()).isNotNull();
         assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().getB()).isEqualTo("Ukraine");
+        assertThat(actual.getWhereTuple3().getB()).isEqualTo("🇺🇦");
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Ukraine, Lviv");
     }
 
@@ -948,7 +948,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhatTuple2().getB()).isEqualTo("Unknown, Unknown on Unknown");
         assertThat(actual.getWhereTuple3().getA()).isNotNull();
         assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().getB()).isEqualTo("Unknown");
+        assertThat(actual.getWhereTuple3().getB()).isEqualTo("🏴‍");
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Unknown, Unknown");
     }
 

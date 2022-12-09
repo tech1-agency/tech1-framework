@@ -24,7 +24,7 @@ public class IncidentTest {
     private static Stream<Arguments> getUsernameTest() {
         return Stream.of(
                 Arguments.of(Map.of(randomString(), randomString()), "Unknown"),
-                Arguments.of(Map.of("Username", "Username123"), "Username123")
+                Arguments.of(Map.of("username", "Username123"), "Username123")
         );
     }
 

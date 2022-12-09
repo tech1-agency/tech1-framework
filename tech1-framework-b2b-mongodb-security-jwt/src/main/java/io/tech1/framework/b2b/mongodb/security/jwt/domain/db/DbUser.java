@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -64,6 +65,11 @@ public class DbUser {
         this.zoneId = ZoneId.of(requestUserUpdate1.getZoneId());
         this.email = requestUserUpdate1.getEmail();
         this.name = requestUserUpdate1.getName();
+    }
+
+    public void edit2(RequestUserUpdate2 requestUserUpdate2) {
+        this.zoneId = ZoneId.of(requestUserUpdate2.getZoneId());
+        this.name = requestUserUpdate2.getName();
     }
 
     public void changePassword(Password password) {

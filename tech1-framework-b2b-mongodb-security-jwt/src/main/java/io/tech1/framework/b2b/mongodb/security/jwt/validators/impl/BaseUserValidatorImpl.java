@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,12 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
         if (nonNull(user) && !user.getUsername().equals(currentDbUser.getUsername())) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
+    }
+
+    @Override
+    public void validateUserUpdateRequest2(RequestUserUpdate2 requestUserUpdate2) {
+        var zoneId = requestUserUpdate2.getZoneId();
+        assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
     }
 
     @Override

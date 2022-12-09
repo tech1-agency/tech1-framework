@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.domain.base.Password;
@@ -32,6 +33,18 @@ public class BaseUserServiceImpl implements BaseUserService {
         var currentDbUser = currentJwtUser.getDbUser();
 
         currentDbUser.edit1(requestUserUpdate1);
+        this.userRepository.save(currentDbUser);
+
+        var authentication = new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Override
+    public void updateUser2(RequestUserUpdate2 requestUserUpdate2) {
+        var currentJwtUser = this.currentSessionAssistant.getCurrentJwtUser();
+        var currentDbUser = currentJwtUser.getDbUser();
+
+        currentDbUser.edit2(requestUserUpdate2);
         this.userRepository.save(currentDbUser);
 
         var authentication = new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());

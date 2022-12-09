@@ -164,6 +164,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
         urlRegistry.antMatchers(GET, basePathPrefix + "/session/current").authenticated();
         urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").denyAll();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/update1").denyAll();
+        urlRegistry.antMatchers(POST, basePathPrefix + "/user/update2").authenticated();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
 
         if (this.essenceConstructor.isInvitationCodesEnabled()) {

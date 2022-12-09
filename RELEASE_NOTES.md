@@ -7,6 +7,7 @@
 - Migrate methods TimestampUtility (toUnixTime)
 - Add properties: serverConfigs
 - Add Password/Email as Java objects (not plain strings) to DbUser (db migration required)
+- Add endpoint /user/update2 (authenticated()) (fields: zoneId, name)
 
 ### v1.5
 - Migrate EnumUtility methods, TuplePercentage(long, long)

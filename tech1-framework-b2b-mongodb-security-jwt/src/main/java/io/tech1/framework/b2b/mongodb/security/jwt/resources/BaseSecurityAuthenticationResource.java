@@ -64,10 +64,10 @@ public class BaseSecurityAuthenticationResource {
         var password = requestUserLogin.getPassword();
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
-        var authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username.getIdentifier(), password.getValue());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
 
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username);
+        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.getIdentifier());
         var dbUser = jwtUser.getDbUser();
 
         var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(dbUser);
@@ -84,7 +84,7 @@ public class BaseSecurityAuthenticationResource {
 
         this.sessionRegistry.register(
                 Session.of(
-                        Username.of(username),
+                        username,
                         new JwtRefreshToken(jwtRefreshToken.getValue())
                 )
         );

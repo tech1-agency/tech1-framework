@@ -5,8 +5,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUs
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -51,8 +49,8 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
             var cachedPayload = this.httpRequestUtility.getCachedPayload(request);
             var requestUserLogin = this.objectMapper.readValue(cachedPayload, RequestUserLogin.class);
 
-            var username = Username.of(requestUserLogin.getUsername());
-            var password = Password.of(requestUserLogin.getPassword());
+            var username = requestUserLogin.getUsername();
+            var password = requestUserLogin.getPassword();
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     EventAuthenticationLoginFailure.of(
                             username

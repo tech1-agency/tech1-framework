@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static io.tech1.framework.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.domain.enums.Status.STARTED;
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -60,9 +62,10 @@ public class BaseSecurityAuthenticationResource {
         this.authenticationRequestsValidator.validateLoginRequest(requestUserLogin);
         var username = requestUserLogin.getUsername();
         var password = requestUserLogin.getPassword();
-        LOGGER.info("Login attempt. Username: {}", username);
+        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
-        var authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        var authentication = this.authenticationManager.authenticate(authenticationToken);
 
         var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username);
         var dbUser = jwtUser.getDbUser();
@@ -77,7 +80,7 @@ public class BaseSecurityAuthenticationResource {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LOGGER.info("Login attempt completed successfully. Username: {}", username);
+        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
 
         this.sessionRegistry.register(
                 Session.of(

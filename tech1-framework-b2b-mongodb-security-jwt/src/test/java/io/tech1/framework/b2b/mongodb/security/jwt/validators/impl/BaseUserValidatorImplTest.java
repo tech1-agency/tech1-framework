@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,13 +40,13 @@ public class BaseUserValidatorImplTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
         return Stream.of(
-                Arguments.of(new RequestUserChangePassword1("", ""), invalidAttribute("newPassword")),
-                Arguments.of(new RequestUserChangePassword1("simple", ""), invalidAttribute("confirmPassword")),
-                Arguments.of(new RequestUserChangePassword1("simple", randomString()), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1("Simple", randomString()), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1("Simple1", randomString()), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1("ComPLEx12", "NoMatch"), "Confirm password should match new password"),
-                Arguments.of(new RequestUserChangePassword1("ComPLEx12", "ComPLEx12"), null)
+                Arguments.of(new RequestUserChangePassword1(null, null), invalidAttribute("newPassword")),
+                Arguments.of(new RequestUserChangePassword1(Password.of("simple"), null), invalidAttribute("confirmPassword")),
+                Arguments.of(new RequestUserChangePassword1(Password.of("simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("Simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("Simple1"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("ComPLEx12"), Password.of("NoMatch")), "Confirm password should match new password"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
         );
     }
 
@@ -54,7 +55,6 @@ public class BaseUserValidatorImplTest {
             TestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
-
 
     }
 

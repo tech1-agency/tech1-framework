@@ -56,7 +56,7 @@ public class BaseUserServiceImpl implements BaseUserService {
         var currentJwtUser = this.currentSessionAssistant.getCurrentJwtUser();
         var currentDbUser = currentJwtUser.getDbUser();
 
-        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.getNewPassword());
+        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.getNewPassword().getValue());
 
         currentDbUser.changePassword(Password.of(hashPassword));
         this.userRepository.save(currentDbUser);

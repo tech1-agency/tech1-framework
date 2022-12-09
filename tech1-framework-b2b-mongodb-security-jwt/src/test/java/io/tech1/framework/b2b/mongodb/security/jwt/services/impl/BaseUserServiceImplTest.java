@@ -141,7 +141,7 @@ public class BaseUserServiceImplTest {
         var currentJwtUser = entity(JwtUser.class);
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(currentJwtUser);
         String hashPassword = randomString();
-        when(this.bCryptPasswordEncoder.encode(eq(requestUserChangePassword1.getNewPassword()))).thenReturn(hashPassword);
+        when(this.bCryptPasswordEncoder.encode(eq(requestUserChangePassword1.getNewPassword().getValue()))).thenReturn(hashPassword);
         ArgumentCaptor<DbUser> dbUserAC = ArgumentCaptor.forClass(DbUser.class);
 
         // Act
@@ -149,7 +149,7 @@ public class BaseUserServiceImplTest {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.bCryptPasswordEncoder).encode(eq(requestUserChangePassword1.getNewPassword()));
+        verify(this.bCryptPasswordEncoder).encode(eq(requestUserChangePassword1.getNewPassword().getValue()));
         verify(this.userRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.getDbUser().getUsername());
         assertThat(dbUserAC.getValue().getPassword().getValue()).isEqualTo(hashPassword);

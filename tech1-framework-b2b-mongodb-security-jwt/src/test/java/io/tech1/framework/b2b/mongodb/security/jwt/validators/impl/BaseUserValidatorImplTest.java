@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUs
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
+import io.tech1.framework.domain.base.Email;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +80,7 @@ public class BaseUserValidatorImplTest {
     public void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
-        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomString(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -94,7 +95,7 @@ public class BaseUserValidatorImplTest {
     public void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), randomString(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), Email.of(randomString()), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -108,7 +109,7 @@ public class BaseUserValidatorImplTest {
     @Test
     public void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
-        var email = randomEmailAsValue();
+        var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
@@ -124,7 +125,7 @@ public class BaseUserValidatorImplTest {
     @Test
     public void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
-        var email = randomEmailAsValue();
+        var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(currentDbUser);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
@@ -140,7 +141,7 @@ public class BaseUserValidatorImplTest {
     @Test
     public void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
-        var email = randomEmailAsValue();
+        var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
         var user = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(user);

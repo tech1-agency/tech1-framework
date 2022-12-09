@@ -60,11 +60,10 @@ public class DbUser {
         this.attributes = new HashMap<>();
     }
 
-    public void edit(RequestUserUpdate1 requestUserUpdate1) {
-        assertZoneIdOrThrow(requestUserUpdate1.getZoneId(), invalidAttribute("DbUser.zoneId"));
+    public void edit1(RequestUserUpdate1 requestUserUpdate1) {
         this.zoneId = ZoneId.of(requestUserUpdate1.getZoneId());
+        this.email = requestUserUpdate1.getEmail();
         this.name = requestUserUpdate1.getName();
-        this.email = Email.of(requestUserUpdate1.getEmail());
     }
 
     public void changePassword(Password password) {

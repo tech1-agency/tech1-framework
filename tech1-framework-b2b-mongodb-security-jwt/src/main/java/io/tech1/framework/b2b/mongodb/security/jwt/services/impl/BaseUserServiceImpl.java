@@ -31,7 +31,7 @@ public class BaseUserServiceImpl implements BaseUserService {
         var currentJwtUser = this.currentSessionAssistant.getCurrentJwtUser();
         var currentDbUser = currentJwtUser.getDbUser();
 
-        currentDbUser.edit(requestUserUpdate1);
+        currentDbUser.edit1(requestUserUpdate1);
         this.userRepository.save(currentDbUser);
 
         var authentication = new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());

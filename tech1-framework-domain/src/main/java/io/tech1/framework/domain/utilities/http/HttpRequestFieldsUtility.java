@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.http;
 
+import io.tech1.framework.domain.base.Email;
 import lombok.experimental.UtilityClass;
 
 import java.util.regex.Pattern;
@@ -12,6 +13,10 @@ public class HttpRequestFieldsUtility {
 
     public static boolean containsCamelCaseLettersAndNumbersWithLength(String field, int length) {
         return CAMEL_CASE_LETTERS_AND_NUMBERS_PATTERN.matcher(field).matches() && field.length() >= length;
+    }
+
+    public static boolean isEmail(Email email) {
+        return isEmail(email.getValue());
     }
 
     public static boolean isEmail(String field) {

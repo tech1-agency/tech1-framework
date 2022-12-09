@@ -6,6 +6,7 @@ import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -26,6 +27,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.List;
 import java.util.Map;
 
+import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UK;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomMethod;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -250,7 +252,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentAuthenticationLogoutFull.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -280,7 +282,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentSessionRefreshed.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -310,7 +312,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentSessionExpired.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );

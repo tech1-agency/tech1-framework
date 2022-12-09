@@ -10,13 +10,17 @@ import lombok.EqualsAndHashCode;
 public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private String name;
+    @MandatoryProperty
+    private String webclientURL;
 
     // NOTE: test-purposes
     public static ServerConfigs of(
-            String name
+            String name,
+            String webclientURL
     ) {
         var instance = new ServerConfigs();
         instance.name = name;
+        instance.webclientURL = webclientURL;
         return instance;
     }
 }

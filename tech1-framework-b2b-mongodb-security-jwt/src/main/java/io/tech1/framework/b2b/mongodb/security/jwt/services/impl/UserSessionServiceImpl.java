@@ -85,6 +85,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 EventSessionAddUserRequestMetadata.of(
                         username,
+                        user.getEmail(),
                         userSession,
                         clientIpAddr,
                         httpServletRequest,
@@ -109,6 +110,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 EventSessionAddUserRequestMetadata.of(
                         username,
+                        user.getEmail(),
                         newUserSession,
                         getClientIpAddr(httpServletRequest),
                         httpServletRequest,

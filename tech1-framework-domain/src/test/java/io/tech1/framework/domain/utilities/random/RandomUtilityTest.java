@@ -824,6 +824,8 @@ public class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getIpAddr()).isNotNull();
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
+        assertThat(actual.getCountryCode()).isEqualTo("UA");
+        assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
         assertThat(actual.getCity()).isEqualTo("Lviv");
         assertThat(actual.getExceptionDetails()).isEqualTo("");
         assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");

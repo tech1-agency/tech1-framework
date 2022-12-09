@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
@@ -155,6 +156,32 @@ public class BaseUserValidatorImplTest {
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo("Attribute `email` is invalid");
         verify(this.userRepository).findByEmail(eq(email));
+    }
+
+    @Test
+    public void validateUserUpdateRequest2InvalidZoneIdTest() {
+        // Arrange
+        var requestUserUpdate2 = new RequestUserUpdate2("invalidZoneId", randomString());
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2));
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Attribute `zoneId` is invalid");
+    }
+
+    @Test
+    public void validateUserUpdateRequest2Test() {
+        // Arrange
+        var requestUserUpdate2 = new RequestUserUpdate2(randomZoneId().getId(), randomString());
+
+        // Act
+        this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2);
+
+        // Assert
+        // no asserts
     }
 
     @ParameterizedTest

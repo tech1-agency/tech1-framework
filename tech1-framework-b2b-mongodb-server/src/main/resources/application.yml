@@ -64,6 +64,12 @@ tech1:
         cookieKey: ajwt
       refreshToken:
         cookieKey: rjwt
+    usersEmailsConfigs:
+      subjectPrefix: "[Tech1]"
+      authenticationLogin:
+        enabled: true
+      sessionRefreshed:
+        enabled: true
 
 # App
 app:

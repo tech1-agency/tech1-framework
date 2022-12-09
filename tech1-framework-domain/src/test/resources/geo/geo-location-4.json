@@ -2,5 +2,6 @@
   "ipAddr" : "127.0.0.1",
   "country" : "Unknown",
   "countryCode" : "Unknown",
+  "countryFlag" : "🏴‍",
   "where" : "Unknown"
 }

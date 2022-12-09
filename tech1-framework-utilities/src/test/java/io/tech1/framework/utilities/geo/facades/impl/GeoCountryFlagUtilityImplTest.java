@@ -1,5 +1,7 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
+import io.tech1.framework.domain.constants.StringConstants;
+import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,14 +27,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GeoCountryFlagUtilityImplTest {
 
-    private static Stream<Arguments> getEmojiTest() {
+    private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
-                Arguments.of(null, null, "🏴‍"),
-                Arguments.of("Ukraine", "UA", "🇺🇦"),
-                Arguments.of("Portugal", "PT", "🇵🇹"),
-                Arguments.of("United States", "US", "🇺🇸"),
-                Arguments.of(UNKNOWN, UNKNOWN, "🏴‍"),
-                Arguments.of(UNDEFINED, UNDEFINED, "🏴‍")
+                Arguments.of(null, null, StringConstants.NO_FLAG),
+                Arguments.of("Ukraine", "UA", TestsConstants.FLAG_UKRAINE),
+                Arguments.of("Portugal", "PT", TestsConstants.FLAG_PORTUGAL),
+                Arguments.of("United States", "US", TestsConstants.FLAG_USA),
+                Arguments.of(UNKNOWN, UNKNOWN, StringConstants.NO_FLAG),
+                Arguments.of(UNDEFINED, UNDEFINED, StringConstants.NO_FLAG)
         );
     }
 
@@ -52,11 +54,11 @@ public class GeoCountryFlagUtilityImplTest {
     private final GeoCountryFlagUtility componentUnderTest;
 
     @ParameterizedTest
-    @MethodSource("getEmojiTest")
-    public void getEmojiTest(String country, String countryCode, String expected) {
+    @MethodSource("getFlagEmojiTest")
+    public void getFlagEmojiTest(String country, String countryCode, String expected) {
         // Act
-        var actual1 = this.componentUnderTest.getEmojiByCountry(country);
-        var actual2 = this.componentUnderTest.getEmojiByCountryCode(countryCode);
+        var actual1 = this.componentUnderTest.getFlagEmojiByCountry(country);
+        var actual2 = this.componentUnderTest.getFlagEmojiByCountryCode(countryCode);
 
         // Assert
         assertThat(actual1).isEqualTo(expected);

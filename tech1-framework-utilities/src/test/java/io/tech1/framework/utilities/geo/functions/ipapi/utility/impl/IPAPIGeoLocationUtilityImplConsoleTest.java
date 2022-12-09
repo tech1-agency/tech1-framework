@@ -2,6 +2,8 @@ package io.tech1.framework.utilities.geo.functions.ipapi.utility.impl;
 
 import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
 import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
+import io.tech1.framework.utilities.geo.facades.impl.GeoCountryFlagUtilityImpl;
 import io.tech1.framework.utilities.geo.functions.ipapi.configurations.IPAPIConfiguration;
 import io.tech1.framework.utilities.geo.functions.ipapi.feign.IPAPIFeign;
 import io.tech1.framework.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -31,11 +34,20 @@ public class IPAPIGeoLocationUtilityImplConsoleTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         private final IPAPIFeign ipapiFeign;
+        private final ResourceLoader resourceLoader;
+
+        @Bean
+        GeoCountryFlagUtility geoCountryFlagUtility() {
+            return new GeoCountryFlagUtilityImpl(
+                    this.resourceLoader
+            );
+        }
 
         @Bean
         IPAPIGeoLocationUtility ipapiGeoLocationUtility() {
             return new IPAPIGeoLocationUtilityImpl(
-                    this.ipapiFeign
+                    this.ipapiFeign,
+                    this.geoCountryFlagUtility()
             );
         }
     }

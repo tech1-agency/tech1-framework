@@ -377,6 +377,7 @@ public class RandomUtility {
                 localhost(),
                 "Ukraine",
                 "UA",
+                "🇺🇦",
                 "Lviv"
         );
     }

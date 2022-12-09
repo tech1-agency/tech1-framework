@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.base.Checkbox;
 import io.tech1.framework.domain.properties.base.Mongodb;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
 import lombok.Data;
@@ -24,6 +25,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     private Mongodb mongodb;
     @MandatoryProperty
     private SessionConfigs sessionConfigs;
+    @MandatoryProperty
+    private UsersEmailsConfigs usersEmailsConfigs;
 
     // NOTE: test-purposes
     public static SecurityJwtConfigs of(
@@ -33,7 +36,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
             JwtTokensConfigs jwtTokensConfigs,
             LoggingConfigs loggingConfigs,
             Mongodb mongodb,
-            SessionConfigs sessionConfigs
+            SessionConfigs sessionConfigs,
+            UsersEmailsConfigs usersEmailsConfigs
     ) {
         var instance = new SecurityJwtConfigs();
         instance.authoritiesConfigs = authoritiesConfigs;
@@ -43,6 +47,18 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         instance.loggingConfigs = loggingConfigs;
         instance.mongodb = mongodb;
         instance.sessionConfigs = sessionConfigs;
+        instance.usersEmailsConfigs = usersEmailsConfigs;
+        return instance;
+    }
+
+    // NOTE: test-purposes
+    public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
+        var instance = new SecurityJwtConfigs();
+        instance.usersEmailsConfigs = UsersEmailsConfigs.of(
+                "[Tech1]",
+                Checkbox.disabled(),
+                Checkbox.disabled()
+        );
         return instance;
     }
 }

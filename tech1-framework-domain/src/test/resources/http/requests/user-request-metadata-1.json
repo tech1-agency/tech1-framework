@@ -4,6 +4,7 @@
     "ipAddr" : "127.0.0.1",
     "country" : "[?]",
     "countryCode" : "[?]",
+    "countryFlag" : "🏴‍",
     "where" : "[?], [?]"
   },
   "userAgentDetails" : {

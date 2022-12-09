@@ -1,6 +1,7 @@
 package io.tech1.framework.utilities.geo.functions.ipapi.utility.impl;
 
 import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
+import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.ipapi.domain.IPAPIResponse;
 import io.tech1.framework.utilities.geo.functions.ipapi.feign.IPAPIFeign;
 import io.tech1.framework.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
@@ -16,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UKRAINE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomFeignException;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPAddress;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -36,28 +38,37 @@ public class IPAPIGeoLocationUtilityImplTest {
         }
 
         @Bean
+        GeoCountryFlagUtility countryFlagUtility() {
+            return mock(GeoCountryFlagUtility.class);
+        }
+
+        @Bean
         IPAPIGeoLocationUtility ipapiGeoLocationUtility() {
             return new IPAPIGeoLocationUtilityImpl(
-                    this.ipapiFeign()
+                    this.ipapiFeign(),
+                    this.countryFlagUtility()
             );
         }
     }
 
     private final IPAPIFeign ipapiFeign;
+    private final GeoCountryFlagUtility countryFlagUtility;
 
     private final IPAPIGeoLocationUtility componentUnderTest;
 
     @BeforeEach
     public void beforeEach() {
         reset(
-                this.ipapiFeign
+                this.ipapiFeign,
+                this.countryFlagUtility
         );
     }
 
     @AfterEach
     public void afterEach() {
         verifyNoMoreInteractions(
-                this.ipapiFeign
+                this.ipapiFeign,
+                this.countryFlagUtility
         );
     }
 
@@ -99,15 +110,18 @@ public class IPAPIGeoLocationUtilityImplTest {
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
         when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenReturn(ipapiResponse);
+        when(this.countryFlagUtility.getFlagEmojiByCountryCode(eq("UA"))).thenReturn(FLAG_UKRAINE);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
         verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
+        verify(this.countryFlagUtility).getFlagEmojiByCountryCode(eq("UA"));
         assertThat(actual.getIpAddr()).isEqualTo(ipAddress.getValue());
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getCountryCode()).isEqualTo("UA");
+        assertThat(actual.getCountryFlag()).isEqualTo(FLAG_UKRAINE);
         assertThat(actual.getCity()).isEqualTo("Lviv");
     }
 }

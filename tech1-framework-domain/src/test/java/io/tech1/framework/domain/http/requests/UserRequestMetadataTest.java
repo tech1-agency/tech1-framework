@@ -20,7 +20,7 @@ public class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         return Stream.of(
                 Arguments.of(processing(localhost()), "user-request-metadata-1.json"),
                 Arguments.of(processed(
-                        GeoLocation.processed(localhost(), "Ukraine", "UA", "Lviv"),
+                        GeoLocation.processed(localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
                         UserAgentDetails.processed("Chrome", "MacOS", "Mobile")
                 ), "user-request-metadata-2.json"),
                 Arguments.of(processed(
@@ -28,7 +28,7 @@ public class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
                         UserAgentDetails.unknown("exception details on user agent")
                 ), "user-request-metadata-3.json"),
                 Arguments.of(processed(
-                        GeoLocation.processed(localhost(), "Ukraine", "UA", "Lviv"),
+                        GeoLocation.processed(localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"),
                         UserAgentDetails.unknown("exception details on user agent")
                 ), "user-request-metadata-4.json"),
                 Arguments.of(processed(

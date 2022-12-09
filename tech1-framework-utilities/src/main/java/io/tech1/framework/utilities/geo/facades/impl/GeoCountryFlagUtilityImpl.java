@@ -66,7 +66,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
 
 
     @Override
-    public String getEmojiByCountry(String country) {
+    public String getFlagEmojiByCountry(String country) {
         return this.getEmoji(
                 this.mappedByCountryName,
                 country
@@ -74,7 +74,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     }
 
     @Override
-    public String getEmojiByCountryCode(String countryCode) {
+    public String getFlagEmojiByCountryCode(String countryCode) {
         return this.getEmoji(
                 this.mappedByCountryCode,
                 countryCode

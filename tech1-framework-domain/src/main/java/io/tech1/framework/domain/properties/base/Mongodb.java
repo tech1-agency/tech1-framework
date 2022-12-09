@@ -2,13 +2,16 @@ package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
 @Data
-public class Mongodb {
+@EqualsAndHashCode(callSuper = true)
+public class Mongodb extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private String host;
     @MandatoryProperty

@@ -4,6 +4,8 @@ logging:
 
 # Tech1 Platform
 tech1:
+  serverConfigs:
+    webclientURL: http://localhost:3000
   incidentConfigs:
     enabled: true
     remoteServer:

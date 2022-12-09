@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.events;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
@@ -15,6 +16,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Data
 public class EventSessionAddUserRequestMetadata {
     private final Username username;
+    private final Email email;
     private final DbUserSession userSession;
     private final IPAddress clientIpAddr;
     private final UserAgentHeader userAgentHeader;
@@ -23,6 +25,7 @@ public class EventSessionAddUserRequestMetadata {
 
     public static EventSessionAddUserRequestMetadata of(
             Username username,
+            Email email,
             DbUserSession userSession,
             IPAddress clientIpAddr,
             HttpServletRequest httpServletRequest,
@@ -35,6 +38,7 @@ public class EventSessionAddUserRequestMetadata {
         assertNonNullOrThrow(httpServletRequest, invalidAttribute("EventSessionAddUserRequestMetadata.httpServletRequest"));
         return new EventSessionAddUserRequestMetadata(
                 username,
+                email,
                 userSession,
                 clientIpAddr,
                 new UserAgentHeader(httpServletRequest),

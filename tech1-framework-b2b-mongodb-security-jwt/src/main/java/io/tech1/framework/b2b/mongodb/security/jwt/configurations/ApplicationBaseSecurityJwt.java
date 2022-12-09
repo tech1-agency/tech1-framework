@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthen
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.domain.base.AbstractAuthority;
+import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -58,11 +59,12 @@ import static org.springframework.http.HttpMethod.*;
 })
 @EnableWebSecurity
 @Import({
+        ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
         ApplicationSecurityJwtMvc.class,
-        ApplicationMongodb.class,
-        ApplicationSpringBootServer.class,
-        ApplicationIncidents.class
+        ApplicationIncidents.class,
+        ApplicationEmails.class,
+        ApplicationMongodb.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {

@@ -24,12 +24,14 @@ public class IncidentAttributes {
 
         public static final String BROWSER = "Browser";
         public static final String COUNTRY = "Country";
+        // todo [yy] naming rules
         public static final String IP_ADDRESS = "IP address";
         public static final String WHAT = "What";
         public static final String WHEN = "When";
         public static final String WHERE = "Where";
     }
 
+    // todo [yy] naming rules
     @UtilityClass
     public static class Values {
         public static final String THROWABLE = "Throwable";

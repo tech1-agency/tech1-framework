@@ -1,7 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
@@ -20,6 +23,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     // Publishers
     private final IncidentPublisher incidentPublisher;
     // Services
+    private final UserEmailService userEmailService;
     private final UserSessionService userSessionService;
 
     @Override
@@ -62,6 +66,13 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         LOGGER.debug(SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA, this.getType(), event.getUsername());
         var userSession = this.userSessionService.saveUserRequestMetadata(event);
         if (event.isAuthenticationLoginEndpoint()) {
+            this.userEmailService.executeAuthenticationLogin(
+                    FunctionAuthenticationLoginEmail.of(
+                            event.getUsername(),
+                            event.getEmail(),
+                            userSession.getRequestMetadata()
+                    )
+            );
             this.incidentPublisher.publishAuthenticationLogin(
                     IncidentAuthenticationLogin.of(
                             event.getUsername(),
@@ -70,6 +81,13 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
             );
         }
         if (event.isAuthenticationRefreshTokenEndpoint()) {
+            this.userEmailService.executeSessionRefreshed(
+                    FunctionSessionRefreshedEmail.of(
+                            event.getUsername(),
+                            event.getEmail(),
+                            userSession.getRequestMetadata()
+                    )
+            );
             this.incidentPublisher.publishSessionRefreshed(
                     IncidentSessionRefreshed.of(
                             event.getUsername(),

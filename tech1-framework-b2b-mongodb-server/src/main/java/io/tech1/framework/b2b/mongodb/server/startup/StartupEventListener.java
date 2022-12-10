@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static io.tech1.framework.domain.constants.FrameworkConstants.VERSION_RUNTIME;
-import static io.tech1.framework.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER;
+import static io.tech1.framework.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER_1;
 import static io.tech1.framework.domain.enums.Status.COMPLETED;
 
 @Slf4j
@@ -39,7 +39,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
         try {
             super.onStartup();
             var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
-            LOGGER.info(SERVER_STARTUP_LISTENER, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
+            LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

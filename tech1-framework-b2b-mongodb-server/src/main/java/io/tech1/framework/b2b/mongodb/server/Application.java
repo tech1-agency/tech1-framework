@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import static io.tech1.framework.domain.constants.FrameworkConstants.VERSION_RUNTIME;
-import static io.tech1.framework.domain.constants.LogsConstants.SERVER_CONTAINER;
+import static io.tech1.framework.domain.constants.LogsConstants.SERVER_CONTAINER_1;
 import static io.tech1.framework.domain.enums.Status.COMPLETED;
 
 @Slf4j
@@ -31,6 +31,6 @@ public class Application {
         var applicationContext = springApplication.run(args);
         var applicationFrameworkProperties = applicationContext.getBean(ApplicationFrameworkProperties.class);
         var serverConfigs = applicationFrameworkProperties.getServerConfigs();
-        LOGGER.info(SERVER_CONTAINER, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
+        LOGGER.info(SERVER_CONTAINER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
     }
 }

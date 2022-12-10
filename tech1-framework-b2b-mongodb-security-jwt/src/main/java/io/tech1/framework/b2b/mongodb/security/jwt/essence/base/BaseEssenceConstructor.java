@@ -54,6 +54,7 @@ public class BaseEssenceConstructor implements EssenceConstructor {
                         defaultUser.getZoneId().getId(),
                         defaultUser.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
                 );
+                user.setEmail(defaultUser.getEmail());
                 LOGGER.debug(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Convert default user. Username: {}", username);
                 return user;
             }).collect(Collectors.toList());

@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.7
+- TBD
+
 ### v1.6
 - Add "countryCode" -> GeoLocation
 - Add geo location facade utility (ipapi + mindmax as failsafe)

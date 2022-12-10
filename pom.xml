@@ -8,7 +8,7 @@
     <groupId>io.tech1.framework</groupId>
     <artifactId>tech1-framework</artifactId>
     <packaging>pom</packaging>
-    <version>1.6</version>
+    <version>1.7-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <description>Tech1 Framework</description>
@@ -95,7 +95,7 @@
         <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
         <version.plugin.gpg>3.0.1</version.plugin.gpg>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
-        <version.plugin.nexus>1.6.7</version.plugin.nexus>
+        <version.plugin.nexus>1.7-SNAPSHOT.7</version.plugin.nexus>
         <version.plugin.jacoco>0.8.7</version.plugin.jacoco>
         <version.plugin.javadoc>3.3.1</version.plugin.javadoc>
         <version.plugin.source>3.2.1</version.plugin.source>

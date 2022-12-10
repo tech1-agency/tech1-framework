@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.utilities.http;
 
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,21 +40,25 @@ public class HttpRequestFieldsUtilityTest {
 
     @ParameterizedTest
     @MethodSource("containsCamelCaseLettersAndNumbersWithLengthTest")
-    public void containsCamelCaseLettersAndNumbersWithLengthTest(String field, int length, boolean expected) {
+    public void containsCamelCaseLettersAndNumbersWithLengthTest(String password, int length, boolean expected) {
         // Act
-        var actual = containsCamelCaseLettersAndNumbersWithLength(field, length);
+        var actual1 = containsCamelCaseLettersAndNumbersWithLength(Password.of(password), length);
+        var actual2 = containsCamelCaseLettersAndNumbersWithLength(password, length);
 
         // Assert
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual1).isEqualTo(expected);
+        assertThat(actual2).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("isEmailTest")
     public void isEmailTest(String email, boolean expected) {
         // Act
-        var actual = isEmail(email);
+        var actual1 = isEmail(Email.of(email));
+        var actual2 = isEmail(email);
 
         // Assert
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual1).isEqualTo(expected);
+        assertThat(actual2).isEqualTo(expected);
     }
 }

@@ -1,10 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
+package io.tech1.framework.utilities.geo.functions.mindmax.impl;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.GeoUtility;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
+import io.tech1.framework.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -20,13 +21,20 @@ import static io.tech1.framework.domain.enums.Status.SUCCESS;
 
 @Slf4j
 @Component
-public class GeoUtilityImpl implements GeoUtility {
+public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility {
     private static final String GEO_DATABASE_NAME = "GeoLite2-City.mmdb";
 
+    // Database
     private final DatabaseReader databaseReader;
+    // Utilities
+    private final GeoCountryFlagUtility geoCountryFlagUtility;
 
     @Autowired
-    public GeoUtilityImpl(ResourceLoader resourceLoader) {
+    public MindMaxGeoLocationUtilityImpl(
+            ResourceLoader resourceLoader,
+            GeoCountryFlagUtility geoCountryFlagUtility
+    ) {
+        this.geoCountryFlagUtility = geoCountryFlagUtility;
         try {
             var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
             var inputStream = resource.getInputStream();
@@ -48,12 +56,14 @@ public class GeoUtilityImpl implements GeoUtility {
         try {
             var inetAddress = InetAddress.getByName(ipAddress.getValue());
             var response = this.databaseReader.city(inetAddress);
-            var country = response.getCountry().getName();
-            var city = response.getCity().getName();
+            var countryCode = response.getCountry().getIsoCode();
+            var countryFlag = this.geoCountryFlagUtility.getFlagEmojiByCountryCode(countryCode);
             return GeoLocation.processed(
                     ipAddress,
-                    country,
-                    city
+                    response.getCountry().getName(),
+                    countryCode,
+                    countryFlag,
+                    response.getCity().getName()
             );
         } catch (IOException | GeoIp2Exception ex) {
             return GeoLocation.unknown(

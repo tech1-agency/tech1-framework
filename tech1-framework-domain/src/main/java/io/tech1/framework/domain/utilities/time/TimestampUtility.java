@@ -16,6 +16,10 @@ public class TimestampUtility {
         return System.currentTimeMillis();
     }
 
+    public static long toUnixTime(long timestamp) {
+        return timestamp / 1000;
+    }
+
     public static long getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC() {
         return getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(ZoneOffset.UTC);
     }

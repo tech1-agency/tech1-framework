@@ -1,5 +1,7 @@
 {
   "ipAddr" : "127.0.0.1",
   "country" : "Ukraine",
+  "countryCode" : "UA",
+  "countryFlag" : "🇺🇦",
   "where" : "Ukraine, Lviv"
 }

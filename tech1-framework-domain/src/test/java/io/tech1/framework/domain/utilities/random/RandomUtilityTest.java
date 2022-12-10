@@ -485,6 +485,23 @@ public class RandomUtilityTest {
     }
 
     @Test
+    public void randomEmailAsValueTest() {
+        // Arrange
+        var domain = "@tech1.io";
+        var randomLength = 32;
+        var domainLength = 9;
+        var expected = randomLength + domainLength;
+
+        // Act
+        var actual = randomEmailAsValue();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.length()).isEqualTo(expected);
+        assertThat(actual.substring(randomLength)).isEqualTo(domain);
+    }
+
+    @Test
     public void randomEmailTest() {
         // Arrange
         var domain = "@tech1.io";
@@ -497,8 +514,8 @@ public class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.length()).isEqualTo(expected);
-        assertThat(actual.substring(randomLength)).isEqualTo(domain);
+        assertThat(actual.getValue().length()).isEqualTo(expected);
+        assertThat(actual.getValue().substring(randomLength)).isEqualTo(domain);
     }
 
     @Test
@@ -807,6 +824,8 @@ public class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getIpAddr()).isNotNull();
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
+        assertThat(actual.getCountryCode()).isEqualTo("UA");
+        assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
         assertThat(actual.getCity()).isEqualTo("Lviv");
         assertThat(actual.getExceptionDetails()).isEqualTo("");
         assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
@@ -903,7 +922,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhatTuple2().getB()).isEqualTo("Chrome, macOS on Desktop");
         assertThat(actual.getWhereTuple3().getA()).isNotNull();
         assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().getB()).isEqualTo("Ukraine");
+        assertThat(actual.getWhereTuple3().getB()).isEqualTo("🇺🇦");
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Ukraine, Lviv");
     }
 
@@ -929,7 +948,7 @@ public class RandomUtilityTest {
         assertThat(actual.getWhatTuple2().getB()).isEqualTo("Unknown, Unknown on Unknown");
         assertThat(actual.getWhereTuple3().getA()).isNotNull();
         assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().getB()).isEqualTo("Unknown");
+        assertThat(actual.getWhereTuple3().getB()).isEqualTo("🏴‍");
         assertThat(actual.getWhereTuple3().getC()).isEqualTo("Unknown, Unknown");
     }
 

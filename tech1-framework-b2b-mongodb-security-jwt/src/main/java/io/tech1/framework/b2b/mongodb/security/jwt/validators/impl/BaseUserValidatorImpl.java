@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotBlankOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertZoneIdOrThrow;
+import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbersWithLength;
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
@@ -34,7 +34,7 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
         var email = requestUserUpdate1.getEmail();
 
         var invalidEmailMessage = invalidAttribute("email");
-        assertNonNullNotBlankOrThrow(email, invalidEmailMessage);
+        assertNonNullOrThrow(email, invalidEmailMessage);
 
         if (!isEmail(email)) {
             throw new IllegalArgumentException(invalidEmailMessage);
@@ -44,6 +44,12 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
         if (nonNull(user) && !user.getUsername().equals(currentDbUser.getUsername())) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
+    }
+
+    @Override
+    public void validateUserUpdateRequest2(RequestUserUpdate2 requestUserUpdate2) {
+        var zoneId = requestUserUpdate2.getZoneId();
+        assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
     }
 
     @Override

@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UK;
+import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_USA;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +38,7 @@ public class ResponseUserSessionsTableTest {
                 new JwtRefreshToken("token1"),
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         randomUserAgentDetails()
                 )
         );
@@ -44,7 +46,7 @@ public class ResponseUserSessionsTableTest {
                 new JwtRefreshToken("token2"),
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "New York"),
+                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", FLAG_USA, "New York"),
                         validUserAgentDetails()
                 )
         );
@@ -52,7 +54,7 @@ public class ResponseUserSessionsTableTest {
                 new JwtRefreshToken("token3"),
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "Liverpool"),
+                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", FLAG_UK, "Liverpool"),
                         invalidUserAgentDetails()
                 )
         );

@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.5</version>
+        <version>1.6</version>
     </parent>
 
     <artifactId>tech1-framework-utilities</artifactId>
@@ -24,6 +24,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- GeoIP2 -->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
         </dependency>
     </dependencies>
 </project>

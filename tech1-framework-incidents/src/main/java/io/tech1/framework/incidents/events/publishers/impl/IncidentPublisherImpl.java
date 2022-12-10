@@ -35,7 +35,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.AUTHENTICATION_LOGIN);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.AUTHENTICATION_LOGIN);
         }
     }
 
@@ -61,7 +61,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.AUTHENTICATION_LOGOUT);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.AUTHENTICATION_LOGOUT);
         }
     }
 
@@ -71,7 +71,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.AUTHENTICATION_LOGOUT);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.AUTHENTICATION_LOGOUT);
         }
     }
 
@@ -81,7 +81,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.REGISTER1);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.REGISTER1);
         }
     }
 
@@ -91,7 +91,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.REGISTER1_FAILURE);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.REGISTER1_FAILURE);
         }
     }
 
@@ -101,7 +101,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.SESSION_REFRESHED);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.SESSION_REFRESHED);
         }
     }
 
@@ -111,7 +111,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
             LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
-            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.Values.SESSION_EXPIRED);
+            LOGGER.warn(INCIDENT_FEATURE_DISABLED, IncidentAttributes.IncidentsTypes.SESSION_EXPIRED);
         }
     }
 

@@ -17,12 +17,13 @@ import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmail;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 @UtilityClass
 public class TestsPropertiesConstants {
+    public static final ServerConfigs SERVER_CONFIGS = ServerConfigs.of("tech1-spring-boot-server", "http://127.0.0.1:3000");
     public static final AsyncConfigs ASYNC_CONFIGS = AsyncConfigs.of("tech1-async");
     public static final EventsConfigs EVENTS_CONFIGS = EventsConfigs.of("tech1-events");
     public static final MvcConfigs MVC_CONFIGS = MvcConfigs.of(
@@ -44,7 +45,7 @@ public class TestsPropertiesConstants {
             "Tech1",
             "tech1@gmail.com",
             "Password123!",
-            new String[] { randomEmail(), randomEmail() }
+            new String[] { randomEmailAsValue(), randomEmailAsValue() }
     );
     public static final IncidentConfigs INCIDENT_CONFIGS = IncidentConfigs.of(
             true,
@@ -112,6 +113,11 @@ public class TestsPropertiesConstants {
             Mongodb.of("127.0.0.1", 27017, "tech1_framework_server"),
             SessionConfigs.of(
                     Cron.of(false, "*/30 * * * * *", "Europe/Kiev")
+            ),
+            UsersEmailsConfigs.of(
+                    "[Tech1]",
+                    Checkbox.enabled(),
+                    Checkbox.enabled()
             )
     );
     public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = SecurityJwtWebsocketsConfigs.of(

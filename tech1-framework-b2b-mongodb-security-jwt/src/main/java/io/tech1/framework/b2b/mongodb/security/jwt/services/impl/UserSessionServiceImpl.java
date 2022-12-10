@@ -8,12 +8,12 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValida
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.GeoUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.utilities.http.HttpServletRequestUtility;
+import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     // Repositories
     private final UserSessionRepository userSessionRepository;
     // Utilities
-    private final GeoUtility geoUtility;
+    private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final SecurityJwtTokenUtility securityJwtTokenUtility;
 
     @Override
@@ -85,6 +85,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 EventSessionAddUserRequestMetadata.of(
                         username,
+                        user.getEmail(),
                         userSession,
                         clientIpAddr,
                         httpServletRequest,
@@ -109,6 +110,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 EventSessionAddUserRequestMetadata.of(
                         username,
+                        user.getEmail(),
                         newUserSession,
                         getClientIpAddr(httpServletRequest),
                         httpServletRequest,
@@ -121,7 +123,7 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public DbUserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
-        var geoLocation = this.geoUtility.getGeoLocation(event.getClientIpAddr());
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.getClientIpAddr());
         var userAgentDetails = HttpServletRequestUtility.getUserAgentDetails(event.getUserAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
         var userSession = event.getUserSession();

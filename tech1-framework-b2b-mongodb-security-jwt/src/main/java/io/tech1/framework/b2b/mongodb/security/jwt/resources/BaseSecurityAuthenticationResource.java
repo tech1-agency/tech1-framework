@@ -14,7 +14,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.AuthenticationRequestsValidator;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static io.tech1.framework.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.domain.enums.Status.STARTED;
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -60,11 +61,12 @@ public class BaseSecurityAuthenticationResource {
         this.authenticationRequestsValidator.validateLoginRequest(requestUserLogin);
         var username = requestUserLogin.getUsername();
         var password = requestUserLogin.getPassword();
-        LOGGER.info("Login attempt. Username: {}", username);
+        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
-        var authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username.getIdentifier(), password.getValue());
+        var authentication = this.authenticationManager.authenticate(authenticationToken);
 
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username);
+        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.getIdentifier());
         var dbUser = jwtUser.getDbUser();
 
         var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(dbUser);
@@ -77,11 +79,11 @@ public class BaseSecurityAuthenticationResource {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LOGGER.info("Login attempt completed successfully. Username: {}", username);
+        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
 
         this.sessionRegistry.register(
                 Session.of(
-                        Username.of(username),
+                        username,
                         new JwtRefreshToken(jwtRefreshToken.getValue())
                 )
         );

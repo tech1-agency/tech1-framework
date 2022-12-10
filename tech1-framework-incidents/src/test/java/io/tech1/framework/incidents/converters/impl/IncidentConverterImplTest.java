@@ -8,8 +8,8 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
@@ -26,6 +26,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.List;
 import java.util.Map;
 
+import static io.tech1.framework.domain.constants.StringConstants.NO_FLAG;
+import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UK;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomMethod;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,11 +61,11 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Throwable");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(4);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Exception", "Message", "Trace");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
-        assertThat(actual.getAttributes().get("Exception")).isEqualTo(NullPointerException.class);
-        assertThat(actual.getAttributes().get("Message")).isEqualTo("Tech1");
-        assertThat(actual.getAttributes().get("Trace").toString()).startsWith("Throwable occurred! Please take required actions!");
+        assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
+        assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
     }
 
     @Test
@@ -83,13 +85,13 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Throwable");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(6);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Exception", "Message", "Trace", "Method", "Params");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "method", "params");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
-        assertThat(actual.getAttributes().get("Exception")).isEqualTo(NullPointerException.class);
-        assertThat(actual.getAttributes().get("Message")).isEqualTo("Tech1");
-        assertThat(actual.getAttributes().get("Trace").toString()).startsWith("Throwable occurred! Please take required actions!");
-        assertThat(actual.getAttributes().get("Method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
-        assertThat(actual.getAttributes().get("Params")).isEqualTo(object + ", param1, 1");
+        assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
+        assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
+        assertThat(actual.getAttributes().get("method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
+        assertThat(actual.getAttributes().get("params")).isEqualTo(object + ", param1, 1");
     }
 
     @Test
@@ -97,7 +99,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var object = new Object();
         var throwable = new NullPointerException("Tech1");
-        var attributes = Map.of("Key1", object);
+        var attributes = Map.of("key1", object);
         var throwableIncident = IncidentThrowable.of(throwable, attributes);
 
         // Act
@@ -108,12 +110,12 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Throwable");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(5);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Exception", "Message", "Trace", "Key1");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "key1");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
-        assertThat(actual.getAttributes().get("Exception")).isEqualTo(NullPointerException.class);
-        assertThat(actual.getAttributes().get("Message")).isEqualTo("Tech1");
-        assertThat(actual.getAttributes().get("Trace").toString()).startsWith("Throwable occurred! Please take required actions!");
-        assertThat(actual.getAttributes().get("Key1")).isEqualTo(object);
+        assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
+        assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
+        assertThat(actual.getAttributes().get("key1")).isEqualTo(object);
     }
 
     @Test
@@ -136,15 +138,15 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Authentication Login");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(8);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where", "Exception");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where", "exception");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Browser")).isEqualTo("[?]");
-        assertThat(actual.getAttributes().get("Country")).isEqualTo("Unknown");
-        assertThat(actual.getAttributes().get("IP address")).isEqualTo("8.8.8.8");
-        assertThat(actual.getAttributes().get("What")).isEqualTo("[?], [?] on [?]");
-        assertThat(actual.getAttributes().get("Where")).isEqualTo("Unknown, Unknown");
-        assertThat(actual.getAttributes().get("Exception")).isEqualTo("exception1");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("browser")).isEqualTo("[?]");
+        assertThat(actual.getAttributes().get("countryFlag")).isEqualTo(NO_FLAG);
+        assertThat(actual.getAttributes().get("ipAddress")).isEqualTo("8.8.8.8");
+        assertThat(actual.getAttributes().get("what")).isEqualTo("[?], [?] on [?]");
+        assertThat(actual.getAttributes().get("where")).isEqualTo("Unknown, Unknown");
+        assertThat(actual.getAttributes().get("exception")).isEqualTo("exception1");
     }
 
     @Test
@@ -164,14 +166,14 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Authentication Login");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Browser")).isEqualTo("[?]");
-        assertThat(actual.getAttributes().get("Country")).isEqualTo("[?]");
-        assertThat(actual.getAttributes().get("IP address")).isEqualTo("127.0.0.1");
-        assertThat(actual.getAttributes().get("What")).isEqualTo("—");
-        assertThat(actual.getAttributes().get("Where")).isEqualTo("Processing...Please wait!");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("browser")).isEqualTo("[?]");
+        assertThat(actual.getAttributes().get("countryFlag")).isEqualTo(NO_FLAG);
+        assertThat(actual.getAttributes().get("ipAddress")).isEqualTo("127.0.0.1");
+        assertThat(actual.getAttributes().get("what")).isEqualTo("—");
+        assertThat(actual.getAttributes().get("where")).isEqualTo("Processing...Please wait!");
     }
 
     @Test
@@ -192,10 +194,10 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Password");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Password")).isEqualTo(password);
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("password")).isEqualTo(password);
     }
 
     @Test
@@ -216,10 +218,10 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Password");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Password")).isEqualTo(Password.of("passw**********"));
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("password")).isEqualTo(Password.of("passw**********"));
     }
 
     @Test
@@ -238,9 +240,9 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Authentication Logout");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
     }
 
     @Test
@@ -250,7 +252,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentAuthenticationLogoutFull.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -263,14 +265,14 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Authentication Logout");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Browser")).isEqualTo("Mozilla");
-        assertThat(actual.getAttributes().get("Country")).isEqualTo("UK");
-        assertThat(actual.getAttributes().get("IP address")).isEqualTo("2.2.2.2");
-        assertThat(actual.getAttributes().get("What")).isEqualTo("Mozilla, MacOS on Desktop");
-        assertThat(actual.getAttributes().get("Where")).isEqualTo("UK, London");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("browser")).isEqualTo("Mozilla");
+        assertThat(actual.getAttributes().get("countryFlag")).isEqualTo(FLAG_UK);
+        assertThat(actual.getAttributes().get("ipAddress")).isEqualTo("2.2.2.2");
+        assertThat(actual.getAttributes().get("what")).isEqualTo("Mozilla, MacOS on Desktop");
+        assertThat(actual.getAttributes().get("where")).isEqualTo("UK, London");
     }
 
     @Test
@@ -280,7 +282,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentSessionRefreshed.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -293,14 +295,14 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Session Refreshed");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Refreshed");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Browser")).isEqualTo("Mozilla");
-        assertThat(actual.getAttributes().get("Country")).isEqualTo("UK");
-        assertThat(actual.getAttributes().get("IP address")).isEqualTo("2.2.2.2");
-        assertThat(actual.getAttributes().get("What")).isEqualTo("Mozilla, MacOS on Desktop");
-        assertThat(actual.getAttributes().get("Where")).isEqualTo("UK, London");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("browser")).isEqualTo("Mozilla");
+        assertThat(actual.getAttributes().get("countryFlag")).isEqualTo(FLAG_UK);
+        assertThat(actual.getAttributes().get("ipAddress")).isEqualTo("2.2.2.2");
+        assertThat(actual.getAttributes().get("what")).isEqualTo("Mozilla, MacOS on Desktop");
+        assertThat(actual.getAttributes().get("where")).isEqualTo("UK, London");
     }
 
     @Test
@@ -310,7 +312,7 @@ public class IncidentConverterImplTest {
         var incident = IncidentSessionExpired.of(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -323,14 +325,14 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Session Expired");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Browser", "Country", "IP address", "What", "Where");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Expired");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Browser")).isEqualTo("Mozilla");
-        assertThat(actual.getAttributes().get("Country")).isEqualTo("UK");
-        assertThat(actual.getAttributes().get("IP address")).isEqualTo("2.2.2.2");
-        assertThat(actual.getAttributes().get("What")).isEqualTo("Mozilla, MacOS on Desktop");
-        assertThat(actual.getAttributes().get("Where")).isEqualTo("UK, London");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("browser")).isEqualTo("Mozilla");
+        assertThat(actual.getAttributes().get("countryFlag")).isEqualTo(FLAG_UK);
+        assertThat(actual.getAttributes().get("ipAddress")).isEqualTo("2.2.2.2");
+        assertThat(actual.getAttributes().get("what")).isEqualTo("Mozilla, MacOS on Desktop");
+        assertThat(actual.getAttributes().get("where")).isEqualTo("UK, London");
     }
 
     @Test
@@ -349,9 +351,9 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Register1");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
     }
 
     @Test
@@ -374,10 +376,10 @@ public class IncidentConverterImplTest {
         assertThat(actual.getType()).isEqualTo("Register1 Failure");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(4);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "Username", "Exception", "Invitation Code");
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "exception", "invitationCode");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1 Failure");
-        assertThat(actual.getAttributes().get("Username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("Exception")).isEqualTo(exception);
-        assertThat(actual.getAttributes().get("Invitation Code")).isEqualTo(invitationCode);
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("exception")).isEqualTo(exception);
+        assertThat(actual.getAttributes().get("invitationCode")).isEqualTo(invitationCode);
     }
 }

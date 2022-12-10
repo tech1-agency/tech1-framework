@@ -14,7 +14,7 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWO
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultStartupEventListener implements BaseStartupEventListener {
-    private static final String STARTUP_MESSAGE = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + "Default startup event listener. Status: `{}`";
+    private static final String STARTUP_MESSAGE = FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Default startup event listener. Status: `{}`";
 
     // Essence
     protected final EssenceConstructor essenceConstructor;

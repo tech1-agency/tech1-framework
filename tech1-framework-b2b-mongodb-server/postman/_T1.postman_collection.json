@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "52bff66b-cbcf-443f-a859-77772eca007a",
+		"_postman_id": "f20c26ac-31ed-47b6-b099-c0c800b9e478",
 		"name": "_T1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -264,7 +264,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"zoneId\": \"Africa/Cairo\",\n    \"email\": \"admin23@gmail.com\",\n    \"name\": \"Admin1 Admin2\"\n}",
+							"raw": "{\n    \"zoneId\": \"Europe/Kiev\",\n    \"email\": \"iuywiueywqeuqyeqwieyqueqi@tech1.io\",\n    \"name\": \"Admin11 Surname\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -280,6 +280,34 @@
 								"{{frameworkBasePathPrefix}}",
 								"user",
 								"update1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"zoneId\": \"Europe/Kiev\",\n    \"name\": \"Admin11 Surname2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/user/update2",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"user",
+								"update2"
 							]
 						}
 					},

@@ -74,15 +74,12 @@ public class RegistrationRequestsValidatorImplTest {
     public void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
         var username = randomUsername();
-        var password = randomString();
-        var confirmPassword = randomString();
-        var zoneId = randomZoneId().getId();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
-                username.getIdentifier(),
-                password,
-                confirmPassword,
-                zoneId,
+                username,
+                randomPassword(),
+                randomPassword(),
+                randomZoneId().getId(),
                 invitationCode
         );
         var currentDbUser = entity(DbUser.class);
@@ -116,15 +113,12 @@ public class RegistrationRequestsValidatorImplTest {
     public void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
         // Arrange
         var username = randomUsername();
-        var password = randomString();
-        var confirmPassword = randomString();
-        var zoneId = randomZoneId().getId();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
-                username.getIdentifier(),
-                password,
-                confirmPassword,
-                zoneId,
+                username,
+                randomPassword(),
+                randomPassword(),
+                randomZoneId().getId(),
                 invitationCode
         );
         var dbInvitationCode = entity(DbInvitationCode.class);
@@ -160,15 +154,12 @@ public class RegistrationRequestsValidatorImplTest {
     public void validateRegistrationRequest1NoInvitationCodeTest() {
         // Arrange
         var username = randomUsername();
-        var password = randomString();
-        var confirmPassword = randomString();
-        var zoneId = randomZoneId().getId();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
-                username.getIdentifier(),
-                password,
-                confirmPassword,
-                zoneId,
+                username,
+                randomPassword(),
+                randomPassword(),
+                randomZoneId().getId(),
                 invitationCode
         );
         when(this.userRepository.findByUsername(eq(username))).thenReturn(null);
@@ -203,15 +194,12 @@ public class RegistrationRequestsValidatorImplTest {
     public void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
         // Arrange
         var username = randomUsername();
-        var password = randomString();
-        var confirmPassword = randomString();
-        var zoneId = randomZoneId().getId();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
-                username.getIdentifier(),
-                password,
-                confirmPassword,
-                zoneId,
+                username,
+                randomPassword(),
+                randomPassword(),
+                randomZoneId().getId(),
                 invitationCode
         );
         var dbInvitationCode = entity(DbInvitationCode.class);

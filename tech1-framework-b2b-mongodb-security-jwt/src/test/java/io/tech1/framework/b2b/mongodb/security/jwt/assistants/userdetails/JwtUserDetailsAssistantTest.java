@@ -91,7 +91,7 @@ public class JwtUserDetailsAssistantTest {
         assertThat(jwtUser).isNotNull();
         assertThat(jwtUser.getDbUser()).isEqualTo(dbUser);
         assertThat(jwtUser.getUsername()).isEqualTo(username.getIdentifier());
-        assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword());
+        assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().getValue());
         assertThat(jwtUser.isAccountNonExpired()).isTrue();
         assertThat(jwtUser.isAccountNonLocked()).isTrue();
         assertThat(jwtUser.isCredentialsNonExpired()).isTrue();

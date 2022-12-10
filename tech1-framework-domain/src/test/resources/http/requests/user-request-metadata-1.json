@@ -3,6 +3,8 @@
   "geoLocation" : {
     "ipAddr" : "127.0.0.1",
     "country" : "[?]",
+    "countryCode" : "[?]",
+    "countryFlag" : "🏴‍",
     "where" : "[?], [?]"
   },
   "userAgentDetails" : {
@@ -14,7 +16,7 @@
   },
   "whereTuple3" : {
     "a" : "127.0.0.1",
-    "b" : "[?]",
+    "b" : "🏴‍",
     "c" : "Processing...Please wait!"
   },
   "whatTuple2" : {

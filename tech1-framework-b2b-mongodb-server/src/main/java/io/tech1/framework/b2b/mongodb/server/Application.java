@@ -9,9 +9,8 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import static io.tech1.framework.b2b.mongodb.server.constants.ApplicationConstants.SERVER_NAME;
 import static io.tech1.framework.domain.constants.FrameworkConstants.VERSION_RUNTIME;
-import static io.tech1.framework.domain.constants.LogsConstants.SERVER_CONTAINER;
+import static io.tech1.framework.domain.constants.LogsConstants.SERVER_CONTAINER_1;
 import static io.tech1.framework.domain.enums.Status.COMPLETED;
 
 @Slf4j
@@ -29,7 +28,9 @@ public class Application {
 
     public static void main(String[] args) {
         var springApplication = new SpringApplication(Application.class);
-        springApplication.run(args);
-        LOGGER.info(SERVER_CONTAINER, SERVER_NAME, VERSION_RUNTIME, COMPLETED);
+        var applicationContext = springApplication.run(args);
+        var applicationFrameworkProperties = applicationContext.getBean(ApplicationFrameworkProperties.class);
+        var serverConfigs = applicationFrameworkProperties.getServerConfigs();
+        LOGGER.info(SERVER_CONTAINER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
     }
 }

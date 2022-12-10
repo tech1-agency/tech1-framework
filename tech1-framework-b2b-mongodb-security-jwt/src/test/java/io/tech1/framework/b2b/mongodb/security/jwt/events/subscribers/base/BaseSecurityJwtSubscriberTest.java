@@ -2,7 +2,10 @@ package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
@@ -21,8 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPAddress;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -38,6 +40,11 @@ public class BaseSecurityJwtSubscriberTest {
         }
 
         @Bean
+        UserEmailService userEmailService() {
+            return mock(UserEmailService.class);
+        }
+
+        @Bean
         UserSessionService userSessionService() {
             return mock(UserSessionService.class);
         }
@@ -46,6 +53,7 @@ public class BaseSecurityJwtSubscriberTest {
         SecurityJwtSubscriber securityJwtSubscriber() {
             return new BaseSecurityJwtSubscriber(
                     this.incidentPublisher(),
+                    this.userEmailService(),
                     this.userSessionService()
             );
         }
@@ -54,6 +62,7 @@ public class BaseSecurityJwtSubscriberTest {
     // Publishers
     private final IncidentPublisher incidentPublisher;
     // Services
+    private final UserEmailService userEmailService;
     private final UserSessionService userSessionService;
 
     private final SecurityJwtSubscriber componentUnderTest;
@@ -62,6 +71,7 @@ public class BaseSecurityJwtSubscriberTest {
     public void beforeEach() {
         reset(
                 this.incidentPublisher,
+                this.userEmailService,
                 this.userSessionService
         );
     }
@@ -70,6 +80,7 @@ public class BaseSecurityJwtSubscriberTest {
     public void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
+                this.userEmailService,
                 this.userSessionService
         );
     }
@@ -163,6 +174,7 @@ public class BaseSecurityJwtSubscriberTest {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
+                randomEmail(),
                 entity(DbUserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
@@ -184,6 +196,7 @@ public class BaseSecurityJwtSubscriberTest {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
+                randomEmail(),
                 entity(DbUserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
@@ -198,6 +211,7 @@ public class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
+        verify(this.userEmailService).executeAuthenticationLogin(eq(FunctionAuthenticationLoginEmail.of(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
         verify(this.incidentPublisher).publishAuthenticationLogin(eq(IncidentAuthenticationLogin.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 
@@ -206,6 +220,7 @@ public class BaseSecurityJwtSubscriberTest {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
+                randomEmail(),
                 entity(DbUserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
@@ -220,6 +235,7 @@ public class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
+        verify(this.userEmailService).executeSessionRefreshed(eq(FunctionSessionRefreshedEmail.of(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
         verify(this.incidentPublisher).publishSessionRefreshed(eq(IncidentSessionRefreshed.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 }

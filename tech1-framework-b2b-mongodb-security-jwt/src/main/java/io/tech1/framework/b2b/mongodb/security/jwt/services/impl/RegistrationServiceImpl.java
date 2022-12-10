@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUs
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     public DbUser register1(RequestUserRegistration1 requestUserRegistration1) {
         var invitationCode = invitationCodeRepository.findByValue(requestUserRegistration1.getInvitationCode());
 
-        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.getPassword());
+        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.getPassword().getValue());
 
         var user = new DbUser(
-                Username.of(requestUserRegistration1.getUsername()),
-                hashPassword,
+                requestUserRegistration1.getUsername(),
+                Password.of(hashPassword),
                 requestUserRegistration1.getZoneId(),
                 invitationCode.getAuthorities()
         );

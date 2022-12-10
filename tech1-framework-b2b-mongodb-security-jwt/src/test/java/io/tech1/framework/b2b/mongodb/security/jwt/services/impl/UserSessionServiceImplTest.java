@@ -7,14 +7,15 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.GeoUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.SecurityJwtTokenUtilityImpl;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,8 +66,8 @@ public class UserSessionServiceImplTest {
         }
 
         @Bean
-        GeoUtility geoUtility() {
-            return mock(GeoUtility.class);
+        GeoLocationFacadeUtility geoLocationFacadeUtility() {
+            return mock(GeoLocationFacadeUtility.class);
         }
 
         @Bean
@@ -81,7 +82,7 @@ public class UserSessionServiceImplTest {
             return new UserSessionServiceImpl(
                     this.securityJwtPublisher(),
                     this.userSessionRepository(),
-                    this.geoUtility(),
+                    this.geoLocationFacadeUtility(),
                     this.securityJwtTokenUtility()
             );
         }
@@ -89,7 +90,7 @@ public class UserSessionServiceImplTest {
 
     private final SecurityJwtPublisher securityJwtPublisher;
     private final UserSessionRepository userSessionRepository;
-    private final GeoUtility geoUtility;
+    private final GeoLocationFacadeUtility geoLocationFacadeUtility;
 
     private final UserSessionService componentUnderTest;
 
@@ -98,7 +99,7 @@ public class UserSessionServiceImplTest {
         reset(
                 this.securityJwtPublisher,
                 this.userSessionRepository,
-                this.geoUtility
+                this.geoLocationFacadeUtility
         );
     }
 
@@ -107,7 +108,7 @@ public class UserSessionServiceImplTest {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
                 this.userSessionRepository,
-                this.geoUtility
+                this.geoLocationFacadeUtility
         );
     }
 
@@ -213,7 +214,7 @@ public class UserSessionServiceImplTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.getB()).isEqualTo(UNDEFINED);
+        assertThat(whereTuple3.getB()).isEqualTo(StringConstants.NO_FLAG);
         assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
@@ -256,7 +257,7 @@ public class UserSessionServiceImplTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.getB()).isEqualTo(UNDEFINED);
+        assertThat(whereTuple3.getB()).isEqualTo(StringConstants.NO_FLAG);
         assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
@@ -310,14 +311,14 @@ public class UserSessionServiceImplTest {
         // Arrange
         var event = entity(EventSessionAddUserRequestMetadata.class);
         var geoLocation = randomGeoLocation();
-        when(this.geoUtility.getGeoLocation(eq(event.getClientIpAddr()))).thenReturn(geoLocation);
+        when(this.geoLocationFacadeUtility.getGeoLocation(eq(event.getClientIpAddr()))).thenReturn(geoLocation);
         var userSessionAC = ArgumentCaptor.forClass(DbUserSession.class);
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.geoUtility).getGeoLocation(eq(event.getClientIpAddr()));
+        verify(this.geoLocationFacadeUtility).getGeoLocation(eq(event.getClientIpAddr()));
         verify(this.userSessionRepository).save(userSessionAC.capture());
         var userSession = userSessionAC.getValue();
         assertThat(userSession.getRequestMetadata().getGeoLocation()).isEqualTo(geoLocation);

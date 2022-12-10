@@ -12,7 +12,7 @@ public class PasswordTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFileName() {
-        return "password1.json";
+        return "password-1.json";
     }
 
     @Override

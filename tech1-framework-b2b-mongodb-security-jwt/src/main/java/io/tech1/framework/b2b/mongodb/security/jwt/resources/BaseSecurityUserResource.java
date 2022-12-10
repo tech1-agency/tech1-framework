@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.annotations.AbstractFramework
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,13 @@ public class BaseSecurityUserResource {
         var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
         this.baseUserValidator.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1);
         this.baseUserService.updateUser1(requestUserUpdate1);
+    }
+
+    @PostMapping("/update2")
+    @ResponseStatus(HttpStatus.OK)
+    public void update1(@RequestBody RequestUserUpdate2 requestUserUpdate2) {
+        this.baseUserValidator.validateUserUpdateRequest2(requestUserUpdate2);
+        this.baseUserService.updateUser2(requestUserUpdate2);
     }
 
     @PostMapping("/changePassword1")

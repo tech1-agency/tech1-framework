@@ -16,26 +16,26 @@ public class GeoLocationTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
-                Arguments.of(processed(localhost(), "Ukraine", "Lviv"), "geo-location-1.json"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "geo-location-1.json"),
                 Arguments.of(unknown(localhost(), "exception details"), "geo-location-2.json"),
                 Arguments.of(processing(localhost()), "geo-location-3.json"),
-                Arguments.of(processed(localhost(), null, "Lviv"), "geo-location-4.json"),
+                Arguments.of(processed(localhost(), null, null, null, "Lviv"), "geo-location-4.json"),
                 Arguments.of(unknown(null, "exception details"), "geo-location-5.json")
         );
     }
 
     private static Stream<Arguments> getWhereTest() {
         return Stream.of(
-                Arguments.of(processed(localhost(), "Ukraine", "Lviv"), "Ukraine, Lviv"),
-                Arguments.of(processed(localhost(), "Ukraine", ""), "Ukraine"),
-                Arguments.of(processed(localhost(), "Ukraine", " "), "Ukraine"),
-                Arguments.of(processed(localhost(), "Ukraine", "    "), "Ukraine"),
-                Arguments.of(processed(localhost(), "Ukraine", null), "Ukraine"),
-                Arguments.of(processed(localhost(), null, "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "  ", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "     ", "Lviv"), "Unknown")
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "Ukraine, Lviv"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", ""), "Ukraine"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", " "), "Ukraine"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "    "), "Ukraine"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", null), "Ukraine"),
+                Arguments.of(processed(localhost(), null, "UA", "🇺🇦", "Lviv"), "Unknown"),
+                Arguments.of(processed(localhost(), "", "UA", "🇺🇦", "Lviv"), "Unknown"),
+                Arguments.of(processed(localhost(), "", "UA", "🇺🇦", "Lviv"), "Unknown"),
+                Arguments.of(processed(localhost(), "  ", "UA", "🇺🇦", "Lviv"), "Unknown"),
+                Arguments.of(processed(localhost(), "     ", "UA", "🇺🇦", "Lviv"), "Unknown")
         );
     }
 

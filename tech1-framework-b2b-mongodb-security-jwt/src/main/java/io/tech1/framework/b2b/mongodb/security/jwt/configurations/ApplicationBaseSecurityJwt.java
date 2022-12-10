@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthen
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.domain.base.AbstractAuthority;
+import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -53,14 +54,17 @@ import static org.springframework.http.HttpMethod.*;
         "io.tech1.framework.b2b.mongodb.security.jwt.utilities",
         "io.tech1.framework.b2b.mongodb.security.jwt.validators",
         // -------------------------------------------------------------------------------------------------------------
+        "io.tech1.framework.utilities.geo"
+        // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity
 @Import({
+        ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
         ApplicationSecurityJwtMvc.class,
-        ApplicationMongodb.class,
-        ApplicationSpringBootServer.class,
-        ApplicationIncidents.class
+        ApplicationIncidents.class,
+        ApplicationEmails.class,
+        ApplicationMongodb.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
@@ -162,6 +166,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
         urlRegistry.antMatchers(GET, basePathPrefix + "/session/current").authenticated();
         urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").denyAll();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/update1").denyAll();
+        urlRegistry.antMatchers(POST, basePathPrefix + "/user/update2").authenticated();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
 
         if (this.essenceConstructor.isInvitationCodesEnabled()) {

@@ -19,7 +19,7 @@ public class ResponseUserSession2 {
     private final TupleExceptionDetails exception;
 
     private final String ipAddr;
-    private final String country;
+    private final String countryFlag;
     private final String where;
 
     private final String browser;
@@ -42,7 +42,7 @@ public class ResponseUserSession2 {
 
         var whereTuple3 = requestMetadata.getWhereTuple3();
         this.ipAddr = whereTuple3.getA();
-        this.country = whereTuple3.getB();
+        this.countryFlag = whereTuple3.getB();
         this.where = whereTuple3.getC();
 
         var whatTuple2 = requestMetadata.getWhatTuple2();

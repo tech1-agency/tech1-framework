@@ -12,7 +12,7 @@ public class UsernameTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFileName() {
-        return "username1.json";
+        return "username-1.json";
     }
 
     @Override

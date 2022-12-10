@@ -3,6 +3,8 @@
   "geoLocation" : {
     "ipAddr" : "127.0.0.1",
     "country" : "Unknown",
+    "countryCode" : "Unknown",
+    "countryFlag" : "🏴‍",
     "where" : "Unknown, Unknown"
   },
   "userAgentDetails" : {
@@ -14,7 +16,7 @@
   },
   "whereTuple3" : {
     "a" : "127.0.0.1",
-    "b" : "Unknown",
+    "b" : "🏴‍",
     "c" : "Unknown, Unknown"
   },
   "whatTuple2" : {

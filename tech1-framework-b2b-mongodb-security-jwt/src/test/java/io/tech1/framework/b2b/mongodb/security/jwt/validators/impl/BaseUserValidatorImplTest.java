@@ -3,9 +3,12 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,13 +41,13 @@ public class BaseUserValidatorImplTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
         return Stream.of(
-                Arguments.of(new RequestUserChangePassword1("", ""), invalidAttribute("newPassword")),
-                Arguments.of(new RequestUserChangePassword1("simple", ""), invalidAttribute("confirmPassword")),
-                Arguments.of(new RequestUserChangePassword1("simple", randomString()), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1("Simple", randomString()), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1("Simple1", randomString()), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1("ComPLEx12", "NoMatch"), "Confirm password should match new password"),
-                Arguments.of(new RequestUserChangePassword1("ComPLEx12", "ComPLEx12"), null)
+                Arguments.of(new RequestUserChangePassword1(null, null), invalidAttribute("newPassword")),
+                Arguments.of(new RequestUserChangePassword1(Password.of("simple"), null), invalidAttribute("confirmPassword")),
+                Arguments.of(new RequestUserChangePassword1(Password.of("simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("Simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("Simple1"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("ComPLEx12"), Password.of("NoMatch")), "Confirm password should match new password"),
+                Arguments.of(new RequestUserChangePassword1(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
         );
     }
 
@@ -53,7 +56,6 @@ public class BaseUserValidatorImplTest {
             TestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
-
 
     }
 
@@ -79,7 +81,7 @@ public class BaseUserValidatorImplTest {
     public void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
-        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomString(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -94,7 +96,7 @@ public class BaseUserValidatorImplTest {
     public void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), randomString(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), Email.of(randomString()), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
@@ -154,6 +156,32 @@ public class BaseUserValidatorImplTest {
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo("Attribute `email` is invalid");
         verify(this.userRepository).findByEmail(eq(email));
+    }
+
+    @Test
+    public void validateUserUpdateRequest2InvalidZoneIdTest() {
+        // Arrange
+        var requestUserUpdate2 = new RequestUserUpdate2("invalidZoneId", randomString());
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2));
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Attribute `zoneId` is invalid");
+    }
+
+    @Test
+    public void validateUserUpdateRequest2Test() {
+        // Arrange
+        var requestUserUpdate2 = new RequestUserUpdate2(randomZoneId().getId(), randomString());
+
+        // Act
+        this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2);
+
+        // Assert
+        // no asserts
     }
 
     @ParameterizedTest

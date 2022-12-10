@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.random;
 
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
@@ -50,6 +51,7 @@ public class EntityUtility {
         addConstructorRule(TimeZone.class, clazz -> randomTimeZone());
         addConstructorRule(Username.class, clazz -> randomUsername());
         addConstructorRule(Password.class, clazz -> randomPassword());
+        addConstructorRule(Email.class, clazz -> randomEmail());
 
         addConstructorRule(IPAddress.class, clazz -> randomIPAddress());
         addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());

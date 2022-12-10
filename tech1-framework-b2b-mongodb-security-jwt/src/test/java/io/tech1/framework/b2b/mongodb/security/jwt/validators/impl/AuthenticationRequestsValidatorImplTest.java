@@ -3,6 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.AuthenticationRequestsValidator;
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,16 +35,24 @@ public class AuthenticationRequestsValidatorImplTest {
     })
     static class ContextConfiguration {
 
-
-
     }
 
     private static Stream<Arguments> validateLoginRequestTest() {
         return Stream.of(
-                Arguments.of(new RequestUserLogin("", "admin"), invalidAttribute("username")),
-                Arguments.of(new RequestUserLogin("admin", ""), invalidAttribute("password")),
-                Arguments.of(new RequestUserLogin("admin", "admin"), null),
-                Arguments.of(new RequestUserLogin("user", "password"), null)
+                Arguments.of(
+                        new RequestUserLogin(null, Password.of("admin")),
+                        invalidAttribute("username")
+                ),
+                Arguments.of(
+                        new RequestUserLogin(Username.of("admin"), null),
+                        invalidAttribute("password")
+                ),
+                Arguments.of(
+                        new RequestUserLogin(Username.of("admin"), Password.of("admin")), null
+                ),
+                Arguments.of(
+                        new RequestUserLogin(Username.of("user"), Password.of("password")), null
+                )
         );
     }
 

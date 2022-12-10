@@ -18,6 +18,8 @@ jasypt:
 
 # Tech1 Platform
 tech1:
+  serverConfigs:
+    name: tech1-framework-b2b-mongodb-server
   asyncConfigs:
     threadNamePrefix: tps1-async
   eventsConfigs:
@@ -62,6 +64,12 @@ tech1:
         cookieKey: ajwt
       refreshToken:
         cookieKey: rjwt
+    usersEmailsConfigs:
+      subjectPrefix: "[Tech1]"
+      authenticationLogin:
+        enabled: true
+      sessionRefreshed:
+        enabled: true
 
 # App
 app:

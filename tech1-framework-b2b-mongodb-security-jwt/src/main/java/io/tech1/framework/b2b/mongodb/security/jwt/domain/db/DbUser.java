@@ -2,6 +2,9 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -35,15 +38,15 @@ public class DbUser {
 
     private Map<String, Object> attributes;
 
-    private String password;
+    private Password password;
     private ZoneId zoneId;
 
-    private String email;
+    private Email email;
     private String name;
 
     public DbUser(
             Username username,
-            String password,
+            Password password,
             String zoneId,
             List<SimpleGrantedAuthority> authorities
     ) {
@@ -58,14 +61,18 @@ public class DbUser {
         this.attributes = new HashMap<>();
     }
 
-    public void edit(RequestUserUpdate1 requestUserUpdate1) {
-        assertZoneIdOrThrow(requestUserUpdate1.getZoneId(), invalidAttribute("DbUser.zoneId"));
+    public void edit1(RequestUserUpdate1 requestUserUpdate1) {
         this.zoneId = ZoneId.of(requestUserUpdate1.getZoneId());
-        this.name = requestUserUpdate1.getName();
         this.email = requestUserUpdate1.getEmail();
+        this.name = requestUserUpdate1.getName();
     }
 
-    public void changePassword(String password) {
+    public void edit2(RequestUserUpdate2 requestUserUpdate2) {
+        this.zoneId = ZoneId.of(requestUserUpdate2.getZoneId());
+        this.name = requestUserUpdate2.getName();
+    }
+
+    public void changePassword(Password password) {
         this.password = password;
     }
 

@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities;
+package io.tech1.framework.utilities.geo.functions.mindmax;
 
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 
-public interface GeoUtility {
+public interface MindMaxGeoLocationUtility {
     GeoLocation getGeoLocation(IPAddress ipAddress);
 }

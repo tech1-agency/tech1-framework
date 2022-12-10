@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessType;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
@@ -38,7 +38,7 @@ public class UserEmailServiceImpl implements UserEmailService {
                 function.getTuple3(),
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin(),
                 this.userEmailUtility.getAuthenticationLoginTemplateName(),
-                AccountAccessType.USERNAME_PASSWORD
+                AccountAccessMethod.USERNAME_PASSWORD
         );
     }
 
@@ -48,7 +48,7 @@ public class UserEmailServiceImpl implements UserEmailService {
                 function.getTuple3(),
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed(),
                 this.userEmailUtility.getSessionRefreshedTemplateName(),
-                AccountAccessType.SECURITY_TOKEN
+                AccountAccessMethod.SECURITY_TOKEN
         );
     }
 
@@ -59,19 +59,19 @@ public class UserEmailServiceImpl implements UserEmailService {
             Tuple3<Username, Email, UserRequestMetadata> tuple3,
             Checkbox checkbox,
             String templateName,
-            AccountAccessType accountAccessType
+            AccountAccessMethod accountAccessMethod
     ) {
         var email = tuple3.getB();
         if (nonNull(email) && checkbox.isEnabled()) {
             this.emailService.sendHTML(
                     EmailHTML.of(
                             Set.of(email.getValue()),
-                            this.userEmailUtility.getSubject("Authentication Attempted"),
+                            this.userEmailUtility.getSubject("Account Accessed"),
                             templateName,
                             this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
                                     tuple3.getA(),
                                     tuple3.getC(),
-                                    accountAccessType
+                                    accountAccessMethod
                             )
                     )
             );

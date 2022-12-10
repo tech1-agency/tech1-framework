@@ -2,10 +2,7 @@ package io.tech1.framework.domain.properties.utilties;
 
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.base.*;
-import io.tech1.framework.domain.properties.configs.EmailConfigs;
-import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
-import io.tech1.framework.domain.properties.configs.IncidentConfigs;
-import io.tech1.framework.domain.properties.configs.MvcConfigs;
+import io.tech1.framework.domain.properties.configs.*;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
@@ -264,6 +261,20 @@ public class PropertiesAsserterAndPrinterTest {
 
         // Assert
         // no asserts
+    }
+
+    @Test
+    public void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
+        // Act
+        var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
+
+        // Act
+        var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Attribute `securityJwtConfigs.authoritiesConfigs` is invalid");
     }
 
     @Test

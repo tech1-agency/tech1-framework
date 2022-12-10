@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessType;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.UserEmailUtility;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -62,14 +62,14 @@ public class UserEmailUtilityImpl implements UserEmailUtility {
     public Map<String, Object> getAuthenticationLoginOrSessionRefreshedVariables(
             Username username,
             UserRequestMetadata userRequestMetadata,
-            AccountAccessType accountAccessType
+            AccountAccessMethod accountAccessMethod
     ) {
         var geoLocation = userRequestMetadata.getGeoLocation();
         var userAgentDetails = userRequestMetadata.getUserAgentDetails();
         Map<String, Object> variables = new HashMap<>();
         variables.put("year", now(UTC).getYear());
         variables.put("username", username.getIdentifier());
-        variables.put("accessType", accountAccessType.getValue());
+        variables.put("accessMethod", accountAccessMethod.getValue());
         variables.put("where", geoLocation.getCountryFlag() + " " + geoLocation.getWhere());
         variables.put("what", userAgentDetails.getWhat());
         variables.put("ipAddress", geoLocation.getIpAddr());

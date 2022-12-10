@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessType;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
@@ -162,11 +162,11 @@ public class UserEmailServiceImplTest {
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         when(this.userEmailUtility.getAuthenticationLoginTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject(eq("Authentication Attempted"))).thenReturn(subject);
+        when(this.userEmailUtility.getSubject(eq("Account Accessed"))).thenReturn(subject);
         when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
                 eq(username),
                 eq(userRequestMetadata),
-                eq(AccountAccessType.USERNAME_PASSWORD)
+                eq(AccountAccessMethod.USERNAME_PASSWORD)
         )).thenReturn(variables);
 
         // Act
@@ -175,11 +175,11 @@ public class UserEmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
-        verify(this.userEmailUtility).getSubject(eq("Authentication Attempted"));
+        verify(this.userEmailUtility).getSubject(eq("Account Accessed"));
         verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
                 eq(username),
                 eq(userRequestMetadata),
-                eq(AccountAccessType.USERNAME_PASSWORD)
+                eq(AccountAccessMethod.USERNAME_PASSWORD)
         );
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
@@ -210,11 +210,11 @@ public class UserEmailServiceImplTest {
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         when(this.userEmailUtility.getSessionRefreshedTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject(eq("Authentication Attempted"))).thenReturn(subject);
+        when(this.userEmailUtility.getSubject(eq("Account Accessed"))).thenReturn(subject);
         when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
                 eq(username),
                 eq(userRequestMetadata),
-                eq(AccountAccessType.SECURITY_TOKEN)
+                eq(AccountAccessMethod.SECURITY_TOKEN)
         )).thenReturn(variables);
 
         // Act
@@ -223,11 +223,11 @@ public class UserEmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtility).getSessionRefreshedTemplateName();
-        verify(this.userEmailUtility).getSubject(eq("Authentication Attempted"));
+        verify(this.userEmailUtility).getSubject(eq("Account Accessed"));
         verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
                 eq(username),
                 eq(userRequestMetadata),
-                eq(AccountAccessType.SECURITY_TOKEN)
+                eq(AccountAccessMethod.SECURITY_TOKEN)
         );
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());

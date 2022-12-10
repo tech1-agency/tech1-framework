@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessType;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.UserEmailUtility;
 import io.tech1.framework.domain.utilities.time.LocalDateTimeUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -123,20 +123,20 @@ public class UserEmailUtilityImplTest {
         // Arrange
         var username = randomUsername();
         var userRequestMetadata = validUserRequestMetadata();
-        var accountAccessType = randomEnum(AccountAccessType.class);
+        var accountAccessMethod = randomEnum(AccountAccessMethod.class);
 
         // Act
         var variables = this.componentUnderTest.getAuthenticationLoginOrSessionRefreshedVariables(
                 username,
                 userRequestMetadata,
-                accountAccessType
+                accountAccessMethod
         );
 
         // Assert
         assertThat(variables).hasSize(7);
         assertThat(variables.get("year")).isEqualTo(now(UTC).getYear());
         assertThat(variables.get("username")).isEqualTo(username.getIdentifier());
-        assertThat(variables.get("accessType")).isEqualTo(accountAccessType.getValue());
+        assertThat(variables.get("accessMethod")).isEqualTo(accountAccessMethod.getValue());
         assertThat(variables.get("where")).isEqualTo("🇺🇦 Ukraine, Lviv");
         assertThat(variables.get("what")).isEqualTo("Chrome, macOS on Desktop");
         assertThat(variables.get("ipAddress")).isEqualTo("127.0.0.1");

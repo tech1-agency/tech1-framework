@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.utilities;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessType;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 
@@ -13,6 +13,6 @@ public interface UserEmailUtility {
     Map<String, Object> getAuthenticationLoginOrSessionRefreshedVariables(
             Username username,
             UserRequestMetadata userRequestMetadata,
-            AccountAccessType accountAccessType
+            AccountAccessMethod accountAccessMethod
     );
 }

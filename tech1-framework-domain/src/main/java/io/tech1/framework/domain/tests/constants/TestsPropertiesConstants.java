@@ -117,7 +117,7 @@ public class TestsPropertiesConstants {
             UsersEmailsConfigs.of(
                     "[Tech1]",
                     Checkbox.enabled(),
-                    Checkbox.disabled()
+                    Checkbox.enabled()
             )
     );
     public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = SecurityJwtWebsocketsConfigs.of(

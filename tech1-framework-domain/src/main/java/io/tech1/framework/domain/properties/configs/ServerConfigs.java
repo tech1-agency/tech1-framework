@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +11,7 @@ import lombok.EqualsAndHashCode;
 public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private String name;
-    @MandatoryProperty
+    @NonMandatoryProperty
     private String webclientURL;
 
     // NOTE: test-purposes

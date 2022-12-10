@@ -263,7 +263,7 @@ public class PropertiesAsserterAndPrinterTest {
         // no asserts
     }
 
-    @Test
+    @RepeatedTest(5)
     public void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
         // Act
         var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
@@ -274,7 +274,8 @@ public class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `securityJwtConfigs.authoritiesConfigs` is invalid");
+        assertThat(throwable.getMessage()).startsWith("Attribute `securityJwtConfigs.");
+        assertThat(throwable.getMessage()).endsWith("` is invalid");
     }
 
     @Test

@@ -10,11 +10,25 @@ public class InvitationCodes implements AbstractToggleProperty {
     private boolean enabled;
 
     // NOTE: test-purposes
-    public static InvitationCodes of(
+    private static InvitationCodes of(
             boolean enabled
     ) {
         var instance = new InvitationCodes();
         instance.enabled = enabled;
         return instance;
+    }
+
+    // NOTE: test-purposes
+    public static InvitationCodes enabled() {
+        return of(
+                true
+        );
+    }
+
+    // NOTE: test-purposes
+    public static InvitationCodes disabled() {
+        return of(
+                false
+        );
     }
 }

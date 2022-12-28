@@ -102,7 +102,7 @@ public class TestsPropertiesConstants {
                                     )
                             )
                     ),
-                    InvitationCodes.of(true)
+                    InvitationCodes.enabled()
             ),
             JwtTokensConfigs.of(
                     "TECH1",

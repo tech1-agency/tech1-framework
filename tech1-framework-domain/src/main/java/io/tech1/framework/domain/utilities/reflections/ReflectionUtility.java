@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.reflections;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
@@ -102,12 +103,16 @@ public class ReflectionUtility {
 
     public static List<Method> getGetters(Object object) {
         return Stream.of(object.getClass().getMethods())
-                .filter(method -> !method.getName().equals("getClass"))
                 .filter(method -> method.getParameterTypes().length == 0)
                 .filter(method -> {
                     var methodName = method.getName();
                     return methodName.startsWith("get") || methodName.startsWith("is");
-                }).collect(Collectors.toList());
+                })
+                .filter(method -> {
+                    var methodName = method.getName();
+                    return !"getClass".equals(methodName) && !"getDeclaringClass".equals(methodName);
+                })
+                .collect(Collectors.toList());
     }
 
     public static List<ReflectionProperty> getNotNullPropertiesRecursively(Object object, String parentKey) {
@@ -149,12 +154,7 @@ public class ReflectionUtility {
         return getters.stream()
                 .map(getter -> {
                     try {
-                        var getterName = getter.getName();
-                        // replace get/is at beginning
-                        var propertyName = uncapitalize(getterName
-                                .replaceAll("^get", "")
-                                .replaceAll("^is", "")
-                        );
+                        var propertyName = getPropertyName(getter);
                         var propertyValue = getter.invoke(object);
                         if (isNull(propertyValue)) {
                             return null;
@@ -194,5 +194,14 @@ public class ReflectionUtility {
     public static Tuple2<Field, Object> getFieldTuple2(Object object, Field field, List<Method> getters) {
         var fieldValueOrNull = getFieldValueOrNull(object, field, getters);
         return Tuple2.of(field, fieldValueOrNull);
+    }
+
+    public static String getPropertyName(Method method) {
+        // replace get/is at beginning
+        return uncapitalize(
+                method.getName()
+                        .replaceAll("^get", "")
+                        .replaceAll("^is", "")
+        );
     }
 }

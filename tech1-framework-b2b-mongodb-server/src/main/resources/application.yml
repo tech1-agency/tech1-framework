@@ -73,5 +73,8 @@ tech1:
 
 # App
 app:
-  attribute1: value
+  serverConfigs:
+    targetAttribute1: "value1"
+    targetAttribute2: 10
+    targetAuthority: "USER"
 

@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotEmptyOrThrow;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
 import static java.util.Collections.emptyList;
-import static org.springframework.util.StringUtils.uncapitalize;
 
 @Slf4j
 @UtilityClass
@@ -65,15 +65,12 @@ public class PropertiesAsserter {
     // =================================================================================================================
     private static void verifyProperties(List<Method> getters, Object property, String parentName, List<String> projection) {
         getters.forEach(getter -> {
-            var attribute = uncapitalize(getter.getName()
-                    .replace("get", "")
-                    .replace("is", "")
-            );
-            var attributeName = parentName + "." + attribute;
+            var propertyName = getPropertyName(getter);
+            var attributeName = parentName + "." + propertyName;
             try {
                 var getterValue = getter.invoke(property);
                 innerClass(getterValue, attributeName, projection);
-            } catch (IllegalAccessException | InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new IllegalArgumentException("Unexpected. Attribute: " + attributeName);
             }
         });
@@ -102,18 +99,15 @@ public class PropertiesAsserter {
                 .filter(method -> !method.getName().equals("getOrder"))
                 .filter(method -> {
                     try {
-                        var fieldName = uncapitalize(method.getName()
-                                .replace("get", "")
-                                .replace("is", "")
-                        );
-                        var declaredField = property.getClass().getDeclaredField(fieldName);
+                        var propertyName = getPropertyName(method);
+                        var declaredField = property.getClass().getDeclaredField(propertyName);
                         return declaredField.isAnnotationPresent(MandatoryProperty.class) && !declaredField.isAnnotationPresent(NonMandatoryProperty.class);
                     } catch (NoSuchFieldException e) {
                         return true;
                     }
                 })
                 .filter(method -> {
-                    var lowerCaseAttribute = method.getName().toLowerCase().replace("get", "");
+                    var lowerCaseAttribute = method.getName().toLowerCase().replaceAll("^get", "");
                     return !skipProjection.contains(lowerCaseAttribute);
                 })
                 .collect(Collectors.toList());

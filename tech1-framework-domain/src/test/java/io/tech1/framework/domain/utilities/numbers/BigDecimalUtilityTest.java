@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
+import static io.tech1.framework.domain.constants.BigDecimalConstants.*;
 import static io.tech1.framework.domain.utilities.numbers.BigDecimalUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBigDecimalGreaterThanZero;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBigDecimalLessThanZero;
@@ -193,6 +193,24 @@ public class BigDecimalUtilityTest {
                 Arguments.of(randomBigDecimalGreaterThanZero(), false),
                 Arguments.of(ZERO, true),
                 Arguments.of(randomBigDecimalLessThanZero(), true)
+        );
+    }
+
+    private static Stream<Arguments> getNumberOfDigitsAfterTheDecimalPointOrZeroTest() {
+        return Stream.of(
+                Arguments.of(ZERO, 0),
+                Arguments.of(TWO, 0),
+                Arguments.of(ONE_HUNDRED, 0),
+                Arguments.of(new BigDecimal("33"), 0),
+                Arguments.of(new BigDecimal("1.1"), 1),
+                Arguments.of(new BigDecimal("1.11"), 2),
+                Arguments.of(new BigDecimal("1.111"), 3),
+                Arguments.of(new BigDecimal("1.111111"), 6),
+                Arguments.of(new BigDecimal("1.00"), 0),
+                Arguments.of(new BigDecimal("1.0000"), 0),
+                Arguments.of(new BigDecimal("1.00000"), 0),
+                Arguments.of(new BigDecimal("1.000000000000000000000"), 0),
+                Arguments.of(new BigDecimal("1.0000000000000000000001"), 22)
         );
     }
 
@@ -408,7 +426,6 @@ public class BigDecimalUtilityTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-
     @Test
     public void absOrZeroTest() {
         // Arrange
@@ -418,7 +435,7 @@ public class BigDecimalUtilityTest {
         cases.add(Tuple2.of(null, ZERO));
         cases.add(Tuple2.of(ZERO, ZERO));
         cases.add(Tuple2.of(positive, positive));
-        cases.add(Tuple2.of(negative, negative.multiply(BigDecimal.valueOf(-1))));
+        cases.add(Tuple2.of(negative, negative.multiply(MINUS_ONE)));
 
         cases.forEach(item -> {
             // Arrange
@@ -431,5 +448,15 @@ public class BigDecimalUtilityTest {
             // Assert
             assertThat(actual).isEqualTo(expected);
         });
+    }
+
+    @ParameterizedTest
+    @MethodSource("getNumberOfDigitsAfterTheDecimalPointOrZeroTest")
+    public void getNumberOfDigitsAfterTheDecimalPointOrZeroTest(BigDecimal value, int expected) {
+        // Act
+        var actual = getNumberOfDigitsAfterTheDecimalPointOrZero(value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 }

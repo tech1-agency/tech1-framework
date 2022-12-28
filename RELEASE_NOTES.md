@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.7
-- TBD
+- Migrate bigdecimal-**: constants (TWO), getNumberOfDigitsAfterTheDecimalPointOrZero() method
 
 ### v1.6
 - Add "countryCode" -> GeoLocation

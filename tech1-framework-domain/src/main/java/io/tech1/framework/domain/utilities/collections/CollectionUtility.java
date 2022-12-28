@@ -14,6 +14,24 @@ import static org.springframework.util.CollectionUtils.*;
 @UtilityClass
 public class CollectionUtility {
 
+    public static <T> List<T> mutableSingletonList(T object) {
+        List<T> list = new ArrayList<>(1);
+        list.add(object);
+        return list;
+    }
+
+    public static <T> Set<T> mutableSingletonSet(T object) {
+        Set<T> list = new HashSet<>(1);
+        list.add(object);
+        return list;
+    }
+
+    public static <K, V> Map<K, V> mutableSingletonMap(K key, V value) {
+        Map<K, V> map = new HashMap<>(1);
+        map.put(key, value);
+        return map;
+    }
+
     public static <T> Queue<T> emptyQueue() {
         return new LinkedList<>();
     }

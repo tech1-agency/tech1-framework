@@ -11,10 +11,10 @@ import java.util.Date;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.UTC_ZONE_ID;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.*;
 import static java.time.Month.*;
+import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LocalDateUtilityImplTest {
@@ -36,11 +36,11 @@ public class LocalDateUtilityImplTest {
     private static Stream<Arguments> convertDateZoneIdTest() {
         return Stream.of(
                 Arguments.of(new Date(1640438177000L), EET_ZONE_ID, _25_11_2021),
-                Arguments.of(new Date(1640445377000L), UTC_ZONE_ID, _25_11_2021),
+                Arguments.of(new Date(1640445377000L), UTC, _25_11_2021),
                 Arguments.of(new Date(1324818977000L), EET_ZONE_ID, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1324826177000L), UTC_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(new Date(1324826177000L), UTC, _25_11_2021.minusYears(10)),
                 Arguments.of(new Date(1009286177000L), EET_ZONE_ID, _25_11_2021.minusYears(20)),
-                Arguments.of(new Date(1009293377000L), UTC_ZONE_ID, _25_11_2021.minusYears(20))
+                Arguments.of(new Date(1009293377000L), UTC, _25_11_2021.minusYears(20))
         );
     }
 

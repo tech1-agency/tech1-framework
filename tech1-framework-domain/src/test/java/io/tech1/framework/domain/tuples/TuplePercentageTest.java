@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.tuples;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -88,5 +90,18 @@ public class TuplePercentageTest extends AbstractTupleTest {
         assertThat(json).isEqualTo(this.readFile());
     }
 
-    // deserialization ignored deliberately
+    @Test
+    public void deserializeTest() throws JsonProcessingException {
+        // Arrange
+        var json = this.readFile();
+        var typeReference = new TypeReference<TuplePercentage>() {
+        };
+
+        // Act
+        var tuple = OBJECT_MAPPER.readValue(json, typeReference);
+
+        // Assert
+        assertThat(tuple).isNotNull();
+        assertThat(tuple).isEqualTo(TUPLE);
+    }
 }

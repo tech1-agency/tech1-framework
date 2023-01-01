@@ -13,10 +13,6 @@ public class TestsConstants {
     // Date Formatters
     public static final String DEFAULT_DATE_FORMAT_PATTERN = "dd.MM.yyyy HH:mm:ss";
 
-    // UK, London
-    public static final TimeZone UTC_TIME_ZONE = TimeZone.getTimeZone("UTC");
-    public static final ZoneId UTC_ZONE_ID = ZoneId.of("UTC");
-
     // Poland
     public static final TimeZone POLAND_TIME_ZONE = TimeZone.getTimeZone("Poland");
     public static final ZoneId POLAND_ZONE_ID = ZoneId.of("Poland");

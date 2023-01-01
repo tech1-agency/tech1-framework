@@ -1,38 +1,22 @@
 package io.tech1.framework.domain.tuples;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.divideOrZero;
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
 import static java.math.BigDecimal.ZERO;
 
 // Lombok
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data(staticConstructor = "of")
 public class TuplePercentage {
     private final BigDecimal value;
     private final BigDecimal percentage;
 
-    private TuplePercentage(
-            BigDecimal value,
-            BigDecimal percentage
-    ) {
-        assertNonNullOrThrow(value, invalidAttribute("TuplePercentage.value"));
-        assertNonNullOrThrow(percentage, invalidAttribute("TuplePercentage.percentage"));
-        this.value = value;
-        this.percentage = percentage;
-    }
-
     public static TuplePercentage of(BigDecimal value, BigDecimal maxValue, int valueScale, int percentageScale) {
-        return new TuplePercentage(
+        return TuplePercentage.of(
                 scale(value, valueScale),
                 divideOrZero(value.abs().multiply(ONE_HUNDRED), maxValue, percentageScale)
         );

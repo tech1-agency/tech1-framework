@@ -29,6 +29,7 @@ public abstract class AbstractTimerTask {
         this.interval = interval;
         this.duration = duration;
         this.elapsedSeconds = 0;
+        this.state = TimerTaskState.CREATED;
     }
 
     public abstract void onTick();

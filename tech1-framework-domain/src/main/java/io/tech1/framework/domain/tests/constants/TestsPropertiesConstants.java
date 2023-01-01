@@ -113,7 +113,7 @@ public class TestsPropertiesConstants {
             LoggingConfigs.of(true),
             Mongodb.of("127.0.0.1", 27017, "tech1_framework_server"),
             SessionConfigs.of(
-                    Cron.of(false, "*/30 * * * * *", "Europe/Kiev")
+                    Cron.enabled("*/30 * * * * *", "Europe/Kiev")
             ),
             UsersEmailsConfigs.of(
                     "[Tech1]",

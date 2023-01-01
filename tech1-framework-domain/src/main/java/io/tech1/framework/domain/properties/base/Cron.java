@@ -27,11 +27,14 @@ public class Cron implements AbstractToggleProperty {
     }
 
     // NOTE: test-purposes
-    public static Cron enabled() {
+    public static Cron enabled(
+            String expression,
+            String zoneId
+    ) {
         return Cron.of(
                 true,
-                null,
-                null
+                expression,
+                zoneId
         );
     }
 

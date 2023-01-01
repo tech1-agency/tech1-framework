@@ -21,6 +21,8 @@ tech1:
         enabled: false
       logout:
         enabled: true
+      logoutMin:
+        enabled: true
       sessionRefreshed:
         enabled: true
       sessionExpired:

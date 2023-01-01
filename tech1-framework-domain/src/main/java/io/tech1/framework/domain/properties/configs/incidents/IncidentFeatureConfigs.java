@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 // Lombok (property-based)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentFeatureConfigs extends AbstractPropertiesToggleConfigs implements AbstractIncidentFeatureConfigs {
+public class IncidentFeatureConfigs extends AbstractPropertiesToggleConfigs {
     @NonMandatoryProperty
     private boolean enabled;
 
@@ -24,10 +24,5 @@ public class IncidentFeatureConfigs extends AbstractPropertiesToggleConfigs impl
         var instance = new IncidentFeatureConfigs();
         instance.enabled = false;
         return instance;
-    }
-
-    @Override
-    public void configureRequiredIncidentsIfMissing() {
-        this.enabled = false;
     }
 }

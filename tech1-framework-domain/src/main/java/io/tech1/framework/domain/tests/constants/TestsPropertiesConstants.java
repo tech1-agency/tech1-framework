@@ -51,12 +51,13 @@ public class TestsPropertiesConstants {
             true,
             RemoteServer.of(
                     "http://localhost:8973",
-                    "incident-user",
+                    "incident-username",
                     "incident-password"
             ),
             IncidentFeaturesConfigs.of(
                     IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
                     IncidentFeatureConfigs.disabledIncidentFeatureConfigs(),
+                    IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
                     IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
                     IncidentFeatureConfigs.disabledIncidentFeatureConfigs(),
                     IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),

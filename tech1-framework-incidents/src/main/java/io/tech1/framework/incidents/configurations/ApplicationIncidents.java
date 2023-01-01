@@ -32,9 +32,7 @@ public class ApplicationIncidents {
 
     @PostConstruct
     public void init() {
-        var incidentConfigs = this.applicationFrameworkProperties.getIncidentConfigs();
-        incidentConfigs.configureRequiredIncidentsIfMissing();
-        assertProperties(incidentConfigs, "incidentConfigs");
+        assertProperties(this.applicationFrameworkProperties.getIncidentConfigs(), "incidentConfigs");
     }
 
     @Bean

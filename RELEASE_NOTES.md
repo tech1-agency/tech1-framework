@@ -6,6 +6,7 @@
 - Migrate collection utility methods: get mutable list, set and map
 - Migrate tuples: TupleToggle + serialize/deserialize process improved
 - Add state machine -> TimerTask1 (created, operative, stopped)
+- Add authentication logout min incident type
 
 ### v1.6
 - Add "countryCode" -> GeoLocation

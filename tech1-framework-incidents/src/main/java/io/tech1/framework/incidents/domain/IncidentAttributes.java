@@ -38,6 +38,7 @@ public class IncidentAttributes {
         public static final String AUTHENTICATION_LOGIN = "Authentication Login";
         public static final String AUTHENTICATION_LOGIN_FAILURE = "Authentication Login Failure";
         public static final String AUTHENTICATION_LOGOUT = "Authentication Logout";
+        public static final String AUTHENTICATION_LOGOUT_MIN = "Authentication Logout Min";
         public static final String SESSION_REFRESHED = "Session Refreshed";
         public static final String SESSION_EXPIRED = "Session Expired";
         public static final String REGISTER1 = "Register1";

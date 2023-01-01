@@ -79,7 +79,7 @@ public class IncidentConverterImpl implements IncidentConverter {
 
     @Override
     public Incident convert(IncidentAuthenticationLogoutMin incidentAuthenticationLogoutMin) {
-        return this.convertOnlyUsername(AUTHENTICATION_LOGOUT, incidentAuthenticationLogoutMin.getUsername());
+        return this.convertOnlyUsername(AUTHENTICATION_LOGOUT_MIN, incidentAuthenticationLogoutMin.getUsername());
     }
 
     @Override

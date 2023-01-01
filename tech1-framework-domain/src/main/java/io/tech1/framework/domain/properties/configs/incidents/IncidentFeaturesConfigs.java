@@ -1,22 +1,31 @@
 package io.tech1.framework.domain.properties.configs.incidents;
 
+import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import static java.util.Objects.isNull;
-
 // Lombok (property-based)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class IncidentFeaturesConfigs extends AbstractPropertiesConfigs implements AbstractIncidentFeatureConfigs {
+public class IncidentFeaturesConfigs extends AbstractPropertiesConfigs {
+    @MandatoryProperty
     private IncidentFeatureConfigs login;
+    @MandatoryProperty
     private IncidentFeatureConfigs loginFailureUsernamePassword;
+    @MandatoryProperty
     private IncidentFeatureConfigs loginFailureUsernameMaskedPassword;
+    @MandatoryProperty
     private IncidentFeatureConfigs logout;
+    @MandatoryProperty
+    private IncidentFeatureConfigs logoutMin;
+    @MandatoryProperty
     private IncidentFeatureConfigs sessionRefreshed;
+    @MandatoryProperty
     private IncidentFeatureConfigs sessionExpired;
+    @MandatoryProperty
     private IncidentFeatureConfigs register1;
+    @MandatoryProperty
     private IncidentFeatureConfigs register1Failure;
 
     // NOTE: test-purposes
@@ -25,6 +34,7 @@ public class IncidentFeaturesConfigs extends AbstractPropertiesConfigs implement
             IncidentFeatureConfigs loginFailureUsernamePassword,
             IncidentFeatureConfigs loginFailureUsernameMaskedPassword,
             IncidentFeatureConfigs logout,
+            IncidentFeatureConfigs logoutMin,
             IncidentFeatureConfigs sessionRefreshed,
             IncidentFeatureConfigs sessionExpired,
             IncidentFeatureConfigs register1,
@@ -35,46 +45,11 @@ public class IncidentFeaturesConfigs extends AbstractPropertiesConfigs implement
         instance.loginFailureUsernamePassword = loginFailureUsernamePassword;
         instance.loginFailureUsernameMaskedPassword = loginFailureUsernameMaskedPassword;
         instance.logout = logout;
+        instance.logoutMin = logoutMin;
         instance.sessionRefreshed = sessionRefreshed;
         instance.sessionExpired = sessionExpired;
         instance.register1 = register1;
         instance.register1Failure = register1Failure;
         return instance;
-    }
-
-    @Override
-    public void configureRequiredIncidentsIfMissing() {
-        if (isNull(this.login)) {
-            this.login = new IncidentFeatureConfigs();
-            this.login.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.loginFailureUsernamePassword)) {
-            this.loginFailureUsernamePassword = new IncidentFeatureConfigs();
-            this.loginFailureUsernamePassword.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.loginFailureUsernameMaskedPassword)) {
-            this.loginFailureUsernameMaskedPassword = new IncidentFeatureConfigs();
-            this.loginFailureUsernameMaskedPassword.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.logout)) {
-            this.logout = new IncidentFeatureConfigs();
-            this.logout.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.sessionRefreshed)) {
-            this.sessionRefreshed = new IncidentFeatureConfigs();
-            this.sessionRefreshed.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.sessionExpired)) {
-            this.sessionExpired = new IncidentFeatureConfigs();
-            this.sessionExpired.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.register1)) {
-            this.register1 = new IncidentFeatureConfigs();
-            this.register1.configureRequiredIncidentsIfMissing();
-        }
-        if (isNull(this.register1Failure)) {
-            this.register1Failure = new IncidentFeatureConfigs();
-            this.register1Failure.configureRequiredIncidentsIfMissing();
-        }
     }
 }

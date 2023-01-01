@@ -4,13 +4,13 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,8 +35,8 @@ public class BaseSecurityJwtSubscriberTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
+            return mock(SecurityJwtIncidentPublisher.class);
         }
 
         @Bean
@@ -52,7 +52,7 @@ public class BaseSecurityJwtSubscriberTest {
         @Bean
         SecurityJwtSubscriber securityJwtSubscriber() {
             return new BaseSecurityJwtSubscriber(
-                    this.incidentPublisher(),
+                    this.securityJwtIncidentPublisher(),
                     this.userEmailService(),
                     this.userSessionService()
             );
@@ -60,7 +60,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     // Publishers
-    private final IncidentPublisher incidentPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
     private final UserEmailService userEmailService;
     private final UserSessionService userSessionService;
@@ -70,7 +70,7 @@ public class BaseSecurityJwtSubscriberTest {
     @BeforeEach
     public void beforeEach() {
         reset(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.userEmailService,
                 this.userSessionService
         );
@@ -79,7 +79,7 @@ public class BaseSecurityJwtSubscriberTest {
     @AfterEach
     public void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.userEmailService,
                 this.userSessionService
         );
@@ -212,7 +212,7 @@ public class BaseSecurityJwtSubscriberTest {
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
         verify(this.userEmailService).executeAuthenticationLogin(eq(FunctionAuthenticationLoginEmail.of(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
-        verify(this.incidentPublisher).publishAuthenticationLogin(eq(IncidentAuthenticationLogin.of(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(eq(IncidentAuthenticationLogin.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 
     @Test
@@ -236,6 +236,6 @@ public class BaseSecurityJwtSubscriberTest {
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
         verify(this.userEmailService).executeSessionRefreshed(eq(FunctionSessionRefreshedEmail.of(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
-        verify(this.incidentPublisher).publishSessionRefreshed(eq(IncidentSessionRefreshed.of(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(eq(IncidentSessionRefreshed.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 }

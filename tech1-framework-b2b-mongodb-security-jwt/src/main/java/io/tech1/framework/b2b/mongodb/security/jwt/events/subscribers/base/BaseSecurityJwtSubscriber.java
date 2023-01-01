@@ -3,13 +3,13 @@ package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.base;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
 public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implements SecurityJwtSubscriber {
 
     // Publishers
-    private final IncidentPublisher incidentPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
     private final UserEmailService userEmailService;
     private final UserSessionService userSessionService;
@@ -73,7 +73,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
                             userSession.getRequestMetadata()
                     )
             );
-            this.incidentPublisher.publishAuthenticationLogin(
+            this.securityJwtIncidentPublisher.publishAuthenticationLogin(
                     IncidentAuthenticationLogin.of(
                             event.getUsername(),
                             userSession.getRequestMetadata()
@@ -88,7 +88,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
                             userSession.getRequestMetadata()
                     )
             );
-            this.incidentPublisher.publishSessionRefreshed(
+            this.securityJwtIncidentPublisher.publishSessionRefreshed(
                     IncidentSessionRefreshed.of(
                             event.getUsername(),
                             userSession.getRequestMetadata()

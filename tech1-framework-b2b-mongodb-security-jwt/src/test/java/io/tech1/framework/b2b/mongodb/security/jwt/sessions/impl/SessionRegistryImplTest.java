@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionRef
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.Session;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
@@ -17,7 +18,6 @@ import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,13 +52,13 @@ public class SessionRegistryImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        IncidentPublisher incidentPublisher() {
-            return mock(IncidentPublisher.class);
+        SecurityJwtPublisher securityJwtPublisher() {
+            return mock(SecurityJwtPublisher.class);
         }
 
         @Bean
-        SecurityJwtPublisher securityJwtPublisher() {
-            return mock(SecurityJwtPublisher.class);
+        SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
+            return mock(SecurityJwtIncidentPublisher.class);
         }
 
         @Bean
@@ -69,15 +69,15 @@ public class SessionRegistryImplTest {
         @Bean
         SessionRegistry sessionRegistry() {
             return new SessionRegistryImpl(
-                    this.incidentPublisher(),
                     this.securityJwtPublisher(),
+                    this.securityJwtIncidentPublisher(),
                     this.userSessionService()
             );
         }
     }
 
-    private final IncidentPublisher incidentPublisher;
     private final SecurityJwtPublisher securityJwtPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     private final UserSessionService userSessionService;
 
     private final SessionRegistry componentUnderTest;
@@ -87,7 +87,7 @@ public class SessionRegistryImplTest {
         // WARNING: clean session to execute a.k.a. integration test -> method "integrationFlow"
         setPrivateField(this.componentUnderTest, "sessions", ConcurrentHashMap.newKeySet());
         reset(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.userSessionService
         );
@@ -96,7 +96,7 @@ public class SessionRegistryImplTest {
     @AfterEach
     public void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.userSessionService
         );
@@ -171,11 +171,11 @@ public class SessionRegistryImplTest {
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session3)));
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session4)));
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(rndSession)));
-        verify(this.incidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session1.getUsername(), dbUserSession1.getRequestMetadata())));
-        verify(this.incidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session2.getUsername(), dbUserSession2.getRequestMetadata())));
-        verify(this.incidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session3.getUsername(), dbUserSession3.getRequestMetadata())));
-        verify(this.incidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session4.getUsername(), dbUserSession4.getRequestMetadata())));
-        verify(this.incidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session1.getUsername(), dbUserSession1.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session2.getUsername(), dbUserSession2.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session3.getUsername(), dbUserSession3.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session4.getUsername(), dbUserSession4.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
         verify(this.userSessionService).deleteByRefreshToken(eq(session1.getRefreshToken()));
         verify(this.userSessionService).deleteByRefreshToken(eq(session2.getRefreshToken()));
         verify(this.userSessionService).deleteByRefreshToken(eq(session3.getRefreshToken()));
@@ -241,7 +241,7 @@ public class SessionRegistryImplTest {
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutFull.class);
-        verify(this.incidentPublisher).publishAuthenticationLogoutFull(incidentAC.capture());
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getUsername()).isEqualTo(username);
         assertThat(incident.getUserRequestMetadata()).isEqualTo(dbUserSession.getRequestMetadata());
@@ -265,7 +265,7 @@ public class SessionRegistryImplTest {
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().getSession()).isEqualTo(session);
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutMin.class);
-        verify(this.incidentPublisher).publishAuthenticationLogoutMin(incidentAC.capture());
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutMin(incidentAC.capture());
         assertThat(incidentAC.getValue().getUsername()).isEqualTo(username);
     }
 
@@ -307,7 +307,7 @@ public class SessionRegistryImplTest {
         assertThat(eventSessionExpired.getSession().getUsername()).isEqualTo(username1);
         assertThat(eventSessionExpired.getSession().getRefreshToken()).isEqualTo(dbUserSession3.getJwtRefreshToken());
         var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
-        verify(this.incidentPublisher).publishSessionExpired(seiCaptor.capture());
+        verify(this.securityJwtIncidentPublisher).publishSessionExpired(seiCaptor.capture());
         var sessionExpiredIncident = seiCaptor.getValue();
         assertThat(sessionExpiredIncident.getUsername()).isEqualTo(username1);
         assertThat(sessionExpiredIncident.getUserRequestMetadata()).isEqualTo(dbUserSession3.getRequestMetadata());

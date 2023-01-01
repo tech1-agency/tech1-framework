@@ -48,6 +48,7 @@ import static org.springframework.http.HttpMethod.*;
         "io.tech1.framework.b2b.mongodb.security.jwt.events",
         "io.tech1.framework.b2b.mongodb.security.jwt.filters",
         "io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions",
+        "io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters",
         "io.tech1.framework.b2b.mongodb.security.jwt.resources",
         "io.tech1.framework.b2b.mongodb.security.jwt.services",
         "io.tech1.framework.b2b.mongodb.security.jwt.sessions",

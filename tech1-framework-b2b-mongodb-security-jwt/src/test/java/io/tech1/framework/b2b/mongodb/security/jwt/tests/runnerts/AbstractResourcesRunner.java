@@ -48,7 +48,6 @@ public abstract class AbstractResourcesRunner {
 
     protected static CurrentClientUser randomCurrentClientUser() {
         return new CurrentClientUser(
-                randomString(),
                 randomUsername(),
                 randomEmail(),
                 randomString(),

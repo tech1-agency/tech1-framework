@@ -73,7 +73,6 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
         }
 
         return new CurrentClientUser(
-                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getName(),

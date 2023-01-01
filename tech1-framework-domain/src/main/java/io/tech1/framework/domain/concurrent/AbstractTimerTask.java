@@ -7,12 +7,9 @@ import lombok.Getter;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
-import static java.time.temporal.ChronoUnit.FOREVER;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-public abstract class AbstractTimerTask1 {
-    public static final TimeAmount DURATION_FOREVER = TimeAmount.of(1L, FOREVER);
-
+public abstract class AbstractTimerTask {
     @Getter
     protected volatile TimerTaskState state;
 
@@ -25,15 +22,7 @@ public abstract class AbstractTimerTask1 {
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
     private Future<?> scheduledFuture = null;
 
-    protected AbstractTimerTask1(
-            SchedulerConfiguration interval
-    ) {
-        this.interval = interval;
-        this.duration = DURATION_FOREVER;
-        this.elapsedSeconds = 0;
-    }
-
-    protected AbstractTimerTask1(
+    protected AbstractTimerTask(
             SchedulerConfiguration interval,
             TimeAmount duration
     ) {
@@ -43,12 +32,18 @@ public abstract class AbstractTimerTask1 {
     }
 
     public abstract void onTick();
+    public abstract void onComplete();
 
-    protected void onComplete() {
-        // ignored by default
-        // override on complete on demand
+    // ================================================================================================================
+    // PUBLIC METHODS: GETTERS
+    // ================================================================================================================
+    public final long getRemainingSeconds() {
+        return this.duration.toSeconds() - this.elapsedSeconds;
     }
 
+    // ================================================================================================================
+    // PUBLIC METHODS: MUTATIONS
+    // ================================================================================================================
     public final void switchState() {
         if (this.state.isOperative()) {
             this.stop();
@@ -57,7 +52,7 @@ public abstract class AbstractTimerTask1 {
         }
     }
 
-    public void start() {
+    public final void start() {
         if (this.state.isOperative()) {
             return;
         }
@@ -72,20 +67,12 @@ public abstract class AbstractTimerTask1 {
         }, this.interval.getInitialDelay(), this.interval.getDelay(), this.interval.getUnit());
     }
 
-    public void stop() {
+    public final void stop() {
         if (!this.state.isOperative()) {
             return;
         }
         this.scheduledFuture.cancel(false);
         this.state = TimerTaskState.STOPPED;
         this.elapsedSeconds = 0;
-    }
-
-    public final long getRemainingSeconds() {
-        if (FOREVER.equals(this.duration.getUnit())) {
-            return AbstractTimerTask1.DURATION_FOREVER.toSeconds();
-        } else {
-            return this.duration.toSeconds() - this.elapsedSeconds;
-        }
     }
 }

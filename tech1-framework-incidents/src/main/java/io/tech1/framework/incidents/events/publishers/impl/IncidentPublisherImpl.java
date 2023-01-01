@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
-import static io.tech1.framework.incidents.domain.IncidentAttributes.IncidentsTypes.*;
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
 
 @Slf4j
 @Service
@@ -31,7 +31,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishAuthenticationLogin(IncidentAuthenticationLogin incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getLogin().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -41,7 +41,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishAuthenticationLoginFailureUsernamePassword(IncidentAuthenticationLoginFailureUsernamePassword incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getLoginFailureUsernamePassword().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         }
@@ -49,7 +49,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishAuthenticationLoginFailureUsernameMaskedPassword(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getLoginFailureUsernameMaskedPassword().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         }
@@ -57,7 +57,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getLogoutMin().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT_MIN)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -67,7 +67,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getLogout().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -77,7 +77,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishRegistration1(IncidentRegistration1 incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getRegister1().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER1)) {
             LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -87,7 +87,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishRegistration1Failure(IncidentRegistration1Failure incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getRegister1Failure().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER1_FAILURE)) {
             LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -97,7 +97,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishSessionRefreshed(IncidentSessionRefreshed incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getSessionRefreshed().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(SESSION_REFRESHED)) {
             LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -107,7 +107,7 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishSessionExpired(IncidentSessionExpired incident) {
-        if (this.applicationFrameworkProperties.getIncidentConfigs().getFeatures().getSessionExpired().isEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(SESSION_EXPIRED)) {
             LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incident.getUsername());
             this.applicationEventPublisher.publishEvent(incident);
         } else {

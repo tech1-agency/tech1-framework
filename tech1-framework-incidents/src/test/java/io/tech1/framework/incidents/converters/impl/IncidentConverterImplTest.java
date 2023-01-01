@@ -191,11 +191,11 @@ public class IncidentConverterImplTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getType()).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Password");
         assertThat(actual.getAttributes().get("username")).isEqualTo(username);
         assertThat(actual.getAttributes().get("password")).isEqualTo(password);
     }
@@ -215,11 +215,11 @@ public class IncidentConverterImplTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getType()).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Masked Password");
         assertThat(actual.getAttributes().get("username")).isEqualTo(username);
         assertThat(actual.getAttributes().get("password")).isEqualTo(Password.of("passw**********"));
     }
@@ -237,11 +237,11 @@ public class IncidentConverterImplTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getType()).isEqualTo("Authentication Logout");
+        assertThat(actual.getType()).isEqualTo("Authentication Logout Min");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout Min");
         assertThat(actual.getAttributes().get("username")).isEqualTo(username);
     }
 

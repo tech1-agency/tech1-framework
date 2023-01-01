@@ -1,11 +1,16 @@
 package io.tech1.framework.domain.properties.utilties;
 
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.properties.base.*;
-import io.tech1.framework.domain.properties.configs.*;
-import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
+import io.tech1.framework.domain.properties.base.ScheduledJob;
+import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
+import io.tech1.framework.domain.properties.base.SpringLogging;
+import io.tech1.framework.domain.properties.base.SpringServer;
+import io.tech1.framework.domain.properties.configs.EmailConfigs;
+import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
+import io.tech1.framework.domain.properties.configs.MvcConfigs;
+import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.security.jwt.IncidentsConfigs;
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.utilities.collections.CollectorUtility;
 import io.tech1.framework.domain.utilities.enums.EnumUtility;
 import org.junit.jupiter.api.RepeatedTest;
@@ -16,8 +21,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.disabledIncidentFeatureConfigs;
-import static io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs.enabledIncidentFeatureConfigs;
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperties;
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.*;
@@ -133,70 +137,6 @@ public class PropertiesAsserterAndPrinterTest {
         // no asserts
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void incidentConfigsCorrectFeaturesTest() {
-        var flag = randomBoolean();
-        var loginFailureUsernamePassword = flag ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs();
-        var loginFailureUsernameMaskedPassword = !flag ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs();
-        var incidentConfigs = IncidentConfigs.of(
-                true,
-                RemoteServer.of(
-                        "http://localhost:8973",
-                        "incident-user",
-                        "incident-password"
-                ),
-                IncidentFeaturesConfigs.of(
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        loginFailureUsernamePassword,
-                        loginFailureUsernameMaskedPassword,
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs()
-                )
-        );
-
-        // Act
-        assertProperties(incidentConfigs, "incidentConfigs");
-        printProperties(incidentConfigs);
-
-        // Assert
-        // no asserts
-    }
-
-    @Test
-    public void incidentConfigsExceptionFeaturesTest() {
-        var incidentConfigs = IncidentConfigs.of(
-                true,
-                RemoteServer.of(
-                        "http://localhost:8973",
-                        "incident-user",
-                        "incident-password"
-                ),
-                IncidentFeaturesConfigs.of(
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        enabledIncidentFeatureConfigs(),
-                        enabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
-                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs()
-                )
-        );
-
-        // Act
-        var throwable = catchThrowable(() -> assertProperties(incidentConfigs, "incidentConfigs"));
-
-        // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Please configure login failure incident feature. Only one feature type could be enabled");
-    }
-
     @Test
     public void incidentConfigsTest() {
         // Act
@@ -288,6 +228,111 @@ public class PropertiesAsserterAndPrinterTest {
 
         // Assert
         // no asserts
+    }
+
+    @Test
+    public void securityJwtConfigsIncidentsCorrectTest() {
+        var loginFailureUsernamePassword = randomBoolean();
+        var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
+        var incidentConfigs = IncidentsConfigs.of(
+                Map.of(
+                        AUTHENTICATION_LOGIN, randomBoolean(),
+                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, loginFailureUsernamePassword,
+                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, loginFailureUsernameMaskedPassword,
+                        AUTHENTICATION_LOGOUT, randomBoolean(),
+                        AUTHENTICATION_LOGOUT_MIN, randomBoolean(),
+                        SESSION_REFRESHED, randomBoolean(),
+                        SESSION_EXPIRED, randomBoolean(),
+                        REGISTER1, randomBoolean(),
+                        REGISTER1_FAILURE, randomBoolean()
+                )
+        );
+        var securityJwtConfigs = new SecurityJwtConfigs();
+        securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
+        securityJwtConfigs.setCookiesConfigs(SECURITY_JWT_CONFIGS.getCookiesConfigs());
+        securityJwtConfigs.setEssenceConfigs(SECURITY_JWT_CONFIGS.getEssenceConfigs());
+        securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
+        securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
+        securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
+        securityJwtConfigs.setMongodb(SECURITY_JWT_CONFIGS.getMongodb());
+        securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
+        securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
+
+        // Act
+        assertProperties(securityJwtConfigs, "securityJwtConfigs");
+        printProperties(securityJwtConfigs);
+
+        // Assert
+        // no asserts
+    }
+
+    @Test
+    public void securityJwtConfigsIncidentsNoSessionRefreshedFailureTest() {
+        var incidentConfigs = IncidentsConfigs.of(
+                Map.of(
+                        AUTHENTICATION_LOGIN, randomBoolean(),
+                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false,
+                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
+                        AUTHENTICATION_LOGOUT, randomBoolean(),
+                        AUTHENTICATION_LOGOUT_MIN, randomBoolean(),
+                        SESSION_EXPIRED, randomBoolean(),
+                        REGISTER1, randomBoolean(),
+                        REGISTER1_FAILURE, randomBoolean()
+                )
+        );
+        var securityJwtConfigs = new SecurityJwtConfigs();
+        securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
+        securityJwtConfigs.setCookiesConfigs(SECURITY_JWT_CONFIGS.getCookiesConfigs());
+        securityJwtConfigs.setEssenceConfigs(SECURITY_JWT_CONFIGS.getEssenceConfigs());
+        securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
+        securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
+        securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
+        securityJwtConfigs.setMongodb(SECURITY_JWT_CONFIGS.getMongodb());
+        securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
+        securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
+
+        // Act
+        var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Attribute `incidentsConfigs.typesConfigs` requirements: `[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register1, Register1 Failure, Session Expired, Session Refreshed]`, disjunction: `[Session Refreshed]`");
+    }
+
+    @Test
+    public void securityJwtConfigsIncidentsOnlyOneLoginFailureTest() {
+        var incidentConfigs = IncidentsConfigs.of(
+                Map.of(
+                        AUTHENTICATION_LOGIN, randomBoolean(),
+                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true,
+                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
+                        AUTHENTICATION_LOGOUT, randomBoolean(),
+                        AUTHENTICATION_LOGOUT_MIN, randomBoolean(),
+                        SESSION_REFRESHED, randomBoolean(),
+                        SESSION_EXPIRED, randomBoolean(),
+                        REGISTER1, randomBoolean(),
+                        REGISTER1_FAILURE, randomBoolean()
+                )
+        );
+        var securityJwtConfigs = new SecurityJwtConfigs();
+        securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
+        securityJwtConfigs.setCookiesConfigs(SECURITY_JWT_CONFIGS.getCookiesConfigs());
+        securityJwtConfigs.setEssenceConfigs(SECURITY_JWT_CONFIGS.getEssenceConfigs());
+        securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
+        securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
+        securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
+        securityJwtConfigs.setMongodb(SECURITY_JWT_CONFIGS.getMongodb());
+        securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
+        securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
+
+        // Act
+        var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
+
+        // Assert
+        assertThat(throwable).isNotNull();
+        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(throwable.getMessage()).isEqualTo("Please configure login failure incident feature. Only one feature type could be enabled");
     }
 
     @Test

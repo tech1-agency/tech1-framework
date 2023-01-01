@@ -12,25 +12,6 @@ tech1:
       baseURL: http://localhost:8973
       username: admin
       password: admin
-    features:
-      login:
-        enabled: true
-      loginFailureUsernamePassword:
-        enabled: true
-      loginFailureUsernameMaskedPassword:
-        enabled: false
-      logout:
-        enabled: true
-      logoutMin:
-        enabled: true
-      sessionRefreshed:
-        enabled: true
-      sessionExpired:
-        enabled: true
-      register1:
-        enabled: true
-      register1Failure:
-        enabled: true
   mvcConfigs:
     corsConfigs:
       allowedOrigins:
@@ -39,6 +20,17 @@ tech1:
   securityJwtConfigs:
     cookiesConfigs:
       domain: localhost
+    incidentsConfigs:
+      typesConfigs:
+        AUTHENTICATION_LOGIN: true
+        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD: false
+        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD: true
+        AUTHENTICATION_LOGOUT: false
+        AUTHENTICATION_LOGOUT_MIN: false
+        SESSION_REFRESHED: true
+        SESSION_EXPIRED: false
+        REGISTER1: true
+        REGISTER1_FAILURE: true
     jwtTokensConfigs:
       secretKey: ENC(G/ikUUQcuS4+pbN4dj1gPlGwm/Ht2a+8)
       accessToken:

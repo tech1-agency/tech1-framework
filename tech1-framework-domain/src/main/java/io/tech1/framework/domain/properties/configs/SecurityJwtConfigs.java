@@ -3,9 +3,21 @@ package io.tech1.framework.domain.properties.configs;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Checkbox;
 import io.tech1.framework.domain.properties.base.Mongodb;
+import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
+import io.tech1.framework.domain.utilities.enums.EnumUtility;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Map;
+
+import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD;
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD;
+import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.missingMappingsKeys;
+import static java.lang.Boolean.TRUE;
+import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
 @Data
@@ -17,6 +29,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     private CookiesConfigs cookiesConfigs;
     @MandatoryProperty
     private EssenceConfigs essenceConfigs;
+    @MandatoryProperty
+    private IncidentsConfigs incidentsConfigs;
     @MandatoryProperty
     private JwtTokensConfigs jwtTokensConfigs;
     @MandatoryProperty
@@ -33,6 +47,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
             AuthoritiesConfigs authoritiesConfigs,
             CookiesConfigs cookiesConfigs,
             EssenceConfigs essenceConfigs,
+            IncidentsConfigs incidentsConfigs,
             JwtTokensConfigs jwtTokensConfigs,
             LoggingConfigs loggingConfigs,
             Mongodb mongodb,
@@ -43,6 +58,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         instance.authoritiesConfigs = authoritiesConfigs;
         instance.cookiesConfigs = cookiesConfigs;
         instance.essenceConfigs = essenceConfigs;
+        instance.incidentsConfigs = incidentsConfigs;
         instance.jwtTokensConfigs = jwtTokensConfigs;
         instance.loggingConfigs = loggingConfigs;
         instance.mongodb = mongodb;
@@ -60,5 +76,28 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                 Checkbox.disabled()
         );
         return instance;
+    }
+
+    @Override
+    public void assertProperties() {
+        super.assertProperties();
+
+        var typesConfigs = this.incidentsConfigs.getTypesConfigs();
+        var disjunction = disjunction(typesConfigs.keySet(), EnumUtility.set(SecurityJwtIncidentType.class));
+        assertTrueOrThrow(
+                typesConfigs.size() == 9,
+                missingMappingsKeys(
+                        "incidentsConfigs.typesConfigs",
+                        baseJoining(SecurityJwtIncidentType.class),
+                        baseJoining(disjunction)
+                )
+        );
+
+        var loginFailureUsernamePassword = typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD);
+        var loginFailureUsernameMaskedPassword = typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD);
+
+        if (TRUE.equals(loginFailureUsernamePassword) && TRUE.equals(loginFailureUsernameMaskedPassword)) {
+            throw new IllegalArgumentException("Please configure login failure incident feature. Only one feature type could be enabled");
+        }
     }
 }

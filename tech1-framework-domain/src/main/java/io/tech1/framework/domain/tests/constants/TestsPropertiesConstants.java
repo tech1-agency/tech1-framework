@@ -3,8 +3,6 @@ package io.tech1.framework.domain.tests.constants;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.base.*;
 import io.tech1.framework.domain.properties.configs.*;
-import io.tech1.framework.domain.properties.configs.incidents.IncidentFeatureConfigs;
-import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
 import io.tech1.framework.domain.properties.configs.security.jwt.websockets.*;
@@ -17,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -53,17 +52,6 @@ public class TestsPropertiesConstants {
                     "http://localhost:8973",
                     "incident-username",
                     "incident-password"
-            ),
-            IncidentFeaturesConfigs.of(
-                    IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.disabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.disabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.disabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.enabledIncidentFeatureConfigs(),
-                    IncidentFeatureConfigs.disabledIncidentFeatureConfigs()
             )
     );
     public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = HardwareMonitoringConfigs.of(
@@ -104,6 +92,19 @@ public class TestsPropertiesConstants {
                             )
                     ),
                     InvitationCodes.enabled()
+            ),
+            IncidentsConfigs.of(
+                    Map.of(
+                            AUTHENTICATION_LOGIN, true,
+                            AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false,
+                            AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
+                            AUTHENTICATION_LOGOUT, false,
+                            AUTHENTICATION_LOGOUT_MIN, false,
+                            SESSION_REFRESHED, true,
+                            SESSION_EXPIRED, false,
+                            REGISTER1, true,
+                            REGISTER1_FAILURE, true
+                    )
             ),
             JwtTokensConfigs.of(
                     "TECH1",

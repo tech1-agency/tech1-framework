@@ -5,8 +5,8 @@ import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.domain.properties.configs.incidents.IncidentFeaturesConfigs;
 import io.tech1.framework.domain.utilities.random.EntityUtility;
 import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
@@ -406,7 +406,8 @@ public class IncidentPublisherImplTest {
                         incidentFeatureConfigs.get(4),
                         incidentFeatureConfigs.get(5),
                         incidentFeatureConfigs.get(6),
-                        incidentFeatureConfigs.get(7)
+                        incidentFeatureConfigs.get(7),
+                        incidentFeatureConfigs.get(8)
                 )
         );
     }

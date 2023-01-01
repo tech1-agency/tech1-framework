@@ -153,6 +153,7 @@ public class PropertiesAsserterAndPrinterTest {
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
+                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs()
                 )
         );
@@ -178,6 +179,7 @@ public class PropertiesAsserterAndPrinterTest {
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         enabledIncidentFeatureConfigs(),
                         enabledIncidentFeatureConfigs(),
+                        randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),
                         randomBoolean() ? enabledIncidentFeatureConfigs() : disabledIncidentFeatureConfigs(),

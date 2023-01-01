@@ -1,13 +1,15 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters.SecurityJwtIncidentConverter;
-import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.incidents.domain.authetication.*;
+import io.tech1.framework.incidents.converters.IncidentConverter;
+import io.tech1.framework.incidents.converters.impl.IncidentConverterImpl;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
@@ -35,8 +37,15 @@ public class SecurityJwtIncidentConverterImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
+        IncidentConverter incidentConverter() {
+            return new IncidentConverterImpl();
+        }
+
+        @Bean
         SecurityJwtIncidentConverter securityJwtIncidentConverter() {
-            return new SecurityJwtIncidentConverterImpl();
+            return new SecurityJwtIncidentConverterImpl(
+                    this.incidentConverter()
+            );
         }
     }
 
@@ -98,75 +107,6 @@ public class SecurityJwtIncidentConverterImplTest {
         assertThat(actual.getAttributes().get("ipAddress")).isEqualTo("127.0.0.1");
         assertThat(actual.getAttributes().get("what")).isEqualTo("—");
         assertThat(actual.getAttributes().get("where")).isEqualTo("Processing...Please wait!");
-    }
-
-    @Test
-    public void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
-        // Arrange
-        var username = Username.of("tech1");
-        var password = Password.of("passwordTOP123!");
-        var incident = IncidentAuthenticationLoginFailureUsernamePassword.of(
-                username,
-                password
-        );
-
-        // Act
-        var actual = this.componentUnderTest.convert(incident);
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
-        assertThat(actual.getAttributes()).hasSize(3);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Password");
-        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("password")).isEqualTo(password);
-    }
-
-    @Test
-    public void convertAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
-        // Arrange
-        var username = Username.of("tech1");
-        var password = Password.of("passwordTOP123!");
-        var incident = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
-                username,
-                password
-        );
-
-        // Act
-        var actual = this.componentUnderTest.convert(incident);
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
-        assertThat(actual.getAttributes()).hasSize(3);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Masked Password");
-        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("password")).isEqualTo(Password.of("passw**********"));
-    }
-
-    @Test
-    public void convertAuthenticationLogoutMinIncidentTest() {
-        // Arrange
-        var username = Username.of("tech1");
-        var incident = IncidentAuthenticationLogoutMin.of(
-                username
-        );
-
-        // Act
-        var actual = this.componentUnderTest.convert(incident);
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getType()).isEqualTo("Authentication Logout Min");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
-        assertThat(actual.getAttributes()).hasSize(2);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout Min");
-        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
     }
 
     @Test

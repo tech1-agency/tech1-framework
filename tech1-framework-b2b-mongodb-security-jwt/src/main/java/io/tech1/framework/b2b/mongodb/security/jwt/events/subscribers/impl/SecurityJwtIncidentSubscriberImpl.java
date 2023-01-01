@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtIncidentSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters.SecurityJwtIncidentConverter;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
+import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -25,6 +26,7 @@ public class SecurityJwtIncidentSubscriberImpl extends AbstractEventSubscriber i
     private final IncidentClient incidentClient;
     // Converters
     private final SecurityJwtIncidentConverter securityJwtIncidentConverter;
+    private final IncidentConverter incidentConverter;
 
     @Override
     public void onEvent(IncidentAuthenticationLogin incidentAuthenticationLogin) {
@@ -36,21 +38,21 @@ public class SecurityJwtIncidentSubscriberImpl extends AbstractEventSubscriber i
     @Override
     public void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword) {
         LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incidentAuthenticationLoginFailureUsernamePassword.getUsername());
-        var incident = this.securityJwtIncidentConverter.convert(incidentAuthenticationLoginFailureUsernamePassword);
+        var incident = this.incidentConverter.convert(incidentAuthenticationLoginFailureUsernamePassword);
         this.incidentClient.registerIncident(incident);
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword) {
         LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incidentAuthenticationLoginFailureUsernameMaskedPassword.getUsername());
-        var incident = this.securityJwtIncidentConverter.convert(incidentAuthenticationLoginFailureUsernameMaskedPassword);
+        var incident = this.incidentConverter.convert(incidentAuthenticationLoginFailureUsernameMaskedPassword);
         this.incidentClient.registerIncident(incident);
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLogoutMin incidentAuthenticationLogoutMin) {
         LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incidentAuthenticationLogoutMin.getUsername());
-        var incident = this.securityJwtIncidentConverter.convert(incidentAuthenticationLogoutMin);
+        var incident = this.incidentConverter.convert(incidentAuthenticationLogoutMin);
         this.incidentClient.registerIncident(incident);
     }
 

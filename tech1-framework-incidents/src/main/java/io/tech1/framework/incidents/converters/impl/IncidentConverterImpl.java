@@ -1,8 +1,13 @@
 package io.tech1.framework.incidents.converters.impl;
 
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.IncidentAttributes;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
 import static io.tech1.framework.domain.utilities.exceptions.ThrowableUtility.getTrace;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -44,6 +50,49 @@ public class IncidentConverterImpl implements IncidentConverter {
         if (!isEmpty(attributes)) {
             attributes.forEach(incident::add);
         }
+        return incident;
+    }
+
+    @Override
+    public Incident convert(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword) {
+        return this.convertAuthenticationLoginFailure(
+                AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD.toString(),
+                incidentAuthenticationLoginFailureUsernamePassword.getUsername(),
+                incidentAuthenticationLoginFailureUsernamePassword.getPassword()
+        );
+    }
+
+    @Override
+    public Incident convert(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword) {
+        return this.convertAuthenticationLoginFailure(
+                AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD.toString(),
+                incidentAuthenticationLoginFailureUsernameMaskedPassword.getUsername(),
+                incidentAuthenticationLoginFailureUsernameMaskedPassword.getPassword()
+        );
+    }
+
+    @Override
+    public Incident convert(IncidentAuthenticationLogoutMin incidentAuthenticationLogoutMin) {
+        return this.convertUsername(
+                AUTHENTICATION_LOGOUT_MIN.toString(),
+                incidentAuthenticationLogoutMin.getUsername()
+        );
+    }
+
+    @Override
+    public Incident convertUsername(String incidentType, Username username) {
+        var incident = new Incident();
+        incident.add(IncidentAttributes.Keys.TYPE, incidentType);
+        incident.add(IncidentAttributes.Keys.USERNAME, username);
+        return incident;
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private Incident convertAuthenticationLoginFailure(String incidentType, Username username, Password password) {
+        var incident = this.convertUsername(incidentType, username);
+        incident.add(IncidentAttributes.Keys.PASSWORD, password);
         return incident;
     }
 }

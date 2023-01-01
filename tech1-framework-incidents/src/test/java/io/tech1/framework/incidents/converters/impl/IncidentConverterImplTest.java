@@ -1,6 +1,11 @@
 package io.tech1.framework.incidents.converters.impl;
 
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.converters.IncidentConverter;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -102,5 +107,74 @@ public class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
         assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
         assertThat(actual.getAttributes().get("key1")).isEqualTo(object);
+    }
+
+    @Test
+    public void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var password = Password.of("passwordTOP123!");
+        var incident = IncidentAuthenticationLoginFailureUsernamePassword.of(
+                username,
+                password
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(3);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Password");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("password")).isEqualTo(password);
+    }
+
+    @Test
+    public void convertAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var password = Password.of("passwordTOP123!");
+        var incident = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
+                username,
+                password
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(3);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Masked Password");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes().get("password")).isEqualTo(Password.of("passw**********"));
+    }
+
+    @Test
+    public void convertAuthenticationLogoutMinIncidentTest() {
+        // Arrange
+        var username = Username.of("tech1");
+        var incident = IncidentAuthenticationLogoutMin.of(
+                username
+        );
+
+        // Act
+        var actual = this.componentUnderTest.convert(incident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Logout Min");
+        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(2);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
+        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout Min");
+        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
     }
 }

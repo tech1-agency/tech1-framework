@@ -17,7 +17,7 @@ public class IncidentTypeTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
-                Arguments.of(Tuple1.of(IncidentType.THROWABLE), "incident-type-throwable.json"),
+                Arguments.of(Tuple1.of(IncidentType.REGISTER1), "incident-type-register1.json"),
                 Arguments.of(Tuple1.of(IncidentType.AUTHENTICATION_LOGIN), "incident-type-authentication-login.json")
         );
     }

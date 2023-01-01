@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum IncidentType {
-    THROWABLE("Throwable"),
     AUTHENTICATION_LOGIN("Authentication Login"),
     AUTHENTICATION_LOGIN_FAILURE("Authentication Login Failure"),
     AUTHENTICATION_LOGOUT("Authentication Logout"),

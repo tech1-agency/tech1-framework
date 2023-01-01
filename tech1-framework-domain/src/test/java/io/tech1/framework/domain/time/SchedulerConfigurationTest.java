@@ -13,14 +13,14 @@ public class SchedulerConfigurationTest {
     @Test
     public void neverTest() {
         // Act
-        var schedulerConfiguration = SchedulerConfiguration.never();
+        var sc = SchedulerConfiguration.never();
 
         // Assert
-        assertThat(schedulerConfiguration).isNotNull();
-        assertThat(schedulerConfiguration.getInitialDelay()).isEqualTo(9223372036854775807L);
-        assertThat(schedulerConfiguration.getDelay()).isEqualTo(9223372036854775807L);
-        assertThat(schedulerConfiguration.getUnit()).isEqualTo(TimeUnit.DAYS);
-        assertThat(schedulerConfiguration.getDelayedSeconds()).isEqualTo(9223372036854775807L);
+        assertThat(sc).isNotNull();
+        assertThat(sc.getInitialDelay()).isEqualTo(9223372036854775807L);
+        assertThat(sc.getDelay()).isEqualTo(9223372036854775807L);
+        assertThat(sc.getUnit()).isEqualTo(TimeUnit.DAYS);
+        assertThat(sc.getUnit().toSeconds(sc.getDelay())).isEqualTo(9223372036854775807L);
     }
 
     @Test
@@ -38,6 +38,5 @@ public class SchedulerConfigurationTest {
         assertThat(schedulerConfiguration.getInitialDelay()).isEqualTo(initialDelay);
         assertThat(schedulerConfiguration.getDelay()).isEqualTo(delay);
         assertThat(schedulerConfiguration.getUnit()).isEqualTo(unit);
-        assertThat(schedulerConfiguration.getDelayedSeconds()).isEqualTo(unit.toSeconds(delay));
     }
 }

@@ -4,14 +4,14 @@ import io.tech1.framework.domain.time.SchedulerConfiguration;
 import io.tech1.framework.domain.time.TimeAmount;
 import lombok.Getter;
 
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
+import static java.time.temporal.ChronoUnit.FOREVER;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
 public abstract class AbstractTimerTask1 {
-    public static final TimeAmount DURATION_FOREVER = TimeAmount.of(1L, ChronoUnit.FOREVER);
+    public static final TimeAmount DURATION_FOREVER = TimeAmount.of(1L, FOREVER);
 
     @Getter
     protected volatile TimerTaskState state;
@@ -20,7 +20,7 @@ public abstract class AbstractTimerTask1 {
     private final TimeAmount duration;
 
     @Getter
-    private long elapsedTime;
+    private long elapsedSeconds;
 
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
     private Future<?> scheduledFuture = null;
@@ -30,7 +30,7 @@ public abstract class AbstractTimerTask1 {
     ) {
         this.interval = interval;
         this.duration = DURATION_FOREVER;
-        this.elapsedTime = 0;
+        this.elapsedSeconds = 0;
     }
 
     protected AbstractTimerTask1(
@@ -39,7 +39,7 @@ public abstract class AbstractTimerTask1 {
     ) {
         this.interval = interval;
         this.duration = duration;
-        this.elapsedTime = 0;
+        this.elapsedSeconds = 0;
     }
 
     public abstract void onTick();
@@ -64,8 +64,8 @@ public abstract class AbstractTimerTask1 {
         this.state = TimerTaskState.OPERATIVE;
         this.scheduledFuture = this.scheduledExecutorService.scheduleWithFixedDelay(() -> {
             this.onTick();
-            this.elapsedTime += this.interval.getDelayedSeconds();
-            if (this.duration.toSeconds() > 0 && this.elapsedTime >= this.duration.toSeconds()) {
+            this.elapsedSeconds += this.interval.getUnit().toSeconds(this.interval.getDelay());
+            if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
                 this.onComplete();
                 this.scheduledFuture.cancel(false);
             }
@@ -78,14 +78,14 @@ public abstract class AbstractTimerTask1 {
         }
         this.scheduledFuture.cancel(false);
         this.state = TimerTaskState.STOPPED;
-        this.elapsedTime = 0;
+        this.elapsedSeconds = 0;
     }
 
-    public final long getRemainingTime() {
-        if (ChronoUnit.FOREVER.equals(this.duration.getUnit())) {
+    public final long getRemainingSeconds() {
+        if (FOREVER.equals(this.duration.getUnit())) {
             return AbstractTimerTask1.DURATION_FOREVER.toSeconds();
         } else {
-            return this.duration.toSeconds() - this.elapsedTime;
+            return this.duration.toSeconds() - this.elapsedSeconds;
         }
     }
 }

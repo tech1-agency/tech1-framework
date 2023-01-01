@@ -18,8 +18,4 @@ public class SchedulerConfiguration {
                 TimeUnit.DAYS
         );
     }
-
-    public long getDelayedSeconds() {
-        return this.unit.toSeconds(this.delay);
-    }
 }

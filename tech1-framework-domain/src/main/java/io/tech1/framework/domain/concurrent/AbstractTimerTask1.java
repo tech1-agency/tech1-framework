@@ -10,11 +10,11 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-public abstract class AbstractTimerTask {
+public abstract class AbstractTimerTask1 {
     public static final TimeAmount DURATION_FOREVER = TimeAmount.of(1L, ChronoUnit.FOREVER);
 
     @Getter
-    private volatile boolean isRunning = false;
+    protected volatile TimerTaskState state;
 
     private final SchedulerConfiguration interval;
     private final TimeAmount duration;
@@ -25,7 +25,7 @@ public abstract class AbstractTimerTask {
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
     private Future<?> scheduledFuture = null;
 
-    protected AbstractTimerTask(
+    protected AbstractTimerTask1(
             SchedulerConfiguration interval
     ) {
         this.interval = interval;
@@ -33,7 +33,7 @@ public abstract class AbstractTimerTask {
         this.elapsedTime = 0;
     }
 
-    protected AbstractTimerTask(
+    protected AbstractTimerTask1(
             SchedulerConfiguration interval,
             TimeAmount duration
     ) {
@@ -49,43 +49,43 @@ public abstract class AbstractTimerTask {
         // override on complete on demand
     }
 
+    public final void switchState() {
+        if (this.state.isOperative()) {
+            this.stop();
+        } else {
+            this.start();
+        }
+    }
+
     public void start() {
-        if (this.isRunning) {
+        if (this.state.isOperative()) {
             return;
         }
-        this.isRunning = true;
+        this.state = TimerTaskState.OPERATIVE;
         this.scheduledFuture = this.scheduledExecutorService.scheduleWithFixedDelay(() -> {
-            onTick();
+            this.onTick();
             this.elapsedTime += this.interval.getDelayedSeconds();
             if (this.duration.toSeconds() > 0 && this.elapsedTime >= this.duration.toSeconds()) {
-                onComplete();
+                this.onComplete();
                 this.scheduledFuture.cancel(false);
             }
         }, this.interval.getInitialDelay(), this.interval.getDelay(), this.interval.getUnit());
     }
 
     public void stop() {
-        pause();
-        this.elapsedTime = 0;
-    }
-
-    public void pause() {
-        if (!this.isRunning) {
+        if (!this.state.isOperative()) {
             return;
         }
         this.scheduledFuture.cancel(false);
-        this.isRunning = false;
+        this.state = TimerTaskState.STOPPED;
+        this.elapsedTime = 0;
     }
 
-    public void resume() {
-        this.start();
-    }
-
-    public long getRemainingTime() {
+    public final long getRemainingTime() {
         if (ChronoUnit.FOREVER.equals(this.duration.getUnit())) {
-            return AbstractTimerTask.DURATION_FOREVER.toSeconds();
+            return AbstractTimerTask1.DURATION_FOREVER.toSeconds();
         } else {
-            return this.duration.toSeconds() - elapsedTime;
+            return this.duration.toSeconds() - this.elapsedTime;
         }
     }
 }

@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.websockets.tasks;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.websockets.template.WssMessagingTemplate;
-import io.tech1.framework.domain.concurrent.AbstractTimerTask;
+import io.tech1.framework.domain.concurrent.AbstractTimerTask1;
 import io.tech1.framework.domain.time.SchedulerConfiguration;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -17,7 +17,7 @@ import static io.tech1.framework.b2b.mongodb.security.jwt.websockets.domain.even
 
 @Slf4j
 @Component
-public class HardwareBackPressureTimerTask extends AbstractTimerTask {
+public class HardwareBackPressureTimerTask extends AbstractTimerTask1 {
 
     // Sessions
     private final SessionRegistry sessionRegistry;
@@ -39,7 +39,9 @@ public class HardwareBackPressureTimerTask extends AbstractTimerTask {
             IncidentPublisher incidentPublisher,
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
-        super(SchedulerConfiguration.of(60L, 60L, TimeUnit.SECONDS));
+        super(
+                SchedulerConfiguration.of(60L, 60L, TimeUnit.SECONDS)
+        );
         this.sessionRegistry = sessionRegistry;
         this.wssMessagingTemplate = wssMessagingTemplate;
         this.hardwareMonitoringStore = hardwareMonitoringStore;

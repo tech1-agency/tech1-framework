@@ -79,6 +79,7 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
         );
         incident.add(EXCEPTION, incidentRegistration1Failure.getException());
         incident.add(INVITATION_CODE, incidentRegistration1Failure.getInvitationCode());
+        incident.add(INVITATION_CODE_OWNER, incidentRegistration1Failure.getInvitationCodeOwner());
         return incident;
     }
 

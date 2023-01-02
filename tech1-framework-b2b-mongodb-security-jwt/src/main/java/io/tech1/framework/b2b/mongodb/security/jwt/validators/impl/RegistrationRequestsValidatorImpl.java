@@ -51,15 +51,15 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             username,
-                            exception,
-                            invitationCode
+                            invitationCode,
+                            exception
                     )
             );
             this.securityJwtIncidentPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
                             username,
-                            exception,
-                            invitationCode
+                            invitationCode,
+                            exception
                     )
             );
             throw new RegistrationException(exception);
@@ -72,15 +72,17 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
                 this.securityJwtPublisher.publishRegistration1Failure(
                         EventRegistration1Failure.of(
                                 username,
-                                exception,
-                                invitationCode
+                                invitationCode,
+                                dbInvitationCode.getOwner(),
+                                exception
                         )
                 );
                 this.securityJwtIncidentPublisher.publishRegistration1Failure(
                         IncidentRegistration1Failure.of(
                                 username,
-                                exception,
-                                invitationCode
+                                invitationCode,
+                                dbInvitationCode.getOwner(),
+                                exception
                         )
                 );
                 throw new RegistrationException(exception);
@@ -90,15 +92,15 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             username,
-                            exception,
-                            invitationCode
+                            invitationCode,
+                            exception
                     )
             );
             this.securityJwtIncidentPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
                             username,
-                            exception,
-                            invitationCode
+                            invitationCode,
+                            exception
                     )
             );
             throw new RegistrationException(exception);

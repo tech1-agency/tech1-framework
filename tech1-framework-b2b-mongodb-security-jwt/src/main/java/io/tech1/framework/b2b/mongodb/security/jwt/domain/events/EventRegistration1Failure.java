@@ -7,6 +7,20 @@ import lombok.Data;
 @Data(staticConstructor = "of")
 public class EventRegistration1Failure {
     private final Username username;
-    private final String exception;
     private final String invitationCode;
+    private final Username invitationCodeOwner;
+    private final String exception;
+
+    public static EventRegistration1Failure of(
+            Username username,
+            String exception,
+            String invitationCode
+    ) {
+        return EventRegistration1Failure.of(
+                username,
+                invitationCode,
+                Username.of("—"),
+                exception
+        );
+    }
 }

@@ -228,8 +228,8 @@ public class SecurityJwtIncidentConverterImplTest {
         var invitationCode = randomString();
         var incident = IncidentRegistration1Failure.of(
                 username,
-                exception,
-                invitationCode
+                invitationCode,
+                exception
         );
 
         // Act
@@ -239,11 +239,12 @@ public class SecurityJwtIncidentConverterImplTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1 Failure");
         assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
-        assertThat(actual.getAttributes()).hasSize(4);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "exception", "invitationCode");
+        assertThat(actual.getAttributes()).hasSize(5);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "exception", "invitationCode", "invitationCodeOwner");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1 Failure");
         assertThat(actual.getAttributes().get("username")).isEqualTo(username);
         assertThat(actual.getAttributes().get("exception")).isEqualTo(exception);
         assertThat(actual.getAttributes().get("invitationCode")).isEqualTo(invitationCode);
+        assertThat(actual.getAttributes().get("invitationCodeOwner")).isEqualTo(Username.of("—"));
     }
 }

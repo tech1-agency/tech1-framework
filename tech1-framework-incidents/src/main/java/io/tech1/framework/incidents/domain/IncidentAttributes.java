@@ -21,6 +21,7 @@ public class IncidentAttributes {
         public static final String PARAMS = "params";
 
         public static final String INVITATION_CODE = "invitationCode";
+        public static final String INVITATION_CODE_OWNER = "invitationCodeOwner";
 
         public static final String BROWSER = "browser";
         public static final String COUNTRY = "country";

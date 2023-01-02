@@ -96,15 +96,15 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
                 EventRegistration1Failure.of(
                         username,
-                        "Username is already used",
-                        invitationCode
+                        invitationCode,
+                        "Username is already used"
                 )
         ));
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
-                        "Username is already used",
-                        invitationCode
+                        invitationCode,
+                        "Username is already used"
                 )
         ));
     }
@@ -137,15 +137,17 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
                 EventRegistration1Failure.of(
                         username,
-                        "InvitationCode is already used",
-                        invitationCode
+                        invitationCode,
+                        dbInvitationCode.getOwner(),
+                        "InvitationCode is already used"
                 )
         ));
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
-                        "InvitationCode is already used",
-                        invitationCode
+                        invitationCode,
+                        dbInvitationCode.getOwner(),
+                        "InvitationCode is already used"
                 )
         ));
     }
@@ -177,15 +179,15 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
                 EventRegistration1Failure.of(
                         username,
-                        "InvitationCode is not found",
-                        invitationCode
+                        invitationCode,
+                        "InvitationCode is not found"
                 )
         ));
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
-                        "InvitationCode is not found",
-                        invitationCode
+                        invitationCode,
+                        "InvitationCode is not found"
                 )
         ));
     }

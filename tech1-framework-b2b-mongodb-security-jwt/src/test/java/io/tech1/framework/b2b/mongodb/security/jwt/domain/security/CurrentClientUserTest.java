@@ -60,7 +60,6 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     public void serializeTest() {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomString(),
                 Username.of("tech1"),
                 Email.of("tech1@tech1.io"),
                 "Tech1",
@@ -88,7 +87,6 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     public void getAttributeByKeyTest(String attributeKey, boolean reflectionHack, Object expected) throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomString(),
                 randomUsername(),
                 randomEmail(),
                 randomString(),
@@ -116,7 +114,6 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     public void hasAbstractAuthorityTest(AbstractAuthority abstractAuthority, boolean expected) {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomString(),
                 randomUsername(),
                 randomEmail(),
                 randomString(),
@@ -141,7 +138,6 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     public void hasAuthorityTest(String authority, boolean expected) {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomString(),
                 randomUsername(),
                 randomEmail(),
                 randomString(),

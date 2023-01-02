@@ -4,10 +4,7 @@ import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.Data;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -29,6 +26,22 @@ public class DefaultUsers implements AbstractToggleProperty {
         instance.enabled = enabled;
         instance.users = users;
         return instance;
+    }
+
+    // NOTE: test-purposes
+    public static DefaultUsers enabled() {
+        return of(
+                true,
+                new ArrayList<>()
+        );
+    }
+
+    // NOTE: test-purposes
+    public static DefaultUsers disabled() {
+        return of(
+                false,
+                new ArrayList<>()
+        );
     }
 
     public final Set<String> getDefaultUsersAuthorities() {

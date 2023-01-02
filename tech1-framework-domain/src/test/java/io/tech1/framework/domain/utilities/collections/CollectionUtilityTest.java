@@ -59,6 +59,81 @@ public class CollectionUtilityTest {
     }
 
     @Test
+    public void mutableSingletonListIntegrationTest() {
+        // Arrange
+        var element1 = "element1";
+        var element2 = "element2";
+        var element3 = "element3";
+
+        // Act-1
+        var elements = mutableSingletonList(element1);
+
+        // Assert-1
+        assertThat(elements).hasSize(1);
+        assertThat(elements.get(0)).isEqualTo(element1);
+
+        // Act-2
+        elements.add(element2);
+        elements.add(element3);
+
+        // Assert-2
+        assertThat(elements).hasSize(3);
+        assertThat(elements).containsExactly(element1, element2, element3);
+    }
+
+    @Test
+    public void mutableSingletonSetIntegrationTest() {
+        // Arrange
+        var element1 = "element1";
+        var element2 = "element2";
+        var element3 = "element3";
+
+        // Act-1
+        var elements = mutableSingletonSet(element1);
+
+        // Assert-1
+        assertThat(elements).hasSize(1);
+        assertThat(elements.iterator().next()).isEqualTo(element1);
+
+        // Act-2
+        elements.add(element2);
+        elements.add(element3);
+
+        // Assert-2
+        assertThat(elements).hasSize(3);
+        assertThat(elements).containsExactly(element1, element2, element3);
+    }
+
+    @Test
+    public void mutableSingletonMapIntegrationTest() {
+        // Arrange
+        var key1 = "key1";
+        var key2 = "key2";
+        var key3 = "key3";
+        var value1 = "value1";
+        var value2 = "value2";
+        var value3 = "value3";
+
+        // Act-1
+        var elements = mutableSingletonMap(key1, value1);
+
+        // Assert-1
+        assertThat(elements).hasSize(1);
+        var entry = elements.entrySet().iterator().next();
+        assertThat(entry.getKey()).isEqualTo(key1);
+        assertThat(entry.getValue()).isEqualTo(value1);
+
+        // Act-2
+        elements.put(key2, value2);
+        elements.put(key3, value3);
+
+        // Assert-2
+        assertThat(elements).hasSize(3);
+        assertThat(elements.keySet()).containsExactly(key1, key2, key3);
+        assertThat(elements.values()).containsExactly(value1, value2, value3);
+    }
+
+    @Test
     public void emptyQueueTest() {
         // Arrange
         var expected = new LinkedList<>();

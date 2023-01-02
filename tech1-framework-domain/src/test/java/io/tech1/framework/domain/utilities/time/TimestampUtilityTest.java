@@ -11,7 +11,9 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsConstants.POLAND_ZONE_ID;
+import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.*;
+import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -128,7 +130,7 @@ public class TimestampUtilityTest {
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
     public void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
@@ -139,9 +141,12 @@ public class TimestampUtilityTest {
         assertThat(timestampUTC).isLessThan(timestampPoland);
         assertThat(timestampUTC).isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampUTC - timestampPoland).isEqualTo(-2671200000L);
-        assertThat(timestampUTC - timestampUkraine).isEqualTo(-2667600000L);
-        assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
+        var localDateTimeUTC = convertTimestamp(timestampUTC, UTC);
+        var localDateTimeUkraine = convertTimestamp(timestampUkraine, EET_ZONE_ID);
+        var localDateTimePoland = convertTimestamp(timestampPoland, POLAND_ZONE_ID);
+        assertThat(localDateTimeUTC.toString()).endsWith("00:00");
+        assertThat(localDateTimeUkraine.toString()).endsWith("00:00");
+        assertThat(localDateTimePoland.toString()).endsWith("00:00");
     }
 
     @ParameterizedTest

@@ -4,34 +4,23 @@ import io.tech1.framework.domain.time.SchedulerConfiguration;
 import io.tech1.framework.domain.time.TimeAmount;
 import lombok.Getter;
 
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
 public abstract class AbstractTimerTask {
-    public static final TimeAmount DURATION_FOREVER = TimeAmount.of(1L, ChronoUnit.FOREVER);
-
     @Getter
-    private volatile boolean isRunning = false;
+    protected volatile TimerTaskState state;
 
     private final SchedulerConfiguration interval;
     private final TimeAmount duration;
 
     @Getter
-    private long elapsedTime;
+    private long elapsedSeconds;
 
     private final ScheduledExecutorService scheduledExecutorService = newSingleThreadScheduledExecutor();
     private Future<?> scheduledFuture = null;
-
-    protected AbstractTimerTask(
-            SchedulerConfiguration interval
-    ) {
-        this.interval = interval;
-        this.duration = DURATION_FOREVER;
-        this.elapsedTime = 0;
-    }
 
     protected AbstractTimerTask(
             SchedulerConfiguration interval,
@@ -39,53 +28,52 @@ public abstract class AbstractTimerTask {
     ) {
         this.interval = interval;
         this.duration = duration;
-        this.elapsedTime = 0;
+        this.elapsedSeconds = 0;
+        this.state = TimerTaskState.CREATED;
     }
 
     public abstract void onTick();
+    public abstract void onComplete();
 
-    protected void onComplete() {
-        // ignored by default
-        // override on complete on demand
+    // ================================================================================================================
+    // PUBLIC METHODS: GETTERS
+    // ================================================================================================================
+    public final long getRemainingSeconds() {
+        return this.duration.toSeconds() - this.elapsedSeconds;
     }
 
-    public void start() {
-        if (this.isRunning) {
+    // ================================================================================================================
+    // PUBLIC METHODS: MUTATIONS
+    // ================================================================================================================
+    public final void switchState() {
+        if (this.state.isOperative()) {
+            this.stop();
+        } else {
+            this.start();
+        }
+    }
+
+    public final void start() {
+        if (this.state.isOperative()) {
             return;
         }
-        this.isRunning = true;
+        this.state = TimerTaskState.OPERATIVE;
         this.scheduledFuture = this.scheduledExecutorService.scheduleWithFixedDelay(() -> {
-            onTick();
-            this.elapsedTime += this.interval.getDelayedSeconds();
-            if (this.duration.toSeconds() > 0 && this.elapsedTime >= this.duration.toSeconds()) {
-                onComplete();
+            this.onTick();
+            this.elapsedSeconds += this.interval.getUnit().toSeconds(this.interval.getDelay());
+            if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
+                this.onComplete();
                 this.scheduledFuture.cancel(false);
             }
         }, this.interval.getInitialDelay(), this.interval.getDelay(), this.interval.getUnit());
     }
 
-    public void stop() {
-        pause();
-        this.elapsedTime = 0;
-    }
-
-    public void pause() {
-        if (!this.isRunning) {
+    public final void stop() {
+        if (!this.state.isOperative()) {
             return;
         }
         this.scheduledFuture.cancel(false);
-        this.isRunning = false;
-    }
-
-    public void resume() {
-        this.start();
-    }
-
-    public long getRemainingTime() {
-        if (ChronoUnit.FOREVER.equals(this.duration.getUnit())) {
-            return AbstractTimerTask.DURATION_FOREVER.toSeconds();
-        } else {
-            return this.duration.toSeconds() - elapsedTime;
-        }
+        this.state = TimerTaskState.STOPPED;
+        this.elapsedSeconds = 0;
     }
 }

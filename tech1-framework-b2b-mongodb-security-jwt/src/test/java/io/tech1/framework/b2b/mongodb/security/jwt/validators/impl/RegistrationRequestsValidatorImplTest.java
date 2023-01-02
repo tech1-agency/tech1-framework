@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1Failure;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
@@ -11,7 +12,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicati
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,8 +43,8 @@ public class RegistrationRequestsValidatorImplTest {
 
     }
 
-    private final IncidentPublisher incidentPublisher;
     private final SecurityJwtPublisher securityJwtPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     private final InvitationCodeRepository invitationCodeRepository;
     private final UserRepository userRepository;
 
@@ -53,8 +53,8 @@ public class RegistrationRequestsValidatorImplTest {
     @BeforeEach
     public void beforeEach() {
         reset(
-                this.incidentPublisher,
                 this.securityJwtPublisher,
+                this.securityJwtIncidentPublisher,
                 this.invitationCodeRepository,
                 this.userRepository
         );
@@ -63,7 +63,7 @@ public class RegistrationRequestsValidatorImplTest {
     @AfterEach
     public void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.invitationCodeRepository,
                 this.userRepository
@@ -96,15 +96,15 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
                 EventRegistration1Failure.of(
                         username,
-                        "Username is already used",
-                        invitationCode
+                        invitationCode,
+                        "Username is already used"
                 )
         ));
-        verify(this.incidentPublisher).publishRegistration1Failure(eq(
+        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
-                        "Username is already used",
-                        invitationCode
+                        invitationCode,
+                        "Username is already used"
                 )
         ));
     }
@@ -137,15 +137,17 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
                 EventRegistration1Failure.of(
                         username,
-                        "InvitationCode is already used",
-                        invitationCode
+                        invitationCode,
+                        dbInvitationCode.getOwner(),
+                        "InvitationCode is already used"
                 )
         ));
-        verify(this.incidentPublisher).publishRegistration1Failure(eq(
+        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
-                        "InvitationCode is already used",
-                        invitationCode
+                        invitationCode,
+                        dbInvitationCode.getOwner(),
+                        "InvitationCode is already used"
                 )
         ));
     }
@@ -177,15 +179,15 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
                 EventRegistration1Failure.of(
                         username,
-                        "InvitationCode is not found",
-                        invitationCode
+                        invitationCode,
+                        "InvitationCode is not found"
                 )
         ));
-        verify(this.incidentPublisher).publishRegistration1Failure(eq(
+        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
                 IncidentRegistration1Failure.of(
                         username,
-                        "InvitationCode is not found",
-                        invitationCode
+                        invitationCode,
+                        "InvitationCode is not found"
                 )
         ));
     }

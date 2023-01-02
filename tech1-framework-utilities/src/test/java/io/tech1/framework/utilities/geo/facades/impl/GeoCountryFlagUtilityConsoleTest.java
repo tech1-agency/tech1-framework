@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 
+@Slf4j
 public class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializationRunner {
 
     @Data
@@ -43,6 +45,6 @@ public class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializatio
                 .map(flag -> new CountryFlagMin(flag.getCode(), flag.getEmoji()))
                 .collect(Collectors.toList());
         var flagsJSON = OBJECT_MAPPER.writeValueAsString(flags);
-        System.out.println(flagsJSON);
+        LOGGER.info(flagsJSON);
     }
 }

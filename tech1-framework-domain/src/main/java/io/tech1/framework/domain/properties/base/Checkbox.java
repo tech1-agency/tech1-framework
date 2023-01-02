@@ -10,16 +10,25 @@ public class Checkbox implements AbstractToggleProperty {
     private boolean enabled;
 
     // NOTE: test-purposes
-    public static Checkbox enabled() {
+    private static Checkbox of(
+            boolean enabled
+    ) {
         var instance = new Checkbox();
-        instance.enabled = true;
+        instance.enabled = enabled;
         return instance;
     }
 
     // NOTE: test-purposes
+    public static Checkbox enabled() {
+        return of(
+                true
+        );
+    }
+
+    // NOTE: test-purposes
     public static Checkbox disabled() {
-        var instance = new Checkbox();
-        instance.enabled = false;
-        return instance;
+        return of(
+                false
+        );
     }
 }

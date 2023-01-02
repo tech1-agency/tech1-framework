@@ -3,12 +3,12 @@ package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ import java.io.IOException;
 public class JwtAuthenticationEntryPointExceptionHandler implements AuthenticationEntryPoint {
 
     // Publishers
-    private final IncidentPublisher incidentPublisher;
     private final SecurityJwtPublisher securityJwtPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Utilities
     private final HttpRequestUtility httpRequestUtility;
     // JSONs
@@ -56,13 +56,13 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
                             username
                     )
             );
-            this.incidentPublisher.publishAuthenticationLoginFailureUsernamePassword(
+            this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernamePassword(
                     IncidentAuthenticationLoginFailureUsernamePassword.of(
                             username,
                             password
                     )
             );
-            this.incidentPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
+            this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
                     IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
                             username,
                             password

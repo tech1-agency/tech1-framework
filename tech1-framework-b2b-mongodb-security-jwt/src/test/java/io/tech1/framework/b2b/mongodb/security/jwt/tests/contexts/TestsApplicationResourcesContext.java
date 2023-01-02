@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.*;
@@ -102,6 +103,11 @@ public class TestsApplicationResourcesContext {
     @Bean
     public SecurityJwtPublisher securityJwtPublisher() {
         return mock(SecurityJwtPublisher.class);
+    }
+
+    @Bean
+    public SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
+        return mock(SecurityJwtIncidentPublisher.class);
     }
 
     @Bean

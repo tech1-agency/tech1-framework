@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.constants.TestsConstants.*;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.*;
 import static java.time.Month.DECEMBER;
+import static java.time.ZoneOffset.UTC;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -43,33 +44,33 @@ public class LocalDateTimeUtilityImplTest {
     private static Stream<Arguments> isBetweenTest() {
         return Stream.of(
                 Arguments.of(1640438177000L, EET_ZONE_ID, _25_11_2021),
-                Arguments.of(1640445377000L, UTC_ZONE_ID, _25_11_2021),
+                Arguments.of(1640445377000L, UTC, _25_11_2021),
                 Arguments.of(1324818977000L, EET_ZONE_ID, _25_11_2021.minusYears(10)),
-                Arguments.of(1324826177000L, UTC_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(1324826177000L, UTC, _25_11_2021.minusYears(10)),
                 Arguments.of(1009286177000L, EET_ZONE_ID, _25_11_2021.minusYears(20)),
-                Arguments.of(1009293377000L, UTC_ZONE_ID, _25_11_2021.minusYears(20))
+                Arguments.of(1009293377000L, UTC, _25_11_2021.minusYears(20))
         );
     }
 
     private static Stream<Arguments> convertDateTest() {
         return Stream.of(
                 Arguments.of(new Date(1640438177000L), EET_ZONE_ID, _25_11_2021),
-                Arguments.of(new Date(1640445377000L), UTC_ZONE_ID, _25_11_2021),
+                Arguments.of(new Date(1640445377000L), UTC, _25_11_2021),
                 Arguments.of(new Date(1324818977000L), EET_ZONE_ID, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1324826177000L), UTC_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(new Date(1324826177000L), UTC, _25_11_2021.minusYears(10)),
                 Arguments.of(new Date(1009286177000L), EET_ZONE_ID, _25_11_2021.minusYears(20)),
-                Arguments.of(new Date(1009293377000L), UTC_ZONE_ID, _25_11_2021.minusYears(20))
+                Arguments.of(new Date(1009293377000L), UTC, _25_11_2021.minusYears(20))
         );
     }
 
     private static Stream<Arguments> getTimestampTest() {
         return Stream.of(
                 Arguments.of(_25_11_2021, EET_ZONE_ID, 1640438177000L),
-                Arguments.of(_25_11_2021, UTC_ZONE_ID, 1640445377000L),
+                Arguments.of(_25_11_2021, UTC, 1640445377000L),
                 Arguments.of(_25_11_2021.minusYears(10), EET_ZONE_ID, 1324818977000L),
-                Arguments.of(_25_11_2021.minusYears(10), UTC_ZONE_ID, 1324826177000L),
+                Arguments.of(_25_11_2021.minusYears(10), UTC, 1324826177000L),
                 Arguments.of(_25_11_2021.minusYears(20), EET_ZONE_ID, 1009286177000L),
-                Arguments.of(_25_11_2021.minusYears(20), UTC_ZONE_ID, 1009293377000L)
+                Arguments.of(_25_11_2021.minusYears(20), UTC, 1009293377000L)
         );
     }
 

@@ -25,4 +25,26 @@ public class Cron implements AbstractToggleProperty {
         instance.zoneId = zoneId;
         return instance;
     }
+
+    // NOTE: test-purposes
+    public static Cron enabled(
+            String expression,
+            String zoneId
+    ) {
+        return Cron.of(
+                true,
+                expression,
+                zoneId
+        );
+    }
+
+
+    // NOTE: test-purposes
+    public static Cron disabled() {
+        return Cron.of(
+                false,
+                null,
+                null
+        );
+    }
 }

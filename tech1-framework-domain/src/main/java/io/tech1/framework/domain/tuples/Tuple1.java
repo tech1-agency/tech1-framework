@@ -1,18 +1,9 @@
 package io.tech1.framework.domain.tuples;
 
-import lombok.*;
+import lombok.Data;
 
 // Lombok
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data(staticConstructor = "of")
 public class Tuple1<A> {
     private final A value;
-
-    public static <A> Tuple1<A> of(
-            A value
-    ) {
-        return new Tuple1<>(value);
-    }
 }

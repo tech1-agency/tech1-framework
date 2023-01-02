@@ -5,7 +5,7 @@ import lombok.Data;
 
 // Lombok (property-based)
 @Data
-public class ScheduledJob {
+public class ScheduledJob implements AbstractToggleProperty {
     @MandatoryProperty
     private boolean enabled;
     @MandatoryProperty
@@ -20,5 +20,22 @@ public class ScheduledJob {
         instance.enabled = enabled;
         instance.configuration = configuration;
         return instance;
+    }
+
+    // NOTE: test-purposes
+    public static ScheduledJob enabled() {
+        return ScheduledJob.of(
+                true,
+                null
+        );
+    }
+
+
+    // NOTE: test-purposes
+    public static ScheduledJob disabled() {
+        return ScheduledJob.of(
+                false,
+                null
+        );
     }
 }

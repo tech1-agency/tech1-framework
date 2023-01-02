@@ -1,12 +1,9 @@
 package io.tech1.framework.domain.tuples;
 
-import lombok.*;
+import lombok.Data;
 
 // Lombok
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data(staticConstructor = "of")
 public class Tuple6<A, B, C, D, E, F> {
     private final A a;
     private final B b;
@@ -14,22 +11,4 @@ public class Tuple6<A, B, C, D, E, F> {
     private final D d;
     private final E e;
     private final F f;
-
-    public static <A, B, C, D, E, F> Tuple6<A, B, C, D, E, F> of(
-            A a,
-            B b,
-            C c,
-            D d,
-            E e,
-            F f
-    ) {
-        return new Tuple6<>(
-                a,
-                b,
-                c,
-                d,
-                e,
-                f
-        );
-    }
 }

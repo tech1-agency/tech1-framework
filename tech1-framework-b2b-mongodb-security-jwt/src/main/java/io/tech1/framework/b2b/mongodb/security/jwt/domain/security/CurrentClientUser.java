@@ -17,8 +17,6 @@ import static java.util.Objects.nonNull;
 // Lombok
 @Data
 public class CurrentClientUser {
-    @JsonIgnore
-    private final String id;
     private final Username username;
     private final Email email;
     private final String name;
@@ -27,7 +25,6 @@ public class CurrentClientUser {
     private Map<String, Object> attributes;
 
     public CurrentClientUser(
-            String id,
             Username username,
             Email email,
             String name,
@@ -35,7 +32,6 @@ public class CurrentClientUser {
             List<SimpleGrantedAuthority> authorities,
             Map<String, Object> attributes
     ) {
-        this.id = id;
         this.username = username;
         this.email = email;
         this.name = name;

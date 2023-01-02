@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
@@ -10,7 +11,6 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,8 +51,8 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
 
     }
 
-    private final IncidentPublisher incidentPublisher;
     private final SecurityJwtPublisher securityJwtPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     private final HttpRequestUtility httpRequestUtility;
     private final ObjectMapper objectMapper;
 
@@ -61,7 +61,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     @BeforeEach
     public void beforeEach() {
         reset(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.httpRequestUtility
         );
@@ -70,7 +70,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     @AfterEach
     public void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.httpRequestUtility
         );
@@ -161,13 +161,13 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
                         username
                 )
         ));
-        verify(this.incidentPublisher).publishAuthenticationLoginFailureUsernamePassword(eq(
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(eq(
                 IncidentAuthenticationLoginFailureUsernamePassword.of(
                         username,
                         password
                 )
         ));
-        verify(this.incidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(eq(
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(eq(
                 IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
                         username,
                         password

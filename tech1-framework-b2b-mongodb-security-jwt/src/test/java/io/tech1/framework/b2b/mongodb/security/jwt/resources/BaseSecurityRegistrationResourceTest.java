@@ -2,12 +2,12 @@ package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1;
+import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
     private final RegistrationService registrationService;
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
-    private final IncidentPublisher incidentPublisher;
+    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Validators
     private final RegistrationRequestsValidator registrationRequestsValidator;
 
@@ -40,7 +40,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
         reset(
                 this.registrationService,
                 this.securityJwtPublisher,
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.registrationRequestsValidator
         );
     }
@@ -50,7 +50,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
         verifyNoMoreInteractions(
                 this.registrationService,
                 this.securityJwtPublisher,
-                this.incidentPublisher,
+                this.securityJwtIncidentPublisher,
                 this.registrationRequestsValidator
         );
     }
@@ -72,6 +72,6 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
         verify(this.registrationRequestsValidator).validateRegistrationRequest1(eq(requestUserRegistration1));
         verify(this.registrationService).register1(eq(requestUserRegistration1));
         verify(this.securityJwtPublisher).publishRegistration1(eq(EventRegistration1.of(requestUserRegistration1)));
-        verify(this.incidentPublisher).publishRegistration1(eq(IncidentRegistration1.of(requestUserRegistration1.getUsername())));
+        verify(this.securityJwtIncidentPublisher).publishRegistration1(eq(IncidentRegistration1.of(requestUserRegistration1.getUsername())));
     }
 }

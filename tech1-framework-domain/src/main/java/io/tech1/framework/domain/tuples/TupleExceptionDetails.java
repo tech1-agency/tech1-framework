@@ -4,16 +4,13 @@ import io.tech1.framework.domain.constants.StringConstants;
 import lombok.*;
 
 // Lombok
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data(staticConstructor = "of")
 public class TupleExceptionDetails {
     private final boolean ok;
     private final String message;
 
     public static TupleExceptionDetails ok() {
-        return new TupleExceptionDetails(
+        return TupleExceptionDetails.of(
                 true,
                 StringConstants.EMPTY
         );
@@ -22,7 +19,7 @@ public class TupleExceptionDetails {
     public static TupleExceptionDetails exception(
             String message
     ) {
-        return new TupleExceptionDetails(
+        return TupleExceptionDetails.of(
                 false,
                 message
         );

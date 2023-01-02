@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.8
+- TBD
+
 ### v1.7
 - Migrate bigdecimal-**: constants (TWO), getNumberOfDigitsAfterTheDecimalPointOrZero() method
 - Fix bug with @Mandatory + "get" in the middle of the property: target1 -> getTarget1() is expected getter, not tar1()

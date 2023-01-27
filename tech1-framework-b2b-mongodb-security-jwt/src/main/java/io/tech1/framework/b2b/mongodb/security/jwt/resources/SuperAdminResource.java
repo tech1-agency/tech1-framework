@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// todo [yy] naming -> BasedSuperAdminResource
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController

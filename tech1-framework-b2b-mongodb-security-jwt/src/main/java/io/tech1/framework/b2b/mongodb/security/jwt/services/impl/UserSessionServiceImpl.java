@@ -12,7 +12,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUti
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.utilities.http.HttpServletRequestUtility;
+import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +40,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final SecurityJwtTokenUtility securityJwtTokenUtility;
+    private final UserAgentDetailsUtility userAgentDetailsUtility;
 
     @Override
     public List<DbUserSession> findByUsername(Username username) {
@@ -124,7 +125,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     @Override
     public DbUserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.getClientIpAddr());
-        var userAgentDetails = HttpServletRequestUtility.getUserAgentDetails(event.getUserAgentHeader());
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.getUserAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
         var userSession = event.getUserSession();
         userSession.editRequestMetadata(requestMetadata);

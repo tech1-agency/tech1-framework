@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.7</version>
+        <version>1.8</version>
     </parent>
 
     <artifactId>tech1-framework-domain</artifactId>
@@ -37,11 +37,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-        </dependency>
-        <!-- Browser Capabilities -->
-        <dependency>
-            <groupId>com.blueconic</groupId>
-            <artifactId>browscap-java</artifactId>
         </dependency>
         <!-- Common Codec -->
         <dependency>

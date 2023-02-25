@@ -1,5 +1,9 @@
 # Release Notes
 
+### v1.8
+- Change user agent utility: static -> spring component
+- Re-configure thread pools on @Async and @EventListener + add @Async annotation on subscriber
+
 ### v1.7
 - Migrate bigdecimal-**: constants (TWO), getNumberOfDigitsAfterTheDecimalPointOrZero() method
 - Fix bug with @Mandatory + "get" in the middle of the property: target1 -> getTarget1() is expected getter, not tar1()

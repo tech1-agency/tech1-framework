@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.Response
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession3;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.SuperAdminService;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJw
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SuperAdminServiceImpl implements SuperAdminService {
+public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
 
     // Sessions
     private final SessionRegistry sessionRegistry;

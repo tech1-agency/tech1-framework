@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.7</version>
+        <version>1.8</version>
     </parent>
 
     <artifactId>tech1-framework-utilities</artifactId>
@@ -24,6 +24,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Browser Capabilities -->
+        <dependency>
+            <groupId>com.blueconic</groupId>
+            <artifactId>browscap-java</artifactId>
         </dependency>
         <!-- GeoIP2 -->
         <dependency>

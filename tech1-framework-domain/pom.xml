@@ -38,11 +38,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
         </dependency>
-        <!-- Browser Capabilities -->
-        <dependency>
-            <groupId>com.blueconic</groupId>
-            <artifactId>browscap-java</artifactId>
-        </dependency>
         <!-- Common Codec -->
         <dependency>
             <groupId>commons-codec</groupId>

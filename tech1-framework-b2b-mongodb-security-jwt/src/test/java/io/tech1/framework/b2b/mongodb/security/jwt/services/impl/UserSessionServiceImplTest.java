@@ -15,6 +15,8 @@ import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
+import io.tech1.framework.utilities.browsers.impl.UserAgentDetailsUtilityImpl;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -34,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getUserAgentDetails;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,12 +79,18 @@ public class UserSessionServiceImplTest {
         }
 
         @Bean
+        UserAgentDetailsUtility userAgentDetailsUtility() {
+            return new UserAgentDetailsUtilityImpl();
+        }
+
+        @Bean
         UserSessionService userSessionService() {
             return new UserSessionServiceImpl(
                     this.securityJwtPublisher(),
                     this.userSessionRepository(),
                     this.geoLocationFacadeUtility(),
-                    this.securityJwtTokenUtility()
+                    this.securityJwtTokenUtility(),
+                    this.userAgentDetailsUtility()
             );
         }
     }
@@ -91,6 +98,7 @@ public class UserSessionServiceImplTest {
     private final SecurityJwtPublisher securityJwtPublisher;
     private final UserSessionRepository userSessionRepository;
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
+    private final UserAgentDetailsUtility userAgentDetailsUtility;
 
     private final UserSessionService componentUnderTest;
 
@@ -322,7 +330,7 @@ public class UserSessionServiceImplTest {
         verify(this.userSessionRepository).save(userSessionAC.capture());
         var userSession = userSessionAC.getValue();
         assertThat(userSession.getRequestMetadata().getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(userSession.getRequestMetadata().getUserAgentDetails()).isEqualTo(getUserAgentDetails(event.getUserAgentHeader()));
+        assertThat(userSession.getRequestMetadata().getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.getUserAgentHeader()));
     }
 
     @Test

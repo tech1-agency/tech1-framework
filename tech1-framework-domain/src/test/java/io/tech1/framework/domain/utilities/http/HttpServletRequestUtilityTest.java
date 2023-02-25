@@ -1,21 +1,21 @@
 package io.tech1.framework.domain.utilities.http;
 
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.*;
+import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getBaseURL;
+import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getFullURL;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HttpServletRequestUtilityTest {
 
@@ -36,14 +36,6 @@ public class HttpServletRequestUtilityTest {
         return Stream.of(
                 Arguments.of(randomString(), null),
                 Arguments.of(randomString(), randomString())
-        );
-    }
-
-    private static Stream<Arguments> getUserAgentDetailsTest() {
-        return Stream.of(
-                Arguments.of("", "Unknown", "Unknown", "Unknown"),
-                Arguments.of(randomString(), "Default Browser", "Unknown", "Unknown"),
-                Arguments.of("Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0", "Firefox", "MacOSX", "Desktop")
         );
     }
 
@@ -91,43 +83,5 @@ public class HttpServletRequestUtilityTest {
         } else {
             assertThat(actual).isEqualTo(requestURL + "?" + queryString);
         }
-    }
-
-    @Test
-    public void getUserAgentDetailsExceptionTest() {
-        // Arrange
-        var message = randomString();
-        var userAgentHeader = mock(UserAgentHeader.class);
-        doAnswer(invocation -> { throw new IOException(message); } ).when(userAgentHeader).getValue();
-
-        // Act
-        var userAgentDetails = getUserAgentDetails(userAgentHeader);
-
-        // Assert
-        assertThat(userAgentDetails).isNotNull();
-        assertThat(userAgentDetails.getBrowser()).isEqualTo("Unknown");
-        assertThat(userAgentDetails.getPlatform()).isEqualTo("Unknown");
-        assertThat(userAgentDetails.getDeviceType()).isEqualTo("Unknown");
-        assertThat(userAgentDetails.getExceptionDetails()).isEqualTo(message);
-        assertThat(userAgentDetails.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
-    }
-
-    @ParameterizedTest
-    @MethodSource("getUserAgentDetailsTest")
-    public void getUserAgentDetailsTest(String header, String browser, String platform, String deviceType) {
-        // Arrange
-        var request = mock(HttpServletRequest.class);
-        when(request.getHeader("User-Agent")).thenReturn(header);
-        var userAgentHeader = new UserAgentHeader(request);
-
-        // Act
-        var userAgentDetails = getUserAgentDetails(userAgentHeader);
-
-        // Assert
-        assertThat(userAgentDetails).isNotNull();
-        assertThat(userAgentDetails.getBrowser()).isEqualTo(browser);
-        assertThat(userAgentDetails.getPlatform()).isEqualTo(platform);
-        assertThat(userAgentDetails.getDeviceType()).isEqualTo(deviceType);
-        assertThat(userAgentDetails.getExceptionDetails()).isEqualTo("");
     }
 }

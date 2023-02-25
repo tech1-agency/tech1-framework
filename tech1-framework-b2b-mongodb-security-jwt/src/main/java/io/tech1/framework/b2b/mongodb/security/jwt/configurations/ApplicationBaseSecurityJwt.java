@@ -55,6 +55,7 @@ import static org.springframework.http.HttpMethod.*;
         "io.tech1.framework.b2b.mongodb.security.jwt.utilities",
         "io.tech1.framework.b2b.mongodb.security.jwt.validators",
         // -------------------------------------------------------------------------------------------------------------
+        "io.tech1.framework.utilities.browsers",
         "io.tech1.framework.utilities.geo"
         // -------------------------------------------------------------------------------------------------------------
 })

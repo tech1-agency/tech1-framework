@@ -16,6 +16,7 @@ import java.util.concurrent.Executor;
 
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
+import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
 @EnableAsync
@@ -36,6 +37,7 @@ public class ApplicationAsync implements AsyncConfigurer {
         var threadNamePrefix = this.applicationFrameworkProperties.getAsyncConfigs().getThreadNamePrefix();
         var taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(getHalfOfCores());
+        taskExecutor.setMaxPoolSize(getNumOfCores());
         taskExecutor.setThreadNamePrefix(threadNamePrefix);
         taskExecutor.initialize();
         return taskExecutor;

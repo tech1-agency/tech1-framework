@@ -70,8 +70,8 @@ public class TestsApplicationResourcesContext {
     }
 
     @Bean
-    public SuperAdminService superAdminService() {
-        return mock(SuperAdminService.class);
+    public BaseSuperAdminService superAdminService() {
+        return mock(BaseSuperAdminService.class);
     }
 
     @Bean

@@ -1,7 +1,8 @@
 # Release Notes
 
 ### v1.8
-- TBD
+- Change user agent utility: static -> spring component
+- Re-configure thread pools on @Async and @EventListener + add @Async annotation on subscriber
 
 ### v1.7
 - Migrate bigdecimal-**: constants (TWO), getNumberOfDigitsAfterTheDecimalPointOrZero() method

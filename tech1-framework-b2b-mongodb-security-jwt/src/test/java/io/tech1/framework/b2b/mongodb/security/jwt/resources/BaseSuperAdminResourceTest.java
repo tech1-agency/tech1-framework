@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession3;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.SuperAdminService;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -20,26 +20,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SuperAdminResourceTest extends AbstractResourcesRunner {
+public class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
     // Assistants
-    private final SuperAdminService superAdminService;
+    private final BaseSuperAdminService baseSuperAdminService;
 
     // Resource
-    private final SuperAdminResource componentUnderTest;
+    private final BaseSuperAdminResource componentUnderTest;
 
     @BeforeEach
     public void beforeEach() throws Exception {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
-                this.superAdminService
+                this.baseSuperAdminService
         );
     }
 
     @AfterEach
     public void afterEach() {
         verifyNoMoreInteractions(
-                this.superAdminService
+                this.baseSuperAdminService
         );
     }
 
@@ -47,7 +47,7 @@ public class SuperAdminResourceTest extends AbstractResourcesRunner {
     public void getUnusedInvitationCodesTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitationCode1.class);
-        when(this.superAdminService.findUnused()).thenReturn(codes);
+        when(this.baseSuperAdminService.findUnused()).thenReturn(codes);
 
         // Act
         this.mvc.perform(get("/superadmin/invitationCodes/unused").contentType(MediaType.APPLICATION_JSON))
@@ -55,7 +55,7 @@ public class SuperAdminResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$", hasSize(codes.size())));
 
         // Assert
-        verify(this.superAdminService).findUnused();
+        verify(this.baseSuperAdminService).findUnused();
     }
 
     @Test
@@ -65,7 +65,7 @@ public class SuperAdminResourceTest extends AbstractResourcesRunner {
                 list345(ResponseUserSession3.class),
                 list345(ResponseUserSession3.class)
         );
-        when(this.superAdminService.getServerSessions()).thenReturn(sessionsTable);
+        when(this.baseSuperAdminService.getServerSessions()).thenReturn(sessionsTable);
 
         // Act
         this.mvc.perform(get("/superadmin/sessions/server").contentType(MediaType.APPLICATION_JSON))
@@ -74,6 +74,6 @@ public class SuperAdminResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.getInactiveSessions().size())));
 
         // Assert
-        verify(this.superAdminService).getServerSessions();
+        verify(this.baseSuperAdminService).getServerSessions();
     }
 }

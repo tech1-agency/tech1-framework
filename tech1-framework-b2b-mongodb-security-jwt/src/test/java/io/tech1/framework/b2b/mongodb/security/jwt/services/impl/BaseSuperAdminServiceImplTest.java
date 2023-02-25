@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.SuperAdminService;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SuperAdminServiceImplTest {
+public class BaseSuperAdminServiceImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -53,8 +53,8 @@ public class SuperAdminServiceImplTest {
         }
 
         @Bean
-        SuperAdminService superAdminService() {
-            return new SuperAdminServiceImpl(
+        BaseSuperAdminService superAdminService() {
+            return new BaseSuperAdminServiceImpl(
                     this.sessionRegistry(),
                     this.invitationCodeRepository(),
                     this.userSessionRepository()
@@ -66,7 +66,7 @@ public class SuperAdminServiceImplTest {
     private final InvitationCodeRepository invitationCodeRepository;
     private final UserSessionRepository userSessionRepository;
 
-    private final SuperAdminService componentUnderTest;
+    private final BaseSuperAdminService componentUnderTest;
 
     @BeforeEach
     public void beforeEach() {

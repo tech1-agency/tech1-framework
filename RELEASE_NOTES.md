@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.9
+- Re-configure incidents-based thread pools on @Async and @EventListener 
+
 ### v1.8
 - Change user agent utility: static -> spring component
 - Re-configure thread pools on @Async and @EventListener + add @Async annotation on subscriber

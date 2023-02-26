@@ -22,6 +22,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
+import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
@@ -36,6 +37,10 @@ public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
 
     @PostConstruct
     public void postConstruct() {
+        assertProperties(
+                this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs(),
+                "securityJwtConfigs.jwtTokensConfigs"
+        );
         var secretKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getSecretKey();
         this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }

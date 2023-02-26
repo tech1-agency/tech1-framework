@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.10
+- TBD
+
 ### v1.9
 - Re-configure incidents-based thread pools on @Async and @EventListener 
 

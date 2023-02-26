@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.annotation.PostConstruct;
 
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
+import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
+import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -31,10 +33,13 @@ public class ApplicationEventsIncidents {
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
         var threadNamePrefix = this.applicationFrameworkProperties.getEventsConfigs().getThreadNamePrefix();
-        var simpleAsyncTaskExecutor = new SimpleAsyncTaskExecutor();
-        simpleAsyncTaskExecutor.setThreadNamePrefix(threadNamePrefix);
+        var taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setThreadNamePrefix(threadNamePrefix);
+        taskExecutor.setCorePoolSize(getHalfOfCores());
+        taskExecutor.setMaxPoolSize(getNumOfCores());
+        taskExecutor.initialize();
         var eventMulticaster = new SimpleApplicationEventMulticaster();
-        eventMulticaster.setTaskExecutor(simpleAsyncTaskExecutor);
+        eventMulticaster.setTaskExecutor(taskExecutor);
         eventMulticaster.setErrorHandler(this.errorHandlerPublisher);
         return eventMulticaster;
     }

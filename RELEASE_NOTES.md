@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.9
-- TBD
+- Re-configure incidents-based thread pools on @Async and @EventListener 
 
 ### v1.8
 - Change user agent utility: static -> spring component

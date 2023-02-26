@@ -1,4 +1,3 @@
-
 package io.tech1.framework.b2b.mongodb.security.jwt.configurations;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

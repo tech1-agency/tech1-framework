@@ -15,6 +15,14 @@ import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 
 @Repository
 public interface UserRepository extends MongoRepository<DbUser, String> {
+    // ================================================================================================================
+    // Constants
+    // ================================================================================================================
+    SimpleGrantedAuthority SUPERADMIN = new SimpleGrantedAuthority(SUPER_ADMIN);
+
+    // ================================================================================================================
+    // Spring Data
+    // ================================================================================================================
     DbUser findByEmail(Email email);
     DbUser findByUsername(Username username);
     List<DbUser> findByUsernameIn(Set<Username> usernames);
@@ -35,11 +43,25 @@ public interface UserRepository extends MongoRepository<DbUser, String> {
     @Query(value = "{ 'authorities': { '$ne': ?0}}", fields = "{ 'id': 0, 'username' : 1}")
     List<DbUser> findByAuthorityNotEqualProjectionUsernames(SimpleGrantedAuthority authority);
 
+    @Query(value = "{ 'authorities': ?0}", delete = true)
+    void deleteByAuthority(SimpleGrantedAuthority authority);
+
+    @Query(value = "{ 'authorities': { '$ne': ?0}}", delete = true)
+    void deleteByAuthorityNotEqual(SimpleGrantedAuthority authority);
+
     default List<DbUser> findByAuthoritySuperadmin() {
-        return this.findByAuthority(new SimpleGrantedAuthority(SUPER_ADMIN));
+        return this.findByAuthority(SUPERADMIN);
     }
 
     default List<DbUser> findByAuthorityNotSuperadmin() {
-        return this.findByAuthorityNotEqual(new SimpleGrantedAuthority(SUPER_ADMIN));
+        return this.findByAuthorityNotEqual(SUPERADMIN);
+    }
+
+    default void deleteByAuthoritySuperadmin() {
+        this.deleteByAuthority(SUPERADMIN);
+    }
+
+    default void deleteByAuthorityNotSuperadmin() {
+        this.deleteByAuthorityNotEqual(SUPERADMIN);
     }
 }

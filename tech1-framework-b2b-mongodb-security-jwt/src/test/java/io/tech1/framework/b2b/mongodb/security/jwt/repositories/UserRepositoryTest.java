@@ -62,7 +62,7 @@ public class UserRepositoryTest {
     private final UserRepository userRepository;
 
     @Test
-    public void findSuperadminsTest() {
+    public void findByAuthoritiesTests() {
         // Arrange
         var superadminAuthority = new SimpleGrantedAuthority(SUPER_ADMIN);
         this.userRepository.saveAll(dummyUsersData1());
@@ -103,5 +103,28 @@ public class UserRepositoryTest {
             assertThat(user.getAuthorities()).isNull();
             assertThat(user.getZoneId()).isNull();
         });
+    }
+
+    @Test
+    public void deleteByAuthoritiesTests() {
+        // Arrange
+        this.userRepository.saveAll(dummyUsersData1());
+
+        // Act-1
+        this.userRepository.deleteByAuthorityNotSuperadmin();
+
+        // Assert-1
+        var users1 = this.userRepository.findAll();
+        assertThat(users1).isNotNull();
+        assertThat(users1).hasSize(3);
+        assertThat(toUsernamesAsStrings(users1)).containsExactly("sa1", "sa2", "sa3");
+
+        // Act-2
+        this.userRepository.deleteByAuthoritySuperadmin();
+
+        // Assert-2
+        var users2 = this.userRepository.findAll();
+        assertThat(users2).isNotNull();
+        assertThat(users2).hasSize(0);
     }
 }

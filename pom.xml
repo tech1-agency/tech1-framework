@@ -89,6 +89,7 @@
         <version.dependency.assertj>3.21.0</version.dependency.assertj>
         <version.dependency.jsonpath>2.6.0</version.dependency.jsonpath>
         <version.dependency.junit>5.8.2</version.dependency.junit>
+        <version.dependency.testcontainers>1.17.6</version.dependency.testcontainers>
         <!-- plugins -->
         <version.plugin.compiler>3.9.0</version.plugin.compiler>
         <version.plugin.dependency>3.2.0</version.plugin.dependency>
@@ -210,6 +211,25 @@
                 <version>${version.dependency.springframework.boot}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- Testcontainers -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${version.dependency.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.dependency.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mongodb</artifactId>
+                <version>${version.dependency.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
             <!-- JUnit -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -273,6 +293,22 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Testcontainers -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mongodb</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- JUnit -->

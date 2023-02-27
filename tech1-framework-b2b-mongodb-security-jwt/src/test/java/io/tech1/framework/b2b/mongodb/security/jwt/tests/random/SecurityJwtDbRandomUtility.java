@@ -8,12 +8,26 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 
 @UtilityClass
 public class SecurityJwtDbRandomUtility {
+
+    // =================================================================================================================
+    // User: Lists
+    // =================================================================================================================
+    public static List<DbUser> dummyUsersData1() {
+        return List.of(
+                superadmin("sa1"),
+                superadmin("sa2"),
+                admin("admin"),
+                randomUserBy("user1", List.of("user", INVITATION_CODE_WRITE)),
+                randomUserBy("user2", List.of("user", INVITATION_CODE_READ)),
+                randomUserBy("sa3", List.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))
+        );
+    }
 
     // =================================================================================================================
     // User

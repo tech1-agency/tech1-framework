@@ -2,6 +2,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests.random;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,6 +55,21 @@ public class SecurityJwtDbRandomUtility {
     }
 
     // =================================================================================================================
+    // UserSessions: Dummy Data
+    // =================================================================================================================
+    public static List<DbUserSession> dummyUserSessionsData1() {
+        return List.of(
+                sessionByOwner("sa1"),
+                sessionByOwner("sa1"),
+                sessionByOwner("sa1"),
+                sessionByOwner("user1"),
+                sessionByOwner("user2"),
+                sessionByOwner("admin"),
+                sessionByOwner("admin")
+        );
+    }
+
+    // =================================================================================================================
     // InvitationCodes
     // =================================================================================================================
     public static DbInvitationCode invitationCodeByOwner(String owner) {
@@ -91,6 +108,17 @@ public class SecurityJwtDbRandomUtility {
                 randomPassword(),
                 randomZoneId().getId(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+        );
+    }
+
+    // =================================================================================================================
+    // UserSessions
+    // =================================================================================================================
+    public static DbUserSession sessionByOwner(String owner) {
+        return new DbUserSession(
+                new JwtRefreshToken(randomString()),
+                Username.of(owner),
+                randomUserRequestMetadata()
         );
     }
 }

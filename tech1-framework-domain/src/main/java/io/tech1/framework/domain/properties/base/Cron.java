@@ -38,6 +38,14 @@ public class Cron implements AbstractToggleProperty {
         );
     }
 
+    // NOTE: test-purposes
+    public static Cron enabled() {
+        return Cron.of(
+                true,
+                "*/30 * * * * *",
+                "Europe/Kiev"
+        );
+    }
 
     // NOTE: test-purposes
     public static Cron disabled() {

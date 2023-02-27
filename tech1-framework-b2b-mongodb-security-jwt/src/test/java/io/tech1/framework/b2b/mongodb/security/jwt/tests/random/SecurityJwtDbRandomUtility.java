@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.random;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
@@ -9,14 +10,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
 @UtilityClass
 public class SecurityJwtDbRandomUtility {
 
     // =================================================================================================================
-    // User: Lists
+    // InvitationCodes: Dummy Data
+    // =================================================================================================================
+    public static List<DbInvitationCode> dummyInvitationCodesData1() {
+        var invitationCode1 = invitationCodeByOwner("user1");
+        var invitationCode2 = invitationCodeByOwner("user1");
+        var invitationCode3 = invitationCodeByOwner("user2");
+        var invitationCode4 = invitationCodeByOwner("user2");
+        var invitationCode5 = invitationCodeByOwner("user2");
+        var invitationCode6 = invitationCodeByOwner("user3");
+
+        invitationCode4.setInvited(Username.of("superadmin"));
+
+        return List.of(
+                invitationCode1,
+                invitationCode2,
+                invitationCode3,
+                invitationCode4,
+                invitationCode5,
+                invitationCode6
+        );
+    }
+
+    // =================================================================================================================
+    // Users: Dummy Data
     // =================================================================================================================
     public static List<DbUser> dummyUsersData1() {
         return List.of(
@@ -30,7 +53,21 @@ public class SecurityJwtDbRandomUtility {
     }
 
     // =================================================================================================================
-    // User
+    // InvitationCodes
+    // =================================================================================================================
+    public static DbInvitationCode invitationCodeByOwner(String owner) {
+        return new DbInvitationCode(
+                Username.of(owner),
+                List.of(
+                        new SimpleGrantedAuthority(randomString()),
+                        new SimpleGrantedAuthority(randomString()),
+                        new SimpleGrantedAuthority(randomString())
+                )
+        );
+    }
+
+    // =================================================================================================================
+    // Users
     // =================================================================================================================
     public static DbUser superadmin(String username) {
         return randomUserBy(username, SUPER_ADMIN);

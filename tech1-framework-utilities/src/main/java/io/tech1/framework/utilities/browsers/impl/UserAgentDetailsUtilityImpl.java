@@ -29,19 +29,19 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
 
     @Autowired
     public UserAgentDetailsUtilityImpl() {
-        UserAgentParser userAgentParser;
-        boolean configured;
-        String exceptionMessage;
+        UserAgentParser userAgentParserOrNull;
+        boolean configuredFlag;
+        String exceptionMessageOrNull;
         try {
-            userAgentParser = new UserAgentService().loadParser(
+            userAgentParserOrNull = new UserAgentService().loadParser(
                     List.of(
                             BrowsCapField.BROWSER,
                             BrowsCapField.PLATFORM,
                             BrowsCapField.DEVICE_TYPE
                     )
             );
-            configured = true;
-            exceptionMessage = null;
+            configuredFlag = true;
+            exceptionMessageOrNull = null;
             LOGGER.info("{} user agent configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, SUCCESS);
         } catch (ParseException | IOException ex) {
             var message = String.format("%s user agent configuration status: %s", FRAMEWORK_UTILITIES_PREFIX, FAILURE);
@@ -49,13 +49,13 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
             LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
             LOGGER.error("Please check user agent parses configuration");
             LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
-            userAgentParser = null;
-            configured = false;
-            exceptionMessage = ex.getMessage();
+            userAgentParserOrNull = null;
+            configuredFlag = false;
+            exceptionMessageOrNull = ex.getMessage();
         }
-        this.userAgentParser = userAgentParser;
-        this.configured = configured;
-        this.exceptionMessage = exceptionMessage;
+        this.userAgentParser = userAgentParserOrNull;
+        this.configured = configuredFlag;
+        this.exceptionMessage = exceptionMessageOrNull;
     }
 
     @Override

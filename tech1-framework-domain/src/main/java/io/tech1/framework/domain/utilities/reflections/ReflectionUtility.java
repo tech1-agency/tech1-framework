@@ -2,7 +2,6 @@ package io.tech1.framework.domain.utilities.reflections;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
@@ -124,7 +123,7 @@ public class ReflectionUtility {
             return isArray || isMap || isSet ||
                     Username.class.equals(clazz) ||
                     Password.class.equals(clazz) ||
-                    ZoneId.class.equals(clazz) ||
+                    ZoneId.class.isAssignableFrom(clazz) ||
                     ChronoUnit.class.equals(clazz) ||
                     TimeUnit.class.equals(clazz) ||
                     TimeAmount.class.equals(clazz) ||

@@ -3,6 +3,8 @@
 ### v1.10
 - Add queries on users, sessions and invitation codes repositories (querying and deleting)
 - Add testcontainers (mongodb integration tests)
+- Add tuples: TuplePresence
+- Add properties printing support: ZoneId
 
 ### v1.9
 - Re-configure incidents-based thread pools on @Async and @EventListener 

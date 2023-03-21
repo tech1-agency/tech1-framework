@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.11
+- TBD
+
 ### v1.10
 - Add queries on users, sessions and invitation codes repositories (querying and deleting)
 - Add testcontainers (mongodb integration tests)

@@ -1,5 +1,11 @@
 # Release Notes
 
+### v1.10
+- Add queries on users, sessions and invitation codes repositories (querying and deleting)
+- Add testcontainers (mongodb integration tests)
+- Add tuples: TuplePresence
+- Add properties printing support: ZoneId
+
 ### v1.9
 - Re-configure incidents-based thread pools on @Async and @EventListener 
 
@@ -25,7 +31,8 @@
 - Add Password/Email as Java objects (not plain strings) to DbUser (db migration required)
 - Add endpoint /user/update2 (authenticated()) (fields: zoneId, name)
 - Add email notification -> user (email is present + checkbox config is enabled)
-- Change user request metadata tuple3 -> { ipAddress, countryFlag, where }
+- Change user request metad
+- ata tuple3 -> { ipAddress, countryFlag, where }
 - Change incidents key/values to camel-case-based strings
 
 ### v1.5

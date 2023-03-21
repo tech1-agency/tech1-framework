@@ -5,7 +5,6 @@ import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import org.springframework.scheduling.annotation.Async;
 
 public interface SecurityJwtIncidentPublisher {
     void publishAuthenticationLogin(IncidentAuthenticationLogin incident);

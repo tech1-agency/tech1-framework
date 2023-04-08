@@ -45,4 +45,22 @@ public class EmailConfigsTest {
         assertThat(emailConfigs.getPassword()).isNull();
         assertThat(emailConfigs.getTo()).isNull();
     }
+
+    @Test
+    public void enabledTest() {
+        // Arrange
+        var from = randomEmailAsValue();
+
+        // Act
+        var emailConfigs = EmailConfigs.enabled(from);
+
+        // Assert
+        assertThat(emailConfigs.isEnabled()).isTrue();
+        assertThat(emailConfigs.getHost()).isNull();
+        assertThat(emailConfigs.getPort()).isZero();
+        assertThat(emailConfigs.getFrom()).isEqualTo(from);
+        assertThat(emailConfigs.getUsername()).isNull();
+        assertThat(emailConfigs.getPassword()).isNull();
+        assertThat(emailConfigs.getTo()).isNull();
+    }
 }

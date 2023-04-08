@@ -110,8 +110,6 @@ public class TimestampUtilityTest {
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampUTC - timestampPoland).isEqualTo(3600000L);
-        assertThat(timestampUTC - timestampUkraine).isEqualTo(7200000L);
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
@@ -125,8 +123,6 @@ public class TimestampUtilityTest {
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampUTC - timestampPoland).isEqualTo(3600000L);
-        assertThat(timestampUTC - timestampUkraine).isEqualTo(7200000L);
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 

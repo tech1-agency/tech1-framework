@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.11
-- TBD
+- Add email service method: send plain text + plain attachment
 
 ### v1.10
 - Add queries on users, sessions and invitation codes repositories (querying and deleting)

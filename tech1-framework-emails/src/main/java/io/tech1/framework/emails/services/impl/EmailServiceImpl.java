@@ -1,6 +1,7 @@
 package io.tech1.framework.emails.services.impl;
 
 import io.tech1.framework.emails.domain.EmailHTML;
+import io.tech1.framework.emails.domain.EmailPlainAttachment;
 import io.tech1.framework.emails.services.EmailService;
 import io.tech1.framework.emails.utilities.EmailUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -11,9 +12,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import javax.activation.DataHandler;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+
+import static javax.mail.Message.RecipientType.TO;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EmailServiceImpl implements EmailService {
@@ -54,6 +62,38 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendPlain(Set<String> to, String subject, String message) {
         this.sendPlain(to.toArray(new String[0]), subject, message);
+    }
+
+    @Override
+    public void sendPlainAttachment(EmailPlainAttachment emailPlainAttachment) {
+        var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
+        if (emailConfigs.isEnabled()) {
+            try {
+                var message = this.javaMailSender.createMimeMessage();
+                var multipart = new MimeMultipart();
+
+                var part1 = new MimeBodyPart();
+                part1.setText(emailPlainAttachment.getMessage());
+                multipart.addBodyPart(part1);
+
+                var part2 = new MimeBodyPart();
+                var source = new ByteArrayDataSource(emailPlainAttachment.getAttachmentMessage(), "text/plain; charset=UTF-8");
+                part2.setDataHandler(new DataHandler(source));
+                part2.setFileName(emailPlainAttachment.getAttachmentFileName());
+                multipart.addBodyPart(part2);
+
+                message.setFrom(emailConfigs.getFrom());
+                for (var to : emailPlainAttachment.getTo()) {
+                    message.addRecipients(TO, to);
+                }
+                message.setSubject(emailPlainAttachment.getSubject());
+                message.setContent(multipart);
+
+                this.javaMailSender.send(message);
+            } catch (IOException | MessagingException ex) {
+                // ignored
+            }
+        }
     }
 
     @Override

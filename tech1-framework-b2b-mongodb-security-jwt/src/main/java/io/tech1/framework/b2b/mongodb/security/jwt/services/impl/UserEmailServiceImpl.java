@@ -64,7 +64,7 @@ public class UserEmailServiceImpl implements UserEmailService {
         var email = tuple3.getB();
         if (nonNull(email) && checkbox.isEnabled()) {
             this.emailService.sendHTML(
-                    EmailHTML.of(
+                    new EmailHTML(
                             Set.of(email.getValue()),
                             this.userEmailUtility.getSubject("Account Accessed"),
                             templateName,

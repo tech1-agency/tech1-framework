@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+@Deprecated(since = "use TraceUtility")
 @UtilityClass
 public class ThrowableUtility {
 
@@ -14,7 +15,7 @@ public class ThrowableUtility {
     }
 
     public static ThrowableTrace getTrace(Throwable throwable, int length) {
-        return ThrowableTrace.of(getTracedText(throwable, length));
+        return new ThrowableTrace(getTracedText(throwable, length));
     }
 
     // =================================================================================================================

@@ -97,10 +97,10 @@ public class SessionRegistryImpl implements SessionRegistry {
         var dbUserSession = this.userSessionService.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull.of(username, dbUserSession.getRequestMetadata()));
+            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.getRequestMetadata()));
             this.userSessionService.deleteByRefreshToken(jwtRefreshToken);
         } else {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin.of(username));
+            this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
         }
     }
 
@@ -115,7 +115,7 @@ public class SessionRegistryImpl implements SessionRegistry {
             LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);
             this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
-            this.securityJwtIncidentPublisher.publishSessionExpired(IncidentSessionExpired.of(username, dbUserSession.getRequestMetadata()));
+            this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, dbUserSession.getRequestMetadata()));
         });
 
         var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds());

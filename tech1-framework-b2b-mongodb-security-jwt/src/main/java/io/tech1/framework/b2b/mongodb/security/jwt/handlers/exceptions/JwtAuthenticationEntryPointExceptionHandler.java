@@ -57,13 +57,13 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
                     )
             );
             this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernamePassword(
-                    IncidentAuthenticationLoginFailureUsernamePassword.of(
+                    new IncidentAuthenticationLoginFailureUsernamePassword(
                             username,
                             password
                     )
             );
             this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
-                    IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
+                    new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                             username,
                             password
                     )

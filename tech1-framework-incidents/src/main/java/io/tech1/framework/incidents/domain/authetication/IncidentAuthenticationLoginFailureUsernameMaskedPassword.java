@@ -7,7 +7,7 @@ import lombok.Data;
 import static io.tech1.framework.domain.utilities.strings.MaskUtility.mask5;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class IncidentAuthenticationLoginFailureUsernameMaskedPassword {
     private final Username username;
     private final Password password;

@@ -36,6 +36,6 @@ public class BaseSecurityRegistrationResource {
         this.registrationRequestsValidator.validateRegistrationRequest1(requestUserRegistration1);
         this.registrationService.register1(requestUserRegistration1);
         this.securityJwtPublisher.publishRegistration1(new EventRegistration1(requestUserRegistration1));
-        this.securityJwtIncidentPublisher.publishRegistration1(IncidentRegistration1.of(requestUserRegistration1.getUsername()));
+        this.securityJwtIncidentPublisher.publishRegistration1(new IncidentRegistration1(requestUserRegistration1.getUsername()));
     }
 }

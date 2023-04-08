@@ -72,6 +72,6 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
         verify(this.registrationRequestsValidator).validateRegistrationRequest1(eq(requestUserRegistration1));
         verify(this.registrationService).register1(eq(requestUserRegistration1));
         verify(this.securityJwtPublisher).publishRegistration1(eq(new EventRegistration1(requestUserRegistration1)));
-        verify(this.securityJwtIncidentPublisher).publishRegistration1(eq(IncidentRegistration1.of(requestUserRegistration1.getUsername())));
+        verify(this.securityJwtIncidentPublisher).publishRegistration1(eq(new IncidentRegistration1(requestUserRegistration1.getUsername())));
     }
 }

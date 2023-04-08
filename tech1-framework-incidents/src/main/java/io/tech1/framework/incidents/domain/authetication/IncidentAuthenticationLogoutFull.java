@@ -5,7 +5,7 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class IncidentAuthenticationLogoutFull {
     private final Username username;
     private final UserRequestMetadata userRequestMetadata;

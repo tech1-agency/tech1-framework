@@ -55,7 +55,7 @@ public class SecurityJwtIncidentConverterImplTest {
     public void convertAuthenticationLoginIncidentExceptionTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentAuthenticationLogin.of(
+        var incident = new IncidentAuthenticationLogin(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.unknown(new IPAddress("8.8.8.8"), "exception1"),
@@ -86,7 +86,7 @@ public class SecurityJwtIncidentConverterImplTest {
     public void convertAuthenticationLoginIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentAuthenticationLogin.of(
+        var incident = new IncidentAuthenticationLogin(
                 username,
                 UserRequestMetadata.processing(new IPAddress("127.0.0.1"))
         );
@@ -113,7 +113,7 @@ public class SecurityJwtIncidentConverterImplTest {
     public void convertAuthenticationLogoutFullIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentAuthenticationLogoutFull.of(
+        var incident = new IncidentAuthenticationLogoutFull(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
@@ -143,7 +143,7 @@ public class SecurityJwtIncidentConverterImplTest {
     public void convertSessionRefreshedIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentSessionRefreshed.of(
+        var incident = new IncidentSessionRefreshed(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
@@ -173,7 +173,7 @@ public class SecurityJwtIncidentConverterImplTest {
     public void convertSessionExpiredIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentSessionExpired.of(
+        var incident = new IncidentSessionExpired(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
@@ -203,7 +203,7 @@ public class SecurityJwtIncidentConverterImplTest {
     public void convertRegister1IncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentRegistration1.of(
+        var incident = new IncidentRegistration1(
                 username
         );
 

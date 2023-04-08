@@ -114,7 +114,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var username = Username.of("tech1");
         var password = Password.of("passwordTOP123!");
-        var incident = IncidentAuthenticationLoginFailureUsernamePassword.of(
+        var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
                 username,
                 password
         );
@@ -138,7 +138,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var username = Username.of("tech1");
         var password = Password.of("passwordTOP123!");
-        var incident = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
+        var incident = new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                 username,
                 password
         );
@@ -161,7 +161,7 @@ public class IncidentConverterImplTest {
     public void convertAuthenticationLogoutMinIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentAuthenticationLogoutMin.of(
+        var incident = new IncidentAuthenticationLogoutMin(
                 username
         );
 

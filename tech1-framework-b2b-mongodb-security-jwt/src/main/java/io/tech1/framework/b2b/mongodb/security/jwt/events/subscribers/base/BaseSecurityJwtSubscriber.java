@@ -74,7 +74,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
                     )
             );
             this.securityJwtIncidentPublisher.publishAuthenticationLogin(
-                    IncidentAuthenticationLogin.of(
+                    new IncidentAuthenticationLogin(
                             event.getUsername(),
                             userSession.getRequestMetadata()
                     )
@@ -89,7 +89,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
                     )
             );
             this.securityJwtIncidentPublisher.publishSessionRefreshed(
-                    IncidentSessionRefreshed.of(
+                    new IncidentSessionRefreshed(
                             event.getUsername(),
                             userSession.getRequestMetadata()
                     )

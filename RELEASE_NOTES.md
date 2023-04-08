@@ -2,7 +2,7 @@
 
 ### v1.11
 - Add email service method: send plain text + plain attachment
-- Delete Lombok staticConstructor usage
+- Delete lombok static constructor usage
 
 ### v1.10
 - Add queries on users, sessions and invitation codes repositories (querying and deleting)

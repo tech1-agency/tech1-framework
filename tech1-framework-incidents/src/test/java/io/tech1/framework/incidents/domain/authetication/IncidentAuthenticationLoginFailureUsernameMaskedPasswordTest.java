@@ -29,7 +29,7 @@ public class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
 
 
         // Act
-        var actual = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
+        var actual = new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                 username,
                 Password.of(password)
         );

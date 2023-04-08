@@ -143,7 +143,7 @@ public class RegistrationRequestsValidatorImplTest {
                 )
         ));
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
-                IncidentRegistration1Failure.of(
+                new IncidentRegistration1Failure(
                         username,
                         invitationCode,
                         dbInvitationCode.getOwner(),

@@ -171,11 +171,11 @@ public class SessionRegistryImplTest {
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session3)));
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session4)));
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(rndSession)));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session1.getUsername(), dbUserSession1.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session2.getUsername(), dbUserSession2.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session3.getUsername(), dbUserSession3.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session4.getUsername(), dbUserSession4.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session1.getUsername(), dbUserSession1.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session2.getUsername(), dbUserSession2.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session3.getUsername(), dbUserSession3.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session4.getUsername(), dbUserSession4.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
         verify(this.userSessionService).deleteByRefreshToken(eq(session1.getRefreshToken()));
         verify(this.userSessionService).deleteByRefreshToken(eq(session2.getRefreshToken()));
         verify(this.userSessionService).deleteByRefreshToken(eq(session3.getRefreshToken()));

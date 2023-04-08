@@ -78,7 +78,7 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
                         )
                 );
                 this.securityJwtIncidentPublisher.publishRegistration1Failure(
-                        IncidentRegistration1Failure.of(
+                        new IncidentRegistration1Failure(
                                 username,
                                 invitationCode,
                                 dbInvitationCode.getOwner(),

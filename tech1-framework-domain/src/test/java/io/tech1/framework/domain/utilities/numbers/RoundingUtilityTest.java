@@ -99,10 +99,10 @@ public class RoundingUtilityTest {
         when(exception.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
 
         List<Tuple4<BigDecimal, BigDecimal, Integer, BigDecimal>> cases = new ArrayList<>();
-        cases.add(Tuple4.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3),  3, BigDecimal.valueOf(3.333)));
-        cases.add(Tuple4.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE));
-        cases.add(Tuple4.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE));
-        cases.add(Tuple4.of(BigDecimal.valueOf(10), exception, 5, BigDecimal.ONE));
+        cases.add(new Tuple4<>(BigDecimal.valueOf(10), BigDecimal.valueOf(3),  3, BigDecimal.valueOf(3.333)));
+        cases.add(new Tuple4<>(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE));
+        cases.add(new Tuple4<>(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE));
+        cases.add(new Tuple4<>(BigDecimal.valueOf(10), exception, 5, BigDecimal.ONE));
 
         cases.forEach(source -> {
             // Arrange

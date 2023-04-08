@@ -10,13 +10,13 @@ import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
 import static java.math.BigDecimal.ZERO;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class TuplePercentage {
     private final BigDecimal value;
     private final BigDecimal percentage;
 
     public static TuplePercentage of(BigDecimal value, BigDecimal maxValue, int valueScale, int percentageScale) {
-        return TuplePercentage.of(
+        return new TuplePercentage(
                 scale(value, valueScale),
                 divideOrZero(value.abs().multiply(ONE_HUNDRED), maxValue, percentageScale)
         );

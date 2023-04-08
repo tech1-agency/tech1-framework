@@ -157,7 +157,7 @@ public class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         var jwtUser = entity(JwtUser.class);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(Tuple2.of(jwtUser, jwtRefreshToken));
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Tuple5Test extends AbstractTupleTest {
-    private static final Tuple5<String, String, String, String, String> TUPLE = Tuple5.of(
+    private static final Tuple5<String, String, String, String, String> TUPLE = new Tuple5<>(
             "1st",
             "2nd",
             "3rd",

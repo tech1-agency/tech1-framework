@@ -3,7 +3,7 @@ package io.tech1.framework.domain.tuples;
 import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class Tuple6<A, B, C, D, E, F> {
     private final A a;
     private final B b;

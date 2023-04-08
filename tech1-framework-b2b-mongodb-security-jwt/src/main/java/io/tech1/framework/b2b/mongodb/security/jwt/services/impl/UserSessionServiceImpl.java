@@ -145,7 +145,7 @@ public class UserSessionServiceImpl implements UserSessionService {
                 var isExpired = isPast(validatedClaims.safeGetExpirationTimestamp());
                 if (isExpired) {
                     expiredOrInvalidSessionIds.add(sessionId);
-                    expiredSessions.add(Tuple2.of(validatedClaims.safeGetUsername(), userSession));
+                    expiredSessions.add(new Tuple2<>(validatedClaims.safeGetUsername(), userSession));
                 }
             } else {
                 expiredOrInvalidSessionIds.add(sessionId);

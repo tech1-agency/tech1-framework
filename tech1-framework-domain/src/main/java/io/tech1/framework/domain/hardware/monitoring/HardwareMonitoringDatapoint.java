@@ -65,7 +65,7 @@ public class HardwareMonitoringDatapoint {
                 1
         );
 
-        this.global = Tuple3.of(
+        this.global = new Tuple3<>(
                 server,
                 swap,
                 virtual
@@ -121,10 +121,10 @@ public class HardwareMonitoringDatapoint {
             );
         };
 
-        table.add(tableRowFnc.apply(Tuple3.of(HEAP, this.heap, this.maxValues.getHeap())));
-        table.add(tableRowFnc.apply(Tuple3.of(SERVER, this.global.getA(), this.maxValues.getServer())));
-        table.add(tableRowFnc.apply(Tuple3.of(SWAP, this.global.getB(), this.maxValues.getSwap())));
-        table.add(tableRowFnc.apply(Tuple3.of(VIRTUAL, this.global.getC(), this.maxValues.getVirtual())));
+        table.add(tableRowFnc.apply(new Tuple3<>(HEAP, this.heap, this.maxValues.getHeap())));
+        table.add(tableRowFnc.apply(new Tuple3<>(SERVER, this.global.getA(), this.maxValues.getServer())));
+        table.add(tableRowFnc.apply(new Tuple3<>(SWAP, this.global.getB(), this.maxValues.getSwap())));
+        table.add(tableRowFnc.apply(new Tuple3<>(VIRTUAL, this.global.getC(), this.maxValues.getVirtual())));
 
         return new HardwareMonitoringDatapointTableView(table);
     }

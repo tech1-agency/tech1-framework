@@ -367,7 +367,7 @@ public class EmailServiceImplTest {
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
         var message = mock(MimeMessage.class);
         var mimeMessageHelper = mock(MimeMessageHelper.class);
-        when(this.emailUtility.getMimeMessageTuple2()).thenReturn(Tuple2.of(message, mimeMessageHelper));
+        when(this.emailUtility.getMimeMessageTuple2()).thenReturn(new Tuple2<>(message, mimeMessageHelper));
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);

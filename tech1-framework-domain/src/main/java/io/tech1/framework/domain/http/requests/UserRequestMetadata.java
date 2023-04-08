@@ -55,17 +55,17 @@ public class UserRequestMetadata {
 
     public Tuple3<String, String, String> getWhereTuple3() {
         if (this.status.isCompleted()) {
-            return Tuple3.of(this.geoLocation.getIpAddr(), this.geoLocation.getCountryFlag(), this.geoLocation.getWhere());
+            return new Tuple3<>(this.geoLocation.getIpAddr(), this.geoLocation.getCountryFlag(), this.geoLocation.getWhere());
         } else {
-            return Tuple3.of(this.geoLocation.getIpAddr(), NO_FLAG, "Processing...Please wait!");
+            return new Tuple3<>(this.geoLocation.getIpAddr(), NO_FLAG, "Processing...Please wait!");
         }
     }
 
     public Tuple2<String, String> getWhatTuple2() {
         if (this.status.isCompleted()) {
-            return Tuple2.of(this.userAgentDetails.getBrowser(), this.userAgentDetails.getWhat());
+            return new Tuple2<>(this.userAgentDetails.getBrowser(), this.userAgentDetails.getWhat());
         } else {
-            return Tuple2.of(this.userAgentDetails.getBrowser(), "—");
+            return new Tuple2<>(this.userAgentDetails.getBrowser(), "—");
         }
     }
 

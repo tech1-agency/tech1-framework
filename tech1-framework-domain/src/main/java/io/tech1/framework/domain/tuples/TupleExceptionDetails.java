@@ -1,16 +1,16 @@
 package io.tech1.framework.domain.tuples;
 
 import io.tech1.framework.domain.constants.StringConstants;
-import lombok.*;
+import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class TupleExceptionDetails {
     private final boolean ok;
     private final String message;
 
     public static TupleExceptionDetails ok() {
-        return TupleExceptionDetails.of(
+        return new TupleExceptionDetails(
                 true,
                 StringConstants.EMPTY
         );
@@ -19,7 +19,7 @@ public class TupleExceptionDetails {
     public static TupleExceptionDetails exception(
             String message
     ) {
-        return TupleExceptionDetails.of(
+        return new TupleExceptionDetails(
                 false,
                 message
         );

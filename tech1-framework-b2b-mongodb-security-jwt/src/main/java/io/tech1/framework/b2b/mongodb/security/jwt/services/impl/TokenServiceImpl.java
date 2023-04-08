@@ -55,7 +55,7 @@ public class TokenServiceImpl implements TokenService {
 
         // JWT Access Token: isValid + isAlive
         var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().getIdentifier());
-        return Tuple2.of(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.getJwtToken()));
+        return new Tuple2(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.getJwtToken()));
     }
 
     @Override

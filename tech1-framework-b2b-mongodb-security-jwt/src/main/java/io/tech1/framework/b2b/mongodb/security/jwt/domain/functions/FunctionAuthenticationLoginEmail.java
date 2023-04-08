@@ -14,7 +14,7 @@ public class FunctionAuthenticationLoginEmail {
     private final UserRequestMetadata requestMetadata;
 
     public Tuple3<Username, Email, UserRequestMetadata> getTuple3() {
-        return Tuple3.of(
+        return new Tuple3<>(
                 this.username,
                 this.email,
                 this.requestMetadata

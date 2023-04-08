@@ -192,7 +192,7 @@ public class ReflectionUtility {
 
     public static Tuple2<Field, Object> getFieldTuple2(Object object, Field field, List<Method> getters) {
         var fieldValueOrNull = getFieldValueOrNull(object, field, getters);
-        return Tuple2.of(field, fieldValueOrNull);
+        return new Tuple2<>(field, fieldValueOrNull);
     }
 
     public static String getPropertyName(Method method) {

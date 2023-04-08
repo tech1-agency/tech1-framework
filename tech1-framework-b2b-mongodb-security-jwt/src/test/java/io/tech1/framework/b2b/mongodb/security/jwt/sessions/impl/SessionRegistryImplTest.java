@@ -291,7 +291,7 @@ public class SessionRegistryImplTest {
         when(dbUserSession3.getId()).thenReturn(randomString());
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
-        var sessionsValidatedTuple2 = new SessionsValidatedTuple2(List.of(Tuple2.of(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+        var sessionsValidatedTuple2 = new SessionsValidatedTuple2(List.of(new Tuple2<>(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
         when(this.userSessionService.validate(eq(usersSessions))).thenReturn(sessionsValidatedTuple2);
 
         // Act

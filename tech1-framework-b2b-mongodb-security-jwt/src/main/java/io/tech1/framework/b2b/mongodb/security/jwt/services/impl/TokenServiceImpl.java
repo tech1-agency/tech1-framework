@@ -81,16 +81,16 @@ public class TokenServiceImpl implements TokenService {
         LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);
 
         this.sessionRegistry.renew(
-                Session.of(
+                new Session(
                         username,
                         new JwtRefreshToken(oldCookieRefreshToken.getValue())
                 ),
-                Session.of(
+                new Session(
                         username,
                         newJwtRefreshToken
                 )
         );
 
-        return ResponseUserSession1.of(userSession.getJwtRefreshToken().getValue());
+        return new ResponseUserSession1(userSession.getJwtRefreshToken().getValue());
     }
 }

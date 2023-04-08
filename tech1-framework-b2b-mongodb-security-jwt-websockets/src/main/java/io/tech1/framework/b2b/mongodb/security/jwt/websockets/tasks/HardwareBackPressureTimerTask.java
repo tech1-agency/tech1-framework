@@ -40,7 +40,7 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         super(
-                SchedulerConfiguration.of(60L, 60L, TimeUnit.SECONDS)
+                new SchedulerConfiguration(60L, 60L, TimeUnit.SECONDS)
         );
         this.sessionRegistry = sessionRegistry;
         this.wssMessagingTemplate = wssMessagingTemplate;

@@ -165,7 +165,7 @@ public class JwtTokensFilterTest {
         // Assert
         verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
         // WARNING: no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(eq(Session.of(jwtUser.getDbUser().getUsername(), jwtRefreshToken)));
+        verify(this.sessionRegistry).register(eq(new Session(jwtUser.getDbUser().getUsername(), jwtRefreshToken)));
         verify(filterChain).doFilter(eq(request), eq(response));
         verifyNoMoreInteractions(
                 request,

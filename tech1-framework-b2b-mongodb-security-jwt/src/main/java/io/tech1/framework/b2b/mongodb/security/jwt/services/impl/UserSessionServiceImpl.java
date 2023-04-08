@@ -152,7 +152,7 @@ public class UserSessionServiceImpl implements UserSessionService {
             }
         });
 
-        return SessionsValidatedTuple2.of(
+        return new SessionsValidatedTuple2(
                 expiredSessions,
                 expiredOrInvalidSessionIds
         );

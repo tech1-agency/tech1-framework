@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class SessionsValidatedTuple2 {
     private final List<Tuple2<Username, DbUserSession>> expiredSessions;
     private final List<String> expiredOrInvalidSessionIds;

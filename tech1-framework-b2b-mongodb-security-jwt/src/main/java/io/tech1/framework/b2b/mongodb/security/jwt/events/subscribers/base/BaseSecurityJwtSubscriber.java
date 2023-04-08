@@ -67,7 +67,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         var userSession = this.userSessionService.saveUserRequestMetadata(event);
         if (event.isAuthenticationLoginEndpoint()) {
             this.userEmailService.executeAuthenticationLogin(
-                    FunctionAuthenticationLoginEmail.of(
+                    new FunctionAuthenticationLoginEmail(
                             event.getUsername(),
                             event.getEmail(),
                             userSession.getRequestMetadata()
@@ -82,7 +82,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         }
         if (event.isAuthenticationRefreshTokenEndpoint()) {
             this.userEmailService.executeSessionRefreshed(
-                    FunctionSessionRefreshedEmail.of(
+                    new FunctionSessionRefreshedEmail(
                             event.getUsername(),
                             event.getEmail(),
                             userSession.getRequestMetadata()

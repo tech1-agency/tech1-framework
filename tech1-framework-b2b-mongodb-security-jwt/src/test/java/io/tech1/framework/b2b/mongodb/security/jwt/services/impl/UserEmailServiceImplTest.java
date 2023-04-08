@@ -92,7 +92,7 @@ public class UserEmailServiceImplTest {
     @Test
     public void noExecutionNullEmailAndEnabledEmailTest() {
         // Arrange
-        var function = FunctionAuthenticationLoginEmail.of(
+        var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
                 null,
                 randomUserRequestMetadata()
@@ -110,7 +110,7 @@ public class UserEmailServiceImplTest {
     @Test
     public void noExecutionNullEmailAndDisabledEmailTest() {
         // Arrange
-        var function = FunctionAuthenticationLoginEmail.of(
+        var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
                 null,
                 randomUserRequestMetadata()
@@ -128,7 +128,7 @@ public class UserEmailServiceImplTest {
     @Test
     public void noExecutionNotNullEmailAndDisabledEmailTest() {
         // Arrange
-        var function = FunctionAuthenticationLoginEmail.of(
+        var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
                 randomEmail(),
                 randomUserRequestMetadata()
@@ -149,7 +149,7 @@ public class UserEmailServiceImplTest {
         var username = randomUsername();
         var email = randomEmail();
         var userRequestMetadata = randomUserRequestMetadata();
-        var function = FunctionAuthenticationLoginEmail.of(
+        var function = new FunctionAuthenticationLoginEmail(
                 username,
                 email,
                 userRequestMetadata
@@ -197,7 +197,7 @@ public class UserEmailServiceImplTest {
         var username = randomUsername();
         var email = randomEmail();
         var userRequestMetadata = randomUserRequestMetadata();
-        var function = FunctionSessionRefreshedEmail.of(
+        var function = new FunctionSessionRefreshedEmail(
                 username,
                 email,
                 userRequestMetadata

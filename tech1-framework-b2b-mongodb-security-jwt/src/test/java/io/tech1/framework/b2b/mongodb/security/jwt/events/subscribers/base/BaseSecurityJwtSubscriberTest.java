@@ -211,7 +211,7 @@ public class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.userEmailService).executeAuthenticationLogin(eq(FunctionAuthenticationLoginEmail.of(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
+        verify(this.userEmailService).executeAuthenticationLogin(eq(new FunctionAuthenticationLoginEmail(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(eq(IncidentAuthenticationLogin.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 
@@ -235,7 +235,7 @@ public class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.userEmailService).executeSessionRefreshed(eq(FunctionSessionRefreshedEmail.of(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
+        verify(this.userEmailService).executeSessionRefreshed(eq(new FunctionSessionRefreshedEmail(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
         verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(eq(IncidentSessionRefreshed.of(event.getUsername(), userSession.getRequestMetadata())));
     }
 }

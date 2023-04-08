@@ -52,7 +52,7 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
             var username = requestUserLogin.getUsername();
             var password = requestUserLogin.getPassword();
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
-                    EventAuthenticationLoginFailure.of(
+                    new EventAuthenticationLoginFailure(
                             username
                     )
             );

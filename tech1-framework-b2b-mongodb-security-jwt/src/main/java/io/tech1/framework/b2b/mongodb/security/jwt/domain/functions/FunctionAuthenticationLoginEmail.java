@@ -7,7 +7,7 @@ import io.tech1.framework.domain.tuples.Tuple3;
 import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class FunctionAuthenticationLoginEmail {
     private final Username username;
     private final Email email;

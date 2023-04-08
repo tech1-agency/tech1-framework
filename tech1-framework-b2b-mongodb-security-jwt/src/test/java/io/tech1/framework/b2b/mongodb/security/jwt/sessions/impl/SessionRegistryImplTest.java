@@ -162,15 +162,15 @@ public class SessionRegistryImplTest {
         verify(this.userSessionService).findByRefreshToken(eq(session3.getRefreshToken()));
         verify(this.userSessionService).findByRefreshToken(eq(session4.getRefreshToken()));
         verify(this.userSessionService).findByRefreshToken(eq(rndSession.getRefreshToken()));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session1.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session2.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session3.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session4.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session1)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session2)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session3)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session4)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(rndSession)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session1.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session2.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session3.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session4.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session1)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session2)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session3)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session4)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(rndSession)));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session1.getUsername(), dbUserSession1.getRequestMetadata())));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session2.getUsername(), dbUserSession2.getRequestMetadata())));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session3.getUsername(), dbUserSession3.getRequestMetadata())));
@@ -200,7 +200,7 @@ public class SessionRegistryImplTest {
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-        verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(username)));
+        verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(eq(new EventAuthenticationLogin(username)));
     }
 
     @Test

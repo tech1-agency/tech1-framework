@@ -135,7 +135,7 @@ public class RegistrationRequestsValidatorImplTest {
         verify(this.userRepository).findByUsername(eq(username));
         verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
         verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
-                EventRegistration1Failure.of(
+                new EventRegistration1Failure(
                         username,
                         invitationCode,
                         dbInvitationCode.getOwner(),

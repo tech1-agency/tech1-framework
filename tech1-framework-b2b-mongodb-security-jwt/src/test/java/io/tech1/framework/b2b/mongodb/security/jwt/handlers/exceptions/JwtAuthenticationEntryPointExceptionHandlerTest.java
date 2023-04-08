@@ -157,7 +157,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
         var username = Username.of(usernameString);
         var password = Password.of(passwordString);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eq(
-                EventAuthenticationLoginFailure.of(
+                new EventAuthenticationLoginFailure(
                         username
                 )
         ));

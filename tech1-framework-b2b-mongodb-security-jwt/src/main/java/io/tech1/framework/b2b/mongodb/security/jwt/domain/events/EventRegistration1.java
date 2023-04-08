@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUs
 import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class EventRegistration1 {
     private final RequestUserRegistration1 requestUserRegistration1;
 }

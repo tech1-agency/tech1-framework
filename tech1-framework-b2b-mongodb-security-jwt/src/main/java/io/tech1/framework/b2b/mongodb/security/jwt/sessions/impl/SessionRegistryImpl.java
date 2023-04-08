@@ -69,7 +69,7 @@ public class SessionRegistryImpl implements SessionRegistry {
         boolean added = this.sessions.add(session);
         if (added) {
             LOGGER.debug(SESSION_REGISTRY_REGISTER_SESSION, username);
-            this.securityJwtPublisher.publishAuthenticationLogin(EventAuthenticationLogin.of(username));
+            this.securityJwtPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
         }
     }
 
@@ -81,7 +81,7 @@ public class SessionRegistryImpl implements SessionRegistry {
             var username = newSession.getUsername();
             LOGGER.debug(SESSION_REGISTRY_RENEW_SESSION, username);
 
-            this.securityJwtPublisher.publishSessionRefreshed(EventSessionRefreshed.of(newSession));
+            this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
@@ -91,7 +91,7 @@ public class SessionRegistryImpl implements SessionRegistry {
         LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
         this.sessions.remove(session);
 
-        this.securityJwtPublisher.publishAuthenticationLogout(EventAuthenticationLogout.of(session));
+        this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
         var jwtRefreshToken = session.getRefreshToken();
         var dbUserSession = this.userSessionService.findByRefreshToken(jwtRefreshToken);
@@ -114,7 +114,7 @@ public class SessionRegistryImpl implements SessionRegistry {
             var session = new Session(username, dbUserSession.getJwtRefreshToken());
             LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);
-            this.securityJwtPublisher.publishSessionExpired(EventSessionExpired.of(session));
+            this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
             this.securityJwtIncidentPublisher.publishSessionExpired(IncidentSessionExpired.of(username, dbUserSession.getRequestMetadata()));
         });
 

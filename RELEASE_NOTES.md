@@ -3,7 +3,7 @@
 ### v1.11
 - Add email service method: send plain text + plain attachment
 - Delete lombok static constructor usage
-- Add trace utility
+- Add trace utility (instead of throwable utility)
 
 ### v1.10
 - Add queries on users, sessions and invitation codes repositories (querying and deleting)

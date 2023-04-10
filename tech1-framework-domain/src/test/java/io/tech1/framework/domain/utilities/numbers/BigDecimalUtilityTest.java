@@ -102,35 +102,35 @@ public class BigDecimalUtilityTest {
 
     private static Stream<Arguments> inRangeExceptionTest() {
         return Stream.of(
-                Arguments.of(null, TupleRange.of(ZERO, ZERO), "Attribute `number` is invalid"),
+                Arguments.of(null, new TupleRange<>(ZERO, ZERO), "Attribute `number` is invalid"),
                 Arguments.of(ZERO, null, "Attribute `range` is invalid")
         );
     }
 
     private static Stream<Arguments> inRangeTest() {
         return Stream.of(
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("-2"), new BigDecimal("2")), true),
-                Arguments.of(ZERO, TupleRange.of(ZERO, new BigDecimal("2")), false),
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("-2"), ZERO), false),
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("1"), new BigDecimal("2")), false),
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("-2"), new BigDecimal("-1")), false)
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("2")), true),
+                Arguments.of(ZERO, new TupleRange<>(ZERO, new BigDecimal("2")), false),
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), ZERO), false),
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("1"), new BigDecimal("2")), false),
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("-1")), false)
         );
     }
 
     private static Stream<Arguments> inRangeClosedExceptionTest() {
         return Stream.of(
-                Arguments.of(null, TupleRange.of(ZERO, ZERO), "Attribute `number` is invalid"),
+                Arguments.of(null, new TupleRange<>(ZERO, ZERO), "Attribute `number` is invalid"),
                 Arguments.of(ZERO, null, "Attribute `range` is invalid")
         );
     }
 
     private static Stream<Arguments> inRangeClosedTest() {
         return Stream.of(
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("-2"), new BigDecimal("2")), true),
-                Arguments.of(ZERO, TupleRange.of(ZERO, new BigDecimal("2")), true),
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("-2"), ZERO), true),
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("1"), new BigDecimal("2")), false),
-                Arguments.of(ZERO, TupleRange.of(new BigDecimal("-2"), new BigDecimal("-1")), false)
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("2")), true),
+                Arguments.of(ZERO, new TupleRange<>(ZERO, new BigDecimal("2")), true),
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), ZERO), true),
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("1"), new BigDecimal("2")), false),
+                Arguments.of(ZERO, new TupleRange<>(new BigDecimal("-2"), new BigDecimal("-1")), false)
         );
     }
 
@@ -432,10 +432,10 @@ public class BigDecimalUtilityTest {
         var positive = randomBigDecimalGreaterThanZero();
         var negative = randomBigDecimalLessThanZero();
         List<Tuple2<BigDecimal, BigDecimal>> cases = new ArrayList<>();
-        cases.add(Tuple2.of(null, ZERO));
-        cases.add(Tuple2.of(ZERO, ZERO));
-        cases.add(Tuple2.of(positive, positive));
-        cases.add(Tuple2.of(negative, negative.multiply(MINUS_ONE)));
+        cases.add(new Tuple2<>(null, ZERO));
+        cases.add(new Tuple2<>(ZERO, ZERO));
+        cases.add(new Tuple2<>(positive, positive));
+        cases.add(new Tuple2<>(negative, negative.multiply(MINUS_ONE)));
 
         cases.forEach(item -> {
             // Arrange

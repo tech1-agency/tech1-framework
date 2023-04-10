@@ -105,11 +105,11 @@ public class SessionRegistryImplTest {
     @Test
     public void integrationTest() {
         // Arrange
-        var session1 = Session.of(Username.of("username1"), new JwtRefreshToken(randomString()));
-        var session2 = Session.of(Username.of("username2"), new JwtRefreshToken(randomString()));
-        var session3 = Session.of(Username.of("username3"), new JwtRefreshToken(randomString()));
-        var session4 = Session.of(Username.of("username4"), new JwtRefreshToken(randomString()));
-        var rndSession = Session.of(randomUsername(), new JwtRefreshToken(randomString()));
+        var session1 = new Session(Username.of("username1"), new JwtRefreshToken(randomString()));
+        var session2 = new Session(Username.of("username2"), new JwtRefreshToken(randomString()));
+        var session3 = new Session(Username.of("username3"), new JwtRefreshToken(randomString()));
+        var session4 = new Session(Username.of("username4"), new JwtRefreshToken(randomString()));
+        var rndSession = new Session(randomUsername(), new JwtRefreshToken(randomString()));
         var dbUserSession1 = entity(DbUserSession.class);
         var dbUserSession2 = entity(DbUserSession.class);
         var dbUserSession3 = entity(DbUserSession.class);
@@ -162,20 +162,20 @@ public class SessionRegistryImplTest {
         verify(this.userSessionService).findByRefreshToken(eq(session3.getRefreshToken()));
         verify(this.userSessionService).findByRefreshToken(eq(session4.getRefreshToken()));
         verify(this.userSessionService).findByRefreshToken(eq(rndSession.getRefreshToken()));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session1.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session2.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session3.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(session4.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session1)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session2)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session3)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(session4)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(EventAuthenticationLogout.of(rndSession)));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session1.getUsername(), dbUserSession1.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session2.getUsername(), dbUserSession2.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session3.getUsername(), dbUserSession3.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(session4.getUsername(), dbUserSession4.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(IncidentAuthenticationLogoutFull.of(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session1.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session2.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session3.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session4.getUsername())));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session1)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session2)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session3)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session4)));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(rndSession)));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session1.getUsername(), dbUserSession1.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session2.getUsername(), dbUserSession2.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session3.getUsername(), dbUserSession3.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session4.getUsername(), dbUserSession4.getRequestMetadata())));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
         verify(this.userSessionService).deleteByRefreshToken(eq(session1.getRefreshToken()));
         verify(this.userSessionService).deleteByRefreshToken(eq(session2.getRefreshToken()));
         verify(this.userSessionService).deleteByRefreshToken(eq(session3.getRefreshToken()));
@@ -189,18 +189,18 @@ public class SessionRegistryImplTest {
         var username = Username.of("incident");
 
         // Act
-        this.componentUnderTest.register(Session.of(username, entity(JwtRefreshToken.class)));
-        this.componentUnderTest.register(Session.of(username, entity(JwtRefreshToken.class)));
+        this.componentUnderTest.register(new Session(username, entity(JwtRefreshToken.class)));
+        this.componentUnderTest.register(new Session(username, entity(JwtRefreshToken.class)));
 
         var duplicatedJwtRefreshToken = entity(JwtRefreshToken.class);
-        this.componentUnderTest.register(Session.of(username, duplicatedJwtRefreshToken));
-        this.componentUnderTest.register(Session.of(username, duplicatedJwtRefreshToken));
-        this.componentUnderTest.register(Session.of(username, duplicatedJwtRefreshToken));
+        this.componentUnderTest.register(new Session(username, duplicatedJwtRefreshToken));
+        this.componentUnderTest.register(new Session(username, duplicatedJwtRefreshToken));
+        this.componentUnderTest.register(new Session(username, duplicatedJwtRefreshToken));
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-        verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(eq(EventAuthenticationLogin.of(username)));
+        verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(eq(new EventAuthenticationLogin(username)));
     }
 
     @Test
@@ -209,13 +209,13 @@ public class SessionRegistryImplTest {
         var username = Username.of("incident");
 
         // Act
-        this.componentUnderTest.renew(Session.of(username, entity(JwtRefreshToken.class)), Session.of(username, entity(JwtRefreshToken.class)));
-        this.componentUnderTest.renew(Session.of(username, entity(JwtRefreshToken.class)), Session.of(username, entity(JwtRefreshToken.class)));
+        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, entity(JwtRefreshToken.class)));
+        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, entity(JwtRefreshToken.class)));
 
         var duplicatedJwtRefreshToken = entity(JwtRefreshToken.class);
-        this.componentUnderTest.renew(Session.of(username, entity(JwtRefreshToken.class)), Session.of(username, duplicatedJwtRefreshToken));
-        this.componentUnderTest.renew(Session.of(username, entity(JwtRefreshToken.class)), Session.of(username, duplicatedJwtRefreshToken));
-        this.componentUnderTest.renew(Session.of(username, entity(JwtRefreshToken.class)), Session.of(username, duplicatedJwtRefreshToken));
+        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, duplicatedJwtRefreshToken));
+        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, duplicatedJwtRefreshToken));
+        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, duplicatedJwtRefreshToken));
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
@@ -228,7 +228,7 @@ public class SessionRegistryImplTest {
         // Arrange
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
-        var session = Session.of(username, refreshToken);
+        var session = new Session(username, refreshToken);
         var dbUserSession = entity(DbUserSession.class);
         when(this.userSessionService.findByRefreshToken(eq(refreshToken))).thenReturn(dbUserSession);
 
@@ -253,7 +253,7 @@ public class SessionRegistryImplTest {
         // Arrange
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
-        var session = Session.of(username, refreshToken);
+        var session = new Session(username, refreshToken);
         when(this.userSessionService.findByRefreshToken(eq(refreshToken))).thenReturn(null);
 
         // Act
@@ -273,9 +273,9 @@ public class SessionRegistryImplTest {
     public void cleanByExpiredRefreshTokensEnabledTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var username1 = Username.of("username1");
-        var session1 = Session.of(username1, entity(JwtRefreshToken.class));
-        var session2 = Session.of(Username.of("username2"), entity(JwtRefreshToken.class));
-        var session3 = Session.of(Username.of("username3"), entity(JwtRefreshToken.class));
+        var session1 = new Session(username1, entity(JwtRefreshToken.class));
+        var session2 = new Session(Username.of("username2"), entity(JwtRefreshToken.class));
+        var session3 = new Session(Username.of("username3"), entity(JwtRefreshToken.class));
         Set<Session> sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session1);
         sessions.add(session2);
@@ -291,7 +291,7 @@ public class SessionRegistryImplTest {
         when(dbUserSession3.getId()).thenReturn(randomString());
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
-        var sessionsValidatedTuple2 = SessionsValidatedTuple2.of(List.of(Tuple2.of(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+        var sessionsValidatedTuple2 = new SessionsValidatedTuple2(List.of(new Tuple2<>(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
         when(this.userSessionService.validate(eq(usersSessions))).thenReturn(sessionsValidatedTuple2);
 
         // Act

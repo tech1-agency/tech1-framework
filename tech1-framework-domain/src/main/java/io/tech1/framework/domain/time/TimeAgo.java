@@ -17,12 +17,12 @@ import static java.util.concurrent.TimeUnit.*;
 @EqualsAndHashCode
 public class TimeAgo {
     public static final List<Tuple2<Long, String>> UNITS = List.of(
-            Tuple2.of(DAYS.toMillis(365), "year"),
-            Tuple2.of(DAYS.toMillis(30), "month"),
-            Tuple2.of(DAYS.toMillis(1), "day"),
-            Tuple2.of(HOURS.toMillis(1), "hour"),
-            Tuple2.of(MINUTES.toMillis(1), "minute"),
-            Tuple2.of(SECONDS.toMillis(1), "second")
+            new Tuple2<>(DAYS.toMillis(365), "year"),
+            new Tuple2<>(DAYS.toMillis(30), "month"),
+            new Tuple2<>(DAYS.toMillis(1), "day"),
+            new Tuple2<>(HOURS.toMillis(1), "hour"),
+            new Tuple2<>(MINUTES.toMillis(1), "minute"),
+            new Tuple2<>(SECONDS.toMillis(1), "second")
     );
 
     @JsonValue

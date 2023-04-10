@@ -42,7 +42,7 @@ public class InvitationCodeServiceImpl implements InvitationCodeService {
                 return comparing((DbInvitationCode code) -> code.getInvited().getIdentifier()).compare(o1, o2);
             }
         });
-        return ResponseInvitationCodes.of(
+        return new ResponseInvitationCodes(
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
                 invitationCodes
         );

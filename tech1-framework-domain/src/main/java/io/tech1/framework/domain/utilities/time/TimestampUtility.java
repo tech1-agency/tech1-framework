@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.utilities.time;
 
 import io.tech1.framework.domain.time.TimeAmount;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
 import java.time.ZoneId;
@@ -50,16 +50,16 @@ public class TimestampUtility {
         );
     }
 
-    public static Tuple2<Long, Long> getPastRange(TimeAmount timeAmount) {
+    public static TupleRange<Long> getPastRange(TimeAmount timeAmount) {
         var currentTimestamp = getCurrentTimestamp();
         var past = currentTimestamp - timeAmount.toMillis();
-        return Tuple2.of(past, currentTimestamp);
+        return new TupleRange<>(past, currentTimestamp);
     }
 
-    public static Tuple2<Long, Long> getFutureRange(TimeAmount timeAmount) {
+    public static TupleRange<Long> getFutureRange(TimeAmount timeAmount) {
         var currentTimestamp = getCurrentTimestamp();
         var future = currentTimestamp + timeAmount.toMillis();
-        return Tuple2.of(currentTimestamp, future);
+        return new TupleRange<>(currentTimestamp, future);
     }
 
     public static boolean isBetween(long timestamp, long past, long future) {

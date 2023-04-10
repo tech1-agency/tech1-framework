@@ -31,7 +31,7 @@ public class SchedulerConfigurationTest {
         var unit = randomEnum(TimeUnit.class);
 
         // Act
-        var schedulerConfiguration = SchedulerConfiguration.of(initialDelay, delay, unit);
+        var schedulerConfiguration = new SchedulerConfiguration(initialDelay, delay, unit);
 
         // Assert
         assertThat(schedulerConfiguration).isNotNull();

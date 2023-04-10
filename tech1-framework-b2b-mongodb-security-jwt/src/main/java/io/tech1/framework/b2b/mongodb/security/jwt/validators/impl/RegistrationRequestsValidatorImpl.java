@@ -70,7 +70,7 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
             if (nonNull(dbInvitationCode.getInvited())) {
                 var exception = entityAlreadyUsed("InvitationCode");
                 this.securityJwtPublisher.publishRegistration1Failure(
-                        EventRegistration1Failure.of(
+                        new EventRegistration1Failure(
                                 username,
                                 invitationCode,
                                 dbInvitationCode.getOwner(),
@@ -78,7 +78,7 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
                         )
                 );
                 this.securityJwtIncidentPublisher.publishRegistration1Failure(
-                        IncidentRegistration1Failure.of(
+                        new IncidentRegistration1Failure(
                                 username,
                                 invitationCode,
                                 dbInvitationCode.getOwner(),

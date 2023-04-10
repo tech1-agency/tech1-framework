@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.utilities.exceptions.ThrowableUtility.getTrace;
+import static io.tech1.framework.domain.utilities.exceptions.TraceUtility.getTrace;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 

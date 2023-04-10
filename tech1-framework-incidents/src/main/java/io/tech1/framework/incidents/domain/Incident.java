@@ -25,6 +25,11 @@ public class Incident {
         this.attributes = new TreeMap<>();
     }
 
+    public Incident(Map<String, Object> attributes) {
+        this.attributes = new TreeMap<>();
+        this.addAll(attributes);
+    }
+
     public static Incident copyOf(Incident incident) {
         assertNonNullOrThrow(incident, invalidAttribute("Incident.incident"));
         var instance = new Incident();

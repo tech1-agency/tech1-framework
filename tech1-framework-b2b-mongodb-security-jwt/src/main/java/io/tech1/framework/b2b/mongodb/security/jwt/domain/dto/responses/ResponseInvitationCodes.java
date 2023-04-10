@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class ResponseInvitationCodes {
     private final Set<String> authorities;
     private final List<DbInvitationCode> invitationCodes;

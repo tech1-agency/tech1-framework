@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Map;
 import java.util.Set;
 
-@Data(staticConstructor = "of")
+@Data
 public class EmailHTML {
     private final Set<String> to;
     private final String subject;

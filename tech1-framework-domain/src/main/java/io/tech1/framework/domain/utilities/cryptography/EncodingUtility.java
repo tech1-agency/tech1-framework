@@ -9,7 +9,7 @@ import static java.util.Base64.getEncoder;
 public class EncodingUtility {
 
     public static Tuple2<String, String> getBasicAuthenticationHeader(String username, String password) {
-        return Tuple2.of(
+        return new Tuple2<>(
                 "Authorization",
                 getBasicAuthenticationHeaderValue(username, password)
         );

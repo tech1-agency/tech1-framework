@@ -82,7 +82,7 @@ public class BaseSecurityAuthenticationResource {
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
 
         this.sessionRegistry.register(
-                Session.of(
+                new Session(
                         username,
                         new JwtRefreshToken(jwtRefreshToken.getValue())
                 )
@@ -102,7 +102,7 @@ public class BaseSecurityAuthenticationResource {
             if (validatedClaims.isValid()) {
                 var username = validatedClaims.safeGetUsername();
                 this.sessionRegistry.logout(
-                        Session.of(
+                        new Session(
                                 username,
                                 jwtRefreshToken
                         )

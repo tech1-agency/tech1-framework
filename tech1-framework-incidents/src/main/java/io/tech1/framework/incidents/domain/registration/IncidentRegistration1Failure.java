@@ -4,7 +4,7 @@ import io.tech1.framework.domain.base.Username;
 import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class IncidentRegistration1Failure {
     private final Username username;
     private final String invitationCode;
@@ -16,7 +16,7 @@ public class IncidentRegistration1Failure {
             String invitationCode,
             String exception
     ) {
-        return IncidentRegistration1Failure.of(
+        return new IncidentRegistration1Failure(
                 username,
                 invitationCode,
                 Username.of("—"),

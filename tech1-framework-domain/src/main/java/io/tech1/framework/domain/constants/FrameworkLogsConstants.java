@@ -18,6 +18,7 @@ public class FrameworkLogsConstants {
     public static final String FRAMEWORK_INCIDENT_PREFIX = FRAMEWORK_PREFIX + "Incident]";
     public static final String FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX = FRAMEWORK_PREFIX + "B2B-MongoDb SecurityJWT]";
     public static final String FRAMEWORK_SESSION_REGISTRY_PREFIX = FRAMEWORK_PREFIX + "SessionRegistry]";
+    public static final String FRAMEWORK_SERVER = FRAMEWORK_PREFIX + "Server]";
 
     // =================================================================================================================
     // Incidents
@@ -32,6 +33,7 @@ public class FrameworkLogsConstants {
     public static final String INCIDENT_REGISTER1_FAILURE = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /register1 failure. Username: `{}`";
     public static final String INCIDENT_SESSION_REFRESHED = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /refreshToken. Username: `{}`";
     public static final String INCIDENT_SESSION_EXPIRED = FRAMEWORK_INCIDENT_PREFIX + " `{}` - session expired. Username: `{}`";
+    public static final String INCIDENT_SYSTEM_RESET_SERVER = FRAMEWORK_INCIDENT_PREFIX + " `{}` - system reset server. Username: `{}`. Status: `{}`";
 
     // =================================================================================================================
     // SecurityJWT
@@ -52,4 +54,9 @@ public class FrameworkLogsConstants {
     public static final String SESSION_REGISTRY_RENEW_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - renew session";
     public static final String SESSION_REGISTRY_REMOVE_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - remove session";
     public static final String SESSION_REGISTRY_EXPIRE_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - expire session";
+
+    // =================================================================================================================
+    // Server
+    // =================================================================================================================
+    public static final String SERVER_RESET_SERVER_TASK = FRAMEWORK_SERVER + " Reset Server: {}. Status: `{}`";
 }

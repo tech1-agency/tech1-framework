@@ -157,7 +157,7 @@ public class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         var jwtUser = entity(JwtUser.class);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(Tuple2.of(jwtUser, jwtRefreshToken));
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -165,7 +165,7 @@ public class JwtTokensFilterTest {
         // Assert
         verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
         // WARNING: no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(eq(Session.of(jwtUser.getDbUser().getUsername(), jwtRefreshToken)));
+        verify(this.sessionRegistry).register(eq(new Session(jwtUser.getDbUser().getUsername(), jwtRefreshToken)));
         verify(filterChain).doFilter(eq(request), eq(response));
         verifyNoMoreInteractions(
                 request,

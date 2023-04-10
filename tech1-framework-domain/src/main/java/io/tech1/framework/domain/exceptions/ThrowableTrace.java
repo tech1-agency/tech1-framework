@@ -21,10 +21,6 @@ public class ThrowableTrace {
         this.value = value;
     }
 
-    public static ThrowableTrace of(String value) {
-        return new ThrowableTrace(value);
-    }
-
     @Override
     public String toString() {
         return this.value;

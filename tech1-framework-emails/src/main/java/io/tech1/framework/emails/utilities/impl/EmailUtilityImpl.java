@@ -23,6 +23,6 @@ public class EmailUtilityImpl implements EmailUtility {
     public Tuple2<MimeMessage, MimeMessageHelper> getMimeMessageTuple2() throws MessagingException {
         var message = this.javaMailSender.createMimeMessage();
         var mimeMessageHelper = new MimeMessageHelper(message, MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
-        return Tuple2.of(message, mimeMessageHelper);
+        return new Tuple2<>(message, mimeMessageHelper);
     }
 }

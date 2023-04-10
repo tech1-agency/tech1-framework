@@ -29,7 +29,7 @@ public class SchedulerConfiguration {
     }
 
     public io.tech1.framework.domain.time.SchedulerConfiguration getSchedulerConfiguration() {
-        return io.tech1.framework.domain.time.SchedulerConfiguration.of(
+        return new io.tech1.framework.domain.time.SchedulerConfiguration(
                 this.initialDelay,
                 this.delay,
                 this.unit

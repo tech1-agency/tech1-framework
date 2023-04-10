@@ -157,18 +157,18 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
         var username = Username.of(usernameString);
         var password = Password.of(passwordString);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eq(
-                EventAuthenticationLoginFailure.of(
+                new EventAuthenticationLoginFailure(
                         username
                 )
         ));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(eq(
-                IncidentAuthenticationLoginFailureUsernamePassword.of(
+                new IncidentAuthenticationLoginFailureUsernamePassword(
                         username,
                         password
                 )
         ));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(eq(
-                IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
+                new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                         username,
                         password
                 )

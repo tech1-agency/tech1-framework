@@ -5,14 +5,14 @@ import lombok.Data;
 import java.util.concurrent.TimeUnit;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class SchedulerConfiguration {
     private final long initialDelay;
     private final long delay;
     private final TimeUnit unit;
 
     public static SchedulerConfiguration never() {
-        return of(
+        return new SchedulerConfiguration(
                 Long.MAX_VALUE,
                 Long.MAX_VALUE,
                 TimeUnit.DAYS

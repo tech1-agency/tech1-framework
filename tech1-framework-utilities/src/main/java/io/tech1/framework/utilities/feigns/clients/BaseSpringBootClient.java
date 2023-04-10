@@ -37,7 +37,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
 
     @Override
     public Tuple2<String, SpringBootActuatorInfo> infoMappedByServerName() {
-        return Tuple2.of(this.getServerName(), this.info());
+        return new Tuple2(this.getServerName(), this.info());
     }
 
     @Override
@@ -52,6 +52,6 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
 
     @Override
     public Tuple2<String, SpringBootActuatorHealth> healthMappedByServerName() {
-        return Tuple2.of(this.getServerName(), this.health());
+        return new Tuple2(this.getServerName(), this.health());
     }
 }

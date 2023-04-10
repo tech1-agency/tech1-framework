@@ -239,36 +239,36 @@ public class BaseCurrentSessionAssistantTest {
         Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
                     tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.getB()), randomUsername(), tuple2.getA());
 
-        var validSession = sessionFnc.apply(Tuple2.of(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
-        var invalidSession1 = sessionFnc.apply(Tuple2.of(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
-        var invalidSession2 = sessionFnc.apply(Tuple2.of(processed(validGeoLocation(), invalidUserAgentDetails()), randomString()));
-        var invalidSession3 = sessionFnc.apply(Tuple2.of(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), invalidUserAgentDetails()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
         List<Tuple3<List<DbUserSession>, Integer, Boolean>> cases = new ArrayList<>();
         cases.add(
-                Tuple3.of(
+                new Tuple3<>(
                         List.of(validSession),
                         1,
                         false
                 )
         );
         cases.add(
-                Tuple3.of(
+                new Tuple3<>(
                         List.of(validSession, invalidSession1),
                         2,
                         true
                 )
         );
         cases.add(
-                Tuple3.of(
+                new Tuple3<>(
                         List.of(validSession, invalidSession1, invalidSession2),
                         3,
                         true
                 )
         );
         cases.add(
-                Tuple3.of(
+                new Tuple3<>(
                         List.of(validSession, invalidSession1, invalidSession2, invalidSession3),
                         4,
                         true

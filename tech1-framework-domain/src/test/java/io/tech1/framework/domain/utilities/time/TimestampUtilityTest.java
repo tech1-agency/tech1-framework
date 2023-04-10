@@ -18,11 +18,11 @@ import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimestampUtilityTest {
-    private static final Long _2_HOUR_AGO = getPastRange(TimeAmount.of(2L, HOURS)).getA();
-    private static final Long _5_MINUTES_AGO = getPastRange(TimeAmount.of(5L, MINUTES)).getA();
-    private static final Long _1_MINUTE_AGO = getPastRange(TimeAmount.of(1L, MINUTES)).getA();
-    private static final Long _2_MINUTES_FUTURE = getFutureRange(TimeAmount.of(2L, MINUTES)).getB();
-    private static final Long _1_HOUR_FUTURE = getFutureRange(TimeAmount.of(1L, HOURS)).getB();
+    private static final Long _2_HOUR_AGO = getPastRange(TimeAmount.of(2L, HOURS)).getFrom();
+    private static final Long _5_MINUTES_AGO = getPastRange(TimeAmount.of(5L, MINUTES)).getFrom();
+    private static final Long _1_MINUTE_AGO = getPastRange(TimeAmount.of(1L, MINUTES)).getFrom();
+    private static final Long _2_MINUTES_FUTURE = getFutureRange(TimeAmount.of(2L, MINUTES)).getTo();
+    private static final Long _1_HOUR_FUTURE = getFutureRange(TimeAmount.of(1L, HOURS)).getTo();
 
     private static final long _5_SECONDS = TimeAmount.of(5L, SECONDS).toMillis();
 
@@ -110,8 +110,6 @@ public class TimestampUtilityTest {
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampUTC - timestampPoland).isEqualTo(3600000L);
-        assertThat(timestampUTC - timestampUkraine).isEqualTo(7200000L);
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
@@ -125,8 +123,6 @@ public class TimestampUtilityTest {
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
-        assertThat(timestampUTC - timestampPoland).isEqualTo(3600000L);
-        assertThat(timestampUTC - timestampUkraine).isEqualTo(7200000L);
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 

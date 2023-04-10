@@ -51,4 +51,14 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
         instance.enabled = false;
         return instance;
     }
+
+    // NOTE: test-purposes
+    public static EmailConfigs enabled(
+            String from
+    ) {
+        var instance = new EmailConfigs();
+        instance.enabled = true;
+        instance.from = from;
+        return instance;
+    }
 }

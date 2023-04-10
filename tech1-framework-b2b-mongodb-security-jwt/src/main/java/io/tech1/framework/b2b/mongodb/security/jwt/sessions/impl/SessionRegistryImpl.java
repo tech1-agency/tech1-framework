@@ -69,7 +69,7 @@ public class SessionRegistryImpl implements SessionRegistry {
         boolean added = this.sessions.add(session);
         if (added) {
             LOGGER.debug(SESSION_REGISTRY_REGISTER_SESSION, username);
-            this.securityJwtPublisher.publishAuthenticationLogin(EventAuthenticationLogin.of(username));
+            this.securityJwtPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
         }
     }
 
@@ -81,7 +81,7 @@ public class SessionRegistryImpl implements SessionRegistry {
             var username = newSession.getUsername();
             LOGGER.debug(SESSION_REGISTRY_RENEW_SESSION, username);
 
-            this.securityJwtPublisher.publishSessionRefreshed(EventSessionRefreshed.of(newSession));
+            this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
@@ -91,16 +91,16 @@ public class SessionRegistryImpl implements SessionRegistry {
         LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
         this.sessions.remove(session);
 
-        this.securityJwtPublisher.publishAuthenticationLogout(EventAuthenticationLogout.of(session));
+        this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
         var jwtRefreshToken = session.getRefreshToken();
         var dbUserSession = this.userSessionService.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull.of(username, dbUserSession.getRequestMetadata()));
+            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.getRequestMetadata()));
             this.userSessionService.deleteByRefreshToken(jwtRefreshToken);
         } else {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin.of(username));
+            this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
         }
     }
 
@@ -111,11 +111,11 @@ public class SessionRegistryImpl implements SessionRegistry {
         sessionsValidatedTuple2.getExpiredSessions().forEach(tuple2 -> {
             var username = tuple2.getA();
             var dbUserSession = tuple2.getB();
-            var session = Session.of(username, dbUserSession.getJwtRefreshToken());
+            var session = new Session(username, dbUserSession.getJwtRefreshToken());
             LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);
-            this.securityJwtPublisher.publishSessionExpired(EventSessionExpired.of(session));
-            this.securityJwtIncidentPublisher.publishSessionExpired(IncidentSessionExpired.of(username, dbUserSession.getRequestMetadata()));
+            this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
+            this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, dbUserSession.getRequestMetadata()));
         });
 
         var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds());

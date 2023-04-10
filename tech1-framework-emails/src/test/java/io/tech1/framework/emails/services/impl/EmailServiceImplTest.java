@@ -3,6 +3,7 @@ package io.tech1.framework.emails.services.impl;
 import io.tech1.framework.domain.properties.configs.EmailConfigs;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.emails.domain.EmailHTML;
+import io.tech1.framework.emails.domain.EmailPlainAttachment;
 import io.tech1.framework.emails.services.EmailService;
 import io.tech1.framework.emails.utilities.EmailUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -27,6 +28,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,7 @@ import java.util.Set;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static javax.mail.Message.RecipientType.TO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -238,6 +242,81 @@ public class EmailServiceImplTest {
     }
 
     @Test
+    public void sendPlainAttachmentDisabledTest() {
+        // Arrange
+        var emailPlainAttachment = entity(EmailPlainAttachment.class);
+        var emailConfigs = EmailConfigs.disabled();
+        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+
+        // Act
+        this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getEmailConfigs();
+    }
+
+    @Test
+    public void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
+        // Arrange
+        var emailPlainAttachment = entity(EmailPlainAttachment.class);
+        var from = randomEmailAsValue();
+        var emailConfigs = EmailConfigs.enabled(from);
+        var mimeMessage = mock(MimeMessage.class);
+        doThrow(new MessagingException()).when(mimeMessage).setFrom(eq(from));
+        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
+
+        // Act
+        this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.javaMailSender).createMimeMessage();
+    }
+
+    @Test
+    public void sendPlainAttachmentEnabledTest() throws MessagingException, IOException {
+        // Arrange
+        var emailPlainAttachment = new EmailPlainAttachment(
+                Set.of(
+                        "test1@tech1.io",
+                        "test2@tech1.io"
+                ),
+                "subject1",
+                "message1",
+                "attachment-file-name1",
+                "attachment-message1"
+        );
+        var from = randomEmailAsValue();
+        var emailConfigs = EmailConfigs.enabled(from);
+        var mimeMessage = mock(MimeMessage.class);
+        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
+
+        // Act
+        this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
+
+        // Assert
+        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.javaMailSender).createMimeMessage();
+        verify(mimeMessage).setFrom(eq(from));
+        verify(mimeMessage).setSubject(eq("subject1"));
+        verify(mimeMessage).addRecipients(TO, "test1@tech1.io");
+        verify(mimeMessage).addRecipients(TO, "test2@tech1.io");
+        var mimeMultipartAC = ArgumentCaptor.forClass(MimeMultipart.class);
+        verify(mimeMessage).setContent(mimeMultipartAC.capture());
+        var multipart = mimeMultipartAC.getValue();
+        assertThat(multipart.getCount()).isEqualTo(2);
+        assertThat(multipart.getBodyPart(0).getContent()).isEqualTo("message1");
+        assertThat(multipart.getBodyPart(1).getContent()).isEqualTo("attachment-message1");
+        assertThat(multipart.getBodyPart(1).getFileName()).isEqualTo("attachment-file-name1");
+        verify(this.javaMailSender).send(any(MimeMessage.class));
+        verifyNoMoreInteractions(
+                mimeMessage
+        );
+    }
+
+    @Test
     public void sendHTMLDisabledTest() {
         // Arrange
         var emailHTML = entity(EmailHTML.class);
@@ -256,9 +335,7 @@ public class EmailServiceImplTest {
         // Arrange
         var from = randomEmailAsValue();
         var emailHTML = entity(EmailHTML.class);
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
         when(this.emailUtility.getMimeMessageTuple2()).thenThrow(new MessagingException());
 
@@ -278,7 +355,7 @@ public class EmailServiceImplTest {
                 "param1", "key2",
                 "param2", 2L
         );
-        var emailHTML = EmailHTML.of(
+        var emailHTML = new EmailHTML(
                 Set.of(
                         "tests@tech1.io"
                 ),
@@ -286,13 +363,11 @@ public class EmailServiceImplTest {
                 "template1",
                 templateVariables
         );
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
         var message = mock(MimeMessage.class);
         var mimeMessageHelper = mock(MimeMessageHelper.class);
-        when(this.emailUtility.getMimeMessageTuple2()).thenReturn(Tuple2.of(message, mimeMessageHelper));
+        when(this.emailUtility.getMimeMessageTuple2()).thenReturn(new Tuple2<>(message, mimeMessageHelper));
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);

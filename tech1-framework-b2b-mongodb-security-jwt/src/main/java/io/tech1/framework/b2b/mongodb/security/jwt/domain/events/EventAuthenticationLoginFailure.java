@@ -4,7 +4,7 @@ import io.tech1.framework.domain.base.Username;
 import lombok.Data;
 
 // Lombok
-@Data(staticConstructor = "of")
+@Data
 public class EventAuthenticationLoginFailure {
     private final Username username;
 }

@@ -23,7 +23,7 @@ public enum TimerTaskState {
     }
 
     public TimerTaskPermissions getPermissions() {
-        return TimerTaskPermissions.of(
+        return new TimerTaskPermissions(
                 CREATED.equals(this) || STOPPED.equals(this),
                 this.isOperative()
         );

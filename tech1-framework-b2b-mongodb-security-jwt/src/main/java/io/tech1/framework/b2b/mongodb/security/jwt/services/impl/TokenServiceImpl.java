@@ -55,7 +55,7 @@ public class TokenServiceImpl implements TokenService {
 
         // JWT Access Token: isValid + isAlive
         var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().getIdentifier());
-        return Tuple2.of(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.getJwtToken()));
+        return new Tuple2(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.getJwtToken()));
     }
 
     @Override
@@ -81,16 +81,16 @@ public class TokenServiceImpl implements TokenService {
         LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);
 
         this.sessionRegistry.renew(
-                Session.of(
+                new Session(
                         username,
                         new JwtRefreshToken(oldCookieRefreshToken.getValue())
                 ),
-                Session.of(
+                new Session(
                         username,
                         newJwtRefreshToken
                 )
         );
 
-        return ResponseUserSession1.of(userSession.getJwtRefreshToken().getValue());
+        return new ResponseUserSession1(userSession.getJwtRefreshToken().getValue());
     }
 }

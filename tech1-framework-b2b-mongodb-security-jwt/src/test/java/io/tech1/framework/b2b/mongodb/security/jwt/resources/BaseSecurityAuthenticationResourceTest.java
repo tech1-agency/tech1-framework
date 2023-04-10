@@ -143,7 +143,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
         verify(this.cookieProvider).createJwtAccessCookie(eq(jwtAccessToken), any(HttpServletResponse.class));
         verify(this.cookieProvider).createJwtRefreshCookie(eq(jwtRefreshToken), any(HttpServletResponse.class));
         // WARNING: no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(eq(Session.of(username, jwtRefreshToken)));
+        verify(this.sessionRegistry).register(eq(new Session(username, jwtRefreshToken)));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
 
@@ -210,7 +210,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
         // Assert
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtility).validate(eq(jwtRefreshToken));
-        verify(this.sessionRegistry).logout(eq(Session.of(username, jwtRefreshToken)));
+        verify(this.sessionRegistry).logout(eq(new Session(username, jwtRefreshToken)));
         verify(this.cookieProvider).clearCookies(any(HttpServletResponse.class));
         verify(httpSession).invalidate();
         // WARNING: no verifications on static SecurityContextHolder
@@ -237,7 +237,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
         // Assert
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtility).validate(eq(jwtRefreshToken));
-        verify(this.sessionRegistry).logout(eq(Session.of(username, jwtRefreshToken)));
+        verify(this.sessionRegistry).logout(eq(new Session(username, jwtRefreshToken)));
         verify(this.cookieProvider).clearCookies(any(HttpServletResponse.class));
         // WARNING: no verifications on static SecurityContextHolder
     }

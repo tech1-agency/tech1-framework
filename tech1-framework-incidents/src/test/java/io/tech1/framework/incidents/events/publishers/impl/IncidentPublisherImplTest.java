@@ -17,8 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.randomIncident;
-import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.randomThrowableIncident;
+import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -68,6 +67,30 @@ public class IncidentPublisherImplTest {
                 this.applicationEventPublisher,
                 this.applicationFrameworkProperties
         );
+    }
+
+    @Test
+    public void publishResetServerStartedTest() {
+        // Arrange
+        var incident = randomIncidentSystemResetServerStarted();
+
+        // Act
+        this.componentUnderTest.publishResetServerStarted(incident);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+    }
+
+    @Test
+    public void publishResetServerCompletedTest() {
+        // Arrange
+        var incident = randomIncidentSystemResetServerCompleted();
+
+        // Act
+        this.componentUnderTest.publishResetServerCompleted(incident);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(eq(incident));
     }
 
     @Test

@@ -122,13 +122,14 @@ public class SecurityHandshakeHandlerTest {
         var jwtUser = entity(JwtUser.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(Tuple2.of(jwtUser, jwtRefreshToken));
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
 
         // Act
         var actual = this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes);
 
         // Assert
         verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
+        assertThat(actual).isNotNull();
         assertThat(actual.getName()).isEqualTo(jwtUser.getUsername());
     }
 }

@@ -32,6 +32,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     // Cookies
     private final CookieProvider cookieProvider;
 
+    @SuppressWarnings("NullableProblems")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -43,7 +44,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
 
             // Session Registry
             this.sessionRegistry.register(
-                    Session.of(
+                    new Session(
                             currentJwtUser.getDbUser().getUsername(),
                             tuple2.getB()
                     )

@@ -1,3 +1,4 @@
+
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
@@ -65,7 +66,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(DbInvitationCode.class);
-        var responseInvitationCodes = ResponseInvitationCodes.of(authorities, invitationCodes);
+        var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
         when(this.invitationCodeService.findByOwner(eq(owner))).thenReturn(responseInvitationCodes);
 
         // Act

@@ -56,7 +56,8 @@ public class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
         assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
         assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident1Test");
     }
 
     @Test
@@ -80,7 +81,8 @@ public class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
         assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
         assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident2Test");
         assertThat(actual.getAttributes().get("method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
         assertThat(actual.getAttributes().get("params")).isEqualTo(object + ", param1, 1");
     }
@@ -105,7 +107,8 @@ public class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
         assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
         assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).startsWith("Throwable occurred! Please take required actions!");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident3Test");
         assertThat(actual.getAttributes().get("key1")).isEqualTo(object);
     }
 
@@ -114,7 +117,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var username = Username.of("tech1");
         var password = Password.of("passwordTOP123!");
-        var incident = IncidentAuthenticationLoginFailureUsernamePassword.of(
+        var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
                 username,
                 password
         );
@@ -138,7 +141,7 @@ public class IncidentConverterImplTest {
         // Arrange
         var username = Username.of("tech1");
         var password = Password.of("passwordTOP123!");
-        var incident = IncidentAuthenticationLoginFailureUsernameMaskedPassword.of(
+        var incident = new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                 username,
                 password
         );
@@ -161,7 +164,7 @@ public class IncidentConverterImplTest {
     public void convertAuthenticationLogoutMinIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
-        var incident = IncidentAuthenticationLogoutMin.of(
+        var incident = new IncidentAuthenticationLogoutMin(
                 username
         );
 

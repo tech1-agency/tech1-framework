@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,6 +24,11 @@ public class Incident {
 
     public Incident() {
         this.attributes = new TreeMap<>();
+    }
+
+    public Incident(Map<String, Object> attributes) {
+        this.attributes = new TreeMap<>();
+        this.addAll(attributes);
     }
 
     public static Incident copyOf(Incident incident) {

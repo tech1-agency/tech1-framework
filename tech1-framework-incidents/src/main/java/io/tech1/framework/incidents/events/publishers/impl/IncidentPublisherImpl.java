@@ -2,6 +2,8 @@ package io.tech1.framework.incidents.events.publishers.impl;
 
 import io.tech1.framework.domain.pubsub.AbstractEventPublisher;
 import io.tech1.framework.incidents.domain.Incident;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.INCIDENT;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.INCIDENT_THROWABLE;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
+import static io.tech1.framework.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.domain.enums.Status.STARTED;
 
 @Slf4j
 @Service
@@ -20,6 +23,18 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
+
+    @Override
+    public void publishResetServerStarted(IncidentSystemResetServerStarted incident) {
+        LOGGER.debug(INCIDENT_SYSTEM_RESET_SERVER, this.getType(), incident.getUsername(), STARTED);
+        this.applicationEventPublisher.publishEvent(incident);
+    }
+
+    @Override
+    public void publishResetServerCompleted(IncidentSystemResetServerCompleted incident) {
+        LOGGER.debug(INCIDENT_SYSTEM_RESET_SERVER, this.getType(), incident.getUsername(), COMPLETED);
+        this.applicationEventPublisher.publishEvent(incident);
+    }
 
     @Override
     public void publishIncident(Incident incident) {

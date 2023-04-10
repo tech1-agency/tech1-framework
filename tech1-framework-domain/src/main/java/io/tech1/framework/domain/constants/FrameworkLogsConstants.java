@@ -32,6 +32,7 @@ public class FrameworkLogsConstants {
     public static final String INCIDENT_REGISTER1_FAILURE = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /register1 failure. Username: `{}`";
     public static final String INCIDENT_SESSION_REFRESHED = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /refreshToken. Username: `{}`";
     public static final String INCIDENT_SESSION_EXPIRED = FRAMEWORK_INCIDENT_PREFIX + " `{}` - session expired. Username: `{}`";
+    public static final String INCIDENT_SYSTEM_RESET_SERVER = FRAMEWORK_INCIDENT_PREFIX + " `{}` - system reset server. Username: `{}`. Status: `{}`";
 
     // =================================================================================================================
     // SecurityJWT

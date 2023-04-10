@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +17,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.List;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.repositories.RepositoriesConstants.MONGO_DB_PORT;
 import static io.tech1.framework.b2b.mongodb.security.jwt.repositories.RepositoriesConstants.MONGO_DB_VERSION;
@@ -72,6 +75,8 @@ public class UserRepositoryTest {
         var notSuperadmins = this.userRepository.findByAuthorityNotSuperadmin();
         var superadminsProjection = this.userRepository.findByAuthorityProjectionUsernames(superadminAuthority);
         var notSuperadminsProjection = this.userRepository.findByAuthorityNotEqualProjectionUsernames(superadminAuthority);
+        var superadminsUsernames = this.userRepository.findSuperadminsUsernames();
+        var notSuperadminsUsernames = this.userRepository.findNotSuperadminsUsernames();
 
         // Assert
         assertThat(superadmins).isNotNull();
@@ -103,6 +108,26 @@ public class UserRepositoryTest {
             assertThat(user.getAuthorities()).isNull();
             assertThat(user.getZoneId()).isNull();
         });
+
+        assertThat(superadminsUsernames).isNotNull();
+        assertThat(superadminsUsernames).hasSize(3);
+        assertThat(superadminsUsernames).isEqualTo(
+                List.of(
+                        Username.of("sa1"),
+                        Username.of("sa2"),
+                        Username.of("sa3")
+                )
+        );
+
+        assertThat(notSuperadminsUsernames).isNotNull();
+        assertThat(notSuperadminsUsernames).hasSize(3);
+        assertThat(notSuperadminsUsernames).isEqualTo(
+                List.of(
+                        Username.of("admin"),
+                        Username.of("user1"),
+                        Username.of("user2")
+                )
+        );
     }
 
     @Test

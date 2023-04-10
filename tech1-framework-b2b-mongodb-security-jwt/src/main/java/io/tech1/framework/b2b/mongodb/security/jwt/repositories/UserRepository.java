@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 
@@ -53,8 +54,16 @@ public interface UserRepository extends MongoRepository<DbUser, String> {
         return this.findByAuthority(SUPERADMIN);
     }
 
+    default List<Username> findSuperadminsUsernames() {
+        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(DbUser::getUsername).collect(Collectors.toList());
+    }
+
     default List<DbUser> findByAuthorityNotSuperadmin() {
         return this.findByAuthorityNotEqual(SUPERADMIN);
+    }
+
+    default List<Username> findNotSuperadminsUsernames() {
+        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(DbUser::getUsername).collect(Collectors.toList());
     }
 
     default void deleteByAuthoritySuperadmin() {

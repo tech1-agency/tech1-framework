@@ -3,6 +3,7 @@ package io.tech1.framework.domain.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+// Lombok
 @AllArgsConstructor
 public enum Status {
     // Major

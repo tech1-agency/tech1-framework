@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.12
+- TBD
+
 ### v1.11
 - Add email service method: send plain text + plain attachment
 - Delete lombok static constructor usage

@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.12
-- TBD
+- Upgraded Feign dependencies 10.7.0 -> 12.3
 
 ### v1.11
 - Add email service method: send plain text + plain attachment

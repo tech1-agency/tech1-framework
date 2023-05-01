@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.12
+- Upgraded GeoIP2 dependency 2.8.0 -> 4.0.1
 - Upgraded Feign dependencies 10.7.0 -> 12.3
 
 ### v1.11

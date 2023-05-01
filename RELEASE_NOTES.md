@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.12
+- Upgraded spring-boot-dependencies 2.6.1 -> 2.7.11
 - Upgraded GeoIP2 dependency 2.8.0 -> 4.0.1
 - Upgraded Feign dependencies 10.7.0 -> 12.3
 

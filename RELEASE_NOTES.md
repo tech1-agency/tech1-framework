@@ -1,6 +1,8 @@
 # Release Notes
 
 ### v1.12
+- Upgraded tomcat-embed-core 9.0.55 -> 9.0.74
+- Upgraded jakarta.xml.bind-api 2.3.2 -> 2.3.3
 - Upgraded spring-boot-dependencies 2.6.1 -> 2.7.11
 - Upgraded GeoIP2 dependency 2.8.0 -> 4.0.1
 - Upgraded Feign dependencies 10.7.0 -> 12.3

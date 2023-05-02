@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.12
+- Upgraded browscap-java 1.3.12 -> 1.4.0
 - Upgraded tomcat-embed-core 9.0.55 -> 9.0.74
 - Upgraded jakarta.xml.bind-api 2.3.2 -> 2.3.3
 - Upgraded spring-boot-dependencies 2.6.1 -> 2.7.11

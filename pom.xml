@@ -91,16 +91,16 @@
         <version.dependency.junit>5.9.3</version.dependency.junit>
         <version.dependency.testcontainers>1.18.0</version.dependency.testcontainers>
         <!-- plugins -->
-        <version.plugin.compiler>3.9.0</version.plugin.compiler>
-        <version.plugin.dependency>3.2.0</version.plugin.dependency>
+        <version.plugin.compiler>3.11.0</version.plugin.compiler>
+        <version.plugin.dependency>3.5.0</version.plugin.dependency>
         <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
         <version.plugin.gpg>3.0.1</version.plugin.gpg>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
-        <version.plugin.nexus>1.6.7</version.plugin.nexus>
-        <version.plugin.jacoco>0.8.7</version.plugin.jacoco>
-        <version.plugin.javadoc>3.3.1</version.plugin.javadoc>
+        <version.plugin.nexus>1.6.13</version.plugin.nexus>
+        <version.plugin.jacoco>0.8.9</version.plugin.jacoco>
+        <version.plugin.javadoc>3.5.0</version.plugin.javadoc>
         <version.plugin.source>3.2.1</version.plugin.source>
-        <version.plugin.surefire>3.0.0-M5</version.plugin.surefire>
+        <version.plugin.surefire>3.0.0</version.plugin.surefire>
     </properties>
 
     <dependencyManagement>

@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 dir('tech1-framework-b2b-mongodb-server') {
-                    sh 'cp ${OPS_HOME}/docker/java11-v3/Dockerfile .'
+                    sh 'cp ${OPS_HOME}/docker/java17/Dockerfile .'
                     sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_DOCKERHUB_REPOSITORY} dev'
                 }
             }
@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 dir('tech1-framework-b2b-mongodb-server') {
-                    sh 'cp ${OPS_HOME}/docker/java11-v3/Dockerfile .'
+                    sh 'cp ${OPS_HOME}/docker/java17/Dockerfile .'
                     sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_DOCKERHUB_REPOSITORY} prod'
                 }
             }

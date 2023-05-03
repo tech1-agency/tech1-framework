@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.12
+- Upgraded jasypt-spring-boot-starter 3.0.4 -> 3.0.5
 - Upgraded jackson dependencies 2.13.0 -> 2.15.0
 - Upgraded browscap-java 1.3.12 -> 1.4.0
 - Upgraded tomcat-embed-core 9.0.55 -> 9.0.74

@@ -80,7 +80,7 @@
         <version.dependency.geoip2>4.0.1</version.dependency.geoip2>
         <version.dependency.jackson>2.15.0</version.dependency.jackson>
         <version.dependency.jakarta>2.3.3</version.dependency.jakarta>
-        <version.dependency.jasypt>3.0.4</version.dependency.jasypt>
+        <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
         <version.dependency.lombok>1.18.22</version.dependency.lombok>
         <version.dependency.springframework.boot>2.7.11</version.dependency.springframework.boot>

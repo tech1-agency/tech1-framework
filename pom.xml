@@ -86,10 +86,10 @@
         <version.dependency.springframework.boot>2.7.11</version.dependency.springframework.boot>
         <version.dependency.tomcat.embed>9.0.74</version.dependency.tomcat.embed>
         <!-- dependencies, scope == test -->
-        <version.dependency.assertj>3.21.0</version.dependency.assertj>
-        <version.dependency.jsonpath>2.6.0</version.dependency.jsonpath>
-        <version.dependency.junit>5.8.2</version.dependency.junit>
-        <version.dependency.testcontainers>1.17.6</version.dependency.testcontainers>
+        <version.dependency.assertj>3.24.2</version.dependency.assertj>
+        <version.dependency.jsonpath>2.8.0</version.dependency.jsonpath>
+        <version.dependency.junit>5.9.3</version.dependency.junit>
+        <version.dependency.testcontainers>1.18.0</version.dependency.testcontainers>
         <!-- plugins -->
         <version.plugin.compiler>3.9.0</version.plugin.compiler>
         <version.plugin.dependency>3.2.0</version.plugin.dependency>
@@ -242,16 +242,11 @@
             </dependency>
             <!-- JUnit -->
             <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
                 <version>${version.dependency.junit}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-params</artifactId>
-                <version>${version.dependency.junit}</version>
-                <scope>test</scope>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- JSON Path -->
             <dependency>

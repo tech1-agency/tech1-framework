@@ -1,6 +1,10 @@
 # Release Notes
 
 ### v1.12
+- Upgraded testcontainers dependencies 1.17.6 -> 1.18.0
+- Upgraded junit dependencies 5.8.2 -> 5.9.3
+- Upgraded json-path 2.6.0 -> 2.8.0
+- Upgraded assertj-core 3.21.0 -> 3.24.2
 - Upgraded lombok dependencies 1.18.22 -> 1.18.26
 - Upgraded jasypt-spring-boot-starter 3.0.4 -> 3.0.5
 - Upgraded jackson dependencies 2.13.0 -> 2.15.0

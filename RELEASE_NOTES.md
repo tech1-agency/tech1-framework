@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.12
+- Upgraded Java version 11 -> 17
 - Upgraded maven-surefire-plugin 3.0.0-M5 -> 3.0.0
 - Upgraded maven-javadoc-plugin 3.3.1 -> 3.5.0
 - Upgraded jacoco-maven-plugin 0.8.7 -> 0.8.9

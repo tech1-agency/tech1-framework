@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.13
+- TBD
+
 ### v1.12
 - Upgraded Java version 11 -> 17
 - Upgraded maven-surefire-plugin 3.0.0-M5 -> 3.0.0

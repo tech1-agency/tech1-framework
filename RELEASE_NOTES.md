@@ -1,7 +1,26 @@
 # Release Notes
 
 ### v1.12
-- TBD
+- Upgraded Java version 11 -> 17
+- Upgraded maven-surefire-plugin 3.0.0-M5 -> 3.0.0
+- Upgraded maven-javadoc-plugin 3.3.1 -> 3.5.0
+- Upgraded jacoco-maven-plugin 0.8.7 -> 0.8.9
+- Upgraded nexus-staging-maven-plugin 1.6.7 -> 1.6.13
+- Upgraded maven-dependency-plugin 3.2.0 -> 3.5.0
+- Upgraded maven-compiler-plugin 3.9.0 -> 3.11.0
+- Upgraded testcontainers dependencies 1.17.6 -> 1.18.0
+- Upgraded junit dependencies 5.8.2 -> 5.9.3
+- Upgraded json-path 2.6.0 -> 2.8.0
+- Upgraded assertj-core 3.21.0 -> 3.24.2
+- Upgraded lombok dependencies 1.18.22 -> 1.18.26
+- Upgraded jasypt-spring-boot-starter 3.0.4 -> 3.0.5
+- Upgraded jackson dependencies 2.13.0 -> 2.15.0
+- Upgraded browscap-java 1.3.12 -> 1.4.0
+- Upgraded tomcat-embed-core 9.0.55 -> 9.0.74
+- Upgraded jakarta.xml.bind-api 2.3.2 -> 2.3.3
+- Upgraded spring-boot-dependencies 2.6.1 -> 2.7.11
+- Upgraded GeoIP2 dependency 2.8.0 -> 4.0.1
+- Upgraded Feign dependencies 10.7.0 -> 12.3
 
 ### v1.11
 - Add email service method: send plain text + plain attachment

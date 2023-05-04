@@ -368,7 +368,8 @@ public class RandomUtility {
                         new byte[] {},
                         Charset.defaultCharset()
                 ),
-                new byte[] {}
+                new byte[] {},
+                new HashMap<>()
         );
     }
 

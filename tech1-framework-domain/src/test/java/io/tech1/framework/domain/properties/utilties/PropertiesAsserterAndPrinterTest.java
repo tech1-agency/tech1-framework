@@ -17,8 +17,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
@@ -167,10 +167,10 @@ public class PropertiesAsserterAndPrinterTest {
         // Arrange
         var hardwareMonitoringConfigs = HardwareMonitoringConfigs.of(
                 true,
-                Map.of(
-                        HardwareName.CPU, new BigDecimal("80"),
-                        HardwareName.HEAP, new BigDecimal("85")
-                )
+                new HashMap<>() {{
+                    put(HardwareName.CPU, new BigDecimal("80"));
+                    put(HardwareName.HEAP, new BigDecimal("85"));
+                }}
         );
 
         // Act
@@ -235,17 +235,17 @@ public class PropertiesAsserterAndPrinterTest {
         var loginFailureUsernamePassword = randomBoolean();
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
         var incidentConfigs = IncidentsConfigs.of(
-                Map.of(
-                        AUTHENTICATION_LOGIN, randomBoolean(),
-                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, loginFailureUsernamePassword,
-                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, loginFailureUsernameMaskedPassword,
-                        AUTHENTICATION_LOGOUT, randomBoolean(),
-                        AUTHENTICATION_LOGOUT_MIN, randomBoolean(),
-                        SESSION_REFRESHED, randomBoolean(),
-                        SESSION_EXPIRED, randomBoolean(),
-                        REGISTER1, randomBoolean(),
-                        REGISTER1_FAILURE, randomBoolean()
-                )
+                new HashMap<>() {{
+                    put(AUTHENTICATION_LOGIN, randomBoolean());
+                    put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, loginFailureUsernamePassword);
+                    put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, loginFailureUsernameMaskedPassword);
+                    put(AUTHENTICATION_LOGOUT, randomBoolean());
+                    put(AUTHENTICATION_LOGOUT_MIN, randomBoolean());
+                    put(SESSION_REFRESHED, randomBoolean());
+                    put(SESSION_EXPIRED, randomBoolean());
+                    put(REGISTER1, randomBoolean());
+                    put(REGISTER1_FAILURE, randomBoolean());
+                }}
         );
         var securityJwtConfigs = new SecurityJwtConfigs();
         securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
@@ -269,16 +269,16 @@ public class PropertiesAsserterAndPrinterTest {
     @Test
     public void securityJwtConfigsIncidentsNoSessionRefreshedFailureTest() {
         var incidentConfigs = IncidentsConfigs.of(
-                Map.of(
-                        AUTHENTICATION_LOGIN, randomBoolean(),
-                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false,
-                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
-                        AUTHENTICATION_LOGOUT, randomBoolean(),
-                        AUTHENTICATION_LOGOUT_MIN, randomBoolean(),
-                        SESSION_EXPIRED, randomBoolean(),
-                        REGISTER1, randomBoolean(),
-                        REGISTER1_FAILURE, randomBoolean()
-                )
+                new HashMap<>() {{
+                    put(AUTHENTICATION_LOGIN, randomBoolean());
+                    put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
+                    put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
+                    put(AUTHENTICATION_LOGOUT, randomBoolean());
+                    put(AUTHENTICATION_LOGOUT_MIN, randomBoolean());
+                    put(SESSION_EXPIRED, randomBoolean());
+                    put(REGISTER1, randomBoolean());
+                    put(REGISTER1_FAILURE, randomBoolean());
+                }}
         );
         var securityJwtConfigs = new SecurityJwtConfigs();
         securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
@@ -303,17 +303,17 @@ public class PropertiesAsserterAndPrinterTest {
     @Test
     public void securityJwtConfigsIncidentsOnlyOneLoginFailureTest() {
         var incidentConfigs = IncidentsConfigs.of(
-                Map.of(
-                        AUTHENTICATION_LOGIN, randomBoolean(),
-                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true,
-                        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
-                        AUTHENTICATION_LOGOUT, randomBoolean(),
-                        AUTHENTICATION_LOGOUT_MIN, randomBoolean(),
-                        SESSION_REFRESHED, randomBoolean(),
-                        SESSION_EXPIRED, randomBoolean(),
-                        REGISTER1, randomBoolean(),
-                        REGISTER1_FAILURE, randomBoolean()
-                )
+                new HashMap<>() {{
+                    put(AUTHENTICATION_LOGIN, randomBoolean());
+                    put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
+                    put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
+                    put(AUTHENTICATION_LOGOUT, randomBoolean());
+                    put(AUTHENTICATION_LOGOUT_MIN, randomBoolean());
+                    put(SESSION_REFRESHED, randomBoolean());
+                    put(SESSION_EXPIRED, randomBoolean());
+                    put(REGISTER1, randomBoolean());
+                    put(REGISTER1_FAILURE, randomBoolean());
+                }}
         );
         var securityJwtConfigs = new SecurityJwtConfigs();
         securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());

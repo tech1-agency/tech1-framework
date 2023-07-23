@@ -94,7 +94,7 @@ class HardwareMonitoringStoreImplTest {
 
         var widget2 = this.componentUnderTest.getHardwareMonitoringWidget();
 
-        assertThat(widget2.getVersion().getValue()).isEqualTo("tech1-framework vTEST");
+        assertThat(widget2.getVersion().value()).isEqualTo("tech1-framework vTEST");
         assertThat(widget2.getDatapoint().isAnyProblem()).isFalse();
         assertThat(widget2.getDatapoint().isAnyPresent()).isTrue();
         var mappedRows = widget2.getDatapoint().getRows().stream()

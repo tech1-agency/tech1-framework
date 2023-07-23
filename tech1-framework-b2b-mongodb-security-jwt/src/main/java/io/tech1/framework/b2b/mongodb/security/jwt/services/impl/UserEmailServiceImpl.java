@@ -65,7 +65,7 @@ public class UserEmailServiceImpl implements UserEmailService {
         if (nonNull(email) && checkbox.isEnabled()) {
             this.emailService.sendHTML(
                     new EmailHTML(
-                            Set.of(email.getValue()),
+                            Set.of(email.value()),
                             this.userEmailUtility.getSubject("Account Accessed"),
                             templateName,
                             this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(

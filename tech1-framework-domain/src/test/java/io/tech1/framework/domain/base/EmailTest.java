@@ -26,7 +26,6 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
         var json = this.writeValueAsString(EMAIL);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 
@@ -41,9 +40,8 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(EMAIL);
-        assertThat(actual.getValue()).isEqualTo(EMAIL.getValue());
-        assertThat(actual.toString()).isEqualTo(EMAIL.getValue());
+        assertThat(actual.value()).isEqualTo(EMAIL.value());
+        assertThat(actual.toString()).hasToString(EMAIL.value());
     }
 }

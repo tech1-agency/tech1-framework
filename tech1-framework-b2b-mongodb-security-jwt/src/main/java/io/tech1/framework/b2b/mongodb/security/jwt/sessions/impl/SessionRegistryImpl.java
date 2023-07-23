@@ -45,7 +45,7 @@ public class SessionRegistryImpl implements SessionRegistry {
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {
         return this.sessions.stream()
-                .map(session -> session.getUsername().getIdentifier())
+                .map(session -> session.getUsername().identifier())
                 .collect(Collectors.toSet());
     }
 

@@ -141,7 +141,7 @@ class BaseUserServiceImplTest {
         var currentJwtUser = entity(JwtUser.class);
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(currentJwtUser);
         String hashPassword = randomString();
-        when(this.bCryptPasswordEncoder.encode(eq(requestUserChangePassword1.getNewPassword().getValue()))).thenReturn(hashPassword);
+        when(this.bCryptPasswordEncoder.encode(eq(requestUserChangePassword1.getNewPassword().value()))).thenReturn(hashPassword);
         ArgumentCaptor<DbUser> dbUserAC = ArgumentCaptor.forClass(DbUser.class);
 
         // Act
@@ -149,10 +149,10 @@ class BaseUserServiceImplTest {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.bCryptPasswordEncoder).encode(eq(requestUserChangePassword1.getNewPassword().getValue()));
+        verify(this.bCryptPasswordEncoder).encode(eq(requestUserChangePassword1.getNewPassword().value()));
         verify(this.userRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.getDbUser().getUsername());
-        assertThat(dbUserAC.getValue().getPassword().getValue()).isEqualTo(hashPassword);
+        assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder
     }
 }

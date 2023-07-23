@@ -11,10 +11,10 @@ import static java.util.Comparator.comparing;
 @UtilityClass
 public class SecurityJwtComparators {
     public static final Comparator<ResponseInvitationCode1> INVITATION_CODE_1 =
-            comparing((ResponseInvitationCode1 code) -> code.getOwner().getIdentifier())
+            comparing((ResponseInvitationCode1 code) -> code.getOwner().identifier())
                     .thenComparing(ResponseInvitationCode1::getValue);
 
     public static final Comparator<ResponseUserSession3> SESSIONS_3 =
-            comparing((ResponseUserSession3 session) -> session.getWho().getIdentifier())
+            comparing((ResponseUserSession3 session) -> session.getWho().identifier())
                     .thenComparing(ResponseUserSession3::getWhere);
 }

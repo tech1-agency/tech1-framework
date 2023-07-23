@@ -33,7 +33,6 @@ class VersionTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(version);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -49,9 +48,8 @@ class VersionTest extends AbstractFolderSerializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(version);
-        assertThat(actual.getValue()).isEqualTo(version.getValue());
-        assertThat(actual.toString()).isEqualTo(version.getValue());
+        assertThat(actual.value()).isEqualTo(version.value());
+        assertThat(actual.toString()).hasToString(version.value());
     }
 }

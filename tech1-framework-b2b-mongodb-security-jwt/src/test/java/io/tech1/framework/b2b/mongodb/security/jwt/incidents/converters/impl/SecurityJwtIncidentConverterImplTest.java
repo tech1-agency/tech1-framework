@@ -69,7 +69,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(8);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where", "exception");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login");
@@ -97,7 +97,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login");
@@ -127,7 +127,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Logout");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
@@ -157,7 +157,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Refreshed");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Refreshed");
@@ -187,7 +187,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Expired");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Expired");
@@ -213,7 +213,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1");
@@ -238,7 +238,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1 Failure");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(5);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "exception", "invitationCode", "invitationCodeOwner");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1 Failure");

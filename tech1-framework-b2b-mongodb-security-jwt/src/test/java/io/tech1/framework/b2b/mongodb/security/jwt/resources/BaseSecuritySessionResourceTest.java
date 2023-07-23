@@ -57,7 +57,7 @@ class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
         // Act
         this.mvc.perform(get("/session/current").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(currentClientUser.getUsername().getIdentifier()))
+                .andExpect(jsonPath("$.username").value(currentClientUser.getUsername().identifier()))
                 .andExpect(jsonPath("$.zoneId", new BaseMatcher<String>() {
 
                     @Override

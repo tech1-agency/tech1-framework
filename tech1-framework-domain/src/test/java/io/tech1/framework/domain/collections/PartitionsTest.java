@@ -20,8 +20,7 @@ class PartitionsTest {
         var actual = Partitions.ofSize(values, 3);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.equals(values)).isFalse();
+        assertThat(actual).isNotEqualTo(values);
         assertThat(actual.hashCode()).isPositive();
         assertThat(actual).hasSize(4);
         assertThat(actual.get(0)).hasSize(3);

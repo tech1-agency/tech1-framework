@@ -37,6 +37,6 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getUsername()).isEqualTo(username);
-        assertThat(actual.getPassword().getValue()).isEqualTo(expected);
+        assertThat(actual.getPassword().value()).isEqualTo(expected);
     }
 }

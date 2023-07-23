@@ -366,6 +366,6 @@ class UserSessionServiceImplTest {
         );
         assertThat(sessionsValidatedTuple2.getExpiredSessions()).isNotNull();
         assertThat(sessionsValidatedTuple2.getExpiredSessions()).hasSize(1);
-        assertThat(sessionsValidatedTuple2.getExpiredSessions().get(0).getA().getIdentifier()).isEqualTo("multiuser43");
+        assertThat(sessionsValidatedTuple2.getExpiredSessions().get(0).getA().identifier()).isEqualTo("multiuser43");
     }
 }

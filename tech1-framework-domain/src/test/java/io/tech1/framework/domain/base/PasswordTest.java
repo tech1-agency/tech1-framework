@@ -26,7 +26,6 @@ class PasswordTest extends AbstractSerializationDeserializationRunner {
         var json = this.writeValueAsString(PASSWORD);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 
@@ -41,9 +40,8 @@ class PasswordTest extends AbstractSerializationDeserializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(PASSWORD);
-        assertThat(actual.getValue()).isEqualTo(PASSWORD.getValue());
-        assertThat(actual.toString()).isEqualTo(PASSWORD.getValue());
+        assertThat(actual.value()).isEqualTo(PASSWORD.value());
+        assertThat(actual.toString()).hasToString(PASSWORD.value());
     }
 }

@@ -27,7 +27,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     public DbUser register1(RequestUserRegistration1 requestUserRegistration1) {
         var invitationCode = invitationCodeRepository.findByValue(requestUserRegistration1.getInvitationCode());
 
-        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.getPassword().getValue());
+        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.getPassword().value());
 
         var user = new DbUser(
                 requestUserRegistration1.getUsername(),

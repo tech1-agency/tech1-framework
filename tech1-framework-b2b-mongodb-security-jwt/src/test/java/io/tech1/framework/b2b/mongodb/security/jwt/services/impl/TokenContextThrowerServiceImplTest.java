@@ -219,14 +219,14 @@ class TokenContextThrowerServiceImplTest {
         var oldJwtRefreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
         var jwtUser = entity(JwtUser.class);
-        when(this.jwtUserDetailsAssistant.loadUserByUsername(eq(validatedClaims.safeGetUsername().getIdentifier()))).thenReturn(jwtUser);
+        when(this.jwtUserDetailsAssistant.loadUserByUsername(eq(validatedClaims.safeGetUsername().identifier()))).thenReturn(jwtUser);
         when(this.userSessionRepository.isPresent(eq(oldJwtRefreshToken))).thenReturn(true);
 
         // Act
         var dbUser = this.componentUnderTest.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
 
         // Assert
-        verify(this.jwtUserDetailsAssistant).loadUserByUsername(eq(validatedClaims.safeGetUsername().getIdentifier()));
+        verify(this.jwtUserDetailsAssistant).loadUserByUsername(eq(validatedClaims.safeGetUsername().identifier()));
         verify(this.userSessionRepository).isPresent(eq(oldJwtRefreshToken));
         assertThat(dbUser).isEqualTo(jwtUser.getDbUser());
     }
@@ -237,14 +237,14 @@ class TokenContextThrowerServiceImplTest {
         var oldJwtRefreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
         var jwtUser = entity(JwtUser.class);
-        when(this.jwtUserDetailsAssistant.loadUserByUsername(eq(validatedClaims.safeGetUsername().getIdentifier()))).thenReturn(jwtUser);
+        when(this.jwtUserDetailsAssistant.loadUserByUsername(eq(validatedClaims.safeGetUsername().identifier()))).thenReturn(jwtUser);
         when(this.userSessionRepository.isPresent(eq(oldJwtRefreshToken))).thenReturn(false);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken));
 
         // Assert
-        verify(this.jwtUserDetailsAssistant).loadUserByUsername(eq(validatedClaims.safeGetUsername().getIdentifier()));
+        verify(this.jwtUserDetailsAssistant).loadUserByUsername(eq(validatedClaims.safeGetUsername().identifier()));
         verify(this.userSessionRepository).isPresent(eq(oldJwtRefreshToken));
         assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(CookieRefreshTokenDbNotFoundException.class);

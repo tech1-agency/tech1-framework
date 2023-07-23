@@ -66,13 +66,13 @@ class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
         var eventAC = ArgumentCaptor.forClass(EventLastHardwareMonitoringDatapoint.class);
         verify(this.hardwareMonitoringPublisher).publishLastHardwareMonitoringDatapoint(eventAC.capture());
         var event = eventAC.getValue();
-        assertThat(event.getVersion()).isEqualTo(Version.unknown());
-        assertThat(event.getLast().getGlobal().getA().getValue()).isEqualTo(new BigDecimal("0.84"));
-        assertThat(event.getLast().getGlobal().getA().getPercentage()).isEqualTo(new BigDecimal("45.6"));
-        assertThat(event.getLast().getGlobal().getB().getValue()).isEqualTo(new BigDecimal("1.00"));
-        assertThat(event.getLast().getGlobal().getB().getPercentage()).isEqualTo(new BigDecimal("60.5"));
-        assertThat(event.getLast().getGlobal().getC().getValue()).isEqualTo(new BigDecimal("1.00"));
-        assertThat(event.getLast().getGlobal().getC().getPercentage()).isEqualTo(new BigDecimal("64.2"));
-        assertThat(event.getLast().getCpu()).isEqualTo(CPU_MEMORY.getValue());
+        assertThat(event.version()).isEqualTo(Version.unknown());
+        assertThat(event.last().getGlobal().getA().getValue()).isEqualTo(new BigDecimal("0.84"));
+        assertThat(event.last().getGlobal().getA().getPercentage()).isEqualTo(new BigDecimal("45.6"));
+        assertThat(event.last().getGlobal().getB().getValue()).isEqualTo(new BigDecimal("1.00"));
+        assertThat(event.last().getGlobal().getB().getPercentage()).isEqualTo(new BigDecimal("60.5"));
+        assertThat(event.last().getGlobal().getC().getValue()).isEqualTo(new BigDecimal("1.00"));
+        assertThat(event.last().getGlobal().getC().getPercentage()).isEqualTo(new BigDecimal("64.2"));
+        assertThat(event.last().getCpu()).isEqualTo(CPU_MEMORY.value());
     }
 }

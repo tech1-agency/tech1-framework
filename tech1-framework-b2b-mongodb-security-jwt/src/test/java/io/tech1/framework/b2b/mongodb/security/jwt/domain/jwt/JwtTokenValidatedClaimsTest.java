@@ -27,7 +27,7 @@ class JwtTokenValidatedClaimsTest {
     void safeGetUsernameTest() {
         // Arrange
         var username = randomUsername();
-        var claims = Jwts.claims().setSubject(username.getIdentifier());
+        var claims = Jwts.claims().setSubject(username.identifier());
         var validatedClaims = JwtTokenValidatedClaims.valid(new JwtAccessToken(randomString()), claims);
 
         // Act

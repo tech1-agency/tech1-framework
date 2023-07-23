@@ -83,7 +83,7 @@ class IncidentSubscriberImplTest {
         verify(this.incidentClient).registerIncident(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getType()).isEqualTo("Reset Server Started");
-        assertThat(incident.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(incident.getUsername().identifier()).isEqualTo("tech1");
         assertThat(incident.getAttributes()).hasSize(2);
         assertThat(incident.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(incident.getAttributes().get("incidentType")).isEqualTo("Reset Server Started");
@@ -102,7 +102,7 @@ class IncidentSubscriberImplTest {
         verify(this.incidentClient).registerIncident(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getType()).isEqualTo("Reset Server Completed");
-        assertThat(incident.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(incident.getUsername().identifier()).isEqualTo("tech1");
         assertThat(incident.getAttributes()).hasSize(2);
         assertThat(incident.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(incident.getAttributes().get("incidentType")).isEqualTo("Reset Server Completed");

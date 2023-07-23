@@ -17,6 +17,6 @@ public class IncidentAuthenticationLoginFailureUsernameMaskedPassword {
             Password password
     ) {
         this.username = username;
-        this.password = Password.of(mask5(password.getValue()));
+        this.password = Password.of(mask5(password.value()));
     }
 }

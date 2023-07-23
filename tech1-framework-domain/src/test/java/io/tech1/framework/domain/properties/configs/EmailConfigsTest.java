@@ -14,7 +14,7 @@ class EmailConfigsTest {
                 true,
                 randomString(),
                 randomInteger(),
-                randomUsername().getIdentifier(),
+                randomUsername().identifier(),
                 randomString(),
                 randomString(),
                 randomStringsAsArray(3)

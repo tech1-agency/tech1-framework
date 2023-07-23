@@ -18,9 +18,9 @@ class TraceUtilityTest {
 
         // Arrange
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isNotNull();
-        assertThat(actual.getValue().length()).isGreaterThan(10000);
-        assertThat(actual.getValue()).startsWith("java.lang.NullPointerException: Tech1");
-        assertThat(actual.getValue()).contains("at io.tech1.framework.domain.utilities.exceptions.TraceUtilityTest.getTraceTest(TraceUtilityTest.java:14)");
+        assertThat(actual.value()).isNotNull();
+        assertThat(actual.value().length()).isGreaterThan(10000);
+        assertThat(actual.value()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.value()).contains("at io.tech1.framework.domain.utilities.exceptions.TraceUtilityTest.getTraceTest(TraceUtilityTest.java:14)");
     }
 }

@@ -138,7 +138,7 @@ class TokenServiceImplTest {
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(cookieRefreshToken);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(jwtAccessToken)).thenReturn(accessTokenValidatedClaims);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(jwtRefreshToken)).thenReturn(refreshTokenValidatedClaims);
-        when(this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().getIdentifier())).thenReturn(jwtUser);
+        when(this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
 
         // Act
         var tuple2 = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(request);
@@ -149,7 +149,7 @@ class TokenServiceImplTest {
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(jwtAccessToken);
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(jwtRefreshToken);
         verify(this.tokenContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
-        verify(this.jwtUserDetailsAssistant).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().getIdentifier());
+        verify(this.jwtUserDetailsAssistant).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
         assertThat(tuple2).isNotNull();
         assertThat(tuple2.getA()).isEqualTo(jwtUser);
         assertThat(tuple2.getB()).isEqualTo(jwtRefreshToken);

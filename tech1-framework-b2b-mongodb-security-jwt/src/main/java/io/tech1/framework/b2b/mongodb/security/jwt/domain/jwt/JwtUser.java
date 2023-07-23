@@ -20,12 +20,12 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.dbUser.getPassword().getValue();
+        return this.dbUser.getPassword().value();
     }
 
     @Override
     public String getUsername() {
-        return this.dbUser.getUsername().getIdentifier();
+        return this.dbUser.getUsername().identifier();
     }
 
     @Override

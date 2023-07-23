@@ -514,8 +514,8 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue().length()).isEqualTo(expected);
-        assertThat(actual.getValue().substring(randomLength)).isEqualTo(domain);
+        assertThat(actual.value().length()).isEqualTo(expected);
+        assertThat(actual.value().substring(randomLength)).isEqualTo(domain);
     }
 
     @Test
@@ -791,7 +791,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getIdentifier()).isNotNull();
+        assertThat(actual.identifier()).isNotNull();
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
@@ -801,7 +801,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isNotNull();
+        assertThat(actual.value()).isNotNull();
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)

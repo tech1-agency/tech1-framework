@@ -135,7 +135,7 @@ class UserEmailUtilityImplTest {
         // Assert
         assertThat(variables).hasSize(7);
         assertThat(variables.get("year")).isEqualTo(now(UTC).getYear());
-        assertThat(variables.get("username")).isEqualTo(username.getIdentifier());
+        assertThat(variables.get("username")).isEqualTo(username.identifier());
         assertThat(variables.get("accessMethod")).isEqualTo(accountAccessMethod.getValue());
         assertThat(variables.get("where")).isEqualTo("🇺🇦 Ukraine, Lviv");
         assertThat(variables.get("what")).isEqualTo("Chrome, macOS on Desktop");

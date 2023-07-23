@@ -50,7 +50,7 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Throwable");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("Unknown");
+        assertThat(actual.getUsername().identifier()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(4);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
@@ -75,7 +75,7 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Throwable");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("Unknown");
+        assertThat(actual.getUsername().identifier()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(6);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "method", "params");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
@@ -101,7 +101,7 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Throwable");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("Unknown");
+        assertThat(actual.getUsername().identifier()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(5);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "key1");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
@@ -128,7 +128,7 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Password");
@@ -152,7 +152,7 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Masked Password");
@@ -174,7 +174,7 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Logout Min");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout Min");

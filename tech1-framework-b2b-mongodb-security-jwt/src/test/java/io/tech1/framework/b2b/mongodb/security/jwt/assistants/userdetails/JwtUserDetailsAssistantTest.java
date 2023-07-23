@@ -67,13 +67,13 @@ class JwtUserDetailsAssistantTest {
         when(this.userRepository.findByUsername(eq(username))).thenReturn(null);
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.loadUserByUsername(username.getIdentifier()));
+        var throwable = catchThrowable(() -> this.componentUnderTest.loadUserByUsername(username.identifier()));
 
         // Assert
         verify(this.userRepository).findByUsername(eq(username));
         assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(UsernameNotFoundException.class);
-        assertThat(throwable).hasMessage(entityNotFound("Username", username.getIdentifier()));
+        assertThat(throwable).hasMessage(entityNotFound("Username", username.identifier()));
     }
 
     @Test
@@ -84,14 +84,14 @@ class JwtUserDetailsAssistantTest {
         when(this.userRepository.findByUsername(eq(username))).thenReturn(dbUser);
 
         // Act
-        var jwtUser = this.componentUnderTest.loadUserByUsername(username.getIdentifier());
+        var jwtUser = this.componentUnderTest.loadUserByUsername(username.identifier());
 
         // Assert
         verify(this.userRepository).findByUsername(eq(username));
         assertThat(jwtUser).isNotNull();
         assertThat(jwtUser.getDbUser()).isEqualTo(dbUser);
-        assertThat(jwtUser.getUsername()).isEqualTo(username.getIdentifier());
-        assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().getValue());
+        assertThat(jwtUser.getUsername()).isEqualTo(username.identifier());
+        assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().value());
         assertThat(jwtUser.isAccountNonExpired()).isTrue();
         assertThat(jwtUser.isAccountNonLocked()).isTrue();
         assertThat(jwtUser.isCredentialsNonExpired()).isTrue();

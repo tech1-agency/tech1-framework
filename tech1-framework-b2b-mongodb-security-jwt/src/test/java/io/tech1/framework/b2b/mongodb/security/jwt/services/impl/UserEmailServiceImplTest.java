@@ -185,7 +185,7 @@ class UserEmailServiceImplTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.getTo()).hasSize(1);
-        assertThat(emailHTML.getTo().stream().iterator().next()).isEqualTo(email.getValue());
+        assertThat(emailHTML.getTo().stream().iterator().next()).isEqualTo(email.value());
         assertThat(emailHTML.getSubject()).isEqualTo(subject);
         assertThat(emailHTML.getTemplateName()).isEqualTo("framework-account-accessed");
         assertThat(emailHTML.getTemplateVariables()).isEqualTo(variables);
@@ -233,7 +233,7 @@ class UserEmailServiceImplTest {
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
         assertThat(emailHTML.getTo()).hasSize(1);
-        assertThat(emailHTML.getTo().stream().iterator().next()).isEqualTo(email.getValue());
+        assertThat(emailHTML.getTo().stream().iterator().next()).isEqualTo(email.value());
         assertThat(emailHTML.getSubject()).isEqualTo(subject);
         assertThat(emailHTML.getTemplateName()).isEqualTo("framework-account-accessed");
         assertThat(emailHTML.getTemplateVariables()).isEqualTo(variables);

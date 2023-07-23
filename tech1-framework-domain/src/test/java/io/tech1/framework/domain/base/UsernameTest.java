@@ -26,7 +26,6 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
         var json = this.writeValueAsString(USERNAME);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 
@@ -41,9 +40,8 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(USERNAME);
-        assertThat(actual.getIdentifier()).isEqualTo(USERNAME.getIdentifier());
-        assertThat(actual.toString()).isEqualTo(USERNAME.getIdentifier());
+        assertThat(actual.identifier()).isEqualTo(USERNAME.identifier());
+        assertThat(actual.toString()).hasToString(USERNAME.identifier());
     }
 }

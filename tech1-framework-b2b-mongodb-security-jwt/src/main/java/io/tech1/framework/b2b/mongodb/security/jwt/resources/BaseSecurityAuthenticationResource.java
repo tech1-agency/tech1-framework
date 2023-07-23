@@ -63,10 +63,10 @@ public class BaseSecurityAuthenticationResource {
         var password = requestUserLogin.getPassword();
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
-        var authenticationToken = new UsernamePasswordAuthenticationToken(username.getIdentifier(), password.getValue());
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username.identifier(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
 
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.getIdentifier());
+        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
         var dbUser = jwtUser.getDbUser();
 
         var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(dbUser);

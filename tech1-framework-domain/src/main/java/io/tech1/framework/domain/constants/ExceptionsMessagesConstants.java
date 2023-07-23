@@ -1,9 +1,6 @@
 package io.tech1.framework.domain.constants;
 
-import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import lombok.experimental.UtilityClass;
-
-import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
 
 @UtilityClass
 public class ExceptionsMessagesConstants {

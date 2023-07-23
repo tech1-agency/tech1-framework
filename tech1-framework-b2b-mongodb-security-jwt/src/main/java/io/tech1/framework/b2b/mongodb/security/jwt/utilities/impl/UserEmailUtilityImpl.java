@@ -68,7 +68,7 @@ public class UserEmailUtilityImpl implements UserEmailUtility {
         var userAgentDetails = userRequestMetadata.getUserAgentDetails();
         Map<String, Object> variables = new HashMap<>();
         variables.put("year", now(UTC).getYear());
-        variables.put("username", username.getIdentifier());
+        variables.put("username", username.identifier());
         variables.put("accessMethod", accountAccessMethod.getValue());
         variables.put("where", geoLocation.getCountryFlag() + " " + geoLocation.getWhere());
         variables.put("what", userAgentDetails.getWhat());

@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -24,7 +25,11 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
     private final TokenService tokenService;
 
     @Override
-    protected Principal determineUser(ServerHttpRequest serverHttpRequest, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+    protected Principal determineUser(
+            @NotNull ServerHttpRequest serverHttpRequest,
+            @NotNull WebSocketHandler wsHandler,
+            @NotNull Map<String, Object> attributes
+    ) {
         try {
             var request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
             var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(request);

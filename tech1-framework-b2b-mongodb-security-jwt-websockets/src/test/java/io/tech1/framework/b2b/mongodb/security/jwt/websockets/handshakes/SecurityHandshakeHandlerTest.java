@@ -34,7 +34,6 @@ import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
@@ -100,16 +99,16 @@ class SecurityHandshakeHandlerTest {
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenThrow(exception);
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(request)).thenThrow(exception);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).startsWith("WebSocket user not determined");
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("WebSocket user not determined");
+        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(request);
     }
 
     @Test
@@ -122,13 +121,13 @@ class SecurityHandshakeHandlerTest {
         var jwtUser = entity(JwtUser.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(request)).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
 
         // Act
         var actual = this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes);
 
         // Assert
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
+        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(request);
         assertThat(actual).isNotNull();
         assertThat(actual.getName()).isEqualTo(jwtUser.getUsername());
     }

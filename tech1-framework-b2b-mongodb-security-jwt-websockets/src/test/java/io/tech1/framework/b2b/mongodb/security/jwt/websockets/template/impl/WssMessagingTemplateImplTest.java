@@ -89,14 +89,14 @@ class WssMessagingTemplateImplTest {
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
         var simpleDestination = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs().getSimpleDestination();
-        doThrow(ex).when(this.simpMessagingTemplate).convertAndSendToUser(eq(username.identifier()), eq(simpleDestination + destination), eq(websocketEvent));
+        doThrow(ex).when(this.simpMessagingTemplate).convertAndSendToUser(username.identifier(), simpleDestination + destination, websocketEvent);
 
         // Act
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);
 
         // Assert
-        verify(this.simpMessagingTemplate).convertAndSendToUser(eq(username.identifier()), eq(simpleDestination + destination), eq(websocketEvent));
-        verify(this.incidentPublisher).publishThrowable(eq(IncidentThrowable.of(ex)));
+        verify(this.simpMessagingTemplate).convertAndSendToUser(username.identifier(), simpleDestination + destination, websocketEvent);
+        verify(this.incidentPublisher).publishThrowable(IncidentThrowable.of(ex));
         verifyNoMoreInteractions(this.simpMessagingTemplate);
     }
 
@@ -112,7 +112,7 @@ class WssMessagingTemplateImplTest {
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);
 
         // Assert
-        verify(this.simpMessagingTemplate).convertAndSendToUser(eq(username.identifier()), eq(simpleDestination + destination), eq(websocketEvent));
+        verify(this.simpMessagingTemplate).convertAndSendToUser(username.identifier(), simpleDestination + destination, websocketEvent);
         verifyNoMoreInteractions(this.simpMessagingTemplate);
     }
 }

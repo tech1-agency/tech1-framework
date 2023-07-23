@@ -28,7 +28,6 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-1.json"));
     }
 
@@ -47,7 +46,6 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-2.json"));
     }
 
@@ -61,10 +59,10 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
                         )
                 )
         );
-        assertThat(websocketEvent.getAttributes()).hasSize(2);
-        assertThat(websocketEvent.getAttributes()).containsKey("eventType");
-        assertThat(websocketEvent.getAttributes().get("eventType")).isEqualTo("HARDWARE_MONITORING");
-        assertThat(websocketEvent.getAttributes()).containsKey("datapoint");
+        assertThat(websocketEvent.getAttributes())
+                .hasSize(2)
+                .containsKey("datapoint")
+                .containsEntry("eventType", "HARDWARE_MONITORING");
         assertThat(websocketEvent.getAttributes().get("datapoint").getClass()).isEqualTo(HardwareMonitoringDatapointTableView.class);
 
         websocketEvent.add("key1", "value1");
@@ -79,10 +77,10 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var websocketEvent = WebsocketEvent.resetServerProgress(
                 new ResetServerStatus(15)
         );
-        assertThat(websocketEvent.getAttributes()).hasSize(2);
-        assertThat(websocketEvent.getAttributes()).containsKey("eventType");
-        assertThat(websocketEvent.getAttributes().get("eventType")).isEqualTo("RESET_SERVER_PROGRESS");
-        assertThat(websocketEvent.getAttributes()).containsKey("status");
+        assertThat(websocketEvent.getAttributes())
+                .hasSize(2)
+                .containsKey("status")
+                .containsEntry("eventType", "RESET_SERVER_PROGRESS");
         assertThat(websocketEvent.getAttributes().get("status").getClass()).isEqualTo(ResetServerStatus.class);
 
         websocketEvent.add("key1", "value1");

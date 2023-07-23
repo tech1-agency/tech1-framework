@@ -91,9 +91,9 @@ class HardwareMonitoringSubscriberWebsocketsTest {
         this.componentUnderTest.onLastHardwareMonitoringDatapoint(event);
 
         // Assert
-        verify(this.hardwareMonitoringStore).storeEvent(eq(event));
+        verify(this.hardwareMonitoringStore).storeEvent(event);
         verify(this.hardwareBackPressureTimerTask).isAnyProblemOrFirstDatapoint();
-        verify(this.incidentPublisher).publishThrowable(eq(npe));
+        verify(this.incidentPublisher).publishThrowable(npe);
     }
 
     @Test
@@ -106,7 +106,7 @@ class HardwareMonitoringSubscriberWebsocketsTest {
         this.componentUnderTest.onLastHardwareMonitoringDatapoint(event);
 
         // Assert
-        verify(this.hardwareMonitoringStore).storeEvent(eq(event));
+        verify(this.hardwareMonitoringStore).storeEvent(event);
         verify(this.hardwareBackPressureTimerTask).isAnyProblemOrFirstDatapoint();
     }
 
@@ -120,7 +120,7 @@ class HardwareMonitoringSubscriberWebsocketsTest {
         this.componentUnderTest.onLastHardwareMonitoringDatapoint(event);
 
         // Assert
-        verify(this.hardwareMonitoringStore).storeEvent(eq(event));
+        verify(this.hardwareMonitoringStore).storeEvent(event);
         verify(this.hardwareBackPressureTimerTask).isAnyProblemOrFirstDatapoint();
         verify(this.hardwareBackPressureTimerTask).send();
     }

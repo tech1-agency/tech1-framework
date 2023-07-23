@@ -66,7 +66,7 @@ class CsrfInterceptorHandshakeTest {
 
         // Assert
         assertThat(actual).isFalse();
-        assertThat(attributes).hasSize(0);
+        assertThat(attributes).isEmpty();
         verify(request).getServletRequest();
         verifyNoMoreInteractions(
                 request,
@@ -90,7 +90,7 @@ class CsrfInterceptorHandshakeTest {
 
         // Assert
         assertThat(actual).isFalse();
-        assertThat(attributes).hasSize(0);
+        assertThat(attributes).isEmpty();
         verify(request).getServletRequest();
         verifyNoMoreInteractions(
                 request,

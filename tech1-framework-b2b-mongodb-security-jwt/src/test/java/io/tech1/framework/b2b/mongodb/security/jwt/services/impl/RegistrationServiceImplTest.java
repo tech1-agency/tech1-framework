@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RegistrationServiceImplTest {
+class RegistrationServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -64,7 +64,7 @@ public class RegistrationServiceImplTest {
     private final RegistrationService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.invitationCodeRepository,
                 this.userRepository,
@@ -73,7 +73,7 @@ public class RegistrationServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.invitationCodeRepository,
                 this.userRepository,
@@ -82,7 +82,7 @@ public class RegistrationServiceImplTest {
     }
 
     @Test
-    public void register1Test() {
+    void register1Test() {
         // Arrange
         var requestUserRegistration1 = new RequestUserRegistration1(
                 randomUsername(),

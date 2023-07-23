@@ -45,7 +45,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserSessionServiceImplTest {
+class UserSessionServiceImplTest {
 
     @Configuration
     @Import({
@@ -103,7 +103,7 @@ public class UserSessionServiceImplTest {
     private final UserSessionService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtPublisher,
                 this.userSessionRepository,
@@ -112,7 +112,7 @@ public class UserSessionServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
                 this.userSessionRepository,
@@ -121,7 +121,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void findByUsernameTest() {
+    void findByUsernameTest() {
         // Arrange
         var username = randomUsername();
         var usersSessions = list345(DbUserSession.class);
@@ -136,7 +136,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void findByUsernameInTest() {
+    void findByUsernameInTest() {
         // Arrange
         var usernames = set345(Username.class);
         var usersSessions = list345(DbUserSession.class);
@@ -151,7 +151,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void deleteByIdInTest() {
+    void deleteByIdInTest() {
         // Arrange
         var ids = randomStringsAsList(3);
         var deletedRecords = randomLongGreaterThanZero();
@@ -166,7 +166,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void findByRefreshTokenTest() {
+    void findByRefreshTokenTest() {
         // Arrange
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         var userSession = entity(DbUserSession.class);
@@ -181,7 +181,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void deleteByRefreshTokenTest() {
+    void deleteByRefreshTokenTest() {
         // Arrange
         var jwtRefreshToken = entity(JwtRefreshToken.class);
 
@@ -193,7 +193,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void saveUserSessionNotNullTest() {
+    void saveUserSessionNotNullTest() {
         // Arrange
         var ipAddr = randomIPv4();
         var httpServletRequest = mock(HttpServletRequest.class);
@@ -238,7 +238,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void saveUserSessionNullTest() {
+    void saveUserSessionNullTest() {
         // Arrange
         var ipAddr = randomIPv4();
         var httpServletRequest = mock(HttpServletRequest.class);
@@ -281,7 +281,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void refreshTest() {
+    void refreshTest() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
@@ -315,7 +315,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void saveUserRequestMetadataTest() {
+    void saveUserRequestMetadataTest() {
         // Arrange
         var event = entity(EventSessionAddUserRequestMetadata.class);
         var geoLocation = randomGeoLocation();
@@ -334,7 +334,7 @@ public class UserSessionServiceImplTest {
     }
 
     @Test
-    public void validateTest() {
+    void validateTest() {
         // Arrange
         var sessionInvalidUserSession = new DbUserSession(
                 new JwtRefreshToken("<invalid>"),

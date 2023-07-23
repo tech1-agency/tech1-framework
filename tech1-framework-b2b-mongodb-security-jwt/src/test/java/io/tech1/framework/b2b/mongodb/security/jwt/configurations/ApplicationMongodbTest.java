@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationMongodbTest {
+class ApplicationMongodbTest {
 
     @Configuration
     @Import({
@@ -43,7 +43,7 @@ public class ApplicationMongodbTest {
     private final ApplicationMongodb componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)

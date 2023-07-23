@@ -46,7 +46,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseCurrentSessionAssistantTest {
+class BaseCurrentSessionAssistantTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -103,7 +103,7 @@ public class BaseCurrentSessionAssistantTest {
     private final CurrentSessionAssistant componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
@@ -115,7 +115,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
@@ -127,7 +127,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentUsernameTest() {
+    void getCurrentUsernameTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedUsername()).thenReturn(expectedJwtUser.getUsername());
@@ -141,7 +141,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentUserIdTest() {
+    void getCurrentUserIdTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
@@ -155,7 +155,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentDbUserTest() {
+    void getCurrentDbUserTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
@@ -169,7 +169,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentJwtUserTest() {
+    void getCurrentJwtUserTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
@@ -183,7 +183,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentClientUserTest() {
+    void getCurrentClientUserTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
@@ -207,7 +207,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentClientUserNoHardwareTest() {
+    void getCurrentClientUserNoHardwareTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
@@ -229,7 +229,7 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentUserDbSessionsTableTest() {
+    void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         var username = jwtUser.getDbUser().getUsername();

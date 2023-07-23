@@ -14,7 +14,7 @@ import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.localhost;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
+class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -45,7 +45,7 @@ public class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serializeTest(UserRequestMetadata userRequestMetadata, String fileName) {
+    void serializeTest(UserRequestMetadata userRequestMetadata, String fileName) {
         // Act
         var json = this.writeValueAsString(userRequestMetadata);
 

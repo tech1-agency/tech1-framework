@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
+class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -34,7 +34,7 @@ public class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
     private final BaseSecuritySessionResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() throws Exception {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant
@@ -42,14 +42,14 @@ public class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant
         );
     }
 
     @Test
-    public void getCurrentClientUserTest() throws Exception {
+    void getCurrentClientUserTest() throws Exception {
         // Arrange
         var currentClientUser = randomCurrentClientUser();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
@@ -77,7 +77,7 @@ public class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
     }
 
     @Test
-    public void getCurrentUserDbSessionsTest() throws Exception {
+    void getCurrentUserDbSessionsTest() throws Exception {
         // Arrange
         var userSessionsTables = new ResponseUserSessionsTable(list345(ResponseUserSession2.class));
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(any(HttpServletRequest.class))).thenReturn(userSessionsTables);

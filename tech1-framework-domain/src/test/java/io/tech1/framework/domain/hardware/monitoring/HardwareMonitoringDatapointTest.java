@@ -14,7 +14,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner {
+class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
@@ -23,7 +23,7 @@ public class HardwareMonitoringDatapointTest extends AbstractFolderSerialization
 
     @SneakyThrows
     @RepeatedTest(5)
-    public void integrationTest() {
+    void integrationTest() {
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = new HardwareMonitoringDatapoint(
@@ -104,7 +104,7 @@ public class HardwareMonitoringDatapointTest extends AbstractFolderSerialization
 
     @SneakyThrows
     @Test
-    public void zeroUsageTest() {
+    void zeroUsageTest() {
         // Arrange
         var threshold = new BigDecimal("50");
         var datapoint = HardwareMonitoringDatapoint.zeroUsage();

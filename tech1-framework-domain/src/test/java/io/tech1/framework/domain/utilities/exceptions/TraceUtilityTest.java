@@ -6,10 +6,10 @@ import org.junit.jupiter.api.RepeatedTest;
 import static io.tech1.framework.domain.utilities.exceptions.TraceUtility.getTrace;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TraceUtilityTest {
+class TraceUtilityTest {
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void getTraceTest() {
+    void getTraceTest() {
         // Arrange
         var npe = new NullPointerException("Tech1");
 

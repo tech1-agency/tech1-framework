@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokenContextThrowerServiceImplTest {
+class TokenContextThrowerServiceImplTest {
 
     private static Stream<Arguments> verifyAccessTokenExpirationOrThrow() {
         return Stream.of(
@@ -94,7 +94,7 @@ public class TokenContextThrowerServiceImplTest {
     private final TokenContextThrowerService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.jwtUserDetailsAssistant,
                 this.userSessionRepository,
@@ -103,7 +103,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.jwtUserDetailsAssistant,
                 this.userSessionRepository,
@@ -112,7 +112,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @Test
-    public void verifyValidityAccessTokenTest() throws CookieAccessTokenInvalidException {
+    void verifyValidityAccessTokenTest() throws CookieAccessTokenInvalidException {
         // Arrange
         var jwtAccessToken = entity(JwtAccessToken.class);
         when(this.securityJwtTokenUtility.validate(jwtAccessToken)).thenReturn(valid(jwtAccessToken, randomValidDefaultClaims()));
@@ -125,7 +125,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @Test
-    public void verifyValidityAccessTokenThrowTest() {
+    void verifyValidityAccessTokenThrowTest() {
         // Arrange
         var jwtAccessToken = entity(JwtAccessToken.class);
         when(this.securityJwtTokenUtility.validate(jwtAccessToken)).thenReturn(JwtTokenValidatedClaims.invalid(jwtAccessToken));
@@ -141,7 +141,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @Test
-    public void verifyValidityRefreshTokenTest() throws CookieRefreshTokenInvalidException {
+    void verifyValidityRefreshTokenTest() throws CookieRefreshTokenInvalidException {
         // Arrange
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         when(this.securityJwtTokenUtility.validate(jwtRefreshToken)).thenReturn(valid(jwtRefreshToken, randomValidDefaultClaims()));
@@ -154,7 +154,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @Test
-    public void verifyValidityRefreshTokenThrowTest() {
+    void verifyValidityRefreshTokenThrowTest() {
         // Arrange
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         when(this.securityJwtTokenUtility.validate(jwtRefreshToken)).thenReturn(JwtTokenValidatedClaims.invalid(jwtRefreshToken));
@@ -171,7 +171,7 @@ public class TokenContextThrowerServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("verifyAccessTokenExpirationOrThrow")
-    public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims, boolean expiredFlag, boolean throwableFlag) {
+    void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims, boolean expiredFlag, boolean throwableFlag) {
         // Arrange
         when(this.securityJwtTokenUtility.isExpired(eq(validatedClaims))).thenReturn(expiredFlag);
 
@@ -193,7 +193,7 @@ public class TokenContextThrowerServiceImplTest {
 
     @ParameterizedTest
     @MethodSource("verifyRefreshTokenExpirationOrThrowTest")
-    public void verifyRefreshTokenExpirationOrThrowTest(JwtTokenValidatedClaims validatedClaims, boolean expiredFlag, boolean throwableFlag) {
+    void verifyRefreshTokenExpirationOrThrowTest(JwtTokenValidatedClaims validatedClaims, boolean expiredFlag, boolean throwableFlag) {
         // Arrange
         when(this.securityJwtTokenUtility.isExpired(eq(validatedClaims))).thenReturn(expiredFlag);
 
@@ -214,7 +214,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @Test
-    public void verifyDbPresenceTest() throws CookieRefreshTokenDbNotFoundException {
+    void verifyDbPresenceTest() throws CookieRefreshTokenDbNotFoundException {
         // Arrange
         var oldJwtRefreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
@@ -232,7 +232,7 @@ public class TokenContextThrowerServiceImplTest {
     }
 
     @Test
-    public void verifyDbPresenceThrowTest() {
+    void verifyDbPresenceThrowTest() {
         // Arrange
         var oldJwtRefreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());

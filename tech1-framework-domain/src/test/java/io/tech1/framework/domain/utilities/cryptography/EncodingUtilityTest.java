@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.utilities.cryptography.EncodingUtility.getBasicAuthenticationHeader;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EncodingUtilityTest {
+class EncodingUtilityTest {
 
     private static Stream<Arguments> getBasicAuthenticationHeaderTest() {
         return Stream.of(
@@ -21,7 +21,7 @@ public class EncodingUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getBasicAuthenticationHeaderTest")
-    public void getBasicAuthenticationHeaderTest(String username, String password, String expected) {
+    void getBasicAuthenticationHeaderTest(String username, String password, String expected) {
         // Act
         var actual = getBasicAuthenticationHeader(username, password);
 

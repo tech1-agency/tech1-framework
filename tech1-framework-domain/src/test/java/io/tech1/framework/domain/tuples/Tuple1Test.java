@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Tuple1Test extends AbstractTupleTest {
+class Tuple1Test extends AbstractTupleTest {
     private static final Tuple1<String> TUPLE = new Tuple1<>(
             "1st"
     );
@@ -17,7 +17,7 @@ public class Tuple1Test extends AbstractTupleTest {
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(TUPLE);
 
@@ -28,7 +28,7 @@ public class Tuple1Test extends AbstractTupleTest {
 
     @SneakyThrows
     @Test
-    public void deserializeTest() {
+    void deserializeTest() {
         // Arrange
         var json = this.readFile();
         var typeReference = new TypeReference<Tuple1<String>>() {};

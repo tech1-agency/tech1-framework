@@ -7,10 +7,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExceptionsMessagesUtilityTest {
+class ExceptionsMessagesUtilityTest {
 
     @Test
-    public void contactDevelopmentTeamTest() {
+    void contactDevelopmentTeamTest() {
         // Arrange
         var prefix = randomString();
 
@@ -22,7 +22,7 @@ public class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    public void attributeNameTest() {
+    void attributeNameTest() {
         // Arrange
         var attributeName = randomString();
 
@@ -34,7 +34,7 @@ public class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    public void entityNotFoundShortTest() {
+    void entityNotFoundShortTest() {
         // Arrange
         var entity = randomString();
 
@@ -46,7 +46,7 @@ public class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    public void entityNotFoundTest() {
+    void entityNotFoundTest() {
         // Arrange
         var entity = randomString();
         var value = randomString();
@@ -59,7 +59,7 @@ public class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    public void entityAlreadyUsedTest() {
+    void entityAlreadyUsedTest() {
         // Arrange
         var entity = randomString();
 
@@ -71,7 +71,7 @@ public class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    public void accessDeniedTest() {
+    void accessDeniedTest() {
         // Arrange
         var username = randomUsername();
         var entity = randomString();
@@ -85,7 +85,7 @@ public class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    public void parametrizedTestCaseTest() {
+    void parametrizedTestCaseTest() {
         // Arrange
         var sourceObj = randomString();
         var actualObj = randomString();

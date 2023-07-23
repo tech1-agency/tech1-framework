@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseUserValidatorImplTest {
+class BaseUserValidatorImplTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
         return Stream.of(
@@ -64,21 +64,21 @@ public class BaseUserValidatorImplTest {
     private final BaseUserValidator componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.userRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );
     }
 
     @Test
-    public void validateUserUpdateRequest1InvalidZoneIdTest() {
+    void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
         var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
@@ -93,7 +93,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @Test
-    public void validateUserUpdateRequest1InvalidEmailTest() {
+    void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), Email.of(randomString()), randomString());
@@ -108,7 +108,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @Test
-    public void validateUserUpdateRequest1EmailValidNoUserTest() {
+    void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
@@ -124,7 +124,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @Test
-    public void validateUserUpdateRequest1EmailValidUserFoundTest() {
+    void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
@@ -140,7 +140,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @Test
-    public void validateUserUpdateRequest1EmailValidTwoUsersTest() {
+    void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
@@ -159,7 +159,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @Test
-    public void validateUserUpdateRequest2InvalidZoneIdTest() {
+    void validateUserUpdateRequest2InvalidZoneIdTest() {
         // Arrange
         var requestUserUpdate2 = new RequestUserUpdate2("invalidZoneId", randomString());
 
@@ -173,7 +173,7 @@ public class BaseUserValidatorImplTest {
     }
 
     @Test
-    public void validateUserUpdateRequest2Test() {
+    void validateUserUpdateRequest2Test() {
         // Arrange
         var requestUserUpdate2 = new RequestUserUpdate2(randomZoneId().getId(), randomString());
 
@@ -186,7 +186,7 @@ public class BaseUserValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateUserChangePasswordRequest1Test")
-    public void validateUserChangePasswordRequest1Test(RequestUserChangePassword1 requestUserChangePassword1, String exceptionMessage) {
+    void validateUserChangePasswordRequest1Test(RequestUserChangePassword1 requestUserChangePassword1, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserChangePasswordRequest1(requestUserChangePassword1));
 

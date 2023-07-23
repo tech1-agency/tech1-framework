@@ -17,7 +17,7 @@ import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.Sp
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit.undefinedSpringBootActuatorInfoGit;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
+class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> deserializeTest() {
         return Stream.of(
@@ -55,7 +55,7 @@ public class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunne
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("deserializeTest")
-    public void deserializeTest(SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isUndefined, String fileName) {
+    void deserializeTest(SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isUndefined, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<SpringBootActuatorInfo>() {};

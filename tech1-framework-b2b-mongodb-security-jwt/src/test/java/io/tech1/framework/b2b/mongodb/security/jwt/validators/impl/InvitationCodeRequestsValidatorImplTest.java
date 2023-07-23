@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InvitationCodeRequestsValidatorImplTest {
+class InvitationCodeRequestsValidatorImplTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
@@ -63,7 +63,7 @@ public class InvitationCodeRequestsValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateCreateNewInvitationCodeTest")
-    public void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams requestNewInvitationCodeParams, String exceptionMessage) {
+    void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams requestNewInvitationCodeParams, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitationCode(requestNewInvitationCodeParams));
 
@@ -78,7 +78,7 @@ public class InvitationCodeRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateDeleteByIdAccessDeniedTest() {
+    void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var currentUser = entity(DbUser.class);
         var invitationCodeId = randomString();
@@ -96,7 +96,7 @@ public class InvitationCodeRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateDeleteByIdOkTest() {
+    void validateDeleteByIdOkTest() {
         // Arrange
         var currentUser = entity(DbUser.class);
         var invitationCodeId = randomString();

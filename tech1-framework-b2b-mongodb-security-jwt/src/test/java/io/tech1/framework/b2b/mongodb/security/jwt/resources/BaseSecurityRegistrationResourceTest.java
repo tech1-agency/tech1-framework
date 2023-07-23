@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
+class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
 
     // Services
     private final RegistrationService registrationService;
@@ -35,7 +35,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
     private final BaseSecurityRegistrationResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() throws Exception {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.registrationService,
@@ -46,7 +46,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.registrationService,
                 this.securityJwtPublisher,
@@ -56,7 +56,7 @@ public class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunne
     }
 
     @Test
-    public void update1Test() throws Exception {
+    void update1Test() throws Exception {
         // Arrange
         var requestUserRegistration1 = entity(RequestUserRegistration1.class);
 

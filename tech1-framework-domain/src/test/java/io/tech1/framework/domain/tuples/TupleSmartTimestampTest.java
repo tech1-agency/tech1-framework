@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TupleSmartTimestampTest extends AbstractTupleTest {
+class TupleSmartTimestampTest extends AbstractTupleTest {
     private static final TupleSmartTimestamp TUPLE = TupleSmartTimestamp.of(
             1668419401637L,
             TestsConstants.EET_ZONE_ID,
@@ -18,7 +18,7 @@ public class TupleSmartTimestampTest extends AbstractTupleTest {
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(TUPLE);
 

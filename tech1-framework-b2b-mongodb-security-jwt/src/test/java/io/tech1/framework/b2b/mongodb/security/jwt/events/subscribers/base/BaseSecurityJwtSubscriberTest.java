@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityJwtSubscriberTest {
+class BaseSecurityJwtSubscriberTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -68,7 +68,7 @@ public class BaseSecurityJwtSubscriberTest {
     private final SecurityJwtSubscriber componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.userEmailService,
@@ -77,7 +77,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.userEmailService,
@@ -86,7 +86,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onAuthenticationLoginTest() {
+    void onAuthenticationLoginTest() {
         // Arrange
         var event = entity(EventAuthenticationLogin.class);
 
@@ -98,7 +98,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onAuthenticationLoginFailureTest() {
+    void onAuthenticationLoginFailureTest() {
         // Arrange
         var event = entity(EventAuthenticationLoginFailure.class);
 
@@ -110,7 +110,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onAuthenticationLogoutTest() {
+    void onAuthenticationLogoutTest() {
         // Arrange
         var event = entity(EventAuthenticationLogout.class);
 
@@ -122,7 +122,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onRegistration1Test() {
+    void onRegistration1Test() {
         // Arrange
         var event = entity(EventRegistration1.class);
 
@@ -134,7 +134,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onRegistration1FailureTest() {
+    void onRegistration1FailureTest() {
         // Arrange
         var event = entity(EventRegistration1Failure.class);
 
@@ -146,7 +146,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onSessionRefreshedTest() {
+    void onSessionRefreshedTest() {
         // Arrange
         var event = entity(EventSessionRefreshed.class);
 
@@ -158,7 +158,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onSessionExpiredTest() {
+    void onSessionExpiredTest() {
         // Arrange
         var event = entity(EventSessionExpired.class);
 
@@ -170,7 +170,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onSessionAddUserRequestMetadataNotAuthenticationEndpointTest() {
+    void onSessionAddUserRequestMetadataNotAuthenticationEndpointTest() {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
@@ -192,7 +192,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onSessionAddUserRequestMetadataIsAuthenticationLoginEndpointTest() {
+    void onSessionAddUserRequestMetadataIsAuthenticationLoginEndpointTest() {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
@@ -216,7 +216,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onSessionAddUserRequestMetadataIsAuthenticationRefreshTokenEndpointTest() {
+    void onSessionAddUserRequestMetadataIsAuthenticationRefreshTokenEndpointTest() {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),

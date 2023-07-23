@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtUserDetailsAssistantTest {
+class JwtUserDetailsAssistantTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -46,21 +46,21 @@ public class JwtUserDetailsAssistantTest {
     private final JwtUserDetailsAssistant componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.userRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );
     }
 
     @Test
-    public void loadUserByUsernameExceptionTest() {
+    void loadUserByUsernameExceptionTest() {
         // Arrange
         var dbUser = entity(DbUser.class);
         var username = dbUser.getUsername();
@@ -77,7 +77,7 @@ public class JwtUserDetailsAssistantTest {
     }
 
     @Test
-    public void loadUserByUsernameTest() {
+    void loadUserByUsernameTest() {
         // Arrange
         var dbUser = entity(DbUser.class);
         var username = dbUser.getUsername();

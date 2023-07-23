@@ -16,10 +16,10 @@ import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_USA;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ResponseUserSessionsTableTest {
+class ResponseUserSessionsTableTest {
 
     @Test
-    public void noSessionsConstructorTest() {
+    void noSessionsConstructorTest() {
         // Act
         var actual = new ResponseUserSessionsTable(new ArrayList<>());
 
@@ -31,7 +31,7 @@ public class ResponseUserSessionsTableTest {
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         // Arrange
         var username = randomUsername();
         var dbUserSession1 = new DbUserSession(

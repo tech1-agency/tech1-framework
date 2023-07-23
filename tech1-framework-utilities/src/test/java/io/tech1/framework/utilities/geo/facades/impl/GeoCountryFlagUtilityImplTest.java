@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GeoCountryFlagUtilityImplTest {
+class GeoCountryFlagUtilityImplTest {
 
     private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
@@ -55,7 +55,7 @@ public class GeoCountryFlagUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("getFlagEmojiTest")
-    public void getFlagEmojiTest(String country, String countryCode, String expected) {
+    void getFlagEmojiTest(String country, String countryCode, String expected) {
         // Act
         var actual1 = this.componentUnderTest.getFlagEmojiByCountry(country);
         var actual2 = this.componentUnderTest.getFlagEmojiByCountryCode(countryCode);

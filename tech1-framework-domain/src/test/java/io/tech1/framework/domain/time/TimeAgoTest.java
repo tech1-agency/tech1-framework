@@ -10,7 +10,7 @@ import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurre
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeAgoTest {
+class TimeAgoTest {
 
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
@@ -27,7 +27,7 @@ public class TimeAgoTest {
 
     @ParameterizedTest
     @MethodSource("constructorTest")
-    public void constructorTest(long timestamp, String expected) {
+    void constructorTest(long timestamp, String expected) {
         // Act
         var actual = TimeAgo.of(timestamp);
 

@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class WssMessagingTemplateImplTest {
+class WssMessagingTemplateImplTest {
 
     @Configuration
     @Import({
@@ -66,7 +66,7 @@ public class WssMessagingTemplateImplTest {
     private final WssMessagingTemplate componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.simpMessagingTemplate,
                 this.incidentPublisher
@@ -74,7 +74,7 @@ public class WssMessagingTemplateImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.simpMessagingTemplate,
                 this.incidentPublisher
@@ -82,7 +82,7 @@ public class WssMessagingTemplateImplTest {
     }
 
     @Test
-    public void convertAndSendToUserThrowExceptionTest() {
+    void convertAndSendToUserThrowExceptionTest() {
         // Assert
         var username = randomUsername();
         var destination = randomString();
@@ -101,7 +101,7 @@ public class WssMessagingTemplateImplTest {
     }
 
     @Test
-    public void convertAndSendToUserTest() {
+    void convertAndSendToUserTest() {
         // Assert
         var username = randomUsername();
         var destination = randomString();

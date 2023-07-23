@@ -47,7 +47,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SessionRegistryImplTest {
+class SessionRegistryImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -83,7 +83,7 @@ public class SessionRegistryImplTest {
     private final SessionRegistry componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() throws Exception {
         // WARNING: clean session to execute a.k.a. integration test -> method "integrationFlow"
         setPrivateField(this.componentUnderTest, "sessions", ConcurrentHashMap.newKeySet());
         reset(
@@ -94,7 +94,7 @@ public class SessionRegistryImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -103,7 +103,7 @@ public class SessionRegistryImplTest {
     }
 
     @Test
-    public void integrationTest() {
+    void integrationTest() {
         // Arrange
         var session1 = new Session(Username.of("username1"), new JwtRefreshToken(randomString()));
         var session2 = new Session(Username.of("username2"), new JwtRefreshToken(randomString()));
@@ -184,7 +184,7 @@ public class SessionRegistryImplTest {
     }
 
     @Test
-    public void registerTest() {
+    void registerTest() {
         // Arrange
         var username = Username.of("incident");
 
@@ -204,7 +204,7 @@ public class SessionRegistryImplTest {
     }
 
     @Test
-    public void renewTest() {
+    void renewTest() {
         // Arrange
         var username = Username.of("incident");
 
@@ -224,7 +224,7 @@ public class SessionRegistryImplTest {
     }
 
     @Test
-    public void logoutDbUserSessionPresentTest() {
+    void logoutDbUserSessionPresentTest() {
         // Arrange
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
@@ -249,7 +249,7 @@ public class SessionRegistryImplTest {
     }
 
     @Test
-    public void logoutDbUserSessionNotPresentTest() {
+    void logoutDbUserSessionNotPresentTest() {
         // Arrange
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
@@ -270,7 +270,7 @@ public class SessionRegistryImplTest {
     }
 
     @Test
-    public void cleanByExpiredRefreshTokensEnabledTest() throws NoSuchFieldException, IllegalAccessException {
+    void cleanByExpiredRefreshTokensEnabledTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var username1 = Username.of("username1");
         var session1 = new Session(username1, entity(JwtRefreshToken.class));

@@ -8,10 +8,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnu
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SchedulerConfigurationTest {
+class SchedulerConfigurationTest {
 
     @Test
-    public void neverTest() {
+    void neverTest() {
         // Act
         var sc = SchedulerConfiguration.never();
 
@@ -24,7 +24,7 @@ public class SchedulerConfigurationTest {
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         // Arrange
         var initialDelay = randomLongGreaterThanZero();
         var delay = randomLongGreaterThanZero();

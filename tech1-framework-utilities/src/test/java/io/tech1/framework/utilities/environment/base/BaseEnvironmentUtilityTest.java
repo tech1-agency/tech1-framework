@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseEnvironmentUtilityTest {
+class BaseEnvironmentUtilityTest {
 
     private static Stream<Arguments> isProfilesTest() {
         return Stream.of(
@@ -63,21 +63,21 @@ public class BaseEnvironmentUtilityTest {
     private final EnvironmentUtility componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.environment
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.environment
         );
     }
 
     @Test
-    public void verifyProfilesConfigurationExceptionTest() {
+    void verifyProfilesConfigurationExceptionTest() {
         // Arrange
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { "dev", "prod" });
 
@@ -91,7 +91,7 @@ public class BaseEnvironmentUtilityTest {
     }
 
     @Test
-    public void verifyProfilesConfigurationTest() {
+    void verifyProfilesConfigurationTest() {
         // Arrange
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { "dev" });
 
@@ -103,7 +103,7 @@ public class BaseEnvironmentUtilityTest {
     }
 
     @Test
-    public void getActiveProfileTest() {
+    void getActiveProfileTest() {
         // Arrange
         var expectedProfile = "dev";
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { expectedProfile });
@@ -117,7 +117,7 @@ public class BaseEnvironmentUtilityTest {
     }
 
     @Test
-    public void getActiveProfileSeveralActiveProfilesTest() {
+    void getActiveProfileSeveralActiveProfilesTest() {
         // Arrange
         var expectedProfile = "dev";
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { expectedProfile, randomString() });
@@ -132,7 +132,7 @@ public class BaseEnvironmentUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isProfilesTest")
-    public void isProfilesTest(String[] profiles, boolean devExpected, boolean stageExpected, boolean prodExpected) {
+    void isProfilesTest(String[] profiles, boolean devExpected, boolean stageExpected, boolean prodExpected) {
         // Arrange
         when(this.environment.getActiveProfiles()).thenReturn(profiles);
 

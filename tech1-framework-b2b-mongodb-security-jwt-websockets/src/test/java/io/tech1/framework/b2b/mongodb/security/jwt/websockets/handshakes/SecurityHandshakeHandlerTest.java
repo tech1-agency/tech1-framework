@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityHandshakeHandlerTest {
+class SecurityHandshakeHandlerTest {
 
     private static Stream<Arguments> determineUserExceptionTest() {
         return Stream.of(
@@ -78,14 +78,14 @@ public class SecurityHandshakeHandlerTest {
     private final SecurityHandshakeHandler componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.tokenService
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.tokenService
         );
@@ -93,7 +93,7 @@ public class SecurityHandshakeHandlerTest {
 
     @ParameterizedTest
     @MethodSource("determineUserExceptionTest")
-    public void determineUserExceptionTest(Exception exception) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenNotFoundException, CookieAccessTokenExpiredException, CookieRefreshTokenNotFoundException {
+    void determineUserExceptionTest(Exception exception) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenNotFoundException, CookieAccessTokenExpiredException, CookieRefreshTokenNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
@@ -113,7 +113,7 @@ public class SecurityHandshakeHandlerTest {
     }
 
     @Test
-    public void determineUserTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenNotFoundException, CookieAccessTokenExpiredException, CookieRefreshTokenNotFoundException {
+    void determineUserTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenNotFoundException, CookieAccessTokenExpiredException, CookieRefreshTokenNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);

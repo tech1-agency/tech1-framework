@@ -27,7 +27,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AuthenticationRequestsValidatorImplTest {
+class AuthenticationRequestsValidatorImplTest {
 
     @Configuration
     @Import({
@@ -60,7 +60,7 @@ public class AuthenticationRequestsValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateLoginRequestTest")
-    public void validateLoginRequestTest(RequestUserLogin requestUserLogin, String exceptionMessage) {
+    void validateLoginRequestTest(RequestUserLogin requestUserLogin, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateLoginRequest(requestUserLogin));
 

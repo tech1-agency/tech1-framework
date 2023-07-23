@@ -12,7 +12,7 @@ import static java.time.ZoneId.systemDefault;
 import static java.util.Collections.emptySet;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DefaultUsersTest {
+class DefaultUsersTest {
 
     private static Stream<Arguments> getDefaultUsersAuthoritiesTest() {
         return Stream.of(
@@ -35,7 +35,7 @@ public class DefaultUsersTest {
 
     @ParameterizedTest
     @MethodSource("getDefaultUsersAuthoritiesTest")
-    public void getDefaultUsersAuthoritiesTest(List<DefaultUser> users, Set<String> expected) {
+    void getDefaultUsersAuthoritiesTest(List<DefaultUser> users, Set<String> expected) {
         // Arrange
         var defaultUsers = DefaultUsers.of(true, users);
 

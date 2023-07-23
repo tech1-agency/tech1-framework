@@ -13,7 +13,7 @@ import static io.tech1.framework.domain.hardware.monitoring.HardwareName.HEAP;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HardwareMonitoringDatapointTableRowTest {
+class HardwareMonitoringDatapointTableRowTest {
 
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
@@ -26,7 +26,7 @@ public class HardwareMonitoringDatapointTableRowTest {
 
     @ParameterizedTest
     @MethodSource("constructorTest")
-    public void constructorTest(Map<HardwareName, BigDecimal> thresholds, boolean expected) {
+    void constructorTest(Map<HardwareName, BigDecimal> thresholds, boolean expected) {
         // Act
         var actual = new HardwareMonitoringDatapointTableRow(
                 CPU,

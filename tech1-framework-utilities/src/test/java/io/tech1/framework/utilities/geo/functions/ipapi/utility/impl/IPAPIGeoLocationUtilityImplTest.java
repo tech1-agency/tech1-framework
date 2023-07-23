@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IPAPIGeoLocationUtilityImplTest {
+class IPAPIGeoLocationUtilityImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -57,7 +57,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     private final IPAPIGeoLocationUtility componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.ipapiFeign,
                 this.countryFlagUtility
@@ -65,7 +65,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.ipapiFeign,
                 this.countryFlagUtility
@@ -73,7 +73,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     }
 
     @Test
-    public void getGeoLocationThrowFeignExceptionTest() {
+    void getGeoLocationThrowFeignExceptionTest() {
         // Arrange
         var ipAddress = randomIPAddress();
         var feignException = randomFeignException();
@@ -89,7 +89,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     }
 
     @Test
-    public void getGeoLocationAPIFailureTest() {
+    void getGeoLocationAPIFailureTest() {
         // Arrange
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("fail", null, null, null, "reserved range");
@@ -105,7 +105,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     }
 
     @Test
-    public void getGeoLocationTest() throws GeoLocationNotFoundException {
+    void getGeoLocationTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);

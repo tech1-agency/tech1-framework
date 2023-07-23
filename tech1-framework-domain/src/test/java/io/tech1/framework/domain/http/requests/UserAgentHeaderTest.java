@@ -9,10 +9,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserAgentHeaderTest {
+class UserAgentHeaderTest {
 
     @Test
-    public void constructorsRequestNull() {
+    void constructorsRequestNull() {
         // Act
         var actual = new UserAgentHeader(null);
 
@@ -22,7 +22,7 @@ public class UserAgentHeaderTest {
     }
 
     @Test
-    public void constructorsRequestNoHeader() {
+    void constructorsRequestNoHeader() {
         // Arrange
         var request = mock(HttpServletRequest.class);
 
@@ -35,7 +35,7 @@ public class UserAgentHeaderTest {
     }
 
     @Test
-    public void constructorsRequestValid() {
+    void constructorsRequestValid() {
         // Arrange
         var userAgentHeader = RandomUtility.randomString();
         var request = mock(HttpServletRequest.class);

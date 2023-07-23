@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityJwtPublisherTest {
+class BaseSecurityJwtPublisherTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -45,21 +45,21 @@ public class BaseSecurityJwtPublisherTest {
     private final SecurityJwtPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.applicationEventPublisher
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher
         );
     }
 
     @Test
-    public void publishAuthenticationLoginTest() {
+    void publishAuthenticationLoginTest() {
         // Arrange
         var event = entity(EventAuthenticationLogin.class);
 
@@ -71,7 +71,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishAuthenticationLoginFailureTest() {
+    void publishAuthenticationLoginFailureTest() {
         // Arrange
         var event = entity(EventAuthenticationLoginFailure.class);
 
@@ -83,7 +83,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishAuthenticationLogoutTest() {
+    void publishAuthenticationLogoutTest() {
         // Arrange
         var event = entity(EventAuthenticationLogout.class);
 
@@ -95,7 +95,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishRegistration1Test() {
+    void publishRegistration1Test() {
         // Arrange
         var event = entity(EventRegistration1.class);
 
@@ -107,7 +107,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishRegistration1FailureTest() {
+    void publishRegistration1FailureTest() {
         // Arrange
         var event = entity(EventRegistration1Failure.class);
 
@@ -119,7 +119,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishSessionRefreshedTest() {
+    void publishSessionRefreshedTest() {
         // Arrange
         var event = entity(EventSessionRefreshed.class);
 
@@ -131,7 +131,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishSessionExpiredTest() {
+    void publishSessionExpiredTest() {
         // Arrange
         var event = entity(EventSessionExpired.class);
 
@@ -143,7 +143,7 @@ public class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    public void publishSessionAddUserRequestMetadataTest() {
+    void publishSessionAddUserRequestMetadataTest() {
         // Arrange
         var event = entity(EventSessionAddUserRequestMetadata.class);
 

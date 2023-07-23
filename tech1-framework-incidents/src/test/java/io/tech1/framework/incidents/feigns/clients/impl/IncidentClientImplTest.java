@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentClientImplTest {
+class IncidentClientImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -44,21 +44,21 @@ public class IncidentClientImplTest {
     private final IncidentClient componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentClientDefinition
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentClientDefinition
         );
     }
 
     @Test
-    public void registerIncidentExceptionTest() {
+    void registerIncidentExceptionTest() {
         // Arrange
         var incident = mock(Incident.class);
         doThrow(randomFeignException()).when(incidentClientDefinition).registerIncident(eq(incident));
@@ -72,7 +72,7 @@ public class IncidentClientImplTest {
     }
 
     @Test
-    public void registerIncidentTest() {
+    void registerIncidentTest() {
         // Arrange
         var incident = mock(Incident.class);
 

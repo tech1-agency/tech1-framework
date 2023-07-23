@@ -46,7 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
+class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(
@@ -78,7 +78,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     private final BaseSecurityAuthenticationResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() throws Exception {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.authenticationManager,
@@ -94,7 +94,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.authenticationManager,
                 this.sessionRegistry,
@@ -109,7 +109,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void loginTest() throws Exception {
+    void loginTest() throws Exception {
         // Arrange
         var requestUserLogin = entity(RequestUserLogin.class);
         var username = requestUserLogin.getUsername();
@@ -148,7 +148,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void logoutNoJwtRefreshTokenTest() throws Exception {
+    void logoutNoJwtRefreshTokenTest() throws Exception {
         // Arrange
         var cookieRefreshToken = new CookieRefreshToken(null);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
@@ -165,7 +165,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void logoutInvalidJwtRefreshTokenTest() throws Exception {
+    void logoutInvalidJwtRefreshTokenTest() throws Exception {
         // Arrange
         var cookieRefreshToken = new CookieRefreshToken(randomString());
         var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
@@ -185,7 +185,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void logoutTest() throws Exception {
+    void logoutTest() throws Exception {
         // Arrange
         var httpSession = mock(HttpSession.class);
         var username = randomUsername();
@@ -217,7 +217,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void logoutNullSessionTest() throws Exception {
+    void logoutNullSessionTest() throws Exception {
         // Arrange
         var username = randomUsername();
         var cookieRefreshToken = new CookieRefreshToken(randomString());
@@ -244,7 +244,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
 
     @ParameterizedTest
     @MethodSource("refreshTokenThrowCookieUnauthorizedExceptionsTest")
-    public void refreshTokenThrowCookieUnauthorizedExceptionsTest(Exception exception) throws Exception {
+    void refreshTokenThrowCookieUnauthorizedExceptionsTest(Exception exception) throws Exception {
         // Arrange
         when(this.tokenService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenThrow(exception);
 
@@ -268,7 +268,7 @@ public class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void refreshTokenValidTest() throws Exception {
+    void refreshTokenValidTest() throws Exception {
         // Arrange
         var userSession1 = entity(ResponseUserSession1.class);
         when(this.tokenService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenReturn(userSession1);

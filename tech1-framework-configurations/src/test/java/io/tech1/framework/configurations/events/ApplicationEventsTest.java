@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationEventsTest {
+class ApplicationEventsTest {
 
     @Configuration
     @Import({
@@ -35,7 +35,7 @@ public class ApplicationEventsTest {
     private final ApplicationEvents componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -47,7 +47,7 @@ public class ApplicationEventsTest {
     }
 
     @Test
-    public void simpleApplicationEventMulticasterTest() {
+    void simpleApplicationEventMulticasterTest() {
         // Act
         var actual = this.componentUnderTest.simpleApplicationEventMulticaster();
 

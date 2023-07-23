@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtTokensFilterTest {
+class JwtTokensFilterTest {
 
     private static Stream<Arguments> accessTokenCookieRequiredTest() {
         return Stream.of(
@@ -87,7 +87,7 @@ public class JwtTokensFilterTest {
     private final JwtTokensFilter componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.sessionRegistry,
                 this.tokenService,
@@ -96,7 +96,7 @@ public class JwtTokensFilterTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.tokenService,
@@ -106,7 +106,7 @@ public class JwtTokensFilterTest {
 
     @ParameterizedTest
     @MethodSource("accessTokenCookieRequiredTest")
-    public void accessTokenCookieRequiredTest(Exception exception) throws Exception {
+    void accessTokenCookieRequiredTest(Exception exception) throws Exception {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
@@ -128,7 +128,7 @@ public class JwtTokensFilterTest {
 
     @ParameterizedTest
     @MethodSource("clearCookieTest")
-    public void clearCookieTest(Exception exception) throws Exception {
+    void clearCookieTest(Exception exception) throws Exception {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
@@ -150,7 +150,7 @@ public class JwtTokensFilterTest {
     }
 
     @Test
-    public void accessTokenValidTest() throws Exception {
+    void accessTokenValidTest() throws Exception {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);

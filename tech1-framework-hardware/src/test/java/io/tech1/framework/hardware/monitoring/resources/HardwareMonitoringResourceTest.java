@@ -25,14 +25,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
+class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
 
     private final HardwareMonitoringPublisher hardwareMonitoringPublisher;
 
     private final HardwareMonitoringResource resourceUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         beforeByResource(this.resourceUnderTest);
         reset(
                 this.hardwareMonitoringPublisher
@@ -40,14 +40,14 @@ public class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.hardwareMonitoringPublisher
         );
     }
 
     @Test
-    public void systemMemoriesTest() throws Exception {
+    void systemMemoriesTest() throws Exception {
         // Arrange
         var hardwareMonitoringMetadata = new HardwareMonitoringMetadata(
                 Version.unknown(),

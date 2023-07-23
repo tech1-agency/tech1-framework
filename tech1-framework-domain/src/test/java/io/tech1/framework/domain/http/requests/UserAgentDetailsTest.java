@@ -11,7 +11,7 @@ import static io.tech1.framework.domain.http.requests.UserAgentDetails.*;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
+class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -31,7 +31,7 @@ public class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serializeTest(UserAgentDetails userAgentDetails, String fileName) {
+    void serializeTest(UserAgentDetails userAgentDetails, String fileName) {
         // Act
         var json = this.writeValueAsString(userAgentDetails);
 

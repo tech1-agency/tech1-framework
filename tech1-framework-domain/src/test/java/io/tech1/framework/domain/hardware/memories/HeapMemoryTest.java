@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HeapMemoryTest extends AbstractMemoriesTest {
+class HeapMemoryTest extends AbstractMemoriesTest {
 
     private static Stream<Arguments> serializeDeserializeTest() {
         return Stream.of(
@@ -27,7 +27,7 @@ public class HeapMemoryTest extends AbstractMemoriesTest {
 
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void serializeTest(HeapMemory heapMemory, String fileName) {
+    void serializeTest(HeapMemory heapMemory, String fileName) {
         // Act
         var json = this.writeValueAsString(heapMemory);
 
@@ -39,7 +39,7 @@ public class HeapMemoryTest extends AbstractMemoriesTest {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void deserializeTest(HeapMemory heapMemory, String fileName) {
+    void deserializeTest(HeapMemory heapMemory, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<HeapMemory>() {};

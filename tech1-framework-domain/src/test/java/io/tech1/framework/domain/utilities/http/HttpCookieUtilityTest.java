@@ -18,7 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class HttpCookieUtilityTest {
+class HttpCookieUtilityTest {
 
     private static Stream<Arguments> createCookieTests() {
         return Stream.of(
@@ -31,7 +31,7 @@ public class HttpCookieUtilityTest {
 
     @ParameterizedTest
     @MethodSource("createCookieTests")
-    public void createCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
+    void createCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
         // Act
         var actual = createCookie(cookieKey, cookieValue, domain, httpOnly, maxAge);
 
@@ -47,7 +47,7 @@ public class HttpCookieUtilityTest {
 
     @ParameterizedTest
     @MethodSource("createCookieTests")
-    public void createNullCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
+    void createNullCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
         // Act
         var actual = createNullCookie(cookieKey, domain);
 
@@ -66,7 +66,7 @@ public class HttpCookieUtilityTest {
     }
 
     @Test
-    public void readCookieExceptionTest() {
+    void readCookieExceptionTest() {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var cookieKey = randomString();
@@ -81,7 +81,7 @@ public class HttpCookieUtilityTest {
     }
 
     @Test
-    public void readCookieNoCookieTest() {
+    void readCookieNoCookieTest() {
         // Arrange
         var cookie1 = createNullCookie("cookie1", randomString());
         var cookie2 = createNullCookie("cookie2", randomString());
@@ -100,7 +100,7 @@ public class HttpCookieUtilityTest {
     }
 
     @RepeatedTest(5)
-    public void readCookieTest() throws CookieNotFoundException {
+    void readCookieTest() throws CookieNotFoundException {
         // Arrange
         var cookieKey = randomString();
         var expected = randomString();

@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationEmailsTest {
+class ApplicationEmailsTest {
 
     @Configuration
     @Import({
@@ -38,7 +38,7 @@ public class ApplicationEmailsTest {
     private final ApplicationEmails componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -54,7 +54,7 @@ public class ApplicationEmailsTest {
     }
 
     @Test
-    public void javaMailSenderTest() {
+    void javaMailSenderTest() {
         // Act
         var javaMailSender = (JavaMailSenderImpl) this.componentUnderTest.javaMailSender();
 

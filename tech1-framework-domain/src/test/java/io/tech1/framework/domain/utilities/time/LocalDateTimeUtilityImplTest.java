@@ -22,7 +22,7 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LocalDateTimeUtilityImplTest {
+class LocalDateTimeUtilityImplTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final LocalDateTime NOW_6_30 = LocalDate.now().atTime(6, 30); // to avoid failures on 59 min
     private static final LocalDateTime _25_11_2021 = LocalDateTime.of(2021, DECEMBER, 25, 15, 16, 17);
@@ -157,7 +157,7 @@ public class LocalDateTimeUtilityImplTest {
     }
 
     @Test
-    public void nowByTimezoneIncludingDaylightSavingTimeTest() {
+    void nowByTimezoneIncludingDaylightSavingTimeTest() {
         // Act
         var actual1 = nowByTimezone(POLAND_TIME_ZONE);
         var actual2 = nowByTimezone(EET_TIME_ZONE);
@@ -169,7 +169,7 @@ public class LocalDateTimeUtilityImplTest {
     }
 
     @Test
-    public void nowByZoneIdIncludingDaylightSavingTimeTest() {
+    void nowByZoneIdIncludingDaylightSavingTimeTest() {
         // Act
         var actual1 = nowByZoneId(POLAND_ZONE_ID);
         var actual2 = nowByZoneId(EET_ZONE_ID);
@@ -182,7 +182,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("formatTest")
-    public void formatTest(LocalDateTime localDateTime, DateTimeFormatter formatter, String expected) {
+    void formatTest(LocalDateTime localDateTime, DateTimeFormatter formatter, String expected) {
         // Act
         var actual = format(localDateTime, formatter);
 
@@ -192,7 +192,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("parseTest")
-    public void parseTest(String localDateTime, DateTimeFormatter formatter, LocalDateTime expected) {
+    void parseTest(String localDateTime, DateTimeFormatter formatter, LocalDateTime expected) {
         // Act
         var actual = parse(localDateTime, formatter);
 
@@ -202,7 +202,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isBetweenTest")
-    public void convertTimestampTest(Long timestamp, ZoneId zoneId, LocalDateTime expected) {
+    void convertTimestampTest(Long timestamp, ZoneId zoneId, LocalDateTime expected) {
         // Act
         var actual = convertTimestamp(timestamp, zoneId);
 
@@ -212,7 +212,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("convertDateTest")
-    public void convertDateTest(Date date, ZoneId zoneId, LocalDateTime expected) {
+    void convertDateTest(Date date, ZoneId zoneId, LocalDateTime expected) {
         // Act
         var actual = convertDate(date, zoneId);
 
@@ -222,7 +222,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("getTimestampTest")
-    public void getTimestampTest(LocalDateTime localDateTime, ZoneId zoneId, long expected) {
+    void getTimestampTest(LocalDateTime localDateTime, ZoneId zoneId, long expected) {
         // Act
         long actual = getTimestamp(localDateTime, zoneId);
 
@@ -232,7 +232,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isParamsEqualsTruncatedBySecondsTest")
-    public void isParamsEqualsTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isParamsEqualsTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isParamsEqualsTruncatedBySeconds(time1, time2);
 
@@ -242,7 +242,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isParamsEqualsTruncatedByTest")
-    public void isParamsEqualsTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isParamsEqualsTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isParamsEqualsTruncatedBy(time1, time2, ChronoUnit.HOURS);
 
@@ -252,7 +252,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamAfterTruncatedBySecondsTest")
-    public void isFirstParamAfterTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamAfterTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamAfterTruncatedBySeconds(time1, time2);
 
@@ -262,7 +262,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamAfterTruncatedByTest")
-    public void isFirstParamAfterTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamAfterTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamAfterTruncatedBy(time1, time2, ChronoUnit.HOURS);
 
@@ -272,7 +272,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamAfterOrEqualTruncatedBySecondsTest")
-    public void isFirstParamAfterOrEqualTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamAfterOrEqualTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamAfterOrEqualTruncatedBySeconds(time1, time2);
 
@@ -282,7 +282,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamAfterOrEqualTruncatedByTest")
-    public void isFirstParamAfterOrEqualTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamAfterOrEqualTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamAfterOrEqualTruncatedBy(time1, time2, ChronoUnit.HOURS);
 
@@ -292,7 +292,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamBeforeTruncatedBySecondsTest")
-    public void isFirstParamBeforeTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamBeforeTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamBeforeTruncatedBySeconds(time1, time2);
 
@@ -302,7 +302,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamBeforeTruncatedByTest")
-    public void isFirstParamBeforeTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamBeforeTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamBeforeTruncatedBy(time1, time2, ChronoUnit.HOURS);
 
@@ -312,7 +312,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamBeforeOrEqualTruncatedBySecondsTest")
-    public void isFirstParamBeforeOrEqualTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamBeforeOrEqualTruncatedBySecondsTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamBeforeOrEqualTruncatedBySeconds(time1, time2);
 
@@ -322,7 +322,7 @@ public class LocalDateTimeUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstParamBeforeOrEqualTruncatedByTest")
-    public void isFirstParamBeforeOrEqualTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
+    void isFirstParamBeforeOrEqualTruncatedByTest(LocalDateTime time1, LocalDateTime time2, boolean expected) {
         // Act
         var actual = isFirstParamBeforeOrEqualTruncatedBy(time1, time2, ChronoUnit.HOURS);
 

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GeoCountryFlagTest extends AbstractFolderSerializationRunner {
+class GeoCountryFlagTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -26,7 +26,7 @@ public class GeoCountryFlagTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serializeTest(GeoCountryFlag geoCountryFlag, String fileName) {
+    void serializeTest(GeoCountryFlag geoCountryFlag, String fileName) {
         // Act
         var json = this.writeValueAsString(geoCountryFlag);
 

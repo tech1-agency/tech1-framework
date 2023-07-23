@@ -45,7 +45,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class EmailServiceImplTest {
+class EmailServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -102,7 +102,7 @@ public class EmailServiceImplTest {
     private final EmailService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.javaMailSender,
                 this.emailUtility,
@@ -111,7 +111,7 @@ public class EmailServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.javaMailSender,
                 this.emailUtility,
@@ -120,7 +120,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void mainSendPlainDisabledTest() {
+    void mainSendPlainDisabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var subject = randomString();
@@ -136,7 +136,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void mainSendPlainEnabledTest() {
+    void mainSendPlainEnabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var from = randomEmailAsValue();
@@ -162,7 +162,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void systemSendPlainEnabledTest() {
+    void systemSendPlainEnabledTest() {
         // Arrange
         var to1 = randomEmailAsValue();
         var to2 = randomEmailAsValue();
@@ -190,7 +190,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void listSendPlainEnabledTest() {
+    void listSendPlainEnabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var from = randomEmailAsValue();
@@ -216,7 +216,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void setSendPlainEnabledTest() {
+    void setSendPlainEnabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var from = randomEmailAsValue();
@@ -242,7 +242,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendPlainAttachmentDisabledTest() {
+    void sendPlainAttachmentDisabledTest() {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var emailConfigs = EmailConfigs.disabled();
@@ -256,7 +256,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
+    void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var from = randomEmailAsValue();
@@ -275,7 +275,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendPlainAttachmentEnabledTest() throws MessagingException, IOException {
+    void sendPlainAttachmentEnabledTest() throws MessagingException, IOException {
         // Arrange
         var emailPlainAttachment = new EmailPlainAttachment(
                 Set.of(
@@ -317,7 +317,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendHTMLDisabledTest() {
+    void sendHTMLDisabledTest() {
         // Arrange
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = EmailConfigs.disabled();
@@ -331,7 +331,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendHTMLEnabledExceptionTest() throws MessagingException {
+    void sendHTMLEnabledExceptionTest() throws MessagingException {
         // Arrange
         var from = randomEmailAsValue();
         var emailHTML = entity(EmailHTML.class);
@@ -348,7 +348,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendHTMLEnabledTest() throws MessagingException {
+    void sendHTMLEnabledTest() throws MessagingException {
         // Arrange
         var from = randomEmailAsValue();
         Map<String, Object> templateVariables = Map.of(

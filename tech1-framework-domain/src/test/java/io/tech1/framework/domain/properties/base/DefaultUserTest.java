@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DefaultUserTest {
+class DefaultUserTest {
 
     @Test
-    public void getEmailNullTest() {
+    void getEmailNullTest() {
         // Arrange
         var defaultUsers = TestsPropertiesConstants.SECURITY_JWT_CONFIGS.getEssenceConfigs().getDefaultUsers();
 
@@ -21,7 +21,7 @@ public class DefaultUserTest {
     }
 
     @Test
-    public void getEmailTest() {
+    void getEmailTest() {
         // Arrange
         var defaultUsers = entity(DefaultUser.class);
 

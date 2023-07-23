@@ -30,7 +30,7 @@ import static org.mockito.Mockito.mock;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HardwareMonitoringStoreImplTest {
+class HardwareMonitoringStoreImplTest {
 
     @Configuration
     @Import({
@@ -53,7 +53,7 @@ public class HardwareMonitoringStoreImplTest {
     private final HardwareMonitoringStore componentUnderTest;
 
     @Test
-    public void integrationTest() {
+    void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
                 this.applicationFrameworkProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()

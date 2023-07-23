@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseUserServiceImplTest {
+class BaseUserServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -68,7 +68,7 @@ public class BaseUserServiceImplTest {
     private final BaseUserService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.currentSessionAssistant,
                 this.userRepository,
@@ -77,7 +77,7 @@ public class BaseUserServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.userRepository,
@@ -86,7 +86,7 @@ public class BaseUserServiceImplTest {
     }
 
     @Test
-    public void updateUser1Test() {
+    void updateUser1Test() {
         // Arrange
         var requestUserUpdate1 = new RequestUserUpdate1(
                 randomZoneId().getId(),
@@ -111,7 +111,7 @@ public class BaseUserServiceImplTest {
     }
 
     @Test
-    public void updateUser2Test() {
+    void updateUser2Test() {
         // Arrange
         var requestUserUpdate2 = new RequestUserUpdate2(
                 randomZoneId().getId(),
@@ -135,7 +135,7 @@ public class BaseUserServiceImplTest {
     }
 
     @Test
-    public void changePassword1Tes() {
+    void changePassword1Tes() {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
         var currentJwtUser = entity(JwtUser.class);

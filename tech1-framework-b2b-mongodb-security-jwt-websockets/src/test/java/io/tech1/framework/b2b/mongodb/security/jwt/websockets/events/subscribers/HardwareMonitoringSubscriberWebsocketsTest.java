@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HardwareMonitoringSubscriberWebsocketsTest {
+class HardwareMonitoringSubscriberWebsocketsTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -54,7 +54,7 @@ public class HardwareMonitoringSubscriberWebsocketsTest {
     }
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.hardwareMonitoringStore,
                 this.hardwareBackPressureTimerTask,
@@ -63,7 +63,7 @@ public class HardwareMonitoringSubscriberWebsocketsTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.hardwareMonitoringStore,
                 this.hardwareBackPressureTimerTask,
@@ -81,7 +81,7 @@ public class HardwareMonitoringSubscriberWebsocketsTest {
     private final HardwareMonitoringSubscriberWebsockets componentUnderTest;
 
     @Test
-    public void onLastHardwareMonitoringDatapointExceptionTest() {
+    void onLastHardwareMonitoringDatapointExceptionTest() {
         // Arrange
         var event = entity(EventLastHardwareMonitoringDatapoint.class);
         var npe = new NullPointerException("datapoint-exception");
@@ -97,7 +97,7 @@ public class HardwareMonitoringSubscriberWebsocketsTest {
     }
 
     @Test
-    public void onLastHardwareMonitoringDatapointNoProblemNeitherFirstDatapointTest() {
+    void onLastHardwareMonitoringDatapointNoProblemNeitherFirstDatapointTest() {
         // Arrange
         var event = entity(EventLastHardwareMonitoringDatapoint.class);
         when(this.hardwareBackPressureTimerTask.isAnyProblemOrFirstDatapoint()).thenReturn(false);
@@ -111,7 +111,7 @@ public class HardwareMonitoringSubscriberWebsocketsTest {
     }
 
     @Test
-    public void onLastHardwareMonitoringDatapointAnyProblemsTest() {
+    void onLastHardwareMonitoringDatapointAnyProblemsTest() {
         // Arrange
         var event = entity(EventLastHardwareMonitoringDatapoint.class);
         when(this.hardwareBackPressureTimerTask.isAnyProblemOrFirstDatapoint()).thenReturn(true);

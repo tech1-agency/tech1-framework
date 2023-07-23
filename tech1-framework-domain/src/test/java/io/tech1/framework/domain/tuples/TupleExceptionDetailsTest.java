@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner {
+class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -28,7 +28,7 @@ public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serialize(TupleExceptionDetails tupleExceptionDetails, String fileName) {
+    void serialize(TupleExceptionDetails tupleExceptionDetails, String fileName) {
         // Act
         var json = this.writeValueAsString(tupleExceptionDetails);
 
@@ -40,7 +40,7 @@ public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void deserializeTest(TupleExceptionDetails tupleExceptionDetails, String fileName) {
+    void deserializeTest(TupleExceptionDetails tupleExceptionDetails, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<TupleExceptionDetails>() {};

@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityJwtIncidentConverterImplTest {
+class SecurityJwtIncidentConverterImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -52,7 +52,7 @@ public class SecurityJwtIncidentConverterImplTest {
     private final SecurityJwtIncidentConverter componentUnderTest;
 
     @Test
-    public void convertAuthenticationLoginIncidentExceptionTest() {
+    void convertAuthenticationLoginIncidentExceptionTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentAuthenticationLogin(
@@ -83,7 +83,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertAuthenticationLoginIncidentTest() {
+    void convertAuthenticationLoginIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentAuthenticationLogin(
@@ -110,7 +110,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertAuthenticationLogoutFullIncidentTest() {
+    void convertAuthenticationLogoutFullIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentAuthenticationLogoutFull(
@@ -140,7 +140,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertSessionRefreshedIncidentTest() {
+    void convertSessionRefreshedIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentSessionRefreshed(
@@ -170,7 +170,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertSessionExpiredIncidentTest() {
+    void convertSessionExpiredIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentSessionExpired(
@@ -200,7 +200,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertRegister1IncidentTest() {
+    void convertRegister1IncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentRegistration1(
@@ -221,7 +221,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertRegister1FailureIncidentTest() {
+    void convertRegister1FailureIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var exception = randomString();

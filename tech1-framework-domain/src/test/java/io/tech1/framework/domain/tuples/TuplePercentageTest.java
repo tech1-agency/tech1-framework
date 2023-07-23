@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TuplePercentageTest extends AbstractTupleTest {
+class TuplePercentageTest extends AbstractTupleTest {
     private static final TuplePercentage TUPLE = TuplePercentage.of(new BigDecimal(3L), new BigDecimal(11L), 2, 3);
 
     private static Stream<Arguments> constructorsTest() {
@@ -31,7 +31,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
 
     @ParameterizedTest
     @MethodSource("constructorsTest")
-    public void constructorsTest(
+    void constructorsTest(
             BigDecimal value,
             BigDecimal maxValue,
             String expectedValue1,
@@ -59,7 +59,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    public void zeroTest() {
+    void zeroTest() {
         // Act
         var actual = TuplePercentage.zero();
 
@@ -70,7 +70,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    public void oneHundredTest() {
+    void oneHundredTest() {
         // Act
         var actual = TuplePercentage.oneHundred();
 
@@ -81,7 +81,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(TUPLE);
 
@@ -91,7 +91,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    public void deserializeTest() throws JsonProcessingException {
+    void deserializeTest() throws JsonProcessingException {
         // Arrange
         var json = this.readFile();
         var typeReference = new TypeReference<TuplePercentage>() {

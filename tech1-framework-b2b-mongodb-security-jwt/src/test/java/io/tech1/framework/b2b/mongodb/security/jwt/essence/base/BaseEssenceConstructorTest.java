@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseEssenceConstructorTest {
+class BaseEssenceConstructorTest {
 
     @Configuration
     @Import({
@@ -73,7 +73,7 @@ public class BaseEssenceConstructorTest {
     private final EssenceConstructor componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.invitationCodeRepository,
                 this.userRepository
@@ -81,7 +81,7 @@ public class BaseEssenceConstructorTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.invitationCodeRepository,
                 this.userRepository
@@ -89,7 +89,7 @@ public class BaseEssenceConstructorTest {
     }
 
     @Test
-    public void isDefaultUsersEnabledTest() {
+    void isDefaultUsersEnabledTest() {
         // Arrange
         var expectedFlag = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().isEnabled();
 
@@ -101,7 +101,7 @@ public class BaseEssenceConstructorTest {
     }
 
     @Test
-    public void isInvitationCodesEnabledTest() {
+    void isInvitationCodesEnabledTest() {
         // Arrange
         var expectedFlag = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled();
 
@@ -113,7 +113,7 @@ public class BaseEssenceConstructorTest {
     }
 
     @Test
-    public void addDefaultUsersNoActionsTest() {
+    void addDefaultUsersNoActionsTest() {
         // Arrange
         when(this.userRepository.count()).thenReturn(randomLongGreaterThanZero());
 
@@ -127,7 +127,7 @@ public class BaseEssenceConstructorTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void addDefaultUsersTest() {
+    void addDefaultUsersTest() {
         // Arrange
         when(this.userRepository.count()).thenReturn(0L);
         var dbUserAC = ArgumentCaptor.forClass(List.class);
@@ -143,7 +143,7 @@ public class BaseEssenceConstructorTest {
     }
 
     @Test
-    public void addDefaultUsersInvitationCodesAlreadyPresentTest() {
+    void addDefaultUsersInvitationCodesAlreadyPresentTest() {
         // Arrange
         var username = this.getDefaultUserUsername();
         var invitationCodes = list345(DbInvitationCode.class);
@@ -158,7 +158,7 @@ public class BaseEssenceConstructorTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void addDefaultUsersInvitationCodesNotPresentTest() {
+    void addDefaultUsersInvitationCodesNotPresentTest() {
         // Arrange
         var username = this.getDefaultUserUsername();
         when(this.invitationCodeRepository.findByOwner(eq(username))).thenReturn(emptyList());

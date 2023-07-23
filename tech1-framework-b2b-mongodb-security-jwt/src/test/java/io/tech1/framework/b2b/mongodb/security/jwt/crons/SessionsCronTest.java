@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SessionsCronTest {
+class SessionsCronTest {
 
     @Configuration
     @Import({
@@ -63,7 +63,7 @@ public class SessionsCronTest {
     private final SessionsCron componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.sessionRegistry,
                 this.userSessionService
@@ -71,7 +71,7 @@ public class SessionsCronTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.userSessionService
@@ -79,7 +79,7 @@ public class SessionsCronTest {
     }
 
     @Test
-    public void cleanByExpiredRefreshTokensDisabled() {
+    void cleanByExpiredRefreshTokensDisabled() {
         // Arrange
         this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().setEnabled(false);
 
@@ -91,7 +91,7 @@ public class SessionsCronTest {
     }
 
     @Test
-    public void cleanByExpiredRefreshTokensEnabled() {
+    void cleanByExpiredRefreshTokensEnabled() {
         // Arrange
         var usernames = set345(Username.class);
         var sesssions = list345(DbUserSession.class);

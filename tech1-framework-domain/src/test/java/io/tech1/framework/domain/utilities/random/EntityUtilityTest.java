@@ -10,10 +10,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.one;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class EntityUtilityTest {
+class EntityUtilityTest {
 
     @Test
-    public void listDefaultConstructorTest() {
+    void listDefaultConstructorTest() {
         // Arrange
         var size = (int) one(Integer.class);
 
@@ -25,7 +25,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void listNoDefaultConstructorTest() {
+    void listNoDefaultConstructorTest() {
         // Arrange
         var size = (int) one(Integer.class);
 
@@ -37,7 +37,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void listPrivateConstructorTest() {
+    void listPrivateConstructorTest() {
         // Arrange
         var size = (int) one(Integer.class);
 
@@ -50,7 +50,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void setDefaultConstructorTest() {
+    void setDefaultConstructorTest() {
         // Arrange
         var size = (int) one(Integer.class);
 
@@ -62,7 +62,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void setNoDefaultConstructorTest() {
+    void setNoDefaultConstructorTest() {
         // Arrange
         var size = (int) one(Integer.class);
 
@@ -74,7 +74,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void setPrivateConstructorTest() {
+    void setPrivateConstructorTest() {
         // Arrange
         var size = (int) one(Integer.class);
 
@@ -90,7 +90,7 @@ public class EntityUtilityTest {
     // =================================================================================================================
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void processSettersInstanceNullTest() {
+    void processSettersInstanceNullTest() {
         // Act
         var throwable = catchThrowable(() -> setObjectFields(null));
 
@@ -100,7 +100,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void processSettersClassDefaultConstructorNoSettersTest() throws ReflectiveOperationException {
+    void processSettersClassDefaultConstructorNoSettersTest() throws ReflectiveOperationException {
         // Arrange
         var instance = new ClassDefaultConstructorNoSetters();
 
@@ -112,7 +112,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void processSettersClassDefaultConstructorUnexpectedMethodTest() throws ReflectiveOperationException {
+    void processSettersClassDefaultConstructorUnexpectedMethodTest() throws ReflectiveOperationException {
         // Arrange
         var instance = new ClassDefaultConstructorUnexpectedMethods();
 
@@ -124,7 +124,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void processSettersUnexpectedSetterLoggerCaseTest() {
+    void processSettersUnexpectedSetterLoggerCaseTest() {
         // Arrange
         var instance = new ClassDefaultConstructorUnexpectedSetter();
 
@@ -138,7 +138,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void processSettersClassWithAllArgsAndDefaultConstructorsTest() throws ReflectiveOperationException {
+    void processSettersClassWithAllArgsAndDefaultConstructorsTest() throws ReflectiveOperationException {
         // Arrange
         var instance = new ClassWithAllArgsAndDefaultConstructors();
 
@@ -150,7 +150,7 @@ public class EntityUtilityTest {
     }
 
     @Test
-    public void randomNestedClassesTest() {
+    void randomNestedClassesTest() {
         // Arrange
         var random = entity(ClassNestParent.class);
 
@@ -170,7 +170,7 @@ public class EntityUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void list345Test() {
+    void list345Test() {
         // Act
         var set = list345(Long.class);
 
@@ -180,7 +180,7 @@ public class EntityUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void set345Test() {
+    void set345Test() {
         // Act
         var set = set345(Long.class);
 

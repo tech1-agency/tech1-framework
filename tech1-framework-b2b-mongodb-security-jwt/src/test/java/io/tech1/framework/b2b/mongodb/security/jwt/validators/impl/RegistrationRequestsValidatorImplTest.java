@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RegistrationRequestsValidatorImplTest {
+class RegistrationRequestsValidatorImplTest {
 
     @Configuration
     @Import({
@@ -51,7 +51,7 @@ public class RegistrationRequestsValidatorImplTest {
     private final RegistrationRequestsValidator componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
@@ -61,7 +61,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -71,7 +71,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateRegistrationRequest1UsernameAlreadyUsedTest() {
+    void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -110,7 +110,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
+    void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -153,7 +153,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateRegistrationRequest1NoInvitationCodeTest() {
+    void validateRegistrationRequest1NoInvitationCodeTest() {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -193,7 +193,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
+    void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();

@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TestSpringBootClientTest {
+class TestSpringBootClientTest {
 
     @SuppressWarnings("deprecation")
     private static final RetryableException RETRYABLE_EXCEPTION = new RetryableException(
@@ -62,21 +62,21 @@ public class TestSpringBootClientTest {
     private final TestSpringBootClient componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.springBootClientFeign
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.springBootClientFeign
         );
     }
 
     @Test
-    public void getServerNameTest() {
+    void getServerNameTest() {
         // Act
         var serverName = this.componentUnderTest.getServerName();
 
@@ -85,7 +85,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void notAlive1Test() {
+    void notAlive1Test() {
         // Act
         var alive = this.componentUnderTest.isAlive();
 
@@ -95,7 +95,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void notAlive2Test() {
+    void notAlive2Test() {
         // Arrange
         when(this.springBootClientFeign.info()).thenThrow(RETRYABLE_EXCEPTION);
 
@@ -108,7 +108,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void aliveTest() {
+    void aliveTest() {
         // Arrange
         when(this.springBootClientFeign.info()).thenReturn(new SpringBootActuatorInfo(undefinedSpringBootActuatorInfoGit(), null, "dev"));
 
@@ -121,7 +121,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void infoExceptionTest() {
+    void infoExceptionTest() {
         // Arrange
         when(this.springBootClientFeign.info()).thenThrow(RETRYABLE_EXCEPTION);
 
@@ -134,7 +134,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void infoTest() {
+    void infoTest() {
         // Act
         var info = this.componentUnderTest.info();
 
@@ -144,7 +144,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void infoMappedByServerNameTest() {
+    void infoMappedByServerNameTest() {
         // Act
         var tuple2 = this.componentUnderTest.infoMappedByServerName();
 
@@ -155,7 +155,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void healthExceptionTest() {
+    void healthExceptionTest() {
         // Arrange
         when(this.springBootClientFeign.health()).thenThrow(RETRYABLE_EXCEPTION);
 
@@ -168,7 +168,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void healthTest() {
+    void healthTest() {
         // Act
         var health = this.componentUnderTest.health();
 
@@ -178,7 +178,7 @@ public class TestSpringBootClientTest {
     }
 
     @Test
-    public void healthMappedByServerNameTest() {
+    void healthMappedByServerNameTest() {
         // Act
         var tuple2 = this.componentUnderTest.healthMappedByServerName();
 

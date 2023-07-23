@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtAuthenticationEntryPointExceptionHandlerTest {
+class JwtAuthenticationEntryPointExceptionHandlerTest {
 
     @Configuration
     @Import({
@@ -59,7 +59,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     private final JwtAuthenticationEntryPointExceptionHandler componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -68,7 +68,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -77,7 +77,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @Test
-    public void commenceTest() throws IOException {
+    void commenceTest() throws IOException {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);
@@ -99,7 +99,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @Test
-    public void commenceBadCredentialsExceptionNotCachedEndpointTest() throws IOException {
+    void commenceBadCredentialsExceptionNotCachedEndpointTest() throws IOException {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);
@@ -123,7 +123,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @Test
-    public void commenceBadCredentialsExceptionCachedEndpointTest() throws IOException {
+    void commenceBadCredentialsExceptionCachedEndpointTest() throws IOException {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);

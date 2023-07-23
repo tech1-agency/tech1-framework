@@ -17,7 +17,7 @@ import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimestampUtilityTest {
+class TimestampUtilityTest {
     private static final Long _2_HOUR_AGO = getPastRange(TimeAmount.of(2L, HOURS)).getFrom();
     private static final Long _5_MINUTES_AGO = getPastRange(TimeAmount.of(5L, MINUTES)).getFrom();
     private static final Long _1_MINUTE_AGO = getPastRange(TimeAmount.of(1L, MINUTES)).getFrom();
@@ -79,7 +79,7 @@ public class TimestampUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void getCurrentTimestampTest() {
+    void getCurrentTimestampTest() {
         // Arrange
         var expected = System.currentTimeMillis();
 
@@ -92,7 +92,7 @@ public class TimestampUtilityTest {
 
     @ParameterizedTest
     @MethodSource("toUnixTimeTest")
-    public void toUnixTimeTest(long timestamp, long expected) {
+    void toUnixTimeTest(long timestamp, long expected) {
         // Act
         var actual = toUnixTime(timestamp);
 
@@ -101,7 +101,7 @@ public class TimestampUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
+    void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
         var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID);
@@ -114,7 +114,7 @@ public class TimestampUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
+    void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
         var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID);
@@ -127,7 +127,7 @@ public class TimestampUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
+    void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
         var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID, 3);
@@ -147,7 +147,7 @@ public class TimestampUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isBetweenTest")
-    public void isBetweenTest(long past, long future, boolean expected) {
+    void isBetweenTest(long past, long future, boolean expected) {
         // Act
         var actual = isBetween(getCurrentTimestamp(), past, future);
 
@@ -157,7 +157,7 @@ public class TimestampUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isPastTest")
-    public void isPastTest(long timestamp, boolean expected) {
+    void isPastTest(long timestamp, boolean expected) {
         // Act
         var actual = isPast(timestamp);
 
@@ -167,7 +167,7 @@ public class TimestampUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFutureTest")
-    public void isFutureTest(long timestamp, boolean expected) {
+    void isFutureTest(long timestamp, boolean expected) {
         // Act
         var actual = isFuture(timestamp);
 
@@ -177,7 +177,7 @@ public class TimestampUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isCurrentTimestampNSecondsMoreTest")
-    public void isCurrentTimestampNSecondsMoreTest(long timestamp, long seconds, boolean expected) {
+    void isCurrentTimestampNSecondsMoreTest(long timestamp, long seconds, boolean expected) {
         // Act
         var actual = isCurrentTimestampNSecondsMore(timestamp, seconds);
 

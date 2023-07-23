@@ -12,12 +12,12 @@ import static io.tech1.framework.domain.exceptions.ExceptionEntityType.ERROR;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExceptionEntityTest extends AbstractObjectMapperRunner {
+class ExceptionEntityTest extends AbstractObjectMapperRunner {
 
     @SuppressWarnings("unchecked")
     @SneakyThrows
     @Test
-    public void serializeDeserializeTest() {
+    void serializeDeserializeTest() {
         // Arrange
         var exceptionMessage = randomString();
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};

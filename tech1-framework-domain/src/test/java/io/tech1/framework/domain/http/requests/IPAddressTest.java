@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IPAddressTest {
+class IPAddressTest {
 
     @Test
-    public void constructorsNullValueTest() {
+    void constructorsNullValueTest() {
         // Act
         var actual = new IPAddress(null);
 
@@ -18,7 +18,7 @@ public class IPAddressTest {
     }
 
     @Test
-    public void constructorsValidValueTest() {
+    void constructorsValidValueTest() {
         // Arrange
         var value = randomIPv4();
 

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MongodbTest {
+class MongodbTest {
 
     private static Stream<Arguments> noAuthenticationTest() {
         return Stream.of(
@@ -22,7 +22,7 @@ public class MongodbTest {
 
     @ParameterizedTest
     @MethodSource("noAuthenticationTest")
-    public void noAuthenticationTest(String host, int port, String database, String username, String password) {
+    void noAuthenticationTest(String host, int port, String database, String username, String password) {
         // Arrange
         var mongodb = new Mongodb();
         mongodb.setHost(host);
@@ -40,7 +40,7 @@ public class MongodbTest {
     }
 
     @Test
-    public void authenticationPresentTest() {
+    void authenticationPresentTest() {
         // Arrange
         var mongodb = new Mongodb();
         mongodb.setHost("127.0.0.1");

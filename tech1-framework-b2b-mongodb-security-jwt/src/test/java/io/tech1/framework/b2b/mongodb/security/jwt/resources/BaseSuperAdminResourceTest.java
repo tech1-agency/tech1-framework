@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
+class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
     // Assistants
     private final BaseSuperAdminService baseSuperAdminService;
@@ -29,7 +29,7 @@ public class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     private final BaseSuperAdminResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() throws Exception {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.baseSuperAdminService
@@ -37,14 +37,14 @@ public class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.baseSuperAdminService
         );
     }
 
     @Test
-    public void getUnusedInvitationCodesTest() throws Exception {
+    void getUnusedInvitationCodesTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitationCode1.class);
         when(this.baseSuperAdminService.findUnused()).thenReturn(codes);
@@ -59,7 +59,7 @@ public class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     }
 
     @Test
-    public void getServerSessions() throws Exception {
+    void getServerSessions() throws Exception {
         // Arrange
         var sessionsTable = new ResponseServerSessionsTable(
                 list345(ResponseUserSession3.class),

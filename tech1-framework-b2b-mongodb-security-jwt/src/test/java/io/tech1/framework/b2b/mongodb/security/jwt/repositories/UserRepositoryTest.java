@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
     @Container
     private static final MongoDBContainer container = new MongoDBContainer(MONGO_DB_VERSION).withExposedPorts(MONGO_DB_PORT);
@@ -58,14 +58,14 @@ public class UserRepositoryTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         this.userRepository.deleteAll();
     }
 
     private final UserRepository userRepository;
 
     @Test
-    public void findByAuthoritiesTests() {
+    void findByAuthoritiesTests() {
         // Arrange
         var superadminAuthority = new SimpleGrantedAuthority(SUPER_ADMIN);
         this.userRepository.saveAll(dummyUsersData1());
@@ -131,7 +131,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void deleteByAuthoritiesTests() {
+    void deleteByAuthoritiesTests() {
         // Arrange
         this.userRepository.saveAll(dummyUsersData1());
 

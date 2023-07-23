@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JsonNodeUtilityTest {
+class JsonNodeUtilityTest {
 
     private static Stream<Arguments> getJsonNodeValueAsBigDecimalOrZeroTest() {
         return Stream.of(
@@ -29,7 +29,7 @@ public class JsonNodeUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getJsonNodeValueAsBigDecimalOrZeroTest")
-    public void getJsonNodeValueAsBigDecimalOrZeroTest(JsonNode jsonNode, BigDecimal expected) {
+    void getJsonNodeValueAsBigDecimalOrZeroTest(JsonNode jsonNode, BigDecimal expected) {
         // Act
         var actual = getJsonNodeValueAsBigDecimalOrZero(jsonNode);
 
@@ -38,7 +38,7 @@ public class JsonNodeUtilityTest {
     }
 
     @Test
-    public void getJsonNodeFieldValueAsBigDecimalOrZeroJsonNodeNullTest() {
+    void getJsonNodeFieldValueAsBigDecimalOrZeroJsonNodeNullTest() {
         // Act
         var actual = getJsonNodeFieldValueAsBigDecimalOrZero(null, randomString());
 
@@ -47,7 +47,7 @@ public class JsonNodeUtilityTest {
     }
 
     @Test
-    public void getJsonNodeFieldValueAsBigDecimalOrZeroJsonFieldNullTest() {
+    void getJsonNodeFieldValueAsBigDecimalOrZeroJsonFieldNullTest() {
         // Arrange
         var fieldName = randomString();
         var jsonNode = mock(JsonNode.class);
@@ -61,7 +61,7 @@ public class JsonNodeUtilityTest {
     }
 
     @Test
-    public void getJsonNodeFieldValueAsBigDecimalOrZeroJsonTest() {
+    void getJsonNodeFieldValueAsBigDecimalOrZeroJsonTest() {
         // Arrange
         var expected = BigDecimalConstants.ONE_HUNDRED;
         var fieldName = randomString();

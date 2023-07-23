@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IPAPIGeoLocationUtilityImplConsoleTest {
+class IPAPIGeoLocationUtilityImplConsoleTest {
 
     @Configuration
     @Import({
@@ -56,7 +56,7 @@ public class IPAPIGeoLocationUtilityImplConsoleTest {
 
     @Test
     @Disabled
-    public void australiaTest() throws GeoLocationNotFoundException {
+    void australiaTest() throws GeoLocationNotFoundException {
         // Act
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("1.1.1.1"));
 
@@ -66,7 +66,7 @@ public class IPAPIGeoLocationUtilityImplConsoleTest {
 
     @Test
     @Disabled
-    public void localhostTest() throws GeoLocationNotFoundException {
+    void localhostTest() throws GeoLocationNotFoundException {
         // Act
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("127.0.0.1"));
 

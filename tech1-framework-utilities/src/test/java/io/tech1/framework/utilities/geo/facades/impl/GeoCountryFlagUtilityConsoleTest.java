@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 
 @Slf4j
-public class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializationRunner {
+class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializationRunner {
 
     @Data
     static class CountryFlagFull {
@@ -37,7 +37,7 @@ public class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializatio
 
     @Test
     @Disabled
-    public void readFileTest() throws JsonProcessingException {
+    void readFileTest() throws JsonProcessingException {
         var flagsFullsJSON = readFile(this.getFolder(), "test-geo-countries-flags.json");
         var typeReference = new TypeReference<List<CountryFlagFull>>() {};
         var flagsFulls = OBJECT_MAPPER.readValue(flagsFullsJSON, typeReference);

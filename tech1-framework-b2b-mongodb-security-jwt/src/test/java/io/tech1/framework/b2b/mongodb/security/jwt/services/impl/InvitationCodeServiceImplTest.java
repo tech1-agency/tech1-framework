@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InvitationCodeServiceImplTest {
+class InvitationCodeServiceImplTest {
 
     @Configuration
     @Import({
@@ -68,21 +68,21 @@ public class InvitationCodeServiceImplTest {
     private final InvitationCodeService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.invitationCodeRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.invitationCodeRepository
         );
     }
 
     @Test
-    public void findByOwnerTest() {
+    void findByOwnerTest() {
         // Arrange
         var owner = randomUsername();
         var authorities = singletonList(new SimpleGrantedAuthority("admin"));
@@ -116,7 +116,7 @@ public class InvitationCodeServiceImplTest {
     }
 
     @Test
-    public void saveTest() {
+    void saveTest() {
         // Arrange
         var dbUser = entity(DbUser.class);
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
@@ -133,7 +133,7 @@ public class InvitationCodeServiceImplTest {
     }
 
     @Test
-    public void deleteByIdTest() {
+    void deleteByIdTest() {
         // Arrange
         var invitationCodeId = randomString();
 

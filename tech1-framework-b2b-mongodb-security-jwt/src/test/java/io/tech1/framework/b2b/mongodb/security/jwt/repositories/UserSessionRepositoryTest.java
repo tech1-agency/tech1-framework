@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserSessionRepositoryTest {
+class UserSessionRepositoryTest {
 
     @Container
     private static final MongoDBContainer container = new MongoDBContainer(MONGO_DB_VERSION).withExposedPorts(MONGO_DB_PORT);
@@ -55,14 +55,14 @@ public class UserSessionRepositoryTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         this.userSessionRepository.deleteAll();
     }
 
     private final UserSessionRepository userSessionRepository;
 
     @Test
-    public void findByUsernamesTest() {
+    void findByUsernamesTest() {
         // Arrange
         this.userSessionRepository.saveAll(dummyUserSessionsData1());
 
@@ -75,7 +75,7 @@ public class UserSessionRepositoryTest {
     }
 
     @Test
-    public void deleteByUsernamesTest() {
+    void deleteByUsernamesTest() {
         // Arrange
         this.userSessionRepository.saveAll(dummyUserSessionsData1());
 

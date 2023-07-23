@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CookieProviderImplTest {
+class CookieProviderImplTest {
 
     @Configuration
     @Import({
@@ -57,7 +57,7 @@ public class CookieProviderImplTest {
     private final CookieProvider componentUnderTest;
 
     @Test
-    public void createJwtAccessCookie() {
+    void createJwtAccessCookie() {
         // Arrange
         var jwtAccessToken = new JwtAccessToken(randomString());
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -82,7 +82,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void createJwtRefreshCookie() {
+    void createJwtRefreshCookie() {
         // Arrange
         var refreshAccessToken = entity(JwtRefreshToken.class);
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -106,7 +106,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void readJwtAccessToken() throws CookieAccessTokenNotFoundException {
+    void readJwtAccessToken() throws CookieAccessTokenNotFoundException {
         // Arrange
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
@@ -123,7 +123,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void readJwtAccessTokenThrow() {
+    void readJwtAccessTokenThrow() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { });
@@ -140,7 +140,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void readJwtRefreshToken() throws CookieRefreshTokenNotFoundException {
+    void readJwtRefreshToken() throws CookieRefreshTokenNotFoundException {
         // Arrange
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
@@ -157,7 +157,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void readJwtRefreshTokenThrow() {
+    void readJwtRefreshTokenThrow() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { });
@@ -174,7 +174,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void clearCookies() {
+    void clearCookies() {
         // Arrange
         var httpServletResponse = mock(HttpServletResponse.class);
         var domain = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs().getDomain();

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CronTriggerTest extends AbstractSerializationDeserializationRunner {
+class CronTriggerTest extends AbstractSerializationDeserializationRunner {
     private static final CronTrigger CRON_TRIGGER = CronTrigger.of();
 
     @Override
@@ -19,7 +19,7 @@ public class CronTriggerTest extends AbstractSerializationDeserializationRunner 
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(CRON_TRIGGER);
 

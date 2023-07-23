@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ResourceExceptionHandlerTest {
+class ResourceExceptionHandlerTest {
 
     @Configuration
     @Import({
@@ -57,7 +57,7 @@ public class ResourceExceptionHandlerTest {
 
     @ParameterizedTest
     @MethodSource("unauthorizedResponseErrorMessageTest")
-    public void unauthorizedResponseErrorMessageTest(Exception exception) {
+    void unauthorizedResponseErrorMessageTest(Exception exception) {
         // Act
         var response = this.componentUnderTest.cookiesUnauthorizedExceptions(exception);
 
@@ -70,7 +70,7 @@ public class ResourceExceptionHandlerTest {
     }
 
     @Test
-    public void accessDeniedExceptionTest() {
+    void accessDeniedExceptionTest() {
         // Arrange
         var message = randomString();
         var exception = new AccessDeniedException(message);
@@ -87,7 +87,7 @@ public class ResourceExceptionHandlerTest {
     }
 
     @Test
-    public void registrationExceptionTest() {
+    void registrationExceptionTest() {
         // Arrange
         var message = randomString();
         var exception = new RegistrationException(message);
@@ -104,7 +104,7 @@ public class ResourceExceptionHandlerTest {
     }
 
     @Test
-    public void internalServerErrorTest() {
+    void internalServerErrorTest() {
         // Arrange
         var message = randomString();
         var exception = new IllegalArgumentException(message);

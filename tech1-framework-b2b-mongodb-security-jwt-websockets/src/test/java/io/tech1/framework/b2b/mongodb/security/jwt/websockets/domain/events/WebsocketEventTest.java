@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomHardwareMonitoringDatapointTableRow;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WebsocketEventTest extends AbstractFolderSerializationRunner {
+class WebsocketEventTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
@@ -20,7 +20,7 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void serialize1Test() {
+    void serialize1Test() {
         // Arrange
         var websocketEvent = new WebsocketEvent();
 
@@ -33,7 +33,7 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void serialize2Test() {
+    void serialize2Test() {
         // Arrange
         var websocketEvent = new WebsocketEvent(
                 Map.of(
@@ -52,7 +52,7 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void hardwareMonitoringTest() {
+    void hardwareMonitoringTest() {
         var websocketEvent = WebsocketEvent.hardwareMonitoring(
                 new HardwareMonitoringDatapointTableView(
                         List.of(
@@ -75,7 +75,7 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void resetServerProgressTest() {
+    void resetServerProgressTest() {
         var websocketEvent = WebsocketEvent.resetServerProgress(
                 new ResetServerStatus(15)
         );

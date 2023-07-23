@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserEmailServiceImplTest {
+class UserEmailServiceImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -72,7 +72,7 @@ public class UserEmailServiceImplTest {
     private final UserEmailService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.emailService,
                 this.userEmailUtility,
@@ -81,7 +81,7 @@ public class UserEmailServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.emailService,
                 this.userEmailUtility,
@@ -90,7 +90,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void noExecutionNullEmailAndEnabledEmailTest() {
+    void noExecutionNullEmailAndEnabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
@@ -108,7 +108,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void noExecutionNullEmailAndDisabledEmailTest() {
+    void noExecutionNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
@@ -126,7 +126,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void noExecutionNotNullEmailAndDisabledEmailTest() {
+    void noExecutionNotNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
@@ -144,7 +144,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void executeAuthenticationLoginTest() {
+    void executeAuthenticationLoginTest() {
         // Arrange
         var username = randomUsername();
         var email = randomEmail();
@@ -192,7 +192,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void executeSessionRefreshedTest() {
+    void executeSessionRefreshedTest() {
         // Arrange
         var username = randomUsername();
         var email = randomEmail();

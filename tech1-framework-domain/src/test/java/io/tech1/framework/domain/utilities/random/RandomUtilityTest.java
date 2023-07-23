@@ -30,7 +30,7 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-public class RandomUtilityTest {
+class RandomUtilityTest {
 
     private static Stream<Arguments> oneTest() {
         return Stream.of(
@@ -57,7 +57,7 @@ public class RandomUtilityTest {
 
     @ParameterizedTest
     @MethodSource("oneTest")
-    public void oneTest(Class<? extends Number> clazz, Number expected) {
+    void oneTest(Class<? extends Number> clazz, Number expected) {
         // Act
         var actual = one(clazz);
 
@@ -67,7 +67,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void oneTestException() {
+    void oneTestException() {
         // Act
         var throwable = catchThrowable(() -> one(Float.class));
 
@@ -77,7 +77,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomShortTest() {
+    void randomShortTest() {
         // Act
         var actual = randomShort();
 
@@ -86,7 +86,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomBooleanTest() {
+    void randomBooleanTest() {
         // Act
         var actual = randomBoolean();
 
@@ -95,7 +95,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomDoubleTest() {
+    void randomDoubleTest() {
         // Act
         var actual = randomDouble();
 
@@ -104,7 +104,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomIntegerTest() {
+    void randomIntegerTest() {
         // Act
         var actual = randomInteger();
 
@@ -113,7 +113,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomIntegerGreaterThanZeroTest() {
+    void randomIntegerGreaterThanZeroTest() {
         // Act
         var actual = randomIntegerGreaterThanZero();
 
@@ -123,7 +123,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomIntegerLessThanZeroTest() {
+    void randomIntegerLessThanZeroTest() {
         // Act
         var actual = randomIntegerLessThanZero();
 
@@ -133,7 +133,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomIntegerGreaterThanZeroByBoundsTest() {
+    void randomIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomIntegerGreaterThanZeroByBounds(50, 75);
         var upperBound = randomIntegerGreaterThanZeroByBounds(77, 100);
@@ -148,7 +148,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomLongTest() {
+    void randomLongTest() {
         // Act
         var actual = randomLong();
 
@@ -157,7 +157,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLongGreaterThanZeroTest() {
+    void randomLongGreaterThanZeroTest() {
         // Act
         var actual = randomLongGreaterThanZero();
 
@@ -167,7 +167,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLongLessThanZeroTest() {
+    void randomLongLessThanZeroTest() {
         // Act
         var actual = randomLongLessThanZero();
 
@@ -177,7 +177,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLongGreaterThanZeroByBoundsTest() {
+    void randomLongGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         var upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -192,7 +192,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomBigDecimalTest() {
+    void randomBigDecimalTest() {
         // Act
         var actual = randomBigDecimal();
 
@@ -201,7 +201,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigDecimalGreaterThanZeroTest() {
+    void randomBigDecimalGreaterThanZeroTest() {
         // Act
         var actual = randomBigDecimalGreaterThanZero();
 
@@ -211,7 +211,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigDecimalLessThanZeroTest() {
+    void randomBigDecimalLessThanZeroTest() {
         // Act
         var actual = randomBigDecimalLessThanZero();
 
@@ -221,7 +221,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigDecimalGreaterThanZeroByBoundsTest() {
+    void randomBigDecimalGreaterThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -236,7 +236,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigDecimalLessThanZeroByBoundsTest() {
+    void randomBigDecimalLessThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -251,7 +251,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigDecimalByBoundsTest() {
+    void randomBigDecimalByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -266,7 +266,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomBigIntegerTest() {
+    void randomBigIntegerTest() {
         // Act
         var actual = randomBigInteger();
 
@@ -275,7 +275,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigIntegerGreaterThanZeroTest() {
+    void randomBigIntegerGreaterThanZeroTest() {
         // Act
         var actual = randomBigIntegerGreaterThanZero();
 
@@ -285,7 +285,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigIntegerLessThanZeroTestt() {
+    void randomBigIntegerLessThanZeroTestt() {
         // Act
         var actual = randomBigIntegerLessThanZero();
 
@@ -295,7 +295,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigIntegerGreaterThanZeroByBoundsTest() {
+    void randomBigIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -310,7 +310,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigIntegerLessThanZeroByBoundsTest() {
+    void randomBigIntegerLessThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -325,7 +325,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomBigIntegerByBoundsTest() {
+    void randomBigIntegerByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
         long upperBound = randomLongGreaterThanZeroByBounds(77, 100);
@@ -340,7 +340,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomStringTest() {
+    void randomStringTest() {
         // Act
         var actual = randomString();
 
@@ -350,7 +350,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomStringLetterOrNumbersOnlyTest() {
+    void randomStringLetterOrNumbersOnlyTest() {
         // Arrange
         var regex = "[^a-z0-9 ]";
         var size = 40;
@@ -365,7 +365,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomIPv4Test() {
+    void randomIPv4Test() {
         // Act
         var actual = randomIPv4();
 
@@ -382,7 +382,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomIPAddressTest() {
+    void randomIPAddressTest() {
         // Act
         var actual = randomIPAddress();
 
@@ -399,7 +399,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void localhostTest() {
+    void localhostTest() {
         // Act
         var actual = localhost();
 
@@ -409,7 +409,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomServerURLTest() {
+    void randomServerURLTest() {
         // Arrange
         var pattern = Pattern.compile("^"
                 + "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}" // Domain name
@@ -429,7 +429,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomStringsAsListTest() {
+    void randomStringsAsListTest() {
         // Arrange
         var size = randomIntegerGreaterThanZeroByBounds(1, 5);
         var elementLength = 32;
@@ -448,7 +448,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomStringsAsSetTest() {
+    void randomStringsAsSetTest() {
         // Arrange
         var size = randomIntegerGreaterThanZeroByBounds(1, 5);
         var elementLength = 32;
@@ -467,7 +467,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomStringsAsArrayTest() {
+    void randomStringsAsArrayTest() {
         // Arrange
         var size = randomIntegerGreaterThanZeroByBounds(1, 5);
         var elementLength = 32;
@@ -485,7 +485,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomEmailAsValueTest() {
+    void randomEmailAsValueTest() {
         // Arrange
         var domain = "@tech1.io";
         var randomLength = 32;
@@ -502,7 +502,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomEmailTest() {
+    void randomEmailTest() {
         // Arrange
         var domain = "@tech1.io";
         var randomLength = 32;
@@ -519,7 +519,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomElementListTest() {
+    void randomElementListTest() {
         // Arrange
         var list = List.of(
                 EXAMPLE_1,
@@ -537,7 +537,7 @@ public class RandomUtilityTest {
     }
 
     @Test
-    public void randomElementSetTest() {
+    void randomElementSetTest() {
         // Arrange
         var set = Set.of(
                 EXAMPLE_1,
@@ -555,7 +555,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLocalDateTest() {
+    void randomLocalDateTest() {
         // Act
         var actual = randomLocalDate();
 
@@ -566,7 +566,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLocalDateByBoundsTest() {
+    void randomLocalDateByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
         var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
@@ -581,7 +581,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLocalDateTimeTest() {
+    void randomLocalDateTimeTest() {
         // Act
         var actual = randomLocalDateTime();
 
@@ -592,7 +592,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomLocalDateTimeByBoundsTest() {
+    void randomLocalDateTimeByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
         var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
@@ -607,7 +607,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomDateTest() {
+    void randomDateTest() {
         // Act
         var actual = randomDate();
 
@@ -621,7 +621,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomDateByBoundsTest() {
+    void randomDateByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
         var maxYear = randomIntegerGreaterThanZeroByBounds(2020, 2022);
@@ -639,7 +639,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumTest() {
+    void randomEnumTest() {
         // Act
         var actual1 = randomEnum(EnumUnderTests.class);
         EnumUnderTests actual2 = randomEnumWildcard(EnumUnderTests.class);
@@ -650,7 +650,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptExceptionTest() {
+    void randomEnumExceptExceptionTest() {
         // Act
         var throwable1 = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
         var throwable2 = catchThrowable(() -> randomEnumExceptWildcard(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
@@ -664,7 +664,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptWildcardTest() {
+    void randomEnumExceptWildcardTest() {
         // Arrange
         var enumValues = List.of(EnumUnderTests.values());
         var clazz = EnumUnderTests.class;
@@ -683,7 +683,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
-    public void randomEnumExceptCaseAsListTest() {
+    void randomEnumExceptCaseAsListTest() {
         // Arrange
         var enumValues = List.of(EnumUnderTests.values());
         var clazz = EnumUnderTests.class;
@@ -708,7 +708,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomEnumExceptCaseAsListExceptionTest() {
+    void randomEnumExceptCaseAsListExceptionTest() {
         // Arrange
         var clazz = EnumUnderTests.class;
         var allPossibleEnumValues = List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4);
@@ -727,7 +727,7 @@ public class RandomUtilityTest {
 
     @ParameterizedTest
     @MethodSource("containsPrimitiveWrapperTest")
-    public void containsPrimitiveWrapperTest(Class<?> primitiveWrapper, boolean expected) {
+    void containsPrimitiveWrapperTest(Class<?> primitiveWrapper, boolean expected) {
         // Act
         var actualContains = containsPrimitiveWrapper(primitiveWrapper);
 
@@ -737,7 +737,7 @@ public class RandomUtilityTest {
 
     @ParameterizedTest
     @MethodSource("containsPrimitiveWrapperTest")
-    public void randomListOfPrimitiveWrappersTest(Class<?> primitiveWrapper, boolean containsPrimitiveWrrapper) {
+    void randomListOfPrimitiveWrappersTest(Class<?> primitiveWrapper, boolean containsPrimitiveWrrapper) {
         // Arrange
         int size = randomIntegerGreaterThanZeroByBounds(2, 5);
 
@@ -758,7 +758,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomMethodTest() {
+    void randomMethodTest() {
         // Act
         var actual = randomMethod();
 
@@ -767,7 +767,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomZoneIdTest() {
+    void randomZoneIdTest() {
         // Act
         var actual = randomZoneId();
 
@@ -776,7 +776,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomTimeZoneTest() {
+    void randomTimeZoneTest() {
         // Act
         var actual = randomTimeZone();
 
@@ -785,7 +785,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomUsernameTest() {
+    void randomUsernameTest() {
         // Act
         var actual = randomUsername();
 
@@ -795,7 +795,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomPasswordTest() {
+    void randomPasswordTest() {
         // Act
         var actual = randomPassword();
 
@@ -805,7 +805,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomFeignExceptionTest() {
+    void randomFeignExceptionTest() {
         // Act
         var actual = randomFeignException();
 
@@ -816,7 +816,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void validGeoLocationTest() {
+    void validGeoLocationTest() {
         // Act
         var actual = validGeoLocation();
 
@@ -832,7 +832,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void invalidGeoLocationTest() {
+    void invalidGeoLocationTest() {
         // Act
         var actual = invalidGeoLocation();
 
@@ -846,7 +846,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomGeoLocationTest() {
+    void randomGeoLocationTest() {
         // Act
         var actual = randomGeoLocation();
 
@@ -859,7 +859,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void validUserAgentDetailsTest() {
+    void validUserAgentDetailsTest() {
         // Act
         var actual = validUserAgentDetails();
 
@@ -873,7 +873,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void invalidUserAgentDetailsTest() {
+    void invalidUserAgentDetailsTest() {
         // Act
         var actual = invalidUserAgentDetails();
 
@@ -887,7 +887,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomUserAgentDetailsTest() {
+    void randomUserAgentDetailsTest() {
         // Act
         var userAgentDetails = randomUserAgentDetails();
 
@@ -901,7 +901,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void validUserRequestMetadataTest() {
+    void validUserRequestMetadataTest() {
         // Act
         var actual = validUserRequestMetadata();
 
@@ -927,7 +927,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void invalidUserRequestMetadataTest() {
+    void invalidUserRequestMetadataTest() {
         // Act
         var actual = invalidUserRequestMetadata();
 
@@ -953,7 +953,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomUserRequestMetadataTest() {
+    void randomUserRequestMetadataTest() {
         // Act
         var actual = randomUserRequestMetadata();
 
@@ -978,7 +978,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomHardwareMonitoringThresholdTest() {
+    void randomHardwareMonitoringThresholdTest() {
         // Act
         var actual = randomHardwareMonitoringThreshold();
 
@@ -989,7 +989,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomHardwareMonitoringThresholdsTest() {
+    void randomHardwareMonitoringThresholdsTest() {
         // Act
         var actual = randomHardwareMonitoringThresholds();
 
@@ -1003,7 +1003,7 @@ public class RandomUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void randomHardwareMonitoringDatapointTableRowTest() {
+    void randomHardwareMonitoringDatapointTableRowTest() {
         // Act
         var actual = randomHardwareMonitoringDatapointTableRow();
 

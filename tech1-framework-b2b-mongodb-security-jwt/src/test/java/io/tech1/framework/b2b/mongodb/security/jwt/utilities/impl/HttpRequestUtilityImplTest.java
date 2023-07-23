@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HttpRequestUtilityImplTest {
+class HttpRequestUtilityImplTest {
 
     private static Stream<Arguments> authenticationLoginEndpointCases() {
         return Stream.of(
@@ -79,7 +79,7 @@ public class HttpRequestUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("authenticationLoginEndpointCases")
-    public void isCachedEndpointTest(String method, String requestURI, boolean expected) {
+    void isCachedEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
@@ -93,7 +93,7 @@ public class HttpRequestUtilityImplTest {
     }
 
     @Test
-    public void cachePayloadTest() {
+    void cachePayloadTest() {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         var payload = randomString();
@@ -107,7 +107,7 @@ public class HttpRequestUtilityImplTest {
     }
 
     @Test
-    public void getCachedPayloadMissingTest() {
+    void getCachedPayloadMissingTest() {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var payload = randomString();
@@ -123,7 +123,7 @@ public class HttpRequestUtilityImplTest {
     }
 
     @Test
-    public void getCachedPayloadPresentTest() {
+    void getCachedPayloadPresentTest() {
         // Arrange
         var request = mock(HttpServletRequest.class);
 
@@ -138,7 +138,7 @@ public class HttpRequestUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("authenticationLoginEndpointCases")
-    public void isAuthenticationLoginEndpointTest(String method, String requestURI, boolean expected) {
+    void isAuthenticationLoginEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
@@ -153,7 +153,7 @@ public class HttpRequestUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("authenticationRefreshTokenEndpointCases")
-    public void isAuthenticationRefreshTokenEndpointTest(String method, String requestURI, boolean expected) {
+    void isAuthenticationRefreshTokenEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentPublisherImplTest {
+class IncidentPublisherImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -54,7 +54,7 @@ public class IncidentPublisherImplTest {
     private final IncidentPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.applicationEventPublisher,
                 this.applicationFrameworkProperties
@@ -62,7 +62,7 @@ public class IncidentPublisherImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher,
                 this.applicationFrameworkProperties
@@ -70,7 +70,7 @@ public class IncidentPublisherImplTest {
     }
 
     @Test
-    public void publishResetServerStartedTest() {
+    void publishResetServerStartedTest() {
         // Arrange
         var incident = randomIncidentSystemResetServerStarted();
 
@@ -82,7 +82,7 @@ public class IncidentPublisherImplTest {
     }
 
     @Test
-    public void publishResetServerCompletedTest() {
+    void publishResetServerCompletedTest() {
         // Arrange
         var incident = randomIncidentSystemResetServerCompleted();
 
@@ -94,7 +94,7 @@ public class IncidentPublisherImplTest {
     }
 
     @Test
-    public void publishIncidentTest() {
+    void publishIncidentTest() {
         // Arrange
         var incident = randomIncident();
 
@@ -106,7 +106,7 @@ public class IncidentPublisherImplTest {
     }
 
     @Test
-    public void publishThrowableIncidentTest() {
+    void publishThrowableIncidentTest() {
         // Arrange
         var incident = randomThrowableIncident();
 
@@ -118,7 +118,7 @@ public class IncidentPublisherImplTest {
     }
 
     @Test
-    public void publishThrowableTest() {
+    void publishThrowableTest() {
         // Arrange
         var throwable = randomThrowableIncident().getThrowable();
 

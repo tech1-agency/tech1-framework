@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSuperAdminServiceImplTest {
+class BaseSuperAdminServiceImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -69,7 +69,7 @@ public class BaseSuperAdminServiceImplTest {
     private final BaseSuperAdminService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.sessionRegistry,
                 this.invitationCodeRepository,
@@ -78,7 +78,7 @@ public class BaseSuperAdminServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.invitationCodeRepository,
@@ -87,7 +87,7 @@ public class BaseSuperAdminServiceImplTest {
     }
 
     @Test
-    public void findUnusedTestt() {
+    void findUnusedTestt() {
         // Arrange
         var invitationCodes = list345(DbInvitationCode.class);
         when(this.invitationCodeRepository.findByInvitedIsNull()).thenReturn(invitationCodes);
@@ -104,7 +104,7 @@ public class BaseSuperAdminServiceImplTest {
     }
 
     @Test
-    public void getServerSessionsTest() {
+    void getServerSessionsTest() {
         // Arrange
         var dbUserSession1 = entity(DbUserSession.class);
         var dbUserSession2 = entity(DbUserSession.class);

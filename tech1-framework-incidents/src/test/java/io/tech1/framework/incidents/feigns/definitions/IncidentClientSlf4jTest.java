@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentClientSlf4jTest {
+class IncidentClientSlf4jTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -29,7 +29,7 @@ public class IncidentClientSlf4jTest {
     private final IncidentClientDefinition componentUnderTest;
 
     @Test
-    public void registerIncidentExceptionTest() {
+    void registerIncidentExceptionTest() {
         // Arrange
         var incident = mock(Incident.class);
 

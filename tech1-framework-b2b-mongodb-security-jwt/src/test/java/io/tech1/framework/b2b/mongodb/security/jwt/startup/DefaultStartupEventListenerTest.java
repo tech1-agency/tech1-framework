@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class DefaultStartupEventListenerTest {
+class DefaultStartupEventListenerTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -52,7 +52,7 @@ public class DefaultStartupEventListenerTest {
     private final DefaultStartupEventListener componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.essenceConstructor,
                 this.environmentUtility
@@ -60,7 +60,7 @@ public class DefaultStartupEventListenerTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.essenceConstructor,
                 this.environmentUtility
@@ -78,7 +78,7 @@ public class DefaultStartupEventListenerTest {
 
     @ParameterizedTest
     @MethodSource("onStartupTest")
-    public void onStartupTest(boolean isDefaultUsersEnabled, boolean isInvitationCodesEnabled) {
+    void onStartupTest(boolean isDefaultUsersEnabled, boolean isInvitationCodesEnabled) {
         // Arrange
         when(this.essenceConstructor.isDefaultUsersEnabled()).thenReturn(isDefaultUsersEnabled);
         when(this.essenceConstructor.isInvitationCodesEnabled()).thenReturn(isInvitationCodesEnabled);

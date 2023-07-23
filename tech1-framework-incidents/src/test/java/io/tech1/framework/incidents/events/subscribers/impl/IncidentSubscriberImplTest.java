@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentSubscriberImplTest {
+class IncidentSubscriberImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -55,7 +55,7 @@ public class IncidentSubscriberImplTest {
     private final IncidentSubscriber componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentClient,
                 this.incidentConverter
@@ -63,7 +63,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentClient,
                 this.incidentConverter
@@ -71,7 +71,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventIncidentSystemResetServerStartedTest() {
+    void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
         var incidentSystemResetServerStarted = randomIncidentSystemResetServerStarted();
 
@@ -90,7 +90,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventIncidentSystemResetServerCompletedTest() {
+    void onEventIncidentSystemResetServerCompletedTest() {
         // Arrange
         var incidentSystemResetServerStarted = randomIncidentSystemResetServerCompleted();
 
@@ -109,7 +109,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventIncidentTest() {
+    void onEventIncidentTest() {
         // Arrange
         var incident = randomIncident();
 
@@ -121,7 +121,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventThrowableIncidentTest() {
+    void onEventThrowableIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var throwableIncident = randomThrowableIncident();

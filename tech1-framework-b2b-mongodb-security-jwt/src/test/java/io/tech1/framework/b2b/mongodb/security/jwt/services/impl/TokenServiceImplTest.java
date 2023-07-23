@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokenServiceImplTest {
+class TokenServiceImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -100,7 +100,7 @@ public class TokenServiceImplTest {
     private final TokenService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.jwtUserDetailsAssistant,
                 this.sessionRegistry,
@@ -112,7 +112,7 @@ public class TokenServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.jwtUserDetailsAssistant,
                 this.sessionRegistry,
@@ -124,7 +124,7 @@ public class TokenServiceImplTest {
     }
 
     @Test
-    public void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
+    void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
         // Arrage
         var request = mock(HttpServletRequest.class);
         var cookieAccessToken = new CookieAccessToken(randomString());
@@ -156,7 +156,7 @@ public class TokenServiceImplTest {
     }
 
     @Test
-    public void refreshSessionOrThrowTest() throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
+    void refreshSessionOrThrowTest() throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);

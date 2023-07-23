@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GlobalMemoryTest extends AbstractMemoriesTest {
+class GlobalMemoryTest extends AbstractMemoriesTest {
 
     private static Stream<Arguments> serializeDeserializeTest() {
         return Stream.of(
@@ -29,7 +29,7 @@ public class GlobalMemoryTest extends AbstractMemoriesTest {
 
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void serializeTest(GlobalMemory globalMemory, String fileName) {
+    void serializeTest(GlobalMemory globalMemory, String fileName) {
         // Act
         var json = this.writeValueAsString(globalMemory);
 
@@ -41,7 +41,7 @@ public class GlobalMemoryTest extends AbstractMemoriesTest {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void deserializeTest(GlobalMemory globalMemory, String fileName) {
+    void deserializeTest(GlobalMemory globalMemory, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<GlobalMemory>() {};

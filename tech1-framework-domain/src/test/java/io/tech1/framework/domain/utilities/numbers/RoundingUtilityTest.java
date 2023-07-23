@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RoundingUtilityTest {
+class RoundingUtilityTest {
 
     private static Stream<Arguments> scaleTest() {
         return Stream.of(
@@ -54,7 +54,7 @@ public class RoundingUtilityTest {
 
     @ParameterizedTest
     @MethodSource("scaleTest")
-    public void scaleTest(BigDecimal value, Integer scale, BigDecimal expected) {
+    void scaleTest(BigDecimal value, Integer scale, BigDecimal expected) {
         BigDecimal actual;
         if (scale == DEFAULT_SCALE) {
             // Act
@@ -69,7 +69,7 @@ public class RoundingUtilityTest {
 
     @ParameterizedTest
     @MethodSource("divideTest")
-    public void divideTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
+    void divideTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
         BigDecimal actual;
         if (scale == DEFAULT_SCALE) {
             // Act
@@ -84,7 +84,7 @@ public class RoundingUtilityTest {
 
     @ParameterizedTest
     @MethodSource("divideOrZeroTest")
-    public void divideOrZeroTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
+    void divideOrZeroTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
         // Act
         var actual = divideOrZero(divider, divisor, scale);
 
@@ -93,7 +93,7 @@ public class RoundingUtilityTest {
     }
 
     @Test
-    public void divideOrOneTest() {
+    void divideOrOneTest() {
         // Arrange
         var exception = mock(BigDecimal.class);
         when(exception.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
@@ -123,7 +123,7 @@ public class RoundingUtilityTest {
 
     @ParameterizedTest
     @MethodSource("formatTest")
-    public void formatTest(BigDecimal value, int scale, String expected) {
+    void formatTest(BigDecimal value, int scale, String expected) {
         String actual;
         if (scale == DEFAULT_SCALE) {
             // Act

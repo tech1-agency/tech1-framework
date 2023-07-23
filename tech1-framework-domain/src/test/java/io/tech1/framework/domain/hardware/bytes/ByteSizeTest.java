@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ByteSizeTest extends AbstractFolderSerializationRunner {
+class ByteSizeTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeDeserializeTest() {
         return Stream.of(
@@ -39,7 +39,7 @@ public class ByteSizeTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void serializeTest(ByteSize byteSize, String fileName) {
+    void serializeTest(ByteSize byteSize, String fileName) {
         // Act
         var json = this.writeValueAsString(byteSize);
 
@@ -51,7 +51,7 @@ public class ByteSizeTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void deserializeTest(ByteSize byteSize, String fileName) {
+    void deserializeTest(ByteSize byteSize, String fileName) {
         // Arrange
         var json = TestsIOUtils.readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<ByteSize>() {};
@@ -67,7 +67,7 @@ public class ByteSizeTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("getByTest")
-    public void getByTest(ByteUnit unit, int scale, BigDecimal expected1, BigDecimal expected2) {
+    void getByTest(ByteUnit unit, int scale, BigDecimal expected1, BigDecimal expected2) {
         // Arrange
         var gigabyte15 = new ByteSize(1573741824L);
 

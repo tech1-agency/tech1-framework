@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationMvc3Test {
+class ApplicationMvc3Test {
 
     @Configuration
     static class ContextConfiguration {
@@ -60,7 +60,7 @@ public class ApplicationMvc3Test {
     private final ApplicationMVC componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -72,7 +72,7 @@ public class ApplicationMvc3Test {
     }
 
     @Test
-    public void addCorsMappingsEnabledTest() {
+    void addCorsMappingsEnabledTest() {
         // Arrange
         var corsRegistry = mock(CorsRegistry.class);
         var corsRegistration = mock(CorsRegistration.class);

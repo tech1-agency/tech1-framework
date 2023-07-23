@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserAgentDetailsUtilityImplTest {
+class UserAgentDetailsUtilityImplTest {
 
     private static Stream<Arguments> getUserAgentDetailsTest() {
         return Stream.of(
@@ -50,7 +50,7 @@ public class UserAgentDetailsUtilityImplTest {
     private final UserAgentDetailsUtility componentUnderTest;
 
     @Test
-    public void getUserAgentDetailsExceptionTest() throws NoSuchFieldException, IllegalAccessException {
+    void getUserAgentDetailsExceptionTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var userAgentHeader = mock(UserAgentHeader.class);
         setPrivateField(this.componentUnderTest, "configured", false);
@@ -70,7 +70,7 @@ public class UserAgentDetailsUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("getUserAgentDetailsTest")
-    public void getUserAgentDetailsTest(String header, String browser, String platform, String deviceType) {
+    void getUserAgentDetailsTest(String header, String browser, String platform, String deviceType) {
         // Arrange
         var request = mock(HttpServletRequest.class);
         when(request.getHeader("User-Agent")).thenReturn(header);

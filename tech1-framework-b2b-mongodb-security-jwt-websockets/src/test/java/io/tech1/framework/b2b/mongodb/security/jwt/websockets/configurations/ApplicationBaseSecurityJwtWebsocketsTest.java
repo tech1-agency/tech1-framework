@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwtWebsocketsTest {
+class ApplicationBaseSecurityJwtWebsocketsTest {
 
     @Configuration
     @Import({
@@ -91,7 +91,7 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
     private final ApplicationBaseSecurityJwtWebsockets componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -104,7 +104,7 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
     }
 
     @Test
-    public void registerStompEndpointsTest() {
+    void registerStompEndpointsTest() {
         // Arrange
         var registration = mock(StompWebSocketEndpointRegistration.class);
         var registry = mock(StompEndpointRegistry.class);
@@ -129,7 +129,7 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
     }
 
     @Test
-    public void configureMessageBrokerTest() {
+    void configureMessageBrokerTest() {
         // Arrange
         var registry = mock(MessageBrokerRegistry.class);
 
@@ -146,7 +146,7 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
     }
 
     @Test
-    public void sameOriginDisabledTest() {
+    void sameOriginDisabledTest() {
         // Act
         var actual = this.componentUnderTest.sameOriginDisabled();
 

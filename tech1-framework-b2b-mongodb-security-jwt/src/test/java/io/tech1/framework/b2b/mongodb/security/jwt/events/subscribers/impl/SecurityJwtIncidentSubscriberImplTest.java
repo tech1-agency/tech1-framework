@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityJwtIncidentSubscriberImplTest {
+class SecurityJwtIncidentSubscriberImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -66,7 +66,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     private final SecurityJwtIncidentSubscriber componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentClient,
                 this.securityJwtIncidentConverter,
@@ -75,7 +75,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentClient,
                 this.securityJwtIncidentConverter,
@@ -85,7 +85,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
 
 
     @Test
-    public void onEventAuthenticationLoginIncidentTest() {
+    void onEventAuthenticationLoginIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var authenticationLoginIncident = entity(IncidentAuthenticationLogin.class);
@@ -100,7 +100,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventAuthenticationLoginFailureUsernamePasswordIncidentTest() {
+    void onEventAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var authenticationLoginFailureUsernamePasswordIncident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
@@ -115,7 +115,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
+    void onEventAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var authenticationLoginFailureUsernameMaskedPasswordIncident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
@@ -130,7 +130,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventAuthenticationLogoutMinIncidentTest() {
+    void onEventAuthenticationLogoutMinIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var authenticationLogoutMinIncident = entity(IncidentAuthenticationLogoutMin.class);
@@ -145,7 +145,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventAuthenticationLogoutFullIncidentTest() {
+    void onEventAuthenticationLogoutFullIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var authenticationLogoutFullIncident = entity(IncidentAuthenticationLogoutFull.class);
@@ -160,7 +160,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventSessionRefreshedIncidentTest() {
+    void onEventSessionRefreshedIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var sessionRefreshedIncident = entity(IncidentSessionRefreshed.class);
@@ -175,7 +175,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventSessionExpiredIncidentTest() {
+    void onEventSessionExpiredIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var sessionExpiredIncident = entity(IncidentSessionExpired.class);
@@ -190,7 +190,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventRegister1IncidentTest() {
+    void onEventRegister1IncidentTest() {
         // Arrange
         var incident = randomIncident();
         var register1Incident = entity(IncidentRegistration1.class);
@@ -205,7 +205,7 @@ public class SecurityJwtIncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventRegister1FailureIncidentTest() {
+    void onEventRegister1FailureIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var register1FailureIncident = entity(IncidentRegistration1Failure.class);

@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtAccessDeniedExceptionHandlerTest {
+class JwtAccessDeniedExceptionHandlerTest {
 
     @Configuration
     @Import({
@@ -45,7 +45,7 @@ public class JwtAccessDeniedExceptionHandlerTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void handleTest() throws IOException {
+    void handleTest() throws IOException {
         // Arrange
         var httpServletResponse = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);

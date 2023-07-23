@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityJwtTokenUtilityImplTest {
+class SecurityJwtTokenUtilityImplTest {
 
     private static Stream<Arguments> createJwtTokenTest() {
         return Stream.of(
@@ -133,7 +133,7 @@ public class SecurityJwtTokenUtilityImplTest {
     private final SecurityJwtTokenUtility componentUnderTest;
 
     @Test
-    public void createJwtAccessTokenTest() {
+    void createJwtAccessTokenTest() {
         // Arrange
         var expectedUsername = Username.of("multiuser43");
         var authorities = Arrays.asList(
@@ -160,7 +160,7 @@ public class SecurityJwtTokenUtilityImplTest {
     }
 
     @Test
-    public void createJwtRefreshTokenTest() {
+    void createJwtRefreshTokenTest() {
         // Arrange
         var expectedUsername = Username.of("multiuser43");
         var authorities = Arrays.asList(
@@ -188,7 +188,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("createJwtTokenTest")
-    public void createJwtTokenTest(TimeAmount timeAmount) {
+    void createJwtTokenTest(TimeAmount timeAmount) {
         // Arrange
         var user = EntityUtility.entity(DbUser.class);
 
@@ -209,7 +209,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("validateTest")
-    public void validateTest(String jwtToken, boolean expected) {
+    void validateTest(String jwtToken, boolean expected) {
         // Act
         var accessValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         var refreshValidatedClaims = this.componentUnderTest.validate(new JwtRefreshToken(jwtToken));
@@ -228,7 +228,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isExpiredTest")
-    public void isExpiredTest(String jwtToken, boolean expected) {
+    void isExpiredTest(String jwtToken, boolean expected) {
         // Act
         var jwtTokenValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         var actualExpired = this.componentUnderTest.isExpired(jwtTokenValidatedClaims);
@@ -239,7 +239,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("getUsernameByClaimsTest")
-    public void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
+    void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
         // Act
         var jwtTokenValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         var actualUsername = jwtTokenValidatedClaims.safeGetUsername();
@@ -250,7 +250,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("versionsTests")
-    public void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> expectedAuthorities) throws ParseException {
+    void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> expectedAuthorities) throws ParseException {
         // Arrange
         var sdf = new SimpleDateFormat(TestsConstants.DEFAULT_DATE_FORMAT_PATTERN);
         sdf.setTimeZone(TestsConstants.EET_TIME_ZONE);

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HardwareMonitoringPublisherImplTest {
+class HardwareMonitoringPublisherImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -45,21 +45,21 @@ public class HardwareMonitoringPublisherImplTest {
     private final HardwareMonitoringPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.applicationEventPublisher
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher
         );
     }
 
     @Test
-    public void publishLastHardwareMonitoringDatapointTest() {
+    void publishLastHardwareMonitoringDatapointTest() {
         // Arrange
         var event = mock(EventLastHardwareMonitoringDatapoint.class);
 

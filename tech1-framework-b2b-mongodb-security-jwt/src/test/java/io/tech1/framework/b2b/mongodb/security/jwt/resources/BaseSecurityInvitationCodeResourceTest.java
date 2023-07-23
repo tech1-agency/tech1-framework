@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
+class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -43,7 +43,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     private final BaseSecurityInvitationCodeResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() throws Exception {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
@@ -52,7 +52,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.invitationCodeService
@@ -60,7 +60,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void findAllTest() throws Exception {
+    void findAllTest() throws Exception {
         // Arrange
         var owner = randomUsername();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
@@ -81,7 +81,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void saveTest() throws Exception {
+    void saveTest() throws Exception {
         // Arrange
         var owner = randomUsername();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
@@ -102,7 +102,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void deleteByIdTest() throws Exception {
+    void deleteByIdTest() throws Exception {
         // Arrange
         var user = entity(DbUser.class);
         when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(user);

@@ -35,7 +35,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserEmailUtilityImplTest {
+class UserEmailUtilityImplTest {
 
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
@@ -69,21 +69,21 @@ public class UserEmailUtilityImplTest {
     private final UserEmailUtility componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.environmentUtility
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.environmentUtility
         );
     }
 
     @RepeatedTest(5)
-    public void getSubjectTest() {
+    void getSubjectTest() {
         // Arrange
         when(this.environmentUtility.getActiveProfile()).thenReturn("stage");
 
@@ -101,7 +101,7 @@ public class UserEmailUtilityImplTest {
     }
 
     @Test
-    public void getAuthenticationLoginTemplateNameTest() {
+    void getAuthenticationLoginTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getAuthenticationLoginTemplateName();
 
@@ -110,7 +110,7 @@ public class UserEmailUtilityImplTest {
     }
 
     @Test
-    public void getSessionRefreshedTemplateNameTest() {
+    void getSessionRefreshedTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getSessionRefreshedTemplateName();
 
@@ -119,7 +119,7 @@ public class UserEmailUtilityImplTest {
     }
 
     @Test
-    public void getAuthenticationLoginOrSessionRefreshedVariablesTest() {
+    void getAuthenticationLoginOrSessionRefreshedVariablesTest() {
         // Arrange
         var username = randomUsername();
         var userRequestMetadata = validUserRequestMetadata();

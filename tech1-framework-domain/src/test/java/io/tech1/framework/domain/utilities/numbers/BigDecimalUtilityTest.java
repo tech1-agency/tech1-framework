@@ -20,7 +20,7 @@ import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-public class BigDecimalUtilityTest {
+class BigDecimalUtilityTest {
 
     private static Stream<Arguments> areValuesEqualsTest() {
         return Stream.of(
@@ -216,7 +216,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("areValuesEqualsTest")
-    public void areValuesEqualsTest(BigDecimal value1, BigDecimal value2, boolean expected) {
+    void areValuesEqualsTest(BigDecimal value1, BigDecimal value2, boolean expected) {
         // Act
         var actual = areValuesEquals(value1, value2);
 
@@ -226,7 +226,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueGreaterExceptionTest")
-    public void isFirstValueGreaterExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
+    void isFirstValueGreaterExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
         // Act
         var throwable = catchThrowable(() -> isFirstValueGreater(value1, value2));
 
@@ -238,7 +238,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueGreaterTest")
-    public void isFirstValueGreaterTest(BigDecimal value1, BigDecimal value2, boolean expected) {
+    void isFirstValueGreaterTest(BigDecimal value1, BigDecimal value2, boolean expected) {
         // Act
         var actual = isFirstValueGreater(value1, value2);
 
@@ -248,7 +248,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueGreaterOrEqualExceptionTest")
-    public void isFirstValueGreaterOrEqualExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
+    void isFirstValueGreaterOrEqualExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
         // Act
         var throwable = catchThrowable(() -> isFirstValueGreaterOrEqual(value1, value2));
 
@@ -260,7 +260,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueGreaterOrEqualTest")
-    public void isFirstValueGreaterOrEqualTest(BigDecimal value1, BigDecimal value2, boolean expected) {
+    void isFirstValueGreaterOrEqualTest(BigDecimal value1, BigDecimal value2, boolean expected) {
         // Act
         var actual = isFirstValueGreaterOrEqual(value1, value2);
 
@@ -270,7 +270,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueLesserExceptionTest")
-    public void isFirstValueLesserExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
+    void isFirstValueLesserExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
         // Act
         var throwable = catchThrowable(() -> isFirstValueLesser(value1, value2));
 
@@ -282,7 +282,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueLesserTest")
-    public void isFirstValueLesserTest(BigDecimal value1, BigDecimal value2, boolean expected) {
+    void isFirstValueLesserTest(BigDecimal value1, BigDecimal value2, boolean expected) {
         // Act
         var actual = isFirstValueLesser(value1, value2);
 
@@ -292,7 +292,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueLesserOrEqualExceptionTest")
-    public void isFirstValueLesserOrEqualExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
+    void isFirstValueLesserOrEqualExceptionTest(BigDecimal value1, BigDecimal value2, String expected) {
         // Act
         var throwable = catchThrowable(() -> isFirstValueLesserOrEqual(value1, value2));
 
@@ -304,7 +304,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isFirstValueLesserOrEqualTest")
-    public void isFirstValueLesserOrEqualTest(BigDecimal value1, BigDecimal value2, boolean expected) {
+    void isFirstValueLesserOrEqualTest(BigDecimal value1, BigDecimal value2, boolean expected) {
         // Act
         var actual = isFirstValueLesserOrEqual(value1, value2);
 
@@ -314,7 +314,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("inRangeExceptionTest")
-    public void inRangeExceptionTest(BigDecimal value, TupleRange<BigDecimal> range, String expected) {
+    void inRangeExceptionTest(BigDecimal value, TupleRange<BigDecimal> range, String expected) {
         // Act
         var throwable = catchThrowable(() -> inRange(value, range));
 
@@ -326,7 +326,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("inRangeTest")
-    public void inRangeTest(BigDecimal value, TupleRange<BigDecimal> range, boolean expected) {
+    void inRangeTest(BigDecimal value, TupleRange<BigDecimal> range, boolean expected) {
         // Act
         var actual = inRange(value, range);
 
@@ -336,7 +336,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("inRangeClosedExceptionTest")
-    public void inRangeClosedExceptionTest(BigDecimal value, TupleRange<BigDecimal> range, String expected) {
+    void inRangeClosedExceptionTest(BigDecimal value, TupleRange<BigDecimal> range, String expected) {
         // Act
         var throwable = catchThrowable(() -> inRangeClosed(value, range));
 
@@ -348,7 +348,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("inRangeClosedTest")
-    public void inRangeClosedTest(BigDecimal value, TupleRange<BigDecimal> range, boolean expected) {
+    void inRangeClosedTest(BigDecimal value, TupleRange<BigDecimal> range, boolean expected) {
         // Act
         var actual = inRangeClosed(value, range);
 
@@ -358,7 +358,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isZeroTest")
-    public void isZeroTest(BigDecimal value, boolean expected) {
+    void isZeroTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isZero(value);
 
@@ -368,7 +368,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isNullOrZeroTest")
-    public void isNullOrZeroTest(BigDecimal value, boolean expected) {
+    void isNullOrZeroTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isNullOrZero(value);
 
@@ -378,7 +378,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isOneHundredTest")
-    public void isOneHundredTest(BigDecimal value, boolean expected) {
+    void isOneHundredTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isOneHundred(value);
 
@@ -388,7 +388,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isPositiveTest")
-    public void isPositiveTest(BigDecimal value, boolean expected) {
+    void isPositiveTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isPositive(value);
 
@@ -398,7 +398,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isPositiveOrZeroTest")
-    public void isPositiveOrZeroTest(BigDecimal value, boolean expected) {
+    void isPositiveOrZeroTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isPositiveOrZero(value);
 
@@ -408,7 +408,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isNegativeTest")
-    public void isNegativeTest(BigDecimal value, boolean expected) {
+    void isNegativeTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isNegative(value);
 
@@ -418,7 +418,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isNegativeOrZeroTest")
-    public void isNegativeOrZeroTest(BigDecimal value, boolean expected) {
+    void isNegativeOrZeroTest(BigDecimal value, boolean expected) {
         // Act
         var actual = isNegativeOrZero(value);
 
@@ -427,7 +427,7 @@ public class BigDecimalUtilityTest {
     }
 
     @Test
-    public void absOrZeroTest() {
+    void absOrZeroTest() {
         // Arrange
         var positive = randomBigDecimalGreaterThanZero();
         var negative = randomBigDecimalLessThanZero();
@@ -452,7 +452,7 @@ public class BigDecimalUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getNumberOfDigitsAfterTheDecimalPointOrZeroTest")
-    public void getNumberOfDigitsAfterTheDecimalPointOrZeroTest(BigDecimal value, int expected) {
+    void getNumberOfDigitsAfterTheDecimalPointOrZeroTest(BigDecimal value, int expected) {
         // Act
         var actual = getNumberOfDigitsAfterTheDecimalPointOrZero(value);
 

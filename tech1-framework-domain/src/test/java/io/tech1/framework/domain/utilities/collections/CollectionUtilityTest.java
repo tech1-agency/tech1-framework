@@ -16,7 +16,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class CollectionUtilityTest {
+class CollectionUtilityTest {
 
     private static Stream<Arguments> getFirstNElementsTest() {
         return Stream.of(
@@ -59,7 +59,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void mutableSingletonListIntegrationTest() {
+    void mutableSingletonListIntegrationTest() {
         // Arrange
         var element1 = "element1";
         var element2 = "element2";
@@ -82,7 +82,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void mutableSingletonSetIntegrationTest() {
+    void mutableSingletonSetIntegrationTest() {
         // Arrange
         var element1 = "element1";
         var element2 = "element2";
@@ -105,7 +105,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void mutableSingletonMapIntegrationTest() {
+    void mutableSingletonMapIntegrationTest() {
         // Arrange
         var key1 = "key1";
         var key2 = "key2";
@@ -134,7 +134,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void emptyQueueTest() {
+    void emptyQueueTest() {
         // Arrange
         var expected = new LinkedList<>();
 
@@ -146,7 +146,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void unionListsTest() {
+    void unionListsTest() {
         // Arrange
         var list1 = randomStringsAsList(randomIntegerGreaterThanZeroByBounds(3, 10));
         var list2 = randomStringsAsList(randomIntegerGreaterThanZeroByBounds(3, 10));
@@ -163,7 +163,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void unionSetTest() {
+    void unionSetTest() {
         // Arrange
         var set1 = randomStringsAsSet(randomIntegerGreaterThanZeroByBounds(3, 10));
         var set2 = randomStringsAsSet(randomIntegerGreaterThanZeroByBounds(3, 10));
@@ -180,7 +180,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void safeGettersExceptionCases() {
+    void safeGettersExceptionCases() {
         // Arrange
         var emptyList = List.of();
         var emptySet = Set.of();
@@ -198,7 +198,7 @@ public class CollectionUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void safeGetters() {
+    void safeGetters() {
         // Arrange
         var list = List.of(1, 2, 3, 4, 5);
         var set = new LinkedHashSet<>();
@@ -226,7 +226,7 @@ public class CollectionUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getFirstNElementsTest")
-    public void getFirstNElementsTest(List<Integer> list, int size, List<Integer> expected) {
+    void getFirstNElementsTest(List<Integer> list, int size, List<Integer> expected) {
         // Act
         var actual = getFirstNElements(list, size);
 
@@ -235,7 +235,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void getFirstNElementsExceptionTest() {
+    void getFirstNElementsExceptionTest() {
         // Arrange
         var list = List.of(0, 1, 2, 3, 4);
 
@@ -248,7 +248,7 @@ public class CollectionUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getLastNElementsTest")
-    public void getLastNElementsTest(List<Integer> list, int size, List<Integer> expected) {
+    void getLastNElementsTest(List<Integer> list, int size, List<Integer> expected) {
         // Act
         var actual = getLastNElements(list, size);
 
@@ -257,7 +257,7 @@ public class CollectionUtilityTest {
     }
 
     @Test
-    public void getLastNElementsExceptionTest() {
+    void getLastNElementsExceptionTest() {
         // Arrange
         var list = List.of(0, 1, 2, 3, 4);
 
@@ -270,7 +270,7 @@ public class CollectionUtilityTest {
 
     @ParameterizedTest
     @MethodSource("maxOrZeroTest")
-    public void maxOrZeroTest(List<BigDecimal> list, BigDecimal expected) {
+    void maxOrZeroTest(List<BigDecimal> list, BigDecimal expected) {
         // Act
         var actual = maxOrZero(list);
 
@@ -280,7 +280,7 @@ public class CollectionUtilityTest {
 
     @ParameterizedTest
     @MethodSource("minOrZeroTest")
-    public void minOrZeroTest(List<BigDecimal> list, BigDecimal expected) {
+    void minOrZeroTest(List<BigDecimal> list, BigDecimal expected) {
         // Act
         var actual = minOrZero(list);
 

@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RejectedExecutionHandlerPublisherTest {
+class RejectedExecutionHandlerPublisherTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -48,21 +48,21 @@ public class RejectedExecutionHandlerPublisherTest {
     private final RejectedExecutionHandlerPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentPublisher
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher
         );
     }
 
     @Test
-    public void rejectedExecutionTest() {
+    void rejectedExecutionTest() {
         // Arrange
         var runnableName = randomString();
         var executorName = randomString();

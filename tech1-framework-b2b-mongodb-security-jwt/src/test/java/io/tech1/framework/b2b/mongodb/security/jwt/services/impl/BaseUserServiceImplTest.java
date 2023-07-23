@@ -103,10 +103,10 @@ class BaseUserServiceImplTest {
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.getDbUser().getUsername());
-        assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.getZoneId()));
-        assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate1.getName());
-        assertThat(dbUserAC.getValue().getEmail()).isEqualTo(requestUserUpdate1.getEmail());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.dbUser().getUsername());
+        assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
+        assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate1.name());
+        assertThat(dbUserAC.getValue().getEmail()).isEqualTo(requestUserUpdate1.email());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
@@ -127,10 +127,10 @@ class BaseUserServiceImplTest {
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.getDbUser().getUsername());
-        assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.getZoneId()));
-        assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate2.getName());
-        assertThat(dbUserAC.getValue().getEmail()).isEqualTo(currentJwtUser.getDbUser().getEmail());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.dbUser().getUsername());
+        assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
+        assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate2.name());
+        assertThat(dbUserAC.getValue().getEmail()).isEqualTo(currentJwtUser.dbUser().getEmail());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
@@ -141,7 +141,7 @@ class BaseUserServiceImplTest {
         var currentJwtUser = entity(JwtUser.class);
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(currentJwtUser);
         String hashPassword = randomString();
-        when(this.bCryptPasswordEncoder.encode(eq(requestUserChangePassword1.getNewPassword().value()))).thenReturn(hashPassword);
+        when(this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value())).thenReturn(hashPassword);
         ArgumentCaptor<DbUser> dbUserAC = ArgumentCaptor.forClass(DbUser.class);
 
         // Act
@@ -149,9 +149,9 @@ class BaseUserServiceImplTest {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.bCryptPasswordEncoder).encode(eq(requestUserChangePassword1.getNewPassword().value()));
+        verify(this.bCryptPasswordEncoder).encode(requestUserChangePassword1.newPassword().value());
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.getDbUser().getUsername());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.dbUser().getUsername());
         assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder
     }

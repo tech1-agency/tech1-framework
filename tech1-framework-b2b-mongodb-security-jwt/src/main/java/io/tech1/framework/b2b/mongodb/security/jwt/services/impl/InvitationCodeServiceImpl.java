@@ -52,7 +52,7 @@ public class InvitationCodeServiceImpl implements InvitationCodeService {
     public void save(RequestNewInvitationCodeParams requestNewInvitationCodeParams, Username owner) {
         var invitationCode = new DbInvitationCode(
                 owner,
-                requestNewInvitationCodeParams.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
         this.invitationCodeRepository.save(invitationCode);
     }

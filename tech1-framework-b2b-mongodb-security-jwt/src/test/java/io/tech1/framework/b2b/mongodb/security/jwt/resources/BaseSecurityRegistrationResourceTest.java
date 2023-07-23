@@ -35,7 +35,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
     private final BaseSecurityRegistrationResource componentUnderTest;
 
     @BeforeEach
-    void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.registrationService,
@@ -69,9 +69,9 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.registrationRequestsValidator).validateRegistrationRequest1(eq(requestUserRegistration1));
-        verify(this.registrationService).register1(eq(requestUserRegistration1));
-        verify(this.securityJwtPublisher).publishRegistration1(eq(new EventRegistration1(requestUserRegistration1)));
-        verify(this.securityJwtIncidentPublisher).publishRegistration1(eq(new IncidentRegistration1(requestUserRegistration1.getUsername())));
+        verify(this.registrationRequestsValidator).validateRegistrationRequest1(requestUserRegistration1);
+        verify(this.registrationService).register1(requestUserRegistration1);
+        verify(this.securityJwtPublisher).publishRegistration1(new EventRegistration1(requestUserRegistration1));
+        verify(this.securityJwtIncidentPublisher).publishRegistration1(new IncidentRegistration1(requestUserRegistration1.username()));
     }
 }

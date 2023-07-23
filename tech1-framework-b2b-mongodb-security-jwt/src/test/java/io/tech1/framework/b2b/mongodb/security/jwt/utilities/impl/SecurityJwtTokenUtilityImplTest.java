@@ -149,14 +149,14 @@ class SecurityJwtTokenUtilityImplTest {
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtAccessToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
-        assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
         var zoneId = user.getZoneId();
         var timeAmount = accessToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.getClaims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
     }
 
     @Test
@@ -176,14 +176,14 @@ class SecurityJwtTokenUtilityImplTest {
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtRefreshToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
-        assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
         var zoneId = user.getZoneId();
         var timeAmount = refreshToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.getClaims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
     }
 
     @ParameterizedTest
@@ -198,13 +198,13 @@ class SecurityJwtTokenUtilityImplTest {
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(user.getUsername());
-        assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
         var zoneId = nonNull(user.getZoneId()) ? user.getZoneId() : ZoneId.systemDefault();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.getClaims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
     }
 
     @ParameterizedTest
@@ -215,15 +215,15 @@ class SecurityJwtTokenUtilityImplTest {
         var refreshValidatedClaims = this.componentUnderTest.validate(new JwtRefreshToken(jwtToken));
 
         // Assert
-        assertThat(accessValidatedClaims.isValid()).isEqualTo(expected);
-        assertThat(accessValidatedClaims.getJwtToken()).isEqualTo(jwtToken);
-        assertThat(accessValidatedClaims.isAccess()).isEqualTo(true);
-        assertThat(accessValidatedClaims.isRefresh()).isEqualTo(false);
+        assertThat(accessValidatedClaims.valid()).isEqualTo(expected);
+        assertThat(accessValidatedClaims.jwtToken()).isEqualTo(jwtToken);
+        assertThat(accessValidatedClaims.isAccess()).isTrue();
+        assertThat(accessValidatedClaims.isRefresh()).isFalse();
 
-        assertThat(refreshValidatedClaims.isValid()).isEqualTo(expected);
-        assertThat(refreshValidatedClaims.getJwtToken()).isEqualTo(jwtToken);
-        assertThat(refreshValidatedClaims.isAccess()).isEqualTo(false);
-        assertThat(refreshValidatedClaims.isRefresh()).isEqualTo(true);
+        assertThat(refreshValidatedClaims.valid()).isEqualTo(expected);
+        assertThat(refreshValidatedClaims.jwtToken()).isEqualTo(jwtToken);
+        assertThat(refreshValidatedClaims.isAccess()).isFalse();
+        assertThat(refreshValidatedClaims.isRefresh()).isTrue();
     }
 
     @ParameterizedTest
@@ -259,7 +259,7 @@ class SecurityJwtTokenUtilityImplTest {
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
 
         // Assert
-        var claims = validatedClaims.getClaims();
+        var claims = validatedClaims.claims();
         assertThat(claims.getIssuedAt()).isEqualTo(sdf.parse(expectedIssuedAt));
         assertThat(claims.getExpiration()).isEqualTo(sdf.parse(expectedExpiration));
         var actualAuthorities = Arrays.stream(claims.get("authorities").toString()

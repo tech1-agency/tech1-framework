@@ -17,8 +17,8 @@ public class AuthenticationRequestsValidatorImpl implements AuthenticationReques
 
     @Override
     public void validateLoginRequest(RequestUserLogin requestUserLogin) {
-        var username = requestUserLogin.getUsername();
-        var password = requestUserLogin.getPassword();
+        var username = requestUserLogin.username();
+        var password = requestUserLogin.password();
 
         assertNonNullNotBlankOrThrow(username, invalidAttribute("username"));
         assertNonNullNotBlankOrThrow(password, invalidAttribute("password"));

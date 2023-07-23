@@ -18,9 +18,9 @@ class JwtTokenValidatedClaimsTest {
         var throwable = catchThrowable(validatedClaims::safeGetUsername);
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).startsWith("Attribute `JwtTokenValidatedClaims` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Attribute `JwtTokenValidatedClaims` is invalid");
     }
 
     @Test
@@ -34,7 +34,6 @@ class JwtTokenValidatedClaimsTest {
         var actual = validatedClaims.safeGetUsername();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(username);
     }
 
@@ -47,9 +46,9 @@ class JwtTokenValidatedClaimsTest {
         var throwable = catchThrowable(validatedClaims::safeGetExpirationTimestamp);
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).startsWith("Attribute `JwtTokenValidatedClaims` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Attribute `JwtTokenValidatedClaims` is invalid");
     }
 
     @Test
@@ -63,7 +62,6 @@ class JwtTokenValidatedClaimsTest {
         var actual = validatedClaims.safeGetExpirationTimestamp();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(date.getTime());
     }
 }

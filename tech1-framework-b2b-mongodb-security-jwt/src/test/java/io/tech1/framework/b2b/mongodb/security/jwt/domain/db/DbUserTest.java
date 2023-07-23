@@ -27,8 +27,7 @@ class DbUserTest {
         var actual = user.getNotNullAttributes();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).hasSize(0);
+        assertThat(actual).isEmpty();
     }
 
     @Test
@@ -48,7 +47,6 @@ class DbUserTest {
         var actual = user.getNotNullAttributes();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).hasSize(0);
+        assertThat(actual).isEmpty();
     }
 }

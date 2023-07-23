@@ -60,19 +60,20 @@ class JwtAccessDeniedExceptionHandlerTest {
         this.componentUnderTest.handle(httpServletRequest, httpServletResponse, exception);
 
         // Assert
-        verify(httpServletResponse).setContentType(eq("application/json;charset=UTF-8"));
-        verify(httpServletResponse).setStatus(eq(HttpServletResponse.SC_FORBIDDEN));
+        verify(httpServletResponse).setContentType("application/json;charset=UTF-8");
+        verify(httpServletResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(httpServletResponse).getWriter();
         verify(exception).getMessage();
         verify(printWriter).write(jsonAC.capture());
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
         HashMap<String, Object> json = objectMapper.readValue(jsonAC.getValue(), typeRef);
-        assertThat(json).hasSize(3);
-        assertThat(json).containsKeys("exceptionEntityType", "attributes", "timestamp");
-        assertThat(json.get("exceptionEntityType")).isEqualTo(ERROR.toString());
+        assertThat(json)
+                .hasSize(3)
+                .containsKeys("exceptionEntityType", "attributes", "timestamp")
+                .containsEntry("exceptionEntityType", ERROR.toString());
         var attributes = (Map<String, Object>) json.get("attributes");
-        assertThat(attributes.get("shortMessage")).isEqualTo(exceptionMessage);
-        assertThat(attributes.get("fullMessage")).isEqualTo(exceptionMessage);
+        assertThat(attributes).containsEntry("shortMessage", exceptionMessage);
+        assertThat(attributes).containsEntry("fullMessage", exceptionMessage);
         verifyNoMoreInteractions(
                 httpServletRequest,
                 httpServletResponse,

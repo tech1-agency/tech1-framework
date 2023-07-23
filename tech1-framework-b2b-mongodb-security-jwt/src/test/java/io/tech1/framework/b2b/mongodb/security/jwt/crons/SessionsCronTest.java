@@ -87,16 +87,16 @@ class SessionsCronTest {
         this.componentUnderTest.cleanByExpiredRefreshTokens();
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.sessionRegistry);
     }
 
     @Test
     void cleanByExpiredRefreshTokensEnabled() {
         // Arrange
         var usernames = set345(Username.class);
-        var sesssions = list345(DbUserSession.class);
+        var sessions = list345(DbUserSession.class);
         when(this.sessionRegistry.getActiveSessionsUsernames()).thenReturn(usernames);
-        when(this.userSessionService.findByUsernameIn(eq(usernames))).thenReturn(sesssions);
+        when(this.userSessionService.findByUsernameIn(usernames)).thenReturn(sessions);
         this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().setEnabled(true);
 
         // Act
@@ -104,7 +104,7 @@ class SessionsCronTest {
 
         // Assert
         verify(this.sessionRegistry).getActiveSessionsUsernames();
-        verify(this.userSessionService).findByUsernameIn(eq(usernames));
-        verify(this.sessionRegistry).cleanByExpiredRefreshTokens(eq(sesssions));
+        verify(this.userSessionService).findByUsernameIn(usernames);
+        verify(this.sessionRegistry).cleanByExpiredRefreshTokens(sessions);
     }
 }

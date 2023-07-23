@@ -97,7 +97,6 @@ class BaseSuperAdminServiceImplTest {
 
         // Assert
         verify(this.invitationCodeRepository).findByInvitedIsNull();
-        assertThat(unused).isNotNull();
         assertThat(unused).hasSize(invitationCodes.size());
         assertThat(unused.stream().map(ResponseInvitationCode1::getValue).collect(Collectors.toSet()))
                 .isEqualTo(invitationCodes.stream().map(DbInvitationCode::getValue).collect(Collectors.toSet()));
@@ -125,9 +124,9 @@ class BaseSuperAdminServiceImplTest {
         verify(this.userSessionRepository).findAll();
         verify(this.sessionRegistry).getActiveSessionsRefreshTokens();
         assertThat(serverSessions).isNotNull();
-        assertThat(serverSessions.getActiveSessions()).hasSize(2);
+        assertThat(serverSessions.activeSessions()).hasSize(2);
         assertThat(serverSessions.getActiveUsernames()).containsExactlyInAnyOrder(dbUserSession1.getUsername(), dbUserSession3.getUsername());
-        assertThat(serverSessions.getInactiveSessions()).hasSize(1);
+        assertThat(serverSessions.inactiveSessions()).hasSize(1);
         assertThat(serverSessions.getInactiveUsernames()).containsExactlyInAnyOrder(dbUserSession2.getUsername());
     }
 }

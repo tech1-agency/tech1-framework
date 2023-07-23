@@ -92,8 +92,9 @@ class UserEmailUtilityImplTest {
 
         // Assert
         verify(this.environmentUtility).getActiveProfile();
-        assertThat(subject).startsWith("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ");
-        assertThat(subject).endsWith(" (UTC)");
+        assertThat(subject)
+                .startsWith("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ")
+                .endsWith(" (UTC)");
         subject = subject.replace("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF), ZoneOffset.UTC);
@@ -133,13 +134,14 @@ class UserEmailUtilityImplTest {
         );
 
         // Assert
-        assertThat(variables).hasSize(7);
-        assertThat(variables.get("year")).isEqualTo(now(UTC).getYear());
-        assertThat(variables.get("username")).isEqualTo(username.identifier());
-        assertThat(variables.get("accessMethod")).isEqualTo(accountAccessMethod.getValue());
-        assertThat(variables.get("where")).isEqualTo("🇺🇦 Ukraine, Lviv");
-        assertThat(variables.get("what")).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(variables.get("ipAddress")).isEqualTo("127.0.0.1");
-        assertThat(variables.get("webclientURL")).isEqualTo("http://127.0.0.1:3000");
+        assertThat(variables)
+                .hasSize(7)
+                .containsEntry("year", now(UTC).getYear())
+                .containsEntry("username", username.identifier())
+                .containsEntry("accessMethod", accountAccessMethod.getValue())
+                .containsEntry("where", "🇺🇦 Ukraine, Lviv")
+                .containsEntry("what", "Chrome, macOS on Desktop")
+                .containsEntry("ipAddress", "127.0.0.1")
+                .containsEntry("webclientURL", "http://127.0.0.1:3000");
     }
 }

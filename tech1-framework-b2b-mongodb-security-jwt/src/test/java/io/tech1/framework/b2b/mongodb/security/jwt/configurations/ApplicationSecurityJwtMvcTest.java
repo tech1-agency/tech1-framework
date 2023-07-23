@@ -50,8 +50,9 @@ class ApplicationSecurityJwtMvcTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("addCorsMappings");
-        assertThat(methods).contains("configurePathMatch");
-        assertThat(methods).hasSize(28);
+        assertThat(methods)
+                .hasSize(28)
+                .contains("addCorsMappings")
+                .contains("configurePathMatch");
     }
 }

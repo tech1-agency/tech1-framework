@@ -192,13 +192,13 @@ class TokenServiceImplTest {
         verify(this.sessionRegistry).renew(oldSessionAC.capture(), newSessionAC.capture());
         var oldSession = oldSessionAC.getValue();
         assertThat(oldSession).isNotNull();
-        assertThat(oldSession.getUsername()).isEqualTo(user.getUsername());
-        assertThat(oldSession.getRefreshToken().getValue()).isEqualTo(oldJwtRefreshToken.getValue());
+        assertThat(oldSession.username()).isEqualTo(user.getUsername());
+        assertThat(oldSession.refreshToken().value()).isEqualTo(oldJwtRefreshToken.value());
         var newSession = newSessionAC.getValue();
         assertThat(newSession).isNotNull();
-        assertThat(newSession.getUsername()).isEqualTo(user.getUsername());
-        assertThat(newSession.getRefreshToken().getValue()).isEqualTo(newJwtRefreshToken.getValue());
+        assertThat(newSession.username()).isEqualTo(user.getUsername());
+        assertThat(newSession.refreshToken().value()).isEqualTo(newJwtRefreshToken.value());
         assertThat(responseUserSession1).isNotNull();
-        assertThat(responseUserSession1.getRefreshToken()).isEqualTo(userSession.getJwtRefreshToken().getValue());
+        assertThat(responseUserSession1.refreshToken()).isEqualTo(userSession.getJwtRefreshToken().value());
     }
 }

@@ -25,14 +25,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public DbUser register1(RequestUserRegistration1 requestUserRegistration1) {
-        var invitationCode = invitationCodeRepository.findByValue(requestUserRegistration1.getInvitationCode());
+        var invitationCode = invitationCodeRepository.findByValue(requestUserRegistration1.invitationCode());
 
-        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.getPassword().value());
+        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value());
 
         var user = new DbUser(
-                requestUserRegistration1.getUsername(),
+                requestUserRegistration1.username(),
                 Password.of(hashPassword),
-                requestUserRegistration1.getZoneId(),
+                requestUserRegistration1.zoneId(),
                 invitationCode.getAuthorities()
         );
 

@@ -34,7 +34,7 @@ class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
     private final BaseSecuritySessionResource componentUnderTest;
 
     @BeforeEach
-    void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant
@@ -79,13 +79,14 @@ class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
     @Test
     void getCurrentUserDbSessionsTest() throws Exception {
         // Arrange
-        var userSessionsTables = new ResponseUserSessionsTable(list345(ResponseUserSession2.class));
+        var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(any(HttpServletRequest.class))).thenReturn(userSessionsTables);
 
         // Act
         this.mvc.perform(get("/session/db/table").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.sessions", hasSize(userSessionsTables.getSessions().size())))
+                .andExpect(jsonPath("$.sessions", hasSize(userSessionsTables.sessions().size())))
+                .andExpect(jsonPath("$.anyPresent", instanceOf(Boolean.class)))
                 .andExpect(jsonPath("$.anyProblem", instanceOf(Boolean.class)));
 
         // Assert

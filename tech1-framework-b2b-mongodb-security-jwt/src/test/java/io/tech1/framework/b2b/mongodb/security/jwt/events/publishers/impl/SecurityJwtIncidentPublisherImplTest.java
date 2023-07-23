@@ -107,7 +107,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -136,7 +136,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -165,7 +165,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -194,7 +194,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -223,7 +223,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -252,7 +252,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -281,7 +281,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -310,7 +310,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -339,7 +339,7 @@ class SecurityJwtIncidentPublisherImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     // =================================================================================================================

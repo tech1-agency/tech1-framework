@@ -30,7 +30,7 @@ public class BaseUserServiceImpl implements BaseUserService {
     @Override
     public void updateUser1(RequestUserUpdate1 requestUserUpdate1) {
         var currentJwtUser = this.currentSessionAssistant.getCurrentJwtUser();
-        var currentDbUser = currentJwtUser.getDbUser();
+        var currentDbUser = currentJwtUser.dbUser();
 
         currentDbUser.edit1(requestUserUpdate1);
         this.userRepository.save(currentDbUser);
@@ -42,7 +42,7 @@ public class BaseUserServiceImpl implements BaseUserService {
     @Override
     public void updateUser2(RequestUserUpdate2 requestUserUpdate2) {
         var currentJwtUser = this.currentSessionAssistant.getCurrentJwtUser();
-        var currentDbUser = currentJwtUser.getDbUser();
+        var currentDbUser = currentJwtUser.dbUser();
 
         currentDbUser.edit2(requestUserUpdate2);
         this.userRepository.save(currentDbUser);
@@ -54,9 +54,9 @@ public class BaseUserServiceImpl implements BaseUserService {
     @Override
     public void changePassword1(RequestUserChangePassword1 requestUserChangePassword1) {
         var currentJwtUser = this.currentSessionAssistant.getCurrentJwtUser();
-        var currentDbUser = currentJwtUser.getDbUser();
+        var currentDbUser = currentJwtUser.dbUser();
 
-        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.getNewPassword().value());
+        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value());
 
         currentDbUser.changePassword(Password.of(hashPassword));
         this.userRepository.save(currentDbUser);

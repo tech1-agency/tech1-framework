@@ -124,10 +124,10 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public DbUserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.getClientIpAddr());
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.getUserAgentHeader());
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = event.getUserSession();
+        var userSession = event.userSession();
         userSession.editRequestMetadata(requestMetadata);
         return this.userSessionRepository.save(userSession);
     }
@@ -140,7 +140,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         usersSessions.forEach(userSession -> {
             var sessionId = userSession.getId();
             var validatedClaims = this.securityJwtTokenUtility.validate(userSession.getJwtRefreshToken());
-            var isValid = validatedClaims.isValid();
+            var isValid = validatedClaims.valid();
             if (isValid) {
                 var isExpired = isPast(validatedClaims.safeGetExpirationTimestamp());
                 if (isExpired) {

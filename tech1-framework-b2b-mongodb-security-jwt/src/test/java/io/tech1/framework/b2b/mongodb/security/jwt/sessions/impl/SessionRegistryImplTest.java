@@ -41,7 +41,6 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -115,16 +114,16 @@ class SessionRegistryImplTest {
         var dbUserSession3 = entity(DbUserSession.class);
         var dbUserSession4 = entity(DbUserSession.class);
         var rndDbUserSession = entity(DbUserSession.class);
-        when(this.userSessionService.findByRefreshToken(session1.getRefreshToken())).thenReturn(dbUserSession1);
-        when(this.userSessionService.findByRefreshToken(session2.getRefreshToken())).thenReturn(dbUserSession2);
-        when(this.userSessionService.findByRefreshToken(session3.getRefreshToken())).thenReturn(dbUserSession3);
-        when(this.userSessionService.findByRefreshToken(session4.getRefreshToken())).thenReturn(dbUserSession4);
-        when(this.userSessionService.findByRefreshToken(rndSession.getRefreshToken())).thenReturn(rndDbUserSession);
+        when(this.userSessionService.findByRefreshToken(session1.refreshToken())).thenReturn(dbUserSession1);
+        when(this.userSessionService.findByRefreshToken(session2.refreshToken())).thenReturn(dbUserSession2);
+        when(this.userSessionService.findByRefreshToken(session3.refreshToken())).thenReturn(dbUserSession3);
+        when(this.userSessionService.findByRefreshToken(session4.refreshToken())).thenReturn(dbUserSession4);
+        when(this.userSessionService.findByRefreshToken(rndSession.refreshToken())).thenReturn(rndDbUserSession);
 
         // Iteration #1
         var activeSessionsUsernames1 = this.componentUnderTest.getActiveSessionsUsernamesIdentifiers();
-        assertThat(activeSessionsUsernames1).hasSize(0);
-        assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).hasSize(0);
+        assertThat(activeSessionsUsernames1).isEmpty();
+        assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).isEmpty();
 
         // Iteration #2
         this.componentUnderTest.register(session1);
@@ -132,7 +131,7 @@ class SessionRegistryImplTest {
         var activeSessionsUsernames2 = this.componentUnderTest.getActiveSessionsUsernames();
         assertThat(activeSessionsUsernames2).hasSize(2);
         assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).hasSize(2);
-        assertThat(activeSessionsUsernames2).isEqualTo(new HashSet<>(List.of(session1.getUsername(), session2.getUsername())));
+        assertThat(activeSessionsUsernames2).isEqualTo(new HashSet<>(List.of(session1.username(), session2.username())));
 
         // Iteration #3
         this.componentUnderTest.register(session3);
@@ -140,7 +139,7 @@ class SessionRegistryImplTest {
         var activeSessionsUsernames3 = this.componentUnderTest.getActiveSessionsUsernames();
         assertThat(activeSessionsUsernames3).hasSize(3);
         assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).hasSize(3);
-        assertThat(activeSessionsUsernames3).isEqualTo(new HashSet<>(List.of(session1.getUsername(), session2.getUsername(), session3.getUsername())));
+        assertThat(activeSessionsUsernames3).isEqualTo(new HashSet<>(List.of(session1.username(), session2.username(), session3.username())));
 
         // Iteration #4
         this.componentUnderTest.register(session4);
@@ -150,37 +149,37 @@ class SessionRegistryImplTest {
         var activeSessionsUsernames4 = this.componentUnderTest.getActiveSessionsUsernames();
         assertThat(activeSessionsUsernames4).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).hasSize(1);
-        assertThat(activeSessionsUsernames4).isEqualTo(new HashSet<>(List.of(session4.getUsername())));
+        assertThat(activeSessionsUsernames4).isEqualTo(new HashSet<>(List.of(session4.username())));
 
         // Iteration #5 (cleanup)
         this.componentUnderTest.logout(session4);
-        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(0);
-        assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(0);
-        assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).hasSize(0);
-        verify(this.userSessionService).findByRefreshToken(eq(session1.getRefreshToken()));
-        verify(this.userSessionService).findByRefreshToken(eq(session2.getRefreshToken()));
-        verify(this.userSessionService).findByRefreshToken(eq(session3.getRefreshToken()));
-        verify(this.userSessionService).findByRefreshToken(eq(session4.getRefreshToken()));
-        verify(this.userSessionService).findByRefreshToken(eq(rndSession.getRefreshToken()));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session1.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session2.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session3.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogin(eq(new EventAuthenticationLogin(session4.getUsername())));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session1)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session2)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session3)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(session4)));
-        verify(this.securityJwtPublisher).publishAuthenticationLogout(eq(new EventAuthenticationLogout(rndSession)));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session1.getUsername(), dbUserSession1.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session2.getUsername(), dbUserSession2.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session3.getUsername(), dbUserSession3.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(session4.getUsername(), dbUserSession4.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(eq(new IncidentAuthenticationLogoutFull(rndSession.getUsername(), rndDbUserSession.getRequestMetadata())));
-        verify(this.userSessionService).deleteByRefreshToken(eq(session1.getRefreshToken()));
-        verify(this.userSessionService).deleteByRefreshToken(eq(session2.getRefreshToken()));
-        verify(this.userSessionService).deleteByRefreshToken(eq(session3.getRefreshToken()));
-        verify(this.userSessionService).deleteByRefreshToken(eq(session4.getRefreshToken()));
-        verify(this.userSessionService).deleteByRefreshToken(eq(rndSession.getRefreshToken()));
+        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEmpty();
+        assertThat(this.componentUnderTest.getActiveSessionsUsernames()).isEmpty();
+        assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).isEmpty();
+        verify(this.userSessionService).findByRefreshToken(session1.refreshToken());
+        verify(this.userSessionService).findByRefreshToken(session2.refreshToken());
+        verify(this.userSessionService).findByRefreshToken(session3.refreshToken());
+        verify(this.userSessionService).findByRefreshToken(session4.refreshToken());
+        verify(this.userSessionService).findByRefreshToken(rndSession.refreshToken());
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session1.username()));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session2.username()));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session3.username()));
+        verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session4.username()));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session1));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session2));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session3));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session4));
+        verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(rndSession));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session1.username(), dbUserSession1.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session2.username(), dbUserSession2.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session4.username(), dbUserSession4.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(rndSession.username(), rndDbUserSession.getRequestMetadata()));
+        verify(this.userSessionService).deleteByRefreshToken(session1.refreshToken());
+        verify(this.userSessionService).deleteByRefreshToken(session2.refreshToken());
+        verify(this.userSessionService).deleteByRefreshToken(session3.refreshToken());
+        verify(this.userSessionService).deleteByRefreshToken(session4.refreshToken());
+        verify(this.userSessionService).deleteByRefreshToken(rndSession.refreshToken());
     }
 
     @Test
@@ -200,7 +199,7 @@ class SessionRegistryImplTest {
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-        verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(eq(new EventAuthenticationLogin(username)));
+        verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(new EventAuthenticationLogin(username));
     }
 
     @Test
@@ -230,13 +229,13 @@ class SessionRegistryImplTest {
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
         var dbUserSession = entity(DbUserSession.class);
-        when(this.userSessionService.findByRefreshToken(eq(refreshToken))).thenReturn(dbUserSession);
+        when(this.userSessionService.findByRefreshToken(refreshToken)).thenReturn(dbUserSession);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.userSessionService).findByRefreshToken(eq(refreshToken));
+        verify(this.userSessionService).findByRefreshToken(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
@@ -245,7 +244,7 @@ class SessionRegistryImplTest {
         var incident = incidentAC.getValue();
         assertThat(incident.username()).isEqualTo(username);
         assertThat(incident.userRequestMetadata()).isEqualTo(dbUserSession.getRequestMetadata());
-        verify(this.userSessionService).deleteByRefreshToken(eq(refreshToken));
+        verify(this.userSessionService).deleteByRefreshToken(refreshToken);
     }
 
     @Test
@@ -254,16 +253,16 @@ class SessionRegistryImplTest {
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
-        when(this.userSessionService.findByRefreshToken(eq(refreshToken))).thenReturn(null);
+        when(this.userSessionService.findByRefreshToken(refreshToken)).thenReturn(null);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.userSessionService).findByRefreshToken(eq(refreshToken));
+        verify(this.userSessionService).findByRefreshToken(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
-        assertThat(eventAC.getValue().getSession()).isEqualTo(session);
+        assertThat(eventAC.getValue().session()).isEqualTo(session);
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutMin.class);
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutMin(incidentAC.capture());
         assertThat(incidentAC.getValue().username()).isEqualTo(username);
@@ -292,20 +291,20 @@ class SessionRegistryImplTest {
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
         var sessionsValidatedTuple2 = new SessionsValidatedTuple2(List.of(new Tuple2<>(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
-        when(this.userSessionService.validate(eq(usersSessions))).thenReturn(sessionsValidatedTuple2);
+        when(this.userSessionService.validate(usersSessions)).thenReturn(sessionsValidatedTuple2);
 
         // Act
         this.componentUnderTest.cleanByExpiredRefreshTokens(usersSessions);
 
         // Assert
-        verify(this.userSessionService).validate(eq(usersSessions));
+        verify(this.userSessionService).validate(usersSessions);
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(3);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(3);
         var eseCaptor = ArgumentCaptor.forClass(EventSessionExpired.class);
         verify(this.securityJwtPublisher).publishSessionExpired(eseCaptor.capture());
         var eventSessionExpired = eseCaptor.getValue();
-        assertThat(eventSessionExpired.getSession().getUsername()).isEqualTo(username1);
-        assertThat(eventSessionExpired.getSession().getRefreshToken()).isEqualTo(dbUserSession3.getJwtRefreshToken());
+        assertThat(eventSessionExpired.session().username()).isEqualTo(username1);
+        assertThat(eventSessionExpired.session().refreshToken()).isEqualTo(dbUserSession3.getJwtRefreshToken());
         var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
         verify(this.securityJwtIncidentPublisher).publishSessionExpired(seiCaptor.capture());
         var sessionExpiredIncident = seiCaptor.getValue();

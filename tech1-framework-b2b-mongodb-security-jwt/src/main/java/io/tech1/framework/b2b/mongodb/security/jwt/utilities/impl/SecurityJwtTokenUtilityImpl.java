@@ -76,17 +76,17 @@ public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
 
     @Override
     public JwtTokenValidatedClaims validate(JwtAccessToken jwtAccessToken) {
-        return this.validate(jwtAccessToken.getValue(), true, false);
+        return this.validate(jwtAccessToken.value(), true, false);
     }
 
     @Override
     public JwtTokenValidatedClaims validate(JwtRefreshToken jwtRefreshToken) {
-        return this.validate(jwtRefreshToken.getValue(), false, true);
+        return this.validate(jwtRefreshToken.value(), false, true);
     }
 
     @Override
     public boolean isExpired(JwtTokenValidatedClaims jwtTokenValidatedClaims) {
-        return jwtTokenValidatedClaims.isValid() && this.getIssuedAt().after(jwtTokenValidatedClaims.getClaims().getExpiration());
+        return jwtTokenValidatedClaims.valid() && this.getIssuedAt().after(jwtTokenValidatedClaims.claims().getExpiration());
     }
 
     // =================================================================================================================

@@ -87,6 +87,6 @@ class InvitationCodeRepositoryTest {
         this.invitationCodeRepository.deleteByInvitedNotUsed();
 
         // Assert-2
-        assertThat(this.invitationCodeRepository.count()).isEqualTo(0);
+        assertThat(this.invitationCodeRepository.count()).isZero();
     }
 }

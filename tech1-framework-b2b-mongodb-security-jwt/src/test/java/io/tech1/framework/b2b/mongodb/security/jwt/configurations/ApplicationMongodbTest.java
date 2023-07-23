@@ -50,10 +50,11 @@ class ApplicationMongodbTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("tech1MongoClient");
-        assertThat(methods).contains("tech1MongoDatabaseFactory");
-        assertThat(methods).contains("tech1MongoTemplate");
-        assertThat(methods).hasSize(12);
+        assertThat(methods)
+                .hasSize(12)
+                .contains("tech1MongoClient")
+                .contains("tech1MongoDatabaseFactory")
+                .contains("tech1MongoTemplate");
         assertThat(this.componentUnderTest.tech1MongoClient()).isNotNull();
         assertThat(this.componentUnderTest.tech1MongoDatabaseFactory()).isNotNull();
         assertThat(this.componentUnderTest.tech1MongoTemplate()).isNotNull();

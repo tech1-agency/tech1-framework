@@ -43,7 +43,7 @@ class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
     private final BaseSecurityInvitationCodeResource componentUnderTest;
 
     @BeforeEach
-    void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
@@ -67,7 +67,7 @@ class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(DbInvitationCode.class);
         var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
-        when(this.invitationCodeService.findByOwner(eq(owner))).thenReturn(responseInvitationCodes);
+        when(this.invitationCodeService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
         this.mvc.perform(get("/invitationCode").contentType(MediaType.APPLICATION_JSON))
@@ -77,7 +77,7 @@ class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeService).findByOwner(eq(owner));
+        verify(this.invitationCodeService).findByOwner(owner);
     }
 
     @Test
@@ -97,8 +97,8 @@ class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeRequestsValidator).validateCreateNewInvitationCode(eq(requestNewInvitationCodeParams));
-        verify(this.invitationCodeService).save(eq(requestNewInvitationCodeParams), eq(owner));
+        verify(this.invitationCodeRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
+        verify(this.invitationCodeService).save(requestNewInvitationCodeParams, owner);
     }
 
     @Test
@@ -117,7 +117,7 @@ class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.invitationCodeRequestsValidator).validateDeleteById(eq(user), eq(invitationCodeId));
-        verify(this.invitationCodeService).deleteById(eq(invitationCodeId));
+        verify(this.invitationCodeRequestsValidator).validateDeleteById(user, invitationCodeId);
+        verify(this.invitationCodeService).deleteById(invitationCodeId);
     }
 }

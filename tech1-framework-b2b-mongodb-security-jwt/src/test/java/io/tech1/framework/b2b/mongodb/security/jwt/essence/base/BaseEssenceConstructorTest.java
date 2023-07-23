@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.essence.base;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.constants.SecurityJwtConstants;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
@@ -131,7 +130,7 @@ class BaseEssenceConstructorTest {
         // Arrange
         when(this.userRepository.count()).thenReturn(0L);
         var dbUserAC = ArgumentCaptor.forClass(List.class);
-        long usersCount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers().size();
+        int usersCount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers().size();
 
         // Act
         this.componentUnderTest.addDefaultUsers();
@@ -139,7 +138,7 @@ class BaseEssenceConstructorTest {
         // Assert
         verify(this.userRepository).count();
         verify(this.userRepository).saveAll(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().size()).isEqualTo(usersCount);
+        assertThat(dbUserAC.getValue()).hasSize(usersCount);
     }
 
     @Test
@@ -147,13 +146,13 @@ class BaseEssenceConstructorTest {
         // Arrange
         var username = this.getDefaultUserUsername();
         var invitationCodes = list345(DbInvitationCode.class);
-        when(this.invitationCodeRepository.findByOwner(eq(username))).thenReturn(invitationCodes);
+        when(this.invitationCodeRepository.findByOwner(username)).thenReturn(invitationCodes);
 
         // Act
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
-        verify(this.invitationCodeRepository).findByOwner(eq(username));
+        verify(this.invitationCodeRepository).findByOwner(username);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -161,13 +160,13 @@ class BaseEssenceConstructorTest {
     void addDefaultUsersInvitationCodesNotPresentTest() {
         // Arrange
         var username = this.getDefaultUserUsername();
-        when(this.invitationCodeRepository.findByOwner(eq(username))).thenReturn(emptyList());
+        when(this.invitationCodeRepository.findByOwner(username)).thenReturn(emptyList());
 
         // Act
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
-        verify(this.invitationCodeRepository).findByOwner(eq(username));
+        verify(this.invitationCodeRepository).findByOwner(username);
         var invitationCodesAC = ArgumentCaptor.forClass(List.class);
         verify(this.invitationCodeRepository).saveAll(invitationCodesAC.capture());
         List<DbInvitationCode> invitationCodes = invitationCodesAC.getValue();
@@ -181,7 +180,7 @@ class BaseEssenceConstructorTest {
                     new SimpleGrantedAuthority(INVITATION_CODE_READ),
                     new SimpleGrantedAuthority(INVITATION_CODE_WRITE)
             );
-            assertThat(invitationCode.getValue().length()).isEqualTo(SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH);
+            assertThat(invitationCode.getValue()).hasSize(40);
         });
     }
 

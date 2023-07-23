@@ -111,14 +111,14 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenThrow(exception);
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(request)).thenThrow(exception);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
-        verify(filterChain).doFilter(eq(request), eq(response));
+        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(request);
+        verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,
                 response,
@@ -133,15 +133,15 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenThrow(exception);
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(request)).thenThrow(exception);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
+        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(request);
         verify(this.cookieProvider).clearCookies(response);
-        verify(response).sendError(eq(HttpStatus.UNAUTHORIZED.value()));
+        verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
         verifyNoMoreInteractions(
                 request,
                 response,
@@ -157,16 +157,16 @@ class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         var jwtUser = entity(JwtUser.class);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(eq(request))).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
+        when(this.tokenService.getJwtUserByAccessTokenOrThrow(request)).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(eq(request));
+        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(request);
         // WARNING: no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(eq(new Session(jwtUser.getDbUser().getUsername(), jwtRefreshToken)));
-        verify(filterChain).doFilter(eq(request), eq(response));
+        verify(this.sessionRegistry).register(new Session(jwtUser.dbUser().getUsername(), jwtRefreshToken));
+        verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,
                 response,

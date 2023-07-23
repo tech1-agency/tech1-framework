@@ -64,8 +64,9 @@ class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
@@ -81,8 +82,9 @@ class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
@@ -98,8 +100,9 @@ class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(contactDevelopmentTeam("Registration Failure"));
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", contactDevelopmentTeam("Registration Failure"))
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -115,8 +118,9 @@ class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

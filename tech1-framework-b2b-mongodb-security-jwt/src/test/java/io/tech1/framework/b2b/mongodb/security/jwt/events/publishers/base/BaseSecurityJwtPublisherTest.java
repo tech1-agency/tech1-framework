@@ -67,7 +67,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishAuthenticationLogin(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -79,7 +79,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishAuthenticationLoginFailure(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -91,7 +91,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishAuthenticationLogout(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -103,7 +103,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishRegistration1(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -115,7 +115,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishRegistration1Failure(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -127,7 +127,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishSessionRefreshed(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -139,7 +139,7 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishSessionExpired(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 
     @Test
@@ -151,6 +151,6 @@ class BaseSecurityJwtPublisherTest {
         this.componentUnderTest.publishSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(event));
+        verify(this.applicationEventPublisher).publishEvent(event);
     }
 }

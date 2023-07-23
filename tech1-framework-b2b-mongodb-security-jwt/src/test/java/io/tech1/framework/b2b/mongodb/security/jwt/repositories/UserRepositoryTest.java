@@ -79,15 +79,12 @@ class UserRepositoryTest {
         var notSuperadminsUsernames = this.userRepository.findNotSuperadminsUsernames();
 
         // Assert
-        assertThat(superadmins).isNotNull();
         assertThat(superadmins).hasSize(3);
         assertThat(toUsernamesAsStrings(superadmins)).containsExactly("sa1", "sa2", "sa3");
 
-        assertThat(notSuperadmins).isNotNull();
         assertThat(notSuperadmins).hasSize(3);
         assertThat(toUsernamesAsStrings(notSuperadmins)).containsExactly("admin", "user1", "user2");
 
-        assertThat(superadminsProjection).isNotNull();
         assertThat(superadminsProjection).hasSize(3);
         assertThat(toUsernamesAsStrings(superadminsProjection)).containsExactly("sa1", "sa2", "sa3");
         superadminsProjection.forEach(user -> {
@@ -98,7 +95,6 @@ class UserRepositoryTest {
             assertThat(user.getZoneId()).isNull();
         });
 
-        assertThat(notSuperadminsProjection).isNotNull();
         assertThat(notSuperadminsProjection).hasSize(3);
         assertThat(toUsernamesAsStrings(notSuperadminsProjection)).containsExactly("admin", "user1", "user2");
         notSuperadminsProjection.forEach(user -> {
@@ -109,25 +105,25 @@ class UserRepositoryTest {
             assertThat(user.getZoneId()).isNull();
         });
 
-        assertThat(superadminsUsernames).isNotNull();
-        assertThat(superadminsUsernames).hasSize(3);
-        assertThat(superadminsUsernames).isEqualTo(
-                List.of(
-                        Username.of("sa1"),
-                        Username.of("sa2"),
-                        Username.of("sa3")
-                )
-        );
+        assertThat(superadminsUsernames)
+                .hasSize(3)
+                .isEqualTo(
+                    List.of(
+                            Username.of("sa1"),
+                            Username.of("sa2"),
+                            Username.of("sa3")
+                    )
+                );
 
-        assertThat(notSuperadminsUsernames).isNotNull();
-        assertThat(notSuperadminsUsernames).hasSize(3);
-        assertThat(notSuperadminsUsernames).isEqualTo(
-                List.of(
-                        Username.of("admin"),
-                        Username.of("user1"),
-                        Username.of("user2")
-                )
-        );
+        assertThat(notSuperadminsUsernames)
+                .hasSize(3)
+                .isEqualTo(
+                    List.of(
+                            Username.of("admin"),
+                            Username.of("user1"),
+                            Username.of("user2")
+                    )
+                );
     }
 
     @Test
@@ -140,7 +136,6 @@ class UserRepositoryTest {
 
         // Assert-1
         var users1 = this.userRepository.findAll();
-        assertThat(users1).isNotNull();
         assertThat(users1).hasSize(3);
         assertThat(toUsernamesAsStrings(users1)).containsExactly("sa1", "sa2", "sa3");
 
@@ -149,7 +144,6 @@ class UserRepositoryTest {
 
         // Assert-2
         var users2 = this.userRepository.findAll();
-        assertThat(users2).isNotNull();
-        assertThat(users2).hasSize(0);
+        assertThat(users2).isEmpty();
     }
 }

@@ -45,27 +45,27 @@ public class SessionRegistryImpl implements SessionRegistry {
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {
         return this.sessions.stream()
-                .map(session -> session.getUsername().identifier())
+                .map(session -> session.username().identifier())
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<Username> getActiveSessionsUsernames() {
         return this.sessions.stream()
-                .map(Session::getUsername)
+                .map(Session::username)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<JwtRefreshToken> getActiveSessionsRefreshTokens() {
         return this.sessions.stream()
-                .map(Session::getRefreshToken)
+                .map(Session::refreshToken)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public void register(Session session) {
-        var username = session.getUsername();
+        var username = session.username();
         boolean added = this.sessions.add(session);
         if (added) {
             LOGGER.debug(SESSION_REGISTRY_REGISTER_SESSION, username);
@@ -78,7 +78,7 @@ public class SessionRegistryImpl implements SessionRegistry {
         this.sessions.remove(oldSession);
         boolean added = this.sessions.add(newSession);
         if (added) {
-            var username = newSession.getUsername();
+            var username = newSession.username();
             LOGGER.debug(SESSION_REGISTRY_RENEW_SESSION, username);
 
             this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
@@ -87,13 +87,13 @@ public class SessionRegistryImpl implements SessionRegistry {
 
     @Override
     public void logout(Session session) {
-        var username = session.getUsername();
+        var username = session.username();
         LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
         this.sessions.remove(session);
 
         this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
-        var jwtRefreshToken = session.getRefreshToken();
+        var jwtRefreshToken = session.refreshToken();
         var dbUserSession = this.userSessionService.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
@@ -108,7 +108,7 @@ public class SessionRegistryImpl implements SessionRegistry {
     public void cleanByExpiredRefreshTokens(List<DbUserSession> usersSessions) {
         var sessionsValidatedTuple2 = this.userSessionService.validate(usersSessions);
 
-        sessionsValidatedTuple2.getExpiredSessions().forEach(tuple2 -> {
+        sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {
             var username = tuple2.a();
             var dbUserSession = tuple2.b();
             var session = new Session(username, dbUserSession.getJwtRefreshToken());
@@ -118,7 +118,7 @@ public class SessionRegistryImpl implements SessionRegistry {
             this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, dbUserSession.getRequestMetadata()));
         });
 
-        var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.getExpiredOrInvalidSessionIds());
+        var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 }

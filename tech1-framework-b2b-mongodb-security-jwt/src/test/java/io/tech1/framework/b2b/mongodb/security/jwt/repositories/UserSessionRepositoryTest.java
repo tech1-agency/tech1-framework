@@ -70,7 +70,6 @@ class UserSessionRepositoryTest {
         var sessions = this.userSessionRepository.findByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
-        assertThat(sessions).isNotNull();
         assertThat(sessions).hasSize(5);
     }
 

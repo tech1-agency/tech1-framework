@@ -66,9 +66,9 @@ class AuthenticationRequestsValidatorImplTest {
 
         // Assert
         if (nonNull(exceptionMessage)) {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable).hasMessage(exceptionMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(exceptionMessage);
         } else {
             assertThat(throwable).isNull();
         }

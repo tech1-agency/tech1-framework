@@ -30,7 +30,7 @@ public class ResponseUserSession2 {
         assertNonNullOrThrow(cookieRefreshToken, invalidAttribute("ResponseUserSession2.cookieRefreshToken"));
         this.id = session.getId();
 
-        this.current = cookieRefreshToken.getValue().equals(session.getJwtRefreshToken().getValue());
+        this.current = cookieRefreshToken.value().equals(session.getJwtRefreshToken().value());
         if (this.current) {
             this.activity = "Current session";
         } else {

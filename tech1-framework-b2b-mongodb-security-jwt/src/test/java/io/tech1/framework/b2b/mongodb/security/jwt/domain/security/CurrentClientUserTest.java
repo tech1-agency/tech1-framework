@@ -78,7 +78,6 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(currentClientUser);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), "current-client-user.json"));
     }
 

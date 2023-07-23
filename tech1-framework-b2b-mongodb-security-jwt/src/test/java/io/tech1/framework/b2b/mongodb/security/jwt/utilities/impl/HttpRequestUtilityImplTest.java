@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 import static io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.HttpRequestUtilityImpl.CACHED_PAYLOAD_ATTRIBUTE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -102,7 +101,7 @@ class HttpRequestUtilityImplTest {
         this.componentUnderTest.cachePayload(cachedRequest, payload);
 
         // Assert
-        verify(cachedRequest).setAttribute(eq(CACHED_PAYLOAD_ATTRIBUTE), eq(payload));
+        verify(cachedRequest).setAttribute(CACHED_PAYLOAD_ATTRIBUTE, payload);
         verifyNoMoreInteractions(cachedRequest);
     }
 
@@ -118,7 +117,7 @@ class HttpRequestUtilityImplTest {
 
         // Assert
         assertThat(cachedPayload).isEqualTo(payload);
-        verify(request).getAttribute(eq(CACHED_PAYLOAD_ATTRIBUTE));
+        verify(request).getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
         verifyNoMoreInteractions(request);
     }
 
@@ -132,7 +131,7 @@ class HttpRequestUtilityImplTest {
 
         // Assert
         assertThat(cachedPayload).isNull();
-        verify(request).getAttribute(eq(CACHED_PAYLOAD_ATTRIBUTE));
+        verify(request).getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
         verifyNoMoreInteractions(request);
     }
 

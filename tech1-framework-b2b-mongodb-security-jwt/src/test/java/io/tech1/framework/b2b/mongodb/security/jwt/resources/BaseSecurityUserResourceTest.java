@@ -34,7 +34,7 @@ class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
     private final BaseSecurityUserResource componentUnderTest;
 
     @BeforeEach
-    void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.baseUserService,
@@ -69,8 +69,8 @@ class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.baseUserValidator).validateUserUpdateRequest1(eq(currentDbUser), eq(requestUserUpdate1));
-        verify(this.baseUserService).updateUser1(eq(requestUserUpdate1));
+        verify(this.baseUserValidator).validateUserUpdateRequest1(currentDbUser, requestUserUpdate1);
+        verify(this.baseUserService).updateUser1(requestUserUpdate1);
     }
 
     @Test
@@ -87,8 +87,8 @@ class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUserValidator).validateUserUpdateRequest2(eq(requestUserUpdate2));
-        verify(this.baseUserService).updateUser2(eq(requestUserUpdate2));
+        verify(this.baseUserValidator).validateUserUpdateRequest2(requestUserUpdate2);
+        verify(this.baseUserService).updateUser2(requestUserUpdate2);
     }
 
     @Test
@@ -105,7 +105,7 @@ class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUserValidator).validateUserChangePasswordRequest1(eq(requestUserChangePassword1));
-        verify(this.baseUserService).changePassword1(eq(requestUserChangePassword1));
+        verify(this.baseUserValidator).validateUserChangePasswordRequest1(requestUserChangePassword1);
+        verify(this.baseUserService).changePassword1(requestUserChangePassword1);
     }
 }

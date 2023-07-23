@@ -137,7 +137,7 @@ class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedUsername();
-        assertThat(actualUsername).isEqualTo(expectedJwtUser.getDbUser().getUsername());
+        assertThat(actualUsername).isEqualTo(expectedJwtUser.dbUser().getUsername());
     }
 
     @Test
@@ -151,7 +151,7 @@ class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-        assertThat(actualUserId).isEqualTo(expectedJwtUser.getDbUser().getId());
+        assertThat(actualUserId).isEqualTo(expectedJwtUser.dbUser().getId());
     }
 
     @Test
@@ -165,7 +165,7 @@ class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-        assertThat(currentDbUser).isEqualTo(jwtUser.getDbUser());
+        assertThat(currentDbUser).isEqualTo(jwtUser.dbUser());
     }
 
     @Test
@@ -199,8 +199,8 @@ class BaseCurrentSessionAssistantTest {
         verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.getDbUser().getName());
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.getDbUser().getEmail());
+        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.dbUser().getName());
+        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.dbUser().getEmail());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).hasSize(1);
         assertThat(currentClientUser.getAttributes()).containsOnlyKeys("hardware");
@@ -222,8 +222,8 @@ class BaseCurrentSessionAssistantTest {
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.getDbUser().getName());
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.getDbUser().getEmail());
+        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.dbUser().getName());
+        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.dbUser().getEmail());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).isEmpty();
     }
@@ -232,7 +232,7 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
-        var username = jwtUser.getDbUser().getUsername();
+        var username = jwtUser.dbUser().getUsername();
         var validJwtRefreshToken = randomString();
         var cookieRefreshToken = new CookieRefreshToken(validJwtRefreshToken);
 
@@ -296,10 +296,10 @@ class BaseCurrentSessionAssistantTest {
                 verify(this.sessionRegistry).cleanByExpiredRefreshTokens(userSessions);
                 verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
                 assertThat(currentUserDbSessionsTable).isNotNull();
-                assertThat(currentUserDbSessionsTable.getSessions()).hasSize(expectedSessionSize);
-                assertThat(currentUserDbSessionsTable.getSessions().stream().filter(ResponseUserSession2::isCurrent).count()).isEqualTo(1);
-                assertThat(currentUserDbSessionsTable.getSessions().stream().filter(session -> "Current session".equals(session.getActivity())).count()).isEqualTo(1);
-                assertThat(currentUserDbSessionsTable.isAnyProblem()).isEqualTo(expectedAnyProblems);
+                assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
+                assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::isCurrent).count()).isEqualTo(1);
+                assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.getActivity())).count()).isEqualTo(1);
+                assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 
                 reset(
                         this.sessionRegistry,

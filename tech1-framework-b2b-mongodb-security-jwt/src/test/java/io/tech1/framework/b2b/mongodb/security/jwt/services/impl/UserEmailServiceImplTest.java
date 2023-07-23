@@ -162,11 +162,11 @@ class UserEmailServiceImplTest {
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         when(this.userEmailUtility.getAuthenticationLoginTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject(eq("Account Accessed"))).thenReturn(subject);
+        when(this.userEmailUtility.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.USERNAME_PASSWORD)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.USERNAME_PASSWORD
         )).thenReturn(variables);
 
         // Act
@@ -175,11 +175,11 @@ class UserEmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
-        verify(this.userEmailUtility).getSubject(eq("Account Accessed"));
+        verify(this.userEmailUtility).getSubject("Account Accessed");
         verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.USERNAME_PASSWORD)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.USERNAME_PASSWORD
         );
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
@@ -210,11 +210,11 @@ class UserEmailServiceImplTest {
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         when(this.userEmailUtility.getSessionRefreshedTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject(eq("Account Accessed"))).thenReturn(subject);
+        when(this.userEmailUtility.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.SECURITY_TOKEN)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.SECURITY_TOKEN
         )).thenReturn(variables);
 
         // Act
@@ -223,11 +223,11 @@ class UserEmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtility).getSessionRefreshedTemplateName();
-        verify(this.userEmailUtility).getSubject(eq("Account Accessed"));
+        verify(this.userEmailUtility).getSubject("Account Accessed");
         verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.SECURITY_TOKEN)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.SECURITY_TOKEN
         );
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());

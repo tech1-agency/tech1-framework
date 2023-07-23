@@ -89,14 +89,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var authenticationLoginIncident = entity(IncidentAuthenticationLogin.class);
-        when(this.securityJwtIncidentConverter.convert(eq(authenticationLoginIncident))).thenReturn(incident);
+        when(this.securityJwtIncidentConverter.convert(authenticationLoginIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(authenticationLoginIncident);
 
         // Assert
-        verify(this.securityJwtIncidentConverter).convert(eq(authenticationLoginIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.securityJwtIncidentConverter).convert(authenticationLoginIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -104,14 +104,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var authenticationLoginFailureUsernamePasswordIncident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
-        when(this.incidentConverter.convert(eq(authenticationLoginFailureUsernamePasswordIncident))).thenReturn(incident);
+        when(this.incidentConverter.convert(authenticationLoginFailureUsernamePasswordIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(authenticationLoginFailureUsernamePasswordIncident);
 
         // Assert
-        verify(this.incidentConverter).convert(eq(authenticationLoginFailureUsernamePasswordIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentConverter).convert(authenticationLoginFailureUsernamePasswordIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -119,14 +119,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var authenticationLoginFailureUsernameMaskedPasswordIncident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
-        when(this.incidentConverter.convert(eq(authenticationLoginFailureUsernameMaskedPasswordIncident))).thenReturn(incident);
+        when(this.incidentConverter.convert(authenticationLoginFailureUsernameMaskedPasswordIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(authenticationLoginFailureUsernameMaskedPasswordIncident);
 
         // Assert
-        verify(this.incidentConverter).convert(eq(authenticationLoginFailureUsernameMaskedPasswordIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentConverter).convert(authenticationLoginFailureUsernameMaskedPasswordIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -134,14 +134,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var authenticationLogoutMinIncident = entity(IncidentAuthenticationLogoutMin.class);
-        when(this.incidentConverter.convert(eq(authenticationLogoutMinIncident))).thenReturn(incident);
+        when(this.incidentConverter.convert(authenticationLogoutMinIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(authenticationLogoutMinIncident);
 
         // Assert
-        verify(this.incidentConverter).convert(eq(authenticationLogoutMinIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentConverter).convert(authenticationLogoutMinIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -149,14 +149,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var authenticationLogoutFullIncident = entity(IncidentAuthenticationLogoutFull.class);
-        when(this.securityJwtIncidentConverter.convert(eq(authenticationLogoutFullIncident))).thenReturn(incident);
+        when(this.securityJwtIncidentConverter.convert(authenticationLogoutFullIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(authenticationLogoutFullIncident);
 
         // Assert
-        verify(this.securityJwtIncidentConverter).convert(eq(authenticationLogoutFullIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.securityJwtIncidentConverter).convert(authenticationLogoutFullIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -164,14 +164,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var sessionRefreshedIncident = entity(IncidentSessionRefreshed.class);
-        when(this.securityJwtIncidentConverter.convert(eq(sessionRefreshedIncident))).thenReturn(incident);
+        when(this.securityJwtIncidentConverter.convert(sessionRefreshedIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(sessionRefreshedIncident);
 
         // Assert
-        verify(this.securityJwtIncidentConverter).convert(eq(sessionRefreshedIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.securityJwtIncidentConverter).convert(sessionRefreshedIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -179,14 +179,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var sessionExpiredIncident = entity(IncidentSessionExpired.class);
-        when(this.securityJwtIncidentConverter.convert(eq(sessionExpiredIncident))).thenReturn(incident);
+        when(this.securityJwtIncidentConverter.convert(sessionExpiredIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(sessionExpiredIncident);
 
         // Assert
-        verify(this.securityJwtIncidentConverter).convert(eq(sessionExpiredIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.securityJwtIncidentConverter).convert(sessionExpiredIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -194,14 +194,14 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var register1Incident = entity(IncidentRegistration1.class);
-        when(this.securityJwtIncidentConverter.convert(eq(register1Incident))).thenReturn(incident);
+        when(this.securityJwtIncidentConverter.convert(register1Incident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(register1Incident);
 
         // Assert
-        verify(this.securityJwtIncidentConverter).convert(eq(register1Incident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.securityJwtIncidentConverter).convert(register1Incident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -209,13 +209,13 @@ class SecurityJwtIncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var register1FailureIncident = entity(IncidentRegistration1Failure.class);
-        when(this.securityJwtIncidentConverter.convert(eq(register1FailureIncident))).thenReturn(incident);
+        when(this.securityJwtIncidentConverter.convert(register1FailureIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(register1FailureIncident);
 
         // Assert
-        verify(this.securityJwtIncidentConverter).convert(eq(register1FailureIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.securityJwtIncidentConverter).convert(register1FailureIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 }

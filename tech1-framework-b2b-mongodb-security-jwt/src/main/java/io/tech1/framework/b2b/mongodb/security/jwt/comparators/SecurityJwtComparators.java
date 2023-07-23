@@ -15,6 +15,6 @@ public class SecurityJwtComparators {
                     .thenComparing(ResponseInvitationCode1::getValue);
 
     public static final Comparator<ResponseUserSession3> SESSIONS_3 =
-            comparing((ResponseUserSession3 session) -> session.getWho().identifier())
-                    .thenComparing(ResponseUserSession3::getWhere);
+            comparing((ResponseUserSession3 session) -> session.who().identifier())
+                    .thenComparing(ResponseUserSession3::where);
 }

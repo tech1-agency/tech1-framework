@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,9 +33,8 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     // Cookies
     private final CookieProvider cookieProvider;
 
-    @SuppressWarnings("NullableProblems")
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(request);
             var currentJwtUser = tuple2.a();
@@ -45,7 +45,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
             // Session Registry
             this.sessionRegistry.register(
                     new Session(
-                            currentJwtUser.getDbUser().getUsername(),
+                            currentJwtUser.dbUser().getUsername(),
                             tuple2.b()
                     )
             );

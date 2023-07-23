@@ -94,7 +94,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLogin(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -106,7 +106,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLoginFailure(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -118,7 +118,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLogout(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -130,7 +130,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onRegistration1(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -142,7 +142,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onRegistration1Failure(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -154,7 +154,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onSessionRefreshed(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -166,7 +166,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onSessionExpired(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
@@ -182,13 +182,13 @@ class BaseSecurityJwtSubscriberTest {
                 false
         );
         var userSession = entity(DbUserSession.class);
-        when(this.userSessionService.saveUserRequestMetadata(eq(event))).thenReturn(userSession);
+        when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.userSessionService).saveUserRequestMetadata(eq(event));
+        verify(this.userSessionService).saveUserRequestMetadata(event);
     }
 
     @Test
@@ -204,15 +204,15 @@ class BaseSecurityJwtSubscriberTest {
                 false
         );
         var userSession = entity(DbUserSession.class);
-        when(this.userSessionService.saveUserRequestMetadata(eq(event))).thenReturn(userSession);
+        when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.userEmailService).executeAuthenticationLogin(eq(new FunctionAuthenticationLoginEmail(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(eq(new IncidentAuthenticationLogin(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.userSessionService).saveUserRequestMetadata(event);
+        verify(this.userEmailService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), userSession.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), userSession.getRequestMetadata()));
     }
 
     @Test
@@ -228,14 +228,14 @@ class BaseSecurityJwtSubscriberTest {
                 true
         );
         var userSession = entity(DbUserSession.class);
-        when(this.userSessionService.saveUserRequestMetadata(eq(event))).thenReturn(userSession);
+        when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.userEmailService).executeSessionRefreshed(eq(new FunctionSessionRefreshedEmail(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(eq(new IncidentSessionRefreshed(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.userSessionService).saveUserRequestMetadata(event);
+        verify(this.userEmailService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), userSession.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), userSession.getRequestMetadata()));
     }
 }

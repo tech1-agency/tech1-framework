@@ -48,12 +48,12 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
 
     @Override
     public String getCurrentUserId() {
-        return this.getCurrentJwtUser().getDbUser().getId();
+        return this.getCurrentJwtUser().dbUser().getId();
     }
 
     @Override
     public DbUser getCurrentDbUser() {
-        return this.getCurrentJwtUser().getDbUser();
+        return this.getCurrentJwtUser().dbUser();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     public CurrentClientUser getCurrentClientUser() {
         var currentJwtUser = this.getCurrentJwtUser();
 
-        var user = currentJwtUser.getDbUser();
+        var user = currentJwtUser.dbUser();
 
         var attributes = user.getNotNullAttributes();
         if (this.applicationFrameworkProperties.getHardwareMonitoringConfigs().isEnabled()) {
@@ -85,7 +85,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     @Override
     public ResponseUserSessionsTable getCurrentUserDbSessionsTable(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
         var currentJwtUser = this.getCurrentJwtUser();
-        var username = currentJwtUser.getDbUser().getUsername();
+        var username = currentJwtUser.dbUser().getUsername();
         var usersSessions = this.userSessionService.findByUsername(username);
         this.sessionRegistry.cleanByExpiredRefreshTokens(usersSessions);
         var activeUsersSessions = this.userSessionService.findByUsername(username);
@@ -93,6 +93,6 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
         var sessions = activeUsersSessions.stream()
                 .map(session -> new ResponseUserSession2(session, cookieRefreshToken))
                 .collect(Collectors.toList());
-        return new ResponseUserSessionsTable(sessions);
+        return ResponseUserSessionsTable.of(sessions);
     }
 }

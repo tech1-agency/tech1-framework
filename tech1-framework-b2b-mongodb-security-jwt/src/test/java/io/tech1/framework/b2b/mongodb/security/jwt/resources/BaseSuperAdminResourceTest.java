@@ -29,7 +29,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     private final BaseSuperAdminResource componentUnderTest;
 
     @BeforeEach
-    void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.baseSuperAdminService
@@ -61,7 +61,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     @Test
     void getServerSessions() throws Exception {
         // Arrange
-        var sessionsTable = new ResponseServerSessionsTable(
+        var sessionsTable = ResponseServerSessionsTable.of(
                 list345(ResponseUserSession3.class),
                 list345(ResponseUserSession3.class)
         );
@@ -70,8 +70,8 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         // Act
         this.mvc.perform(get("/superadmin/sessions/server").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activeSessions", hasSize(sessionsTable.getActiveSessions().size())))
-                .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.getInactiveSessions().size())));
+                .andExpect(jsonPath("$.activeSessions", hasSize(sessionsTable.activeSessions().size())))
+                .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.inactiveSessions().size())));
 
         // Assert
         verify(this.baseSuperAdminService).getServerSessions();

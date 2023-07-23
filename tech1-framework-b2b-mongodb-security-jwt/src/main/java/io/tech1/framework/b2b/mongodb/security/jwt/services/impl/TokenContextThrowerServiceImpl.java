@@ -67,7 +67,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
     public DbUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
         var username = validatedClaims.safeGetUsername();
         var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
-        var dbUser = jwtUser.getDbUser();
+        var dbUser = jwtUser.dbUser();
         var databasePresence = this.userSessionRepository.isPresent(oldJwtRefreshToken);
         if (!databasePresence) {
             SecurityContextHolder.clearContext();

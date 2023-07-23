@@ -52,7 +52,7 @@ public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
                 inactiveSessions.add(session);
             }
         });
-        return new ResponseServerSessionsTable(
+        return ResponseServerSessionsTable.of(
                 activeSessions,
                 inactiveSessions
         );

@@ -74,9 +74,9 @@ class CookieProviderImplTest {
         verify(httpServletResponse).addCookie(cookieAC.capture());
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(accessToken.getCookieKey());
-        assertThat(cookie.getValue()).isEqualTo(jwtAccessToken.getValue());
+        assertThat(cookie.getValue()).isEqualTo(jwtAccessToken.value());
         assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
-        assertThat(cookie.isHttpOnly()).isEqualTo(true);
+        assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(maxAge);
         verifyNoMoreInteractions(httpServletResponse);
     }
@@ -98,9 +98,9 @@ class CookieProviderImplTest {
         verify(httpServletResponse).addCookie(cookieAC.capture());
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(refreshToken.getCookieKey());
-        assertThat(cookie.getValue()).isEqualTo(refreshAccessToken.getValue());
+        assertThat(cookie.getValue()).isEqualTo(refreshAccessToken.value());
         assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
-        assertThat(cookie.isHttpOnly()).isEqualTo(true);
+        assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(refreshToken.getExpiration().getTimeAmount().toSeconds());
         verifyNoMoreInteractions(httpServletResponse);
     }
@@ -133,10 +133,10 @@ class CookieProviderImplTest {
 
         // Assert
         verify(httpServletRequest).getCookies();
-        assertThat(httpServletRequest.getCookies()).hasSize(0);
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(CookieAccessTokenNotFoundException.class);
-        assertThat(throwable).hasMessageContaining("JWT access token not found");
+        assertThat(httpServletRequest.getCookies()).isEmpty();;
+        assertThat(throwable)
+                .isInstanceOf(CookieAccessTokenNotFoundException.class)
+                .hasMessageContaining("JWT access token not found");
     }
 
     @Test
@@ -167,10 +167,10 @@ class CookieProviderImplTest {
 
         // Assert
         verify(httpServletRequest).getCookies();
-        assertThat(httpServletRequest.getCookies()).hasSize(0);
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(CookieRefreshTokenNotFoundException.class);
-        assertThat(throwable).hasMessageContaining("JWT refresh token not found");
+        assertThat(httpServletRequest.getCookies()).isEmpty();
+        assertThat(throwable)
+                .isInstanceOf(CookieRefreshTokenNotFoundException.class)
+                .hasMessageContaining("JWT refresh token not found");
     }
 
     @Test

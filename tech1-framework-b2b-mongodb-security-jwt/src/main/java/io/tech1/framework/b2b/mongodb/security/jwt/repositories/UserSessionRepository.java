@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
@@ -27,11 +26,11 @@ public interface UserSessionRepository extends MongoRepository<DbUserSession, St
     }
 
     default DbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.getValue()).orElse(null);
+        return this.findById(jwtRefreshToken.value()).orElse(null);
     }
 
     default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.deleteById(jwtRefreshToken.getValue());
+        this.deleteById(jwtRefreshToken.value());
     }
 
     // ================================================================================================================

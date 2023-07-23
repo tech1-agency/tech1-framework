@@ -87,9 +87,9 @@ class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `zoneId` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `zoneId` is invalid");
     }
 
     @Test
@@ -102,9 +102,9 @@ class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `email` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `email` is invalid");
     }
 
     @Test
@@ -120,7 +120,7 @@ class BaseUserValidatorImplTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.userRepository).findByEmail(eq(email));
+        verify(this.userRepository).findByEmail(email);
     }
 
     @Test
@@ -136,7 +136,7 @@ class BaseUserValidatorImplTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.userRepository).findByEmail(eq(email));
+        verify(this.userRepository).findByEmail(email);
     }
 
     @Test
@@ -152,10 +152,10 @@ class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `email` is invalid");
-        verify(this.userRepository).findByEmail(eq(email));
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `email` is invalid");
+        verify(this.userRepository).findByEmail(email);
     }
 
     @Test
@@ -167,9 +167,9 @@ class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `zoneId` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `zoneId` is invalid");
     }
 
     @Test

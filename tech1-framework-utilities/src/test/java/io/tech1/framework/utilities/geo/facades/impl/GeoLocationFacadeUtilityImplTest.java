@@ -79,8 +79,8 @@ class GeoLocationFacadeUtilityImplTest {
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiGeoLocationUtility).getGeoLocation(eq(ipAddress));
-        verify(this.mindMaxGeoLocationUtility).getGeoLocation(eq(ipAddress));
+        verify(this.ipapiGeoLocationUtility).getGeoLocation(ipAddress);
+        verify(this.mindMaxGeoLocationUtility).getGeoLocation(ipAddress);
         assertThat(actual).isEqualTo(geoLocation);
     }
 
@@ -95,7 +95,7 @@ class GeoLocationFacadeUtilityImplTest {
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiGeoLocationUtility).getGeoLocation(eq(ipAddress));
+        verify(this.ipapiGeoLocationUtility).getGeoLocation(ipAddress);
         assertThat(actual).isEqualTo(geoLocation);
     }
 }

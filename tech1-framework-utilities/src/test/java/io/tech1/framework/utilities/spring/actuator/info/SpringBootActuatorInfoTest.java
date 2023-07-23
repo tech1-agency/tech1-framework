@@ -63,8 +63,6 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
-        // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(springBootActuatorInfo);
         assertThat(actual.getProfile()).isEqualTo(profile);
         assertThat(actual.isUndefined()).isEqualTo(isUndefined);

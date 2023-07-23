@@ -9,16 +9,10 @@ import lombok.ToString;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoCommit.undefinedSpringBootActuatorInfoCommit;
 
-// Lombok
-@AllArgsConstructor
-@Getter
-@EqualsAndHashCode
-@ToString
-public class SpringBootActuatorInfoGit {
-    @JsonProperty("commit")
-    private final SpringBootActuatorInfoCommit commit;
-    @JsonProperty("branch")
-    private final String branch;
+public record SpringBootActuatorInfoGit(
+        @JsonProperty("commit") SpringBootActuatorInfoCommit commit,
+        @JsonProperty("branch") String branch
+) {
 
     public static SpringBootActuatorInfoGit undefinedSpringBootActuatorInfoGit() {
         return new SpringBootActuatorInfoGit(
@@ -26,4 +20,5 @@ public class SpringBootActuatorInfoGit {
                 UNDEFINED
         );
     }
+
 }

@@ -24,17 +24,17 @@ public class IPAPIGeoLocationUtilityImpl implements IPAPIGeoLocationUtility {
         try {
             var queryResponse = this.ipapiFeign.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {
-                var countryCode = queryResponse.getCountryCode();
+                var countryCode = queryResponse.countryCode();
                 var countryFlag = this.geoCountryFlagUtility.getFlagEmojiByCountryCode(countryCode);
                 return GeoLocation.processed(
                         ipAddress,
-                        queryResponse.getCountry(),
+                        queryResponse.country(),
                         countryCode,
                         countryFlag,
-                        queryResponse.getCity()
+                        queryResponse.city()
                 );
             } else {
-                throw new GeoLocationNotFoundException(queryResponse.getMessage());
+                throw new GeoLocationNotFoundException(queryResponse.message());
             }
         } catch (RuntimeException throwable) {
             throw new GeoLocationNotFoundException(throwable.getMessage());

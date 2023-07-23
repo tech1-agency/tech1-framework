@@ -110,14 +110,14 @@ class IPAPIGeoLocationUtilityImplTest {
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
         when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
-        when(this.countryFlagUtility.getFlagEmojiByCountryCode(eq("UA"))).thenReturn(FLAG_UKRAINE);
+        when(this.countryFlagUtility.getFlagEmojiByCountryCode("UA")).thenReturn(FLAG_UKRAINE);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
         verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
-        verify(this.countryFlagUtility).getFlagEmojiByCountryCode(eq("UA"));
+        verify(this.countryFlagUtility).getFlagEmojiByCountryCode("UA");
         assertThat(actual.getIpAddr()).isEqualTo(ipAddress.value());
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getCountryCode()).isEqualTo("UA");

@@ -84,6 +84,6 @@ class UserAgentDetailsUtilityImplTest {
         assertThat(userAgentDetails.getBrowser()).isEqualTo(browser);
         assertThat(userAgentDetails.getPlatform()).isEqualTo(platform);
         assertThat(userAgentDetails.getDeviceType()).isEqualTo(deviceType);
-        assertThat(userAgentDetails.getExceptionDetails()).isEqualTo("");
+        assertThat(userAgentDetails.getExceptionDetails()).isEmpty();
     }
 }

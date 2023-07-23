@@ -44,7 +44,6 @@ class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(springBootActuatorHealth);
     }
 }

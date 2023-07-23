@@ -75,7 +75,8 @@ class BaseInfoResourceTest {
         var builderDetailsAC = ArgumentCaptor.forClass(Map.class);
         verify(builder).withDetails(builderDetailsAC.capture());
         var details = builderDetailsAC.getValue();
-        assertThat(details.size()).isEqualTo(1);
-        assertThat(details.get("activeProfile")).isEqualTo(activeProfile);
+        assertThat(details)
+                .hasSize(1)
+                .containsEntry("activeProfile", activeProfile);
     }
 }

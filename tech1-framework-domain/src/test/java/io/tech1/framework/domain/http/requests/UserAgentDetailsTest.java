@@ -36,7 +36,6 @@ class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(userAgentDetails);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 }

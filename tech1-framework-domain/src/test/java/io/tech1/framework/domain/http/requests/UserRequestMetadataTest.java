@@ -50,7 +50,6 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(userRequestMetadata);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 }

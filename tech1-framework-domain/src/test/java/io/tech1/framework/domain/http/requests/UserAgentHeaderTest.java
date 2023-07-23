@@ -18,7 +18,7 @@ class UserAgentHeaderTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("");
+        assertThat(actual.getValue()).isEmpty();;
     }
 
     @Test
@@ -31,7 +31,7 @@ class UserAgentHeaderTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("");
+        assertThat(actual.getValue()).isEmpty();
     }
 
     @Test

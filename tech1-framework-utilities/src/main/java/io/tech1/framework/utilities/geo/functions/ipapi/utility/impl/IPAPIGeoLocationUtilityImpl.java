@@ -22,7 +22,7 @@ public class IPAPIGeoLocationUtilityImpl implements IPAPIGeoLocationUtility {
     @Override
     public GeoLocation getGeoLocation(IPAddress ipAddress) throws GeoLocationNotFoundException {
         try {
-            var queryResponse = this.ipapiFeign.getIPAPIResponse(ipAddress.getValue());
+            var queryResponse = this.ipapiFeign.getIPAPIResponse(ipAddress.value());
             if (queryResponse.isSuccess()) {
                 var countryCode = queryResponse.getCountryCode();
                 var countryFlag = this.geoCountryFlagUtility.getFlagEmojiByCountryCode(countryCode);

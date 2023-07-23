@@ -14,7 +14,7 @@ class IPAddressTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("127.0.0.1");
+        assertThat(actual.value()).isEqualTo("127.0.0.1");
     }
 
     @Test
@@ -27,6 +27,6 @@ class IPAddressTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo(value);
+        assertThat(actual.value()).isEqualTo(value);
     }
 }

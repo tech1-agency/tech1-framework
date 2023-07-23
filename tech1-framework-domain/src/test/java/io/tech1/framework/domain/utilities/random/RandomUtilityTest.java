@@ -387,7 +387,7 @@ class RandomUtilityTest {
         var actual = randomIPAddress();
 
         // Assert
-        var ipv4 = List.of(actual.getValue().split("\\."));
+        var ipv4 = List.of(actual.value().split("\\."));
         assertThat(ipv4).isNotNull();
         assertThat(ipv4.size()).isEqualTo(4);
         ipv4.forEach(element -> {
@@ -405,7 +405,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("127.0.0.1");
+        assertThat(actual.value()).isEqualTo("127.0.0.1");
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)

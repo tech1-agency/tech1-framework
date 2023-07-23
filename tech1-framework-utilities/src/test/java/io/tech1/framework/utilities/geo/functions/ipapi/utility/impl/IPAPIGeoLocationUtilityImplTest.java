@@ -77,13 +77,13 @@ class IPAPIGeoLocationUtilityImplTest {
         // Arrange
         var ipAddress = randomIPAddress();
         var feignException = randomFeignException();
-        when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenThrow(feignException);
+        when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenThrow(feignException);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.getGeoLocation(ipAddress));
 
         // Assert
-        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
+        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
         assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
         assertThat(throwable.getMessage()).isEqualTo("Geo location not found: " + feignException.getMessage());
     }
@@ -93,13 +93,13 @@ class IPAPIGeoLocationUtilityImplTest {
         // Arrange
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("fail", null, null, null, "reserved range");
-        when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenReturn(ipapiResponse);
+        when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.getGeoLocation(ipAddress));
 
         // Assert
-        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
+        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
         assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
         assertThat(throwable.getMessage()).isEqualTo("Geo location not found: reserved range");
     }
@@ -109,16 +109,16 @@ class IPAPIGeoLocationUtilityImplTest {
         // Arrange
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
-        when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenReturn(ipapiResponse);
+        when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
         when(this.countryFlagUtility.getFlagEmojiByCountryCode(eq("UA"))).thenReturn(FLAG_UKRAINE);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
+        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
         verify(this.countryFlagUtility).getFlagEmojiByCountryCode(eq("UA"));
-        assertThat(actual.getIpAddr()).isEqualTo(ipAddress.getValue());
+        assertThat(actual.getIpAddr()).isEqualTo(ipAddress.value());
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getCountryCode()).isEqualTo("UA");
         assertThat(actual.getCountryFlag()).isEqualTo(FLAG_UKRAINE);

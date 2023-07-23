@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.13
-- TBD
+- Java17: records, serialization/deserialization, junit tests sonar suggestions
 
 ### v1.12
 - Upgraded Java version 11 -> 17

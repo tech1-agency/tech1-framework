@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.utilities.http;
 
 import io.tech1.framework.domain.exceptions.cookie.CookieNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@Slf4j
 class HttpCookieUtilityTest {
 
     private static Stream<Arguments> createCookieTests() {
@@ -55,14 +57,14 @@ class HttpCookieUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getPath()).isEqualTo("/");
         assertThat(actual.getName()).isEqualTo(cookieKey);
-        assertThat(actual.getValue()).isEqualTo(null);
+        assertThat(actual.getValue()).isNull();;
         assertThat(actual.getDomain()).isEqualTo(domain);
-        assertThat(actual.isHttpOnly()).isEqualTo(true);
-        assertThat(actual.getMaxAge()).isEqualTo(0);
+        assertThat(actual.isHttpOnly()).isTrue();
+        assertThat(actual.getMaxAge()).isZero();
         // ignored
         assertThat(cookieValue).isNotNull();
-        assertThat(httpOnly).isNotNull();
-        assertThat(maxAge).isNotNull();
+        LOGGER.debug("httpOnly is ignored: " + httpOnly);
+        LOGGER.debug("maxAge is ignored: " + maxAge);
     }
 
     @Test
@@ -115,7 +117,6 @@ class HttpCookieUtilityTest {
         var actual = readCookie(request, cookieKey);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
     }
 }

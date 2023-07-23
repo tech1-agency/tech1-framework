@@ -45,8 +45,9 @@ class EncryptionUtilityTest {
         var actual = catchThrowable(() -> encryptAes128(value, encryptionInitVector, encryptionKey));
 
         // Assert
-        assertThat(actual).isInstanceOf(IllegalArgumentException.class);
-        assertThat(actual).hasMessageStartingWith("Encryption Failure. Algorithm: AES, 128");
+        assertThat(actual)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Encryption Failure. Algorithm: AES, 128");
     }
 
     @ParameterizedTest
@@ -70,7 +71,8 @@ class EncryptionUtilityTest {
         var actual = catchThrowable(() -> decryptAes128(value, encryptionInitVector, encryptionKey));
 
         // Assert
-        assertThat(actual).isInstanceOf(IllegalArgumentException.class);
-        assertThat(actual).hasMessageStartingWith("Decryption Failure. Algorithm: AES, 128");
+        assertThat(actual)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Decryption Failure. Algorithm: AES, 128");
     }
 }

@@ -231,7 +231,6 @@ class BigDecimalUtilityTest {
         var throwable = catchThrowable(() -> isFirstValueGreater(value1, value2));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
     }
@@ -253,7 +252,6 @@ class BigDecimalUtilityTest {
         var throwable = catchThrowable(() -> isFirstValueGreaterOrEqual(value1, value2));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
     }
@@ -275,7 +273,6 @@ class BigDecimalUtilityTest {
         var throwable = catchThrowable(() -> isFirstValueLesser(value1, value2));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
     }
@@ -297,7 +294,6 @@ class BigDecimalUtilityTest {
         var throwable = catchThrowable(() -> isFirstValueLesserOrEqual(value1, value2));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
     }
@@ -319,7 +315,6 @@ class BigDecimalUtilityTest {
         var throwable = catchThrowable(() -> inRange(value, range));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
     }
@@ -341,7 +336,6 @@ class BigDecimalUtilityTest {
         var throwable = catchThrowable(() -> inRangeClosed(value, range));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo(expected);
     }

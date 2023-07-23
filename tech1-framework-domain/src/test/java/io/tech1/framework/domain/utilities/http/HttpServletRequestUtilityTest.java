@@ -46,7 +46,6 @@ class HttpServletRequestUtilityTest {
         var actual = getBaseURL(url);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
     }
 

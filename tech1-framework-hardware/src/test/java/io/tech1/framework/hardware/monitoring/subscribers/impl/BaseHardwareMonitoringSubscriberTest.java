@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -58,12 +59,12 @@ class BaseHardwareMonitoringSubscriberTest {
     @Test
     void onLastHardwareMonitoringDatapointTest() {
         // Arrange
-        var event = mock(EventLastHardwareMonitoringDatapoint.class);
+        var event = entity(EventLastHardwareMonitoringDatapoint.class);
 
         // Act
         this.componentUnderTest.onLastHardwareMonitoringDatapoint(event);
 
         // Assert
-        verify(this.hardwareMonitoringStore).storeEvent(eq(event));
+        verify(this.hardwareMonitoringStore).storeEvent(event);
     }
 }

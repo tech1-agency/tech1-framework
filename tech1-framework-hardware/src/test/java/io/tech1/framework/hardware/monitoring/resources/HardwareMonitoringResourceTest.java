@@ -73,6 +73,6 @@ class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
         assertThat(event.last().getGlobal().b().percentage()).isEqualTo(new BigDecimal("60.5"));
         assertThat(event.last().getGlobal().c().value()).isEqualTo(new BigDecimal("1.00"));
         assertThat(event.last().getGlobal().c().percentage()).isEqualTo(new BigDecimal("64.2"));
-        assertThat(event.last().getCpu()).isEqualTo(CPU_MEMORY.value());
+        assertThat(event.last().getCpu()).isEqualTo(CPU_MEMORY.getValue());
     }
 }

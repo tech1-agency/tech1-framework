@@ -73,7 +73,6 @@ class HashingUtilityTest {
         var throwable = catchThrowable(() -> shaByAlgorithm("value", "hashingKey", "HmacSHA0"));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo("Hashing Failure. Value: `value`. Key: `hashingKey`. Algorithm: `HmacSHA0`. Exception: `NoSuchAlgorithmException`");
     }

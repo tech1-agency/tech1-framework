@@ -8,6 +8,7 @@ import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
 import io.tech1.framework.domain.tests.enums.EnumUnderTests;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,6 +31,7 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
+@Slf4j
 class RandomUtilityTest {
 
     private static Stream<Arguments> oneTest() {
@@ -62,7 +64,6 @@ class RandomUtilityTest {
         var actual = one(clazz);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -72,8 +73,9 @@ class RandomUtilityTest {
         var throwable = catchThrowable(() -> one(Float.class));
 
         // Assert
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable).hasMessageContaining("Unexpected clazz: java.lang.Float");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Unexpected clazz: java.lang.Float");
     }
 
     @Test
@@ -91,7 +93,7 @@ class RandomUtilityTest {
         var actual = randomBoolean();
 
         // Assert
-        assertThat(actual).isNotNull();
+        LOGGER.debug("randomBoolean is ignored: " + actual);
     }
 
     @Test
@@ -118,7 +120,6 @@ class RandomUtilityTest {
         var actual = randomIntegerGreaterThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isPositive();
     }
 
@@ -128,7 +129,6 @@ class RandomUtilityTest {
         var actual = randomIntegerLessThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isNegative();
     }
 
@@ -142,9 +142,9 @@ class RandomUtilityTest {
         var actual = randomIntegerGreaterThanZeroByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual >= lowerBound).isTrue();
-        assertThat(actual <= upperBound).isTrue();
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(lowerBound)
+                .isLessThanOrEqualTo(upperBound);
     }
 
     @Test
@@ -162,7 +162,6 @@ class RandomUtilityTest {
         var actual = randomLongGreaterThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isPositive();
     }
 
@@ -172,7 +171,6 @@ class RandomUtilityTest {
         var actual = randomLongLessThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isNegative();
     }
 
@@ -186,9 +184,9 @@ class RandomUtilityTest {
         var actual = randomLongGreaterThanZeroByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual >= lowerBound).isTrue();
-        assertThat(actual <= upperBound).isTrue();
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(lowerBound)
+                .isLessThanOrEqualTo(upperBound);
     }
 
     @Test
@@ -206,7 +204,6 @@ class RandomUtilityTest {
         var actual = randomBigDecimalGreaterThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isGreaterThan(BigDecimal.ZERO);
     }
 
@@ -216,7 +213,6 @@ class RandomUtilityTest {
         var actual = randomBigDecimalLessThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isLessThan(BigDecimal.ZERO);
     }
 
@@ -230,9 +226,9 @@ class RandomUtilityTest {
         var actual = randomBigDecimalGreaterThanZeroByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThanOrEqualTo(BigDecimal.valueOf(lowerBound));
-        assertThat(actual).isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(lowerBound))
+                .isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -245,9 +241,9 @@ class RandomUtilityTest {
         var actual = randomBigDecimalLessThanZeroByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
-        assertThat(actual).isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE))
+                .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -260,9 +256,9 @@ class RandomUtilityTest {
         var actual = randomBigDecimalByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE));
-        assertThat(actual).isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE))
+                .isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
     @Test
@@ -280,7 +276,6 @@ class RandomUtilityTest {
         var actual = randomBigIntegerGreaterThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isGreaterThan(BigInteger.ZERO);
     }
 
@@ -290,7 +285,6 @@ class RandomUtilityTest {
         var actual = randomBigIntegerLessThanZero();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isLessThan(BigInteger.ZERO);
     }
 
@@ -304,9 +298,9 @@ class RandomUtilityTest {
         var actual = randomBigIntegerGreaterThanZeroByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThanOrEqualTo(BigInteger.valueOf(lowerBound));
-        assertThat(actual).isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(lowerBound))
+                .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -319,9 +313,9 @@ class RandomUtilityTest {
         var actual = randomBigIntegerLessThanZeroByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
-        assertThat(actual).isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE))
+                .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -334,9 +328,9 @@ class RandomUtilityTest {
         var actual = randomBigIntegerByBounds(lowerBound, upperBound);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE));
-        assertThat(actual).isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
+        assertThat(actual)
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE))
+                .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -345,8 +339,7 @@ class RandomUtilityTest {
         var actual = randomString();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.length()).isEqualTo(32L);
+        assertThat(actual).hasSize(32);
     }
 
     @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
@@ -359,8 +352,7 @@ class RandomUtilityTest {
         var actual = randomStringLetterOrNumbersOnly(size);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.length()).isEqualTo(size);
+        assertThat(actual).hasSize(size);
         assertThat(Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(actual).find()).isFalse();
     }
 
@@ -371,12 +363,11 @@ class RandomUtilityTest {
 
         // Assert
         var ipv4 = List.of(actual.split("\\."));
-        assertThat(ipv4).isNotNull();
-        assertThat(ipv4.size()).isEqualTo(4);
+        assertThat(ipv4).hasSize(4);
         ipv4.forEach(element -> {
             var slot = Integer.valueOf(element);
             assertThat(slot).isNotNull();
-            assertThat(slot).isGreaterThanOrEqualTo(0);
+            assertThat(slot).isNotNegative();
             assertThat(slot).isLessThan(256);
         });
     }
@@ -388,12 +379,11 @@ class RandomUtilityTest {
 
         // Assert
         var ipv4 = List.of(actual.value().split("\\."));
-        assertThat(ipv4).isNotNull();
-        assertThat(ipv4.size()).isEqualTo(4);
+        assertThat(ipv4).hasSize(4);
         ipv4.forEach(element -> {
             var slot = Integer.valueOf(element);
             assertThat(slot).isNotNull();
-            assertThat(slot).isGreaterThanOrEqualTo(0);
+            assertThat(slot).isNotNegative();
             assertThat(slot).isLessThan(256);
         });
     }
@@ -404,7 +394,6 @@ class RandomUtilityTest {
         var actual = localhost();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual.value()).isEqualTo("127.0.0.1");
     }
 
@@ -431,57 +420,45 @@ class RandomUtilityTest {
     @Test
     void randomStringsAsListTest() {
         // Arrange
-        var size = randomIntegerGreaterThanZeroByBounds(1, 5);
+        int size = randomIntegerGreaterThanZeroByBounds(1, 5);
         var elementLength = 32;
 
         // Act
         var actual = randomStringsAsList(size);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(ArrayList.class);
-        assertThat(actual.size()).isEqualTo(size);
-        actual.forEach(element -> {
-            assertThat(element).isNotNull();
-            assertThat(element.length()).isEqualTo(elementLength);
-        });
+        assertThat(actual).hasSize(size);
+        actual.forEach(element -> assertThat(element).hasSize(elementLength));
     }
 
     @Test
     void randomStringsAsSetTest() {
         // Arrange
-        var size = randomIntegerGreaterThanZeroByBounds(1, 5);
+        int size = randomIntegerGreaterThanZeroByBounds(1, 5);
         var elementLength = 32;
 
         // Act
         var actual = randomStringsAsSet(size);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(HashSet.class);
-        assertThat(actual.size()).isEqualTo(size);
-        actual.forEach(element -> {
-            assertThat(element).isNotNull();
-            assertThat(element.length()).isEqualTo(elementLength);
-        });
+        assertThat(actual).hasSize(size);
+        actual.forEach(element -> assertThat(element).hasSize(elementLength));
     }
 
     @Test
     void randomStringsAsArrayTest() {
         // Arrange
-        var size = randomIntegerGreaterThanZeroByBounds(1, 5);
+        int size = randomIntegerGreaterThanZeroByBounds(1, 5);
         var elementLength = 32;
 
         // Act
         var actual = randomStringsAsArray(size);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.length).isEqualTo(size);
-        asList(actual).forEach(element -> {
-            assertThat(element).isNotNull();
-            assertThat(element.length()).isEqualTo(elementLength);
-        });
+        assertThat(actual).hasSize(size);
+        asList(actual).forEach(element -> assertThat(element).hasSize(elementLength));
     }
 
     @Test
@@ -496,8 +473,7 @@ class RandomUtilityTest {
         var actual = randomEmailAsValue();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.length()).isEqualTo(expected);
+        assertThat(actual).hasSize(expected);
         assertThat(actual.substring(randomLength)).isEqualTo(domain);
     }
 
@@ -513,8 +489,7 @@ class RandomUtilityTest {
         var actual = randomEmail();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.value().length()).isEqualTo(expected);
+        assertThat(actual.value()).hasSize(expected);
         assertThat(actual.value().substring(randomLength)).isEqualTo(domain);
     }
 
@@ -675,9 +650,10 @@ class RandomUtilityTest {
         var actual2 = randomEnumExceptWildcard(clazz, randomEnum);
 
         // Assert
-        assertThat(enumValues).contains(randomEnum);
-        assertThat(enumValues).contains(actual2);
-        assertThat(enumValues).contains(actual1);
+        assertThat(enumValues)
+                .contains(randomEnum)
+                .contains(actual2)
+                .contains(actual1);
         assertThat(actual2).isNotEqualTo(randomEnum);
         assertThat(actual1).isNotEqualTo(randomEnum);
     }
@@ -696,10 +672,11 @@ class RandomUtilityTest {
         var actual2 = randomEnumExceptWildcard(clazz, randomEnums);
 
         // Assert
-        assertThat(enumValues).contains(randomEnum1);
-        assertThat(enumValues).contains(randomEnum2);
-        assertThat(enumValues).contains(actual1);
-        assertThat(enumValues).contains(actual2);
+        assertThat(enumValues)
+                .contains(randomEnum1)
+                .contains(randomEnum2)
+                .contains(actual1)
+                .contains(actual2);
         assertThat(actual1).isNotEqualTo(randomEnum1);
         assertThat(actual2).isNotEqualTo(randomEnum1);
         assertThat(actual1).isNotEqualTo(randomEnum2);
@@ -753,7 +730,7 @@ class RandomUtilityTest {
             });
             assertThat(actual).hasSize(size);
         } else {
-            assertThat(actual).hasSize(0);
+            assertThat(actual).isEmpty();
         }
     }
 
@@ -827,7 +804,7 @@ class RandomUtilityTest {
         assertThat(actual.getCountryCode()).isEqualTo("UA");
         assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
         assertThat(actual.getCity()).isEqualTo("Lviv");
-        assertThat(actual.getExceptionDetails()).isEqualTo("");
+        assertThat(actual.getExceptionDetails()).isEmpty();
         assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
     }
 
@@ -868,7 +845,7 @@ class RandomUtilityTest {
         assertThat(actual.getBrowser()).isEqualTo("Chrome");
         assertThat(actual.getPlatform()).isEqualTo("macOS");
         assertThat(actual.getDeviceType()).isEqualTo("Desktop");
-        assertThat(actual.getExceptionDetails()).isEqualTo("");
+        assertThat(actual.getExceptionDetails()).isEmpty();
         assertThat(actual.getWhat()).isEqualTo("Chrome, macOS on Desktop");
     }
 
@@ -911,12 +888,12 @@ class RandomUtilityTest {
         assertThat(actual.getGeoLocation().getIpAddr()).isNotNull();
         assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getGeoLocation().getCity()).isEqualTo("Lviv");
-        assertThat(actual.getGeoLocation().getExceptionDetails()).isEqualTo("");
+        assertThat(actual.getGeoLocation().getExceptionDetails()).isEmpty();
         assertThat(actual.getGeoLocation().getWhere()).isEqualTo("Ukraine, Lviv");
         assertThat(actual.getUserAgentDetails().getBrowser()).isEqualTo("Chrome");
         assertThat(actual.getUserAgentDetails().getPlatform()).isEqualTo("macOS");
         assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Desktop");
-        assertThat(actual.getUserAgentDetails().getExceptionDetails()).isEqualTo("");
+        assertThat(actual.getUserAgentDetails().getExceptionDetails()).isEmpty();
         assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Chrome, macOS on Desktop");
         assertThat(actual.getWhatTuple2().a()).isEqualTo("Chrome");
         assertThat(actual.getWhatTuple2().b()).isEqualTo("Chrome, macOS on Desktop");
@@ -995,7 +972,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getThresholds().size()).isEqualTo(5);
+        assertThat(actual.getThresholds()).hasSize(5);
         actual.getThresholds().values().forEach(threshold -> {
             assertThat(threshold.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
             assertThat(threshold.value()).isLessThanOrEqualTo(new BigDecimal("100"));

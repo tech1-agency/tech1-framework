@@ -95,8 +95,9 @@ class EntityUtilityTest {
         var throwable = catchThrowable(() -> setObjectFields(null));
 
         // Assert
-        assertThat(throwable).isInstanceOf(ReflectiveOperationException.class);
-        assertThat(throwable).hasMessageContaining("Cannot invoke setter. Instance is null");
+        assertThat(throwable)
+                .isInstanceOf(ReflectiveOperationException.class)
+                .hasMessageContaining("Cannot invoke setter. Instance is null");
     }
 
     @Test
@@ -133,8 +134,9 @@ class EntityUtilityTest {
                 = catchThrowable(() -> setObjectFields(instance));
 
         // Assert
-        assertThat(throwable).isInstanceOf(ReflectiveOperationException.class);
-        assertThat(throwable).hasMessageContaining("Cannot invoke setter. Unexpected setter signature");
+        assertThat(throwable)
+                .isInstanceOf(ReflectiveOperationException.class)
+                .hasMessageContaining("Cannot invoke setter. Unexpected setter signature");
     }
 
     @Test
@@ -158,7 +160,6 @@ class EntityUtilityTest {
         assertThat(random).isNotNull();
         assertThat(random.getValue1()).isNotNull();
         assertThat(random.getValue2()).isNotNull();
-        assertThat(random.getValue3()).isNotNull();
         assertThat(random.getValue4()).isNotNull();
         assertThat(random.getChild1()).isNotNull();
         assertThat(random.getChild1().getNest1Value1()).isNotNull();

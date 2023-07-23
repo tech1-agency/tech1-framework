@@ -41,7 +41,6 @@ class CollectorUtilityTest {
                 .collect(toSingleton());
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(4);
     }
 }

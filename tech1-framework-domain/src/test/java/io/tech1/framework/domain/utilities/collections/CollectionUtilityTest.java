@@ -77,8 +77,9 @@ class CollectionUtilityTest {
         elements.add(element3);
 
         // Assert-2
-        assertThat(elements).hasSize(3);
-        assertThat(elements).containsExactly(element1, element2, element3);
+        assertThat(elements)
+                .hasSize(3)
+                .containsExactly(element1, element2, element3);
     }
 
     @Test
@@ -100,8 +101,9 @@ class CollectionUtilityTest {
         elements.add(element3);
 
         // Assert-2
-        assertThat(elements).hasSize(3);
-        assertThat(elements).containsExactly(element1, element2, element3);
+        assertThat(elements)
+                .hasSize(3)
+                .containsExactly(element1, element2, element3);
     }
 
     @Test
@@ -157,9 +159,10 @@ class CollectionUtilityTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(ArrayList.class);
-        assertThat(actual).hasSize(list1.size() + list2.size());
-        assertThat(actual).containsAll(list1);
-        assertThat(actual).containsAll(list2);
+        assertThat(actual)
+                .hasSize(list1.size() + list2.size())
+                .containsAll(list1)
+                .containsAll(list2);
     }
 
     @Test
@@ -174,9 +177,10 @@ class CollectionUtilityTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(HashSet.class);
-        assertThat(actual).hasSize(set1.size() + set2.size());
-        assertThat(actual).containsAll(set1);
-        assertThat(actual).containsAll(set2);
+        assertThat(actual)
+                .hasSize(set1.size() + set2.size())
+                .containsAll(set1)
+                .containsAll(set2);
     }
 
     @Test

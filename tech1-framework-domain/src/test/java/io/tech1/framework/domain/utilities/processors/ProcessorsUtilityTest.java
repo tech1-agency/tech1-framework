@@ -35,7 +35,6 @@ class ProcessorsUtilityTest {
 
         // Assert
         assertThat(numOfCores).isPositive();
-        assertThat(halfOfCores).isPositive();
         assertThat(halfOfCores).isEqualTo(numOfCores * 5 / 10);
     }
 }

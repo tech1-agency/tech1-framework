@@ -26,7 +26,7 @@ class EncodingUtilityTest {
         var actual = getBasicAuthenticationHeader(username, password);
 
         // Assert
-        assertThat(actual.getA()).isEqualTo("Authorization");
-        assertThat(actual.getB()).isEqualTo(expected);
+        assertThat(actual.a()).isEqualTo("Authorization");
+        assertThat(actual.b()).isEqualTo(expected);
     }
 }

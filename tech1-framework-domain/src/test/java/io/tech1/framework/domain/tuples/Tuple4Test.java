@@ -25,7 +25,6 @@ class Tuple4Test extends AbstractTupleTest {
         var json = this.writeValueAsString(TUPLE);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 
@@ -40,7 +39,6 @@ class Tuple4Test extends AbstractTupleTest {
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(TUPLE);
     }
 }

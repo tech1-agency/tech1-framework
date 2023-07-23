@@ -21,8 +21,8 @@ public class ResponseUserSession3 {
         assertNonNullOrThrow(session, invalidAttribute("ResponseUserSession3.session"));
         this.who = session.getUsername();
         var requestMetadata = session.getRequestMetadata();
-        this.where = requestMetadata.getWhereTuple3().getC();
-        this.what = requestMetadata.getWhatTuple2().getB();
-        this.ipAddress = requestMetadata.getWhereTuple3().getA();
+        this.where = requestMetadata.getWhereTuple3().c();
+        this.what = requestMetadata.getWhatTuple2().b();
+        this.ipAddress = requestMetadata.getWhereTuple3().a();
     }
 }

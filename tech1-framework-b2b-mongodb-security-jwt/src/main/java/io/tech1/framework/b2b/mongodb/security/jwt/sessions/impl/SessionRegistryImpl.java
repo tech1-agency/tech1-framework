@@ -109,8 +109,8 @@ public class SessionRegistryImpl implements SessionRegistry {
         var sessionsValidatedTuple2 = this.userSessionService.validate(usersSessions);
 
         sessionsValidatedTuple2.getExpiredSessions().forEach(tuple2 -> {
-            var username = tuple2.getA();
-            var dbUserSession = tuple2.getB();
+            var username = tuple2.a();
+            var dbUserSession = tuple2.b();
             var session = new Session(username, dbUserSession.getJwtRefreshToken());
             LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);

@@ -1,15 +1,12 @@
 package io.tech1.framework.domain.time;
 
-import lombok.Data;
-
 import java.util.concurrent.TimeUnit;
 
-// Lombok
-@Data
-public class SchedulerConfiguration {
-    private final long initialDelay;
-    private final long delay;
-    private final TimeUnit unit;
+public record SchedulerConfiguration(
+        long initialDelay,
+        long delay,
+        TimeUnit unit
+) {
 
     public static SchedulerConfiguration never() {
         return new SchedulerConfiguration(
@@ -18,4 +15,5 @@ public class SchedulerConfiguration {
                 TimeUnit.DAYS
         );
     }
+
 }

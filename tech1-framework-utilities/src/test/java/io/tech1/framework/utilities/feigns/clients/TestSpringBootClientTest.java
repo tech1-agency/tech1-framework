@@ -150,8 +150,8 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).info();
-        assertThat(tuple2.getA()).isEqualTo("test-server");
-        assertThat(tuple2.getB()).isNull();
+        assertThat(tuple2.a()).isEqualTo("test-server");
+        assertThat(tuple2.b()).isNull();
     }
 
     @Test
@@ -184,7 +184,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).health();
-        assertThat(tuple2.getA()).isEqualTo("test-server");
-        assertThat(tuple2.getB()).isNull();
+        assertThat(tuple2.a()).isEqualTo("test-server");
+        assertThat(tuple2.b()).isNull();
     }
 }

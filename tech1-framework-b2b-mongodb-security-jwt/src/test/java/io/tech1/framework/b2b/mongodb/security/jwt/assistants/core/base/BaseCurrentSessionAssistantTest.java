@@ -237,7 +237,7 @@ class BaseCurrentSessionAssistantTest {
         var cookieRefreshToken = new CookieRefreshToken(validJwtRefreshToken);
 
         Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
-                    tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.getB()), randomUsername(), tuple2.getA());
+                    tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
@@ -281,9 +281,9 @@ class BaseCurrentSessionAssistantTest {
                 // Arrange
                 var httpServletRequest = mock(HttpServletRequest.class);
                 when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
-                var userSessions = item.getA();
-                var expectedSessionSize = item.getB();
-                var expectedAnyProblems = item.getC();
+                var userSessions = item.a();
+                var expectedSessionSize = item.b();
+                var expectedAnyProblems = item.c();
                 when(this.userSessionService.findByUsername(eq(username))).thenReturn(userSessions);
                 when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
 

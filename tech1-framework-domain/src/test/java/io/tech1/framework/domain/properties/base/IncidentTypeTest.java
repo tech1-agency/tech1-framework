@@ -20,7 +20,7 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(new Tuple1<>(REGISTER1), "incident-type-register1.json"),
-                Arguments.of(new Tuple1(AUTHENTICATION_LOGIN), "incident-type-authentication-login.json")
+                Arguments.of(new Tuple1<>(AUTHENTICATION_LOGIN), "incident-type-authentication-login.json")
         );
     }
 
@@ -36,7 +36,6 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(tuple1);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -52,7 +51,6 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(tuple1);
     }
 }

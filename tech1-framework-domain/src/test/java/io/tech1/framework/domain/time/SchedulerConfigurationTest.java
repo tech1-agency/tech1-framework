@@ -17,10 +17,10 @@ class SchedulerConfigurationTest {
 
         // Assert
         assertThat(sc).isNotNull();
-        assertThat(sc.getInitialDelay()).isEqualTo(9223372036854775807L);
-        assertThat(sc.getDelay()).isEqualTo(9223372036854775807L);
-        assertThat(sc.getUnit()).isEqualTo(TimeUnit.DAYS);
-        assertThat(sc.getUnit().toSeconds(sc.getDelay())).isEqualTo(9223372036854775807L);
+        assertThat(sc.initialDelay()).isEqualTo(9223372036854775807L);
+        assertThat(sc.delay()).isEqualTo(9223372036854775807L);
+        assertThat(sc.unit()).isEqualTo(TimeUnit.DAYS);
+        assertThat(sc.unit().toSeconds(sc.delay())).isEqualTo(9223372036854775807L);
     }
 
     @Test
@@ -35,8 +35,8 @@ class SchedulerConfigurationTest {
 
         // Assert
         assertThat(schedulerConfiguration).isNotNull();
-        assertThat(schedulerConfiguration.getInitialDelay()).isEqualTo(initialDelay);
-        assertThat(schedulerConfiguration.getDelay()).isEqualTo(delay);
-        assertThat(schedulerConfiguration.getUnit()).isEqualTo(unit);
+        assertThat(schedulerConfiguration.initialDelay()).isEqualTo(initialDelay);
+        assertThat(schedulerConfiguration.delay()).isEqualTo(delay);
+        assertThat(schedulerConfiguration.unit()).isEqualTo(unit);
     }
 }

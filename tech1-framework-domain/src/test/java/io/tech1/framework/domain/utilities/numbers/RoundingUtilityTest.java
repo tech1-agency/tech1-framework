@@ -106,10 +106,10 @@ class RoundingUtilityTest {
 
         cases.forEach(source -> {
             // Arrange
-            var divider = source.getA();
-            var divisor = source.getB();
-            var scale = source.getC();
-            var expected = source.getD();
+            var divider = source.a();
+            var divisor = source.b();
+            var scale = source.c();
+            var expected = source.d();
 
             // Act
             var actual = divideOrOne(divider, divisor, scale);

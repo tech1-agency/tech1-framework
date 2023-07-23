@@ -41,12 +41,12 @@ public class ResponseUserSession2 {
         this.exception = requestMetadata.getException();
 
         var whereTuple3 = requestMetadata.getWhereTuple3();
-        this.ipAddr = whereTuple3.getA();
-        this.countryFlag = whereTuple3.getB();
-        this.where = whereTuple3.getC();
+        this.ipAddr = whereTuple3.a();
+        this.countryFlag = whereTuple3.b();
+        this.where = whereTuple3.c();
 
         var whatTuple2 = requestMetadata.getWhatTuple2();
-        this.browser = whatTuple2.getA();
-        this.what = whatTuple2.getB();
+        this.browser = whatTuple2.a();
+        this.what = whatTuple2.b();
     }
 }

@@ -33,12 +33,12 @@ public class TimeAgo {
         var duration = getCurrentTimestamp() - timestamp;
         var agoSb = new StringBuilder();
         for (Tuple2<Long, String> unit : UNITS) {
-            var current = unit.getA();
+            var current = unit.a();
             var temp = duration / current;
             if (temp > 0) {
                 agoSb.append(temp);
                 agoSb.append(" ");
-                agoSb.append(unit.getB());
+                agoSb.append(unit.b());
                 agoSb.append(temp != 1 ? "s" : "");
                 agoSb.append(" ");
                 agoSb.append("ago");

@@ -35,7 +35,6 @@ class MongodbTest {
         var actual = mongodb.connectionString();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo("mongodb://127.0.0.1:27017/tech1_framework_server");
     }
 
@@ -53,7 +52,6 @@ class MongodbTest {
         var actual = mongodb.connectionString();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo("mongodb://admin:Password123!@127.0.0.1:27017/tech1_framework_server");
     }
 }

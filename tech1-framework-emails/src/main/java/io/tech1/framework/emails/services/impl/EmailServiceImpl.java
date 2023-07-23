@@ -102,8 +102,8 @@ public class EmailServiceImpl implements EmailService {
         if (emailConfigs.isEnabled()) {
             try {
                 var tuple2 = this.emailUtility.getMimeMessageTuple2();
-                var message = tuple2.getA();
-                var mmHelper = tuple2.getB();
+                var message = tuple2.a();
+                var mmHelper = tuple2.b();
                 mmHelper.setFrom(emailConfigs.getFrom());
                 mmHelper.setTo(emailHTML.getTo().toArray(new String[0]));
                 mmHelper.setSubject(emailHTML.getSubject());

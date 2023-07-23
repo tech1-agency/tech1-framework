@@ -61,7 +61,7 @@ public class UserEmailServiceImpl implements UserEmailService {
             String templateName,
             AccountAccessMethod accountAccessMethod
     ) {
-        var email = tuple3.getB();
+        var email = tuple3.b();
         if (nonNull(email) && checkbox.isEnabled()) {
             this.emailService.sendHTML(
                     new EmailHTML(
@@ -69,8 +69,8 @@ public class UserEmailServiceImpl implements UserEmailService {
                             this.userEmailUtility.getSubject("Account Accessed"),
                             templateName,
                             this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
-                                    tuple3.getA(),
-                                    tuple3.getC(),
+                                    tuple3.a(),
+                                    tuple3.c(),
                                     accountAccessMethod
                             )
                     )

@@ -918,12 +918,12 @@ class RandomUtilityTest {
         assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Desktop");
         assertThat(actual.getUserAgentDetails().getExceptionDetails()).isEqualTo("");
         assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(actual.getWhatTuple2().getA()).isEqualTo("Chrome");
-        assertThat(actual.getWhatTuple2().getB()).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(actual.getWhereTuple3().getA()).isNotNull();
-        assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().getB()).isEqualTo("🇺🇦");
-        assertThat(actual.getWhereTuple3().getC()).isEqualTo("Ukraine, Lviv");
+        assertThat(actual.getWhatTuple2().a()).isEqualTo("Chrome");
+        assertThat(actual.getWhatTuple2().b()).isEqualTo("Chrome, macOS on Desktop");
+        assertThat(actual.getWhereTuple3().a()).isNotNull();
+        assertThat(actual.getWhereTuple3().a().split("\\.")).hasSize(4);
+        assertThat(actual.getWhereTuple3().b()).isEqualTo("🇺🇦");
+        assertThat(actual.getWhereTuple3().c()).isEqualTo("Ukraine, Lviv");
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
@@ -944,12 +944,12 @@ class RandomUtilityTest {
         assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Unknown");
         assertThat(actual.getUserAgentDetails().getExceptionDetails()).isEqualTo("User agent details are unknown");
         assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Unknown, Unknown on Unknown");
-        assertThat(actual.getWhatTuple2().getA()).isEqualTo("Unknown");
-        assertThat(actual.getWhatTuple2().getB()).isEqualTo("Unknown, Unknown on Unknown");
-        assertThat(actual.getWhereTuple3().getA()).isNotNull();
-        assertThat(actual.getWhereTuple3().getA().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().getB()).isEqualTo("🏴‍");
-        assertThat(actual.getWhereTuple3().getC()).isEqualTo("Unknown, Unknown");
+        assertThat(actual.getWhatTuple2().a()).isEqualTo("Unknown");
+        assertThat(actual.getWhatTuple2().b()).isEqualTo("Unknown, Unknown on Unknown");
+        assertThat(actual.getWhereTuple3().a()).isNotNull();
+        assertThat(actual.getWhereTuple3().a().split("\\.")).hasSize(4);
+        assertThat(actual.getWhereTuple3().b()).isEqualTo("🏴‍");
+        assertThat(actual.getWhereTuple3().c()).isEqualTo("Unknown, Unknown");
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
@@ -970,11 +970,11 @@ class RandomUtilityTest {
         assertThat(actual.getUserAgentDetails().getDeviceType()).isNotNull();
         assertThat(actual.getUserAgentDetails().getExceptionDetails()).isNotNull();
         assertThat(actual.getUserAgentDetails().getWhat()).isNotNull();
-        assertThat(actual.getWhatTuple2().getA()).isNotNull();
-        assertThat(actual.getWhatTuple2().getB()).isNotNull();
-        assertThat(actual.getWhereTuple3().getA()).isNotNull();
-        assertThat(actual.getWhereTuple3().getB()).isNotNull();
-        assertThat(actual.getWhereTuple3().getC()).isNotNull();
+        assertThat(actual.getWhatTuple2().a()).isNotNull();
+        assertThat(actual.getWhatTuple2().b()).isNotNull();
+        assertThat(actual.getWhereTuple3().a()).isNotNull();
+        assertThat(actual.getWhereTuple3().b()).isNotNull();
+        assertThat(actual.getWhereTuple3().c()).isNotNull();
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)

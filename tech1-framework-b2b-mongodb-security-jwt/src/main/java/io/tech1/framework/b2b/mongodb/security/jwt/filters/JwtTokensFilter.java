@@ -37,7 +37,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(request);
-            var currentJwtUser = tuple2.getA();
+            var currentJwtUser = tuple2.a();
 
             var authentication = new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -46,7 +46,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
             this.sessionRegistry.register(
                     new Session(
                             currentJwtUser.getDbUser().getUsername(),
-                            tuple2.getB()
+                            tuple2.b()
                     )
             );
 

@@ -60,12 +60,12 @@ public abstract class AbstractTimerTask {
         this.state = TimerTaskState.OPERATIVE;
         this.scheduledFuture = this.scheduledExecutorService.scheduleWithFixedDelay(() -> {
             this.onTick();
-            this.elapsedSeconds += this.interval.getUnit().toSeconds(this.interval.getDelay());
+            this.elapsedSeconds += this.interval.unit().toSeconds(this.interval.delay());
             if (this.duration.toSeconds() > 0 && this.elapsedSeconds >= this.duration.toSeconds()) {
                 this.onComplete();
                 this.scheduledFuture.cancel(false);
             }
-        }, this.interval.getInitialDelay(), this.interval.getDelay(), this.interval.getUnit());
+        }, this.interval.initialDelay(), this.interval.delay(), this.interval.unit());
     }
 
     public final void stop() {

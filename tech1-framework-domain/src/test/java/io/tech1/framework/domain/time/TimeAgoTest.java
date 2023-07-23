@@ -33,6 +33,6 @@ class TimeAgoTest {
 
         // Assert
         assertThat(actual.getValue()).isEqualTo(expected);
-        assertThat(actual.toString()).isEqualTo(expected);
+        assertThat(actual.toString()).hasToString(expected);
     }
 }

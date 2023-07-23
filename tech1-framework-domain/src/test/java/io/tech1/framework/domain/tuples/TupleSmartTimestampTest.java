@@ -23,7 +23,6 @@ class TupleSmartTimestampTest extends AbstractTupleTest {
         var json = this.writeValueAsString(TUPLE);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 

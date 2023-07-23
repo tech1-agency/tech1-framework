@@ -18,11 +18,11 @@ import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampUtilityTest {
-    private static final Long _2_HOUR_AGO = getPastRange(TimeAmount.of(2L, HOURS)).getFrom();
-    private static final Long _5_MINUTES_AGO = getPastRange(TimeAmount.of(5L, MINUTES)).getFrom();
-    private static final Long _1_MINUTE_AGO = getPastRange(TimeAmount.of(1L, MINUTES)).getFrom();
-    private static final Long _2_MINUTES_FUTURE = getFutureRange(TimeAmount.of(2L, MINUTES)).getTo();
-    private static final Long _1_HOUR_FUTURE = getFutureRange(TimeAmount.of(1L, HOURS)).getTo();
+    private static final Long _2_HOUR_AGO = getPastRange(TimeAmount.of(2L, HOURS)).from();
+    private static final Long _5_MINUTES_AGO = getPastRange(TimeAmount.of(5L, MINUTES)).from();
+    private static final Long _1_MINUTE_AGO = getPastRange(TimeAmount.of(1L, MINUTES)).from();
+    private static final Long _2_MINUTES_FUTURE = getFutureRange(TimeAmount.of(2L, MINUTES)).to();
+    private static final Long _1_HOUR_FUTURE = getFutureRange(TimeAmount.of(1L, HOURS)).to();
 
     private static final long _5_SECONDS = TimeAmount.of(5L, SECONDS).toMillis();
 

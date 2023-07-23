@@ -25,7 +25,6 @@ class UserTriggerTest extends AbstractSerializationDeserializationRunner {
         var json = this.writeValueAsString(USER_TRIGGER);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 }

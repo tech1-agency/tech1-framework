@@ -43,7 +43,6 @@ class DefaultUsersTest {
        var actual = defaultUsers.getDefaultUsersAuthorities();
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
     }
 }

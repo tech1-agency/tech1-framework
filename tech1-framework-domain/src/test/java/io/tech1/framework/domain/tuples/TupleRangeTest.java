@@ -34,7 +34,6 @@ class TupleRangeTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(tupleRange);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -50,7 +49,6 @@ class TupleRangeTest extends AbstractFolderSerializationRunner {
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(tupleRange);
     }
 }

@@ -151,8 +151,8 @@ class TokenServiceImplTest {
         verify(this.tokenContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
         verify(this.jwtUserDetailsAssistant).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
         assertThat(tuple2).isNotNull();
-        assertThat(tuple2.getA()).isEqualTo(jwtUser);
-        assertThat(tuple2.getB()).isEqualTo(jwtRefreshToken);
+        assertThat(tuple2.a()).isEqualTo(jwtUser);
+        assertThat(tuple2.b()).isEqualTo(jwtRefreshToken);
     }
 
     @Test

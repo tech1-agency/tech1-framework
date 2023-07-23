@@ -221,12 +221,12 @@ class UserSessionServiceImplTest {
         assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
-        assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.getB()).isEqualTo(StringConstants.NO_FLAG);
-        assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
+        assertThat(whereTuple3.a()).isEqualTo(ipAddr);
+        assertThat(whereTuple3.b()).isEqualTo(StringConstants.NO_FLAG);
+        assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
-        assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
-        assertThat(whatTuple2.getB()).isEqualTo("—");
+        assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.getId()).isNotNull();
         var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
@@ -264,12 +264,12 @@ class UserSessionServiceImplTest {
         assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
-        assertThat(whereTuple3.getA()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.getB()).isEqualTo(StringConstants.NO_FLAG);
-        assertThat(whereTuple3.getC()).isEqualTo("Processing...Please wait!");
+        assertThat(whereTuple3.a()).isEqualTo(ipAddr);
+        assertThat(whereTuple3.b()).isEqualTo(StringConstants.NO_FLAG);
+        assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
-        assertThat(whatTuple2.getA()).isEqualTo(UNDEFINED);
-        assertThat(whatTuple2.getB()).isEqualTo("—");
+        assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.getId()).isNotNull();
         var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
@@ -366,6 +366,6 @@ class UserSessionServiceImplTest {
         );
         assertThat(sessionsValidatedTuple2.getExpiredSessions()).isNotNull();
         assertThat(sessionsValidatedTuple2.getExpiredSessions()).hasSize(1);
-        assertThat(sessionsValidatedTuple2.getExpiredSessions().get(0).getA().identifier()).isEqualTo("multiuser43");
+        assertThat(sessionsValidatedTuple2.getExpiredSessions().get(0).a().identifier()).isEqualTo("multiuser43");
     }
 }

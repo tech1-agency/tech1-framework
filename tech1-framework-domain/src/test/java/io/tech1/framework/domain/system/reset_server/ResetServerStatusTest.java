@@ -38,7 +38,7 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
 
         // Assert-2
         assertThat(status.getState()).isEqualTo(RESETTING);
-        assertThat(status.getStage()).isEqualTo(0);
+        assertThat(status.getStage()).isZero();
         assertThat(status.getStagesCount()).isEqualTo(9);
         assertThat(status.getPercentage()).isEqualTo(zero());
         assertThat(status.getDescription()).isEqualTo("Resetting");

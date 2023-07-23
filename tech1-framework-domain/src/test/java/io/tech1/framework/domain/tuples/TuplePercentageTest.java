@@ -46,16 +46,16 @@ class TuplePercentageTest extends AbstractTupleTest {
 
         // Assert
         assertThat(actual1).isNotNull();
-        assertThat(actual1.getValue()).isEqualTo(expectedValue1);
-        assertThat(actual1.getPercentage()).isEqualTo(expectedPercentage1);
+        assertThat(actual1.value()).isEqualTo(expectedValue1);
+        assertThat(actual1.percentage()).isEqualTo(expectedPercentage1);
 
         assertThat(actual2).isNotNull();
-        assertThat(actual2.getValue()).isEqualTo(expectedValue1);
-        assertThat(actual2.getPercentage()).isEqualTo(expectedPercentage1);
+        assertThat(actual2.value()).isEqualTo(expectedValue1);
+        assertThat(actual2.percentage()).isEqualTo(expectedPercentage1);
 
         assertThat(actual3).isNotNull();
-        assertThat(actual3.getValue()).isEqualTo(expectedValue2);
-        assertThat(actual3.getPercentage()).isEqualTo(expectedPercentage2);
+        assertThat(actual3.value()).isEqualTo(expectedValue2);
+        assertThat(actual3.percentage()).isEqualTo(expectedPercentage2);
     }
 
     @Test
@@ -65,8 +65,8 @@ class TuplePercentageTest extends AbstractTupleTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("0.00");
-        assertThat(actual.getPercentage()).isEqualTo("0.00");
+        assertThat(actual.value()).isEqualTo("0.00");
+        assertThat(actual.percentage()).isEqualTo("0.00");
     }
 
     @Test
@@ -76,8 +76,8 @@ class TuplePercentageTest extends AbstractTupleTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("100.00");
-        assertThat(actual.getPercentage()).isEqualTo("100.00");
+        assertThat(actual.value()).isEqualTo("100.00");
+        assertThat(actual.percentage()).isEqualTo("100.00");
     }
 
     @Test

@@ -1,13 +1,6 @@
 package io.tech1.framework.domain.tuples;
 
-import lombok.Data;
-
-// Lombok
-@Data
-public class TupleToggle<A> {
-    private final boolean enabled;
-    private final A value;
-
+public record TupleToggle<A>(boolean enabled, A value) {
     public static <A> TupleToggle<A> enabled(A value) {
         return new TupleToggle<>(true, value);
     }

@@ -439,8 +439,8 @@ class BigDecimalUtilityTest {
 
         cases.forEach(item -> {
             // Arrange
-            var value = item.getA();
-            var expected = item.getB();
+            var value = item.a();
+            var expected = item.b();
 
             // Act
             var actual = absOrZero(value);

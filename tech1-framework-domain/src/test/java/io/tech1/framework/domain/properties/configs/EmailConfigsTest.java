@@ -13,7 +13,7 @@ class EmailConfigsTest {
         var emailConfigs = EmailConfigs.of(
                 true,
                 randomString(),
-                randomInteger(),
+                randomIntegerGreaterThanZero(),
                 randomUsername().identifier(),
                 randomString(),
                 randomString(),
@@ -23,7 +23,7 @@ class EmailConfigsTest {
         // Assert
         assertThat(emailConfigs.isEnabled()).isTrue();
         assertThat(emailConfigs.getHost()).isNotNull();
-        assertThat(emailConfigs.getPort()).isNotNull();
+        assertThat(emailConfigs.getPort()).isNotZero();
         assertThat(emailConfigs.getFrom()).isNotNull();
         assertThat(emailConfigs.getUsername()).isNotNull();
         assertThat(emailConfigs.getPassword()).isNotNull();

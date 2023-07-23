@@ -17,7 +17,7 @@ class PubSubHierarchyTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getValue()).isEqualTo("Pub");
-        assertThat(actual.toString()).isEqualTo("Pub");
+        assertThat(actual.toString()).hasToString("Pub");
     }
 
     @Test
@@ -31,6 +31,6 @@ class PubSubHierarchyTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getValue()).isEqualTo("Sub");
-        assertThat(actual.toString()).isEqualTo("Sub");
+        assertThat(actual.toString()).hasToString("Sub");
     }
 }

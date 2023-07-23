@@ -28,7 +28,7 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
         try {
             var request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
             var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(request);
-            var currentJwtUser = tuple2.getA();
+            var currentJwtUser = tuple2.a();
             return new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());
         } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException |
                  CookieAccessTokenInvalidException | CookieRefreshTokenInvalidException | CookieAccessTokenExpiredException ex) {

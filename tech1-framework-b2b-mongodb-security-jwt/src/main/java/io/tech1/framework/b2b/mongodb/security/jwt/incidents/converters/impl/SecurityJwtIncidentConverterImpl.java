@@ -95,13 +95,13 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
         }
 
         var whereTuple3 = userRequestMetadata.getWhereTuple3();
-        incident.add(IP_ADDRESS, whereTuple3.getA());
-        incident.add(COUNTRY_FLAG, whereTuple3.getB());
-        incident.add(WHERE, whereTuple3.getC());
+        incident.add(IP_ADDRESS, whereTuple3.a());
+        incident.add(COUNTRY_FLAG, whereTuple3.b());
+        incident.add(WHERE, whereTuple3.c());
 
         var whatTuple2 = userRequestMetadata.getWhatTuple2();
-        incident.add(BROWSER, whatTuple2.getA());
-        incident.add(WHAT, whatTuple2.getB());
+        incident.add(BROWSER, whatTuple2.a());
+        incident.add(WHAT, whatTuple2.b());
 
         return incident;
     }

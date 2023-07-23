@@ -47,9 +47,10 @@ class ApplicationAsyncTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("getAsyncExecutor");
-        assertThat(methods).contains("getAsyncUncaughtExceptionHandler");
-        assertThat(methods).hasSize(16);
+        assertThat(methods)
+                .hasSize(16)
+                .contains("getAsyncExecutor")
+                .contains("getAsyncUncaughtExceptionHandler");
     }
 
     @Test

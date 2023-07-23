@@ -78,7 +78,7 @@ class IncidentPublisherImplTest {
         this.componentUnderTest.publishResetServerStarted(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -90,7 +90,7 @@ class IncidentPublisherImplTest {
         this.componentUnderTest.publishResetServerCompleted(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -102,7 +102,7 @@ class IncidentPublisherImplTest {
         this.componentUnderTest.publishIncident(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -114,7 +114,7 @@ class IncidentPublisherImplTest {
         this.componentUnderTest.publishThrowable(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
@@ -126,6 +126,6 @@ class IncidentPublisherImplTest {
         this.componentUnderTest.publishThrowable(throwable);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(IncidentThrowable.of(throwable)));
+        verify(this.applicationEventPublisher).publishEvent(IncidentThrowable.of(throwable));
     }
 }

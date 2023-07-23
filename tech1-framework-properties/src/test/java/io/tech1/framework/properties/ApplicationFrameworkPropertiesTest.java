@@ -20,7 +20,6 @@ class ApplicationFrameworkPropertiesTest {
         var getters = getGetters(applicationFrameworkProperties);
 
         // Assert
-        assertThat(getters).isNotNull();
         assertThat(getters).hasSize(11);
         getters.forEach(getter -> {
             try {

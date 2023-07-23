@@ -86,7 +86,7 @@ class IncidentSubscriberImplTest {
         assertThat(incident.getUsername().identifier()).isEqualTo("tech1");
         assertThat(incident.getAttributes()).hasSize(2);
         assertThat(incident.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(incident.getAttributes().get("incidentType")).isEqualTo("Reset Server Started");
+        assertThat(incident.getAttributes()).containsEntry("incidentType", "Reset Server Started");
     }
 
     @Test
@@ -105,7 +105,7 @@ class IncidentSubscriberImplTest {
         assertThat(incident.getUsername().identifier()).isEqualTo("tech1");
         assertThat(incident.getAttributes()).hasSize(2);
         assertThat(incident.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(incident.getAttributes().get("incidentType")).isEqualTo("Reset Server Completed");
+        assertThat(incident.getAttributes()).containsEntry("incidentType", "Reset Server Completed");
     }
 
     @Test
@@ -117,7 +117,7 @@ class IncidentSubscriberImplTest {
         this.componentUnderTest.onEvent(incident);
 
         // Assert
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
@@ -125,13 +125,13 @@ class IncidentSubscriberImplTest {
         // Arrange
         var incident = randomIncident();
         var throwableIncident = randomThrowableIncident();
-        when(this.incidentConverter.convert(eq(throwableIncident))).thenReturn(incident);
+        when(this.incidentConverter.convert(throwableIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(throwableIncident);
 
         // Assert
-        verify(this.incidentConverter).convert(eq(throwableIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentConverter).convert(throwableIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 }

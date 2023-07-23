@@ -243,8 +243,8 @@ class SessionRegistryImplTest {
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutFull.class);
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(incidentAC.capture());
         var incident = incidentAC.getValue();
-        assertThat(incident.getUsername()).isEqualTo(username);
-        assertThat(incident.getUserRequestMetadata()).isEqualTo(dbUserSession.getRequestMetadata());
+        assertThat(incident.username()).isEqualTo(username);
+        assertThat(incident.userRequestMetadata()).isEqualTo(dbUserSession.getRequestMetadata());
         verify(this.userSessionService).deleteByRefreshToken(eq(refreshToken));
     }
 
@@ -266,7 +266,7 @@ class SessionRegistryImplTest {
         assertThat(eventAC.getValue().getSession()).isEqualTo(session);
         var incidentAC = ArgumentCaptor.forClass(IncidentAuthenticationLogoutMin.class);
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutMin(incidentAC.capture());
-        assertThat(incidentAC.getValue().getUsername()).isEqualTo(username);
+        assertThat(incidentAC.getValue().username()).isEqualTo(username);
     }
 
     @Test
@@ -309,8 +309,8 @@ class SessionRegistryImplTest {
         var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
         verify(this.securityJwtIncidentPublisher).publishSessionExpired(seiCaptor.capture());
         var sessionExpiredIncident = seiCaptor.getValue();
-        assertThat(sessionExpiredIncident.getUsername()).isEqualTo(username1);
-        assertThat(sessionExpiredIncident.getUserRequestMetadata()).isEqualTo(dbUserSession3.getRequestMetadata());
+        assertThat(sessionExpiredIncident.username()).isEqualTo(username1);
+        assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.getRequestMetadata());
         verify(this.userSessionService).deleteByIdIn(List.of(dbUserSession1.getId(), dbUserSession2.getId()));
     }
 }

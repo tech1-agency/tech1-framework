@@ -67,8 +67,9 @@ class ApplicationMvc2Test {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("addCorsMappings");
-        assertThat(methods).hasSize(28);
+        assertThat(methods)
+                .hasSize(28)
+                .contains("addCorsMappings");
     }
 
     @Test
@@ -76,14 +77,14 @@ class ApplicationMvc2Test {
         // Arrange
         var corsRegistry = mock(CorsRegistry.class);
         var corsRegistration = mock(CorsRegistration.class);
-        when(corsRegistry.addMapping(eq("/api/**"))).thenReturn(corsRegistration);
+        when(corsRegistry.addMapping("/api/**")).thenReturn(corsRegistration);
 
         // Act
         this.componentUnderTest.addCorsMappings(corsRegistry);
 
         // Assert
         verify(corsRegistry).addMapping("/api/**");
-        verify(corsRegistration).allowCredentials(eq(false));
+        verify(corsRegistration).allowCredentials(false);
         verifyNoMoreInteractions(
                 corsRegistry,
                 corsRegistration

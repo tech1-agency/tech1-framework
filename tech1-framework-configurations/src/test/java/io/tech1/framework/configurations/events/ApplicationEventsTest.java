@@ -42,8 +42,9 @@ class ApplicationEventsTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("simpleApplicationEventMulticaster");
-        assertThat(methods).hasSize(15);
+        assertThat(methods)
+                .hasSize(15)
+                .contains("simpleApplicationEventMulticaster");
     }
 
     @Test

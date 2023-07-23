@@ -26,13 +26,13 @@ public class IncidentPublisherImpl extends AbstractEventPublisher implements Inc
 
     @Override
     public void publishResetServerStarted(IncidentSystemResetServerStarted incident) {
-        LOGGER.debug(INCIDENT_SYSTEM_RESET_SERVER, this.getType(), incident.getUsername(), STARTED);
+        LOGGER.debug(INCIDENT_SYSTEM_RESET_SERVER, this.getType(), incident.username(), STARTED);
         this.applicationEventPublisher.publishEvent(incident);
     }
 
     @Override
     public void publishResetServerCompleted(IncidentSystemResetServerCompleted incident) {
-        LOGGER.debug(INCIDENT_SYSTEM_RESET_SERVER, this.getType(), incident.getUsername(), COMPLETED);
+        LOGGER.debug(INCIDENT_SYSTEM_RESET_SERVER, this.getType(), incident.username(), COMPLETED);
         this.applicationEventPublisher.publishEvent(incident);
     }
 

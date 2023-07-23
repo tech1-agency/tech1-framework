@@ -2,15 +2,13 @@ package io.tech1.framework.incidents.domain.authetication;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import lombok.Data;
 
 import static io.tech1.framework.domain.utilities.strings.MaskUtility.mask5;
 
-// Lombok
-@Data
-public class IncidentAuthenticationLoginFailureUsernameMaskedPassword {
-    private final Username username;
-    private final Password password;
+public record IncidentAuthenticationLoginFailureUsernameMaskedPassword(
+        Username username,
+        Password password
+) {
 
     public IncidentAuthenticationLoginFailureUsernameMaskedPassword(
             Username username,

@@ -61,13 +61,13 @@ class IncidentClientImplTest {
     void registerIncidentExceptionTest() {
         // Arrange
         var incident = mock(Incident.class);
-        doThrow(randomFeignException()).when(incidentClientDefinition).registerIncident(eq(incident));
+        doThrow(randomFeignException()).when(incidentClientDefinition).registerIncident(incident);
 
         // Act
         this.componentUnderTest.registerIncident(incident);
 
         // Assert
-        verify(this.incidentClientDefinition).registerIncident(eq(incident));
+        verify(this.incidentClientDefinition).registerIncident(incident);
         // LOGGER ignored
     }
 
@@ -80,6 +80,6 @@ class IncidentClientImplTest {
         this.componentUnderTest.registerIncident(incident);
 
         // Assert
-        verify(this.incidentClientDefinition).registerIncident(eq(incident));
+        verify(this.incidentClientDefinition).registerIncident(incident);
     }
 }

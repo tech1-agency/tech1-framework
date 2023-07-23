@@ -3,6 +3,7 @@ package io.tech1.framework.incidents.handlers;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class AsyncUncaughtExceptionHandlerPublisher implements AsyncUncaughtExce
     private final IncidentPublisher incidentPublisher;
 
     @Override
-    public void handleUncaughtException(Throwable throwable, Method method, Object... params) {
+    public void handleUncaughtException(@NotNull Throwable throwable, @NotNull Method method, Object @NotNull ... params) {
         this.incidentPublisher.publishThrowable(
                 IncidentThrowable.of(
                         throwable,

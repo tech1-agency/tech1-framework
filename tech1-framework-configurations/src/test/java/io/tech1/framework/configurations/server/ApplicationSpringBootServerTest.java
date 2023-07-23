@@ -47,8 +47,9 @@ class ApplicationSpringBootServerTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("environmentUtility");
-        assertThat(methods).contains("baseInfoResource");
-        assertThat(methods).hasSize(16);
+        assertThat(methods)
+                .hasSize(16)
+                .contains("environmentUtility")
+                .contains("baseInfoResource");
     }
 }

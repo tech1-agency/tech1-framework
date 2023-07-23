@@ -65,8 +65,9 @@ class ApplicationMvc1Test {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("addCorsMappings");
-        assertThat(methods).hasSize(28);
+        assertThat(methods)
+                .hasSize(28)
+                .contains("addCorsMappings");
     }
 
     @Test

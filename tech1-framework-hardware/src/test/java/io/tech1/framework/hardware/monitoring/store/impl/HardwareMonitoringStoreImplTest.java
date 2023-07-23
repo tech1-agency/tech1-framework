@@ -64,8 +64,8 @@ class HardwareMonitoringStoreImplTest {
         var widget1 = this.componentUnderTest.getHardwareMonitoringWidget();
 
         assertThat(containsOneElement1).isFalse();
-        assertThat(widget1.getVersion()).isEqualTo(Version.unknown());
-        assertThat(widget1.getDatapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
+        assertThat(widget1.version()).isEqualTo(Version.unknown());
+        assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
 
         // [1]
         var event1 = mock(EventLastHardwareMonitoringDatapoint.class);
@@ -94,10 +94,10 @@ class HardwareMonitoringStoreImplTest {
 
         var widget2 = this.componentUnderTest.getHardwareMonitoringWidget();
 
-        assertThat(widget2.getVersion().value()).isEqualTo("tech1-framework vTEST");
-        assertThat(widget2.getDatapoint().isAnyProblem()).isFalse();
-        assertThat(widget2.getDatapoint().isAnyPresent()).isTrue();
-        var mappedRows = widget2.getDatapoint().getRows().stream()
+        assertThat(widget2.version().value()).isEqualTo("tech1-framework vTEST");
+        assertThat(widget2.datapoint().isAnyProblem()).isFalse();
+        assertThat(widget2.datapoint().isAnyPresent()).isTrue();
+        var mappedRows = widget2.datapoint().getRows().stream()
                 .collect(Collectors.toMap(
                         HardwareMonitoringDatapointTableRow::getHardwareName,
                         entry -> entry

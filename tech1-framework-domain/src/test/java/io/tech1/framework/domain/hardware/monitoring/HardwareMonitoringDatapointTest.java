@@ -83,7 +83,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         assertThat(tableViewDC.read("$.rows[0].hardwareName", String.class)).isEqualTo("CPU");
         assertThat(tableViewDC.read("$.rows[0].timestamp", long.class)).isPositive();
         assertThat(tableViewDC.read("$.rows[0].usage", BigDecimal.class)).isEqualTo(new BigDecimal("53.28"));
-        assertThat(tableViewDC.read("$.rows[0].value", String.class)).isEqualTo("");
+        assertThat(tableViewDC.read("$.rows[0].value", String.class)).isEmpty();
         assertThat(tableViewDC.read("$.rows[1].hardwareName", String.class)).isEqualTo("Heap");
         assertThat(tableViewDC.read("$.rows[1].timestamp", long.class)).isPositive();
         assertThat(tableViewDC.read("$.rows[1].usage", BigDecimal.class)).isEqualTo(new BigDecimal("1.0"));
@@ -137,10 +137,10 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         assertThat(datapointDC.read("$.cpu", BigDecimal.class)).isEqualTo("0.0");
         assertThat(datapointDC.read("$.heap.value", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
         assertThat(datapointDC.read("$.heap.percentage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);
-        assertThat(datapointDC.read("$.maxValues.server", Long.class)).isEqualTo(0L);
-        assertThat(datapointDC.read("$.maxValues.swap", Long.class)).isEqualTo(0L);
-        assertThat(datapointDC.read("$.maxValues.virtual", Long.class)).isEqualTo(0L);
-        assertThat(datapointDC.read("$.maxValues.heap", Long.class)).isEqualTo(0L);
+        assertThat(datapointDC.read("$.maxValues.server", Long.class)).isZero();
+        assertThat(datapointDC.read("$.maxValues.swap", Long.class)).isZero();
+        assertThat(datapointDC.read("$.maxValues.virtual", Long.class)).isZero();
+        assertThat(datapointDC.read("$.maxValues.heap", Long.class)).isZero();
         var tableViewDC = JsonPath.parse(tableViewJson);
         assertThat(tableViewDC).isNotNull();
         assertThat(tableViewDC.read("$.anyPresent", boolean.class)).isTrue();
@@ -148,7 +148,7 @@ class HardwareMonitoringDatapointTest extends AbstractFolderSerializationRunner 
         assertThat(tableViewDC.read("$.rows[0].hardwareName", String.class)).isEqualTo("CPU");
         assertThat(tableViewDC.read("$.rows[0].timestamp", long.class)).isPositive();
         assertThat(tableViewDC.read("$.rows[0].usage", BigDecimal.class)).isEqualTo(new BigDecimal("0.0"));
-        assertThat(tableViewDC.read("$.rows[0].value", String.class)).isEqualTo("");
+        assertThat(tableViewDC.read("$.rows[0].value", String.class)).isEmpty();
         assertThat(tableViewDC.read("$.rows[1].hardwareName", String.class)).isEqualTo("Heap");
         assertThat(tableViewDC.read("$.rows[1].timestamp", long.class)).isPositive();
         assertThat(tableViewDC.read("$.rows[1].usage", BigDecimal.class)).isEqualTo(BigDecimal.ZERO);

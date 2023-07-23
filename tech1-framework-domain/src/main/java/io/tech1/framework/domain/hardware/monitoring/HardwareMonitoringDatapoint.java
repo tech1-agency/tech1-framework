@@ -71,7 +71,7 @@ public class HardwareMonitoringDatapoint {
                 virtual
         );
 
-        this.cpu = cpu.value();
+        this.cpu = cpu.getValue();
 
         this.heap = TuplePercentage.of(
                 heap.getUsed().getBy(this.unit),

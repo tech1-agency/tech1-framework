@@ -31,7 +31,6 @@ class GeoCountryFlagTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(geoCountryFlag);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 }

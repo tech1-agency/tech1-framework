@@ -34,7 +34,6 @@ class GlobalMemoryTest extends AbstractMemoriesTest {
         var json = this.writeValueAsString(globalMemory);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -50,7 +49,6 @@ class GlobalMemoryTest extends AbstractMemoriesTest {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(globalMemory);
     }
 }

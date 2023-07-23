@@ -72,13 +72,13 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
             usernames.forEach(username -> this.wssMessagingTemplate.sendEventToUser(
                     username,
                     userDestination,
-                    hardwareMonitoring(this.hardwareMonitoringStore.getHardwareMonitoringWidget().getDatapoint())
+                    hardwareMonitoring(this.hardwareMonitoringStore.getHardwareMonitoringWidget().datapoint())
             ));
         }
     }
 
     public boolean isAnyProblemOrFirstDatapoint() {
-        return this.hardwareMonitoringStore.getHardwareMonitoringWidget().getDatapoint().isAnyProblem() ||
+        return this.hardwareMonitoringStore.getHardwareMonitoringWidget().datapoint().isAnyProblem() ||
                 this.hardwareMonitoringStore.containsOneElement();
     }
 }

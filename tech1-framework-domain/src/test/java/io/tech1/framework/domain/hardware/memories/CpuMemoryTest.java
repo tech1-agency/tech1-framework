@@ -30,7 +30,6 @@ class CpuMemoryTest extends AbstractMemoriesTest {
         var json = this.writeValueAsString(cpuMemory);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -46,7 +45,6 @@ class CpuMemoryTest extends AbstractMemoriesTest {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(cpuMemory);
     }
 }

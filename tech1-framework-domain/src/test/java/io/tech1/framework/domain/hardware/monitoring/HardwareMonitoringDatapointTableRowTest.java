@@ -18,8 +18,8 @@ class HardwareMonitoringDatapointTableRowTest {
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
                 Arguments.of(Map.of(), false),
-                Arguments.of(Map.of(HEAP, randomHardwareMonitoringThreshold().getValue()), false),
-                Arguments.of(Map.of(CPU, randomHardwareMonitoringThreshold().getValue()), false),
+                Arguments.of(Map.of(HEAP, randomHardwareMonitoringThreshold().value()), false),
+                Arguments.of(Map.of(CPU, randomHardwareMonitoringThreshold().value()), false),
                 Arguments.of(Map.of(CPU, randomBigDecimalGreaterThanZeroByBounds(5L, 10L)), true)
         );
     }
@@ -39,7 +39,7 @@ class HardwareMonitoringDatapointTableRowTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getHardwareName()).isNotNull();
-        assertThat(actual.getTimestamp()).isNotNull();
+        assertThat(actual.getTimestamp()).isNotZero();
         assertThat(actual.getUsage()).isNotNull();
         assertThat(actual.getValue()).isNotNull();
         assertThat(actual.isThresholdReached()).isEqualTo(expected);

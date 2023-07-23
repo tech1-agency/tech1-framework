@@ -26,7 +26,6 @@ class SystemMemoriesTest extends AbstractMemoriesTest {
         var json = this.writeValueAsString(systemMemories);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -42,7 +41,6 @@ class SystemMemoriesTest extends AbstractMemoriesTest {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(systemMemories);
     }
 }

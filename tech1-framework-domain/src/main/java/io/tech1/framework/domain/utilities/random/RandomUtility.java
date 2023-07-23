@@ -439,7 +439,7 @@ public class RandomUtility {
                 .collect(
                         Collectors.toMap(
                                 entry -> entry,
-                                entry -> randomHardwareMonitoringThreshold().getValue()
+                                entry -> randomHardwareMonitoringThreshold().value()
                         )
                 );
         return new HardwareMonitoringThresholds(thresholds);

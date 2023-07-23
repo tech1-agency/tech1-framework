@@ -44,7 +44,6 @@ class ByteSizeTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(byteSize);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
@@ -60,7 +59,6 @@ class ByteSizeTest extends AbstractFolderSerializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(byteSize);
         assertThat(actual.getBytes()).isEqualTo(byteSize.getBytes());
     }

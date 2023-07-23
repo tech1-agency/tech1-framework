@@ -984,8 +984,8 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isGreaterThanOrEqualTo(new BigDecimal("50"));
-        assertThat(actual.getValue()).isLessThanOrEqualTo(new BigDecimal("100"));
+        assertThat(actual.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
+        assertThat(actual.value()).isLessThanOrEqualTo(new BigDecimal("100"));
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
@@ -997,8 +997,8 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getThresholds().size()).isEqualTo(5);
         actual.getThresholds().values().forEach(threshold -> {
-            assertThat(threshold.getValue()).isGreaterThanOrEqualTo(new BigDecimal("50"));
-            assertThat(threshold.getValue()).isLessThanOrEqualTo(new BigDecimal("100"));
+            assertThat(threshold.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
+            assertThat(threshold.value()).isLessThanOrEqualTo(new BigDecimal("100"));
         });
     }
 

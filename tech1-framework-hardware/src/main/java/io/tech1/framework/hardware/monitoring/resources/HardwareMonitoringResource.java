@@ -25,10 +25,10 @@ public class HardwareMonitoringResource {
     public void systemMemories(@RequestBody HardwareMonitoringMetadata hardwareMonitoringMetadata) {
         this.hardwareMonitoringPublisher.publishLastHardwareMonitoringDatapoint(
                 new EventLastHardwareMonitoringDatapoint(
-                        hardwareMonitoringMetadata.getVersion(),
+                        hardwareMonitoringMetadata.version(),
                         new HardwareMonitoringDatapoint(
-                                hardwareMonitoringMetadata.getSystemMemories().getGlobal(),
-                                hardwareMonitoringMetadata.getSystemMemories().getCpu(),
+                                hardwareMonitoringMetadata.systemMemories().global(),
+                                hardwareMonitoringMetadata.systemMemories().cpu(),
                                 getHeapMemory()
                         )
                 )

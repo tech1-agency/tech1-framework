@@ -51,7 +51,6 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(geoLocation);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 

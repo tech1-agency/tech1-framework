@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.websockets.handshakes;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
 
     // Services
     private final TokenService tokenService;
+    // Cookie
+    private final CookieProvider cookieProvider;
 
     @Override
     protected Principal determineUser(
@@ -32,7 +35,9 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
     ) {
         try {
             var request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
-            var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(request);
+            var cookieAccessToken = this.cookieProvider.readJwtAccessToken(request);
+            var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
+            var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
             var currentJwtUser = tuple2.a();
             return new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());
         } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException |

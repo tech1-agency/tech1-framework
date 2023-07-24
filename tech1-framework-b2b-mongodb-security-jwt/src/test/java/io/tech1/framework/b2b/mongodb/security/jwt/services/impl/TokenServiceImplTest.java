@@ -124,28 +124,23 @@ class TokenServiceImplTest {
     }
 
     @Test
-    void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
-        // Arrage
-        var request = mock(HttpServletRequest.class);
-        var cookieAccessToken = new CookieAccessToken(randomString());
+    void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
+        // Arrange
+        var cookieAccessToken = entity(CookieAccessToken.class);
+        var cookieRefreshToken = entity(CookieRefreshToken.class);
         var jwtAccessToken = cookieAccessToken.getJwtAccessToken();
-        var cookieRefreshToken = new CookieRefreshToken(randomString());
         var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
         var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(jwtAccessToken, randomValidDefaultClaims());
         var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(jwtRefreshToken, randomValidDefaultClaims());
         var jwtUser = entity(JwtUser.class);
-        when(this.cookieProvider.readJwtAccessToken(request)).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(cookieRefreshToken);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(jwtAccessToken)).thenReturn(accessTokenValidatedClaims);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(jwtRefreshToken)).thenReturn(refreshTokenValidatedClaims);
         when(this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
 
         // Act
-        var tuple2 = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(request);
+        var tuple2 = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(request);
-        verify(this.cookieProvider).readJwtRefreshToken(request);
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(jwtAccessToken);
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(jwtRefreshToken);
         verify(this.tokenContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);

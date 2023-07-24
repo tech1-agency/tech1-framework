@@ -51,14 +51,20 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
-                this.currentSessionAssistant
+                this.currentSessionAssistant,
+                this.userSessionService,
+                this.cookieProvider,
+                this.sessionsRequestsValidator
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.currentSessionAssistant
+                this.currentSessionAssistant,
+                this.userSessionService,
+                this.cookieProvider,
+                this.sessionsRequestsValidator
         );
     }
 
@@ -94,7 +100,9 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     void getCurrentUserDbSessionsTest() throws Exception {
         // Arrange
         var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
-        when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(any(HttpServletRequest.class))).thenReturn(userSessionsTables);
+        var cookie = entity(CookieRefreshToken.class);
+        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie)).thenReturn(userSessionsTables);
 
         // Act
         this.mvc.perform(get("/sessions").contentType(MediaType.APPLICATION_JSON))
@@ -104,7 +112,8 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.anyProblem", instanceOf(Boolean.class)));
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentUserDbSessionsTable(any(HttpServletRequest.class));
+        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.currentSessionAssistant).getCurrentUserDbSessionsTable(cookie);
     }
 
     @Test
@@ -144,6 +153,7 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentDbUser();
+        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.userSessionService).deleteAllExceptCurrent(user, cookie);
     }
 }

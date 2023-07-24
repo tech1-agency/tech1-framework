@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_1;
 
@@ -35,7 +34,7 @@ public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
         return invitationCodes.stream()
                 .map(ResponseInvitationCode1::new)
                 .sorted(INVITATION_CODE_1)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

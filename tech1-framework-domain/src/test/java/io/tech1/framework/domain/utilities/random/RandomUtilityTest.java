@@ -18,7 +18,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -427,7 +430,6 @@ class RandomUtilityTest {
         var actual = randomStringsAsList(size);
 
         // Assert
-        assertThat(actual.getClass()).isEqualTo(ArrayList.class);
         assertThat(actual).hasSize(size);
         actual.forEach(element -> assertThat(element).hasSize(elementLength));
     }

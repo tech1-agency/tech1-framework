@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.13
-- Sessions API: terminate by sessionId
+- Sessions API: terminate by sessionId, terminate all except current
 - Sessions API: /session → sessions
 - InvitationCodes API: /invitationCode → /invitationCodes
 - Java17: records, serialization/deserialization, junit tests sonar suggestions

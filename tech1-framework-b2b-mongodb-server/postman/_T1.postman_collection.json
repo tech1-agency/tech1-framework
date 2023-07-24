@@ -222,6 +222,43 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/123",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Except Current",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

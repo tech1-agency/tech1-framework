@@ -1,8 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
@@ -12,6 +14,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.SecurityJwtTok
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.enums.Status;
+import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -33,7 +36,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
@@ -66,6 +71,11 @@ class UserSessionServiceImplTest {
         }
 
         @Bean
+        CookieProvider cookieProvider() {
+            return mock(CookieProvider.class);
+        }
+
+        @Bean
         GeoLocationFacadeUtility geoLocationFacadeUtility() {
             return mock(GeoLocationFacadeUtility.class);
         }
@@ -87,6 +97,7 @@ class UserSessionServiceImplTest {
             return new UserSessionServiceImpl(
                     this.securityJwtPublisher(),
                     this.userSessionRepository(),
+                    this.cookieProvider(),
                     this.geoLocationFacadeUtility(),
                     this.securityJwtTokenUtility(),
                     this.userAgentDetailsUtility()
@@ -94,8 +105,13 @@ class UserSessionServiceImplTest {
         }
     }
 
+    // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
+    // Repositories
     private final UserSessionRepository userSessionRepository;
+    // Cookie
+    private final CookieProvider cookieProvider;
+    // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final UserAgentDetailsUtility userAgentDetailsUtility;
 
@@ -106,6 +122,7 @@ class UserSessionServiceImplTest {
         reset(
                 this.securityJwtPublisher,
                 this.userSessionRepository,
+                this.cookieProvider,
                 this.geoLocationFacadeUtility
         );
     }
@@ -115,6 +132,7 @@ class UserSessionServiceImplTest {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
                 this.userSessionRepository,
+                this.cookieProvider,
                 this.geoLocationFacadeUtility
         );
     }
@@ -378,5 +396,38 @@ class UserSessionServiceImplTest {
 
         // Assert
         verify(this.userSessionRepository).deleteById(sessionId);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void deleteAllExceptCurrentTest() throws CookieRefreshTokenNotFoundException {
+        // Arrange
+        var user = entity(DbUser.class);
+        var httpServletRequest = mock(HttpServletRequest.class);
+        var cookie = entity(CookieRefreshToken.class);
+        var session1 = new DbUserSession(new JwtRefreshToken("session1"), randomUsername(), entity(UserRequestMetadata.class));
+        var session2 = new DbUserSession(new JwtRefreshToken("session2"), randomUsername(), entity(UserRequestMetadata.class));
+        var session3 = new DbUserSession(new JwtRefreshToken("session3"), randomUsername(), entity(UserRequestMetadata.class));
+        var session4 = new DbUserSession(new JwtRefreshToken("session4"), randomUsername(), entity(UserRequestMetadata.class));
+        var sessions = new ArrayList<>(List.of(session1, session2, session3, session4));
+        when(this.userSessionRepository.findByUsername(user.getUsername())).thenReturn(sessions);
+        when(this.cookieProvider.readJwtRefreshToken(httpServletRequest)).thenReturn(cookie);
+        when(this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken())).thenReturn(session3);
+
+        // Act
+        this.componentUnderTest.deleteAllExceptCurrent(user, httpServletRequest);
+
+        // Assert
+        verify(this.userSessionRepository).findByUsername(user.getUsername());
+        verify(this.cookieProvider).readJwtRefreshToken(httpServletRequest);
+        verify(this.userSessionRepository).findByRefreshToken(cookie.getJwtRefreshToken());
+        var sessionsAC = ArgumentCaptor.forClass(List.class);
+        verify(this.userSessionRepository).deleteAll(sessionsAC.capture());
+        assertThat(sessionsAC.getValue()).hasSize(3);
+        assertThat(((List<DbUserSession>) sessionsAC.getValue()).stream().map(DbUserSession::getId).collect(Collectors.toSet())).containsExactlyInAnyOrder(
+                "session1",
+                "session2",
+                "session4"
+        );
     }
 }

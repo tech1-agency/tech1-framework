@@ -46,5 +46,12 @@ public class BaseSecuritySessionsResource {
         this.sessionsRequestsValidator.validateDeleteById(currentDbUser, sessionId);
         this.userSessionService.deleteById(sessionId);
     }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
+        var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
+        this.userSessionService.deleteAllExceptCurrent(currentDbUser, httpServletRequest);
+    }
 }
 

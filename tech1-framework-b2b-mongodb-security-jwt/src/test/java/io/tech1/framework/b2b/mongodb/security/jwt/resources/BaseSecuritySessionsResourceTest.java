@@ -122,4 +122,22 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
         verify(this.sessionsRequestsValidator).validateDeleteById(user, sessionId);
         verify(this.userSessionService).deleteById(sessionId);
     }
+
+    @Test
+    void deleteAllExceptCurrent() throws Exception {
+        // Arrange
+        var user = entity(DbUser.class);
+        when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(user);
+
+        // Act
+        this.mvc.perform(
+                        delete("/sessions/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.currentSessionAssistant).getCurrentDbUser();
+        verify(this.userSessionService).deleteAllExceptCurrent(eq(user), any(HttpServletRequest.class));
+    }
 }

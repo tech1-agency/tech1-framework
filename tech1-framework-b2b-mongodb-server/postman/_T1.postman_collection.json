@@ -458,7 +458,7 @@
 					"response": []
 				},
 				{
-					"name": "Sessions - Server",
+					"name": "Sessions",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -473,7 +473,26 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions/server",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"superadmin",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessions - Delete By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions/123",
 							"host": [
 								"{{serverURL}}"
 							],
@@ -481,7 +500,7 @@
 								"{{frameworkBasePathPrefix}}",
 								"superadmin",
 								"sessions",
-								"server"
+								"123"
 							]
 						}
 					},

@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.Response
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession3;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,8 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
-    // Assistants
+    // Services
     private final BaseSuperAdminService baseSuperAdminService;
+    private final UserSessionService userSessionService;
 
     // Resource
     private final BaseSuperAdminResource componentUnderTest;
@@ -68,12 +72,28 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         when(this.baseSuperAdminService.getServerSessions()).thenReturn(sessionsTable);
 
         // Act
-        this.mvc.perform(get("/superadmin/sessions/server").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/superadmin/sessions").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activeSessions", hasSize(sessionsTable.activeSessions().size())))
                 .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.inactiveSessions().size())));
 
         // Assert
         verify(this.baseSuperAdminService).getServerSessions();
+    }
+
+    @Test
+    void deleteByIdTest() throws Exception {
+        // Arrange
+        var sessionId = randomString();
+
+        // Act
+        this.mvc.perform(
+                        delete("/superadmin/sessions/" + sessionId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.userSessionService).deleteById(sessionId);
     }
 }

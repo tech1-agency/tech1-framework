@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.13
+- Superuser API: terminate by sessionId
 - Sessions API: terminate by sessionId, terminate all except current
 - Sessions API: /session → sessions
 - InvitationCodes API: /invitationCode → /invitationCodes

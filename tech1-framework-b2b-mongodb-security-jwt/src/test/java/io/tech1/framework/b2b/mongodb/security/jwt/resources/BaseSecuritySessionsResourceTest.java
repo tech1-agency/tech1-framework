@@ -25,13 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecuritySessionResourceTest extends AbstractResourcesRunner {
+class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
 
     // Resource
-    private final BaseSecuritySessionResource componentUnderTest;
+    private final BaseSecuritySessionsResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

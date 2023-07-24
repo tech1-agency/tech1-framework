@@ -17,21 +17,21 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/sessions")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecuritySessionResource {
+public class BaseSecuritySessionsResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
 
+    @GetMapping
+    public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
+        return this.currentSessionAssistant.getCurrentUserDbSessionsTable(httpServletRequest);
+    }
+
     @GetMapping("/current")
     public CurrentClientUser getCurrentClientUser() {
         return this.currentSessionAssistant.getCurrentClientUser();
-    }
-
-    @GetMapping("/db/table")
-    public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
-        return this.currentSessionAssistant.getCurrentUserDbSessionsTable(httpServletRequest);
     }
 }
 

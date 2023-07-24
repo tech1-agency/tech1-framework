@@ -1,6 +1,8 @@
 # Release Notes
 
 ### v1.13
+- Sessions API: /session → sessions
+- InvitationCodes API: /invitationCode → /invitationCodes
 - Java17: records, serialization/deserialization, junit tests sonar suggestions
 
 ### v1.12

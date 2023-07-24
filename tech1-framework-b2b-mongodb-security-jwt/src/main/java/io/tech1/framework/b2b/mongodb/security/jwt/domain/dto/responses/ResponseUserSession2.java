@@ -2,16 +2,16 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 import lombok.Data;
-
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 // Lombok
 @Data
 public class ResponseUserSession2 {
     private final String id;
+
+    private final Username who;
 
     private final boolean current;
     private final String activity;
@@ -25,12 +25,12 @@ public class ResponseUserSession2 {
     private final String browser;
     private final String what;
 
-    public ResponseUserSession2(DbUserSession session, CookieRefreshToken cookieRefreshToken) {
-        assertNonNullOrThrow(session, invalidAttribute("ResponseUserSession2.session"));
-        assertNonNullOrThrow(cookieRefreshToken, invalidAttribute("ResponseUserSession2.cookieRefreshToken"));
+    public ResponseUserSession2(DbUserSession session, CookieRefreshToken cookie) {
         this.id = session.getId();
 
-        this.current = cookieRefreshToken.value().equals(session.getJwtRefreshToken().value());
+        this.who = session.getUsername();
+
+        this.current = cookie.value().equals(session.getJwtRefreshToken().value());
         if (this.current) {
             this.activity = "Current session";
         } else {

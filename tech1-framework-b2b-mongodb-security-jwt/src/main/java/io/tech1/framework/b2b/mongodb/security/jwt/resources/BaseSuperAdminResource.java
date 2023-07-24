@@ -35,8 +35,9 @@ public class BaseSuperAdminResource {
     }
 
     @GetMapping("/sessions")
-    public ResponseServerSessionsTable getServerSessions() {
-        return this.baseSuperAdminService.getServerSessions();
+    public ResponseServerSessionsTable getServerSessions(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
+        var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
+        return this.baseSuperAdminService.getServerSessions(cookie);
     }
 
     @DeleteMapping("/sessions/{sessionId}")

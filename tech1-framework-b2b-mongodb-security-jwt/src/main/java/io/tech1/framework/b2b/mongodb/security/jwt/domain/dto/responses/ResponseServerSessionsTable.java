@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.SESSIONS_3;
+import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.SESSIONS_2;
 
 public record ResponseServerSessionsTable(
-        List<ResponseUserSession3> activeSessions,
-        List<ResponseUserSession3> inactiveSessions
+        List<ResponseUserSession2> activeSessions,
+        List<ResponseUserSession2> inactiveSessions
 ) {
     public static ResponseServerSessionsTable of(
-            List<ResponseUserSession3> activeSessions,
-            List<ResponseUserSession3> inactiveSessions
+            List<ResponseUserSession2> activeSessions,
+            List<ResponseUserSession2> inactiveSessions
     ) {
-        activeSessions.sort(SESSIONS_3);
-        inactiveSessions.sort(SESSIONS_3);
+        activeSessions.sort(SESSIONS_2);
+        inactiveSessions.sort(SESSIONS_2);
         return new ResponseServerSessionsTable(
                 activeSessions,
                 inactiveSessions
@@ -27,11 +27,11 @@ public record ResponseServerSessionsTable(
 
     @JsonIgnore
     public Set<Username> getActiveUsernames() {
-        return this.activeSessions.stream().map(ResponseUserSession3::who).collect(Collectors.toSet());
+        return this.activeSessions.stream().map(ResponseUserSession2::getWho).collect(Collectors.toSet());
     }
 
     @JsonIgnore
     public Set<Username> getInactiveUsernames() {
-        return this.inactiveSessions.stream().map(ResponseUserSession3::who).collect(Collectors.toSet());
+        return this.inactiveSessions.stream().map(ResponseUserSession2::getWho).collect(Collectors.toSet());
     }
 }

@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
@@ -105,6 +106,8 @@ class BaseSuperAdminServiceImplTest {
     @Test
     void getServerSessionsTest() {
         // Arrange
+        var cookie = entity(CookieRefreshToken.class);
+
         var dbUserSession1 = entity(DbUserSession.class);
         var dbUserSession2 = entity(DbUserSession.class);
         var dbUserSession3 = entity(DbUserSession.class);
@@ -118,7 +121,7 @@ class BaseSuperAdminServiceImplTest {
         when(this.sessionRegistry.getActiveSessionsRefreshTokens()).thenReturn(activeSessions);
 
         // Act
-        var serverSessions = this.componentUnderTest.getServerSessions();
+        var serverSessions = this.componentUnderTest.getServerSessions(cookie);
 
         // Assert
         verify(this.userSessionRepository).findAll();

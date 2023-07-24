@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession3;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -77,10 +77,12 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     void getServerSessions() throws Exception {
         // Arrange
         var sessionsTable = ResponseServerSessionsTable.of(
-                list345(ResponseUserSession3.class),
-                list345(ResponseUserSession3.class)
+                list345(ResponseUserSession2.class),
+                list345(ResponseUserSession2.class)
         );
-        when(this.baseSuperAdminService.getServerSessions()).thenReturn(sessionsTable);
+        var cookie = entity(CookieRefreshToken.class);
+        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.baseSuperAdminService.getServerSessions(cookie)).thenReturn(sessionsTable);
 
         // Act
         this.mvc.perform(get("/superadmin/sessions").contentType(MediaType.APPLICATION_JSON))
@@ -89,7 +91,8 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.inactiveSessions().size())));
 
         // Assert
-        verify(this.baseSuperAdminService).getServerSessions();
+        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.baseSuperAdminService).getServerSessions(cookie);
     }
 
     @Test

@@ -26,4 +26,5 @@ public interface UserSessionService {
     SessionsValidatedTuple2 validate(List<DbUserSession> usersSessions);
     void deleteById(String sessionId);
     void deleteAllExceptCurrent(DbUser user, CookieRefreshToken cookie);
+    void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie);
 }

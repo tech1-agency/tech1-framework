@@ -505,6 +505,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Sessions - Delete All Except Current",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"superadmin",
+								"sessions"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

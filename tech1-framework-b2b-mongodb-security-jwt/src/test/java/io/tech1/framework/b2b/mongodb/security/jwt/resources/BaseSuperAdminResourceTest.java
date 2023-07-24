@@ -1,8 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession3;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
@@ -13,6 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import javax.servlet.http.HttpServletRequest;
+
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.hamcrest.Matchers.hasSize;
@@ -28,6 +33,8 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     // Services
     private final BaseSuperAdminService baseSuperAdminService;
     private final UserSessionService userSessionService;
+    // Cookie
+    private final CookieProvider cookieProvider;
 
     // Resource
     private final BaseSuperAdminResource componentUnderTest;
@@ -36,14 +43,18 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
-                this.baseSuperAdminService
+                this.baseSuperAdminService,
+                this.userSessionService,
+                this.cookieProvider
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.baseSuperAdminService
+                this.baseSuperAdminService,
+                this.userSessionService,
+                this.cookieProvider
         );
     }
 
@@ -95,5 +106,23 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.userSessionService).deleteById(sessionId);
+    }
+
+    @Test
+    void deleteAllExceptCurrent() throws Exception {
+        // Arrange
+        var cookie = entity(CookieRefreshToken.class);
+        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+
+        // Act
+        this.mvc.perform(
+                        delete("/superadmin/sessions/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.userSessionService).deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

@@ -171,4 +171,12 @@ public class UserSessionServiceImpl implements UserSessionService {
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
         this.userSessionRepository.deleteAll(sessions);
     }
+
+    @Override
+    public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
+        var sessions = this.userSessionRepository.findAll();
+        var currentSession = this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
+        this.userSessionRepository.deleteAll(sessions);
+    }
 }

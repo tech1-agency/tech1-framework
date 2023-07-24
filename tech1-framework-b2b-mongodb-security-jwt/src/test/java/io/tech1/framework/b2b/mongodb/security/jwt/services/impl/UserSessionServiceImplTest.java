@@ -415,4 +415,33 @@ class UserSessionServiceImplTest {
                 "session4"
         );
     }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void deleteAllExceptCurrentAsSuperuserTest() {
+        // Arrange
+        var cookie = entity(CookieRefreshToken.class);
+        var session1 = new DbUserSession(new JwtRefreshToken("session1"), randomUsername(), entity(UserRequestMetadata.class));
+        var session2 = new DbUserSession(new JwtRefreshToken("session2"), randomUsername(), entity(UserRequestMetadata.class));
+        var session3 = new DbUserSession(new JwtRefreshToken("session3"), randomUsername(), entity(UserRequestMetadata.class));
+        var session4 = new DbUserSession(new JwtRefreshToken("session4"), randomUsername(), entity(UserRequestMetadata.class));
+        var sessions = new ArrayList<>(List.of(session1, session2, session3, session4));
+        when(this.userSessionRepository.findAll()).thenReturn(sessions);
+        when(this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken())).thenReturn(session3);
+
+        // Act
+        this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(cookie);
+
+        // Assert
+        verify(this.userSessionRepository).findAll();
+        verify(this.userSessionRepository).findByRefreshToken(cookie.getJwtRefreshToken());
+        var sessionsAC = ArgumentCaptor.forClass(List.class);
+        verify(this.userSessionRepository).deleteAll(sessionsAC.capture());
+        assertThat(sessionsAC.getValue()).hasSize(3);
+        assertThat(((List<DbUserSession>) sessionsAC.getValue()).stream().map(DbUserSession::getId).collect(Collectors.toSet())).containsExactlyInAnyOrder(
+                "session1",
+                "session2",
+                "session4"
+        );
+    }
 }

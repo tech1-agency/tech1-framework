@@ -146,7 +146,7 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
 
         // Act
         this.mvc.perform(
-                        delete("/sessions/")
+                        delete("/sessions")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());

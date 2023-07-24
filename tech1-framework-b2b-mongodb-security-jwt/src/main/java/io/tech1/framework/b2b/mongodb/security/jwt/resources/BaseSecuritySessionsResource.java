@@ -4,13 +4,14 @@ import io.tech1.framework.b2b.mongodb.security.jwt.annotations.AbstractFramework
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.mongodb.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,10 @@ public class BaseSecuritySessionsResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
+    // Services
+    private final UserSessionService userSessionService;
+    // Validators
+    private final SessionsRequestsValidator sessionsRequestsValidator;
 
     @GetMapping
     public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
@@ -32,6 +37,14 @@ public class BaseSecuritySessionsResource {
     @GetMapping("/current")
     public CurrentClientUser getCurrentClientUser() {
         return this.currentSessionAssistant.getCurrentClientUser();
+    }
+
+    @DeleteMapping("/{sessionId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable String sessionId) {
+        var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
+        this.sessionsRequestsValidator.validateDeleteById(currentDbUser, sessionId);
+        this.userSessionService.deleteById(sessionId);
     }
 }
 

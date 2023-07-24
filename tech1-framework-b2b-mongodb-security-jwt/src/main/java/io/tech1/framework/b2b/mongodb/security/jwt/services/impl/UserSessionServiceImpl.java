@@ -157,4 +157,9 @@ public class UserSessionServiceImpl implements UserSessionService {
                 expiredOrInvalidSessionIds
         );
     }
+
+    @Override
+    public void deleteById(String sessionId) {
+        this.userSessionRepository.deleteById(sessionId);
+    }
 }

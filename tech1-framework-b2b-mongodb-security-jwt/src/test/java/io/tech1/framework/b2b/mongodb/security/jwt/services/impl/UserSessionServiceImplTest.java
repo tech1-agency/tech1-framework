@@ -367,4 +367,16 @@ class UserSessionServiceImplTest {
         assertThat(sessionsValidatedTuple2.expiredSessions()).hasSize(1);
         assertThat(sessionsValidatedTuple2.expiredSessions().get(0).a().identifier()).isEqualTo("multiuser43");
     }
+
+    @Test
+    void deleteByIdTest() {
+        // Arrange
+        var sessionId = randomString();
+
+        // Act
+        this.componentUnderTest.deleteById(sessionId);
+
+        // Assert
+        verify(this.userSessionRepository).deleteById(sessionId);
+    }
 }

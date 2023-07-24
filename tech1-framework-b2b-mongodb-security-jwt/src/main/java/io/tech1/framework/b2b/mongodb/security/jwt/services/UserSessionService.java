@@ -23,4 +23,5 @@ public interface UserSessionService {
     DbUserSession refresh(DbUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest);
     DbUserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event);
     SessionsValidatedTuple2 validate(List<DbUserSession> usersSessions);
+    void deleteById(String sessionId);
 }

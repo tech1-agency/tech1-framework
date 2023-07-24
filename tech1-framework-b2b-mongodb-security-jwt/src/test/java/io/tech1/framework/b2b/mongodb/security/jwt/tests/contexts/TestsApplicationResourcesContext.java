@@ -9,10 +9,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.ResourceE
 import io.tech1.framework.b2b.mongodb.security.jwt.services.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.AuthenticationRequestsValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.mongodb.security.jwt.validators.*;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
@@ -152,6 +149,11 @@ public class TestsApplicationResourcesContext {
     @Bean
     public RegistrationRequestsValidator registrationRequestsValidator() {
         return mock(RegistrationRequestsValidator.class);
+    }
+
+    @Bean
+    public SessionsRequestsValidator sessionsRequestsValidator() {
+        return mock(SessionsRequestsValidator.class);
     }
 
     @Bean

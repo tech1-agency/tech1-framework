@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
@@ -11,7 +10,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
@@ -32,7 +30,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -66,11 +63,6 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        CookieProvider cookieProvider() {
-            return mock(CookieProvider.class);
-        }
-
-        @Bean
         SecurityPrincipalUtility securityPrincipalUtility() {
             return mock(SecurityPrincipalUtility.class);
         }
@@ -86,7 +78,6 @@ class BaseCurrentSessionAssistantTest {
                     this.sessionRegistry(),
                     this.userSessionService(),
                     this.hardwareMonitoringStore(),
-                    this.cookieProvider(),
                     this.securityPrincipalUtility(),
                     this.applicationFrameworkProperties()
             );
@@ -96,7 +87,6 @@ class BaseCurrentSessionAssistantTest {
     private final SessionRegistry sessionRegistry;
     private final UserSessionService userSessionService;
     private final HardwareMonitoringStore hardwareMonitoringStore;
-    private final CookieProvider cookieProvider;
     private final SecurityPrincipalUtility securityPrincipalUtility;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -108,7 +98,6 @@ class BaseCurrentSessionAssistantTest {
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
                 this.userSessionService,
-                this.cookieProvider,
                 this.securityPrincipalUtility,
                 this.applicationFrameworkProperties
         );
@@ -120,7 +109,6 @@ class BaseCurrentSessionAssistantTest {
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
                 this.userSessionService,
-                this.cookieProvider,
                 this.securityPrincipalUtility,
                 this.applicationFrameworkProperties
         );
@@ -234,7 +222,7 @@ class BaseCurrentSessionAssistantTest {
         var jwtUser = entity(JwtUser.class);
         var username = jwtUser.dbUser().getUsername();
         var validJwtRefreshToken = randomString();
-        var cookieRefreshToken = new CookieRefreshToken(validJwtRefreshToken);
+        var cookie = new CookieRefreshToken(validJwtRefreshToken);
 
         Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
                     tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
@@ -277,39 +265,31 @@ class BaseCurrentSessionAssistantTest {
 
         // Act
         cases.forEach(item -> {
-            try {
-                // Arrange
-                var httpServletRequest = mock(HttpServletRequest.class);
-                when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
-                var userSessions = item.a();
-                var expectedSessionSize = item.b();
-                var expectedAnyProblems = item.c();
-                when(this.userSessionService.findByUsername(username)).thenReturn(userSessions);
-                when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+            // Arrange
+            when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+            var userSessions = item.a();
+            var expectedSessionSize = item.b();
+            var expectedAnyProblems = item.c();
+            when(this.userSessionService.findByUsername(username)).thenReturn(userSessions);
 
-                // Act
-                var currentUserDbSessionsTable = this.componentUnderTest.getCurrentUserDbSessionsTable(httpServletRequest);
+            // Act
+            var currentUserDbSessionsTable = this.componentUnderTest.getCurrentUserDbSessionsTable(cookie);
 
-                // Assert
-                verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-                verify(this.userSessionService, times(2)).findByUsername(username);
-                verify(this.sessionRegistry).cleanByExpiredRefreshTokens(userSessions);
-                verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-                assertThat(currentUserDbSessionsTable).isNotNull();
-                assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
-                assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::isCurrent).count()).isEqualTo(1);
-                assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.getActivity())).count()).isEqualTo(1);
-                assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
+            // Assert
+            verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
+            verify(this.userSessionService, times(2)).findByUsername(username);
+            verify(this.sessionRegistry).cleanByExpiredRefreshTokens(userSessions);
+            assertThat(currentUserDbSessionsTable).isNotNull();
+            assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::isCurrent).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.getActivity())).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 
-                reset(
-                        this.sessionRegistry,
-                        this.userSessionService,
-                        this.cookieProvider,
-                        this.securityPrincipalUtility
-                );
-            } catch (CookieRefreshTokenNotFoundException ex) {
-                // ignored
-            }
+            reset(
+                    this.sessionRegistry,
+                    this.userSessionService,
+                    this.securityPrincipalUtility
+            );
         });
     }
 }

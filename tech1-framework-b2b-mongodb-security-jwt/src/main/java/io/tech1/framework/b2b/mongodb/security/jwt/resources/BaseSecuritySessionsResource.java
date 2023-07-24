@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -26,12 +27,15 @@ public class BaseSecuritySessionsResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final UserSessionService userSessionService;
+    // Cookie
+    private final CookieProvider cookieProvider;
     // Validators
     private final SessionsRequestsValidator sessionsRequestsValidator;
 
     @GetMapping
     public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
-        return this.currentSessionAssistant.getCurrentUserDbSessionsTable(httpServletRequest);
+        var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
+        return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
     @GetMapping("/current")
@@ -51,7 +55,8 @@ public class BaseSecuritySessionsResource {
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
         var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
-        this.userSessionService.deleteAllExceptCurrent(currentDbUser, httpServletRequest);
+        var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
+        this.userSessionService.deleteAllExceptCurrent(currentDbUser, cookie);
     }
 }
 

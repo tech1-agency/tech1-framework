@@ -3,10 +3,10 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,5 +25,5 @@ public interface UserSessionService {
     DbUserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event);
     SessionsValidatedTuple2 validate(List<DbUserSession> usersSessions);
     void deleteById(String sessionId);
-    void deleteAllExceptCurrent(DbUser user, HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException;
+    void deleteAllExceptCurrent(DbUser user, CookieRefreshToken cookie);
 }

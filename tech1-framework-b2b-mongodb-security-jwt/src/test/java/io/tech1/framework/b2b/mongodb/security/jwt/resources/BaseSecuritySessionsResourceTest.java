@@ -1,9 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.SessionsRequestsValidator;
@@ -37,6 +39,8 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final UserSessionService userSessionService;
+    // Cookie
+    private final CookieProvider cookieProvider;
     // Validators
     private final SessionsRequestsValidator sessionsRequestsValidator;
 
@@ -127,7 +131,9 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
         var user = entity(DbUser.class);
+        var cookie = entity(CookieRefreshToken.class);
         when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(user);
+        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
         this.mvc.perform(
@@ -138,6 +144,6 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.userSessionService).deleteAllExceptCurrent(eq(user), any(HttpServletRequest.class));
+        verify(this.userSessionService).deleteAllExceptCurrent(user, cookie);
     }
 }

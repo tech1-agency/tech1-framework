@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
@@ -11,7 +11,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepos
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
@@ -39,8 +38,6 @@ public class UserSessionServiceImpl implements UserSessionService {
     private final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
     private final UserSessionRepository userSessionRepository;
-    // Cookie
-    private final CookieProvider cookieProvider;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final SecurityJwtTokenUtility securityJwtTokenUtility;
@@ -168,10 +165,9 @@ public class UserSessionServiceImpl implements UserSessionService {
     }
 
     @Override
-    public void deleteAllExceptCurrent(DbUser user, HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
+    public void deleteAllExceptCurrent(DbUser user, CookieRefreshToken cookie) {
         var sessions = this.userSessionRepository.findByUsername(user.getUsername());
-        var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
-        var currentSession = this.userSessionRepository.findByRefreshToken(cookieRefreshToken.getJwtRefreshToken());
+        var currentSession = this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
         this.userSessionRepository.deleteAll(sessions);
     }

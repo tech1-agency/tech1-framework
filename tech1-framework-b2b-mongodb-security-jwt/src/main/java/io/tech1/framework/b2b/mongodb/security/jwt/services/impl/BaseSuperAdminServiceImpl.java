@@ -45,7 +45,7 @@ public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
         List<ResponseUserSession2> inactiveSessions = new ArrayList<>();
         dbUserSessions.forEach(dbUserSession -> {
-            var session = new ResponseUserSession2(dbUserSession, cookie);
+            var session = ResponseUserSession2.of(dbUserSession, cookie);
             if (activeSessionsRefreshTokens.contains(dbUserSession.getJwtRefreshToken())) {
                 activeSessions.add(session);
             } else {

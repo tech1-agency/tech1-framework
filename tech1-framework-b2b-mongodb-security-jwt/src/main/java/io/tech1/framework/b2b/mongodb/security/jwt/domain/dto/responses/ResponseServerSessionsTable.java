@@ -27,11 +27,11 @@ public record ResponseServerSessionsTable(
 
     @JsonIgnore
     public Set<Username> getActiveUsernames() {
-        return this.activeSessions.stream().map(ResponseUserSession2::getWho).collect(Collectors.toSet());
+        return this.activeSessions.stream().map(ResponseUserSession2::who).collect(Collectors.toSet());
     }
 
     @JsonIgnore
     public Set<Username> getInactiveUsernames() {
-        return this.inactiveSessions.stream().map(ResponseUserSession2::getWho).collect(Collectors.toSet());
+        return this.inactiveSessions.stream().map(ResponseUserSession2::who).collect(Collectors.toSet());
     }
 }

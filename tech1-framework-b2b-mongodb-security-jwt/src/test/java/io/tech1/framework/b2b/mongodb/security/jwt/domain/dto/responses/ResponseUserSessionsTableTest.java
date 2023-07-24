@@ -58,21 +58,21 @@ class ResponseUserSessionsTableTest {
                         invalidUserAgentDetails()
                 )
         );
-        var responseUserSession21 = new ResponseUserSession2(dbUserSession1, new CookieRefreshToken(randomString()));
-        var responseUserSession22 = new ResponseUserSession2(dbUserSession2, new CookieRefreshToken("token2"));
-        var responseUserSession23 = new ResponseUserSession2(dbUserSession3, new CookieRefreshToken(randomString()));
+        var responseUserSession21 = ResponseUserSession2.of(dbUserSession1, new CookieRefreshToken(randomString()));
+        var responseUserSession22 = ResponseUserSession2.of(dbUserSession2, new CookieRefreshToken("token2"));
+        var responseUserSession23 = ResponseUserSession2.of(dbUserSession3, new CookieRefreshToken(randomString()));
 
         // Act
         var actual = ResponseUserSessionsTable.of(new ArrayList<>(List.of(responseUserSession21, responseUserSession22, responseUserSession23)));
 
         // Assert
         assertThat(actual.sessions()).hasSize(3);
-        assertThat(actual.sessions().get(0).isCurrent()).isTrue();
-        assertThat(actual.sessions().get(0).getWhere()).isEqualTo("USA, New York");
-        assertThat(actual.sessions().get(1).isCurrent()).isFalse();
-        assertThat(actual.sessions().get(1).getWhere()).isEqualTo("UK, Liverpool");
-        assertThat(actual.sessions().get(2).isCurrent()).isFalse();
-        assertThat(actual.sessions().get(2).getWhere()).isEqualTo("UK, London");
+        assertThat(actual.sessions().get(0).current()).isTrue();
+        assertThat(actual.sessions().get(0).where()).isEqualTo("USA, New York");
+        assertThat(actual.sessions().get(1).current()).isFalse();
+        assertThat(actual.sessions().get(1).where()).isEqualTo("UK, Liverpool");
+        assertThat(actual.sessions().get(2).current()).isFalse();
+        assertThat(actual.sessions().get(2).where()).isEqualTo("UK, London");
         assertThat(actual.anyPresent()).isTrue();
         assertThat(actual.anyProblem()).isTrue();
     }

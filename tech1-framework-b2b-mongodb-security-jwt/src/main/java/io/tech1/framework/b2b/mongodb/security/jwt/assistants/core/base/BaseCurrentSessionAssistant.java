@@ -86,7 +86,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
         this.sessionRegistry.cleanByExpiredRefreshTokens(usersSessions);
         var activeUsersSessions = this.userSessionService.findByUsername(username);
         var sessions = activeUsersSessions.stream()
-                .map(session -> new ResponseUserSession2(session, cookie))
+                .map(session -> ResponseUserSession2.of(session, cookie))
                 .collect(Collectors.toList());
         return ResponseUserSessionsTable.of(sessions);
     }

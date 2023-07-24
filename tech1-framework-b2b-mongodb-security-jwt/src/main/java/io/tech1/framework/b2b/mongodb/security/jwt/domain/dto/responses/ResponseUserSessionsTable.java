@@ -14,11 +14,11 @@ public record ResponseUserSessionsTable(
 ) {
     public static ResponseUserSessionsTable of(List<ResponseUserSession2> sessions) {
         assertNonNullOrThrow(sessions, invalidAttribute("ResponseUserSessionsTable.session"));
-        sessions.sort(comparing(ResponseUserSession2::isCurrent).reversed().thenComparing(ResponseUserSession2::getWhere));
+        sessions.sort(comparing(ResponseUserSession2::current).reversed().thenComparing(ResponseUserSession2::where));
         return new ResponseUserSessionsTable(
                 sessions,
                 !isEmpty(sessions),
-                sessions.stream().anyMatch(session -> !session.getException().isOk())
+                sessions.stream().anyMatch(session -> !session.exception().isOk())
         );
     }
 }

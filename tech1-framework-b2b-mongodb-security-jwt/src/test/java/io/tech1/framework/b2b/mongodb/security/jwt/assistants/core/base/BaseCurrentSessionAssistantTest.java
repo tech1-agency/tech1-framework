@@ -281,8 +281,8 @@ class BaseCurrentSessionAssistantTest {
             verify(this.sessionRegistry).cleanByExpiredRefreshTokens(userSessions);
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
-            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::isCurrent).count()).isEqualTo(1);
-            assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.getActivity())).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.activity())).count()).isEqualTo(1);
             assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 
             reset(

@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.14
+- TBD...
+
 ### v1.13
 - Superuser API: terminate by sessionId, terminate all except current + Postman
 - Sessions API: terminate by sessionId, terminate all except current + Postman

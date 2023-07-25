@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseUserValidatorImplTest {
+class BaseUserValidatorImplTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
         return Stream.of(
@@ -64,21 +64,21 @@ public class BaseUserValidatorImplTest {
     private final BaseUserValidator componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.userRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );
     }
 
     @Test
-    public void validateUserUpdateRequest1InvalidZoneIdTest() {
+    void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
         var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
@@ -87,13 +87,13 @@ public class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `zoneId` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `zoneId` is invalid");
     }
 
     @Test
-    public void validateUserUpdateRequest1InvalidEmailTest() {
+    void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
         var currentDbUser = entity(DbUser.class);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), Email.of(randomString()), randomString());
@@ -102,13 +102,13 @@ public class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `email` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `email` is invalid");
     }
 
     @Test
-    public void validateUserUpdateRequest1EmailValidNoUserTest() {
+    void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
@@ -120,11 +120,11 @@ public class BaseUserValidatorImplTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.userRepository).findByEmail(eq(email));
+        verify(this.userRepository).findByEmail(email);
     }
 
     @Test
-    public void validateUserUpdateRequest1EmailValidUserFoundTest() {
+    void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
@@ -136,11 +136,11 @@ public class BaseUserValidatorImplTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.userRepository).findByEmail(eq(email));
+        verify(this.userRepository).findByEmail(email);
     }
 
     @Test
-    public void validateUserUpdateRequest1EmailValidTwoUsersTest() {
+    void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var email = randomEmail();
         var currentDbUser = entity(DbUser.class);
@@ -152,14 +152,14 @@ public class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `email` is invalid");
-        verify(this.userRepository).findByEmail(eq(email));
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `email` is invalid");
+        verify(this.userRepository).findByEmail(email);
     }
 
     @Test
-    public void validateUserUpdateRequest2InvalidZoneIdTest() {
+    void validateUserUpdateRequest2InvalidZoneIdTest() {
         // Arrange
         var requestUserUpdate2 = new RequestUserUpdate2("invalidZoneId", randomString());
 
@@ -167,13 +167,13 @@ public class BaseUserValidatorImplTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `zoneId` is invalid");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Attribute `zoneId` is invalid");
     }
 
     @Test
-    public void validateUserUpdateRequest2Test() {
+    void validateUserUpdateRequest2Test() {
         // Arrange
         var requestUserUpdate2 = new RequestUserUpdate2(randomZoneId().getId(), randomString());
 
@@ -186,7 +186,7 @@ public class BaseUserValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateUserChangePasswordRequest1Test")
-    public void validateUserChangePasswordRequest1Test(RequestUserChangePassword1 requestUserChangePassword1, String exceptionMessage) {
+    void validateUserChangePasswordRequest1Test(RequestUserChangePassword1 requestUserChangePassword1, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserChangePasswordRequest1(requestUserChangePassword1));
 

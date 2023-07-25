@@ -37,7 +37,7 @@ public class CookieProviderImpl implements CookieProvider {
 
         var cookie =  createCookie(
                 accessTokenConfiguration.getCookieKey(),
-                jwtAccessToken.getValue(),
+                jwtAccessToken.value(),
                 securityJwtConfigs.getCookiesConfigs().getDomain(),
                 true,
                 toIntExactOrZeroOnOverflow(maxAge)
@@ -53,7 +53,7 @@ public class CookieProviderImpl implements CookieProvider {
 
         var cookie = createCookie(
                 refreshTokenConfiguration.getCookieKey(),
-                jwtRefreshToken.getValue(),
+                jwtRefreshToken.value(),
                 securityJwtConfigs.getCookiesConfigs().getDomain(),
                 true,
                 toIntExactOrZeroOnOverflow(refreshTokenConfiguration.getExpiration().getTimeAmount().toSeconds())

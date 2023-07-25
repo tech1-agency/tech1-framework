@@ -32,11 +32,11 @@ public class RegistrationRequestsValidatorImpl implements RegistrationRequestsVa
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
-        var username = requestUserRegistration1.getUsername();
-        var zoneId = requestUserRegistration1.getZoneId();
-        var password = requestUserRegistration1.getPassword();
-        var confirmPassword = requestUserRegistration1.getConfirmPassword();
-        var invitationCode = requestUserRegistration1.getInvitationCode();
+        var username = requestUserRegistration1.username();
+        var zoneId = requestUserRegistration1.zoneId();
+        var password = requestUserRegistration1.password();
+        var confirmPassword = requestUserRegistration1.confirmPassword();
+        var invitationCode = requestUserRegistration1.invitationCode();
 
         assertNonNullOrThrow(username, invalidAttribute("username"));
         assertNonNullOrThrow(password, invalidAttribute("password"));

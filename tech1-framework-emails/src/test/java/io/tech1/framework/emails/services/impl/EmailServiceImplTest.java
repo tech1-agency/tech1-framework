@@ -45,7 +45,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class EmailServiceImplTest {
+class EmailServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -102,7 +102,7 @@ public class EmailServiceImplTest {
     private final EmailService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.javaMailSender,
                 this.emailUtility,
@@ -111,7 +111,7 @@ public class EmailServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.javaMailSender,
                 this.emailUtility,
@@ -120,7 +120,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void mainSendPlainDisabledTest() {
+    void mainSendPlainDisabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var subject = randomString();
@@ -136,7 +136,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void mainSendPlainEnabledTest() {
+    void mainSendPlainEnabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var from = randomEmailAsValue();
@@ -162,7 +162,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void systemSendPlainEnabledTest() {
+    void systemSendPlainEnabledTest() {
         // Arrange
         var to1 = randomEmailAsValue();
         var to2 = randomEmailAsValue();
@@ -190,7 +190,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void listSendPlainEnabledTest() {
+    void listSendPlainEnabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var from = randomEmailAsValue();
@@ -216,7 +216,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void setSendPlainEnabledTest() {
+    void setSendPlainEnabledTest() {
         // Arrange
         var to = randomEmailAsValue();
         var from = randomEmailAsValue();
@@ -242,7 +242,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendPlainAttachmentDisabledTest() {
+    void sendPlainAttachmentDisabledTest() {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var emailConfigs = EmailConfigs.disabled();
@@ -256,13 +256,13 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
+    void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var from = randomEmailAsValue();
         var emailConfigs = EmailConfigs.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
-        doThrow(new MessagingException()).when(mimeMessage).setFrom(eq(from));
+        doThrow(new MessagingException()).when(mimeMessage).setFrom(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
@@ -275,7 +275,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendPlainAttachmentEnabledTest() throws MessagingException, IOException {
+    void sendPlainAttachmentEnabledTest() throws MessagingException, IOException {
         // Arrange
         var emailPlainAttachment = new EmailPlainAttachment(
                 Set.of(
@@ -299,8 +299,8 @@ public class EmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getEmailConfigs();
         verify(this.javaMailSender).createMimeMessage();
-        verify(mimeMessage).setFrom(eq(from));
-        verify(mimeMessage).setSubject(eq("subject1"));
+        verify(mimeMessage).setFrom(from);
+        verify(mimeMessage).setSubject("subject1");
         verify(mimeMessage).addRecipients(TO, "test1@tech1.io");
         verify(mimeMessage).addRecipients(TO, "test2@tech1.io");
         var mimeMultipartAC = ArgumentCaptor.forClass(MimeMultipart.class);
@@ -317,7 +317,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendHTMLDisabledTest() {
+    void sendHTMLDisabledTest() {
         // Arrange
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = EmailConfigs.disabled();
@@ -331,7 +331,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendHTMLEnabledExceptionTest() throws MessagingException {
+    void sendHTMLEnabledExceptionTest() throws MessagingException {
         // Arrange
         var from = randomEmailAsValue();
         var emailHTML = entity(EmailHTML.class);
@@ -348,7 +348,7 @@ public class EmailServiceImplTest {
     }
 
     @Test
-    public void sendHTMLEnabledTest() throws MessagingException {
+    void sendHTMLEnabledTest() throws MessagingException {
         // Arrange
         var from = randomEmailAsValue();
         Map<String, Object> templateVariables = Map.of(
@@ -373,24 +373,26 @@ public class EmailServiceImplTest {
         this.componentUnderTest.sendHTML(emailHTML);
 
         // Assert
-        verify(mimeMessageHelper).setFrom(eq(from));
-        verify(mimeMessageHelper).setTo(eq(new String[] { "tests@tech1.io" }));
-        verify(mimeMessageHelper).setSubject(eq("subject1"));
-        var html = "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<p>\n" +
-                "  Param1: <span >key2</span>\n" +
-                "</p>\n" +
-                "<p>\n" +
-                "  Param2: <span >2</span>\n" +
-                "</p>\n" +
-                "</body>\n" +
-                "</html>\n";
-        verify(mimeMessageHelper).setText(eq(html), eq(true));
+        verify(mimeMessageHelper).setFrom(from);
+        verify(mimeMessageHelper).setTo(new String[] { "tests@tech1.io" });
+        verify(mimeMessageHelper).setSubject("subject1");
+        var html = """
+                <!DOCTYPE html>
+                <html>
+                <head>
+                  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+                <body>
+                <p>
+                  Param1: <span >key2</span>
+                </p>
+                <p>
+                  Param2: <span >2</span>
+                </p>
+                </body>
+                </html>
+                """;
+        verify(mimeMessageHelper).setText(html, true);
         verify(this.applicationFrameworkProperties).getEmailConfigs();
         verify(this.emailUtility).getMimeMessageTuple2();
         verify(this.javaMailSender).send(any(MimeMessage.class));

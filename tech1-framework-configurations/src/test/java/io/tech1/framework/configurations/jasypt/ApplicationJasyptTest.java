@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationJasyptTest {
+class ApplicationJasyptTest {
 
     @Configuration
     @Import({
@@ -35,7 +35,7 @@ public class ApplicationJasyptTest {
     private final ApplicationJasypt componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -46,7 +46,7 @@ public class ApplicationJasyptTest {
     }
 
     @Test
-    public void annotationTest() {
+    void annotationTest() {
         // Assert
         assertThat(this.componentUnderTest).isNotNull();
         assertThat(ApplicationJasypt.class.isAnnotationPresent(EnableEncryptableProperties.class)).isTrue();

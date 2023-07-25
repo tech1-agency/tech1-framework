@@ -16,7 +16,7 @@ import static io.tech1.framework.domain.utilities.enums.EnumUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class EnumUtilityTest {
+class EnumUtilityTest {
 
     private static Stream<Arguments> getEnumNamesTest() {
         return Stream.of(
@@ -52,7 +52,7 @@ public class EnumUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getEnumNamesTest")
-    public void getEnumNamesTest(Class<? extends Enum> enumClass, Set<String> expected) {
+    void getEnumNamesTest(Class<? extends Enum> enumClass, Set<String> expected) {
         // Act
         var actual = getEnumNames(enumClass);
 
@@ -62,7 +62,7 @@ public class EnumUtilityTest {
 
     @ParameterizedTest
     @MethodSource("setTest")
-    public void setTest(Class<? extends Enum> enumClass, Set<? extends Enum> expected) {
+    void setTest(Class<? extends Enum> enumClass, Set<? extends Enum> expected) {
         // Act
         var actual = set(enumClass);
 
@@ -72,7 +72,7 @@ public class EnumUtilityTest {
 
     @ParameterizedTest
     @MethodSource("baseJoiningAsClassTest")
-    public void baseJoiningAsClassTest(Class<? extends Enum> enumClass, String expected) {
+    void baseJoiningAsClassTest(Class<? extends Enum> enumClass, String expected) {
         // Act
         var actual = baseJoining(enumClass);
 
@@ -82,7 +82,7 @@ public class EnumUtilityTest {
 
     @ParameterizedTest
     @MethodSource("baseJoiningAsSetTest")
-    public void baseJoiningAsSetTest(Set<? extends Enum> enumsSet, String expected) {
+    void baseJoiningAsSetTest(Set<? extends Enum> enumsSet, String expected) {
         // Act
         var actual = baseJoining(enumsSet);
 

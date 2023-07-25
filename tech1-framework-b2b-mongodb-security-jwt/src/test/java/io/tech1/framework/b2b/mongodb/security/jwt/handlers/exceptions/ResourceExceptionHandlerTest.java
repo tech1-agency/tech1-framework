@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ResourceExceptionHandlerTest {
+class ResourceExceptionHandlerTest {
 
     @Configuration
     @Import({
@@ -57,20 +57,21 @@ public class ResourceExceptionHandlerTest {
 
     @ParameterizedTest
     @MethodSource("unauthorizedResponseErrorMessageTest")
-    public void unauthorizedResponseErrorMessageTest(Exception exception) {
+    void unauthorizedResponseErrorMessageTest(Exception exception) {
         // Act
         var response = this.componentUnderTest.cookiesUnauthorizedExceptions(exception);
 
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
-    public void accessDeniedExceptionTest() {
+    void accessDeniedExceptionTest() {
         // Arrange
         var message = randomString();
         var exception = new AccessDeniedException(message);
@@ -81,13 +82,14 @@ public class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
     @Test
-    public void registrationExceptionTest() {
+    void registrationExceptionTest() {
         // Arrange
         var message = randomString();
         var exception = new RegistrationException(message);
@@ -98,13 +100,14 @@ public class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(contactDevelopmentTeam("Registration Failure"));
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", contactDevelopmentTeam("Registration Failure"))
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    public void internalServerErrorTest() {
+    void internalServerErrorTest() {
         // Arrange
         var message = randomString();
         var exception = new IllegalArgumentException(message);
@@ -115,8 +118,9 @@ public class ResourceExceptionHandlerTest {
         // Assert
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getExceptionEntityType()).isEqualTo(ERROR);
-        assertThat(response.getBody().getAttributes().get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(response.getBody().getAttributes().get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(response.getBody().getAttributes())
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

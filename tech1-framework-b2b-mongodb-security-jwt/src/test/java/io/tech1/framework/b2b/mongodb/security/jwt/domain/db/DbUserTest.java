@@ -9,10 +9,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DbUserTest {
+class DbUserTest {
 
     @Test
-    public void getNotNullAttributesTest() {
+    void getNotNullAttributesTest() {
         // Arrange
         var user = new DbUser(
                 randomUsername(),
@@ -27,12 +27,11 @@ public class DbUserTest {
         var actual = user.getNotNullAttributes();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).hasSize(0);
+        assertThat(actual).isEmpty();
     }
 
     @Test
-    public void getNotNullAttributesLegacyMigrationNullPointerExceptionTest() throws NoSuchFieldException, IllegalAccessException {
+    void getNotNullAttributesLegacyMigrationNullPointerExceptionTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var user = new DbUser(
                 randomUsername(),
@@ -48,7 +47,6 @@ public class DbUserTest {
         var actual = user.getNotNullAttributes();
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual).hasSize(0);
+        assertThat(actual).isEmpty();
     }
 }

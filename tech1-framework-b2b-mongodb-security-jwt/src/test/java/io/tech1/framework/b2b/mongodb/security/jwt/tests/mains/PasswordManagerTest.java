@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PasswordManagerTest {
+class PasswordManagerTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -35,7 +35,7 @@ public class PasswordManagerTest {
 
     @Test
     @Disabled
-    public void generatePassword() {
+    void generatePassword() {
         // Arrange
         var password = "User12";
 

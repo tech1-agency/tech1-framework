@@ -8,23 +8,23 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnu
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SchedulerConfigurationTest {
+class SchedulerConfigurationTest {
 
     @Test
-    public void neverTest() {
+    void neverTest() {
         // Act
         var sc = SchedulerConfiguration.never();
 
         // Assert
         assertThat(sc).isNotNull();
-        assertThat(sc.getInitialDelay()).isEqualTo(9223372036854775807L);
-        assertThat(sc.getDelay()).isEqualTo(9223372036854775807L);
-        assertThat(sc.getUnit()).isEqualTo(TimeUnit.DAYS);
-        assertThat(sc.getUnit().toSeconds(sc.getDelay())).isEqualTo(9223372036854775807L);
+        assertThat(sc.initialDelay()).isEqualTo(9223372036854775807L);
+        assertThat(sc.delay()).isEqualTo(9223372036854775807L);
+        assertThat(sc.unit()).isEqualTo(TimeUnit.DAYS);
+        assertThat(sc.unit().toSeconds(sc.delay())).isEqualTo(9223372036854775807L);
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         // Arrange
         var initialDelay = randomLongGreaterThanZero();
         var delay = randomLongGreaterThanZero();
@@ -35,8 +35,8 @@ public class SchedulerConfigurationTest {
 
         // Assert
         assertThat(schedulerConfiguration).isNotNull();
-        assertThat(schedulerConfiguration.getInitialDelay()).isEqualTo(initialDelay);
-        assertThat(schedulerConfiguration.getDelay()).isEqualTo(delay);
-        assertThat(schedulerConfiguration.getUnit()).isEqualTo(unit);
+        assertThat(schedulerConfiguration.initialDelay()).isEqualTo(initialDelay);
+        assertThat(schedulerConfiguration.delay()).isEqualTo(delay);
+        assertThat(schedulerConfiguration.unit()).isEqualTo(unit);
     }
 }

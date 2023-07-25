@@ -54,7 +54,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     @Override
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
         try {
-            var inetAddress = InetAddress.getByName(ipAddress.getValue());
+            var inetAddress = InetAddress.getByName(ipAddress.value());
             var response = this.databaseReader.city(inetAddress);
             var countryCode = response.getCountry().getIsoCode();
             var countryFlag = this.geoCountryFlagUtility.getFlagEmojiByCountryCode(countryCode);

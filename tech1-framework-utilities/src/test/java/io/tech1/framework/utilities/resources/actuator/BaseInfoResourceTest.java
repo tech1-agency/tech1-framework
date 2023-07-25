@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseInfoResourceTest {
+class BaseInfoResourceTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -46,14 +46,14 @@ public class BaseInfoResourceTest {
     private final BaseInfoResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.environmentUtility
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.environmentUtility
         );
@@ -61,7 +61,7 @@ public class BaseInfoResourceTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void verifyProfilesConfigurationExceptionTest() {
+    void verifyProfilesConfigurationExceptionTest() {
         // Arrange
         var activeProfile = randomString();
         var builder = mock(Info.Builder.class);
@@ -75,7 +75,8 @@ public class BaseInfoResourceTest {
         var builderDetailsAC = ArgumentCaptor.forClass(Map.class);
         verify(builder).withDetails(builderDetailsAC.capture());
         var details = builderDetailsAC.getValue();
-        assertThat(details.size()).isEqualTo(1);
-        assertThat(details.get("activeProfile")).isEqualTo(activeProfile);
+        assertThat(details)
+                .hasSize(1)
+                .containsEntry("activeProfile", activeProfile);
     }
 }

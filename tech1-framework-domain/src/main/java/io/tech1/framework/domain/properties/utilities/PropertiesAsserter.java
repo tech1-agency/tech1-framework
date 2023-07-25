@@ -20,7 +20,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotEmptyOrThrow;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
@@ -110,6 +109,6 @@ public class PropertiesAsserter {
                     var lowerCaseAttribute = method.getName().toLowerCase().replaceAll("^get", "");
                     return !skipProjection.contains(lowerCaseAttribute);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RegistrationRequestsValidatorImplTest {
+class RegistrationRequestsValidatorImplTest {
 
     @Configuration
     @Import({
@@ -51,7 +51,7 @@ public class RegistrationRequestsValidatorImplTest {
     private final RegistrationRequestsValidator componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
@@ -61,7 +61,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -71,7 +71,7 @@ public class RegistrationRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateRegistrationRequest1UsernameAlreadyUsedTest() {
+    void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -83,34 +83,35 @@ public class RegistrationRequestsValidatorImplTest {
                 invitationCode
         );
         var currentDbUser = entity(DbUser.class);
-        when(this.userRepository.findByUsername(eq(username))).thenReturn(currentDbUser);
+        when(this.userRepository.findByUsername(username)).thenReturn(currentDbUser);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(RegistrationException.class);
+        assertThat(throwable)
+                .isInstanceOf(RegistrationException.class)
+                .hasMessage("Username is already used");
         assertThat(throwable.getMessage()).isEqualTo("Username is already used");
-        verify(this.userRepository).findByUsername(eq(username));
-        verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
+        verify(this.userRepository).findByUsername(username);
+        verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         username,
                         invitationCode,
                         "Username is already used"
                 )
-        ));
-        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
+        );
+        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 IncidentRegistration1Failure.of(
                         username,
                         invitationCode,
                         "Username is already used"
                 )
-        ));
+        );
     }
 
     @Test
-    public void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
+    void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -122,38 +123,37 @@ public class RegistrationRequestsValidatorImplTest {
                 invitationCode
         );
         var dbInvitationCode = entity(DbInvitationCode.class);
-        when(this.userRepository.findByUsername(eq(username))).thenReturn(null);
-        when(this.invitationCodeRepository.findByValue(eq(invitationCode))).thenReturn(dbInvitationCode);
+        when(this.userRepository.findByUsername(username)).thenReturn(null);
+        when(this.invitationCodeRepository.findByValue(invitationCode)).thenReturn(dbInvitationCode);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(RegistrationException.class);
         assertThat(throwable.getMessage()).isEqualTo("InvitationCode is already used");
-        verify(this.userRepository).findByUsername(eq(username));
-        verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
-        verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
+        verify(this.userRepository).findByUsername(username);
+        verify(this.invitationCodeRepository).findByValue(invitationCode);
+        verify(this.securityJwtPublisher).publishRegistration1Failure(
                 new EventRegistration1Failure(
                         username,
                         invitationCode,
                         dbInvitationCode.getOwner(),
                         "InvitationCode is already used"
                 )
-        ));
-        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
+        );
+        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 new IncidentRegistration1Failure(
                         username,
                         invitationCode,
                         dbInvitationCode.getOwner(),
                         "InvitationCode is already used"
                 )
-        ));
+        );
     }
 
     @Test
-    public void validateRegistrationRequest1NoInvitationCodeTest() {
+    void validateRegistrationRequest1NoInvitationCodeTest() {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -164,36 +164,36 @@ public class RegistrationRequestsValidatorImplTest {
                 randomZoneId().getId(),
                 invitationCode
         );
-        when(this.userRepository.findByUsername(eq(username))).thenReturn(null);
-        when(this.invitationCodeRepository.findByValue(eq(invitationCode))).thenReturn(null);
+        when(this.userRepository.findByUsername(username)).thenReturn(null);
+        when(this.invitationCodeRepository.findByValue(invitationCode)).thenReturn(null);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(RegistrationException.class);
-        assertThat(throwable.getMessage()).isEqualTo("InvitationCode is not found");
-        verify(this.userRepository).findByUsername(eq(username));
-        verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
-        verify(this.securityJwtPublisher).publishRegistration1Failure(eq(
+        assertThat(throwable)
+                .isInstanceOf(RegistrationException.class)
+                .hasMessage("InvitationCode is not found");
+        verify(this.userRepository).findByUsername(username);
+        verify(this.invitationCodeRepository).findByValue(invitationCode);
+        verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         username,
                         invitationCode,
                         "InvitationCode is not found"
                 )
-        ));
-        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(eq(
+        );
+        verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 IncidentRegistration1Failure.of(
                         username,
                         invitationCode,
                         "InvitationCode is not found"
                 )
-        ));
+        );
     }
 
     @Test
-    public void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
+    void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
         // Arrange
         var username = randomUsername();
         var invitationCode = randomString();
@@ -206,14 +206,14 @@ public class RegistrationRequestsValidatorImplTest {
         );
         var dbInvitationCode = entity(DbInvitationCode.class);
         dbInvitationCode.setInvited(null);
-        when(this.userRepository.findByUsername(eq(username))).thenReturn(null);
-        when(this.invitationCodeRepository.findByValue(eq(invitationCode))).thenReturn(dbInvitationCode);
+        when(this.userRepository.findByUsername(username)).thenReturn(null);
+        when(this.invitationCodeRepository.findByValue(invitationCode)).thenReturn(dbInvitationCode);
 
         // Act
         this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1);
 
         // Assert
-        verify(this.userRepository).findByUsername(eq(username));
-        verify(this.invitationCodeRepository).findByValue(eq(invitationCode));
+        verify(this.userRepository).findByUsername(username);
+        verify(this.invitationCodeRepository).findByValue(invitationCode);
     }
 }

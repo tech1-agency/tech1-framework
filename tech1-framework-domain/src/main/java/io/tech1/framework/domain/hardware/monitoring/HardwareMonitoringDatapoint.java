@@ -109,9 +109,9 @@ public class HardwareMonitoringDatapoint {
         );
 
         Function<Tuple3<HardwareName, TuplePercentage, ByteSize>, HardwareMonitoringDatapointTableRow> tableRowFnc = tuple3 -> {
-            var hardwareName = tuple3.getA();
-            var percentage = tuple3.getB().getPercentage();
-            var readableValue = tuple3.getB().getValue() + " " + this.unit.getSymbol() + " of " + tuple3.getC().getBy(this.unit, 2) + " " + this.unit.getSymbol();
+            var hardwareName = tuple3.a();
+            var percentage = tuple3.b().percentage();
+            var readableValue = tuple3.b().value() + " " + this.unit.getSymbol() + " of " + tuple3.c().getBy(this.unit, 2) + " " + this.unit.getSymbol();
             return new HardwareMonitoringDatapointTableRow(
                     hardwareName,
                     this.timestamp,
@@ -122,9 +122,9 @@ public class HardwareMonitoringDatapoint {
         };
 
         table.add(tableRowFnc.apply(new Tuple3<>(HEAP, this.heap, this.maxValues.getHeap())));
-        table.add(tableRowFnc.apply(new Tuple3<>(SERVER, this.global.getA(), this.maxValues.getServer())));
-        table.add(tableRowFnc.apply(new Tuple3<>(SWAP, this.global.getB(), this.maxValues.getSwap())));
-        table.add(tableRowFnc.apply(new Tuple3<>(VIRTUAL, this.global.getC(), this.maxValues.getVirtual())));
+        table.add(tableRowFnc.apply(new Tuple3<>(SERVER, this.global.a(), this.maxValues.getServer())));
+        table.add(tableRowFnc.apply(new Tuple3<>(SWAP, this.global.b(), this.maxValues.getSwap())));
+        table.add(tableRowFnc.apply(new Tuple3<>(VIRTUAL, this.global.c(), this.maxValues.getVirtual())));
 
         return new HardwareMonitoringDatapointTableView(table);
     }

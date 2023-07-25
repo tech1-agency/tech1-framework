@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RegistrationServiceImplTest {
+class RegistrationServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -64,7 +64,7 @@ public class RegistrationServiceImplTest {
     private final RegistrationService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.invitationCodeRepository,
                 this.userRepository,
@@ -73,7 +73,7 @@ public class RegistrationServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.invitationCodeRepository,
                 this.userRepository,
@@ -82,7 +82,7 @@ public class RegistrationServiceImplTest {
     }
 
     @Test
-    public void register1Test() {
+    void register1Test() {
         // Arrange
         var requestUserRegistration1 = new RequestUserRegistration1(
                 randomUsername(),
@@ -92,9 +92,9 @@ public class RegistrationServiceImplTest {
                 randomString()
         );
         var dbInvitationCode = entity(DbInvitationCode.class);
-        when(this.invitationCodeRepository.findByValue(eq(requestUserRegistration1.getInvitationCode()))).thenReturn(dbInvitationCode);
+        when(this.invitationCodeRepository.findByValue(requestUserRegistration1.invitationCode())).thenReturn(dbInvitationCode);
         var hashPassword = randomString();
-        when(this.bCryptPasswordEncoder.encode(eq(requestUserRegistration1.getPassword().getValue()))).thenReturn(hashPassword);
+        when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
         var dbUserAC = ArgumentCaptor.forClass(DbUser.class);
         var savedDbUser = entity(DbUser.class);
         when(this.userRepository.save(any())).thenReturn(savedDbUser);
@@ -104,11 +104,11 @@ public class RegistrationServiceImplTest {
         this.componentUnderTest.register1(requestUserRegistration1);
 
         // Assert
-        verify(this.invitationCodeRepository).findByValue(eq(requestUserRegistration1.getInvitationCode()));
-        verify(this.bCryptPasswordEncoder).encode(eq(requestUserRegistration1.getPassword().getValue()));
+        verify(this.invitationCodeRepository).findByValue(requestUserRegistration1.invitationCode());
+        verify(this.bCryptPasswordEncoder).encode(requestUserRegistration1.password().value());
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(requestUserRegistration1.getUsername());
-        assertThat(dbUserAC.getValue().getPassword().getValue()).isEqualTo(hashPassword);
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(requestUserRegistration1.username());
+        assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
         assertThat(dbUserAC.getValue().getAuthorities()).isEqualTo(dbInvitationCode.getAuthorities());
         verify(this.invitationCodeRepository).save(dbInvitationCodeAC.capture());
         assertThat(dbInvitationCodeAC.getValue().getInvited()).isEqualTo(savedDbUser.getUsername());

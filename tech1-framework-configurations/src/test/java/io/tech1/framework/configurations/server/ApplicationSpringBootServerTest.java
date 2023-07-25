@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationSpringBootServerTest {
+class ApplicationSpringBootServerTest {
 
     @Configuration
     @Import({
@@ -40,15 +40,16 @@ public class ApplicationSpringBootServerTest {
     private final ApplicationSpringBootServer componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("environmentUtility");
-        assertThat(methods).contains("baseInfoResource");
-        assertThat(methods).hasSize(16);
+        assertThat(methods)
+                .hasSize(16)
+                .contains("environmentUtility")
+                .contains("baseInfoResource");
     }
 }

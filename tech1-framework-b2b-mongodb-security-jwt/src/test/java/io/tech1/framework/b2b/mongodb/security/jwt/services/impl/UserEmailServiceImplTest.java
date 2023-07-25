@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserEmailServiceImplTest {
+class UserEmailServiceImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -72,7 +72,7 @@ public class UserEmailServiceImplTest {
     private final UserEmailService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.emailService,
                 this.userEmailUtility,
@@ -81,7 +81,7 @@ public class UserEmailServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.emailService,
                 this.userEmailUtility,
@@ -90,7 +90,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void noExecutionNullEmailAndEnabledEmailTest() {
+    void noExecutionNullEmailAndEnabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
@@ -108,7 +108,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void noExecutionNullEmailAndDisabledEmailTest() {
+    void noExecutionNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
@@ -126,7 +126,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void noExecutionNotNullEmailAndDisabledEmailTest() {
+    void noExecutionNotNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
@@ -144,7 +144,7 @@ public class UserEmailServiceImplTest {
     }
 
     @Test
-    public void executeAuthenticationLoginTest() {
+    void executeAuthenticationLoginTest() {
         // Arrange
         var username = randomUsername();
         var email = randomEmail();
@@ -162,11 +162,11 @@ public class UserEmailServiceImplTest {
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         when(this.userEmailUtility.getAuthenticationLoginTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject(eq("Account Accessed"))).thenReturn(subject);
+        when(this.userEmailUtility.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.USERNAME_PASSWORD)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.USERNAME_PASSWORD
         )).thenReturn(variables);
 
         // Act
@@ -175,24 +175,24 @@ public class UserEmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
-        verify(this.userEmailUtility).getSubject(eq("Account Accessed"));
+        verify(this.userEmailUtility).getSubject("Account Accessed");
         verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.USERNAME_PASSWORD)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.USERNAME_PASSWORD
         );
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.getTo()).hasSize(1);
-        assertThat(emailHTML.getTo().stream().iterator().next()).isEqualTo(email.getValue());
-        assertThat(emailHTML.getSubject()).isEqualTo(subject);
-        assertThat(emailHTML.getTemplateName()).isEqualTo("framework-account-accessed");
-        assertThat(emailHTML.getTemplateVariables()).isEqualTo(variables);
+        assertThat(emailHTML.to()).hasSize(1);
+        assertThat(emailHTML.to().stream().iterator().next()).isEqualTo(email.value());
+        assertThat(emailHTML.subject()).isEqualTo(subject);
+        assertThat(emailHTML.templateName()).isEqualTo("framework-account-accessed");
+        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
     }
 
     @Test
-    public void executeSessionRefreshedTest() {
+    void executeSessionRefreshedTest() {
         // Arrange
         var username = randomUsername();
         var email = randomEmail();
@@ -210,11 +210,11 @@ public class UserEmailServiceImplTest {
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         when(this.userEmailUtility.getSessionRefreshedTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject(eq("Account Accessed"))).thenReturn(subject);
+        when(this.userEmailUtility.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.SECURITY_TOKEN)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.SECURITY_TOKEN
         )).thenReturn(variables);
 
         // Act
@@ -223,19 +223,19 @@ public class UserEmailServiceImplTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtility).getSessionRefreshedTemplateName();
-        verify(this.userEmailUtility).getSubject(eq("Account Accessed"));
+        verify(this.userEmailUtility).getSubject("Account Accessed");
         verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
-                eq(username),
-                eq(userRequestMetadata),
-                eq(AccountAccessMethod.SECURITY_TOKEN)
+                username,
+                userRequestMetadata,
+                AccountAccessMethod.SECURITY_TOKEN
         );
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.getTo()).hasSize(1);
-        assertThat(emailHTML.getTo().stream().iterator().next()).isEqualTo(email.getValue());
-        assertThat(emailHTML.getSubject()).isEqualTo(subject);
-        assertThat(emailHTML.getTemplateName()).isEqualTo("framework-account-accessed");
-        assertThat(emailHTML.getTemplateVariables()).isEqualTo(variables);
+        assertThat(emailHTML.to()).hasSize(1);
+        assertThat(emailHTML.to().stream().iterator().next()).isEqualTo(email.value());
+        assertThat(emailHTML.subject()).isEqualTo(subject);
+        assertThat(emailHTML.templateName()).isEqualTo("framework-account-accessed");
+        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
     }
 }

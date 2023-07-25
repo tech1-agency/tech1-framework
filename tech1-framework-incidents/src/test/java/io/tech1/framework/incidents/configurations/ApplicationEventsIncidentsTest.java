@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationEventsIncidentsTest {
+class ApplicationEventsIncidentsTest {
 
     @Configuration
     @Import({
@@ -46,21 +46,21 @@ public class ApplicationEventsIncidentsTest {
     private final ApplicationEventsIncidents componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.errorHandlerPublisher
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.errorHandlerPublisher
         );
     }
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -72,7 +72,7 @@ public class ApplicationEventsIncidentsTest {
     }
 
     @Test
-    public void simpleApplicationEventMulticasterTest() {
+    void simpleApplicationEventMulticasterTest() {
         // Act
         var actual = this.componentUnderTest.simpleApplicationEventMulticaster();
 

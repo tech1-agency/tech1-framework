@@ -59,15 +59,15 @@ public class BaseSecurityAuthenticationResource {
     @ResponseStatus(HttpStatus.OK)
     public CurrentClientUser login(@RequestBody RequestUserLogin requestUserLogin, HttpServletRequest request, HttpServletResponse response) {
         this.authenticationRequestsValidator.validateLoginRequest(requestUserLogin);
-        var username = requestUserLogin.getUsername();
-        var password = requestUserLogin.getPassword();
+        var username = requestUserLogin.username();
+        var password = requestUserLogin.password();
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
-        var authenticationToken = new UsernamePasswordAuthenticationToken(username.getIdentifier(), password.getValue());
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username.identifier(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
 
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.getIdentifier());
-        var dbUser = jwtUser.getDbUser();
+        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
+        var dbUser = jwtUser.dbUser();
 
         var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(dbUser);
         var jwtRefreshToken = this.securityJwtTokenUtility.createJwtRefreshToken(dbUser);
@@ -84,7 +84,7 @@ public class BaseSecurityAuthenticationResource {
         this.sessionRegistry.register(
                 new Session(
                         username,
-                        new JwtRefreshToken(jwtRefreshToken.getValue())
+                        new JwtRefreshToken(jwtRefreshToken.value())
                 )
         );
 
@@ -95,11 +95,11 @@ public class BaseSecurityAuthenticationResource {
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest request, HttpServletResponse response) throws CookieRefreshTokenNotFoundException {
         var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
-        var refreshToken = cookieRefreshToken.getValue();
+        var refreshToken = cookieRefreshToken.value();
         if (nonNull(refreshToken)) {
             var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
             var validatedClaims = this.securityJwtTokenUtility.validate(jwtRefreshToken);
-            if (validatedClaims.isValid()) {
+            if (validatedClaims.valid()) {
                 var username = validatedClaims.safeGetUsername();
                 this.sessionRegistry.logout(
                         new Session(

@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CookieProviderImplTest {
+class CookieProviderImplTest {
 
     @Configuration
     @Import({
@@ -57,7 +57,7 @@ public class CookieProviderImplTest {
     private final CookieProvider componentUnderTest;
 
     @Test
-    public void createJwtAccessCookie() {
+    void createJwtAccessCookie() {
         // Arrange
         var jwtAccessToken = new JwtAccessToken(randomString());
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -74,15 +74,15 @@ public class CookieProviderImplTest {
         verify(httpServletResponse).addCookie(cookieAC.capture());
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(accessToken.getCookieKey());
-        assertThat(cookie.getValue()).isEqualTo(jwtAccessToken.getValue());
+        assertThat(cookie.getValue()).isEqualTo(jwtAccessToken.value());
         assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
-        assertThat(cookie.isHttpOnly()).isEqualTo(true);
+        assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(maxAge);
         verifyNoMoreInteractions(httpServletResponse);
     }
 
     @Test
-    public void createJwtRefreshCookie() {
+    void createJwtRefreshCookie() {
         // Arrange
         var refreshAccessToken = entity(JwtRefreshToken.class);
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -98,15 +98,15 @@ public class CookieProviderImplTest {
         verify(httpServletResponse).addCookie(cookieAC.capture());
         var cookie = cookieAC.getValue();
         assertThat(cookie.getName()).isEqualTo(refreshToken.getCookieKey());
-        assertThat(cookie.getValue()).isEqualTo(refreshAccessToken.getValue());
+        assertThat(cookie.getValue()).isEqualTo(refreshAccessToken.value());
         assertThat(cookie.getDomain()).isEqualTo(cookiesConfigs.getDomain());
-        assertThat(cookie.isHttpOnly()).isEqualTo(true);
+        assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getMaxAge()).isEqualTo(refreshToken.getExpiration().getTimeAmount().toSeconds());
         verifyNoMoreInteractions(httpServletResponse);
     }
 
     @Test
-    public void readJwtAccessToken() throws CookieAccessTokenNotFoundException {
+    void readJwtAccessToken() throws CookieAccessTokenNotFoundException {
         // Arrange
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
@@ -123,7 +123,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void readJwtAccessTokenThrow() {
+    void readJwtAccessTokenThrow() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { });
@@ -133,14 +133,14 @@ public class CookieProviderImplTest {
 
         // Assert
         verify(httpServletRequest).getCookies();
-        assertThat(httpServletRequest.getCookies()).hasSize(0);
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(CookieAccessTokenNotFoundException.class);
-        assertThat(throwable).hasMessageContaining("JWT access token not found");
+        assertThat(httpServletRequest.getCookies()).isEmpty();;
+        assertThat(throwable)
+                .isInstanceOf(CookieAccessTokenNotFoundException.class)
+                .hasMessageContaining("JWT access token not found");
     }
 
     @Test
-    public void readJwtRefreshToken() throws CookieRefreshTokenNotFoundException {
+    void readJwtRefreshToken() throws CookieRefreshTokenNotFoundException {
         // Arrange
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
@@ -157,7 +157,7 @@ public class CookieProviderImplTest {
     }
 
     @Test
-    public void readJwtRefreshTokenThrow() {
+    void readJwtRefreshTokenThrow() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { });
@@ -167,14 +167,14 @@ public class CookieProviderImplTest {
 
         // Assert
         verify(httpServletRequest).getCookies();
-        assertThat(httpServletRequest.getCookies()).hasSize(0);
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(CookieRefreshTokenNotFoundException.class);
-        assertThat(throwable).hasMessageContaining("JWT refresh token not found");
+        assertThat(httpServletRequest.getCookies()).isEmpty();
+        assertThat(throwable)
+                .isInstanceOf(CookieRefreshTokenNotFoundException.class)
+                .hasMessageContaining("JWT refresh token not found");
     }
 
     @Test
-    public void clearCookies() {
+    void clearCookies() {
         // Arrange
         var httpServletResponse = mock(HttpServletResponse.class);
         var domain = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs().getDomain();

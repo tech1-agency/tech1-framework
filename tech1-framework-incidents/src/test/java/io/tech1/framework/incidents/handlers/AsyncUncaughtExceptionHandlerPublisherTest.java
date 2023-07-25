@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AsyncUncaughtExceptionHandlerPublisherTest {
+class AsyncUncaughtExceptionHandlerPublisherTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -45,21 +45,21 @@ public class AsyncUncaughtExceptionHandlerPublisherTest {
     private final AsyncUncaughtExceptionHandlerPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentPublisher
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher
         );
     }
 
     @Test
-    public void handleUncaughtExceptionTest() {
+    void handleUncaughtExceptionTest() {
         // Arrange
         var throwable = mock(Throwable.class);
         var method = randomMethod();

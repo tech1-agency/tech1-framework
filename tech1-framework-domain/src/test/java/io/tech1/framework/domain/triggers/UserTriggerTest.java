@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserTriggerTest extends AbstractSerializationDeserializationRunner {
+class UserTriggerTest extends AbstractSerializationDeserializationRunner {
     private static final UserTrigger USER_TRIGGER = new UserTrigger(Username.of("tech1"));
 
     @Override
@@ -20,12 +20,11 @@ public class UserTriggerTest extends AbstractSerializationDeserializationRunner 
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(USER_TRIGGER);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 }

@@ -21,7 +21,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
+class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> getAttributeByKeyTest() {
         return Stream.of(
@@ -57,7 +57,7 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 Username.of("tech1"),
@@ -78,13 +78,12 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(currentClientUser);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), "current-client-user.json"));
     }
 
     @ParameterizedTest
     @MethodSource("getAttributeByKeyTest")
-    public void getAttributeByKeyTest(String attributeKey, boolean reflectionHack, Object expected) throws NoSuchFieldException, IllegalAccessException {
+    void getAttributeByKeyTest(String attributeKey, boolean reflectionHack, Object expected) throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomUsername(),
@@ -111,7 +110,7 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("hasAbstractAuthorityTest")
-    public void hasAbstractAuthorityTest(AbstractAuthority abstractAuthority, boolean expected) {
+    void hasAbstractAuthorityTest(AbstractAuthority abstractAuthority, boolean expected) {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomUsername(),
@@ -135,7 +134,7 @@ public class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("hasAuthorityTest")
-    public void hasAuthorityTest(String authority, boolean expected) {
+    void hasAuthorityTest(String authority, boolean expected) {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomUsername(),

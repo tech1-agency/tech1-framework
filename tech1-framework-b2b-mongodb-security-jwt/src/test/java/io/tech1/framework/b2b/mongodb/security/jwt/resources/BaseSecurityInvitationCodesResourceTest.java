@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRunner {
+class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -40,10 +40,10 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     // Resource
-    private final BaseSecurityInvitationCodeResource componentUnderTest;
+    private final BaseSecurityInvitationCodesResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
@@ -52,7 +52,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.invitationCodeService
@@ -60,28 +60,28 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
     }
 
     @Test
-    public void findAllTest() throws Exception {
+    void findAllTest() throws Exception {
         // Arrange
         var owner = randomUsername();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(DbInvitationCode.class);
         var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
-        when(this.invitationCodeService.findByOwner(eq(owner))).thenReturn(responseInvitationCodes);
+        when(this.invitationCodeService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
-        this.mvc.perform(get("/invitationCode").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/invitationCodes").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authorities", hasSize(4)))
                 .andExpect(jsonPath("$.invitationCodes", hasSize(invitationCodes.size())));
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeService).findByOwner(eq(owner));
+        verify(this.invitationCodeService).findByOwner(owner);
     }
 
     @Test
-    public void saveTest() throws Exception {
+    void saveTest() throws Exception {
         // Arrange
         var owner = randomUsername();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
@@ -89,7 +89,7 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
 
         // Act
         this.mvc.perform(
-                post("/invitationCode")
+                post("/invitationCodes")
                         .content(this.objectMapper.writeValueAsString(requestNewInvitationCodeParams))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -97,12 +97,12 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeRequestsValidator).validateCreateNewInvitationCode(eq(requestNewInvitationCodeParams));
-        verify(this.invitationCodeService).save(eq(requestNewInvitationCodeParams), eq(owner));
+        verify(this.invitationCodeRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
+        verify(this.invitationCodeService).save(requestNewInvitationCodeParams, owner);
     }
 
     @Test
-    public void deleteByIdTest() throws Exception {
+    void deleteByIdTest() throws Exception {
         // Arrange
         var user = entity(DbUser.class);
         when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(user);
@@ -110,14 +110,14 @@ public class BaseSecurityInvitationCodeResourceTest extends AbstractResourcesRun
 
         // Act
         this.mvc.perform(
-                        delete("/invitationCode/" + invitationCodeId)
+                        delete("/invitationCodes/" + invitationCodeId)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.invitationCodeRequestsValidator).validateDeleteById(eq(user), eq(invitationCodeId));
-        verify(this.invitationCodeService).deleteById(eq(invitationCodeId));
+        verify(this.invitationCodeRequestsValidator).validateDeleteById(user, invitationCodeId);
+        verify(this.invitationCodeService).deleteById(invitationCodeId);
     }
 }

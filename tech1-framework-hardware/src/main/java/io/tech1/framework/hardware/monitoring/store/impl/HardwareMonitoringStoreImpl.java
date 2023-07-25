@@ -28,8 +28,8 @@ public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
     public HardwareMonitoringWidget getHardwareMonitoringWidget() {
         var lastOrUnknownEvent = this.getLastOrUnknownEvent();
         return new HardwareMonitoringWidget(
-                lastOrUnknownEvent.getVersion(),
-                lastOrUnknownEvent.getLast().tableView(
+                lastOrUnknownEvent.version(),
+                lastOrUnknownEvent.last().tableView(
                         new HardwareMonitoringThresholds(
                                 this.applicationFrameworkProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
                         )

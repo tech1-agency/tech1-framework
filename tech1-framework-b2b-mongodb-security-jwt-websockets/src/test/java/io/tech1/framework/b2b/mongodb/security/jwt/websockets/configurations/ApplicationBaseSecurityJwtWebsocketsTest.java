@@ -27,13 +27,12 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_WEBSOCKETS_CONFIGS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwtWebsocketsTest {
+class ApplicationBaseSecurityJwtWebsocketsTest {
 
     @Configuration
     @Import({
@@ -91,36 +90,37 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
     private final ApplicationBaseSecurityJwtWebsockets componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("registerStompEndpoints");
-        assertThat(methods).contains("configureMessageBroker");
-        assertThat(methods).hasSize(31);
+        assertThat(methods)
+                .hasSize(31)
+                .contains("registerStompEndpoints")
+                .contains("configureMessageBroker");
     }
 
     @Test
-    public void registerStompEndpointsTest() {
+    void registerStompEndpointsTest() {
         // Arrange
         var registration = mock(StompWebSocketEndpointRegistration.class);
         var registry = mock(StompEndpointRegistry.class);
-        when(registration.setAllowedOrigins(eq("http://localhost:1234"))).thenReturn(registration);
-        when(registration.setHandshakeHandler(eq(this.securityHandshakeHandler))).thenReturn(registration);
-        when(registration.addInterceptors(eq(this.csrfInterceptorHandshake))).thenReturn(registration);
-        when(registry.addEndpoint(eq("/endpoint"))).thenReturn(registration);
+        when(registration.setAllowedOrigins("http://localhost:1234")).thenReturn(registration);
+        when(registration.setHandshakeHandler(this.securityHandshakeHandler)).thenReturn(registration);
+        when(registration.addInterceptors(this.csrfInterceptorHandshake)).thenReturn(registration);
+        when(registry.addEndpoint("/endpoint")).thenReturn(registration);
 
         // Act
         this.componentUnderTest.registerStompEndpoints(registry);
 
         // Assert
-        verify(registry).addEndpoint(eq("/endpoint"));
-        verify(registration).setAllowedOrigins(eq("http://localhost:1234"));
-        verify(registration).setHandshakeHandler(eq(this.securityHandshakeHandler));
-        verify(registration).addInterceptors(eq(this.csrfInterceptorHandshake));
+        verify(registry).addEndpoint("/endpoint");
+        verify(registration).setAllowedOrigins("http://localhost:1234");
+        verify(registration).setHandshakeHandler(this.securityHandshakeHandler);
+        verify(registration).addInterceptors(this.csrfInterceptorHandshake);
         verify(registration).withSockJS();
         verifyNoMoreInteractions(
                 registry,
@@ -129,7 +129,7 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
     }
 
     @Test
-    public void configureMessageBrokerTest() {
+    void configureMessageBrokerTest() {
         // Arrange
         var registry = mock(MessageBrokerRegistry.class);
 
@@ -137,16 +137,16 @@ public class ApplicationBaseSecurityJwtWebsocketsTest {
         this.componentUnderTest.configureMessageBroker(registry);
 
         // Assert
-        verify(registry).setApplicationDestinationPrefixes(eq("/app"));
-        verify(registry).enableSimpleBroker(eq("/queue"));
-        verify(registry).setUserDestinationPrefix(eq("/user"));
+        verify(registry).setApplicationDestinationPrefixes("/app");
+        verify(registry).enableSimpleBroker("/queue");
+        verify(registry).setUserDestinationPrefix("/user");
         verifyNoMoreInteractions(
                 registry
         );
     }
 
     @Test
-    public void sameOriginDisabledTest() {
+    void sameOriginDisabledTest() {
         // Act
         var actual = this.componentUnderTest.sameOriginDisabled();
 

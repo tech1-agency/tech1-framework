@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
@@ -124,10 +125,10 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public DbUserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.getClientIpAddr());
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.getUserAgentHeader());
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = event.getUserSession();
+        var userSession = event.userSession();
         userSession.editRequestMetadata(requestMetadata);
         return this.userSessionRepository.save(userSession);
     }
@@ -140,7 +141,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         usersSessions.forEach(userSession -> {
             var sessionId = userSession.getId();
             var validatedClaims = this.securityJwtTokenUtility.validate(userSession.getJwtRefreshToken());
-            var isValid = validatedClaims.isValid();
+            var isValid = validatedClaims.valid();
             if (isValid) {
                 var isExpired = isPast(validatedClaims.safeGetExpirationTimestamp());
                 if (isExpired) {
@@ -156,5 +157,26 @@ public class UserSessionServiceImpl implements UserSessionService {
                 expiredSessions,
                 expiredOrInvalidSessionIds
         );
+    }
+
+    @Override
+    public void deleteById(String sessionId) {
+        this.userSessionRepository.deleteById(sessionId);
+    }
+
+    @Override
+    public void deleteAllExceptCurrent(DbUser user, CookieRefreshToken cookie) {
+        var sessions = this.userSessionRepository.findByUsername(user.getUsername());
+        var currentSession = this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
+        this.userSessionRepository.deleteAll(sessions);
+    }
+
+    @Override
+    public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
+        var sessions = this.userSessionRepository.findAll();
+        var currentSession = this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
+        this.userSessionRepository.deleteAll(sessions);
     }
 }

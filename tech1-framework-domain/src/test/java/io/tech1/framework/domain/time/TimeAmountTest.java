@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeAmountTest {
+class TimeAmountTest {
 
     private static Stream<Arguments> toTest() {
         return Stream.of(
@@ -22,7 +22,7 @@ public class TimeAmountTest {
 
     @ParameterizedTest
     @MethodSource("toTest")
-    public void toTest(TimeAmount timeAmount, long expectedSeconds, long expectedMillis) {
+    void toTest(TimeAmount timeAmount, long expectedSeconds, long expectedMillis) {
         // Act
         var actualSeconds = timeAmount.toSeconds();
         var actualMillis = timeAmount.toMillis();

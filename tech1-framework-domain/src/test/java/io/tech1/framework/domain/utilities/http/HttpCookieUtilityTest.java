@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.utilities.http;
 
 import io.tech1.framework.domain.exceptions.cookie.CookieNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +19,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class HttpCookieUtilityTest {
+@Slf4j
+class HttpCookieUtilityTest {
 
     private static Stream<Arguments> createCookieTests() {
         return Stream.of(
@@ -31,7 +33,7 @@ public class HttpCookieUtilityTest {
 
     @ParameterizedTest
     @MethodSource("createCookieTests")
-    public void createCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
+    void createCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
         // Act
         var actual = createCookie(cookieKey, cookieValue, domain, httpOnly, maxAge);
 
@@ -47,7 +49,7 @@ public class HttpCookieUtilityTest {
 
     @ParameterizedTest
     @MethodSource("createCookieTests")
-    public void createNullCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
+    void createNullCookieTest(String cookieKey, String cookieValue, String domain, boolean httpOnly, int maxAge) {
         // Act
         var actual = createNullCookie(cookieKey, domain);
 
@@ -55,18 +57,18 @@ public class HttpCookieUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getPath()).isEqualTo("/");
         assertThat(actual.getName()).isEqualTo(cookieKey);
-        assertThat(actual.getValue()).isEqualTo(null);
+        assertThat(actual.getValue()).isNull();;
         assertThat(actual.getDomain()).isEqualTo(domain);
-        assertThat(actual.isHttpOnly()).isEqualTo(true);
-        assertThat(actual.getMaxAge()).isEqualTo(0);
+        assertThat(actual.isHttpOnly()).isTrue();
+        assertThat(actual.getMaxAge()).isZero();
         // ignored
         assertThat(cookieValue).isNotNull();
-        assertThat(httpOnly).isNotNull();
-        assertThat(maxAge).isNotNull();
+        LOGGER.debug("httpOnly is ignored: " + httpOnly);
+        LOGGER.debug("maxAge is ignored: " + maxAge);
     }
 
     @Test
-    public void readCookieExceptionTest() {
+    void readCookieExceptionTest() {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var cookieKey = randomString();
@@ -81,7 +83,7 @@ public class HttpCookieUtilityTest {
     }
 
     @Test
-    public void readCookieNoCookieTest() {
+    void readCookieNoCookieTest() {
         // Arrange
         var cookie1 = createNullCookie("cookie1", randomString());
         var cookie2 = createNullCookie("cookie2", randomString());
@@ -100,7 +102,7 @@ public class HttpCookieUtilityTest {
     }
 
     @RepeatedTest(5)
-    public void readCookieTest() throws CookieNotFoundException {
+    void readCookieTest() throws CookieNotFoundException {
         // Arrange
         var cookieKey = randomString();
         var expected = randomString();
@@ -115,7 +117,6 @@ public class HttpCookieUtilityTest {
         var actual = readCookie(request, cookieKey);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
     }
 }

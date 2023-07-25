@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +47,11 @@ public class TestsApplicationValidatorsContext {
     @Bean
     InvitationCodeRepository invitationCodeRepository() {
         return mock(InvitationCodeRepository.class);
+    }
+
+    @Bean
+    UserSessionRepository userSessionRepository() {
+        return mock(UserSessionRepository.class);
     }
 
     @Bean

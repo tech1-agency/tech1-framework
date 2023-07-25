@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomHardwareMonitoringDatapointTableRow;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HardwareMonitoringDatapointTableViewTest {
+class HardwareMonitoringDatapointTableViewTest {
 
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
@@ -21,7 +21,7 @@ public class HardwareMonitoringDatapointTableViewTest {
 
     @ParameterizedTest
     @MethodSource("constructorTest")
-    public void constructorTest(List<HardwareMonitoringDatapointTableRow> rows, boolean expectedAnyPresent, boolean expectedAnyProblem) {
+    void constructorTest(List<HardwareMonitoringDatapointTableRow> rows, boolean expectedAnyPresent, boolean expectedAnyProblem) {
         // Act
         var actual = new HardwareMonitoringDatapointTableView(
                 rows

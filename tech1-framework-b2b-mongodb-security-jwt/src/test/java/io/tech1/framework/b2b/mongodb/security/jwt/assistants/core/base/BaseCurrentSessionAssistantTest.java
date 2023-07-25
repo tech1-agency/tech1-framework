@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
@@ -11,7 +10,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
@@ -32,7 +30,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -46,7 +43,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseCurrentSessionAssistantTest {
+class BaseCurrentSessionAssistantTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -66,11 +63,6 @@ public class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        CookieProvider cookieProvider() {
-            return mock(CookieProvider.class);
-        }
-
-        @Bean
         SecurityPrincipalUtility securityPrincipalUtility() {
             return mock(SecurityPrincipalUtility.class);
         }
@@ -86,7 +78,6 @@ public class BaseCurrentSessionAssistantTest {
                     this.sessionRegistry(),
                     this.userSessionService(),
                     this.hardwareMonitoringStore(),
-                    this.cookieProvider(),
                     this.securityPrincipalUtility(),
                     this.applicationFrameworkProperties()
             );
@@ -96,38 +87,35 @@ public class BaseCurrentSessionAssistantTest {
     private final SessionRegistry sessionRegistry;
     private final UserSessionService userSessionService;
     private final HardwareMonitoringStore hardwareMonitoringStore;
-    private final CookieProvider cookieProvider;
     private final SecurityPrincipalUtility securityPrincipalUtility;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final CurrentSessionAssistant componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
                 this.userSessionService,
-                this.cookieProvider,
                 this.securityPrincipalUtility,
                 this.applicationFrameworkProperties
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
                 this.userSessionService,
-                this.cookieProvider,
                 this.securityPrincipalUtility,
                 this.applicationFrameworkProperties
         );
     }
 
     @Test
-    public void getCurrentUsernameTest() {
+    void getCurrentUsernameTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedUsername()).thenReturn(expectedJwtUser.getUsername());
@@ -137,11 +125,11 @@ public class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedUsername();
-        assertThat(actualUsername).isEqualTo(expectedJwtUser.getDbUser().getUsername());
+        assertThat(actualUsername).isEqualTo(expectedJwtUser.dbUser().getUsername());
     }
 
     @Test
-    public void getCurrentUserIdTest() {
+    void getCurrentUserIdTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
@@ -151,11 +139,11 @@ public class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-        assertThat(actualUserId).isEqualTo(expectedJwtUser.getDbUser().getId());
+        assertThat(actualUserId).isEqualTo(expectedJwtUser.dbUser().getId());
     }
 
     @Test
-    public void getCurrentDbUserTest() {
+    void getCurrentDbUserTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
@@ -165,11 +153,11 @@ public class BaseCurrentSessionAssistantTest {
 
         // Assert
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-        assertThat(currentDbUser).isEqualTo(jwtUser.getDbUser());
+        assertThat(currentDbUser).isEqualTo(jwtUser.dbUser());
     }
 
     @Test
-    public void getCurrentJwtUserTest() {
+    void getCurrentJwtUserTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
@@ -183,11 +171,11 @@ public class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    public void getCurrentClientUserTest() {
+    void getCurrentClientUserTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
-        var hardwareMonitoringWidget = mock(HardwareMonitoringWidget.class);
+        var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(TestsPropertiesConstants.HARDWARE_MONITORING_CONFIGS);
 
@@ -199,19 +187,19 @@ public class BaseCurrentSessionAssistantTest {
         verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.getDbUser().getName());
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.getDbUser().getEmail());
+        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.dbUser().getName());
+        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.dbUser().getEmail());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).hasSize(1);
         assertThat(currentClientUser.getAttributes()).containsOnlyKeys("hardware");
     }
 
     @Test
-    public void getCurrentClientUserNoHardwareTest() {
+    void getCurrentClientUserNoHardwareTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
-        var hardwareMonitoringWidget = mock(HardwareMonitoringWidget.class);
+        var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
 
@@ -222,22 +210,22 @@ public class BaseCurrentSessionAssistantTest {
         verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.getDbUser().getName());
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.getDbUser().getEmail());
+        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.dbUser().getName());
+        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.dbUser().getEmail());
         assertThat(currentClientUser.getAttributes()).isNotNull();
-        assertThat(currentClientUser.getAttributes()).hasSize(0);
+        assertThat(currentClientUser.getAttributes()).isEmpty();
     }
 
     @Test
-    public void getCurrentUserDbSessionsTableTest() {
+    void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
-        var username = jwtUser.getDbUser().getUsername();
+        var username = jwtUser.dbUser().getUsername();
         var validJwtRefreshToken = randomString();
-        var cookieRefreshToken = new CookieRefreshToken(validJwtRefreshToken);
+        var cookie = new CookieRefreshToken(validJwtRefreshToken);
 
         Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
-                    tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.getB()), randomUsername(), tuple2.getA());
+                    tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
@@ -277,39 +265,31 @@ public class BaseCurrentSessionAssistantTest {
 
         // Act
         cases.forEach(item -> {
-            try {
-                // Arrange
-                var httpServletRequest = mock(HttpServletRequest.class);
-                when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
-                var userSessions = item.getA();
-                var expectedSessionSize = item.getB();
-                var expectedAnyProblems = item.getC();
-                when(this.userSessionService.findByUsername(eq(username))).thenReturn(userSessions);
-                when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+            // Arrange
+            when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+            var userSessions = item.a();
+            var expectedSessionSize = item.b();
+            var expectedAnyProblems = item.c();
+            when(this.userSessionService.findByUsername(username)).thenReturn(userSessions);
 
-                // Act
-                var currentUserDbSessionsTable = this.componentUnderTest.getCurrentUserDbSessionsTable(httpServletRequest);
+            // Act
+            var currentUserDbSessionsTable = this.componentUnderTest.getCurrentUserDbSessionsTable(cookie);
 
-                // Assert
-                verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-                verify(this.userSessionService, times(2)).findByUsername(eq(username));
-                verify(this.sessionRegistry).cleanByExpiredRefreshTokens(eq(userSessions));
-                verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-                assertThat(currentUserDbSessionsTable).isNotNull();
-                assertThat(currentUserDbSessionsTable.getSessions()).hasSize(expectedSessionSize);
-                assertThat(currentUserDbSessionsTable.getSessions().stream().filter(ResponseUserSession2::isCurrent).count()).isEqualTo(1);
-                assertThat(currentUserDbSessionsTable.getSessions().stream().filter(session -> "Current session".equals(session.getActivity())).count()).isEqualTo(1);
-                assertThat(currentUserDbSessionsTable.isAnyProblem()).isEqualTo(expectedAnyProblems);
+            // Assert
+            verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
+            verify(this.userSessionService, times(2)).findByUsername(username);
+            verify(this.sessionRegistry).cleanByExpiredRefreshTokens(userSessions);
+            assertThat(currentUserDbSessionsTable).isNotNull();
+            assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.activity())).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 
-                reset(
-                        this.sessionRegistry,
-                        this.userSessionService,
-                        this.cookieProvider,
-                        this.securityPrincipalUtility
-                );
-            } catch (CookieRefreshTokenNotFoundException ex) {
-                // ignored
-            }
+            reset(
+                    this.sessionRegistry,
+                    this.userSessionService,
+                    this.securityPrincipalUtility
+            );
         });
     }
 }

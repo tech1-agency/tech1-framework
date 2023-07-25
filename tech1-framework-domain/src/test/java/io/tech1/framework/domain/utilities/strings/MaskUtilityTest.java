@@ -11,7 +11,7 @@ import static io.tech1.framework.domain.utilities.strings.MaskUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-public class MaskUtilityTest {
+class MaskUtilityTest {
 
     private static Stream<Arguments> maskTests() {
         return Stream.of(
@@ -37,7 +37,7 @@ public class MaskUtilityTest {
 
     @ParameterizedTest
     @MethodSource("maskTests")
-    public void maskTests(String value, String expectedMasked5, String expectedMasked8, String expectedMasked2) {
+    void maskTests(String value, String expectedMasked5, String expectedMasked8, String expectedMasked2) {
         // Act
         var actualMasked5 = mask5(value);
         var actualMasked8 = mask8(value);
@@ -51,7 +51,7 @@ public class MaskUtilityTest {
 
     @ParameterizedTest
     @MethodSource("cutMaskTests")
-    public void cutMaskTests(String value, String expectedCut15Mask8, String expectedCutMask1) {
+    void cutMaskTests(String value, String expectedCut15Mask8, String expectedCutMask1) {
         // Act
         var actualCut15Mask8 = cut15Mask8(value);
         var actualCutMask1 = cutMask(value, 10, 5);

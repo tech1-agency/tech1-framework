@@ -9,10 +9,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 @Slf4j
-public class PartitionsTest {
+class PartitionsTest {
 
     @RepeatedTest(10)
-    public void integrationTest() {
+    void integrationTest() {
         // Arrange
         var values = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
@@ -20,8 +20,7 @@ public class PartitionsTest {
         var actual = Partitions.ofSize(values, 3);
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.equals(values)).isFalse();
+        assertThat(actual).isNotEqualTo(values);
         assertThat(actual.hashCode()).isPositive();
         assertThat(actual).hasSize(4);
         assertThat(actual.get(0)).hasSize(3);

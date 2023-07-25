@@ -42,14 +42,14 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             this.mappedByCountryName = geoCountryFlags.stream()
                     .collect(
                             Collectors.toMap(
-                                    item -> item.getName().toLowerCase(),
+                                    item -> item.name().toLowerCase(),
                                     Function.identity()
                             )
                     );
             this.mappedByCountryCode = geoCountryFlags.stream()
                     .collect(
                             Collectors.toMap(
-                                    item -> item.getCode().toLowerCase(),
+                                    item -> item.code().toLowerCase(),
                                     Function.identity()
                             )
                     );
@@ -90,6 +90,6 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
         }
         var countryFlagOpt = mappedBy.get(searchKey.toLowerCase());
         var countryFlag = nonNull(countryFlagOpt) ? countryFlagOpt : mappedBy.get(UNKNOWN.toLowerCase());
-        return countryFlag.getEmoji();
+        return countryFlag.emoji();
     }
 }

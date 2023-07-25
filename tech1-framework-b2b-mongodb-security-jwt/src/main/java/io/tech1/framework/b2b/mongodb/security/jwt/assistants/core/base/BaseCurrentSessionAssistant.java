@@ -1,17 +1,16 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -34,8 +32,6 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     protected final UserSessionService userSessionService;
     // Stores
     protected final HardwareMonitoringStore hardwareMonitoringStore;
-    // Cookie
-    protected final CookieProvider cookieProvider;
     // Utilities
     protected final SecurityPrincipalUtility securityPrincipalUtility;
     // Properties
@@ -48,12 +44,12 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
 
     @Override
     public String getCurrentUserId() {
-        return this.getCurrentJwtUser().getDbUser().getId();
+        return this.getCurrentJwtUser().dbUser().getId();
     }
 
     @Override
     public DbUser getCurrentDbUser() {
-        return this.getCurrentJwtUser().getDbUser();
+        return this.getCurrentJwtUser().dbUser();
     }
 
     @Override
@@ -65,7 +61,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     public CurrentClientUser getCurrentClientUser() {
         var currentJwtUser = this.getCurrentJwtUser();
 
-        var user = currentJwtUser.getDbUser();
+        var user = currentJwtUser.dbUser();
 
         var attributes = user.getNotNullAttributes();
         if (this.applicationFrameworkProperties.getHardwareMonitoringConfigs().isEnabled()) {
@@ -83,16 +79,15 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
+    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieRefreshToken cookie) {
         var currentJwtUser = this.getCurrentJwtUser();
-        var username = currentJwtUser.getDbUser().getUsername();
+        var username = currentJwtUser.dbUser().getUsername();
         var usersSessions = this.userSessionService.findByUsername(username);
         this.sessionRegistry.cleanByExpiredRefreshTokens(usersSessions);
         var activeUsersSessions = this.userSessionService.findByUsername(username);
-        var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
         var sessions = activeUsersSessions.stream()
-                .map(session -> new ResponseUserSession2(session, cookieRefreshToken))
+                .map(session -> ResponseUserSession2.of(session, cookie))
                 .collect(Collectors.toList());
-        return new ResponseUserSessionsTable(sessions);
+        return ResponseUserSessionsTable.of(sessions);
     }
 }

@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CookieRefreshTokenNotFoundExceptionTest {
+class CookieRefreshTokenNotFoundExceptionTest {
 
     @Test
-    public void testException() {
+    void testException() {
         // Act
         var actual = new CookieRefreshTokenNotFoundException();
 

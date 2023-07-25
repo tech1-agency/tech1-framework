@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentPublisherImplTest {
+class IncidentPublisherImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -54,7 +54,7 @@ public class IncidentPublisherImplTest {
     private final IncidentPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.applicationEventPublisher,
                 this.applicationFrameworkProperties
@@ -62,7 +62,7 @@ public class IncidentPublisherImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher,
                 this.applicationFrameworkProperties
@@ -70,7 +70,7 @@ public class IncidentPublisherImplTest {
     }
 
     @Test
-    public void publishResetServerStartedTest() {
+    void publishResetServerStartedTest() {
         // Arrange
         var incident = randomIncidentSystemResetServerStarted();
 
@@ -78,11 +78,11 @@ public class IncidentPublisherImplTest {
         this.componentUnderTest.publishResetServerStarted(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
-    public void publishResetServerCompletedTest() {
+    void publishResetServerCompletedTest() {
         // Arrange
         var incident = randomIncidentSystemResetServerCompleted();
 
@@ -90,11 +90,11 @@ public class IncidentPublisherImplTest {
         this.componentUnderTest.publishResetServerCompleted(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
-    public void publishIncidentTest() {
+    void publishIncidentTest() {
         // Arrange
         var incident = randomIncident();
 
@@ -102,11 +102,11 @@ public class IncidentPublisherImplTest {
         this.componentUnderTest.publishIncident(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
-    public void publishThrowableIncidentTest() {
+    void publishThrowableIncidentTest() {
         // Arrange
         var incident = randomThrowableIncident();
 
@@ -114,11 +114,11 @@ public class IncidentPublisherImplTest {
         this.componentUnderTest.publishThrowable(incident);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(incident));
+        verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
     @Test
-    public void publishThrowableTest() {
+    void publishThrowableTest() {
         // Arrange
         var throwable = randomThrowableIncident().getThrowable();
 
@@ -126,6 +126,6 @@ public class IncidentPublisherImplTest {
         this.componentUnderTest.publishThrowable(throwable);
 
         // Assert
-        verify(this.applicationEventPublisher).publishEvent(eq(IncidentThrowable.of(throwable)));
+        verify(this.applicationEventPublisher).publishEvent(IncidentThrowable.of(throwable));
     }
 }

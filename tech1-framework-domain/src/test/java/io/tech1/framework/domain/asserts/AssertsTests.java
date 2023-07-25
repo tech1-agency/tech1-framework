@@ -17,7 +17,7 @@ import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-public class AssertsTests {
+class AssertsTests {
 
     // =================================================================================================================
     // 1 assert complexity
@@ -121,7 +121,7 @@ public class AssertsTests {
     // =================================================================================================================
     @ParameterizedTest
     @MethodSource("assertNonNullOrThrowTest")
-    public void assertNonNullOrThrowTest(Object object, String expectedErrorMessage) {
+    void assertNonNullOrThrowTest(Object object, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonNullOrThrow(object, expectedErrorMessage));
 
@@ -137,7 +137,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertNonNullPropertyOrThrowTest")
-    public void assertNonNullPropertyOrThrowTest(ReflectionProperty reflectionProperty, String expectedErrorMessage) {
+    void assertNonNullPropertyOrThrowTest(ReflectionProperty reflectionProperty, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonNullPropertyOrThrow(reflectionProperty));
 
@@ -153,7 +153,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertNonBlankOrThrowTest")
-    public void assertNonBlankOrThrowTest(String object, String expectedErrorMessage) {
+    void assertNonBlankOrThrowTest(String object, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonBlankOrThrow(object, expectedErrorMessage));
 
@@ -169,7 +169,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertNonEmptyOrThrowTest")
-    public void assertNonEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
+    void assertNonEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonEmptyOrThrow(collection, expectedErrorMessage));
 
@@ -185,7 +185,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertTrueOrThrowTest")
-    public void assertTrueOrThrowTest(boolean flag, String expectedErrorMessage) {
+    void assertTrueOrThrowTest(boolean flag, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertTrueOrThrow(flag, expectedErrorMessage));
 
@@ -201,7 +201,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertFalseOrThrowTest")
-    public void assertFalseOrThrowTest(boolean flag, String expectedErrorMessage) {
+    void assertFalseOrThrowTest(boolean flag, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertFalseOrThrow(flag, expectedErrorMessage));
 
@@ -217,7 +217,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("requireNonNullOrThrowTest")
-    public void requireNonNullOrThrowTest(Object object, String expectedErrorMessage) {
+    void requireNonNullOrThrowTest(Object object, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> {
             // Act
@@ -242,7 +242,7 @@ public class AssertsTests {
     // =================================================================================================================
     @ParameterizedTest
     @MethodSource("assertNonNullNotBlankOrThrowTest")
-    public void assertNonNullNotBlankOrThrowTest(Object object, String expectedErrorMessage) {
+    void assertNonNullNotBlankOrThrowTest(Object object, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonNullNotBlankOrThrow(object, expectedErrorMessage));
 
@@ -258,7 +258,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertNonNullNotEmptyOrThrowTest")
-    public void assertNonNullNotEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
+    void assertNonNullNotEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertNonNullNotEmptyOrThrow(collection, expectedErrorMessage));
 
@@ -274,7 +274,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertZoneIdOrThrowTest")
-    public void assertZoneIdOrThrowTest(String zoneId, String expectedErrorMessage) {
+    void assertZoneIdOrThrowTest(String zoneId, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertZoneIdOrThrow(zoneId, expectedErrorMessage));
 
@@ -290,7 +290,7 @@ public class AssertsTests {
 
     @ParameterizedTest
     @MethodSource("assertDateTimePatternOrThrowTest")
-    public void assertDateTimePatternOrThrowTest(String dateTimePattern, String expectedErrorMessage) {
+    void assertDateTimePatternOrThrowTest(String dateTimePattern, String expectedErrorMessage) {
         // Act
         var throwable = catchThrowable(() -> assertDateTimePatternOrThrow(dateTimePattern, expectedErrorMessage));
 

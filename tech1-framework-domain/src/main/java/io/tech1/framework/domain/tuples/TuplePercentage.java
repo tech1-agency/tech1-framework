@@ -1,7 +1,5 @@
 package io.tech1.framework.domain.tuples;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
@@ -9,11 +7,10 @@ import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.divide
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
 import static java.math.BigDecimal.ZERO;
 
-// Lombok
-@Data
-public class TuplePercentage {
-    private final BigDecimal value;
-    private final BigDecimal percentage;
+public record TuplePercentage(
+        BigDecimal value,
+        BigDecimal percentage
+) {
 
     public static TuplePercentage of(BigDecimal value, BigDecimal maxValue, int valueScale, int percentageScale) {
         return new TuplePercentage(

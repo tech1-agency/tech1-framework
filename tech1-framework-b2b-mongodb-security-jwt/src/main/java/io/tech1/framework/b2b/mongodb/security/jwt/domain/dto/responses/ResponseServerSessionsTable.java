@@ -1,37 +1,37 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators;
 import io.tech1.framework.domain.base.Username;
-import lombok.Data;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-// Lombok
-@Data
-public class ResponseServerSessionsTable {
-    private final List<ResponseUserSession3> activeSessions;
-    private final List<ResponseUserSession3> inactiveSessions;
+import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.SESSIONS_2;
 
-    public ResponseServerSessionsTable(
-            List<ResponseUserSession3> activeSessions,
-            List<ResponseUserSession3> inactiveSessions
+public record ResponseServerSessionsTable(
+        List<ResponseUserSession2> activeSessions,
+        List<ResponseUserSession2> inactiveSessions
+) {
+    public static ResponseServerSessionsTable of(
+            List<ResponseUserSession2> activeSessions,
+            List<ResponseUserSession2> inactiveSessions
     ) {
-        this.activeSessions = activeSessions;
-        this.activeSessions.sort(SecurityJwtComparators.SESSIONS_3);
-        this.inactiveSessions = inactiveSessions;
-        this.inactiveSessions.sort(SecurityJwtComparators.SESSIONS_3);
+        activeSessions.sort(SESSIONS_2);
+        inactiveSessions.sort(SESSIONS_2);
+        return new ResponseServerSessionsTable(
+                activeSessions,
+                inactiveSessions
+        );
     }
 
     @JsonIgnore
     public Set<Username> getActiveUsernames() {
-        return this.activeSessions.stream().map(ResponseUserSession3::getWho).collect(Collectors.toSet());
+        return this.activeSessions.stream().map(ResponseUserSession2::who).collect(Collectors.toSet());
     }
 
     @JsonIgnore
     public Set<Username> getInactiveUsernames() {
-        return this.inactiveSessions.stream().map(ResponseUserSession3::getWho).collect(Collectors.toSet());
+        return this.inactiveSessions.stream().map(ResponseUserSession2::who).collect(Collectors.toSet());
     }
 }

@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IncidentConfigsTest {
+class IncidentConfigsTest {
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         // Act
         var incidentConfigs = new IncidentConfigs();
 
@@ -17,7 +17,7 @@ public class IncidentConfigsTest {
     }
 
     @Test
-    public void disabledTest() {
+    void disabledTest() {
         // Act
         var incidentConfigs = IncidentConfigs.disabled();
 

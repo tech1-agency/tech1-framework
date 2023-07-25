@@ -11,7 +11,7 @@ import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ResetServerStatusTest extends AbstractFolderSerializationRunner {
+class ResetServerStatusTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
@@ -19,7 +19,7 @@ public class ResetServerStatusTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void integrationTest() {
+    void integrationTest() {
         // Act-1
         var status = new ResetServerStatus(9);
 
@@ -38,7 +38,7 @@ public class ResetServerStatusTest extends AbstractFolderSerializationRunner {
 
         // Assert-2
         assertThat(status.getState()).isEqualTo(RESETTING);
-        assertThat(status.getStage()).isEqualTo(0);
+        assertThat(status.getStage()).isZero();
         assertThat(status.getStagesCount()).isEqualTo(9);
         assertThat(status.getPercentage()).isEqualTo(zero());
         assertThat(status.getDescription()).isEqualTo("Resetting");

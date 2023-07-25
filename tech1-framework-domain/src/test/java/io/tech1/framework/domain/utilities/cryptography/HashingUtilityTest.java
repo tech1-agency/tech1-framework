@@ -11,7 +11,7 @@ import static io.tech1.framework.domain.utilities.cryptography.HashingUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class HashingUtilityTest {
+class HashingUtilityTest {
 
     private static Stream<Arguments> hashingAlgorithmsTest() {
         return Stream.of(
@@ -55,7 +55,7 @@ public class HashingUtilityTest {
 
     @ParameterizedTest
     @MethodSource("hashingAlgorithmsTest")
-    public void hashingAlgorithmsTest(String value, String hashingKey, String expected256, String expected384, String expected512) {
+    void hashingAlgorithmsTest(String value, String hashingKey, String expected256, String expected384, String expected512) {
         // Act
         var actual256 = hmacSha256(value, hashingKey);
         var actual384 = hmacSha384(value, hashingKey);
@@ -68,12 +68,11 @@ public class HashingUtilityTest {
     }
 
     @Test
-    public void shaByAlgorithmExceptionTest() {
+    void shaByAlgorithmExceptionTest() {
         // Act
         var throwable = catchThrowable(() -> shaByAlgorithm("value", "hashingKey", "HmacSHA0"));
 
         // Assert
-        assertThat(throwable).isNotNull();
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         assertThat(throwable.getMessage()).isEqualTo("Hashing Failure. Value: `value`. Key: `hashingKey`. Algorithm: `HmacSHA0`. Exception: `NoSuchAlgorithmException`");
     }

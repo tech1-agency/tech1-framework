@@ -9,10 +9,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class IncidentThrowableTest {
+class IncidentThrowableTest {
 
     @Test
-    public void of1Test() {
+    void of1Test() {
         // Arrange
         var throwable = mock(Throwable.class);
 
@@ -27,7 +27,7 @@ public class IncidentThrowableTest {
     }
 
     @Test
-    public void of2Test() {
+    void of2Test() {
         // Arrange
         var throwable = mock(Throwable.class);
         var method = randomMethod();
@@ -44,7 +44,7 @@ public class IncidentThrowableTest {
     }
 
     @Test
-    public void of3Test() {
+    void of3Test() {
         // Arrange
         var throwable = mock(Throwable.class);
         var attributes = Map.of(randomString(), new Object());

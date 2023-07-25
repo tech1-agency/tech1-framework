@@ -47,7 +47,7 @@ public class ApplicationIncidents {
                     .client(new OkHttpClient())
                     .encoder(new JacksonEncoder())
                     .decoder(new JacksonDecoder())
-                    .requestInterceptor(new BasicAuthRequestInterceptor(username.getIdentifier(), password.getValue()))
+                    .requestInterceptor(new BasicAuthRequestInterceptor(username.identifier(), password.value()))
                     .target(IncidentClientDefinition.class, incidentServerBaseURL);
         } else {
             return new IncidentClientSlf4j();

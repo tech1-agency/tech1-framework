@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ErrorHandlerPublisherTest {
+class ErrorHandlerPublisherTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -41,21 +41,21 @@ public class ErrorHandlerPublisherTest {
     private final ErrorHandlerPublisher componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentPublisher
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentPublisher
         );
     }
 
     @Test
-    public void handleErrorTest() {
+    void handleErrorTest() {
         // Arrange
         var throwable = mock(Throwable.class);
 

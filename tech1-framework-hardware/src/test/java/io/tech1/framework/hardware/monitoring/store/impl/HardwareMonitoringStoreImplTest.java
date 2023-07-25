@@ -24,13 +24,13 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HardwareMonitoringStoreImplTest {
+class HardwareMonitoringStoreImplTest {
 
     @Configuration
     @Import({
@@ -53,7 +53,7 @@ public class HardwareMonitoringStoreImplTest {
     private final HardwareMonitoringStore componentUnderTest;
 
     @Test
-    public void integrationTest() {
+    void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
                 this.applicationFrameworkProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
@@ -64,17 +64,17 @@ public class HardwareMonitoringStoreImplTest {
         var widget1 = this.componentUnderTest.getHardwareMonitoringWidget();
 
         assertThat(containsOneElement1).isFalse();
-        assertThat(widget1.getVersion()).isEqualTo(Version.unknown());
-        assertThat(widget1.getDatapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
+        assertThat(widget1.version()).isEqualTo(Version.unknown());
+        assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
 
         // [1]
-        var event1 = mock(EventLastHardwareMonitoringDatapoint.class);
+        var event1 = entity(EventLastHardwareMonitoringDatapoint.class);
         this.componentUnderTest.storeEvent(event1);
         var containsOneElement2 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement2).isTrue();
 
         // [2]
-        var event2 = mock(EventLastHardwareMonitoringDatapoint.class);
+        var event2 = entity(EventLastHardwareMonitoringDatapoint.class);
         this.componentUnderTest.storeEvent(event2);
         var containsOneElement3 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement3).isFalse();
@@ -94,17 +94,17 @@ public class HardwareMonitoringStoreImplTest {
 
         var widget2 = this.componentUnderTest.getHardwareMonitoringWidget();
 
-        assertThat(widget2.getVersion().getValue()).isEqualTo("tech1-framework vTEST");
-        assertThat(widget2.getDatapoint().isAnyProblem()).isFalse();
-        assertThat(widget2.getDatapoint().isAnyPresent()).isTrue();
-        var mappedRows = widget2.getDatapoint().getRows().stream()
+        assertThat(widget2.version().value()).isEqualTo("tech1-framework vTEST");
+        assertThat(widget2.datapoint().isAnyProblem()).isFalse();
+        assertThat(widget2.datapoint().isAnyPresent()).isTrue();
+        var mappedRows = widget2.datapoint().getRows().stream()
                 .collect(Collectors.toMap(
                         HardwareMonitoringDatapointTableRow::getHardwareName,
                         entry -> entry
                 ));
         assertThat(mappedRows).hasSize(5);
         assertThat(mappedRows.get(HardwareName.CPU).getUsage()).isEqualTo(new BigDecimal("1.23"));
-        assertThat(mappedRows.get(HardwareName.CPU).getValue()).isEqualTo("");
+        assertThat(mappedRows.get(HardwareName.CPU).getValue()).isEmpty();
         assertThat(mappedRows.get(HardwareName.HEAP).getUsage()).isEqualTo(new BigDecimal("53.4"));
         assertThat(mappedRows.get(HardwareName.HEAP).getValue()).isEqualTo("0.53 GB of 1.00 GB");
         assertThat(mappedRows.get(HardwareName.SERVER).getUsage()).isEqualTo(new BigDecimal("45.6"));

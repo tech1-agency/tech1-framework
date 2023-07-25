@@ -43,7 +43,7 @@ public class HardwareMonitoringDatapointTableRow {
         this.usage = usage;
         this.value = value;
         if (!isEmpty(thresholds.getThresholds()) && thresholds.getThresholds().containsKey(hardwareName)) {
-            this.thresholdReached = isFirstValueGreater(usage, thresholds.getThresholds().get(hardwareName).getValue());
+            this.thresholdReached = isFirstValueGreater(usage, thresholds.getThresholds().get(hardwareName).value());
         } else {
             this.thresholdReached = false;
         }

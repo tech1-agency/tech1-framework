@@ -8,10 +8,10 @@ import java.lang.reflect.InvocationTargetException;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ApplicationFrameworkPropertiesTest {
+class ApplicationFrameworkPropertiesTest {
 
     @Test
-    public void applicationFrameworkPropertiesTest() {
+    void applicationFrameworkPropertiesTest() {
         // Arrange
         var context = new ApplicationFrameworkPropertiesContext();
         var applicationFrameworkProperties = context.applicationFrameworkProperties();
@@ -20,7 +20,6 @@ public class ApplicationFrameworkPropertiesTest {
         var getters = getGetters(applicationFrameworkProperties);
 
         // Assert
-        assertThat(getters).isNotNull();
         assertThat(getters).hasSize(11);
         getters.forEach(getter -> {
             try {

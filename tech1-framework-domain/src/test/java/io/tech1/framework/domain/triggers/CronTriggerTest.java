@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CronTriggerTest extends AbstractSerializationDeserializationRunner {
-    private static final CronTrigger CRON_TRIGGER = CronTrigger.of();
+class CronTriggerTest extends AbstractSerializationDeserializationRunner {
+    private static final CronTrigger CRON_TRIGGER = new CronTrigger();
 
     @Override
     protected String getFileName() {
@@ -19,12 +19,11 @@ public class CronTriggerTest extends AbstractSerializationDeserializationRunner 
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(CRON_TRIGGER);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 }

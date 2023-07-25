@@ -39,7 +39,7 @@ public class InvitationCodeServiceImpl implements InvitationCodeService {
             } else if (isNull(o2.getInvited())) {
                 return 1;
             } else {
-                return comparing((DbInvitationCode code) -> code.getInvited().getIdentifier()).compare(o1, o2);
+                return comparing((DbInvitationCode code) -> code.getInvited().identifier()).compare(o1, o2);
             }
         });
         return new ResponseInvitationCodes(
@@ -52,7 +52,7 @@ public class InvitationCodeServiceImpl implements InvitationCodeService {
     public void save(RequestNewInvitationCodeParams requestNewInvitationCodeParams, Username owner) {
         var invitationCode = new DbInvitationCode(
                 owner,
-                requestNewInvitationCodeParams.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
         this.invitationCodeRepository.save(invitationCode);
     }

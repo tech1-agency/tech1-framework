@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IllegalEnumExceptionTest {
+class IllegalEnumExceptionTest {
 
     @Test
-    public void testException() {
+    void testException() {
         // Arrange
         var clazz = EnumUnderTests.class;
 

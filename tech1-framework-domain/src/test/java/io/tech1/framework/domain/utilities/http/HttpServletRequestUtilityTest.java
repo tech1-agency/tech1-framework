@@ -17,7 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class HttpServletRequestUtilityTest {
+class HttpServletRequestUtilityTest {
 
     private static Stream<Arguments> getBaseURLTest() {
         return Stream.of(
@@ -41,17 +41,16 @@ public class HttpServletRequestUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getBaseURLTest")
-    public void getBaseURLTest(String url, String expected) {
+    void getBaseURLTest(String url, String expected) {
         // Act
         var actual = getBaseURL(url);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    public void getFullURLExceptionTest() {
+    void getFullURLExceptionTest() {
         // Act
         var throwable1 = catchThrowable(() -> getFullURL(null));
         var throwable2 = catchThrowable(() -> getFullURL(mock(HttpServletRequest.class)));
@@ -67,7 +66,7 @@ public class HttpServletRequestUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getFullURLTest")
-    public void getFullURLTest(String requestURL, String queryString) {
+    void getFullURLTest(String requestURL, String queryString) {
         // Arrange
         var request = mock(HttpServletRequest.class);
         when(request.getRequestURL()).thenReturn(new StringBuffer(requestURL));

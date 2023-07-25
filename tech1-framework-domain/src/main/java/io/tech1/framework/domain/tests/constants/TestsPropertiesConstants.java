@@ -10,9 +10,7 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
@@ -56,13 +54,15 @@ public class TestsPropertiesConstants {
     );
     public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = HardwareMonitoringConfigs.of(
             true,
-            new HashMap<>() {{
-                put(HardwareName.CPU, new BigDecimal("80"));
-                put(HardwareName.HEAP, new BigDecimal("85"));
-                put(HardwareName.SERVER, new BigDecimal("90"));
-                put(HardwareName.SWAP, new BigDecimal("95"));
-                put(HardwareName.VIRTUAL, new BigDecimal("98"));
-            }}
+            new EnumMap<>(
+                    Map.of(
+                            HardwareName.CPU, new BigDecimal("80"),
+                            HardwareName.HEAP, new BigDecimal("85"),
+                            HardwareName.SERVER, new BigDecimal("90"),
+                            HardwareName.SWAP, new BigDecimal("95"),
+                            HardwareName.VIRTUAL, new BigDecimal("98")
+                    )
+            )
     );
     public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = HardwareServerConfigs.of(
             "http://localhost:8484"
@@ -94,17 +94,19 @@ public class TestsPropertiesConstants {
                     InvitationCodes.enabled()
             ),
             IncidentsConfigs.of(
-                    new HashMap<>() {{
-                        put(AUTHENTICATION_LOGIN, true);
-                        put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
-                        put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
-                        put(AUTHENTICATION_LOGOUT, false);
-                        put(AUTHENTICATION_LOGOUT_MIN, false);
-                        put(SESSION_REFRESHED, true);
-                        put(SESSION_EXPIRED, false);
-                        put(REGISTER1, true);
-                        put(REGISTER1_FAILURE, true);
-                    }}
+                    new EnumMap<>(
+                            Map.of(
+                                    AUTHENTICATION_LOGIN, true,
+                                    AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false,
+                                    AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
+                                    AUTHENTICATION_LOGOUT, false,
+                                    AUTHENTICATION_LOGOUT_MIN, false,
+                                    SESSION_REFRESHED, true,
+                                    SESSION_EXPIRED, false,
+                                    REGISTER1, true,
+                                    REGISTER1_FAILURE, true
+                            )
+                    )
             ),
             JwtTokensConfigs.of(
                     "TECH1",

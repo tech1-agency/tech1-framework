@@ -53,13 +53,13 @@ public class BigDecimalUtility {
     public static boolean inRange(BigDecimal number, TupleRange<BigDecimal> range) {
         assertNonNullOrThrow(number, invalidAttribute("number"));
         assertNonNullOrThrow(range, invalidAttribute("range"));
-        return isFirstValueGreater(number, range.getFrom()) && isFirstValueLesser(number, range.getTo());
+        return isFirstValueGreater(number, range.from()) && isFirstValueLesser(number, range.to());
     }
 
     public static boolean inRangeClosed(BigDecimal number, TupleRange<BigDecimal> range) {
         assertNonNullOrThrow(number, invalidAttribute("number"));
         assertNonNullOrThrow(range, invalidAttribute("range"));
-        return isFirstValueGreaterOrEqual(number, range.getFrom()) && isFirstValueLesserOrEqual(number, range.getTo());
+        return isFirstValueGreaterOrEqual(number, range.from()) && isFirstValueLesserOrEqual(number, range.to());
     }
 
     public static boolean isZero(BigDecimal number) {

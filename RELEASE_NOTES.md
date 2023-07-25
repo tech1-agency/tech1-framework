@@ -1,5 +1,12 @@
 # Release Notes
 
+### v1.13
+- Superuser API: terminate by sessionId, terminate all except current + Postman
+- Sessions API: terminate by sessionId, terminate all except current + Postman
+- Sessions API: /session → sessions + Postman
+- InvitationCodes API: /invitationCode → /invitationCodes + Postman
+- Java17: records, serialization/deserialization, junit tests sonar suggestions
+
 ### v1.12
 - Upgraded Java version 11 -> 17
 - Upgraded maven-surefire-plugin 3.0.0-M5 -> 3.0.0

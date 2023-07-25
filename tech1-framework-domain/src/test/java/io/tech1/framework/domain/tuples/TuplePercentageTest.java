@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TuplePercentageTest extends AbstractTupleTest {
+class TuplePercentageTest extends AbstractTupleTest {
     private static final TuplePercentage TUPLE = TuplePercentage.of(new BigDecimal(3L), new BigDecimal(11L), 2, 3);
 
     private static Stream<Arguments> constructorsTest() {
@@ -31,7 +31,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
 
     @ParameterizedTest
     @MethodSource("constructorsTest")
-    public void constructorsTest(
+    void constructorsTest(
             BigDecimal value,
             BigDecimal maxValue,
             String expectedValue1,
@@ -46,42 +46,42 @@ public class TuplePercentageTest extends AbstractTupleTest {
 
         // Assert
         assertThat(actual1).isNotNull();
-        assertThat(actual1.getValue()).isEqualTo(expectedValue1);
-        assertThat(actual1.getPercentage()).isEqualTo(expectedPercentage1);
+        assertThat(actual1.value()).isEqualTo(expectedValue1);
+        assertThat(actual1.percentage()).isEqualTo(expectedPercentage1);
 
         assertThat(actual2).isNotNull();
-        assertThat(actual2.getValue()).isEqualTo(expectedValue1);
-        assertThat(actual2.getPercentage()).isEqualTo(expectedPercentage1);
+        assertThat(actual2.value()).isEqualTo(expectedValue1);
+        assertThat(actual2.percentage()).isEqualTo(expectedPercentage1);
 
         assertThat(actual3).isNotNull();
-        assertThat(actual3.getValue()).isEqualTo(expectedValue2);
-        assertThat(actual3.getPercentage()).isEqualTo(expectedPercentage2);
+        assertThat(actual3.value()).isEqualTo(expectedValue2);
+        assertThat(actual3.percentage()).isEqualTo(expectedPercentage2);
     }
 
     @Test
-    public void zeroTest() {
+    void zeroTest() {
         // Act
         var actual = TuplePercentage.zero();
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("0.00");
-        assertThat(actual.getPercentage()).isEqualTo("0.00");
+        assertThat(actual.value()).isEqualTo("0.00");
+        assertThat(actual.percentage()).isEqualTo("0.00");
     }
 
     @Test
-    public void oneHundredTest() {
+    void oneHundredTest() {
         // Act
         var actual = TuplePercentage.oneHundred();
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEqualTo("100.00");
-        assertThat(actual.getPercentage()).isEqualTo("100.00");
+        assertThat(actual.value()).isEqualTo("100.00");
+        assertThat(actual.percentage()).isEqualTo("100.00");
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(TUPLE);
 
@@ -91,7 +91,7 @@ public class TuplePercentageTest extends AbstractTupleTest {
     }
 
     @Test
-    public void deserializeTest() throws JsonProcessingException {
+    void deserializeTest() throws JsonProcessingException {
         // Arrange
         var json = this.readFile();
         var typeReference = new TypeReference<TuplePercentage>() {

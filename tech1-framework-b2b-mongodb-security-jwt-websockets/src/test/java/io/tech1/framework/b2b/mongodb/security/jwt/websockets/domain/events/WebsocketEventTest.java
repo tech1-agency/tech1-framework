@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomHardwareMonitoringDatapointTableRow;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WebsocketEventTest extends AbstractFolderSerializationRunner {
+class WebsocketEventTest extends AbstractFolderSerializationRunner {
 
     @Override
     protected String getFolder() {
@@ -20,7 +20,7 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void serialize1Test() {
+    void serialize1Test() {
         // Arrange
         var websocketEvent = new WebsocketEvent();
 
@@ -28,12 +28,11 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-1.json"));
     }
 
     @Test
-    public void serialize2Test() {
+    void serialize2Test() {
         // Arrange
         var websocketEvent = new WebsocketEvent(
                 Map.of(
@@ -47,12 +46,11 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-2.json"));
     }
 
     @Test
-    public void hardwareMonitoringTest() {
+    void hardwareMonitoringTest() {
         var websocketEvent = WebsocketEvent.hardwareMonitoring(
                 new HardwareMonitoringDatapointTableView(
                         List.of(
@@ -61,10 +59,10 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
                         )
                 )
         );
-        assertThat(websocketEvent.getAttributes()).hasSize(2);
-        assertThat(websocketEvent.getAttributes()).containsKey("eventType");
-        assertThat(websocketEvent.getAttributes().get("eventType")).isEqualTo("HARDWARE_MONITORING");
-        assertThat(websocketEvent.getAttributes()).containsKey("datapoint");
+        assertThat(websocketEvent.getAttributes())
+                .hasSize(2)
+                .containsKey("datapoint")
+                .containsEntry("eventType", "HARDWARE_MONITORING");
         assertThat(websocketEvent.getAttributes().get("datapoint").getClass()).isEqualTo(HardwareMonitoringDatapointTableView.class);
 
         websocketEvent.add("key1", "value1");
@@ -75,14 +73,14 @@ public class WebsocketEventTest extends AbstractFolderSerializationRunner {
     }
 
     @Test
-    public void resetServerProgressTest() {
+    void resetServerProgressTest() {
         var websocketEvent = WebsocketEvent.resetServerProgress(
                 new ResetServerStatus(15)
         );
-        assertThat(websocketEvent.getAttributes()).hasSize(2);
-        assertThat(websocketEvent.getAttributes()).containsKey("eventType");
-        assertThat(websocketEvent.getAttributes().get("eventType")).isEqualTo("RESET_SERVER_PROGRESS");
-        assertThat(websocketEvent.getAttributes()).containsKey("status");
+        assertThat(websocketEvent.getAttributes())
+                .hasSize(2)
+                .containsKey("status")
+                .containsEntry("eventType", "RESET_SERVER_PROGRESS");
         assertThat(websocketEvent.getAttributes().get("status").getClass()).isEqualTo(ResetServerStatus.class);
 
         websocketEvent.add("key1", "value1");

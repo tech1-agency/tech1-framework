@@ -49,8 +49,8 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
             var cachedPayload = this.httpRequestUtility.getCachedPayload(request);
             var requestUserLogin = this.objectMapper.readValue(cachedPayload, RequestUserLogin.class);
 
-            var username = requestUserLogin.getUsername();
-            var password = requestUserLogin.getPassword();
+            var username = requestUserLogin.username();
+            var password = requestUserLogin.password();
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(
                             username

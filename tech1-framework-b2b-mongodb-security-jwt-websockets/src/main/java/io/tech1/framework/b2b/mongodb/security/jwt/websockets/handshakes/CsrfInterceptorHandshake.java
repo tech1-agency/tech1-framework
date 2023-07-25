@@ -4,6 +4,7 @@ import io.tech1.framework.domain.exceptions.cookie.CookieNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -27,7 +28,12 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+    public boolean beforeHandshake(
+            @NotNull ServerHttpRequest request,
+            @NotNull ServerHttpResponse response,
+            @NotNull WebSocketHandler wsHandler,
+            @NotNull Map<String, Object> attributes
+    ) {
         try {
             var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
             var httpRequest = ((ServletServerHttpRequest) request).getServletRequest();
@@ -44,7 +50,12 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
     }
 
     @Override
-    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+    public void afterHandshake(
+            @NotNull ServerHttpRequest request,
+            @NotNull ServerHttpResponse response,
+            @NotNull WebSocketHandler wsHandler,
+            Exception exception
+    ) {
         // no actions
     }
 }

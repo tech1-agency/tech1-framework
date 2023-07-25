@@ -27,7 +27,7 @@ public class DbUserSession {
             Username username,
             UserRequestMetadata requestMetadata
     ) {
-        this.id = jwtRefreshToken.getValue();
+        this.id = jwtRefreshToken.value();
         this.username = username;
         this.requestMetadata = requestMetadata;
     }

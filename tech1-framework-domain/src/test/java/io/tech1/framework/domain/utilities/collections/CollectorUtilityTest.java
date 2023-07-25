@@ -10,10 +10,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 @Slf4j
-public class CollectorUtilityTest {
+class CollectorUtilityTest {
 
     @Test
-    public void toSingletonExceptionTest() {
+    void toSingletonExceptionTest() {
         // Arrange
         var list = List.of(1, 2, 3, 4);
 
@@ -31,7 +31,7 @@ public class CollectorUtilityTest {
     }
 
     @Test
-    public void toSingletonTest() {
+    void toSingletonTest() {
         // Arrange
         var list = List.of(1, 2, 3, 4);
 
@@ -41,7 +41,6 @@ public class CollectorUtilityTest {
                 .collect(toSingleton());
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(4);
     }
 }

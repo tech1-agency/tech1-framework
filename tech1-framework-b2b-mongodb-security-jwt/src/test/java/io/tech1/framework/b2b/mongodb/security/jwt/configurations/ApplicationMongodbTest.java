@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationMongodbTest {
+class ApplicationMongodbTest {
 
     @Configuration
     @Import({
@@ -43,17 +43,18 @@ public class ApplicationMongodbTest {
     private final ApplicationMongodb componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("tech1MongoClient");
-        assertThat(methods).contains("tech1MongoDatabaseFactory");
-        assertThat(methods).contains("tech1MongoTemplate");
-        assertThat(methods).hasSize(12);
+        assertThat(methods)
+                .hasSize(12)
+                .contains("tech1MongoClient")
+                .contains("tech1MongoDatabaseFactory")
+                .contains("tech1MongoTemplate");
         assertThat(this.componentUnderTest.tech1MongoClient()).isNotNull();
         assertThat(this.componentUnderTest.tech1MongoDatabaseFactory()).isNotNull();
         assertThat(this.componentUnderTest.tech1MongoTemplate()).isNotNull();

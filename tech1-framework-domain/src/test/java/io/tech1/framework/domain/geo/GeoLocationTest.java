@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.localhost;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GeoLocationTest extends AbstractFolderSerializationRunner {
+class GeoLocationTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -46,18 +46,17 @@ public class GeoLocationTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serializeTest(GeoLocation geoLocation, String fileName) {
+    void serializeTest(GeoLocation geoLocation, String fileName) {
         // Act
         var json = this.writeValueAsString(geoLocation);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @ParameterizedTest
     @MethodSource("getWhereTest")
-    public void getWhereTest(GeoLocation geoLocation, String expected) {
+    void getWhereTest(GeoLocation geoLocation, String expected) {
         // Act
         var actual = geoLocation.getWhere();
 

@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f20c26ac-31ed-47b6-b099-c0c800b9e478",
+		"_postman_id": "a343f775-35a5-4ca5-8266-fc3d33974fc1",
 		"name": "_T1",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28714756"
 	},
 	"item": [
 		{
@@ -129,13 +130,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCode",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCodes",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"invitationCode"
+								"invitationCodes"
 							]
 						}
 					},
@@ -147,13 +148,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCode/1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCodes/1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"invitationCode",
+								"invitationCodes",
 								"1"
 							]
 						}
@@ -163,10 +164,10 @@
 			]
 		},
 		{
-			"name": "Session",
+			"name": "Sessions",
 			"item": [
 				{
-					"name": "Current Client User",
+					"name": "Current Sessions",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -181,13 +182,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/session/current",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"session",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current Session",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/current",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions",
 								"current"
 							]
 						}
@@ -195,30 +224,37 @@
 					"response": []
 				},
 				{
-					"name": "Current User Db Sessions",
+					"name": "Delete By Id",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/session/db/table",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/123",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"session",
-								"db",
-								"table"
+								"sessions",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Except Current",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions"
 							]
 						}
 					},
@@ -422,7 +458,7 @@
 					"response": []
 				},
 				{
-					"name": "Sessions - Server",
+					"name": "Sessions",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -437,7 +473,26 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions/server",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"superadmin",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessions - Delete By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions/123",
 							"host": [
 								"{{serverURL}}"
 							],
@@ -445,7 +500,26 @@
 								"{{frameworkBasePathPrefix}}",
 								"superadmin",
 								"sessions",
-								"server"
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessions - Delete All Except Current",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"superadmin",
+								"sessions"
 							]
 						}
 					},

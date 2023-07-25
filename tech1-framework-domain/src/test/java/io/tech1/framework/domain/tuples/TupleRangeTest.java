@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TupleRangeTest extends AbstractFolderSerializationRunner {
+class TupleRangeTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -29,19 +29,18 @@ public class TupleRangeTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serialize(TupleRange<?> tupleRange, String fileName) {
+    void serialize(TupleRange<?> tupleRange, String fileName) {
         // Act
         var json = this.writeValueAsString(tupleRange);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void deserializeTest(TupleRange<?> tupleRange, String fileName) {
+    void deserializeTest(TupleRange<?> tupleRange, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<TupleRange<?>>() {};
@@ -50,7 +49,6 @@ public class TupleRangeTest extends AbstractFolderSerializationRunner {
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(tupleRange);
     }
 }

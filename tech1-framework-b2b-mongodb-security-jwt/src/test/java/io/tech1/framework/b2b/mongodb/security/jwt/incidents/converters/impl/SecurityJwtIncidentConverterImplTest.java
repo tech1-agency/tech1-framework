@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityJwtIncidentConverterImplTest {
+class SecurityJwtIncidentConverterImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -52,7 +52,7 @@ public class SecurityJwtIncidentConverterImplTest {
     private final SecurityJwtIncidentConverter componentUnderTest;
 
     @Test
-    public void convertAuthenticationLoginIncidentExceptionTest() {
+    void convertAuthenticationLoginIncidentExceptionTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentAuthenticationLogin(
@@ -69,7 +69,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(8);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where", "exception");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login");
@@ -83,7 +83,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertAuthenticationLoginIncidentTest() {
+    void convertAuthenticationLoginIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentAuthenticationLogin(
@@ -97,7 +97,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login");
@@ -110,7 +110,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertAuthenticationLogoutFullIncidentTest() {
+    void convertAuthenticationLogoutFullIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentAuthenticationLogoutFull(
@@ -127,7 +127,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Logout");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout");
@@ -140,7 +140,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertSessionRefreshedIncidentTest() {
+    void convertSessionRefreshedIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentSessionRefreshed(
@@ -157,7 +157,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Refreshed");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Refreshed");
@@ -170,7 +170,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertSessionExpiredIncidentTest() {
+    void convertSessionExpiredIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentSessionExpired(
@@ -187,7 +187,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Expired");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(7);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Session Expired");
@@ -200,7 +200,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertRegister1IncidentTest() {
+    void convertRegister1IncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var incident = new IncidentRegistration1(
@@ -213,7 +213,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1");
@@ -221,7 +221,7 @@ public class SecurityJwtIncidentConverterImplTest {
     }
 
     @Test
-    public void convertRegister1FailureIncidentTest() {
+    void convertRegister1FailureIncidentTest() {
         // Arrange
         var username = Username.of("tech1");
         var exception = randomString();
@@ -238,7 +238,7 @@ public class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1 Failure");
-        assertThat(actual.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(5);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "exception", "invitationCode", "invitationCodeOwner");
         assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Register1 Failure");

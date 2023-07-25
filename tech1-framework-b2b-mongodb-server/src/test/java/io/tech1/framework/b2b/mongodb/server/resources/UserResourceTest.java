@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserResourceTest extends ApplicationResourceRunner {
+class UserResourceTest extends ApplicationResourceRunner {
 
     // Services
     private final UserService userService;
@@ -22,7 +22,7 @@ public class UserResourceTest extends ApplicationResourceRunner {
     private final UserResource resourceUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         this.beforeByResource(this.resourceUnderTest);
         reset(
                 this.userService
@@ -30,14 +30,14 @@ public class UserResourceTest extends ApplicationResourceRunner {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.userService
         );
     }
 
     @Test
-    public void findAll() throws Exception {
+    void findAll() throws Exception {
         // Act
         mvc.perform(get("/user").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NotificationTest extends AbstractObjectMapperRunner {
+class NotificationTest extends AbstractObjectMapperRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -24,7 +24,7 @@ public class NotificationTest extends AbstractObjectMapperRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serialize(Function<String, Notification> fnc, String fileName) {
+    void serialize(Function<String, Notification> fnc, String fileName) {
         // Arrange
         var message = "tech1";
 
@@ -32,7 +32,6 @@ public class NotificationTest extends AbstractObjectMapperRunner {
         var json = this.writeValueAsString(fnc.apply(message));
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(TestsIOUtils.readFile("notifications", fileName));
     }
 }

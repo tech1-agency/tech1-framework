@@ -173,11 +173,11 @@ public class EntityUtility {
         if (instance == null) {
             throw new ReflectiveOperationException("Cannot invoke setter. Instance is null");
         }
-        List<Method> setters = Stream.of(instance.getClass().getMethods())
+        var setters = Stream.of(instance.getClass().getMethods())
                 .filter(method -> {
                     Class<?>[] params = method.getParameterTypes();
                     return method.getName().startsWith("set") && params.length > 0;
-                }).collect(Collectors.toList());
+                }).toList();
 
         for (Method setter : setters) {
             try {

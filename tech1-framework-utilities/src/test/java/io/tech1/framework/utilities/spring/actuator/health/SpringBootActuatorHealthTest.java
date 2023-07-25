@@ -15,7 +15,7 @@ import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth.undefinedSpringBootActuatorHealth;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
+class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> deserializeTest() {
         return Stream.of(
@@ -35,7 +35,7 @@ public class SpringBootActuatorHealthTest extends AbstractFolderSerializationRun
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("deserializeTest")
-    public void deserializeTest(SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
+    void deserializeTest(SpringBootActuatorHealth springBootActuatorHealth, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<SpringBootActuatorHealth>() {};
@@ -44,7 +44,6 @@ public class SpringBootActuatorHealthTest extends AbstractFolderSerializationRun
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(springBootActuatorHealth);
     }
 }

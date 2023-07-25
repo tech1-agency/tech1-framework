@@ -2,6 +2,7 @@ package io.tech1.framework.configurations.mvc;
 
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -31,7 +32,7 @@ public class ApplicationMVC implements WebMvcConfigurer {
     }
 
     @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
+    public void addCorsMappings(@NotNull CorsRegistry corsRegistry) {
         var mvcConfigs = this.applicationFrameworkProperties.getMvcConfigs();
         if (mvcConfigs.isEnabled()) {
             var corsConfigs = mvcConfigs.getCorsConfigs();

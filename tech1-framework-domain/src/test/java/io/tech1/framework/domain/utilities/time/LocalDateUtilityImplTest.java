@@ -17,7 +17,7 @@ import static java.time.Month.*;
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LocalDateUtilityImplTest {
+class LocalDateUtilityImplTest {
     private static final LocalDate _25_11_2021 = LocalDate.of(2021, DECEMBER, 25);
 
     private static Stream<Arguments> convertDateTest() {
@@ -71,7 +71,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void nowByTimeZone() {
+    void nowByTimeZone() {
         // Arrange
         var timeZone = randomTimeZone();
 
@@ -83,7 +83,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void nowByZoneId() {
+    void nowByZoneId() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -96,7 +96,7 @@ public class LocalDateUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("convertDateTest")
-    public void convertDateTest(Date date, LocalDate expected) {
+    void convertDateTest(Date date, LocalDate expected) {
         // Act
         var actual = convertDate(date);
 
@@ -106,7 +106,7 @@ public class LocalDateUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("convertDateZoneIdTest")
-    public void convertDateZoneIdTest(Date date, ZoneId zoneId, LocalDate expected) {
+    void convertDateZoneIdTest(Date date, ZoneId zoneId, LocalDate expected) {
         // Act
         var actual = convertDate(date, zoneId);
 
@@ -115,7 +115,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getFirstDayCurrentMonthTest() {
+    void getFirstDayCurrentMonthTest() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -130,7 +130,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getFirstDayPreviousMonthTest() {
+    void getFirstDayPreviousMonthTest() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -144,7 +144,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getFirstDayTwoMonthAgoTest() {
+    void getFirstDayTwoMonthAgoTest() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -158,7 +158,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getFirstDayMonthsAgoTest() {
+    void getFirstDayMonthsAgoTest() {
         // Arrange
         int months = randomIntegerGreaterThanZeroByBounds(3, 5);
         var zoneId = randomZoneId();
@@ -173,7 +173,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getLastDayCurrentMonthTest() {
+    void getLastDayCurrentMonthTest() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -188,7 +188,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getLastDayPreviousMonthTest() {
+    void getLastDayPreviousMonthTest() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -202,7 +202,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getLastDayTwoMonthAgoTest() {
+    void getLastDayTwoMonthAgoTest() {
         // Arrange
         var zoneId = randomZoneId();
 
@@ -216,7 +216,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getLastDayMonthsAgoTest() {
+    void getLastDayMonthsAgoTest() {
         // Arrange
         int months = randomIntegerGreaterThanZeroByBounds(3, 5);
         var zoneId = randomZoneId();
@@ -232,7 +232,7 @@ public class LocalDateUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isFirstDayOfMonthTest")
-    public void isFirstDayOfMonthTest(LocalDate localDate, boolean expected) {
+    void isFirstDayOfMonthTest(LocalDate localDate, boolean expected) {
         // Act
         var actual = isFirstDayOfMonth(localDate);
 
@@ -242,7 +242,7 @@ public class LocalDateUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("isLastDayOfMonthTest")
-    public void isLastDayOfMonthTest(LocalDate localDate, boolean expected) {
+    void isLastDayOfMonthTest(LocalDate localDate, boolean expected) {
         // Act
         var actual = isLastDayOfMonth(localDate);
 
@@ -251,7 +251,7 @@ public class LocalDateUtilityImplTest {
     }
 
     @Test
-    public void getCurrentDayOfMonthTest() {
+    void getCurrentDayOfMonthTest() {
         // Arrange
         var zoneId = randomZoneId();
 

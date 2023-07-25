@@ -1,7 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
-import lombok.Data;
-
 import java.util.List;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
@@ -9,18 +7,18 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 import static java.util.Comparator.comparing;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
-// Lombok
-@Data
-public class ResponseUserSessionsTable {
-    private final List<ResponseUserSession2> sessions;
-    private final boolean anyPresent;
-    private final boolean anyProblem;
-
-    public ResponseUserSessionsTable(List<ResponseUserSession2> sessions) {
+public record ResponseUserSessionsTable(
+        List<ResponseUserSession2> sessions,
+        boolean anyPresent,
+        boolean anyProblem
+) {
+    public static ResponseUserSessionsTable of(List<ResponseUserSession2> sessions) {
         assertNonNullOrThrow(sessions, invalidAttribute("ResponseUserSessionsTable.session"));
-        sessions.sort(comparing(ResponseUserSession2::isCurrent).reversed().thenComparing(ResponseUserSession2::getWhere));
-        this.sessions = sessions;
-        this.anyPresent = !isEmpty(this.sessions);
-        this.anyProblem = sessions.stream().anyMatch(session -> !session.getException().isOk());
+        sessions.sort(comparing(ResponseUserSession2::current).reversed().thenComparing(ResponseUserSession2::where));
+        return new ResponseUserSessionsTable(
+                sessions,
+                !isEmpty(sessions),
+                sessions.stream().anyMatch(session -> !session.exception().isOk())
+        );
     }
 }

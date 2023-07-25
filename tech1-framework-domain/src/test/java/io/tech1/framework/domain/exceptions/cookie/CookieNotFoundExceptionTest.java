@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CookieNotFoundExceptionTest {
+class CookieNotFoundExceptionTest {
 
     @Test
-    public void testException() {
+    void testException() {
         // Arrange
         var message = randomString();
 

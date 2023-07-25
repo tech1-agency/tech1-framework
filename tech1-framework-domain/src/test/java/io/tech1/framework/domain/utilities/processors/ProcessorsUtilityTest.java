@@ -7,10 +7,10 @@ import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.g
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessorsUtilityTest {
+class ProcessorsUtilityTest {
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void getNumOfCoresTest() {
+    void getNumOfCoresTest() {
         // Act
         int cores = getNumOfCores();
 
@@ -19,7 +19,7 @@ public class ProcessorsUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void getHalfOfCoresTest() {
+    void getHalfOfCoresTest() {
         // Act
         int cores = getHalfOfCores();
 
@@ -28,14 +28,13 @@ public class ProcessorsUtilityTest {
     }
 
     @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
-    public void integrationComparisonTest() {
+    void integrationComparisonTest() {
         // Act
         int numOfCores = getNumOfCores();
         int halfOfCores = getHalfOfCores();
 
         // Assert
         assertThat(numOfCores).isPositive();
-        assertThat(halfOfCores).isPositive();
         assertThat(halfOfCores).isEqualTo(numOfCores * 5 / 10);
     }
 }

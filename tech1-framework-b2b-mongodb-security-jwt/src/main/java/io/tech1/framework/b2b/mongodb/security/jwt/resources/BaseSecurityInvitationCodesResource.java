@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
-@RequestMapping("/invitationCode")
+@RequestMapping("/invitationCodes")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityInvitationCodeResource {
+public class BaseSecurityInvitationCodesResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

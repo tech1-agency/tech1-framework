@@ -31,8 +31,8 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
     public Incident convert(IncidentAuthenticationLogin incidentAuthenticationLogin) {
         return this.convertUserRequestMetadata(
                 AUTHENTICATION_LOGIN,
-                incidentAuthenticationLogin.getUsername(),
-                incidentAuthenticationLogin.getUserRequestMetadata()
+                incidentAuthenticationLogin.username(),
+                incidentAuthenticationLogin.userRequestMetadata()
         );
     }
 
@@ -40,8 +40,8 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
     public Incident convert(IncidentAuthenticationLogoutFull incidentAuthenticationLogoutFull) {
         return this.convertUserRequestMetadata(
                 AUTHENTICATION_LOGOUT,
-                incidentAuthenticationLogoutFull.getUsername(),
-                incidentAuthenticationLogoutFull.getUserRequestMetadata()
+                incidentAuthenticationLogoutFull.username(),
+                incidentAuthenticationLogoutFull.userRequestMetadata()
         );
     }
 
@@ -49,8 +49,8 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
     public Incident convert(IncidentSessionRefreshed incidentSessionRefreshed) {
         return this.convertUserRequestMetadata(
                 SESSION_REFRESHED,
-                incidentSessionRefreshed.getUsername(),
-                incidentSessionRefreshed.getUserRequestMetadata()
+                incidentSessionRefreshed.username(),
+                incidentSessionRefreshed.userRequestMetadata()
         );
     }
 
@@ -58,8 +58,8 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
     public Incident convert(IncidentSessionExpired incidentSessionExpired) {
         return this.convertUserRequestMetadata(
                 SESSION_EXPIRED,
-                incidentSessionExpired.getUsername(),
-                incidentSessionExpired.getUserRequestMetadata()
+                incidentSessionExpired.username(),
+                incidentSessionExpired.userRequestMetadata()
         );
     }
 
@@ -67,7 +67,7 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
     public Incident convert(IncidentRegistration1 incidentRegistration1) {
         return this.incidentConverter.convertUsername(
                 REGISTER1.toString(),
-                incidentRegistration1.getUsername()
+                incidentRegistration1.username()
         );
     }
 
@@ -75,11 +75,11 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
     public Incident convert(IncidentRegistration1Failure incidentRegistration1Failure) {
         var incident = this.incidentConverter.convertUsername(
                 REGISTER1_FAILURE.toString(),
-                incidentRegistration1Failure.getUsername()
+                incidentRegistration1Failure.username()
         );
-        incident.add(EXCEPTION, incidentRegistration1Failure.getException());
-        incident.add(INVITATION_CODE, incidentRegistration1Failure.getInvitationCode());
-        incident.add(INVITATION_CODE_OWNER, incidentRegistration1Failure.getInvitationCodeOwner());
+        incident.add(EXCEPTION, incidentRegistration1Failure.exception());
+        incident.add(INVITATION_CODE, incidentRegistration1Failure.invitationCode());
+        incident.add(INVITATION_CODE_OWNER, incidentRegistration1Failure.invitationCodeOwner());
         return incident;
     }
 
@@ -95,13 +95,13 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
         }
 
         var whereTuple3 = userRequestMetadata.getWhereTuple3();
-        incident.add(IP_ADDRESS, whereTuple3.getA());
-        incident.add(COUNTRY_FLAG, whereTuple3.getB());
-        incident.add(WHERE, whereTuple3.getC());
+        incident.add(IP_ADDRESS, whereTuple3.a());
+        incident.add(COUNTRY_FLAG, whereTuple3.b());
+        incident.add(WHERE, whereTuple3.c());
 
         var whatTuple2 = userRequestMetadata.getWhatTuple2();
-        incident.add(BROWSER, whatTuple2.getA());
-        incident.add(WHAT, whatTuple2.getB());
+        incident.add(BROWSER, whatTuple2.a());
+        incident.add(WHAT, whatTuple2.b());
 
         return incident;
     }

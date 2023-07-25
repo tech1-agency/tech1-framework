@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HttpRequestFieldsUtilityTest {
+class HttpRequestFieldsUtilityTest {
 
     private static Stream<Arguments> containsCamelCaseLettersAndNumbersWithLengthTest() {
         return Stream.of(
@@ -40,7 +40,7 @@ public class HttpRequestFieldsUtilityTest {
 
     @ParameterizedTest
     @MethodSource("containsCamelCaseLettersAndNumbersWithLengthTest")
-    public void containsCamelCaseLettersAndNumbersWithLengthTest(String password, int length, boolean expected) {
+    void containsCamelCaseLettersAndNumbersWithLengthTest(String password, int length, boolean expected) {
         // Act
         var actual1 = containsCamelCaseLettersAndNumbersWithLength(Password.of(password), length);
         var actual2 = containsCamelCaseLettersAndNumbersWithLength(password, length);
@@ -52,7 +52,7 @@ public class HttpRequestFieldsUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isEmailTest")
-    public void isEmailTest(String email, boolean expected) {
+    void isEmailTest(String email, boolean expected) {
         // Act
         var actual1 = isEmail(Email.of(email));
         var actual2 = isEmail(email);

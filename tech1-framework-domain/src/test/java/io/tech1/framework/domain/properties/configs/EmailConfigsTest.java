@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmailConfigsTest {
+class EmailConfigsTest {
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         // Act
         var emailConfigs = EmailConfigs.of(
                 true,
                 randomString(),
-                randomInteger(),
-                randomUsername().getIdentifier(),
+                randomIntegerGreaterThanZero(),
+                randomUsername().identifier(),
                 randomString(),
                 randomString(),
                 randomStringsAsArray(3)
@@ -23,7 +23,7 @@ public class EmailConfigsTest {
         // Assert
         assertThat(emailConfigs.isEnabled()).isTrue();
         assertThat(emailConfigs.getHost()).isNotNull();
-        assertThat(emailConfigs.getPort()).isNotNull();
+        assertThat(emailConfigs.getPort()).isNotZero();
         assertThat(emailConfigs.getFrom()).isNotNull();
         assertThat(emailConfigs.getUsername()).isNotNull();
         assertThat(emailConfigs.getPassword()).isNotNull();
@@ -32,7 +32,7 @@ public class EmailConfigsTest {
     }
 
     @Test
-    public void disabledTest() {
+    void disabledTest() {
         // Act
         var emailConfigs = EmailConfigs.disabled();
 
@@ -47,7 +47,7 @@ public class EmailConfigsTest {
     }
 
     @Test
-    public void enabledTest() {
+    void enabledTest() {
         // Arrange
         var from = randomEmailAsValue();
 

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtUserDetailsAssistantTest {
+class JwtUserDetailsAssistantTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -46,52 +46,52 @@ public class JwtUserDetailsAssistantTest {
     private final JwtUserDetailsAssistant componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.userRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );
     }
 
     @Test
-    public void loadUserByUsernameExceptionTest() {
+    void loadUserByUsernameExceptionTest() {
         // Arrange
         var dbUser = entity(DbUser.class);
         var username = dbUser.getUsername();
-        when(this.userRepository.findByUsername(eq(username))).thenReturn(null);
+        when(this.userRepository.findByUsername(username)).thenReturn(null);
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.loadUserByUsername(username.getIdentifier()));
+        var throwable = catchThrowable(() -> this.componentUnderTest.loadUserByUsername(username.identifier()));
 
         // Assert
-        verify(this.userRepository).findByUsername(eq(username));
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(UsernameNotFoundException.class);
-        assertThat(throwable).hasMessage(entityNotFound("Username", username.getIdentifier()));
+        verify(this.userRepository).findByUsername(username);
+        assertThat(throwable)
+                .isInstanceOf(UsernameNotFoundException.class)
+                .hasMessage(entityNotFound("Username", username.identifier()));
     }
 
     @Test
-    public void loadUserByUsernameTest() {
+    void loadUserByUsernameTest() {
         // Arrange
         var dbUser = entity(DbUser.class);
         var username = dbUser.getUsername();
-        when(this.userRepository.findByUsername(eq(username))).thenReturn(dbUser);
+        when(this.userRepository.findByUsername(username)).thenReturn(dbUser);
 
         // Act
-        var jwtUser = this.componentUnderTest.loadUserByUsername(username.getIdentifier());
+        var jwtUser = this.componentUnderTest.loadUserByUsername(username.identifier());
 
         // Assert
-        verify(this.userRepository).findByUsername(eq(username));
+        verify(this.userRepository).findByUsername(username);
         assertThat(jwtUser).isNotNull();
-        assertThat(jwtUser.getDbUser()).isEqualTo(dbUser);
-        assertThat(jwtUser.getUsername()).isEqualTo(username.getIdentifier());
-        assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().getValue());
+        assertThat(jwtUser.dbUser()).isEqualTo(dbUser);
+        assertThat(jwtUser.getUsername()).isEqualTo(username.identifier());
+        assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().value());
         assertThat(jwtUser.isAccountNonExpired()).isTrue();
         assertThat(jwtUser.isAccountNonLocked()).isTrue();
         assertThat(jwtUser.isCredentialsNonExpired()).isTrue();

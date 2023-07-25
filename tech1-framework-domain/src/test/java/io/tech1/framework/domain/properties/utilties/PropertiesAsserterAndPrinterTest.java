@@ -30,10 +30,10 @@ import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-public class PropertiesAsserterAndPrinterTest {
+class PropertiesAsserterAndPrinterTest {
 
     @Test
-    public void notUsedPropertiesConfigsTest() {
+    void notUsedPropertiesConfigsTest() {
         // Arrange
         var notUsedPropertiesConfigs = NotUsedPropertiesConfigs.of(
                 ScheduledJob.of(true, SchedulerConfiguration.of(10, 10, TimeUnit.SECONDS)),
@@ -50,7 +50,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void serverConfigsTest() {
+    void serverConfigsTest() {
         // Act
         assertProperties(SERVER_CONFIGS, "serverConfigs");
         printProperties(SERVER_CONFIGS);
@@ -60,7 +60,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void asyncConfigsTest() {
+    void asyncConfigsTest() {
         // Act
         assertProperties(ASYNC_CONFIGS, "asyncConfigs");
         printProperties(ASYNC_CONFIGS);
@@ -70,7 +70,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void eventsConfigsTest() {
+    void eventsConfigsTest() {
         // Act
         assertProperties(EVENTS_CONFIGS, "eventsConfigs");
         printProperties(EVENTS_CONFIGS);
@@ -80,7 +80,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void mvcConfigsDisabledTest() {
+    void mvcConfigsDisabledTest() {
         // Arrange
         var mvcConfigs = MvcConfigs.of(
                 false,
@@ -97,7 +97,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void mvcConfigsTest() {
+    void mvcConfigsTest() {
         // Act
         assertProperties(MVC_CONFIGS, "mvcConfigs");
         printProperties(MVC_CONFIGS);
@@ -107,7 +107,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void emailConfigsDisabledTest() {
+    void emailConfigsDisabledTest() {
         // Arrange
         var emailConfigs = EmailConfigs.of(
                 false,
@@ -128,7 +128,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void emailConfigsTest() {
+    void emailConfigsTest() {
         // Act
         assertProperties(EMAIL_CONFIGS, "emailConfigs");
         printProperties(EMAIL_CONFIGS);
@@ -138,7 +138,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void incidentConfigsTest() {
+    void incidentConfigsTest() {
         // Act
         assertProperties(INCIDENT_CONFIGS, "incidentConfigs");
         printProperties(INCIDENT_CONFIGS);
@@ -148,7 +148,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void hardwareMonitoringConfigsDisabledTest() {
+    void hardwareMonitoringConfigsDisabledTest() {
         // Arrange
         var hardwareMonitoringConfigs = HardwareMonitoringConfigs.disabled();
 
@@ -163,7 +163,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void hardwareMonitoringConfigsExceptionTest() {
+    void hardwareMonitoringConfigsExceptionTest() {
         // Arrange
         var hardwareMonitoringConfigs = HardwareMonitoringConfigs.of(
                 true,
@@ -183,7 +183,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void hardwareMonitoringConfigsTest() {
+    void hardwareMonitoringConfigsTest() {
         // Act
         assertProperties(HARDWARE_MONITORING_CONFIGS, "hardwareMonitoringConfigs");
         printProperties(HARDWARE_MONITORING_CONFIGS);
@@ -196,7 +196,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void hardwareServerConfigsTest() {
+    void hardwareServerConfigsTest() {
         // Act
         assertProperties(HARDWARE_SERVER_CONFIGS, "hardwareServerConfigs");
         printProperties(HARDWARE_SERVER_CONFIGS);
@@ -206,7 +206,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @RepeatedTest(5)
-    public void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
+    void securityJwtConfigsDisabledUsersEmailsConfigsTest() {
         // Act
         var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
 
@@ -221,7 +221,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void securityJwtConfigsTest() {
+    void securityJwtConfigsTest() {
         // Act
         assertProperties(SECURITY_JWT_CONFIGS, "securityJwtConfigs");
         printProperties(SECURITY_JWT_CONFIGS);
@@ -231,7 +231,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void securityJwtConfigsIncidentsCorrectTest() {
+    void securityJwtConfigsIncidentsCorrectTest() {
         var loginFailureUsernamePassword = randomBoolean();
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
         var incidentConfigs = IncidentsConfigs.of(
@@ -267,7 +267,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void securityJwtConfigsIncidentsNoSessionRefreshedFailureTest() {
+    void securityJwtConfigsIncidentsNoSessionRefreshedFailureTest() {
         var incidentConfigs = IncidentsConfigs.of(
                 new HashMap<>() {{
                     put(AUTHENTICATION_LOGIN, randomBoolean());
@@ -301,7 +301,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void securityJwtConfigsIncidentsOnlyOneLoginFailureTest() {
+    void securityJwtConfigsIncidentsOnlyOneLoginFailureTest() {
         var incidentConfigs = IncidentsConfigs.of(
                 new HashMap<>() {{
                     put(AUTHENTICATION_LOGIN, randomBoolean());
@@ -336,7 +336,7 @@ public class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
-    public void securityJwtWebsocketsConfigsTest() {
+    void securityJwtWebsocketsConfigsTest() {
         // Act
         assertProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS, "securityJwtWebsocketsConfigs");
         printProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS);

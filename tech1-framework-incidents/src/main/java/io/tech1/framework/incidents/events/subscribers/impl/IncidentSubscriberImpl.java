@@ -36,7 +36,7 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
                 new Incident(
                         Map.of(
                                 TYPE, "Reset Server Started",
-                                USERNAME, incident.getUsername()
+                                USERNAME, incident.username()
                         )
         ));
     }
@@ -47,7 +47,7 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
                 new Incident(
                         Map.of(
                                 TYPE, "Reset Server Completed",
-                                USERNAME, incident.getUsername()
+                                USERNAME, incident.username()
                         )
                 ));
     }

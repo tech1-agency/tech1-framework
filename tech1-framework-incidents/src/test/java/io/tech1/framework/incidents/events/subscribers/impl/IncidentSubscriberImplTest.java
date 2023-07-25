@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentSubscriberImplTest {
+class IncidentSubscriberImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -55,7 +55,7 @@ public class IncidentSubscriberImplTest {
     private final IncidentSubscriber componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.incidentClient,
                 this.incidentConverter
@@ -63,7 +63,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.incidentClient,
                 this.incidentConverter
@@ -71,7 +71,7 @@ public class IncidentSubscriberImplTest {
     }
 
     @Test
-    public void onEventIncidentSystemResetServerStartedTest() {
+    void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
         var incidentSystemResetServerStarted = randomIncidentSystemResetServerStarted();
 
@@ -83,14 +83,14 @@ public class IncidentSubscriberImplTest {
         verify(this.incidentClient).registerIncident(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getType()).isEqualTo("Reset Server Started");
-        assertThat(incident.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(incident.getUsername().identifier()).isEqualTo("tech1");
         assertThat(incident.getAttributes()).hasSize(2);
         assertThat(incident.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(incident.getAttributes().get("incidentType")).isEqualTo("Reset Server Started");
+        assertThat(incident.getAttributes()).containsEntry("incidentType", "Reset Server Started");
     }
 
     @Test
-    public void onEventIncidentSystemResetServerCompletedTest() {
+    void onEventIncidentSystemResetServerCompletedTest() {
         // Arrange
         var incidentSystemResetServerStarted = randomIncidentSystemResetServerCompleted();
 
@@ -102,14 +102,14 @@ public class IncidentSubscriberImplTest {
         verify(this.incidentClient).registerIncident(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.getType()).isEqualTo("Reset Server Completed");
-        assertThat(incident.getUsername().getIdentifier()).isEqualTo("tech1");
+        assertThat(incident.getUsername().identifier()).isEqualTo("tech1");
         assertThat(incident.getAttributes()).hasSize(2);
         assertThat(incident.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(incident.getAttributes().get("incidentType")).isEqualTo("Reset Server Completed");
+        assertThat(incident.getAttributes()).containsEntry("incidentType", "Reset Server Completed");
     }
 
     @Test
-    public void onEventIncidentTest() {
+    void onEventIncidentTest() {
         // Arrange
         var incident = randomIncident();
 
@@ -117,21 +117,21 @@ public class IncidentSubscriberImplTest {
         this.componentUnderTest.onEvent(incident);
 
         // Assert
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentClient).registerIncident(incident);
     }
 
     @Test
-    public void onEventThrowableIncidentTest() {
+    void onEventThrowableIncidentTest() {
         // Arrange
         var incident = randomIncident();
         var throwableIncident = randomThrowableIncident();
-        when(this.incidentConverter.convert(eq(throwableIncident))).thenReturn(incident);
+        when(this.incidentConverter.convert(throwableIncident)).thenReturn(incident);
 
         // Act
         this.componentUnderTest.onEvent(throwableIncident);
 
         // Assert
-        verify(this.incidentConverter).convert(eq(throwableIncident));
-        verify(this.incidentClient).registerIncident(eq(incident));
+        verify(this.incidentConverter).convert(throwableIncident);
+        verify(this.incidentClient).registerIncident(incident);
     }
 }

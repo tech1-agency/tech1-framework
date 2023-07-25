@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
+class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
 
     // Services
     private final BaseUserService baseUserService;
@@ -34,7 +34,7 @@ public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
     private final BaseSecurityUserResource componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.baseUserService,
@@ -44,7 +44,7 @@ public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.baseUserService,
                 this.currentSessionAssistant,
@@ -53,7 +53,7 @@ public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
     }
 
     @Test
-    public void update1Test() throws Exception {
+    void update1Test() throws Exception {
         // Arrange
         var requestUserUpdate1 = entity(RequestUserUpdate1.class);
         var currentDbUser = entity(DbUser.class);
@@ -69,12 +69,12 @@ public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.baseUserValidator).validateUserUpdateRequest1(eq(currentDbUser), eq(requestUserUpdate1));
-        verify(this.baseUserService).updateUser1(eq(requestUserUpdate1));
+        verify(this.baseUserValidator).validateUserUpdateRequest1(currentDbUser, requestUserUpdate1);
+        verify(this.baseUserService).updateUser1(requestUserUpdate1);
     }
 
     @Test
-    public void update2Test() throws Exception {
+    void update2Test() throws Exception {
         // Arrange
         var requestUserUpdate2 = entity(RequestUserUpdate2.class);
 
@@ -87,12 +87,12 @@ public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUserValidator).validateUserUpdateRequest2(eq(requestUserUpdate2));
-        verify(this.baseUserService).updateUser2(eq(requestUserUpdate2));
+        verify(this.baseUserValidator).validateUserUpdateRequest2(requestUserUpdate2);
+        verify(this.baseUserService).updateUser2(requestUserUpdate2);
     }
 
     @Test
-    public void changePassword1Test() throws Exception {
+    void changePassword1Test() throws Exception {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
 
@@ -105,7 +105,7 @@ public class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUserValidator).validateUserChangePasswordRequest1(eq(requestUserChangePassword1));
-        verify(this.baseUserService).changePassword1(eq(requestUserChangePassword1));
+        verify(this.baseUserValidator).validateUserChangePasswordRequest1(requestUserChangePassword1);
+        verify(this.baseUserService).changePassword1(requestUserChangePassword1);
     }
 }

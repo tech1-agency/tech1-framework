@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationAsyncIncidentsTest {
+class ApplicationAsyncIncidentsTest {
 
     @Configuration
     @Import({
@@ -57,7 +57,7 @@ public class ApplicationAsyncIncidentsTest {
     private final ApplicationAsyncIncidents componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.asyncUncaughtExceptionHandlerPublisher,
                 this.rejectedExecutionHandlerPublisher
@@ -65,7 +65,7 @@ public class ApplicationAsyncIncidentsTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.asyncUncaughtExceptionHandlerPublisher,
                 this.rejectedExecutionHandlerPublisher
@@ -73,7 +73,7 @@ public class ApplicationAsyncIncidentsTest {
     }
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -86,7 +86,7 @@ public class ApplicationAsyncIncidentsTest {
     }
 
     @Test
-    public void getAsyncExecutorTest() {
+    void getAsyncExecutorTest() {
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();
 
@@ -99,7 +99,7 @@ public class ApplicationAsyncIncidentsTest {
     }
 
     @Test
-    public void getAsyncUncaughtExceptionHandlerTest() {
+    void getAsyncUncaughtExceptionHandlerTest() {
         // Act
         var actual = this.componentUnderTest.getAsyncUncaughtExceptionHandler();
 

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CpuMemoryTest extends AbstractMemoriesTest {
+class CpuMemoryTest extends AbstractMemoriesTest {
 
     private static Stream<Arguments> serializeDeserializeTest() {
         return Stream.of(
@@ -25,19 +25,18 @@ public class CpuMemoryTest extends AbstractMemoriesTest {
 
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void serializeTest(CpuMemory cpuMemory, String fileName) {
+    void serializeTest(CpuMemory cpuMemory, String fileName) {
         // Act
         var json = this.writeValueAsString(cpuMemory);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeDeserializeTest")
-    public void deserializeTest(CpuMemory cpuMemory, String fileName) {
+    void deserializeTest(CpuMemory cpuMemory, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<CpuMemory>() {};
@@ -46,7 +45,6 @@ public class CpuMemoryTest extends AbstractMemoriesTest {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(cpuMemory);
     }
 }

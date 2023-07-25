@@ -10,7 +10,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StringUtilityTest {
+class StringUtilityTest {
 
     private static Stream<Arguments> isNullOrEmptyTest() {
         return Stream.of(
@@ -71,7 +71,7 @@ public class StringUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isNullOrEmptyTest")
-    public void isNullOrEmptyTest(String value, boolean expected) {
+    void isNullOrEmptyTest(String value, boolean expected) {
         // Act
         var actual = isNullOrEmpty(value);
 
@@ -81,7 +81,7 @@ public class StringUtilityTest {
 
     @ParameterizedTest
     @MethodSource("isNullOrBlankTest")
-    public void isNullOrBlankTest(String value, boolean expected) {
+    void isNullOrBlankTest(String value, boolean expected) {
         // Act
         var actual = isNullOrBlank(value);
 
@@ -91,7 +91,7 @@ public class StringUtilityTest {
 
     @ParameterizedTest
     @MethodSource("hasLengthTest")
-    public void hasLengthTest(String value, boolean expected) {
+    void hasLengthTest(String value, boolean expected) {
         // Act
         var actual = hasLength(value);
 
@@ -101,7 +101,7 @@ public class StringUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getShortenValueOrUndefinedTest")
-    public void getShortenValueOrUndefinedTest(String value, int maxLength, String expected) {
+    void getShortenValueOrUndefinedTest(String value, int maxLength, String expected) {
         // Act
         var actual = getShortenValueOrUndefined(value, maxLength);
 

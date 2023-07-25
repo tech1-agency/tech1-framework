@@ -3,6 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.Session;
@@ -40,10 +42,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Tuple2<JwtUser, JwtRefreshToken> getJwtUserByAccessTokenOrThrow(
-            HttpServletRequest request
-    ) throws CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
-        var cookieAccessToken = this.cookieProvider.readJwtAccessToken(request);
-        var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
+            CookieAccessToken cookieAccessToken,
+            CookieRefreshToken cookieRefreshToken
+    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
 
         var jwtAccessToken = cookieAccessToken.getJwtAccessToken();
         var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
@@ -54,13 +55,14 @@ public class TokenServiceImpl implements TokenService {
         this.tokenContextThrowerService.verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
 
         // JWT Access Token: isValid + isAlive
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().getIdentifier());
-        return new Tuple2(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.getJwtToken()));
+        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
+        return new Tuple2<>(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.jwtToken()));
     }
 
     @Override
     public ResponseUserSession1 refreshSessionOrThrow(
-            HttpServletRequest request, HttpServletResponse response
+            HttpServletRequest request,
+            HttpServletResponse response
     ) throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
         var oldCookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
         var oldJwtRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
@@ -83,7 +85,7 @@ public class TokenServiceImpl implements TokenService {
         this.sessionRegistry.renew(
                 new Session(
                         username,
-                        new JwtRefreshToken(oldCookieRefreshToken.getValue())
+                        new JwtRefreshToken(oldCookieRefreshToken.value())
                 ),
                 new Session(
                         username,
@@ -91,6 +93,6 @@ public class TokenServiceImpl implements TokenService {
                 )
         );
 
-        return new ResponseUserSession1(userSession.getJwtRefreshToken().getValue());
+        return new ResponseUserSession1(userSession.getJwtRefreshToken().value());
     }
 }

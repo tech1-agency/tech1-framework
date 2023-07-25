@@ -113,6 +113,6 @@ public class GeoLocation {
     // PRIVATE METHODS
     // =================================================================================================================
     public static String getIpAddrOrUnknown(IPAddress ipAddress) {
-        return nonNull(ipAddress) ? ipAddress.getValue() : UNKNOWN;
+        return nonNull(ipAddress) ? ipAddress.value() : UNKNOWN;
     }
 }

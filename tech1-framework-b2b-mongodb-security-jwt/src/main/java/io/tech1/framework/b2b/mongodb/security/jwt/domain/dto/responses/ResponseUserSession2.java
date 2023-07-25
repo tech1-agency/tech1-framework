@@ -2,51 +2,45 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
-import lombok.Data;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+public record ResponseUserSession2(
+        String id,
+        Username who,
+        boolean current,
+        String activity,
+        TupleExceptionDetails exception,
+        String ipAddr,
+        String countryFlag,
+        String where,
+        String browser,
+        String what
+) {
 
-// Lombok
-@Data
-public class ResponseUserSession2 {
-    private final String id;
-
-    private final boolean current;
-    private final String activity;
-
-    private final TupleExceptionDetails exception;
-
-    private final String ipAddr;
-    private final String countryFlag;
-    private final String where;
-
-    private final String browser;
-    private final String what;
-
-    public ResponseUserSession2(DbUserSession session, CookieRefreshToken cookieRefreshToken) {
-        assertNonNullOrThrow(session, invalidAttribute("ResponseUserSession2.session"));
-        assertNonNullOrThrow(cookieRefreshToken, invalidAttribute("ResponseUserSession2.cookieRefreshToken"));
-        this.id = session.getId();
-
-        this.current = cookieRefreshToken.getValue().equals(session.getJwtRefreshToken().getValue());
-        if (this.current) {
-            this.activity = "Current session";
+    public static ResponseUserSession2 of(DbUserSession session, CookieRefreshToken cookie) {
+        var current = cookie.value().equals(session.getJwtRefreshToken().value());
+        var activity = "";
+        if (current) {
+            activity = "Current session";
         } else {
-            this.activity = "—";
+            activity = "—";
         }
 
-        var requestMetadata = session.getRequestMetadata();
-        this.exception = requestMetadata.getException();
+        var whereTuple3 = session.getRequestMetadata().getWhereTuple3();
+        var whatTuple2 = session.getRequestMetadata().getWhatTuple2();
 
-        var whereTuple3 = requestMetadata.getWhereTuple3();
-        this.ipAddr = whereTuple3.getA();
-        this.countryFlag = whereTuple3.getB();
-        this.where = whereTuple3.getC();
-
-        var whatTuple2 = requestMetadata.getWhatTuple2();
-        this.browser = whatTuple2.getA();
-        this.what = whatTuple2.getB();
+        return new ResponseUserSession2(
+                session.getId(),
+                session.getUsername(),
+                current,
+                activity,
+                session.getRequestMetadata().getException(),
+                whereTuple3.a(),
+                whereTuple3.b(),
+                whereTuple3.c(),
+                whatTuple2.a(),
+                whatTuple2.b()
+        );
     }
 }

@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationEmailsTest {
+class ApplicationEmailsTest {
 
     @Configuration
     @Import({
@@ -38,23 +38,24 @@ public class ApplicationEmailsTest {
     private final ApplicationEmails componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("javaMailSender");
-        assertThat(methods).contains("springTemplateEngine");
-        assertThat(methods).contains("htmlTemplateResolver");
-        assertThat(methods).contains("emailUtility");
-        assertThat(methods).contains("emailService");
-        assertThat(methods).hasSize(19);
+        assertThat(methods)
+                .hasSize(19)
+                .contains("javaMailSender")
+                .contains("springTemplateEngine")
+                .contains("htmlTemplateResolver")
+                .contains("emailUtility")
+                .contains("emailService");
     }
 
     @Test
-    public void javaMailSenderTest() {
+    void javaMailSenderTest() {
         // Act
         var javaMailSender = (JavaMailSenderImpl) this.componentUnderTest.javaMailSender();
 
@@ -65,9 +66,9 @@ public class ApplicationEmailsTest {
         assertThat(javaMailSender.getUsername()).isEqualTo(emailConfigs.getUsername());
         assertThat(javaMailSender.getPassword()).isEqualTo(emailConfigs.getPassword());
         assertThat(javaMailSender.getJavaMailProperties()).hasSize(4);
-        assertThat(javaMailSender.getJavaMailProperties().get("mail.transport.protocol")).isEqualTo("smtp");
-        assertThat(javaMailSender.getJavaMailProperties().get("mail.smtp.auth")).isEqualTo("true");
-        assertThat(javaMailSender.getJavaMailProperties().get("mail.smtp.starttls.enable")).isEqualTo("true");
-        assertThat(javaMailSender.getJavaMailProperties().get("mail.debug")).isEqualTo("false");
+        assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.transport.protocol", "smtp");
+        assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.smtp.auth", "true");
+        assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.smtp.starttls.enable", "true");
+        assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.debug", "false");
     }
 }

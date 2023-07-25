@@ -13,7 +13,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class EncryptionUtilityTest {
+class EncryptionUtilityTest {
 
     // Sequence: Value, Encryption Init Vector, Encryption Key, Encrypted Value
     private static Stream<Arguments> encryptDecryptAes128() {
@@ -26,7 +26,7 @@ public class EncryptionUtilityTest {
 
     @ParameterizedTest
     @MethodSource("encryptDecryptAes128")
-    public void encryptAes128Test(String value, String encryptionInitVector, String encryptionKey, String encryptedValue) {
+    void encryptAes128Test(String value, String encryptionInitVector, String encryptionKey, String encryptedValue) {
         // Act
         var actual = encryptAes128(value, encryptionInitVector, encryptionKey);
 
@@ -35,7 +35,7 @@ public class EncryptionUtilityTest {
     }
 
     @Test
-    public void encryptAes128ThrowExceptionTest() {
+    void encryptAes128ThrowExceptionTest() {
         // Arrange
         var value = "value";
         var encryptionInitVector = "";
@@ -45,13 +45,14 @@ public class EncryptionUtilityTest {
         var actual = catchThrowable(() -> encryptAes128(value, encryptionInitVector, encryptionKey));
 
         // Assert
-        assertThat(actual).isInstanceOf(IllegalArgumentException.class);
-        assertThat(actual).hasMessageStartingWith("Encryption Failure. Algorithm: AES, 128");
+        assertThat(actual)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Encryption Failure. Algorithm: AES, 128");
     }
 
     @ParameterizedTest
     @MethodSource("encryptDecryptAes128")
-    public void decryptAes128Test(String value, String encryptionInitVector, String encryptionKey, String encryptedValue) {
+    void decryptAes128Test(String value, String encryptionInitVector, String encryptionKey, String encryptedValue) {
         // Act
         var actual = decryptAes128(encryptedValue, encryptionInitVector, encryptionKey);
 
@@ -60,7 +61,7 @@ public class EncryptionUtilityTest {
     }
 
     @Test
-    public void decryptAes128ThrowExceptionTest() {
+    void decryptAes128ThrowExceptionTest() {
         // Arrange
         var value = "value";
         var encryptionInitVector = "";
@@ -70,7 +71,8 @@ public class EncryptionUtilityTest {
         var actual = catchThrowable(() -> decryptAes128(value, encryptionInitVector, encryptionKey));
 
         // Assert
-        assertThat(actual).isInstanceOf(IllegalArgumentException.class);
-        assertThat(actual).hasMessageStartingWith("Decryption Failure. Algorithm: AES, 128");
+        assertThat(actual)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Decryption Failure. Algorithm: AES, 128");
     }
 }

@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserServiceImplTest  {
+class UserServiceImplTest  {
 
     @Configuration
     static class ContextConfiguration {
@@ -45,21 +45,21 @@ public class UserServiceImplTest  {
     private final UserService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.userRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.userRepository
         );
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         // Act
         var expected = list345(DbUser.class);
         when(this.userRepository.findAll()).thenReturn(expected);

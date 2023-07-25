@@ -15,12 +15,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseHardwareMonitoringSubscriberTest {
+class BaseHardwareMonitoringSubscriberTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -42,28 +43,28 @@ public class BaseHardwareMonitoringSubscriberTest {
     private final HardwareMonitoringSubscriber componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.hardwareMonitoringStore
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.hardwareMonitoringStore
         );
     }
 
     @Test
-    public void onLastHardwareMonitoringDatapointTest() {
+    void onLastHardwareMonitoringDatapointTest() {
         // Arrange
-        var event = mock(EventLastHardwareMonitoringDatapoint.class);
+        var event = entity(EventLastHardwareMonitoringDatapoint.class);
 
         // Act
         this.componentUnderTest.onLastHardwareMonitoringDatapoint(event);
 
         // Assert
-        verify(this.hardwareMonitoringStore).storeEvent(eq(event));
+        verify(this.hardwareMonitoringStore).storeEvent(event);
     }
 }

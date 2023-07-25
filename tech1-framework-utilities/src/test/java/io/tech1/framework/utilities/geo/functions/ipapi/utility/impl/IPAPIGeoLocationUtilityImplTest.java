@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IPAPIGeoLocationUtilityImplTest {
+class IPAPIGeoLocationUtilityImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -57,7 +57,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     private final IPAPIGeoLocationUtility componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.ipapiFeign,
                 this.countryFlagUtility
@@ -65,7 +65,7 @@ public class IPAPIGeoLocationUtilityImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.ipapiFeign,
                 this.countryFlagUtility
@@ -73,52 +73,52 @@ public class IPAPIGeoLocationUtilityImplTest {
     }
 
     @Test
-    public void getGeoLocationThrowFeignExceptionTest() {
+    void getGeoLocationThrowFeignExceptionTest() {
         // Arrange
         var ipAddress = randomIPAddress();
         var feignException = randomFeignException();
-        when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenThrow(feignException);
+        when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenThrow(feignException);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.getGeoLocation(ipAddress));
 
         // Assert
-        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
+        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
         assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
         assertThat(throwable.getMessage()).isEqualTo("Geo location not found: " + feignException.getMessage());
     }
 
     @Test
-    public void getGeoLocationAPIFailureTest() {
+    void getGeoLocationAPIFailureTest() {
         // Arrange
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("fail", null, null, null, "reserved range");
-        when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenReturn(ipapiResponse);
+        when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.getGeoLocation(ipAddress));
 
         // Assert
-        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
+        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
         assertThat(throwable.getClass()).isEqualTo(GeoLocationNotFoundException.class);
         assertThat(throwable.getMessage()).isEqualTo("Geo location not found: reserved range");
     }
 
     @Test
-    public void getGeoLocationTest() throws GeoLocationNotFoundException {
+    void getGeoLocationTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = randomIPAddress();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
-        when(this.ipapiFeign.getIPAPIResponse(ipAddress.getValue())).thenReturn(ipapiResponse);
-        when(this.countryFlagUtility.getFlagEmojiByCountryCode(eq("UA"))).thenReturn(FLAG_UKRAINE);
+        when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
+        when(this.countryFlagUtility.getFlagEmojiByCountryCode("UA")).thenReturn(FLAG_UKRAINE);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.getValue());
-        verify(this.countryFlagUtility).getFlagEmojiByCountryCode(eq("UA"));
-        assertThat(actual.getIpAddr()).isEqualTo(ipAddress.getValue());
+        verify(this.ipapiFeign).getIPAPIResponse(ipAddress.value());
+        verify(this.countryFlagUtility).getFlagEmojiByCountryCode("UA");
+        assertThat(actual.getIpAddr()).isEqualTo(ipAddress.value());
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getCountryCode()).isEqualTo("UA");
         assertThat(actual.getCountryFlag()).isEqualTo(FLAG_UKRAINE);

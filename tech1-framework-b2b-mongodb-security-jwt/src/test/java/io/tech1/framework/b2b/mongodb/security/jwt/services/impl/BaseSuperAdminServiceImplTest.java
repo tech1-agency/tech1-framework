@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSuperAdminServiceImplTest {
+class BaseSuperAdminServiceImplTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -69,7 +70,7 @@ public class BaseSuperAdminServiceImplTest {
     private final BaseSuperAdminService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.sessionRegistry,
                 this.invitationCodeRepository,
@@ -78,7 +79,7 @@ public class BaseSuperAdminServiceImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.invitationCodeRepository,
@@ -87,7 +88,7 @@ public class BaseSuperAdminServiceImplTest {
     }
 
     @Test
-    public void findUnusedTestt() {
+    void findUnusedTestt() {
         // Arrange
         var invitationCodes = list345(DbInvitationCode.class);
         when(this.invitationCodeRepository.findByInvitedIsNull()).thenReturn(invitationCodes);
@@ -97,15 +98,16 @@ public class BaseSuperAdminServiceImplTest {
 
         // Assert
         verify(this.invitationCodeRepository).findByInvitedIsNull();
-        assertThat(unused).isNotNull();
         assertThat(unused).hasSize(invitationCodes.size());
         assertThat(unused.stream().map(ResponseInvitationCode1::getValue).collect(Collectors.toSet()))
                 .isEqualTo(invitationCodes.stream().map(DbInvitationCode::getValue).collect(Collectors.toSet()));
     }
 
     @Test
-    public void getServerSessionsTest() {
+    void getServerSessionsTest() {
         // Arrange
+        var cookie = entity(CookieRefreshToken.class);
+
         var dbUserSession1 = entity(DbUserSession.class);
         var dbUserSession2 = entity(DbUserSession.class);
         var dbUserSession3 = entity(DbUserSession.class);
@@ -119,15 +121,15 @@ public class BaseSuperAdminServiceImplTest {
         when(this.sessionRegistry.getActiveSessionsRefreshTokens()).thenReturn(activeSessions);
 
         // Act
-        var serverSessions = this.componentUnderTest.getServerSessions();
+        var serverSessions = this.componentUnderTest.getServerSessions(cookie);
 
         // Assert
         verify(this.userSessionRepository).findAll();
         verify(this.sessionRegistry).getActiveSessionsRefreshTokens();
         assertThat(serverSessions).isNotNull();
-        assertThat(serverSessions.getActiveSessions()).hasSize(2);
+        assertThat(serverSessions.activeSessions()).hasSize(2);
         assertThat(serverSessions.getActiveUsernames()).containsExactlyInAnyOrder(dbUserSession1.getUsername(), dbUserSession3.getUsername());
-        assertThat(serverSessions.getInactiveSessions()).hasSize(1);
+        assertThat(serverSessions.inactiveSessions()).hasSize(1);
         assertThat(serverSessions.getInactiveUsernames()).containsExactlyInAnyOrder(dbUserSession2.getUsername());
     }
 }

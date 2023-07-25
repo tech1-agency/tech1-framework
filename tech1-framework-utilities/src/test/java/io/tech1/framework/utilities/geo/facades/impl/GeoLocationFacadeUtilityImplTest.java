@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GeoLocationFacadeUtilityImplTest {
+class GeoLocationFacadeUtilityImplTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -52,7 +52,7 @@ public class GeoLocationFacadeUtilityImplTest {
     private final GeoLocationFacadeUtility componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.ipapiGeoLocationUtility,
                 this.mindMaxGeoLocationUtility
@@ -60,7 +60,7 @@ public class GeoLocationFacadeUtilityImplTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.ipapiGeoLocationUtility,
                 this.mindMaxGeoLocationUtility
@@ -68,7 +68,7 @@ public class GeoLocationFacadeUtilityImplTest {
     }
 
     @Test
-    public void getGeoLocationThrowExceptionTest() throws GeoLocationNotFoundException {
+    void getGeoLocationThrowExceptionTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = randomIPAddress();
         var geoLocation = randomGeoLocation();
@@ -79,13 +79,13 @@ public class GeoLocationFacadeUtilityImplTest {
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiGeoLocationUtility).getGeoLocation(eq(ipAddress));
-        verify(this.mindMaxGeoLocationUtility).getGeoLocation(eq(ipAddress));
+        verify(this.ipapiGeoLocationUtility).getGeoLocation(ipAddress);
+        verify(this.mindMaxGeoLocationUtility).getGeoLocation(ipAddress);
         assertThat(actual).isEqualTo(geoLocation);
     }
 
     @Test
-    public void getGeoLocationTest() throws GeoLocationNotFoundException {
+    void getGeoLocationTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = randomIPAddress();
         var geoLocation = randomGeoLocation();
@@ -95,7 +95,7 @@ public class GeoLocationFacadeUtilityImplTest {
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
 
         // Assert
-        verify(this.ipapiGeoLocationUtility).getGeoLocation(eq(ipAddress));
+        verify(this.ipapiGeoLocationUtility).getGeoLocation(ipAddress);
         assertThat(actual).isEqualTo(geoLocation);
     }
 }

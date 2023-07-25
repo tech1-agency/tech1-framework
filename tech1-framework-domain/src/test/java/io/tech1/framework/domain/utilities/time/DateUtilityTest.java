@@ -19,7 +19,7 @@ import static java.time.LocalDateTime.of;
 import static java.time.Month.DECEMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateUtilityTest {
+class DateUtilityTest {
     private static final SimpleDateFormat SDF = new SimpleDateFormat(DEFAULT_DATE_FORMAT_PATTERN);
 
     private static Stream<Arguments> convertLocalDateTimeTest() {
@@ -32,7 +32,7 @@ public class DateUtilityTest {
 
     @ParameterizedTest
     @MethodSource("convertLocalDateTimeTest")
-    public void convertLocalDateTimeTest(LocalDateTime localDateTime, String expected) throws ParseException {
+    void convertLocalDateTimeTest(LocalDateTime localDateTime, String expected) throws ParseException {
         // Arrange
         SDF.setTimeZone(TestsConstants.EET_TIME_ZONE);
 
@@ -56,7 +56,7 @@ public class DateUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getAbsDifferenceByTimeUnitTest")
-    public void getAbsDifferenceByTimeUnitTest(String date1, String date2, TimeUnit timeUnit, long expected) throws ParseException {
+    void getAbsDifferenceByTimeUnitTest(String date1, String date2, TimeUnit timeUnit, long expected) throws ParseException {
         // Act
         var actual = getAbsDifferenceByTimeUnit(SDF.parse(date1), SDF.parse(date2), timeUnit);
 

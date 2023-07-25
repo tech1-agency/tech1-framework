@@ -5,24 +5,21 @@ import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
-// Lombok
-@Data
-public class EventSessionAddUserRequestMetadata {
-    private final Username username;
-    private final Email email;
-    private final DbUserSession userSession;
-    private final IPAddress clientIpAddr;
-    private final UserAgentHeader userAgentHeader;
-    private final boolean isAuthenticationLoginEndpoint;
-    private final boolean isAuthenticationRefreshTokenEndpoint;
-
+public record EventSessionAddUserRequestMetadata(
+        Username username,
+        Email email,
+        DbUserSession userSession,
+        IPAddress clientIpAddr,
+        UserAgentHeader userAgentHeader,
+        boolean isAuthenticationLoginEndpoint,
+        boolean isAuthenticationRefreshTokenEndpoint
+) {
     public static EventSessionAddUserRequestMetadata of(
             Username username,
             Email email,

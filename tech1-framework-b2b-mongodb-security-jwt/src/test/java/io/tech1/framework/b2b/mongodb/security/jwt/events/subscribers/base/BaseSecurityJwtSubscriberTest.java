@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSecurityJwtSubscriberTest {
+class BaseSecurityJwtSubscriberTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -68,7 +68,7 @@ public class BaseSecurityJwtSubscriberTest {
     private final SecurityJwtSubscriber componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.userEmailService,
@@ -77,7 +77,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.userEmailService,
@@ -86,7 +86,7 @@ public class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    public void onAuthenticationLoginTest() {
+    void onAuthenticationLoginTest() {
         // Arrange
         var event = entity(EventAuthenticationLogin.class);
 
@@ -94,11 +94,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLogin(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onAuthenticationLoginFailureTest() {
+    void onAuthenticationLoginFailureTest() {
         // Arrange
         var event = entity(EventAuthenticationLoginFailure.class);
 
@@ -106,11 +106,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLoginFailure(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onAuthenticationLogoutTest() {
+    void onAuthenticationLogoutTest() {
         // Arrange
         var event = entity(EventAuthenticationLogout.class);
 
@@ -118,11 +118,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLogout(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onRegistration1Test() {
+    void onRegistration1Test() {
         // Arrange
         var event = entity(EventRegistration1.class);
 
@@ -130,11 +130,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onRegistration1(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onRegistration1FailureTest() {
+    void onRegistration1FailureTest() {
         // Arrange
         var event = entity(EventRegistration1Failure.class);
 
@@ -142,11 +142,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onRegistration1Failure(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onSessionRefreshedTest() {
+    void onSessionRefreshedTest() {
         // Arrange
         var event = entity(EventSessionRefreshed.class);
 
@@ -154,11 +154,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onSessionRefreshed(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onSessionExpiredTest() {
+    void onSessionExpiredTest() {
         // Arrange
         var event = entity(EventSessionExpired.class);
 
@@ -166,11 +166,11 @@ public class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onSessionExpired(event);
 
         // Assert
-        // no asserts
+        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
     }
 
     @Test
-    public void onSessionAddUserRequestMetadataNotAuthenticationEndpointTest() {
+    void onSessionAddUserRequestMetadataNotAuthenticationEndpointTest() {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
@@ -182,17 +182,17 @@ public class BaseSecurityJwtSubscriberTest {
                 false
         );
         var userSession = entity(DbUserSession.class);
-        when(this.userSessionService.saveUserRequestMetadata(eq(event))).thenReturn(userSession);
+        when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.userSessionService).saveUserRequestMetadata(eq(event));
+        verify(this.userSessionService).saveUserRequestMetadata(event);
     }
 
     @Test
-    public void onSessionAddUserRequestMetadataIsAuthenticationLoginEndpointTest() {
+    void onSessionAddUserRequestMetadataIsAuthenticationLoginEndpointTest() {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
@@ -204,19 +204,19 @@ public class BaseSecurityJwtSubscriberTest {
                 false
         );
         var userSession = entity(DbUserSession.class);
-        when(this.userSessionService.saveUserRequestMetadata(eq(event))).thenReturn(userSession);
+        when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.userEmailService).executeAuthenticationLogin(eq(new FunctionAuthenticationLoginEmail(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(eq(new IncidentAuthenticationLogin(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.userSessionService).saveUserRequestMetadata(event);
+        verify(this.userEmailService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), userSession.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), userSession.getRequestMetadata()));
     }
 
     @Test
-    public void onSessionAddUserRequestMetadataIsAuthenticationRefreshTokenEndpointTest() {
+    void onSessionAddUserRequestMetadataIsAuthenticationRefreshTokenEndpointTest() {
         // Arrange
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
@@ -228,14 +228,14 @@ public class BaseSecurityJwtSubscriberTest {
                 true
         );
         var userSession = entity(DbUserSession.class);
-        when(this.userSessionService.saveUserRequestMetadata(eq(event))).thenReturn(userSession);
+        when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.userSessionService).saveUserRequestMetadata(eq(event));
-        verify(this.userEmailService).executeSessionRefreshed(eq(new FunctionSessionRefreshedEmail(event.getUsername(), event.getEmail(), userSession.getRequestMetadata())));
-        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(eq(new IncidentSessionRefreshed(event.getUsername(), userSession.getRequestMetadata())));
+        verify(this.userSessionService).saveUserRequestMetadata(event);
+        verify(this.userEmailService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), userSession.getRequestMetadata()));
+        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), userSession.getRequestMetadata()));
     }
 }

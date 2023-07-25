@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityJwtTokenUtilityImplTest {
+class SecurityJwtTokenUtilityImplTest {
 
     private static Stream<Arguments> createJwtTokenTest() {
         return Stream.of(
@@ -133,7 +133,7 @@ public class SecurityJwtTokenUtilityImplTest {
     private final SecurityJwtTokenUtility componentUnderTest;
 
     @Test
-    public void createJwtAccessTokenTest() {
+    void createJwtAccessTokenTest() {
         // Arrange
         var expectedUsername = Username.of("multiuser43");
         var authorities = Arrays.asList(
@@ -149,18 +149,18 @@ public class SecurityJwtTokenUtilityImplTest {
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtAccessToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
-        assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
         var zoneId = user.getZoneId();
         var timeAmount = accessToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.getClaims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
     }
 
     @Test
-    public void createJwtRefreshTokenTest() {
+    void createJwtRefreshTokenTest() {
         // Arrange
         var expectedUsername = Username.of("multiuser43");
         var authorities = Arrays.asList(
@@ -176,19 +176,19 @@ public class SecurityJwtTokenUtilityImplTest {
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtRefreshToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
-        assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
         var zoneId = user.getZoneId();
         var timeAmount = refreshToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.getClaims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
     }
 
     @ParameterizedTest
     @MethodSource("createJwtTokenTest")
-    public void createJwtTokenTest(TimeAmount timeAmount) {
+    void createJwtTokenTest(TimeAmount timeAmount) {
         // Arrange
         var user = EntityUtility.entity(DbUser.class);
 
@@ -198,37 +198,37 @@ public class SecurityJwtTokenUtilityImplTest {
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(user.getUsername());
-        assertThat(validatedClaims.getClaims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
         var zoneId = nonNull(user.getZoneId()) ? user.getZoneId() : ZoneId.systemDefault();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.getClaims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
     }
 
     @ParameterizedTest
     @MethodSource("validateTest")
-    public void validateTest(String jwtToken, boolean expected) {
+    void validateTest(String jwtToken, boolean expected) {
         // Act
         var accessValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         var refreshValidatedClaims = this.componentUnderTest.validate(new JwtRefreshToken(jwtToken));
 
         // Assert
-        assertThat(accessValidatedClaims.isValid()).isEqualTo(expected);
-        assertThat(accessValidatedClaims.getJwtToken()).isEqualTo(jwtToken);
-        assertThat(accessValidatedClaims.isAccess()).isEqualTo(true);
-        assertThat(accessValidatedClaims.isRefresh()).isEqualTo(false);
+        assertThat(accessValidatedClaims.valid()).isEqualTo(expected);
+        assertThat(accessValidatedClaims.jwtToken()).isEqualTo(jwtToken);
+        assertThat(accessValidatedClaims.isAccess()).isTrue();
+        assertThat(accessValidatedClaims.isRefresh()).isFalse();
 
-        assertThat(refreshValidatedClaims.isValid()).isEqualTo(expected);
-        assertThat(refreshValidatedClaims.getJwtToken()).isEqualTo(jwtToken);
-        assertThat(refreshValidatedClaims.isAccess()).isEqualTo(false);
-        assertThat(refreshValidatedClaims.isRefresh()).isEqualTo(true);
+        assertThat(refreshValidatedClaims.valid()).isEqualTo(expected);
+        assertThat(refreshValidatedClaims.jwtToken()).isEqualTo(jwtToken);
+        assertThat(refreshValidatedClaims.isAccess()).isFalse();
+        assertThat(refreshValidatedClaims.isRefresh()).isTrue();
     }
 
     @ParameterizedTest
     @MethodSource("isExpiredTest")
-    public void isExpiredTest(String jwtToken, boolean expected) {
+    void isExpiredTest(String jwtToken, boolean expected) {
         // Act
         var jwtTokenValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         var actualExpired = this.componentUnderTest.isExpired(jwtTokenValidatedClaims);
@@ -239,7 +239,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("getUsernameByClaimsTest")
-    public void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
+    void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
         // Act
         var jwtTokenValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
         var actualUsername = jwtTokenValidatedClaims.safeGetUsername();
@@ -250,7 +250,7 @@ public class SecurityJwtTokenUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("versionsTests")
-    public void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> expectedAuthorities) throws ParseException {
+    void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> expectedAuthorities) throws ParseException {
         // Arrange
         var sdf = new SimpleDateFormat(TestsConstants.DEFAULT_DATE_FORMAT_PATTERN);
         sdf.setTimeZone(TestsConstants.EET_TIME_ZONE);
@@ -259,7 +259,7 @@ public class SecurityJwtTokenUtilityImplTest {
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
 
         // Assert
-        var claims = validatedClaims.getClaims();
+        var claims = validatedClaims.claims();
         assertThat(claims.getIssuedAt()).isEqualTo(sdf.parse(expectedIssuedAt));
         assertThat(claims.getExpiration()).isEqualTo(sdf.parse(expectedExpiration));
         var actualAuthorities = Arrays.stream(claims.get("authorities").toString()

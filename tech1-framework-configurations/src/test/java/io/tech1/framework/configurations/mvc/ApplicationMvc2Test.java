@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationMvc2Test {
+class ApplicationMvc2Test {
 
     @Configuration
     static class ContextConfiguration {
@@ -60,30 +60,31 @@ public class ApplicationMvc2Test {
     private final ApplicationMVC componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("addCorsMappings");
-        assertThat(methods).hasSize(28);
+        assertThat(methods)
+                .hasSize(28)
+                .contains("addCorsMappings");
     }
 
     @Test
-    public void addCorsMappingsEnabledTest() {
+    void addCorsMappingsEnabledTest() {
         // Arrange
         var corsRegistry = mock(CorsRegistry.class);
         var corsRegistration = mock(CorsRegistration.class);
-        when(corsRegistry.addMapping(eq("/api/**"))).thenReturn(corsRegistration);
+        when(corsRegistry.addMapping("/api/**")).thenReturn(corsRegistration);
 
         // Act
         this.componentUnderTest.addCorsMappings(corsRegistry);
 
         // Assert
         verify(corsRegistry).addMapping("/api/**");
-        verify(corsRegistration).allowCredentials(eq(false));
+        verify(corsRegistration).allowCredentials(false);
         verifyNoMoreInteractions(
                 corsRegistry,
                 corsRegistration

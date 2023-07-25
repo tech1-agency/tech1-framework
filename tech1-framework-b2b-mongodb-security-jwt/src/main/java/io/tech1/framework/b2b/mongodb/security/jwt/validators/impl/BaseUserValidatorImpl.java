@@ -28,10 +28,10 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
 
     @Override
     public void validateUserUpdateRequest1(DbUser currentDbUser, RequestUserUpdate1 requestUserUpdate1) {
-        var zoneId = requestUserUpdate1.getZoneId();
+        var zoneId = requestUserUpdate1.zoneId();
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        var email = requestUserUpdate1.getEmail();
+        var email = requestUserUpdate1.email();
 
         var invalidEmailMessage = invalidAttribute("email");
         assertNonNullOrThrow(email, invalidEmailMessage);
@@ -48,14 +48,14 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
 
     @Override
     public void validateUserUpdateRequest2(RequestUserUpdate2 requestUserUpdate2) {
-        var zoneId = requestUserUpdate2.getZoneId();
+        var zoneId = requestUserUpdate2.zoneId();
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
     }
 
     @Override
     public void validateUserChangePasswordRequest1(RequestUserChangePassword1 requestUserChangePassword1) {
-        var newPassword = requestUserChangePassword1.getNewPassword();
-        var confirmPassword = requestUserChangePassword1.getConfirmPassword();
+        var newPassword = requestUserChangePassword1.newPassword();
+        var confirmPassword = requestUserChangePassword1.confirmPassword();
 
         assertNonNullNotBlankOrThrow(newPassword, invalidAttribute("newPassword"));
         assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));

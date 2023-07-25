@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @Repository
@@ -22,16 +23,26 @@ public interface UserSessionRepository extends MongoRepository<DbUserSession, St
     List<DbUserSession> findByUsernameIn(Set<Username> usernames);
     Long deleteByIdIn(List<String> ids);
 
+    default DbUserSession getById(String sessionId) {
+        return this.findById(sessionId).orElse(null);
+    }
+
+    default DbUserSession requirePresence(String sessionId) {
+        var session = this.getById(sessionId);
+        assertNonNullOrThrow(session, entityNotFound("Session", sessionId));
+        return session;
+    }
+
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
         return nonNull(this.findByRefreshToken(jwtRefreshToken));
     }
 
     default DbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.getValue()).orElse(null);
+        return this.findById(jwtRefreshToken.value()).orElse(null);
     }
 
     default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.deleteById(jwtRefreshToken.getValue());
+        this.deleteById(jwtRefreshToken.value());
     }
 
     // ================================================================================================================

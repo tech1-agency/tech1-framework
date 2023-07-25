@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CsrfInterceptorHandshakeTest {
+class CsrfInterceptorHandshakeTest {
 
     @Configuration
     @Import({
@@ -54,7 +54,7 @@ public class CsrfInterceptorHandshakeTest {
     private final CsrfInterceptorHandshake componentUnderTest;
 
     @Test
-    public void beforeHandshakeRuntimeExceptionTest() {
+    void beforeHandshakeRuntimeExceptionTest() {
         // Arrange
         var request = Mockito.mock(ServletServerHttpRequest.class);
         var response = Mockito.mock(ServerHttpResponse.class);
@@ -66,7 +66,7 @@ public class CsrfInterceptorHandshakeTest {
 
         // Assert
         assertThat(actual).isFalse();
-        assertThat(attributes).hasSize(0);
+        assertThat(attributes).isEmpty();
         verify(request).getServletRequest();
         verifyNoMoreInteractions(
                 request,
@@ -76,7 +76,7 @@ public class CsrfInterceptorHandshakeTest {
     }
 
     @Test
-    public void beforeHandshakeNoCookieExceptionTest() {
+    void beforeHandshakeNoCookieExceptionTest() {
         // Arrange
         var request = Mockito.mock(ServletServerHttpRequest.class);
         var httpRequest = Mockito.mock(HttpServletRequest.class);
@@ -90,7 +90,7 @@ public class CsrfInterceptorHandshakeTest {
 
         // Assert
         assertThat(actual).isFalse();
-        assertThat(attributes).hasSize(0);
+        assertThat(attributes).isEmpty();
         verify(request).getServletRequest();
         verifyNoMoreInteractions(
                 request,
@@ -100,7 +100,7 @@ public class CsrfInterceptorHandshakeTest {
     }
 
     @Test
-    public void beforeHandshakeTest() {
+    void beforeHandshakeTest() {
         // Arrange
         var request = Mockito.mock(ServletServerHttpRequest.class);
         var httpRequest = Mockito.mock(HttpServletRequest.class);
@@ -131,7 +131,7 @@ public class CsrfInterceptorHandshakeTest {
 
 
     @Test
-    public void afterHandshakeTest() {
+    void afterHandshakeTest() {
         // Arrange
         var request = Mockito.mock(ServerHttpRequest.class);
         var response = Mockito.mock(ServerHttpResponse.class);

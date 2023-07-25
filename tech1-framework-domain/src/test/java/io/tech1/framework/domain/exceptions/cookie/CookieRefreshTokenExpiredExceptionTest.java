@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CookieRefreshTokenExpiredExceptionTest {
+class CookieRefreshTokenExpiredExceptionTest {
 
     @Test
-    public void testException() {
+    void testException() {
         // Arrange
         var username = randomUsername();
 

@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 import static io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.HttpRequestUtilityImpl.CACHED_PAYLOAD_ATTRIBUTE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -34,7 +33,7 @@ import static org.mockito.Mockito.*;
 })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HttpRequestUtilityImplTest {
+class HttpRequestUtilityImplTest {
 
     private static Stream<Arguments> authenticationLoginEndpointCases() {
         return Stream.of(
@@ -79,7 +78,7 @@ public class HttpRequestUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("authenticationLoginEndpointCases")
-    public void isCachedEndpointTest(String method, String requestURI, boolean expected) {
+    void isCachedEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
@@ -93,7 +92,7 @@ public class HttpRequestUtilityImplTest {
     }
 
     @Test
-    public void cachePayloadTest() {
+    void cachePayloadTest() {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         var payload = randomString();
@@ -102,12 +101,12 @@ public class HttpRequestUtilityImplTest {
         this.componentUnderTest.cachePayload(cachedRequest, payload);
 
         // Assert
-        verify(cachedRequest).setAttribute(eq(CACHED_PAYLOAD_ATTRIBUTE), eq(payload));
+        verify(cachedRequest).setAttribute(CACHED_PAYLOAD_ATTRIBUTE, payload);
         verifyNoMoreInteractions(cachedRequest);
     }
 
     @Test
-    public void getCachedPayloadMissingTest() {
+    void getCachedPayloadMissingTest() {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var payload = randomString();
@@ -118,12 +117,12 @@ public class HttpRequestUtilityImplTest {
 
         // Assert
         assertThat(cachedPayload).isEqualTo(payload);
-        verify(request).getAttribute(eq(CACHED_PAYLOAD_ATTRIBUTE));
+        verify(request).getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
         verifyNoMoreInteractions(request);
     }
 
     @Test
-    public void getCachedPayloadPresentTest() {
+    void getCachedPayloadPresentTest() {
         // Arrange
         var request = mock(HttpServletRequest.class);
 
@@ -132,13 +131,13 @@ public class HttpRequestUtilityImplTest {
 
         // Assert
         assertThat(cachedPayload).isNull();
-        verify(request).getAttribute(eq(CACHED_PAYLOAD_ATTRIBUTE));
+        verify(request).getAttribute(CACHED_PAYLOAD_ATTRIBUTE);
         verifyNoMoreInteractions(request);
     }
 
     @ParameterizedTest
     @MethodSource("authenticationLoginEndpointCases")
-    public void isAuthenticationLoginEndpointTest(String method, String requestURI, boolean expected) {
+    void isAuthenticationLoginEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);
@@ -153,7 +152,7 @@ public class HttpRequestUtilityImplTest {
 
     @ParameterizedTest
     @MethodSource("authenticationRefreshTokenEndpointCases")
-    public void isAuthenticationRefreshTokenEndpointTest(String method, String requestURI, boolean expected) {
+    void isAuthenticationRefreshTokenEndpointTest(String method, String requestURI, boolean expected) {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn(method);

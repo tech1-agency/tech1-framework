@@ -26,7 +26,7 @@ public class InvitationCodeRequestsValidatorImpl implements InvitationCodeReques
 
     @Override
     public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
-        var authorities = requestNewInvitationCodeParams.getAuthorities();
+        var authorities = requestNewInvitationCodeParams.authorities();
         var availableAuthorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
 
         assertNonNullNotEmptyOrThrow(authorities, invalidAttribute("authorities"));

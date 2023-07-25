@@ -11,12 +11,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class IncidentClientSlf4jTest {
+class IncidentClientSlf4jTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -29,7 +29,7 @@ public class IncidentClientSlf4jTest {
     private final IncidentClientDefinition componentUnderTest;
 
     @Test
-    public void registerIncidentExceptionTest() {
+    void registerIncidentExceptionTest() {
         // Arrange
         var incident = mock(Incident.class);
 
@@ -37,6 +37,7 @@ public class IncidentClientSlf4jTest {
         this.componentUnderTest.registerIncident(incident);
 
         // Assert
-        // LOGGER ignored
+        verify(incident).getType();
+        verifyNoMoreInteractions(incident);
     }
 }

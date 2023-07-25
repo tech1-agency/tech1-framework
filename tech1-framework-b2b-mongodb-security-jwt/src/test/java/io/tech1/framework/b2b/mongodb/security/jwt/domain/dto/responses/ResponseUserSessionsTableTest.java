@@ -16,22 +16,22 @@ import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_USA;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ResponseUserSessionsTableTest {
+class ResponseUserSessionsTableTest {
 
     @Test
-    public void noSessionsConstructorTest() {
+    void noSessionsConstructorTest() {
         // Act
-        var actual = new ResponseUserSessionsTable(new ArrayList<>());
+        var actual = ResponseUserSessionsTable.of(new ArrayList<>());
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getSessions()).hasSize(0);
-        assertThat(actual.isAnyPresent()).isFalse();
-        assertThat(actual.isAnyProblem()).isFalse();
+        assertThat(actual.sessions()).isEmpty();
+        assertThat(actual.anyPresent()).isFalse();
+        assertThat(actual.anyProblem()).isFalse();
     }
 
     @Test
-    public void constructorTest() {
+    void constructorTest() {
         // Arrange
         var username = randomUsername();
         var dbUserSession1 = new DbUserSession(
@@ -58,23 +58,22 @@ public class ResponseUserSessionsTableTest {
                         invalidUserAgentDetails()
                 )
         );
-        var responseUserSession21 = new ResponseUserSession2(dbUserSession1, new CookieRefreshToken(randomString()));
-        var responseUserSession22 = new ResponseUserSession2(dbUserSession2, new CookieRefreshToken("token2"));
-        var responseUserSession23 = new ResponseUserSession2(dbUserSession3, new CookieRefreshToken(randomString()));
+        var responseUserSession21 = ResponseUserSession2.of(dbUserSession1, new CookieRefreshToken(randomString()));
+        var responseUserSession22 = ResponseUserSession2.of(dbUserSession2, new CookieRefreshToken("token2"));
+        var responseUserSession23 = ResponseUserSession2.of(dbUserSession3, new CookieRefreshToken(randomString()));
 
         // Act
-        var actual = new ResponseUserSessionsTable(new ArrayList<>(List.of(responseUserSession21, responseUserSession22, responseUserSession23)));
+        var actual = ResponseUserSessionsTable.of(new ArrayList<>(List.of(responseUserSession21, responseUserSession22, responseUserSession23)));
 
         // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getSessions()).hasSize(3);
-        assertThat(actual.getSessions().get(0).isCurrent()).isTrue();
-        assertThat(actual.getSessions().get(0).getWhere()).isEqualTo("USA, New York");
-        assertThat(actual.getSessions().get(1).isCurrent()).isFalse();
-        assertThat(actual.getSessions().get(1).getWhere()).isEqualTo("UK, Liverpool");
-        assertThat(actual.getSessions().get(2).isCurrent()).isFalse();
-        assertThat(actual.getSessions().get(2).getWhere()).isEqualTo("UK, London");
-        assertThat(actual.isAnyPresent()).isTrue();
-        assertThat(actual.isAnyProblem()).isTrue();
+        assertThat(actual.sessions()).hasSize(3);
+        assertThat(actual.sessions().get(0).current()).isTrue();
+        assertThat(actual.sessions().get(0).where()).isEqualTo("USA, New York");
+        assertThat(actual.sessions().get(1).current()).isFalse();
+        assertThat(actual.sessions().get(1).where()).isEqualTo("UK, Liverpool");
+        assertThat(actual.sessions().get(2).current()).isFalse();
+        assertThat(actual.sessions().get(2).where()).isEqualTo("UK, London");
+        assertThat(actual.anyPresent()).isTrue();
+        assertThat(actual.anyProblem()).isTrue();
     }
 }

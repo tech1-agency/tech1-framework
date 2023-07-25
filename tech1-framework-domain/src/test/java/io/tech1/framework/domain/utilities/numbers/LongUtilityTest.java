@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LongUtilityTest {
+class LongUtilityTest {
 
     private static Stream<Arguments> toIntExactOrZeroOnOverflowTest() {
         return Stream.of(
@@ -27,7 +27,7 @@ public class LongUtilityTest {
 
     @ParameterizedTest
     @MethodSource("toIntExactOrZeroOnOverflowTest")
-    public void toIntExactOrZeroOnOverflowTest(long value, int expected) {
+    void toIntExactOrZeroOnOverflowTest(long value, int expected) {
         // Act
         int actual = toIntExactOrZeroOnOverflow(value);
 

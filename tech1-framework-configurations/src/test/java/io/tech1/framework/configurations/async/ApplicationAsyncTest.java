@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationAsyncTest {
+class ApplicationAsyncTest {
 
     @Configuration
     @Import({
@@ -40,20 +40,21 @@ public class ApplicationAsyncTest {
     private final ApplicationAsync componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("getAsyncExecutor");
-        assertThat(methods).contains("getAsyncUncaughtExceptionHandler");
-        assertThat(methods).hasSize(16);
+        assertThat(methods)
+                .hasSize(16)
+                .contains("getAsyncExecutor")
+                .contains("getAsyncUncaughtExceptionHandler");
     }
 
     @Test
-    public void getAsyncExecutorTest() {
+    void getAsyncExecutorTest() {
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();
 
@@ -66,7 +67,7 @@ public class ApplicationAsyncTest {
     }
 
     @Test
-    public void getAsyncUncaughtExceptionHandlerTest() {
+    void getAsyncUncaughtExceptionHandlerTest() {
         // Act
         var actual = this.componentUnderTest.getAsyncUncaughtExceptionHandler();
 

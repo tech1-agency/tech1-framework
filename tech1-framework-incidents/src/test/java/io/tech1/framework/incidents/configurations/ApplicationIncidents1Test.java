@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationIncidents1Test {
+class ApplicationIncidents1Test {
 
     @Configuration
     @Import({
@@ -50,21 +50,21 @@ public class ApplicationIncidents1Test {
     private final ApplicationIncidents componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.applicationFrameworkProperties
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationFrameworkProperties
         );
     }
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
@@ -76,7 +76,7 @@ public class ApplicationIncidents1Test {
     }
 
     @Test
-    public void incidentClientDefinitionTest() {
+    void incidentClientDefinitionTest() {
         // Arrange
         when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(TestsPropertiesConstants.INCIDENT_CONFIGS);
 

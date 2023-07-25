@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.randomIncident;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IncidentTest {
+class IncidentTest {
 
     private static Stream<Arguments> getTypeTest() {
         return Stream.of(
@@ -29,7 +29,7 @@ public class IncidentTest {
     }
 
     @Test
-    public void copyOfTest() {
+    void copyOfTest() {
         // Arrange
         var incident = randomIncident();
 
@@ -45,7 +45,7 @@ public class IncidentTest {
 
     @ParameterizedTest
     @MethodSource("getTypeTest")
-    public void getTypeTest(Map<String, Object> attributes, String expected) {
+    void getTypeTest(Map<String, Object> attributes, String expected) {
         // Arrange
         var incident = new Incident();
         incident.addAll(attributes);
@@ -59,7 +59,7 @@ public class IncidentTest {
 
     @ParameterizedTest
     @MethodSource("getUsernameTest")
-    public void getUsernameTest(Map<String, Object> attributes, String expected) {
+    void getUsernameTest(Map<String, Object> attributes, String expected) {
         // Arrange
         var incident = new Incident();
         incident.addAll(attributes);
@@ -68,6 +68,6 @@ public class IncidentTest {
         var actual = incident.getUsername();
 
         // Assert
-        assertThat(actual.getIdentifier()).isEqualTo(expected);
+        assertThat(actual.identifier()).isEqualTo(expected);
     }
 }

@@ -13,20 +13,20 @@ import static io.tech1.framework.domain.hardware.monitoring.HardwareName.HEAP;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HardwareMonitoringDatapointTableRowTest {
+class HardwareMonitoringDatapointTableRowTest {
 
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
                 Arguments.of(Map.of(), false),
-                Arguments.of(Map.of(HEAP, randomHardwareMonitoringThreshold().getValue()), false),
-                Arguments.of(Map.of(CPU, randomHardwareMonitoringThreshold().getValue()), false),
+                Arguments.of(Map.of(HEAP, randomHardwareMonitoringThreshold().value()), false),
+                Arguments.of(Map.of(CPU, randomHardwareMonitoringThreshold().value()), false),
                 Arguments.of(Map.of(CPU, randomBigDecimalGreaterThanZeroByBounds(5L, 10L)), true)
         );
     }
 
     @ParameterizedTest
     @MethodSource("constructorTest")
-    public void constructorTest(Map<HardwareName, BigDecimal> thresholds, boolean expected) {
+    void constructorTest(Map<HardwareName, BigDecimal> thresholds, boolean expected) {
         // Act
         var actual = new HardwareMonitoringDatapointTableRow(
                 CPU,
@@ -39,7 +39,7 @@ public class HardwareMonitoringDatapointTableRowTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getHardwareName()).isNotNull();
-        assertThat(actual.getTimestamp()).isNotNull();
+        assertThat(actual.getTimestamp()).isNotZero();
         assertThat(actual.getUsage()).isNotNull();
         assertThat(actual.getValue()).isNotNull();
         assertThat(actual.isThresholdReached()).isEqualTo(expected);

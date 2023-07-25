@@ -62,14 +62,14 @@ public class DbUser {
     }
 
     public void edit1(RequestUserUpdate1 requestUserUpdate1) {
-        this.zoneId = ZoneId.of(requestUserUpdate1.getZoneId());
-        this.email = requestUserUpdate1.getEmail();
-        this.name = requestUserUpdate1.getName();
+        this.zoneId = ZoneId.of(requestUserUpdate1.zoneId());
+        this.email = requestUserUpdate1.email();
+        this.name = requestUserUpdate1.name();
     }
 
     public void edit2(RequestUserUpdate2 requestUserUpdate2) {
-        this.zoneId = ZoneId.of(requestUserUpdate2.getZoneId());
-        this.name = requestUserUpdate2.getName();
+        this.zoneId = ZoneId.of(requestUserUpdate2.zoneId());
+        this.name = requestUserUpdate2.name();
     }
 
     public void changePassword(Password password) {

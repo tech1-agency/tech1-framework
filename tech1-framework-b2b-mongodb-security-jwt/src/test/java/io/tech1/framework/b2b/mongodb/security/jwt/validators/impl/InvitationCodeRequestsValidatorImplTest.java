@@ -31,14 +31,13 @@ import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InvitationCodeRequestsValidatorImplTest {
+class InvitationCodeRequestsValidatorImplTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
@@ -63,7 +62,7 @@ public class InvitationCodeRequestsValidatorImplTest {
 
     @ParameterizedTest
     @MethodSource("validateCreateNewInvitationCodeTest")
-    public void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams requestNewInvitationCodeParams, String exceptionMessage) {
+    void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams requestNewInvitationCodeParams, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitationCode(requestNewInvitationCodeParams));
 
@@ -78,36 +77,36 @@ public class InvitationCodeRequestsValidatorImplTest {
     }
 
     @Test
-    public void validateDeleteByIdAccessDeniedTest() {
+    void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var currentUser = entity(DbUser.class);
         var invitationCodeId = randomString();
         var dbInvitationCode = entity(DbInvitationCode.class);
-        when(this.invitationCodeRepository.requirePresence(eq(invitationCodeId))).thenReturn(dbInvitationCode);
+        when(this.invitationCodeRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(currentUser, invitationCodeId));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-        assertThat(throwable).hasMessageStartingWith("Access denied. Username: `" + currentUser.getUsername()+ "`, Entity: `InvitationCode`. Value: `" + invitationCodeId+ "`");
-        verify(this.invitationCodeRepository).requirePresence(eq(invitationCodeId));
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("Access denied. Username: `" + currentUser.getUsername()+ "`, Entity: `InvitationCode`. Value: `" + invitationCodeId+ "`");
+        verify(this.invitationCodeRepository).requirePresence(invitationCodeId);
     }
 
     @Test
-    public void validateDeleteByIdOkTest() {
+    void validateDeleteByIdOkTest() {
         // Arrange
         var currentUser = entity(DbUser.class);
         var invitationCodeId = randomString();
         var dbInvitationCode = entity(DbInvitationCode.class);
         dbInvitationCode.setOwner(currentUser.getUsername());
-        when(this.invitationCodeRepository.requirePresence(eq(invitationCodeId))).thenReturn(dbInvitationCode);
+        when(this.invitationCodeRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
         // Act
         this.componentUnderTest.validateDeleteById(currentUser, invitationCodeId);
 
         // Assert
-        verify(this.invitationCodeRepository).requirePresence(eq(invitationCodeId));
+        verify(this.invitationCodeRepository).requirePresence(invitationCodeId);
     }
 }

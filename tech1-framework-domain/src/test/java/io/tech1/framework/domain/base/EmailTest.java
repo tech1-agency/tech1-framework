@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmailTest extends AbstractSerializationDeserializationRunner {
+class EmailTest extends AbstractSerializationDeserializationRunner {
     private static final Email EMAIL = Email.of("info@tech1.io");
 
     @Override
@@ -21,18 +21,17 @@ public class EmailTest extends AbstractSerializationDeserializationRunner {
     }
 
     @Test
-    public void serializeTest() {
+    void serializeTest() {
         // Act
         var json = this.writeValueAsString(EMAIL);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(this.readFile());
     }
 
     @SneakyThrows
     @Test
-    public void deserializeTest() {
+    void deserializeTest() {
         // Arrange
         var json = this.readFile();
         var typeReference = new TypeReference<Email>() {};
@@ -41,9 +40,8 @@ public class EmailTest extends AbstractSerializationDeserializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(EMAIL);
-        assertThat(actual.getValue()).isEqualTo(EMAIL.getValue());
-        assertThat(actual.toString()).isEqualTo(EMAIL.getValue());
+        assertThat(actual.value()).isEqualTo(EMAIL.value());
+        assertThat(actual.toString()).hasToString(EMAIL.value());
     }
 }

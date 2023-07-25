@@ -6,10 +6,10 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ByteAmountTest {
+class ByteAmountTest {
 
     @Test
-    public void ofGbTest() {
+    void ofGbTest() {
         // Act
         var actual = ByteAmount.ofGb(1573741824L);
 
@@ -20,7 +20,7 @@ public class ByteAmountTest {
     }
 
     @Test
-    public void ofMBTest() {
+    void ofMBTest() {
         // Act
         var actual = ByteAmount.ofMB(1573741824L);
 

@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InvitationCodeServiceImplTest {
+class InvitationCodeServiceImplTest {
 
     @Configuration
     @Import({
@@ -68,21 +68,21 @@ public class InvitationCodeServiceImplTest {
     private final InvitationCodeService componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.invitationCodeRepository
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.invitationCodeRepository
         );
     }
 
     @Test
-    public void findByOwnerTest() {
+    void findByOwnerTest() {
         // Arrange
         var owner = randomUsername();
         var authorities = singletonList(new SimpleGrantedAuthority("admin"));
@@ -104,19 +104,19 @@ public class InvitationCodeServiceImplTest {
         var responseInvitationCodes = this.componentUnderTest.findByOwner(owner);
 
         // Assert
-        verify(this.invitationCodeRepository).findByOwner(eq(owner));
-        assertThat(responseInvitationCodes.getInvitationCodes()).isEqualTo(invitationCodes);
-        assertThat(responseInvitationCodes.getInvitationCodes().get(0)).isEqualTo(invitationCode3);
-        assertThat(responseInvitationCodes.getInvitationCodes().get(1)).isEqualTo(invitationCode4);
-        assertThat(responseInvitationCodes.getInvitationCodes().get(2)).isEqualTo(invitationCode6);
-        assertThat(responseInvitationCodes.getInvitationCodes().get(3)).isEqualTo(invitationCode2);
-        assertThat(responseInvitationCodes.getInvitationCodes().get(4)).isEqualTo(invitationCode1);
-        assertThat(responseInvitationCodes.getInvitationCodes().get(5)).isEqualTo(invitationCode5);
-        assertThat(responseInvitationCodes.getAuthorities()).isEqualTo(this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
+        verify(this.invitationCodeRepository).findByOwner(owner);
+        assertThat(responseInvitationCodes.invitationCodes()).isEqualTo(invitationCodes);
+        assertThat(responseInvitationCodes.invitationCodes().get(0)).isEqualTo(invitationCode3);
+        assertThat(responseInvitationCodes.invitationCodes().get(1)).isEqualTo(invitationCode4);
+        assertThat(responseInvitationCodes.invitationCodes().get(2)).isEqualTo(invitationCode6);
+        assertThat(responseInvitationCodes.invitationCodes().get(3)).isEqualTo(invitationCode2);
+        assertThat(responseInvitationCodes.invitationCodes().get(4)).isEqualTo(invitationCode1);
+        assertThat(responseInvitationCodes.invitationCodes().get(5)).isEqualTo(invitationCode5);
+        assertThat(responseInvitationCodes.authorities()).isEqualTo(this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
     }
 
     @Test
-    public void saveTest() {
+    void saveTest() {
         // Arrange
         var dbUser = entity(DbUser.class);
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
@@ -127,13 +127,13 @@ public class InvitationCodeServiceImplTest {
 
         // Assert
         verify(this.invitationCodeRepository).save(dbInvitationCodeAC.capture());
-        assertThat(dbInvitationCodeAC.getValue().getAuthorities()).isEqualTo(requestNewInvitationCodeParams.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        assertThat(dbInvitationCodeAC.getValue().getAuthorities()).isEqualTo(requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
         assertThat(dbInvitationCodeAC.getValue().getOwner()).isEqualTo(dbUser.getUsername());
-        assertThat(dbInvitationCodeAC.getValue().getValue().length()).isEqualTo(40L);
+        assertThat(dbInvitationCodeAC.getValue().getValue()).hasSize(40);
     }
 
     @Test
-    public void deleteByIdTest() {
+    void deleteByIdTest() {
         // Arrange
         var invitationCodeId = randomString();
 
@@ -141,6 +141,6 @@ public class InvitationCodeServiceImplTest {
         this.componentUnderTest.deleteById(invitationCodeId);
 
         // Assert
-        verify(this.invitationCodeRepository).deleteById(eq(invitationCodeId));
+        verify(this.invitationCodeRepository).deleteById(invitationCodeId);
     }
 }

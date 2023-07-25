@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner {
+class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -28,19 +28,18 @@ public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serialize(TupleExceptionDetails tupleExceptionDetails, String fileName) {
+    void serialize(TupleExceptionDetails tupleExceptionDetails, String fileName) {
         // Act
         var json = this.writeValueAsString(tupleExceptionDetails);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void deserializeTest(TupleExceptionDetails tupleExceptionDetails, String fileName) {
+    void deserializeTest(TupleExceptionDetails tupleExceptionDetails, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<TupleExceptionDetails>() {};
@@ -49,7 +48,6 @@ public class TupleExceptionDetailsTest extends AbstractFolderSerializationRunner
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(tupleExceptionDetails);
     }
 }

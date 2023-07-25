@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PubSubHierarchyTest {
+class PubSubHierarchyTest {
 
     @Test
-    public void pubTest() {
+    void pubTest() {
         // Arrange
         var eventPublisher = new AbstractEventPublisher() {};
 
@@ -17,11 +17,11 @@ public class PubSubHierarchyTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getValue()).isEqualTo("Pub");
-        assertThat(actual.toString()).isEqualTo("Pub");
+        assertThat(actual.toString()).hasToString("Pub");
     }
 
     @Test
-    public void subTest() {
+    void subTest() {
         // Arrange
         var eventSubscriber = new AbstractEventSubscriber() {};
 
@@ -31,6 +31,6 @@ public class PubSubHierarchyTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getValue()).isEqualTo("Sub");
-        assertThat(actual.toString()).isEqualTo("Sub");
+        assertThat(actual.toString()).hasToString("Sub");
     }
 }

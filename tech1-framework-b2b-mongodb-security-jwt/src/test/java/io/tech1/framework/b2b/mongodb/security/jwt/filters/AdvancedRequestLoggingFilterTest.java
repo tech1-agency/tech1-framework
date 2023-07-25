@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AdvancedRequestLoggingFilterTest {
+class AdvancedRequestLoggingFilterTest {
 
     @Configuration
     @Import({
@@ -68,7 +68,7 @@ public class AdvancedRequestLoggingFilterTest {
     private final AdvancedRequestLoggingFilter componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.httpRequestUtility,
                 this.securityPrincipalUtility
@@ -76,7 +76,7 @@ public class AdvancedRequestLoggingFilterTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.httpRequestUtility,
                 this.securityPrincipalUtility
@@ -84,7 +84,7 @@ public class AdvancedRequestLoggingFilterTest {
     }
 
     @Test
-    public void disabledLoggingCachedEndpointTest() throws ServletException, IOException {
+    void disabledLoggingCachedEndpointTest() throws ServletException, IOException {
         // Arrange
         this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().setAdvancedRequestLoggingEnabled(false);
         var httpServletRequest = mock(HttpServletRequest.class);
@@ -108,7 +108,7 @@ public class AdvancedRequestLoggingFilterTest {
     }
 
     @Test
-    public void enabledLoggingEmptyPayloadTest() throws ServletException, IOException {
+    void enabledLoggingEmptyPayloadTest() throws ServletException, IOException {
         // Arrange
         this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().setAdvancedRequestLoggingEnabled(true);
         var httpServletRequest = mock(HttpServletRequest.class);
@@ -135,7 +135,7 @@ public class AdvancedRequestLoggingFilterTest {
     }
 
     @Test
-    public void enabledLoggingTest() throws ServletException, IOException {
+    void enabledLoggingTest() throws ServletException, IOException {
         // Arrange
         this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().setAdvancedRequestLoggingEnabled(true);
         var httpServletRequest = mock(HttpServletRequest.class);

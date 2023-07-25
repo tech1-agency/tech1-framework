@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TuplePresenceTest extends AbstractFolderSerializationRunner {
+class TuplePresenceTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
@@ -28,19 +28,18 @@ public class TuplePresenceTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void serialize(TuplePresence<String> tuplePresence, String fileName) {
+    void serialize(TuplePresence<String> tuplePresence, String fileName) {
         // Act
         var json = this.writeValueAsString(tuplePresence);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeTest")
-    public void deserializeTest(TuplePresence<String> tuplePresence, String fileName) {
+    void deserializeTest(TuplePresence<String> tuplePresence, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<TuplePresence<String>>() {};
@@ -49,7 +48,6 @@ public class TuplePresenceTest extends AbstractFolderSerializationRunner {
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(tuple).isNotNull();
         assertThat(tuple).isEqualTo(tuplePresence);
     }
 }

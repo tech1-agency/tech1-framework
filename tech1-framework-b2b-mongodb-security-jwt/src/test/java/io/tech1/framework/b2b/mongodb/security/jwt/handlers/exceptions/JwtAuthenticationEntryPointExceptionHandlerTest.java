@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class JwtAuthenticationEntryPointExceptionHandlerTest {
+class JwtAuthenticationEntryPointExceptionHandlerTest {
 
     @Configuration
     @Import({
@@ -59,7 +59,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     private final JwtAuthenticationEntryPointExceptionHandler componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -68,7 +68,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
@@ -77,7 +77,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @Test
-    public void commenceTest() throws IOException {
+    void commenceTest() throws IOException {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);
@@ -99,7 +99,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     @Test
-    public void commenceBadCredentialsExceptionNotCachedEndpointTest() throws IOException {
+    void commenceBadCredentialsExceptionNotCachedEndpointTest() throws IOException {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);
@@ -107,7 +107,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
         var request = mock(HttpServletRequest.class);
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpRequestUtility.isCachedEndpoint(eq(request))).thenReturn(false);
+        when(this.httpRequestUtility.isCachedEndpoint(request)).thenReturn(false);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -119,11 +119,11 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpRequestUtility).isCachedEndpoint(eq(request));
+        verify(this.httpRequestUtility).isCachedEndpoint(request);
     }
 
     @Test
-    public void commenceBadCredentialsExceptionCachedEndpointTest() throws IOException {
+    void commenceBadCredentialsExceptionCachedEndpointTest() throws IOException {
         // Arrange
         var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);
@@ -131,7 +131,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
         var request = mock(HttpServletRequest.class);
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpRequestUtility.isCachedEndpoint(eq(request))).thenReturn(true);
+        when(this.httpRequestUtility.isCachedEndpoint(request)).thenReturn(true);
         var usernameString = "admin11";
         var passwordString = "Admin11!";
         var payload = objectMapper.writeValueAsString(
@@ -140,7 +140,7 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
                         "password", passwordString
                 )
         );
-        when(this.httpRequestUtility.getCachedPayload(eq(request))).thenReturn(payload);
+        when(this.httpRequestUtility.getCachedPayload(request)).thenReturn(payload);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -152,27 +152,27 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpRequestUtility).isCachedEndpoint(eq(request));
-        verify(this.httpRequestUtility).getCachedPayload(eq(request));
+        verify(this.httpRequestUtility).isCachedEndpoint(request);
+        verify(this.httpRequestUtility).getCachedPayload(request);
         var username = Username.of(usernameString);
         var password = Password.of(passwordString);
-        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eq(
+        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(
                 new EventAuthenticationLoginFailure(
                         username
                 )
-        ));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(eq(
+        );
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(
                 new IncidentAuthenticationLoginFailureUsernamePassword(
                         username,
                         password
                 )
-        ));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(eq(
+        );
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(
                 new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                         username,
                         password
                 )
-        ));
+        );
     }
 
     // =================================================================================================================
@@ -186,18 +186,20 @@ public class JwtAuthenticationEntryPointExceptionHandlerTest {
             Exception exception
     ) throws IOException {
         var jsonAC = ArgumentCaptor.forClass(String.class);
-        verify(response).setContentType(eq("application/json;charset=UTF-8"));
-        verify(response).setStatus(eq(HttpServletResponse.SC_UNAUTHORIZED));
+        verify(response).setContentType("application/json;charset=UTF-8");
+        verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         verify(response).getWriter();
         verify(printWriter).write(jsonAC.capture());
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
         HashMap<String, Object> json = this.objectMapper.readValue(jsonAC.getValue(), typeRef);
-        assertThat(json).hasSize(3);
-        assertThat(json).containsKeys("exceptionEntityType", "attributes", "timestamp");
-        assertThat(json.get("exceptionEntityType")).isEqualTo(ERROR.toString());
+        assertThat(json)
+                .hasSize(3)
+                .containsKeys("exceptionEntityType", "attributes", "timestamp")
+                .containsEntry("exceptionEntityType", ERROR.toString());
         var attributes = (Map<String, Object>) json.get("attributes");
-        assertThat(attributes.get("shortMessage")).isEqualTo(exception.getMessage());
-        assertThat(attributes.get("fullMessage")).isEqualTo(exception.getMessage());
+        assertThat(attributes)
+                .containsEntry("shortMessage", exception.getMessage())
+                .containsEntry("fullMessage", exception.getMessage());
         verify(exception, times(3)).getMessage();
         verifyNoMoreInteractions(
                 request,

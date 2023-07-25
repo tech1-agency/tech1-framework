@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationSecurityJwtMvcTest {
+class ApplicationSecurityJwtMvcTest {
 
     @Configuration
     @Import(
@@ -43,15 +43,16 @@ public class ApplicationSecurityJwtMvcTest {
     private final ApplicationSecurityJwtMvc componentUnderTest;
 
     @Test
-    public void beansTests() {
+    void beansTests() {
         // Act
         var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("addCorsMappings");
-        assertThat(methods).contains("configurePathMatch");
-        assertThat(methods).hasSize(28);
+        assertThat(methods)
+                .hasSize(28)
+                .contains("addCorsMappings")
+                .contains("configurePathMatch");
     }
 }

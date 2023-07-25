@@ -35,7 +35,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserEmailUtilityImplTest {
+class UserEmailUtilityImplTest {
 
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
@@ -69,21 +69,21 @@ public class UserEmailUtilityImplTest {
     private final UserEmailUtility componentUnderTest;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         reset(
                 this.environmentUtility
         );
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         verifyNoMoreInteractions(
                 this.environmentUtility
         );
     }
 
     @RepeatedTest(5)
-    public void getSubjectTest() {
+    void getSubjectTest() {
         // Arrange
         when(this.environmentUtility.getActiveProfile()).thenReturn("stage");
 
@@ -92,8 +92,9 @@ public class UserEmailUtilityImplTest {
 
         // Assert
         verify(this.environmentUtility).getActiveProfile();
-        assertThat(subject).startsWith("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ");
-        assertThat(subject).endsWith(" (UTC)");
+        assertThat(subject)
+                .startsWith("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ")
+                .endsWith(" (UTC)");
         subject = subject.replace("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF), ZoneOffset.UTC);
@@ -101,7 +102,7 @@ public class UserEmailUtilityImplTest {
     }
 
     @Test
-    public void getAuthenticationLoginTemplateNameTest() {
+    void getAuthenticationLoginTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getAuthenticationLoginTemplateName();
 
@@ -110,7 +111,7 @@ public class UserEmailUtilityImplTest {
     }
 
     @Test
-    public void getSessionRefreshedTemplateNameTest() {
+    void getSessionRefreshedTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getSessionRefreshedTemplateName();
 
@@ -119,7 +120,7 @@ public class UserEmailUtilityImplTest {
     }
 
     @Test
-    public void getAuthenticationLoginOrSessionRefreshedVariablesTest() {
+    void getAuthenticationLoginOrSessionRefreshedVariablesTest() {
         // Arrange
         var username = randomUsername();
         var userRequestMetadata = validUserRequestMetadata();
@@ -133,13 +134,14 @@ public class UserEmailUtilityImplTest {
         );
 
         // Assert
-        assertThat(variables).hasSize(7);
-        assertThat(variables.get("year")).isEqualTo(now(UTC).getYear());
-        assertThat(variables.get("username")).isEqualTo(username.getIdentifier());
-        assertThat(variables.get("accessMethod")).isEqualTo(accountAccessMethod.getValue());
-        assertThat(variables.get("where")).isEqualTo("🇺🇦 Ukraine, Lviv");
-        assertThat(variables.get("what")).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(variables.get("ipAddress")).isEqualTo("127.0.0.1");
-        assertThat(variables.get("webclientURL")).isEqualTo("http://127.0.0.1:3000");
+        assertThat(variables)
+                .hasSize(7)
+                .containsEntry("year", now(UTC).getYear())
+                .containsEntry("username", username.identifier())
+                .containsEntry("accessMethod", accountAccessMethod.getValue())
+                .containsEntry("where", "🇺🇦 Ukraine, Lviv")
+                .containsEntry("what", "Chrome, macOS on Desktop")
+                .containsEntry("ipAddress", "127.0.0.1")
+                .containsEntry("webclientURL", "http://127.0.0.1:3000");
     }
 }

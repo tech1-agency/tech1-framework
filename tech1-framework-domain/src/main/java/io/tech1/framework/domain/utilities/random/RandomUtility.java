@@ -206,7 +206,7 @@ public class RandomUtility {
     public static List<String> randomStringsAsList(int size) {
         return IntStream.range(0, size)
                 .mapToObj(position -> randomString())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static Set<String> randomStringsAsSet(int size) {
@@ -300,7 +300,7 @@ public class RandomUtility {
         var values = enumClazz.getEnumConstants();
         var collect = Stream.of(values)
                 .filter(item -> !enumValues.contains(item))
-                .collect(Collectors.toList());
+                .toList();
         if (collect.isEmpty()) {
             throw new IllegalEnumException(enumClazz);
         } else {
@@ -313,7 +313,7 @@ public class RandomUtility {
         var values = enumClazz.getEnumConstants();
         var collect = Stream.of(values)
                 .filter(item -> !enumValues.contains(item))
-                .collect(Collectors.toList());
+                .toList();
         if (collect.isEmpty()) {
             throw new IllegalEnumException(enumClazz);
         } else {
@@ -331,7 +331,7 @@ public class RandomUtility {
             var supplier = (Supplier<T>) PRIMITIVE_WRAPPERS.get(type);
             return IntStream.range(0, size)
                     .mapToObj(i -> supplier.get())
-                    .collect(Collectors.toList());
+                    .toList();
         } else {
             return Collections.emptyList();
         }
@@ -439,7 +439,7 @@ public class RandomUtility {
                 .collect(
                         Collectors.toMap(
                                 entry -> entry,
-                                entry -> randomHardwareMonitoringThreshold().getValue()
+                                entry -> randomHardwareMonitoringThreshold().value()
                         )
                 );
         return new HardwareMonitoringThresholds(thresholds);

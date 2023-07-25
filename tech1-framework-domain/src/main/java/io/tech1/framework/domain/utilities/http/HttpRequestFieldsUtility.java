@@ -13,7 +13,7 @@ public class HttpRequestFieldsUtility {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
 
     public static boolean containsCamelCaseLettersAndNumbersWithLength(Password password, int length) {
-        return containsCamelCaseLettersAndNumbersWithLength(password.getValue(), length);
+        return containsCamelCaseLettersAndNumbersWithLength(password.value(), length);
     }
 
     public static boolean containsCamelCaseLettersAndNumbersWithLength(String field, int length) {
@@ -21,7 +21,7 @@ public class HttpRequestFieldsUtility {
     }
 
     public static boolean isEmail(Email email) {
-        return isEmail(email.getValue());
+        return isEmail(email.value());
     }
 
     public static boolean isEmail(String field) {

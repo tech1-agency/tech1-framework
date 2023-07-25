@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class VersionTest extends AbstractFolderSerializationRunner {
+class VersionTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> versionsTests() {
         return Stream.of(
@@ -28,19 +28,18 @@ public class VersionTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("versionsTests")
-    public void serializeTest(Version version, String fileName) {
+    void serializeTest(Version version, String fileName) {
         // Act
         var json = this.writeValueAsString(version);
 
         // Assert
-        assertThat(json).isNotNull();
         assertThat(json).isEqualTo(readFile(this.getFolder(), fileName));
     }
 
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("versionsTests")
-    public void deserializeTest(Version version, String fileName) {
+    void deserializeTest(Version version, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<Version>() {};
@@ -49,9 +48,8 @@ public class VersionTest extends AbstractFolderSerializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(version);
-        assertThat(actual.getValue()).isEqualTo(version.getValue());
-        assertThat(actual.toString()).isEqualTo(version.getValue());
+        assertThat(actual.value()).isEqualTo(version.value());
+        assertThat(actual.toString()).hasToString(version.value());
     }
 }

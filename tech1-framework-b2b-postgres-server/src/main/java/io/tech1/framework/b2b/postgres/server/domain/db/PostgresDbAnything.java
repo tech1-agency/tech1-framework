@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
+package io.tech1.framework.b2b.postgres.server.domain.db;
 
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.domain.base.Username;
@@ -9,7 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
+import static io.tech1.framework.b2b.postgres.server.constants.TablesConstants.ANYTHING;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 // Lombok
@@ -19,8 +19,8 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @ToString
 // JPA
 @Entity
-@Table(name = USERS)
-public class PostgresDbUser {
+@Table(name = ANYTHING)
+public class PostgresDbAnything {
     // WARNING: add sequence generation
     @Id
     private String id;
@@ -29,8 +29,12 @@ public class PostgresDbUser {
     @Column
     private Username username;
 
-    public PostgresDbUser(Username username) {
-        this.id = randomStringLetterOrNumbersOnly(10);;
+    @Column
+    private String value;
+
+    public PostgresDbAnything(Username username) {
+        this.id = randomStringLetterOrNumbersOnly(10);
         this.username = username;
+        this.value = randomStringLetterOrNumbersOnly(20);
     }
 }

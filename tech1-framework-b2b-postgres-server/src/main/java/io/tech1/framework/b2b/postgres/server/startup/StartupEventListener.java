@@ -1,6 +1,10 @@
 package io.tech1.framework.b2b.postgres.server.startup;
 
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUserRepository;
+import io.tech1.framework.b2b.postgres.server.domain.db.PostgresDbAnything;
+import io.tech1.framework.b2b.postgres.server.repositories.PostgresAnythingRepository;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +24,7 @@ public class StartupEventListener {
 
     // Repositories
     private final PostgresUserRepository postgresUserRepository;
+    private final PostgresAnythingRepository postgresAnythingRepository;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -29,11 +34,16 @@ public class StartupEventListener {
             var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
             LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
 
+            var username = Username.of("tech1");
+            this.postgresUserRepository.save(new PostgresDbUser(username));
+            this.postgresAnythingRepository.save(new PostgresDbAnything(username));
+
             LOGGER.warn("============================================================================================");
             LOGGER.warn("Users: " + this.postgresUserRepository.count());
+            LOGGER.warn("Anything: " + this.postgresAnythingRepository.count());
             LOGGER.warn("============================================================================================");
         } catch (RuntimeException ex) {
-            // incidents
+            LOGGER.error("Startup exception", ex);
         }
     }
 }

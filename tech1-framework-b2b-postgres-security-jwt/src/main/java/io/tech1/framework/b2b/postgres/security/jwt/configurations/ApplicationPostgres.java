@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories({
-        "io.tech1.framework.b2b.postgres.security.jwt.repositories"
-})
 @EntityScan({
         "io.tech1.framework.b2b.postgres.security.jwt.domain.db"
 })
+@EnableJpaRepositories({
+        "io.tech1.framework.b2b.postgres.security.jwt.repositories"
+})
+@EnableTransactionManagement
 public class ApplicationPostgres {
 }

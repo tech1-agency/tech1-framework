@@ -3,7 +3,8 @@ pipeline {
     environment {
         MVN_SETTINGS = credentials('jenkins_maven_settings')
         OPS_HOME = "/home/bitnami/infrastructure-resources-private"
-        TECH1_DOCKERHUB_REPOSITORY = "tech1-framework-b2b-mongodb-server"
+        TECH1_MONGODB_DOCKERHUB_REPOSITORY = "tech1-framework-b2b-mongodb-server"
+        TECH1_POSTGRES_DOCKERHUB_REPOSITORY = "tech1-framework-b2b-postgres-server"
         PATH = "${OPS_HOME}/bin:${env.PATH}"
     }
     options {
@@ -42,7 +43,11 @@ pipeline {
             steps {
                 dir('tech1-framework-b2b-mongodb-server') {
                     sh 'cp ${OPS_HOME}/docker/java17/Dockerfile .'
-                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_DOCKERHUB_REPOSITORY} dev'
+                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_MONGODB_DOCKERHUB_REPOSITORY} dev'
+                }
+                dir('tech1-framework-b2b-postgres-server') {
+                    sh 'cp ${OPS_HOME}/docker/java17/Dockerfile .'
+                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_POSTGRES_DOCKERHUB_REPOSITORY} dev'
                 }
             }
         }
@@ -53,7 +58,11 @@ pipeline {
             steps {
                 dir('tech1-framework-b2b-mongodb-server') {
                     sh 'cp ${OPS_HOME}/docker/java17/Dockerfile .'
-                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_DOCKERHUB_REPOSITORY} prod'
+                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_MONGODB_DOCKERHUB_REPOSITORY} prod'
+                }
+                dir('tech1-framework-b2b-postgres-server') {
+                    sh 'cp ${OPS_HOME}/docker/java17/Dockerfile .'
+                    sh 'docker-push-image-v2.sh $TECH1_DOCKERHUB_USERNAME $TECH1_DOCKERHUB_ACCESS_TOKEN ${TECH1_POSTGRES_DOCKERHUB_REPOSITORY} prod'
                 }
             }
         }

@@ -2,18 +2,19 @@
 -- TECH1 FRAMEWORK
 -- =================================================================================================================
 CREATE TABLE "tech1_users" (
-    "id" varchar(255) NOT NULL,
+    "id" INT PRIMARY KEY,
     "username" varchar(255) NOT NULL,
-    PRIMARY KEY ("id")
+    "password" varchar(255) NOT NULL,
+    "status" varchar(65535) NOT NULL,
+    "name" varchar(255)
 );
 
 -- =================================================================================================================
 -- SERVER
 -- =================================================================================================================
 CREATE TABLE "anything" (
-    "id" varchar(255) NOT NULL,
+    "id" INT PRIMARY KEY,
     "username" varchar(255) NOT NULL,
-    "value" varchar(255) NOT NULL,
-    PRIMARY KEY ("id")
+    "value" varchar(255) NOT NULL
 );
 

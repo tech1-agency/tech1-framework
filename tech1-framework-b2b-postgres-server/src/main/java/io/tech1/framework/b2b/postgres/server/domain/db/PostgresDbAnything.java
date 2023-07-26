@@ -21,9 +21,9 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @Entity
 @Table(name = ANYTHING)
 public class PostgresDbAnything {
-    // WARNING: add sequence generation
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column
@@ -33,7 +33,6 @@ public class PostgresDbAnything {
     private String value;
 
     public PostgresDbAnything(Username username) {
-        this.id = randomStringLetterOrNumbersOnly(10);
         this.username = username;
         this.value = randomStringLetterOrNumbersOnly(20);
     }

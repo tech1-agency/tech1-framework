@@ -35,7 +35,9 @@ public class StartupEventListener {
             LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
 
             var username = Username.of("tech1");
-            this.postgresUserRepository.save(new PostgresDbUser(username));
+            for (int i = 0; i < 15; i++) {
+                this.postgresUserRepository.save(new PostgresDbUser(username));
+            }
             this.postgresAnythingRepository.save(new PostgresDbAnything(username));
 
             LOGGER.warn("============================================================================================");

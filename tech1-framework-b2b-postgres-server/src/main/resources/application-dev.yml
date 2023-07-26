@@ -1,0 +1,20 @@
+# Logging
+logging:
+  config: classpath:logback-console.xml
+
+# Tech1 Platform
+tech1:
+  serverConfigs:
+    webclientURL: http://localhost:3000
+  incidentConfigs:
+    enabled: true
+    remoteServer:
+      baseURL: http://localhost:8973
+      username: admin
+      password: admin
+  mvcConfigs:
+    corsConfigs:
+      allowedOrigins:
+        - http://localhost:8686
+        - http://localhost:8787
+

@@ -1,0 +1,56 @@
+# Spring Security: actuator endpoints (no security check)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info"]
+
+# Server
+server:
+  servlet:
+    context-path: /api
+
+# Jasypt
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+# Tech1 Platform
+tech1:
+  serverConfigs:
+    name: tech1-framework-b2b-postgres-server
+  asyncConfigs:
+    threadNamePrefix: tps1-async
+  eventsConfigs:
+    threadNamePrefix: tps1-events
+  mvcConfigs:
+    enabled: true
+    frameworkBasePathPrefix: /framework/security
+    corsConfigs:
+      pathPattern: /**
+      allowedMethods:
+        - DELETE
+        - GET
+        - POST
+        - PUT
+      allowedHeaders:
+        - Cache-Control
+        - Content-Type
+      allowCredentials: true
+  hardwareMonitoringConfigs:
+    enabled: true
+    thresholdsConfigs:
+      CPU: 80
+      HEAP: 80
+      SERVER: 85
+      SWAP: 95
+      VIRTUAL: 85
+
+# App
+app:
+  serverConfigs:
+    targetAttribute1: "value1"
+    targetAttribute2: 10
+    targetAuthority: "USER"
+

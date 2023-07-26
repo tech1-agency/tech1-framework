@@ -65,6 +65,7 @@
         <module>tech1-framework-b2b-postgres-security-jwt</module>
         <!-- Servers -->
         <module>tech1-framework-b2b-mongodb-server</module>
+        <module>tech1-framework-b2b-postgres-server</module>
     </modules>
 
     <properties>

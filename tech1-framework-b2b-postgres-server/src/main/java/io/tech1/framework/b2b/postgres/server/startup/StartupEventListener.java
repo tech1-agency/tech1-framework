@@ -5,17 +5,25 @@ import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUserRep
 import io.tech1.framework.b2b.postgres.server.domain.db.PostgresDbAnything;
 import io.tech1.framework.b2b.postgres.server.repositories.PostgresAnythingRepository;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.utilities.development.DevelopmentUtility;
+import io.tech1.framework.domain.utilities.random.RandomUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import static io.tech1.framework.domain.constants.FrameworkConstants.VERSION_RUNTIME;
 import static io.tech1.framework.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER_1;
 import static io.tech1.framework.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
 @Slf4j
 @Service
@@ -36,7 +44,16 @@ public class StartupEventListener {
 
             var username = Username.of("tech1");
             for (int i = 0; i < 15; i++) {
-                this.postgresUserRepository.save(new PostgresDbUser(username));
+                var authorities = IntStream.range(0, 3).mapToObj(index -> new SimpleGrantedAuthority(randomString())).toList();
+                var user = new PostgresDbUser(username, randomPassword(), randomZoneId(), authorities);
+                user.setAttributes(
+                        Map.of(
+                                "attr1", randomString(),
+                                "attr2", randomLong()
+                        )
+                );
+                user.setEmail(randomEmail());
+                this.postgresUserRepository.save(user);
             }
             this.postgresAnythingRepository.save(new PostgresDbAnything(username));
 

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.server.resources;
 
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUserRepository;
+import io.tech1.framework.b2b.postgres.server.domain.CurrentClientUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,9 @@ public class UsersResource {
     private final PostgresUserRepository postgresUserRepository;
 
     @GetMapping
-    public List<PostgresDbUser> findAll() {
-        return this.postgresUserRepository.findAll();
+    public List<CurrentClientUser> findAll() {
+        return this.postgresUserRepository.findAll().stream()
+                .map(user -> new CurrentClientUser(user.getUsername(), user.getEmail(), user.getName(), user.getZoneId(), user.getAuthorities(), user.getAttributes()))
+                .toList();
     }
 }

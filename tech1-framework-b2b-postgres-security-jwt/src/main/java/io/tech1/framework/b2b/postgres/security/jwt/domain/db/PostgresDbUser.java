@@ -1,21 +1,21 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
-import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresPasswordConverter;
-import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.*;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.enums.Status;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static java.util.Objects.nonNull;
 
 // Lombok
 @NoArgsConstructor
@@ -38,16 +38,40 @@ public class PostgresDbUser {
     @Column
     private Password password;
 
+    @Convert(converter = PostgresZoneIdConverter.class)
+    @Column
+    private ZoneId zoneId;
+
+    @Convert(converter = PostgresSimpleGrantedAuthoritiesConverter.class)
+    @Column
+    private List<SimpleGrantedAuthority> authorities;
+
+    // WARNING: delete @Setter
+    @Setter
+    @Convert(converter = PostgresEmailConverter.class)
+    @Column
+    private Email email;
+
+    // WARNING: delete @Setter
+    @Setter
     @Column
     private String name;
 
+    // WARNING: delete @Setter
+    @Setter
+    @Convert(converter = PostgresMapStringsObjectsConverter.class)
     @Column
-    private Status status;
+    private Map<String, Object> attributes;
 
-    public PostgresDbUser(Username username) {
+    public PostgresDbUser(Username username, Password password, ZoneId zoneId, List<SimpleGrantedAuthority> authorities) {
         this.username = username;
-        this.password = randomPassword();
-        this.name = randomStringLetterOrNumbersOnly(30);
-        this.status = RandomUtility.randomEnum(Status.class);
+        this.password = password;
+        this.zoneId = zoneId;
+        this.authorities = authorities;
+    }
+
+    @JsonIgnore
+    public Map<String, Object> getNotNullAttributes() {
+        return nonNull(this.attributes) ? this.attributes : new HashMap<>();
     }
 }

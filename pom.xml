@@ -95,7 +95,9 @@
         <version.dependency.testcontainers>1.18.0</version.dependency.testcontainers>
         <!-- plugins -->
         <version.plugin.compiler>3.11.0</version.plugin.compiler>
+        <version.plugin.build.helper>3.4.0</version.plugin.build.helper>
         <version.plugin.dependency>3.5.0</version.plugin.dependency>
+        <version.plugin.failsafe>3.1.2</version.plugin.failsafe>
         <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
         <version.plugin.gpg>3.0.1</version.plugin.gpg>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
@@ -448,6 +450,41 @@
                             <goals>
                                 <goal>repackage</goal>
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- FailSafe: unit vs. integration testcontainers tests  -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${version.plugin.failsafe}</version>
+                    <executions>
+                        <execution>
+                            <id>integration-tests</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Tests: integration testcontainers folder -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${version.plugin.build.helper}</version>
+                    <executions>
+                        <execution>
+                            <id>add-integration-test-source</id>
+                            <phase>generate-test-sources</phase>
+                            <goals>
+                                <goal>add-test-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>src/test-integration/java</source>
+                                </sources>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

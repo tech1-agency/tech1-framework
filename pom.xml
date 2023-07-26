@@ -237,6 +237,12 @@
                 <version>${version.dependency.testcontainers}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.dependency.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
             <!-- JUnit -->
             <dependency>
                 <groupId>org.junit</groupId>
@@ -311,6 +317,11 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mongodb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- JUnit -->

@@ -17,6 +17,7 @@ import java.util.Map;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok
 @NoArgsConstructor
 @Getter
@@ -39,7 +40,7 @@ public class PostgresDbUser {
     private Password password;
 
     @Convert(converter = PostgresZoneIdConverter.class)
-    @Column
+    @Column(name = "zone_id")
     private ZoneId zoneId;
 
     @Convert(converter = PostgresSimpleGrantedAuthoritiesConverter.class)

@@ -1,5 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -9,6 +11,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class TestsApplicationRepositoriesRunner {
     public static final String MONGO_DB_VERSION = "mongo:5.0.6";
     public static final int MONGO_DB_PORT = 27017;
@@ -31,7 +34,4 @@ public abstract class TestsApplicationRepositoriesRunner {
         container.stop();
     }
 
-    protected TestsApplicationRepositoriesRunner() {
-
-    }
 }

@@ -2,6 +2,17 @@
 logging:
   config: classpath:logback-console.xml
 
+# Spring PostgreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tech1_b2b_postgres_server
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+  liquibase:
+    change-log: classpath:postgres/changelog.yml
+
 # Tech1 Platform
 tech1:
   serverConfigs:

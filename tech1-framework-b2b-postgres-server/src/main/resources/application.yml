@@ -1,3 +1,8 @@
+# Server
+server:
+  servlet:
+    context-path: /api
+
 # Spring Security: actuator endpoints (no security check)
 management:
   endpoints:
@@ -5,16 +10,20 @@ management:
       exposure:
         include: ["health", "info"]
 
-# Server
-server:
-  servlet:
-    context-path: /api
-
 # Jasypt
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+# Spring PostgreSQL
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
 
 # Tech1 Platform
 tech1:

@@ -85,6 +85,7 @@
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
+        <version.dependency.postresql.hibernate.types>2.21.1</version.dependency.postresql.hibernate.types>
         <version.dependency.springframework.boot>2.7.11</version.dependency.springframework.boot>
         <version.dependency.tomcat.embed>9.0.74</version.dependency.tomcat.embed>
         <!-- dependencies, scope == test -->
@@ -130,6 +131,12 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
+            </dependency>
+            <!-- PostgreSQL -->
+            <dependency>
+                <groupId>com.vladmihalcea</groupId>
+                <artifactId>hibernate-types-52</artifactId>
+                <version>${version.dependency.postresql.hibernate.types}</version>
             </dependency>
             <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
             <dependency>

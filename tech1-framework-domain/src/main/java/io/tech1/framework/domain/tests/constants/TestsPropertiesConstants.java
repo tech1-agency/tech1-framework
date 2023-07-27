@@ -10,7 +10,10 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
@@ -114,7 +117,6 @@ public class TestsPropertiesConstants {
                     JwtToken.of("rjwt", TimeAmount.of(12L, HOURS))
             ),
             LoggingConfigs.of(true),
-            Mongodb.of("127.0.0.1", 27017, "tech1_framework_server"),
             SessionConfigs.of(
                     Cron.enabled("*/30 * * * * *", "Europe/Kiev")
             ),
@@ -124,6 +126,7 @@ public class TestsPropertiesConstants {
                     Checkbox.enabled()
             )
     );
+
     public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = SecurityJwtWebsocketsConfigs.of(
             CsrfConfigs.of("csrf-cookie", "csrf-header", "csrf-parameter"),
             StompEndpointRegistryConfigs.of("/endpoint"),
@@ -131,5 +134,9 @@ public class TestsPropertiesConstants {
             WebsocketsFeaturesConfigs.of(
                     WebsocketsFeatureHardwareConfigs.of(true, "/account")
             )
+    );
+
+    public static final MongodbSecurityJwtConfigs MONGODB_SECURITY_JWT_CONFIGS = MongodbSecurityJwtConfigs.of(
+            Mongodb.of("127.0.0.1", 27017, "tech1_framework_server")
     );
 }

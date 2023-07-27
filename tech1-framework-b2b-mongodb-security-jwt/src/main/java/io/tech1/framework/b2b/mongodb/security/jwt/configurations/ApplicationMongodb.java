@@ -31,7 +31,7 @@ public class ApplicationMongodb {
 
     @Bean(name = "tech1MongoClient")
     public MongoClient tech1MongoClient() {
-        var mongodb = this.applicationFrameworkProperties.getSecurityJwtConfigs().getMongodb();
+        var mongodb = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().getMongodb();
         var connectionString = new ConnectionString(mongodb.connectionString());
         var mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
@@ -43,7 +43,7 @@ public class ApplicationMongodb {
     public MongoDatabaseFactory tech1MongoDatabaseFactory() {
         return new SimpleMongoClientDatabaseFactory(
                 this.tech1MongoClient(),
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getMongodb().getDatabase()
+                this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().getMongodb().getDatabase()
         );
     }
 

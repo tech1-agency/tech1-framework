@@ -1,7 +1,9 @@
 # Release Notes
 
 ### v1.14
-- TBD...
+- Add "mongodbSecurityJwtConfigs" property (migrate "securityJwtConfigs.mongodb" configs)
+- Started extraction of b2b base security JWT reused in mongodb/postgre modules
+- Started development on b2b postgres security JWT
 
 ### v1.13
 - Superuser API: terminate by sessionId, terminate all except current + Postman

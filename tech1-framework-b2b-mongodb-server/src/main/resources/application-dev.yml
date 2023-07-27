@@ -43,10 +43,6 @@ tech1:
           unit: SECONDS # @java.time.temporal.ChronoUnit
     loggingConfigs:
       advancedRequestLoggingEnabled: true
-    mongodb:
-      host: 127.0.0.1
-      port: 27017
-      database: tech1_b2b_mongodb_server
     sessionConfigs:
       cleanSessionsByExpiredRefreshTokensCron:
         enabled: true
@@ -62,3 +58,8 @@ tech1:
             authorities: [ "admin", "invitationCode:write" ]
       invitationCodes:
         enabled: true
+  mongodbSecurityJwtConfigs:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: tech1_b2b_mongodb_server

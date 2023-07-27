@@ -2,7 +2,6 @@ package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Checkbox;
-import io.tech1.framework.domain.properties.base.Mongodb;
 import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
 import io.tech1.framework.domain.utilities.enums.EnumUtility;
@@ -34,8 +33,6 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private LoggingConfigs loggingConfigs;
     @MandatoryProperty
-    private Mongodb mongodb;
-    @MandatoryProperty
     private SessionConfigs sessionConfigs;
     @MandatoryProperty
     private UsersEmailsConfigs usersEmailsConfigs;
@@ -48,7 +45,6 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
             IncidentsConfigs incidentsConfigs,
             JwtTokensConfigs jwtTokensConfigs,
             LoggingConfigs loggingConfigs,
-            Mongodb mongodb,
             SessionConfigs sessionConfigs,
             UsersEmailsConfigs usersEmailsConfigs
     ) {
@@ -59,7 +55,6 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         instance.incidentsConfigs = incidentsConfigs;
         instance.jwtTokensConfigs = jwtTokensConfigs;
         instance.loggingConfigs = loggingConfigs;
-        instance.mongodb = mongodb;
         instance.sessionConfigs = sessionConfigs;
         instance.usersEmailsConfigs = usersEmailsConfigs;
         return instance;

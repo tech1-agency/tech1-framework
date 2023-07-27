@@ -9,6 +9,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthen
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.domain.base.AbstractAuthority;
+import io.tech1.framework.domain.properties.configs.MongodbSecurityJwtConfigs;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -90,6 +91,9 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
     public void init() {
         var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
         assertProperties(securityJwtConfigs, "securityJwtConfigs");
+
+        var mongodbSecurityJwtConfigs = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs();
+        assertProperties(mongodbSecurityJwtConfigs, "mongodbSecurityJwtConfigs");
 
         // Requirements: availableAuthorities vs. defaultUsersAuthorities
         var authoritiesConfigs = securityJwtConfigs.getAuthoritiesConfigs();
@@ -211,7 +215,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
                 .map(className -> {
                     try {
                         return (Class<? extends AbstractAuthority>) Class.forName(className);
-                    } catch (ClassNotFoundException e) {
+                    } catch (ClassNotFoundException ex) {
                         return null;
                     }
                 })

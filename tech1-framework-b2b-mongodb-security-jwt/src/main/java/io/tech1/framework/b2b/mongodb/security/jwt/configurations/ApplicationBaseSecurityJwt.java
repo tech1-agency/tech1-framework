@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.configurations;
 
+import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationSecurityJwtMvc;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.filters.JwtTokensFilter;

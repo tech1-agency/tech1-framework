@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.configurations;
+package io.tech1.framework.b2b.base.security.jwt.configurations;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.configurations.mvc.ApplicationMVC;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,7 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 public class ApplicationSecurityJwtMvc extends ApplicationMVC {
 
     @Autowired
-    public ApplicationSecurityJwtMvc(
-            ApplicationFrameworkProperties applicationFrameworkProperties
-    ) {
+    public ApplicationSecurityJwtMvc(ApplicationFrameworkProperties applicationFrameworkProperties) {
         super(applicationFrameworkProperties);
     }
 

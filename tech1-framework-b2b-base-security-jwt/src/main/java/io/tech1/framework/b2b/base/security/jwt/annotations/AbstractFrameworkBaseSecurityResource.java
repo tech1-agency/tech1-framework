@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.annotations;
+package io.tech1.framework.b2b.base.security.jwt.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

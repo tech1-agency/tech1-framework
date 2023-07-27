@@ -7,5 +7,6 @@ import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 
 @UtilityClass
 public class UsersConstants {
+    // WARNING: migrate to base-security-jwt
     public static final SimpleGrantedAuthority SUPERADMIN = new SimpleGrantedAuthority(SUPER_ADMIN);
 }

@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,7 +43,7 @@ public class PostgresSecurityJwtDbRandomUtility {
                 randomZoneId(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
-        user.setEmail(randomEmail());
+        user.setEmail(Email.of(username + "@tech1.io"));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
         user.setAttributes(
                 Map.of(

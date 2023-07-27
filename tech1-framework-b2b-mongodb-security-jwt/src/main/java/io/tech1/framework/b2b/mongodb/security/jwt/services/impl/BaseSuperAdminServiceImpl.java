@@ -18,6 +18,7 @@ import java.util.List;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_1;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

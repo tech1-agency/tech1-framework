@@ -17,25 +17,7 @@
         <!-- Tech1: Framework -->
         <dependency>
             <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-configurations</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-hardware</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-incidents</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-emails</artifactId>
+            <artifactId>tech1-framework-b2b-base-security-jwt</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -43,15 +25,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <!-- JWT Security -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
         </dependency>
     </dependencies>
 

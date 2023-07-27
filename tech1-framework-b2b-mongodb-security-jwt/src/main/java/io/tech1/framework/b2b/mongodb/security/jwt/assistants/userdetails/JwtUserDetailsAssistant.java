@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

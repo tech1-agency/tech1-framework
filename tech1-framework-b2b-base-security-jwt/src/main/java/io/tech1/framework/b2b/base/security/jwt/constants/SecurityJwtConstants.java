@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.constants;
+package io.tech1.framework.b2b.base.security.jwt.constants;
 
 import lombok.experimental.UtilityClass;
 

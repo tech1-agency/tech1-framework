@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -82,8 +83,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     public ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieRefreshToken cookie) {
         var currentJwtUser = this.getCurrentJwtUser();
         var username = currentJwtUser.dbUser().getUsername();
-        var usersSessions = this.userSessionService.findByUsername(username);
-        this.sessionRegistry.cleanByExpiredRefreshTokens(usersSessions);
+        this.sessionRegistry.cleanByExpiredRefreshTokens(Set.of(username));
         var activeUsersSessions = this.userSessionService.findByUsername(username);
         var sessions = activeUsersSessions.stream()
                 .map(session -> ResponseUserSession2.of(session, cookie))

@@ -32,6 +32,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 import static io.tech1.framework.domain.http.requests.UserRequestMetadata.processed;
@@ -277,8 +278,8 @@ class BaseCurrentSessionAssistantTest {
 
             // Assert
             verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
-            verify(this.userSessionService, times(2)).findByUsername(username);
-            verify(this.sessionRegistry).cleanByExpiredRefreshTokens(userSessions);
+            verify(this.userSessionService).findByUsername(username);
+            verify(this.sessionRegistry).cleanByExpiredRefreshTokens(Set.of(username));
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
             assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);

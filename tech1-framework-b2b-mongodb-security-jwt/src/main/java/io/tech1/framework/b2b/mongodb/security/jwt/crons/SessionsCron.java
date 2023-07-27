@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.crons;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +15,6 @@ public class SessionsCron {
 
     // Sessions
     private final SessionRegistry sessionRegistry;
-    // Repositories
-    private final UserSessionService userSessionService;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -29,8 +26,7 @@ public class SessionsCron {
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled()) {
             var usernames = this.sessionRegistry.getActiveSessionsUsernames();
             LOGGER.debug("Sessions cleanup by expired JWT refresh tokens executed. Alive users: `{}`", usernames.size());
-            var usersSessions = this.userSessionService.findByUsernameIn(usernames);
-            this.sessionRegistry.cleanByExpiredRefreshTokens(usersSessions);
+            this.sessionRegistry.cleanByExpiredRefreshTokens(usernames);
         } else {
             LOGGER.debug("Sessions cleanup by expired JWT refresh tokens is disabled");
         }

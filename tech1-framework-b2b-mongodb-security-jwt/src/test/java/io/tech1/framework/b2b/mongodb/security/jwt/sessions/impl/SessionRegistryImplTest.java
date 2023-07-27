@@ -272,9 +272,11 @@ class SessionRegistryImplTest {
     void cleanByExpiredRefreshTokensEnabledTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var username1 = Username.of("username1");
+        var username2 = Username.of("username2");
+        var username3 = Username.of("username3");
         var session1 = new Session(username1, entity(JwtRefreshToken.class));
-        var session2 = new Session(Username.of("username2"), entity(JwtRefreshToken.class));
-        var session3 = new Session(Username.of("username3"), entity(JwtRefreshToken.class));
+        var session2 = new Session(username2, entity(JwtRefreshToken.class));
+        var session3 = new Session(username3, entity(JwtRefreshToken.class));
         Set<Session> sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session1);
         sessions.add(session2);
@@ -291,12 +293,15 @@ class SessionRegistryImplTest {
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
         var sessionsValidatedTuple2 = new SessionsValidatedTuple2(List.of(new Tuple2<>(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+        var usernames = Set.of(username1, username2, username3);
+        when(this.userSessionService.findByUsernameIn(usernames)).thenReturn(usersSessions);
         when(this.userSessionService.validate(usersSessions)).thenReturn(sessionsValidatedTuple2);
 
         // Act
-        this.componentUnderTest.cleanByExpiredRefreshTokens(usersSessions);
+        this.componentUnderTest.cleanByExpiredRefreshTokens(usernames);
 
         // Assert
+        verify(this.userSessionService).findByUsernameIn(usernames);
         verify(this.userSessionService).validate(usersSessions);
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(3);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(3);

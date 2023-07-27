@@ -1,7 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.crons;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -19,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.set345;
 import static org.mockito.Mockito.*;
 
@@ -42,22 +39,15 @@ class SessionsCronTest {
         }
 
         @Bean
-        UserSessionService userSessionService() {
-            return mock(UserSessionService.class);
-        }
-
-        @Bean
         SessionsCron sessionsCron() {
             return new SessionsCron(
                     this.sessionRegistry(),
-                    this.userSessionService(),
                     this.applicationFrameworkProperties
             );
         }
     }
 
     private final SessionRegistry sessionRegistry;
-    private final UserSessionService userSessionService;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final SessionsCron componentUnderTest;
@@ -65,16 +55,14 @@ class SessionsCronTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.sessionRegistry,
-                this.userSessionService
+                this.sessionRegistry
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.sessionRegistry,
-                this.userSessionService
+                this.sessionRegistry
         );
     }
 
@@ -94,9 +82,7 @@ class SessionsCronTest {
     void cleanByExpiredRefreshTokensEnabled() {
         // Arrange
         var usernames = set345(Username.class);
-        var sessions = list345(DbUserSession.class);
         when(this.sessionRegistry.getActiveSessionsUsernames()).thenReturn(usernames);
-        when(this.userSessionService.findByUsernameIn(usernames)).thenReturn(sessions);
         this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().setEnabled(true);
 
         // Act
@@ -104,7 +90,6 @@ class SessionsCronTest {
 
         // Assert
         verify(this.sessionRegistry).getActiveSessionsUsernames();
-        verify(this.userSessionService).findByUsernameIn(usernames);
-        verify(this.sessionRegistry).cleanByExpiredRefreshTokens(sessions);
+        verify(this.sessionRegistry).cleanByExpiredRefreshTokens(usernames);
     }
 }

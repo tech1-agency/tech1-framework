@@ -1,12 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.Session;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.scheduling.annotation.Async;
 
-import java.util.List;
 import java.util.Set;
 
 public interface SessionRegistry {
@@ -21,5 +19,5 @@ public interface SessionRegistry {
     @Async
     void logout(Session session);
 
-    void cleanByExpiredRefreshTokens(List<DbUserSession> usersSessions);
+    void cleanByExpiredRefreshTokens(Set<Username> usernames);
 }

@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionExpired;
@@ -21,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -105,7 +103,8 @@ public class SessionRegistryImpl implements SessionRegistry {
     }
 
     @Override
-    public void cleanByExpiredRefreshTokens(List<DbUserSession> usersSessions) {
+    public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
+        var usersSessions = this.userSessionService.findByUsernameIn(usernames);
         var sessionsValidatedTuple2 = this.userSessionService.validate(usersSessions);
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {

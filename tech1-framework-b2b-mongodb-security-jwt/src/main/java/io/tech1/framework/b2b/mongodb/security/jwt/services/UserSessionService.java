@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
 import io.tech1.framework.domain.base.Username;
 
 import javax.servlet.http.HttpServletRequest;

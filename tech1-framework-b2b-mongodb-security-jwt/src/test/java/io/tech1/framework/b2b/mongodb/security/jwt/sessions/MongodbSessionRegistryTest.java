@@ -1,20 +1,20 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionRefreshed;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
@@ -292,7 +292,10 @@ class MongodbSessionRegistryTest {
         when(dbUserSession3.getId()).thenReturn(randomString());
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
-        var sessionsValidatedTuple2 = new SessionsValidatedTuple2(List.of(new Tuple2<>(username1, dbUserSession3)), List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+        var sessionsValidatedTuple2 = new SessionsValidatedTuple2(
+                List.of(new Tuple3<>(username1, dbUserSession3.getRequestMetadata(), dbUserSession3.getJwtRefreshToken())),
+                List.of(dbUserSession1.getId(), dbUserSession2.getId())
+        );
         var usernames = Set.of(username1, username2, username3);
         when(this.userSessionService.findByUsernameIn(usernames)).thenReturn(usersSessions);
         when(this.userSessionService.validate(usersSessions)).thenReturn(sessionsValidatedTuple2);

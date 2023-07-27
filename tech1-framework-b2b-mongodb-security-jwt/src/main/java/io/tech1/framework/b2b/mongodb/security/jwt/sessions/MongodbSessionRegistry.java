@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionRefreshed;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -109,12 +109,13 @@ public class MongodbSessionRegistry implements SessionRegistry {
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {
             var username = tuple2.a();
-            var dbUserSession = tuple2.b();
-            var session = new Session(username, dbUserSession.getJwtRefreshToken());
+            var requestMetadata = tuple2.b();
+            var jwtRefreshToken = tuple2.c();
+            var session = new Session(username, jwtRefreshToken);
             LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);
             this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
-            this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, dbUserSession.getRequestMetadata()));
+            this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
         });
 
         var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());

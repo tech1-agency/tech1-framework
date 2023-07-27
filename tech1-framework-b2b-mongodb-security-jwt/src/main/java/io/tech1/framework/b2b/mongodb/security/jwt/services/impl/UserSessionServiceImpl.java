@@ -1,18 +1,18 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;
@@ -135,7 +135,7 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public SessionsValidatedTuple2 validate(List<DbUserSession> usersSessions) {
-        List<Tuple2<Username, DbUserSession>> expiredSessions = new ArrayList<>();
+        List<Tuple3<Username, UserRequestMetadata, JwtRefreshToken>> expiredSessions = new ArrayList<>();
         List<String> expiredOrInvalidSessionIds = new ArrayList<>();
 
         usersSessions.forEach(userSession -> {
@@ -146,7 +146,13 @@ public class UserSessionServiceImpl implements UserSessionService {
                 var isExpired = isPast(validatedClaims.safeGetExpirationTimestamp());
                 if (isExpired) {
                     expiredOrInvalidSessionIds.add(sessionId);
-                    expiredSessions.add(new Tuple2<>(validatedClaims.safeGetUsername(), userSession));
+                    expiredSessions.add(
+                            new Tuple3<>(
+                                    validatedClaims.safeGetUsername(),
+                                    userSession.getRequestMetadata(),
+                                    userSession.getJwtRefreshToken()
+                            )
+                    );
                 }
             } else {
                 expiredOrInvalidSessionIds.add(sessionId);

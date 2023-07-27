@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -33,6 +34,11 @@ public abstract class TestsApplicationRepositoriesRunner {
     @AfterAll
     public static void afterAll() {
         container.stop();
+    }
+
+    @AfterEach
+    void afterEach() {
+        this.getMongoRepository().deleteAll();
     }
 
     public abstract MongoRepository<?, String> getMongoRepository();

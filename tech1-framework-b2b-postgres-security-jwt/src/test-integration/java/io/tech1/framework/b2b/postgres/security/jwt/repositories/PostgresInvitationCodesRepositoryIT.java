@@ -50,6 +50,4 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
     }
-
-
 }

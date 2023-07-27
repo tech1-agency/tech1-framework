@@ -23,8 +23,10 @@ public class ApplicationFrameworkProperties implements PriorityOrdered {
     private IncidentConfigs incidentConfigs;
     private HardwareMonitoringConfigs hardwareMonitoringConfigs;
     private HardwareServerConfigs hardwareServerConfigs;
+    // Mongodb -> @Deprecated
     private SecurityJwtConfigs securityJwtConfigs;
     private SecurityJwtWebsocketsConfigs securityJwtWebsocketsConfigs;
+    // Postgres -> Migrate and Merge
 
     @Override
     public int getOrder() {

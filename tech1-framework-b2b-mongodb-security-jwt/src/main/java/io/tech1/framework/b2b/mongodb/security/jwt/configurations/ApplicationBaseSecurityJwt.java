@@ -8,17 +8,15 @@ import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAccess
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
-import io.tech1.framework.domain.base.AbstractAuthority;
-import io.tech1.framework.domain.properties.configs.MongodbSecurityJwtConfigs;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
-import org.springframework.context.annotation.*;
-import org.springframework.core.type.filter.AssignableTypeFilter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,16 +28,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
@@ -94,40 +85,6 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
 
         var mongodbSecurityJwtConfigs = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs();
         assertProperties(mongodbSecurityJwtConfigs, "mongodbSecurityJwtConfigs");
-
-        // Requirements: availableAuthorities vs. defaultUsersAuthorities
-        var authoritiesConfigs = securityJwtConfigs.getAuthoritiesConfigs();
-        var expectedAuthorities = authoritiesConfigs.getAllAuthoritiesValues();
-        var defaultUsersAuthorities = securityJwtConfigs.getEssenceConfigs().getDefaultUsers().getDefaultUsersAuthorities();
-        boolean containsAll = expectedAuthorities.containsAll(defaultUsersAuthorities);
-        assertTrueOrThrow(containsAll, "Please verify `defaultUsers.users.authorities`. Configuration provide unauthorized authority");
-
-        // Requirements: availableAuthorities vs. required enum values
-        var authorityClasses = this.getAbstractAuthorityClasses(authoritiesConfigs.getPackageName());
-        int size = authorityClasses.size();
-        assertTrueOrThrow(size == 1, "Please verify AbstractAuthority.class has only one sub enum. Found: `" + size + "`");
-        var authorityClass = authorityClasses.iterator().next();
-        Set<String> actualAuthorities = new HashSet<>();
-        var abstractAuthorityClass = AbstractAuthority.class;
-        var frameworkAuthorities = Stream.of(abstractAuthorityClass.getDeclaredFields())
-                .map(field -> {
-                    try {
-                        return field.get(abstractAuthorityClass).toString();
-                    } catch (IllegalAccessException e) {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-        var serverAuthorities = Stream.of(authorityClass.getEnumConstants())
-                .map(AbstractAuthority::getValue)
-                .collect(Collectors.toSet());
-        actualAuthorities.addAll(frameworkAuthorities);
-        actualAuthorities.addAll(serverAuthorities);
-        assertTrueOrThrow(
-                expectedAuthorities.equals(actualAuthorities),
-                "Please verify AbstractAuthority sub enum configuration. Expected: `" + expectedAuthorities + "`. Actual: `" + actualAuthorities + "`"
-        );
     }
 
     @Override
@@ -197,30 +154,5 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder(11);
-    }
-
-    // =================================================================================================================
-    // Private Method: Reflection on AbstractAuthority
-    // =================================================================================================================
-    @SuppressWarnings("unchecked")
-    private Set<Class<? extends AbstractAuthority>> getAbstractAuthorityClasses(String packageName) {
-        var beanDefinitionRegistry = new SimpleBeanDefinitionRegistry();
-        var classPathBeanDefinitionScanner = new ClassPathBeanDefinitionScanner(beanDefinitionRegistry, false);
-        var tf = new AssignableTypeFilter(AbstractAuthority.class);
-        classPathBeanDefinitionScanner.addIncludeFilter(tf);
-        classPathBeanDefinitionScanner.scan(packageName);
-        return Stream.of(beanDefinitionRegistry.getBeanDefinitionNames())
-                .map(beanDefinitionRegistry::getBeanDefinition)
-                .map(BeanDefinition::getBeanClassName)
-                .map(className -> {
-                    try {
-                        return (Class<? extends AbstractAuthority>) Class.forName(className);
-                    } catch (ClassNotFoundException ex) {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .filter(clazz -> nonNull(clazz.getEnumConstants()))
-                .collect(Collectors.toSet());
     }
 }

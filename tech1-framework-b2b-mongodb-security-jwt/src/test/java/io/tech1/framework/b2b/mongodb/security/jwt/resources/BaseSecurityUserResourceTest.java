@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessio
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;

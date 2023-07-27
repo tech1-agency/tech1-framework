@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;

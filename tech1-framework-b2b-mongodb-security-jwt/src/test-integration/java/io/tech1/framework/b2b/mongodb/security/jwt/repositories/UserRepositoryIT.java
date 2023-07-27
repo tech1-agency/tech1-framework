@@ -9,14 +9,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
+import static io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository.SUPERADMIN;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.SecurityJwtDbRandomUtility.dummyUsersData1;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -40,26 +39,28 @@ class UserRepositoryIT extends TestsApplicationRepositoriesRunner {
     @Test
     void findByAuthoritiesTests() {
         // Arrange
-        var superadminAuthority = new SimpleGrantedAuthority(SUPER_ADMIN);
         this.userRepository.saveAll(dummyUsersData1());
 
         // Act
         var superadmins = this.userRepository.findByAuthoritySuperadmin();
         var notSuperadmins = this.userRepository.findByAuthorityNotSuperadmin();
-        var superadminsProjection = this.userRepository.findByAuthorityProjectionUsernames(superadminAuthority);
-        var notSuperadminsProjection = this.userRepository.findByAuthorityNotEqualProjectionUsernames(superadminAuthority);
+        var superadminsProjection = this.userRepository.findByAuthorityProjectionUsernames(SUPERADMIN);
+        var notSuperadminsProjection = this.userRepository.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN);
         var superadminsUsernames = this.userRepository.findSuperadminsUsernames();
         var notSuperadminsUsernames = this.userRepository.findNotSuperadminsUsernames();
 
         // Assert
-        assertThat(superadmins).hasSize(3);
-        assertThat(toUsernamesAsStrings(superadmins)).containsExactly("sa1", "sa2", "sa3");
+        assertThat(toUsernamesAsStrings(superadmins))
+                .hasSize(3)
+                .containsExactly("sa1", "sa2", "sa3");
 
-        assertThat(notSuperadmins).hasSize(3);
-        assertThat(toUsernamesAsStrings(notSuperadmins)).containsExactly("admin", "user1", "user2");
+        assertThat(toUsernamesAsStrings(notSuperadmins))
+                .hasSize(3)
+                .containsExactly("admin", "user1", "user2");
 
-        assertThat(superadminsProjection).hasSize(3);
-        assertThat(toUsernamesAsStrings(superadminsProjection)).containsExactly("sa1", "sa2", "sa3");
+        assertThat(toUsernamesAsStrings(superadminsProjection))
+                .hasSize(3)
+                .containsExactly("sa1", "sa2", "sa3");
         superadminsProjection.forEach(user -> {
             assertThat(user.getUsername()).isNotNull();
             assertThat(user.getId()).isNull();
@@ -68,8 +69,9 @@ class UserRepositoryIT extends TestsApplicationRepositoriesRunner {
             assertThat(user.getZoneId()).isNull();
         });
 
-        assertThat(notSuperadminsProjection).hasSize(3);
-        assertThat(toUsernamesAsStrings(notSuperadminsProjection)).containsExactly("admin", "user1", "user2");
+        assertThat(toUsernamesAsStrings(notSuperadminsProjection))
+                .hasSize(3)
+                .containsExactly("admin", "user1", "user2");
         notSuperadminsProjection.forEach(user -> {
             assertThat(user.getUsername()).isNotNull();
             assertThat(user.getId()).isNull();
@@ -104,18 +106,18 @@ class UserRepositoryIT extends TestsApplicationRepositoriesRunner {
         // Arrange
         this.userRepository.saveAll(dummyUsersData1());
 
-        // Act-1
+        // Act-Assert-0
+        assertThat(this.userRepository.count()).isEqualTo(6);
+
+        // Act-Assert-1
         this.userRepository.deleteByAuthorityNotSuperadmin();
-
-        // Assert-1
         var users1 = this.userRepository.findAll();
-        assertThat(users1).hasSize(3);
-        assertThat(toUsernamesAsStrings(users1)).containsExactly("sa1", "sa2", "sa3");
+        assertThat(toUsernamesAsStrings(users1))
+                .hasSize(3)
+                .containsExactly("sa1", "sa2", "sa3");
 
-        // Act-2
+        // Act-Assert-2
         this.userRepository.deleteByAuthoritySuperadmin();
-
-        // Assert-2
         var users2 = this.userRepository.findAll();
         assertThat(users2).isEmpty();
     }

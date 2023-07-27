@@ -15,6 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings0;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDummies.dummyUsersData1;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,12 +36,16 @@ class PostgresUserRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     @SneakyThrows
     @Test
-    void integrationTests() {
+    void readIntegrationTests() {
         // Arrange
         this.postgresUserRepository.saveAll(dummyUsersData1());
 
         // Act
         var count = this.postgresUserRepository.count();
+        var superadmins = this.postgresUserRepository.findByAuthoritySuperadmin();
+        var notSuperadmins = this.postgresUserRepository.findByAuthorityNotSuperadmin();
+        var superadminsUsernames = this.postgresUserRepository.findSuperadminsUsernames();
+        var notSuperadminsUsernames = this.postgresUserRepository.findNotSuperadminsUsernames();
 
         // Assert
         assertThat(count).isEqualTo(6);
@@ -63,5 +69,42 @@ class PostgresUserRepositoryIT extends TestsApplicationRepositoriesRunner {
                         Username.of("not_real2")
                 )
         )).hasSize(2);
+
+        assertThat(toUsernamesAsStrings1(superadmins))
+                .hasSize(3)
+                .containsExactly("sa1", "sa2", "sa3");
+
+        assertThat(toUsernamesAsStrings1(notSuperadmins))
+                .hasSize(3)
+                .containsExactly("admin", "user1", "user2");
+
+        assertThat(toUsernamesAsStrings0(superadminsUsernames))
+                .hasSize(3)
+                .containsExactly("sa1", "sa2", "sa3");
+
+        assertThat(toUsernamesAsStrings0(notSuperadminsUsernames))
+                .hasSize(3)
+                .containsExactly("admin", "user1", "user2");
+    }
+
+    @Test
+    void deletionIntegrationTests() {
+        // Arrange
+        this.postgresUserRepository.saveAll(dummyUsersData1());
+
+        // Act-Assert-0
+        assertThat(this.postgresUserRepository.count()).isEqualTo(6);
+
+        // Act-Assert-1
+        this.postgresUserRepository.deleteByAuthorityNotSuperadmin();
+        var users1 = this.postgresUserRepository.findAll();
+        assertThat(toUsernamesAsStrings1(users1))
+                .hasSize(3)
+                .containsExactly("sa1", "sa2", "sa3");
+
+        // Act-Assert-2
+        this.postgresUserRepository.deleteByAuthoritySuperadmin();
+        var users2 = this.postgresUserRepository.findAll();
+        assertThat(users2).isEmpty();
     }
 }

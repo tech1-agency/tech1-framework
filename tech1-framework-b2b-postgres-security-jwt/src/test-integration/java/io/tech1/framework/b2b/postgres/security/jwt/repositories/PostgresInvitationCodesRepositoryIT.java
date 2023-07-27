@@ -4,7 +4,6 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitati
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +30,10 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
     private final PostgresInvitationCodesRepository postgresInvitationCodesRepository;
 
     @Override
-    public JpaRepository<PostgresDbInvitationCode, String> getJpaRepository() {
+    public JpaRepository<PostgresDbInvitationCode, Long> getJpaRepository() {
         return this.postgresInvitationCodesRepository;
     }
 
-    @SneakyThrows
     @Test
     void readIntegrationTests() {
         // Arrange
@@ -49,5 +47,24 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user1"))).hasSize(2);
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
+        assertThat(this.postgresInvitationCodesRepository.findByInvitedIsNull()).hasSize(5);
+        assertThat(this.postgresInvitationCodesRepository.findByInvitedIsNotNull()).hasSize(1);
+    }
+
+    @Test
+    void deletionIntegrationTests() {
+        // Arrange
+        this.postgresInvitationCodesRepository.saveAll(dummyInvitationCodesData1());
+
+        // Act-Assert-0
+        assertThat(this.postgresInvitationCodesRepository.count()).isEqualTo(6);
+
+        // Act-Assert-1
+        this.postgresInvitationCodesRepository.deleteByInvitedIsNotNull();
+        assertThat(this.postgresInvitationCodesRepository.count()).isEqualTo(5);
+
+        // Act-Assert-2
+        this.postgresInvitationCodesRepository.deleteByInvitedIsNull();
+        assertThat(this.postgresInvitationCodesRepository.count()).isZero();
     }
 }

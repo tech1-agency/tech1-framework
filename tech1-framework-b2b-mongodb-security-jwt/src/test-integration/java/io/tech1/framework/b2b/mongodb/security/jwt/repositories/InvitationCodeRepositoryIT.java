@@ -33,34 +33,33 @@ class InvitationCodeRepositoryIT extends TestsApplicationRepositoriesRunner {
     }
 
     @Test
-    void findByInvitedTests() {
+    void readIntegrationTests() {
         // Arrange
         this.invitationCodeRepository.saveAll(dummyInvitationCodesData1());
 
         // Act
-        var used = this.invitationCodeRepository.findByInvitedAlreadyUsed();
-        var notUsed = this.invitationCodeRepository.findByInvitedNotUsed();
+        var count = this.invitationCodeRepository.count();
 
         // Assert
-        assertThat(used).hasSize(1);
-        assertThat(notUsed).hasSize(5);
+        assertThat(count).isEqualTo(6);
+        assertThat(this.invitationCodeRepository.findByInvitedAlreadyUsed()).hasSize(1);
+        assertThat(this.invitationCodeRepository.findByInvitedNotUsed()).hasSize(5);
     }
 
     @Test
-    void deleteByInvitedTests() {
+    void deletionIntegrationTests() {
         // Arrange
         this.invitationCodeRepository.saveAll(dummyInvitationCodesData1());
 
-        // Act-1
-        this.invitationCodeRepository.deleteByInvitedAlreadyUsed();
+        // Act-Assert-0
+        assertThat(this.invitationCodeRepository.count()).isEqualTo(6);
 
-        // Assert-1
+        // Act-Assert-1
+        this.invitationCodeRepository.deleteByInvitedAlreadyUsed();
         assertThat(this.invitationCodeRepository.count()).isEqualTo(5);
 
-        // Act-2
+        // Act-Assert-2
         this.invitationCodeRepository.deleteByInvitedNotUsed();
-
-        // Assert-2
         assertThat(this.invitationCodeRepository.count()).isZero();
     }
 }

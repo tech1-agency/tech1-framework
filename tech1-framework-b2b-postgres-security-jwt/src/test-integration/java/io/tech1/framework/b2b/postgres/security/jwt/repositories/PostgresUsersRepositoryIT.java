@@ -5,7 +5,6 @@ import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationReposi
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,10 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
     private final PostgresUsersRepository postgresUsersRepository;
 
     @Override
-    public JpaRepository<PostgresDbUser, String> getJpaRepository() {
+    public JpaRepository<PostgresDbUser, Long> getJpaRepository() {
         return this.postgresUsersRepository;
     }
 
-    @SneakyThrows
     @Test
     void readIntegrationTests() {
         // Arrange

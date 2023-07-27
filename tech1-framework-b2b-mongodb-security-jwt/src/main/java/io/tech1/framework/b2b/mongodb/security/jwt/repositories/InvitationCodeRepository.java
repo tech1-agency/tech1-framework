@@ -33,15 +33,19 @@ public interface InvitationCodeRepository extends MongoRepository<DbInvitationCo
     // ================================================================================================================
     // Queries
     // ================================================================================================================
+    @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': true}}")
     List<DbInvitationCode> findByInvitedAlreadyUsed();
 
+    @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': false}}")
     List<DbInvitationCode> findByInvitedNotUsed();
 
+    @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': true}}", delete = true)
     void deleteByInvitedAlreadyUsed();
 
+    @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': false}}", delete = true)
     void deleteByInvitedNotUsed();
 }

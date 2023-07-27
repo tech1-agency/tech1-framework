@@ -36,7 +36,7 @@ class UserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
     }
 
     @Test
-    void findByUsernamesTest() {
+    void readIntegrationTests() {
         // Arrange
         this.userSessionRepository.saveAll(dummyUserSessionsData1());
 
@@ -48,7 +48,7 @@ class UserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
     }
 
     @Test
-    void deleteByUsernamesTest() {
+    void deletionIntegrationTests() {
         // Arrange
         this.userSessionRepository.saveAll(dummyUserSessionsData1());
 

@@ -30,6 +30,7 @@ import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalD
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
 
+    // TODO [YY] @PostConstruct -> constructor
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
     // Values

@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests;
 
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
@@ -10,7 +9,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -59,5 +57,5 @@ public abstract class TestsApplicationRepositoriesRunner {
         this.getJpaRepository().deleteAll();
     }
 
-    public abstract JpaRepository<?, String> getJpaRepository();
+    public abstract JpaRepository<?, Long> getJpaRepository();
 }

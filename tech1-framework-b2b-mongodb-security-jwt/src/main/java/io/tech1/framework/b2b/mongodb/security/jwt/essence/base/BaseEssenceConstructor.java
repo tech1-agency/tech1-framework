@@ -19,6 +19,7 @@ import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -38,7 +38,7 @@ class UserRepositoryIT extends TestsApplicationRepositoriesRunner {
     }
 
     @Test
-    void findByAuthoritiesTests() {
+    void readIntegrationTests() {
         // Arrange
         this.userRepository.saveAll(dummyUsersData1());
 
@@ -103,7 +103,7 @@ class UserRepositoryIT extends TestsApplicationRepositoriesRunner {
     }
 
     @Test
-    void deleteByAuthoritiesTests() {
+    void deletionIntegrationTests() {
         // Arrange
         this.userRepository.saveAll(dummyUsersData1());
 

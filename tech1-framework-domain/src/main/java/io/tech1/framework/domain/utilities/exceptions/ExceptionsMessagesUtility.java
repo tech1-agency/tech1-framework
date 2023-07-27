@@ -24,6 +24,10 @@ public class ExceptionsMessagesUtility {
         return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
     }
 
+    public static String entityNotFound(String entity, Long value) {
+        return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
+    }
+
     public static String entityAlreadyUsed(String entity) {
         return String.format(ENTITY_ALREADY_USED, entity);
     }

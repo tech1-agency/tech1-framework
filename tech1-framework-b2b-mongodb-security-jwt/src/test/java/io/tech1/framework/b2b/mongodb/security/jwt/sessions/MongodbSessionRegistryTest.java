@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.sessions.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
@@ -11,7 +11,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValida
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -46,7 +45,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class SessionRegistryImplTest {
+class MongodbSessionRegistryTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -67,7 +66,7 @@ class SessionRegistryImplTest {
 
         @Bean
         SessionRegistry sessionRegistry() {
-            return new SessionRegistryImpl(
+            return new MongodbSessionRegistry(
                     this.securityJwtPublisher(),
                     this.securityJwtIncidentPublisher(),
                     this.userSessionService()

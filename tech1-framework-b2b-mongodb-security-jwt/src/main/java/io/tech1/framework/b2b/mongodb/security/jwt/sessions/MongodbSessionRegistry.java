@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.sessions.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogout;
@@ -9,7 +9,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.Session;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.FrameworkLogsConstants;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
@@ -30,7 +29,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SessionRegistryImpl implements SessionRegistry {
+public class MongodbSessionRegistry implements SessionRegistry {
 
     private final Set<Session> sessions = ConcurrentHashMap.newKeySet();
 

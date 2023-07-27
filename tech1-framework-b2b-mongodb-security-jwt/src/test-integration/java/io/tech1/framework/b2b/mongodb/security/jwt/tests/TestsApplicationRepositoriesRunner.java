@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
@@ -34,4 +35,5 @@ public abstract class TestsApplicationRepositoriesRunner {
         container.stop();
     }
 
+    public abstract MongoRepository<?, String> getMongoRepository();
 }

@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.constants.SecurityJwtConstants;
 import io.tech1.framework.domain.base.Username;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -9,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
+import static io.tech1.framework.b2b.mongodb.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 // Lombok
@@ -35,10 +35,6 @@ public class DbInvitationCode {
     ) {
         this.owner = owner;
         this.authorities = authorities;
-        this.value = randomStringLetterOrNumbersOnly(SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH);
-    }
-
-    public void editInvited(Username invited) {
-        this.invited = invited;
+        this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);
     }
 }

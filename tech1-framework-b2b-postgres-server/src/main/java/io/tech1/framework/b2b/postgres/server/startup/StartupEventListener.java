@@ -1,12 +1,10 @@
 package io.tech1.framework.b2b.postgres.server.startup;
 
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUserRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.b2b.postgres.server.domain.db.PostgresDbAnything;
 import io.tech1.framework.b2b.postgres.server.repositories.PostgresAnythingRepository;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.utilities.development.DevelopmentUtility;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -31,7 +28,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 public class StartupEventListener {
 
     // Repositories
-    private final PostgresUserRepository postgresUserRepository;
+    private final PostgresUsersRepository postgresUsersRepository;
     private final PostgresAnythingRepository postgresAnythingRepository;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
@@ -53,12 +50,12 @@ public class StartupEventListener {
                         )
                 );
                 user.setEmail(randomEmail());
-                this.postgresUserRepository.save(user);
+                this.postgresUsersRepository.save(user);
             }
             this.postgresAnythingRepository.save(new PostgresDbAnything(username));
 
             LOGGER.warn("============================================================================================");
-            LOGGER.warn("Users: " + this.postgresUserRepository.count());
+            LOGGER.warn("Users: " + this.postgresUsersRepository.count());
             LOGGER.warn("Anything: " + this.postgresAnythingRepository.count());
             LOGGER.warn("============================================================================================");
         } catch (RuntimeException ex) {

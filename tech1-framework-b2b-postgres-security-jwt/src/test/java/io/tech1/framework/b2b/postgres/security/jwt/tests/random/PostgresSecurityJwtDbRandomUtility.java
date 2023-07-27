@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
@@ -16,6 +17,20 @@ import static org.springframework.util.StringUtils.capitalize;
 
 @UtilityClass
 public class PostgresSecurityJwtDbRandomUtility {
+
+    // =================================================================================================================
+    // InvitationCodes
+    // =================================================================================================================
+    public static PostgresDbInvitationCode invitationCodeByOwner(String owner) {
+        return new PostgresDbInvitationCode(
+                Username.of(owner),
+                List.of(
+                        new SimpleGrantedAuthority(randomString()),
+                        new SimpleGrantedAuthority(randomString()),
+                        new SimpleGrantedAuthority(randomString())
+                )
+        );
+    }
 
     // =================================================================================================================
     // Users

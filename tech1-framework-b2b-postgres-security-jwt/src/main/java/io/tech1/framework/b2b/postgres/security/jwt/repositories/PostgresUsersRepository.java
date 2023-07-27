@@ -19,7 +19,7 @@ import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTabl
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.UsersConstants.SUPERADMIN;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresUserRepository extends JpaRepository<PostgresDbUser, String> {
+public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String> {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

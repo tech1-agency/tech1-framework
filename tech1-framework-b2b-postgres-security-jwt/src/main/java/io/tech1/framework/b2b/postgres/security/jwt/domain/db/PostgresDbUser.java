@@ -21,6 +21,7 @@ import static java.util.Objects.nonNull;
 // Lombok
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 // JPA
@@ -47,19 +48,13 @@ public class PostgresDbUser {
     @Column
     private List<SimpleGrantedAuthority> authorities;
 
-    // WARNING: delete @Setter
-    @Setter
     @Convert(converter = PostgresEmailConverter.class)
     @Column
     private Email email;
 
-    // WARNING: delete @Setter
-    @Setter
     @Column
     private String name;
 
-    // WARNING: delete @Setter
-    @Setter
     @Convert(converter = PostgresMapStringsObjectsConverter.class)
     @Column
     private Map<String, Object> attributes;

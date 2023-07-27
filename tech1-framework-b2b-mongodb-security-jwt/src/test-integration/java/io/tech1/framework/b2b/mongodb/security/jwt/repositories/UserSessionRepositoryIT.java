@@ -1,14 +1,15 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -29,9 +30,9 @@ class UserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     private final UserSessionRepository userSessionRepository;
 
-    @AfterEach
-    void afterEach() {
-        this.userSessionRepository.deleteAll();
+    @Override
+    public MongoRepository<DbUserSession, String> getMongoRepository() {
+        return this.userSessionRepository;
     }
 
     @Test

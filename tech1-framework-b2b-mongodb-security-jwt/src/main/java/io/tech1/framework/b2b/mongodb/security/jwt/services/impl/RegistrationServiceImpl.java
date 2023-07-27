@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -38,7 +39,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         user = this.userRepository.save(user);
 
-        invitationCode.editInvited(user.getUsername());
+        invitationCode.setInvited(user.getUsername());
         this.invitationCodeRepository.save(invitationCode);
 
         return user;

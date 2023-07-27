@@ -93,9 +93,9 @@ class InvitationCodeServiceImplTest {
         var invitationCode5 = new DbInvitationCode(owner, authorities);
         var invitationCode6 = new DbInvitationCode(owner, authorities);
 
-        invitationCode2.editInvited(Username.of("user1"));
-        invitationCode1.editInvited(Username.of("user2"));
-        invitationCode5.editInvited(Username.of("user5"));
+        invitationCode2.setInvited(Username.of("user1"));
+        invitationCode1.setInvited(Username.of("user2"));
+        invitationCode5.setInvited(Username.of("user5"));
 
         var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
         when(this.invitationCodeRepository.findByOwner(owner)).thenReturn(invitationCodes);

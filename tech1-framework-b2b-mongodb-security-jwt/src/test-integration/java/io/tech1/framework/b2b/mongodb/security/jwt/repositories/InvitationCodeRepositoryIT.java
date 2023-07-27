@@ -1,13 +1,14 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.SecurityJwtDbRandomUtility.dummyInvitationCodesData1;
@@ -26,9 +27,9 @@ class InvitationCodeRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     private final InvitationCodeRepository invitationCodeRepository;
 
-    @AfterEach
-    void afterEach() {
-        this.invitationCodeRepository.deleteAll();
+    @Override
+    public MongoRepository<DbInvitationCode, String> getMongoRepository() {
+        return this.invitationCodeRepository;
     }
 
     @Test

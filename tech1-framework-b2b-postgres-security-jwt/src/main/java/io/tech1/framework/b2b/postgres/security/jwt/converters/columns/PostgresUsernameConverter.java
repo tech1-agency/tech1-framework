@@ -5,16 +5,18 @@ import io.tech1.framework.domain.base.Username;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+import static java.util.Objects.nonNull;
+
 @Converter
 public class PostgresUsernameConverter implements AttributeConverter<Username, String> {
 
     @Override
     public String convertToDatabaseColumn(Username username) {
-        return username.identifier();
+        return nonNull(username) ? username.identifier() : null;
     }
 
     @Override
     public Username convertToEntityAttribute(String value) {
-        return Username.of(value);
+        return nonNull(value) ? Username.of(value) : null;
     }
 }

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserLogin;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;

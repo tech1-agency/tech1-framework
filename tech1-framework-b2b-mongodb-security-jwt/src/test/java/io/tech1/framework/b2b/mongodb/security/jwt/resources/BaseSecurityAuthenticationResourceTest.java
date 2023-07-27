@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.requests.RequestUserLogin;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.Session;

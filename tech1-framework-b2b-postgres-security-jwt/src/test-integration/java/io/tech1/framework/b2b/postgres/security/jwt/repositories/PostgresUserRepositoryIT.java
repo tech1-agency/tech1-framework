@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -9,15 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Map;
-import java.util.stream.IntStream;
-
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDummies.dummyUsersData1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -36,26 +30,20 @@ class PostgresUserRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     @SneakyThrows
     @Test
-    void testTest() {
+    void integrationTests() {
         // Arrange
-        var username = Username.of("tech1");
-        for (int i = 0; i < 15; i++) {
-            var authorities = IntStream.range(0, 3).mapToObj(index -> new SimpleGrantedAuthority(randomString())).toList();
-            var user = new PostgresDbUser(username, randomPassword(), randomZoneId(), authorities);
-            user.setAttributes(
-                    Map.of(
-                            "attr1", randomString(),
-                            "attr2", randomLong()
-                    )
-            );
-            user.setEmail(randomEmail());
-            this.postgresUserRepository.save(user);
-        }
+        this.postgresUserRepository.saveAll(dummyUsersData1());
 
         // Act
-        var actual = this.postgresUserRepository.count();
+        var count = this.postgresUserRepository.count();
+        var sa1 = this.postgresUserRepository.findByUsername(Username.of("sa1"));
+        var sa2 = this.postgresUserRepository.findByUsername(Username.of("sa2"));
+        var sa4 = this.postgresUserRepository.findByUsername(Username.of("sa4"));
 
         // Assert
-        assertThat(actual).isEqualTo(15);
+        assertThat(count).isEqualTo(6);
+        assertThat(sa1).isNotNull();
+        assertThat(sa2).isNotNull();
+        assertThat(sa4).isNull();
     }
 }

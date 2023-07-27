@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 

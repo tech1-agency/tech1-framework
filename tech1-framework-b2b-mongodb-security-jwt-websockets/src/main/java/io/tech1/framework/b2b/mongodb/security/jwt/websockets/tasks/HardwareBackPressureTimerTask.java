@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.websockets.tasks;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.websockets.template.WssMessagingTemplate;
 import io.tech1.framework.domain.concurrent.AbstractInfiniteTimerTask;
 import io.tech1.framework.domain.time.SchedulerConfiguration;

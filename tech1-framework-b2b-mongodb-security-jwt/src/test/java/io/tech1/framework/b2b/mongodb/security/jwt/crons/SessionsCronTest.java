@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.crons;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;

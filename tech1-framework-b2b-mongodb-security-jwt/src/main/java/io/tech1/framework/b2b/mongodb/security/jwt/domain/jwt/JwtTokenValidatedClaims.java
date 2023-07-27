@@ -1,6 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;

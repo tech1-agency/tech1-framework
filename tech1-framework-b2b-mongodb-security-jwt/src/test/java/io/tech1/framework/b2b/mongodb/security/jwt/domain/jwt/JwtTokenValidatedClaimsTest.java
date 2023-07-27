@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt;
 
 import io.jsonwebtoken.Jwts;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;

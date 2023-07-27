@@ -1,12 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionRefreshed;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.Session;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.session.SessionsValidatedTuple2;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;

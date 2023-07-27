@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.cookies;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 

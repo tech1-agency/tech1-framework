@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.tests.constants;
 
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.time.ZoneId;
@@ -28,4 +30,10 @@ public class TestsConstants {
     public static final String FLAG_PORTUGAL = "🇵🇹";
     public static final String FLAG_UK = "🇬🇧";
     public static final String FLAG_USA = "🇺🇸";
+
+    // Username
+    public static final Username TECH1 = Username.of("tech1");
+
+    // Email
+    public static final Email EMAIL = Email.of("tests@tech1.io");
 }

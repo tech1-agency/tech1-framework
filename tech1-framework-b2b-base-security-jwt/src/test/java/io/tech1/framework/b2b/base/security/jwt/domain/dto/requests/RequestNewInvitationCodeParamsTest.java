@@ -10,7 +10,9 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestNewInvitationCodeParamsTest extends AbstractSerializationDeserializationRunner {
-    private static final RequestNewInvitationCodeParams REQUEST = new RequestNewInvitationCodeParams(Set.of("admin", "user"));
+    private static final RequestNewInvitationCodeParams REQUEST = new RequestNewInvitationCodeParams(
+            Set.of("admin", "user")
+    );
 
     @Override
     protected String getFolder() {

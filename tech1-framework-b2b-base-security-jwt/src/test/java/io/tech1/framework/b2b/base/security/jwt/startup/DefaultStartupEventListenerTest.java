@@ -1,6 +1,11 @@
 package io.tech1.framework.b2b.base.security.jwt.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.domain.properties.base.DefaultUsers;
+import io.tech1.framework.domain.properties.base.InvitationCodes;
+import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.security.jwt.EssenceConfigs;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
@@ -39,16 +45,23 @@ class DefaultStartupEventListenerTest {
         }
 
         @Bean
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
+        }
+
+        @Bean
         BaseStartupEventListener baseStartupEventListener() {
             return new DefaultStartupEventListener(
                     this.essenceConstructor(),
-                    this.environmentUtility()
+                    this.environmentUtility(),
+                    this.applicationFrameworkProperties()
             );
         }
     }
 
     private final EssenceConstructor essenceConstructor;
     private final EnvironmentUtility environmentUtility;
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final DefaultStartupEventListener componentUnderTest;
 
@@ -56,7 +69,8 @@ class DefaultStartupEventListenerTest {
     void beforeEach() {
         reset(
                 this.essenceConstructor,
-                this.environmentUtility
+                this.environmentUtility,
+                this.applicationFrameworkProperties
         );
     }
 
@@ -64,7 +78,8 @@ class DefaultStartupEventListenerTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.essenceConstructor,
-                this.environmentUtility
+                this.environmentUtility,
+                this.applicationFrameworkProperties
         );
     }
 
@@ -81,16 +96,32 @@ class DefaultStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isDefaultUsersEnabled, boolean isInvitationCodesEnabled) {
         // Arrange
-        when(this.essenceConstructor.isDefaultUsersEnabled()).thenReturn(isDefaultUsersEnabled);
-        when(this.essenceConstructor.isInvitationCodesEnabled()).thenReturn(isInvitationCodesEnabled);
+        SecurityJwtConfigs securityJwtConfigs = SecurityJwtConfigs.of(
+                null,
+                null,
+                EssenceConfigs.of(
+                        DefaultUsers.of(
+                                isDefaultUsersEnabled,
+                                new ArrayList<>()
+                        ),
+                        InvitationCodes.of(
+                                isInvitationCodesEnabled
+                        )
+                ),
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
 
         // Act
         this.componentUnderTest.onStartup();
 
         // Assert
         verify(this.environmentUtility).verifyProfilesConfiguration();
-        verify(this.essenceConstructor).isDefaultUsersEnabled();
-        verify(this.essenceConstructor).isInvitationCodesEnabled();
+        verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtConfigs();
         if (isDefaultUsersEnabled) {
             verify(this.essenceConstructor).addDefaultUsers();
         }

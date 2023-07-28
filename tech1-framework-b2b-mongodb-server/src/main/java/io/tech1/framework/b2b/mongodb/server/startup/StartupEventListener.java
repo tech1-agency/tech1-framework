@@ -19,8 +19,6 @@ public class StartupEventListener extends DefaultStartupEventListener {
 
     // Publishers
     private final IncidentPublisher incidentPublisher;
-    // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Autowired
     public StartupEventListener(
@@ -29,9 +27,12 @@ public class StartupEventListener extends DefaultStartupEventListener {
             IncidentPublisher incidentPublisher,
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
-        super(essenceConstructor, environmentUtility);
+        super(
+                essenceConstructor,
+                environmentUtility,
+                applicationFrameworkProperties
+        );
         this.incidentPublisher = incidentPublisher;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
     }
 
     @Override

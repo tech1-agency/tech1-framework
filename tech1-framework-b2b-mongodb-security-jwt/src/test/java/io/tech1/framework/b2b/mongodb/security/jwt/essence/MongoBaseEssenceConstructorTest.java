@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.domain.base.Username;
@@ -85,30 +85,6 @@ class MongoBaseEssenceConstructorTest {
                 this.mongoInvitationCodesRepository,
                 this.mongoUsersRepository
         );
-    }
-
-    @Test
-    void isDefaultUsersEnabledTest() {
-        // Arrange
-        var expectedFlag = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().isEnabled();
-
-        // Act
-        var actualFlag = this.componentUnderTest.isDefaultUsersEnabled();
-
-        // Assert
-        assertThat(actualFlag).isEqualTo(expectedFlag);
-    }
-
-    @Test
-    void isInvitationCodesEnabledTest() {
-        // Arrange
-        var expectedFlag = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled();
-
-        // Act
-        var actualFlag = this.componentUnderTest.isInvitationCodesEnabled();
-
-        // Assert
-        assertThat(actualFlag).isEqualTo(expectedFlag);
     }
 
     @Test

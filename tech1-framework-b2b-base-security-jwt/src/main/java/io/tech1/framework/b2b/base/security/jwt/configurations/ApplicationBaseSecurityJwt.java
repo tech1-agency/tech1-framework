@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.configurations;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.base.security.jwt.filters.JwtTokensFilter;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
@@ -63,8 +62,6 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;
-    // Essence
-    private final EssenceConstructor essenceConstructor;
     // Filters
     private final JwtTokensFilter jwtTokensFilter;
     // Handlers
@@ -127,7 +124,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/update2").authenticated();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
 
-        if (this.essenceConstructor.isInvitationCodesEnabled()) {
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
             urlRegistry.antMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ);
             urlRegistry.antMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE);
             urlRegistry.antMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);

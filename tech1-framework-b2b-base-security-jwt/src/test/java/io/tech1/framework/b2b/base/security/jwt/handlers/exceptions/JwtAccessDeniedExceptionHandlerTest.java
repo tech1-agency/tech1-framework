@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
+package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
+import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,6 +41,7 @@ class JwtAccessDeniedExceptionHandlerTest {
     }
 
     private final ObjectMapper objectMapper;
+
     private final JwtAccessDeniedExceptionHandler componentUnderTest;
 
     @SuppressWarnings("unchecked")
@@ -72,8 +73,9 @@ class JwtAccessDeniedExceptionHandlerTest {
                 .containsKeys("exceptionEntityType", "attributes", "timestamp")
                 .containsEntry("exceptionEntityType", ERROR.toString());
         var attributes = (Map<String, Object>) json.get("attributes");
-        assertThat(attributes).containsEntry("shortMessage", exceptionMessage);
-        assertThat(attributes).containsEntry("fullMessage", exceptionMessage);
+        assertThat(attributes)
+                .containsEntry("shortMessage", exceptionMessage)
+                .containsEntry("fullMessage", exceptionMessage);
         verifyNoMoreInteractions(
                 httpServletRequest,
                 httpServletResponse,

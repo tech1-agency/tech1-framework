@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSe
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.filters.JwtTokensFilter;
-import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
+import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;

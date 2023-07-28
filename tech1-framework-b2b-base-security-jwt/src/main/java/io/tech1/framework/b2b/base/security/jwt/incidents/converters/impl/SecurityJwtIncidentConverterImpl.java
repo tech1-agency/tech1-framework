@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters.impl;
+package io.tech1.framework.b2b.base.security.jwt.incidents.converters.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters.SecurityJwtIncidentConverter;
+import io.tech1.framework.b2b.base.security.jwt.incidents.converters.SecurityJwtIncidentConverter;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;

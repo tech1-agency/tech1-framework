@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtIncidentSubscriber;
-import io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters.SecurityJwtIncidentConverter;
+import io.tech1.framework.b2b.base.security.jwt.incidents.converters.SecurityJwtIncidentConverter;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.*;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;

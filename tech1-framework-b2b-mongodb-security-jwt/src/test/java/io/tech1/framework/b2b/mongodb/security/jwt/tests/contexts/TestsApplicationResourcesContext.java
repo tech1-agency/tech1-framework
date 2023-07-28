@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.ResourceExceptionHandler;
+import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.*;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;

@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
+package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;

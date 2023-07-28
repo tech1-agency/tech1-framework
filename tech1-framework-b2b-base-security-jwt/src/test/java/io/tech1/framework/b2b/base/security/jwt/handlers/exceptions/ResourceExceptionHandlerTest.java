@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions;
+package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
+import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;

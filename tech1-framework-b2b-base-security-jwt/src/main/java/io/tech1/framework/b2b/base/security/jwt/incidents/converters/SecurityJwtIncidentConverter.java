@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters;
+package io.tech1.framework.b2b.base.security.jwt.incidents.converters;
 
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;

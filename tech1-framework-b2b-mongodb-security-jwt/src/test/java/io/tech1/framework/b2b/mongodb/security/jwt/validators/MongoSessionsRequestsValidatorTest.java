@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongodbSessionsRequestsValidatorTest {
+class MongoSessionsRequestsValidatorTest {
 
     @Configuration
     @Import({
@@ -35,7 +35,7 @@ class MongodbSessionsRequestsValidatorTest {
 
     }
 
-    private final UserSessionRepository userSessionRepository;
+    private final MongoUserSessionRepository mongoUserSessionRepository;
 
     private final SessionsRequestsValidator componentUnderTest;
 
@@ -44,8 +44,8 @@ class MongodbSessionsRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var sessionId = randomString();
-        var session = entity(DbUserSession.class);
-        when(this.userSessionRepository.requirePresence(sessionId)).thenReturn(session);
+        var session = entity(MongoDbUserSession.class);
+        when(this.mongoUserSessionRepository.requirePresence(sessionId)).thenReturn(session);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
@@ -54,7 +54,7 @@ class MongodbSessionsRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `Session`. Value: `" + sessionId + "`");
-        verify(this.userSessionRepository).requirePresence(sessionId);
+        verify(this.mongoUserSessionRepository).requirePresence(sessionId);
     }
 
     @Test
@@ -62,14 +62,14 @@ class MongodbSessionsRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var sessionId = randomString();
-        var session = entity(DbUserSession.class);
+        var session = entity(MongoDbUserSession.class);
         session.setUsername(username);
-        when(this.userSessionRepository.requirePresence(sessionId)).thenReturn(session);
+        when(this.mongoUserSessionRepository.requirePresence(sessionId)).thenReturn(session);
 
         // Act
         this.componentUnderTest.validateDeleteById(username, sessionId);
 
         // Assert
-        verify(this.userSessionRepository).requirePresence(sessionId);
+        verify(this.mongoUserSessionRepository).requirePresence(sessionId);
     }
 }

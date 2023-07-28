@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;
     // Repositories
-    private final UserSessionRepository userSessionRepository;
+    private final MongoUserSessionRepository mongoUserSessionRepository;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -68,7 +68,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
     public JwtUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
         var username = validatedClaims.safeGetUsername();
         var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
-        var databasePresence = this.userSessionRepository.isPresent(oldJwtRefreshToken);
+        var databasePresence = this.mongoUserSessionRepository.isPresent(oldJwtRefreshToken);
         if (!databasePresence) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenDbNotFoundException(username);

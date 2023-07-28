@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -49,8 +49,8 @@ class InvitationCodeServiceImplTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        InvitationCodeRepository invitationCodeRepository() {
-            return mock(InvitationCodeRepository.class);
+        MongoInvitationCodesRepository invitationCodeRepository() {
+            return mock(MongoInvitationCodesRepository.class);
         }
 
         @Bean
@@ -62,7 +62,7 @@ class InvitationCodeServiceImplTest {
         }
     }
 
-    private final InvitationCodeRepository invitationCodeRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final InvitationCodeService componentUnderTest;
@@ -70,14 +70,14 @@ class InvitationCodeServiceImplTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodeRepository
+                this.mongoInvitationCodesRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodeRepository
+                this.mongoInvitationCodesRepository
         );
     }
 
@@ -86,25 +86,25 @@ class InvitationCodeServiceImplTest {
         // Arrange
         var owner = randomUsername();
         var authorities = singletonList(new SimpleGrantedAuthority("admin"));
-        var invitationCode1 = new DbInvitationCode(owner, authorities);
-        var invitationCode2 = new DbInvitationCode(owner, authorities);
-        var invitationCode3 = new DbInvitationCode(owner, authorities);
-        var invitationCode4 = new DbInvitationCode(owner, authorities);
-        var invitationCode5 = new DbInvitationCode(owner, authorities);
-        var invitationCode6 = new DbInvitationCode(owner, authorities);
+        var invitationCode1 = new MongoDbInvitationCode(owner, authorities);
+        var invitationCode2 = new MongoDbInvitationCode(owner, authorities);
+        var invitationCode3 = new MongoDbInvitationCode(owner, authorities);
+        var invitationCode4 = new MongoDbInvitationCode(owner, authorities);
+        var invitationCode5 = new MongoDbInvitationCode(owner, authorities);
+        var invitationCode6 = new MongoDbInvitationCode(owner, authorities);
 
         invitationCode2.setInvited(Username.of("user1"));
         invitationCode1.setInvited(Username.of("user2"));
         invitationCode5.setInvited(Username.of("user5"));
 
         var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
-        when(this.invitationCodeRepository.findByOwner(owner)).thenReturn(invitationCodes);
+        when(this.mongoInvitationCodesRepository.findByOwner(owner)).thenReturn(invitationCodes);
 
         // Act
         var responseInvitationCodes = this.componentUnderTest.findByOwner(owner);
 
         // Assert
-        verify(this.invitationCodeRepository).findByOwner(owner);
+        verify(this.mongoInvitationCodesRepository).findByOwner(owner);
         assertThat(responseInvitationCodes.invitationCodes().get(0)).isEqualTo(invitationCode3.getResponseInvitationCode());
         assertThat(responseInvitationCodes.invitationCodes().get(1)).isEqualTo(invitationCode4.getResponseInvitationCode());
         assertThat(responseInvitationCodes.invitationCodes().get(2)).isEqualTo(invitationCode6.getResponseInvitationCode());
@@ -117,15 +117,15 @@ class InvitationCodeServiceImplTest {
     @Test
     void saveTest() {
         // Arrange
-        var dbUser = entity(DbUser.class);
+        var dbUser = entity(MongoDbUser.class);
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
-        var dbInvitationCodeAC = ArgumentCaptor.forClass(DbInvitationCode.class);
+        var dbInvitationCodeAC = ArgumentCaptor.forClass(MongoDbInvitationCode.class);
 
         // Act
         this.componentUnderTest.save(requestNewInvitationCodeParams, dbUser.getUsername());
 
         // Assert
-        verify(this.invitationCodeRepository).save(dbInvitationCodeAC.capture());
+        verify(this.mongoInvitationCodesRepository).save(dbInvitationCodeAC.capture());
         assertThat(dbInvitationCodeAC.getValue().getAuthorities()).isEqualTo(requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
         assertThat(dbInvitationCodeAC.getValue().getOwner()).isEqualTo(dbUser.getUsername());
         assertThat(dbInvitationCodeAC.getValue().getValue()).hasSize(40);
@@ -140,6 +140,6 @@ class InvitationCodeServiceImplTest {
         this.componentUnderTest.deleteById(invitationCodeId);
 
         // Assert
-        verify(this.invitationCodeRepository).deleteById(invitationCodeId);
+        verify(this.mongoInvitationCodesRepository).deleteById(invitationCodeId);
     }
 }

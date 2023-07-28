@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
@@ -19,28 +19,28 @@ import org.springframework.stereotype.Service;
 public class RegistrationServiceImpl implements RegistrationService {
 
     // Repository
-    private final InvitationCodeRepository invitationCodeRepository;
-    private final UserRepository userRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoUserRepository mongoUserRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public DbUser register1(RequestUserRegistration1 requestUserRegistration1) {
-        var invitationCode = invitationCodeRepository.findByValue(requestUserRegistration1.invitationCode());
+    public MongoDbUser register1(RequestUserRegistration1 requestUserRegistration1) {
+        var invitationCode = mongoInvitationCodesRepository.findByValue(requestUserRegistration1.invitationCode());
 
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value());
 
-        var user = new DbUser(
+        var user = new MongoDbUser(
                 requestUserRegistration1.username(),
                 Password.of(hashPassword),
                 requestUserRegistration1.zoneId(),
                 invitationCode.getAuthorities()
         );
 
-        user = this.userRepository.save(user);
+        user = this.mongoUserRepository.save(user);
 
         invitationCode.setInvited(user.getUsername());
-        this.invitationCodeRepository.save(invitationCode);
+        this.mongoInvitationCodesRepository.save(invitationCode);
 
         return user;
     }

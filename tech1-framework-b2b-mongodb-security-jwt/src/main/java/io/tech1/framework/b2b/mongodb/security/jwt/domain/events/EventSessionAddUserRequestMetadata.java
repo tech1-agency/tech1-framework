@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.events;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.IPAddress;
@@ -14,7 +14,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 public record EventSessionAddUserRequestMetadata(
         Username username,
         Email email,
-        DbUserSession userSession,
+        MongoDbUserSession userSession,
         IPAddress clientIpAddr,
         UserAgentHeader userAgentHeader,
         boolean isAuthenticationLoginEndpoint,
@@ -23,7 +23,7 @@ public record EventSessionAddUserRequestMetadata(
     public static EventSessionAddUserRequestMetadata of(
             Username username,
             Email email,
-            DbUserSession userSession,
+            MongoDbUserSession userSession,
             IPAddress clientIpAddr,
             HttpServletRequest httpServletRequest,
             boolean isAuthenticationLoginEndpoint,

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.mongodb.server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +16,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     // Repositories
-    private final UserRepository userRepository;
+    private final MongoUserRepository mongoUserRepository;
 
     @Override
-    public List<DbUser> findAll() {
-        return this.userRepository.findAll();
+    public List<MongoDbUser> findAll() {
+        return this.mongoUserRepository.findAll();
     }
 }

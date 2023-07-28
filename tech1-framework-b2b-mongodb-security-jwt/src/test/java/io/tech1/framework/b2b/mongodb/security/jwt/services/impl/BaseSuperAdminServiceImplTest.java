@@ -1,11 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
@@ -44,13 +44,13 @@ class BaseSuperAdminServiceImplTest {
         }
 
         @Bean
-        InvitationCodeRepository invitationCodeRepository() {
-            return mock(InvitationCodeRepository.class);
+        MongoInvitationCodesRepository invitationCodeRepository() {
+            return mock(MongoInvitationCodesRepository.class);
         }
 
         @Bean
-        UserSessionRepository userSessionRepository() {
-            return mock(UserSessionRepository.class);
+        MongoUserSessionRepository userSessionRepository() {
+            return mock(MongoUserSessionRepository.class);
         }
 
         @Bean
@@ -64,8 +64,8 @@ class BaseSuperAdminServiceImplTest {
     }
 
     private final SessionRegistry sessionRegistry;
-    private final InvitationCodeRepository invitationCodeRepository;
-    private final UserSessionRepository userSessionRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoUserSessionRepository mongoUserSessionRepository;
 
     private final BaseSuperAdminService componentUnderTest;
 
@@ -73,8 +73,8 @@ class BaseSuperAdminServiceImplTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
-                this.invitationCodeRepository,
-                this.userSessionRepository
+                this.mongoInvitationCodesRepository,
+                this.mongoUserSessionRepository
         );
     }
 
@@ -82,25 +82,25 @@ class BaseSuperAdminServiceImplTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
-                this.invitationCodeRepository,
-                this.userSessionRepository
+                this.mongoInvitationCodesRepository,
+                this.mongoUserSessionRepository
         );
     }
 
     @Test
     void findUnusedTestt() {
         // Arrange
-        var invitationCodes = list345(DbInvitationCode.class);
-        when(this.invitationCodeRepository.findByInvitedIsNull()).thenReturn(invitationCodes);
+        var invitationCodes = list345(MongoDbInvitationCode.class);
+        when(this.mongoInvitationCodesRepository.findByInvitedIsNull()).thenReturn(invitationCodes);
 
         // Act
         var unused = this.componentUnderTest.findUnused();
 
         // Assert
-        verify(this.invitationCodeRepository).findByInvitedIsNull();
+        verify(this.mongoInvitationCodesRepository).findByInvitedIsNull();
         assertThat(unused).hasSize(invitationCodes.size());
         assertThat(unused.stream().map(ResponseInvitationCode::value).collect(Collectors.toSet()))
-                .isEqualTo(invitationCodes.stream().map(DbInvitationCode::getValue).collect(Collectors.toSet()));
+                .isEqualTo(invitationCodes.stream().map(MongoDbInvitationCode::getValue).collect(Collectors.toSet()));
     }
 
     @Test
@@ -108,11 +108,11 @@ class BaseSuperAdminServiceImplTest {
         // Arrange
         var cookie = entity(CookieRefreshToken.class);
 
-        var dbUserSession1 = entity(DbUserSession.class);
-        var dbUserSession2 = entity(DbUserSession.class);
-        var dbUserSession3 = entity(DbUserSession.class);
+        var dbUserSession1 = entity(MongoDbUserSession.class);
+        var dbUserSession2 = entity(MongoDbUserSession.class);
+        var dbUserSession3 = entity(MongoDbUserSession.class);
 
-        when(this.userSessionRepository.findAll()).thenReturn(asList(dbUserSession1, dbUserSession2, dbUserSession3));
+        when(this.mongoUserSessionRepository.findAll()).thenReturn(asList(dbUserSession1, dbUserSession2, dbUserSession3));
         var activeSessions = Set.of(
                 dbUserSession1.getJwtRefreshToken(),
                 dbUserSession3.getJwtRefreshToken()
@@ -124,7 +124,7 @@ class BaseSuperAdminServiceImplTest {
         var serverSessions = this.componentUnderTest.getServerSessions(cookie);
 
         // Assert
-        verify(this.userSessionRepository).findAll();
+        verify(this.mongoUserSessionRepository).findAll();
         verify(this.sessionRegistry).getActiveSessionsRefreshTokens();
         assertThat(serverSessions).isNotNull();
         assertThat(serverSessions.activeSessions()).hasSize(2);

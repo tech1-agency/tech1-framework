@@ -2,9 +2,9 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import org.springframework.context.annotation.Bean;
@@ -45,17 +45,17 @@ public class TestsApplicationValidatorsContext {
     // Repositories
     // =================================================================================================================
     @Bean
-    InvitationCodeRepository invitationCodeRepository() {
-        return mock(InvitationCodeRepository.class);
+    MongoInvitationCodesRepository invitationCodeRepository() {
+        return mock(MongoInvitationCodesRepository.class);
     }
 
     @Bean
-    UserSessionRepository userSessionRepository() {
-        return mock(UserSessionRepository.class);
+    MongoUserSessionRepository userSessionRepository() {
+        return mock(MongoUserSessionRepository.class);
     }
 
     @Bean
-    UserRepository userRepository() {
-        return mock(UserRepository.class);
+    MongoUserRepository userRepository() {
+        return mock(MongoUserRepository.class);
     }
 }

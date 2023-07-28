@@ -5,9 +5,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSer
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,21 +28,21 @@ public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Repositories
-    private final InvitationCodeRepository invitationCodeRepository;
-    private final UserSessionRepository userSessionRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoUserSessionRepository mongoUserSessionRepository;
 
     @Override
     public List<ResponseInvitationCode> findUnused() {
-        var invitationCodes = this.invitationCodeRepository.findByInvitedIsNull();
+        var invitationCodes = this.mongoInvitationCodesRepository.findByInvitedIsNull();
         return invitationCodes.stream()
-                .map(DbInvitationCode::getResponseInvitationCode)
+                .map(MongoDbInvitationCode::getResponseInvitationCode)
                 .sorted(INVITATION_CODE_1)
                 .toList();
     }
 
     @Override
     public ResponseServerSessionsTable getServerSessions(CookieRefreshToken cookie) {
-        var dbUserSessions = this.userSessionRepository.findAll();
+        var dbUserSessions = this.mongoUserSessionRepository.findAll();
         var activeSessionsRefreshTokens = this.sessionRegistry.getActiveSessionsRefreshTokens();
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
         List<ResponseUserSession2> inactiveSessions = new ArrayList<>();

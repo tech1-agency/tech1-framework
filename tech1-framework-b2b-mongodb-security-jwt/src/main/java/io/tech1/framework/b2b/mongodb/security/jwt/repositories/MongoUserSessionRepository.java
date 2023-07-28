@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -15,19 +15,19 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 import static java.util.Objects.nonNull;
 
 @Repository
-public interface UserSessionRepository extends MongoRepository<DbUserSession, String> {
+public interface MongoUserSessionRepository extends MongoRepository<MongoDbUserSession, String> {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    List<DbUserSession> findByUsername(Username username);
-    List<DbUserSession> findByUsernameIn(Set<Username> usernames);
+    List<MongoDbUserSession> findByUsername(Username username);
+    List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
     Long deleteByIdIn(List<String> ids);
 
-    default DbUserSession getById(String sessionId) {
+    default MongoDbUserSession getById(String sessionId) {
         return this.findById(sessionId).orElse(null);
     }
 
-    default DbUserSession requirePresence(String sessionId) {
+    default MongoDbUserSession requirePresence(String sessionId) {
         var session = this.getById(sessionId);
         assertNonNullOrThrow(session, entityNotFound("Session", sessionId));
         return session;
@@ -37,7 +37,7 @@ public interface UserSessionRepository extends MongoRepository<DbUserSession, St
         return nonNull(this.findByRefreshToken(jwtRefreshToken));
     }
 
-    default DbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
+    default MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).orElse(null);
     }
 
@@ -49,7 +49,7 @@ public interface UserSessionRepository extends MongoRepository<DbUserSession, St
     // Queries
     // ================================================================================================================
     @Query(value = "{ 'username': { '$in': ?0}}")
-    List<DbUserSession> findByUsernames(List<Username> usernames);
+    List<MongoDbUserSession> findByUsernames(List<Username> usernames);
 
     @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
     void deleteByUsernames(List<Username> usernames);

@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionExpired;
@@ -52,7 +52,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongodbSessionRegistryTest {
+class MongoSessionRegistryTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -73,7 +73,7 @@ class MongodbSessionRegistryTest {
 
         @Bean
         SessionRegistry sessionRegistry() {
-            return new MongodbSessionRegistry(
+            return new MongoSessionRegistry(
                     this.securityJwtPublisher(),
                     this.securityJwtIncidentPublisher(),
                     this.userSessionService()
@@ -115,11 +115,11 @@ class MongodbSessionRegistryTest {
         var session3 = new Session(Username.of("username3"), new JwtRefreshToken(randomString()));
         var session4 = new Session(Username.of("username4"), new JwtRefreshToken(randomString()));
         var rndSession = new Session(randomUsername(), new JwtRefreshToken(randomString()));
-        var dbUserSession1 = entity(DbUserSession.class);
-        var dbUserSession2 = entity(DbUserSession.class);
-        var dbUserSession3 = entity(DbUserSession.class);
-        var dbUserSession4 = entity(DbUserSession.class);
-        var rndDbUserSession = entity(DbUserSession.class);
+        var dbUserSession1 = entity(MongoDbUserSession.class);
+        var dbUserSession2 = entity(MongoDbUserSession.class);
+        var dbUserSession3 = entity(MongoDbUserSession.class);
+        var dbUserSession4 = entity(MongoDbUserSession.class);
+        var rndDbUserSession = entity(MongoDbUserSession.class);
         when(this.userSessionService.findByRefreshToken(session1.refreshToken())).thenReturn(dbUserSession1);
         when(this.userSessionService.findByRefreshToken(session2.refreshToken())).thenReturn(dbUserSession2);
         when(this.userSessionService.findByRefreshToken(session3.refreshToken())).thenReturn(dbUserSession3);
@@ -234,7 +234,7 @@ class MongodbSessionRegistryTest {
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
-        var dbUserSession = entity(DbUserSession.class);
+        var dbUserSession = entity(MongoDbUserSession.class);
         when(this.userSessionService.findByRefreshToken(refreshToken)).thenReturn(dbUserSession);
 
         // Act
@@ -288,13 +288,13 @@ class MongodbSessionRegistryTest {
         sessions.add(session2);
         sessions.add(session3);
         setPrivateField(this.componentUnderTest, "sessions", sessions);
-        var dbUserSession1 = mock(DbUserSession.class);
+        var dbUserSession1 = mock(MongoDbUserSession.class);
         when(dbUserSession1.getId()).thenReturn(randomString());
         when(dbUserSession1.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
-        var dbUserSession2 = mock(DbUserSession.class);
+        var dbUserSession2 = mock(MongoDbUserSession.class);
         when(dbUserSession2.getId()).thenReturn(randomString());
         when(dbUserSession2.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
-        var dbUserSession3 = mock(DbUserSession.class);
+        var dbUserSession3 = mock(MongoDbUserSession.class);
         when(dbUserSession3.getId()).thenReturn(randomString());
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
@@ -334,8 +334,8 @@ class MongodbSessionRegistryTest {
         var validJwtRefreshToken = randomString();
         var cookie = new CookieRefreshToken(validJwtRefreshToken);
 
-        Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
-                tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
+        Function<Tuple2<UserRequestMetadata, String>, MongoDbUserSession> sessionFnc =
+                tuple2 -> new MongoDbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
@@ -343,7 +343,7 @@ class MongodbSessionRegistryTest {
         var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
-        List<Tuple3<List<DbUserSession>, Integer, Boolean>> cases = new ArrayList<>();
+        List<Tuple3<List<MongoDbUserSession>, Integer, Boolean>> cases = new ArrayList<>();
         cases.add(
                 new Tuple3<>(
                         List.of(validSession),

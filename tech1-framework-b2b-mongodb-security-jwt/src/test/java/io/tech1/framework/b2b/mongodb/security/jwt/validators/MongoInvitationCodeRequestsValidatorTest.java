@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.domain.base.Username;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongodbInvitationCodeRequestsValidatorTest {
+class MongoInvitationCodeRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
@@ -56,7 +56,7 @@ class MongodbInvitationCodeRequestsValidatorTest {
 
     }
 
-    private final InvitationCodeRepository invitationCodeRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
 
     private final InvitationCodeRequestsValidator componentUnderTest;
 
@@ -81,8 +81,8 @@ class MongodbInvitationCodeRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var invitationCodeId = randomString();
-        var dbInvitationCode = entity(DbInvitationCode.class);
-        when(this.invitationCodeRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
+        var dbInvitationCode = entity(MongoDbInvitationCode.class);
+        when(this.mongoInvitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
@@ -91,7 +91,7 @@ class MongodbInvitationCodeRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `InvitationCode`. Value: `" + invitationCodeId+ "`");
-        verify(this.invitationCodeRepository).requirePresence(invitationCodeId);
+        verify(this.mongoInvitationCodesRepository).requirePresence(invitationCodeId);
     }
 
     @Test
@@ -99,14 +99,14 @@ class MongodbInvitationCodeRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var invitationCodeId = randomString();
-        var dbInvitationCode = entity(DbInvitationCode.class);
+        var dbInvitationCode = entity(MongoDbInvitationCode.class);
         dbInvitationCode.setOwner(username);
-        when(this.invitationCodeRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
+        when(this.mongoInvitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
         // Act
         this.componentUnderTest.validateDeleteById(username, invitationCodeId);
 
         // Assert
-        verify(this.invitationCodeRepository).requirePresence(invitationCodeId);
+        verify(this.mongoInvitationCodesRepository).requirePresence(invitationCodeId);
     }
 }

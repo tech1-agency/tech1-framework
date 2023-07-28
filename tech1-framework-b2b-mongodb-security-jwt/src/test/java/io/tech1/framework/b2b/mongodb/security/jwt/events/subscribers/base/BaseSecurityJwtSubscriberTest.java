@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.base;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
@@ -175,13 +175,13 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(DbUserSession.class),
+                entity(MongoDbUserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 false,
                 false
         );
-        var userSession = entity(DbUserSession.class);
+        var userSession = entity(MongoDbUserSession.class);
         when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
@@ -197,13 +197,13 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(DbUserSession.class),
+                entity(MongoDbUserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 true,
                 false
         );
-        var userSession = entity(DbUserSession.class);
+        var userSession = entity(MongoDbUserSession.class);
         when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act
@@ -221,13 +221,13 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(DbUserSession.class),
+                entity(MongoDbUserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 false,
                 true
         );
-        var userSession = entity(DbUserSession.class);
+        var userSession = entity(MongoDbUserSession.class);
         when(this.userSessionService.saveUserRequestMetadata(event)).thenReturn(userSession);
 
         // Act

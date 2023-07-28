@@ -1,10 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.essence.MongodbBaseEssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -36,7 +35,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongodbBaseEssenceConstructorTest {
+class MongoBaseEssenceConstructorTest {
 
     @Configuration
     @Import({
@@ -47,18 +46,18 @@ class MongodbBaseEssenceConstructorTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        InvitationCodeRepository invitationCodeRepository() {
-            return mock(InvitationCodeRepository.class);
+        MongoInvitationCodesRepository invitationCodeRepository() {
+            return mock(MongoInvitationCodesRepository.class);
         }
 
         @Bean
-        UserRepository userRepository() {
-            return mock(UserRepository.class);
+        MongoUserRepository userRepository() {
+            return mock(MongoUserRepository.class);
         }
 
         @Bean
         EssenceConstructor essenceConstructor() {
-            return new MongodbBaseEssenceConstructor(
+            return new MongoBaseEssenceConstructor(
                     this.invitationCodeRepository(),
                     this.userRepository(),
                     this.applicationFrameworkProperties
@@ -66,8 +65,8 @@ class MongodbBaseEssenceConstructorTest {
         }
     }
 
-    private final InvitationCodeRepository invitationCodeRepository;
-    private final UserRepository userRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoUserRepository mongoUserRepository;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final EssenceConstructor componentUnderTest;
@@ -75,16 +74,16 @@ class MongodbBaseEssenceConstructorTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodeRepository,
-                this.userRepository
+                this.mongoInvitationCodesRepository,
+                this.mongoUserRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodeRepository,
-                this.userRepository
+                this.mongoInvitationCodesRepository,
+                this.mongoUserRepository
         );
     }
 
@@ -115,13 +114,13 @@ class MongodbBaseEssenceConstructorTest {
     @Test
     void addDefaultUsersNoActionsTest() {
         // Arrange
-        when(this.userRepository.count()).thenReturn(randomLongGreaterThanZero());
+        when(this.mongoUserRepository.count()).thenReturn(randomLongGreaterThanZero());
 
         // Act
         this.componentUnderTest.addDefaultUsers();
 
         // Assert
-        verify(this.userRepository).count();
+        verify(this.mongoUserRepository).count();
         // No Actions
     }
 
@@ -129,7 +128,7 @@ class MongodbBaseEssenceConstructorTest {
     @Test
     void addDefaultUsersTest() {
         // Arrange
-        when(this.userRepository.count()).thenReturn(0L);
+        when(this.mongoUserRepository.count()).thenReturn(0L);
         var dbUserAC = ArgumentCaptor.forClass(List.class);
         int usersCount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers().size();
 
@@ -137,8 +136,8 @@ class MongodbBaseEssenceConstructorTest {
         this.componentUnderTest.addDefaultUsers();
 
         // Assert
-        verify(this.userRepository).count();
-        verify(this.userRepository).saveAll(dbUserAC.capture());
+        verify(this.mongoUserRepository).count();
+        verify(this.mongoUserRepository).saveAll(dbUserAC.capture());
         assertThat(dbUserAC.getValue()).hasSize(usersCount);
     }
 
@@ -146,14 +145,14 @@ class MongodbBaseEssenceConstructorTest {
     void addDefaultUsersInvitationCodesAlreadyPresentTest() {
         // Arrange
         var username = this.getDefaultUserUsername();
-        var invitationCodes = list345(DbInvitationCode.class);
-        when(this.invitationCodeRepository.findByOwner(username)).thenReturn(invitationCodes);
+        var invitationCodes = list345(MongoDbInvitationCode.class);
+        when(this.mongoInvitationCodesRepository.findByOwner(username)).thenReturn(invitationCodes);
 
         // Act
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
-        verify(this.invitationCodeRepository).findByOwner(username);
+        verify(this.mongoInvitationCodesRepository).findByOwner(username);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -161,16 +160,16 @@ class MongodbBaseEssenceConstructorTest {
     void addDefaultUsersInvitationCodesNotPresentTest() {
         // Arrange
         var username = this.getDefaultUserUsername();
-        when(this.invitationCodeRepository.findByOwner(username)).thenReturn(emptyList());
+        when(this.mongoInvitationCodesRepository.findByOwner(username)).thenReturn(emptyList());
 
         // Act
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
-        verify(this.invitationCodeRepository).findByOwner(username);
+        verify(this.mongoInvitationCodesRepository).findByOwner(username);
         var invitationCodesAC = ArgumentCaptor.forClass(List.class);
-        verify(this.invitationCodeRepository).saveAll(invitationCodesAC.capture());
-        List<DbInvitationCode> invitationCodes = invitationCodesAC.getValue();
+        verify(this.mongoInvitationCodesRepository).saveAll(invitationCodesAC.capture());
+        List<MongoDbInvitationCode> invitationCodes = invitationCodesAC.getValue();
         assertThat(invitationCodes).hasSize(10);
         invitationCodes.forEach(invitationCode -> {
             assertThat(invitationCode.getOwner()).isEqualTo(username);

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -18,48 +18,48 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = {
-                InvitationCodeRepository.class
+                MongoInvitationCodesRepository.class
         }
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class InvitationCodeRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final InvitationCodeRepository invitationCodeRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
 
     @Override
-    public MongoRepository<DbInvitationCode, String> getMongoRepository() {
-        return this.invitationCodeRepository;
+    public MongoRepository<MongoDbInvitationCode, String> getMongoRepository() {
+        return this.mongoInvitationCodesRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.invitationCodeRepository.saveAll(dummyInvitationCodesData1());
+        this.mongoInvitationCodesRepository.saveAll(dummyInvitationCodesData1());
 
         // Act
-        var count = this.invitationCodeRepository.count();
+        var count = this.mongoInvitationCodesRepository.count();
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.invitationCodeRepository.findByInvitedAlreadyUsed()).hasSize(1);
-        assertThat(this.invitationCodeRepository.findByInvitedNotUsed()).hasSize(5);
+        assertThat(this.mongoInvitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
+        assertThat(this.mongoInvitationCodesRepository.findByInvitedNotUsed()).hasSize(5);
     }
 
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.invitationCodeRepository.saveAll(dummyInvitationCodesData1());
+        this.mongoInvitationCodesRepository.saveAll(dummyInvitationCodesData1());
 
         // Act-Assert-0
-        assertThat(this.invitationCodeRepository.count()).isEqualTo(6);
+        assertThat(this.mongoInvitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodeRepository.deleteByInvitedAlreadyUsed();
-        assertThat(this.invitationCodeRepository.count()).isEqualTo(5);
+        this.mongoInvitationCodesRepository.deleteByInvitedAlreadyUsed();
+        assertThat(this.mongoInvitationCodesRepository.count()).isEqualTo(5);
 
         // Act-Assert-2
-        this.invitationCodeRepository.deleteByInvitedNotUsed();
-        assertThat(this.invitationCodeRepository.count()).isZero();
+        this.mongoInvitationCodesRepository.deleteByInvitedNotUsed();
+        assertThat(this.mongoInvitationCodesRepository.count()).isZero();
     }
 }

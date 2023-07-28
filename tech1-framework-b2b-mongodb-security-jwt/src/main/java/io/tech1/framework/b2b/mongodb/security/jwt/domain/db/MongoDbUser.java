@@ -29,7 +29,7 @@ import static java.util.Objects.nonNull;
 @ToString
 // Mongodb
 @Document(collection = "tech1_users")
-public class DbUser {
+public class MongoDbUser {
     @Id
     private String id;
 
@@ -44,7 +44,7 @@ public class DbUser {
     private Email email;
     private String name;
 
-    public DbUser(Username username, Password password, String zoneId, List<SimpleGrantedAuthority> authorities) {
+    public MongoDbUser(Username username, Password password, String zoneId, List<SimpleGrantedAuthority> authorities) {
         assertNonNullOrThrow(username, invalidAttribute("DbUser.username"));
         assertNonNullOrThrow(password, invalidAttribute("DbUser.password"));
         assertZoneIdOrThrow(zoneId, invalidAttribute("DbUser.zoneId"));

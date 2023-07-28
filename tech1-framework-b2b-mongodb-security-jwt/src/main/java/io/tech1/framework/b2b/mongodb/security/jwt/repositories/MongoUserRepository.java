@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 
 @Repository
-public interface UserRepository extends MongoRepository<DbUser, String> {
+public interface MongoUserRepository extends MongoRepository<MongoDbUser, String> {
     // ================================================================================================================
     // Constants
     // ================================================================================================================
@@ -24,25 +24,25 @@ public interface UserRepository extends MongoRepository<DbUser, String> {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    DbUser findByEmail(Email email);
-    DbUser findByUsername(Username username);
-    List<DbUser> findByUsernameIn(Set<Username> usernames);
-    List<DbUser> findByUsernameIn(List<Username> usernames);
+    MongoDbUser findByEmail(Email email);
+    MongoDbUser findByUsername(Username username);
+    List<MongoDbUser> findByUsernameIn(Set<Username> usernames);
+    List<MongoDbUser> findByUsernameIn(List<Username> usernames);
 
     // ================================================================================================================
     // Queries
     // ================================================================================================================
     @Query(value = "{ 'authorities': ?0}")
-    List<DbUser> findByAuthority(SimpleGrantedAuthority authority);
+    List<MongoDbUser> findByAuthority(SimpleGrantedAuthority authority);
 
     @Query(value = "{ 'authorities': ?0}", fields = "{ 'id': 0, 'username' : 1}")
-    List<DbUser> findByAuthorityProjectionUsernames(SimpleGrantedAuthority authority);
+    List<MongoDbUser> findByAuthorityProjectionUsernames(SimpleGrantedAuthority authority);
 
     @Query(value = "{ 'authorities': { '$ne': ?0}}")
-    List<DbUser> findByAuthorityNotEqual(SimpleGrantedAuthority authority);
+    List<MongoDbUser> findByAuthorityNotEqual(SimpleGrantedAuthority authority);
 
     @Query(value = "{ 'authorities': { '$ne': ?0}}", fields = "{ 'id': 0, 'username' : 1}")
-    List<DbUser> findByAuthorityNotEqualProjectionUsernames(SimpleGrantedAuthority authority);
+    List<MongoDbUser> findByAuthorityNotEqualProjectionUsernames(SimpleGrantedAuthority authority);
 
     @Query(value = "{ 'authorities': ?0}", delete = true)
     void deleteByAuthority(SimpleGrantedAuthority authority);
@@ -50,20 +50,20 @@ public interface UserRepository extends MongoRepository<DbUser, String> {
     @Query(value = "{ 'authorities': { '$ne': ?0}}", delete = true)
     void deleteByAuthorityNotEqual(SimpleGrantedAuthority authority);
 
-    default List<DbUser> findByAuthoritySuperadmin() {
+    default List<MongoDbUser> findByAuthoritySuperadmin() {
         return this.findByAuthority(SUPERADMIN);
     }
 
     default List<Username> findSuperadminsUsernames() {
-        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(DbUser::getUsername).collect(Collectors.toList());
+        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(MongoDbUser::getUsername).collect(Collectors.toList());
     }
 
-    default List<DbUser> findByAuthorityNotSuperadmin() {
+    default List<MongoDbUser> findByAuthorityNotSuperadmin() {
         return this.findByAuthorityNotEqual(SUPERADMIN);
     }
 
     default List<Username> findNotSuperadminsUsernames() {
-        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(DbUser::getUsername).collect(Collectors.toList());
+        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(MongoDbUser::getUsername).collect(Collectors.toList());
     }
 
     default void deleteByAuthoritySuperadmin() {

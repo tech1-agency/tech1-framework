@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +29,8 @@ class MongoUserDetailsAssistantTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        UserRepository userRepository() {
-            return mock(UserRepository.class);
+        MongoUserRepository userRepository() {
+            return mock(MongoUserRepository.class);
         }
 
         @Bean
@@ -41,36 +41,36 @@ class MongoUserDetailsAssistantTest {
         }
     }
 
-    private final UserRepository userRepository;
+    private final MongoUserRepository mongoUserRepository;
 
     private final MongoUserDetailsAssistant componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.userRepository
+                this.mongoUserRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.userRepository
+                this.mongoUserRepository
         );
     }
 
     @Test
     void loadUserByUsernameExceptionTest() {
         // Arrange
-        var dbUser = entity(DbUser.class);
+        var dbUser = entity(MongoDbUser.class);
         var username = dbUser.getUsername();
-        when(this.userRepository.findByUsername(username)).thenReturn(null);
+        when(this.mongoUserRepository.findByUsername(username)).thenReturn(null);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.loadUserByUsername(username.identifier()));
 
         // Assert
-        verify(this.userRepository).findByUsername(username);
+        verify(this.mongoUserRepository).findByUsername(username);
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
                 .hasMessage(entityNotFound("Username", username.identifier()));
@@ -79,15 +79,15 @@ class MongoUserDetailsAssistantTest {
     @Test
     void loadUserByUsernameTest() {
         // Arrange
-        var dbUser = entity(DbUser.class);
+        var dbUser = entity(MongoDbUser.class);
         var username = dbUser.getUsername();
-        when(this.userRepository.findByUsername(username)).thenReturn(dbUser);
+        when(this.mongoUserRepository.findByUsername(username)).thenReturn(dbUser);
 
         // Act
         var jwtUser = this.componentUnderTest.loadUserByUsername(username.identifier());
 
         // Assert
-        verify(this.userRepository).findByUsername(username);
+        verify(this.mongoUserRepository).findByUsername(username);
         assertThat(jwtUser).isNotNull();
         assertThat(jwtUser.getUsername()).isEqualTo(username.identifier());
         assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().value());

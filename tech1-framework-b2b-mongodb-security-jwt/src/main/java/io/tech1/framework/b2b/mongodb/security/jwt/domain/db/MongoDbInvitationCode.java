@@ -25,7 +25,7 @@ import static java.util.Objects.nonNull;
 @ToString
 // Mongodb
 @Document(collection = "tech1_invitation_codes")
-public class DbInvitationCode {
+public class MongoDbInvitationCode {
     @Id
     private String id;
 
@@ -35,7 +35,7 @@ public class DbInvitationCode {
 
     private Username invited;
 
-    public DbInvitationCode(
+    public MongoDbInvitationCode(
             Username owner,
             List<SimpleGrantedAuthority> authorities
     ) {

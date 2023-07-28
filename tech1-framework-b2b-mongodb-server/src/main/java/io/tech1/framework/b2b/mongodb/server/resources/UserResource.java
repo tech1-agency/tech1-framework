@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.server.resources;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class UserResource {
     private final UserService userService;
 
     @GetMapping
-    public List<DbUser> findAll() {
+    public List<MongoDbUser> findAll() {
         return this.userService.findAll();
     }
 }

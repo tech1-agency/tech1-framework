@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUserValidator;
 import io.tech1.framework.domain.base.Email;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongodbBaseUserValidatorTest {
+class MongoBaseUserValidatorTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
         return Stream.of(
@@ -60,21 +60,21 @@ class MongodbBaseUserValidatorTest {
 
     }
 
-    private final UserRepository userRepository;
+    private final MongoUserRepository mongoUserRepository;
 
     private final BaseUserValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.userRepository
+                this.mongoUserRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.userRepository
+                this.mongoUserRepository
         );
     }
 
@@ -113,7 +113,7 @@ class MongodbBaseUserValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var email = randomEmail();
-        when(this.userRepository.findByEmail(email)).thenReturn(null);
+        when(this.mongoUserRepository.findByEmail(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -121,15 +121,15 @@ class MongodbBaseUserValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.userRepository).findByEmail(email);
+        verify(this.mongoUserRepository).findByEmail(email);
     }
 
     @Test
     void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
-        var user= entity(DbUser.class);
+        var user= entity(MongoDbUser.class);
         var email = randomEmail();
-        when(this.userRepository.findByEmail(email)).thenReturn(user);
+        when(this.mongoUserRepository.findByEmail(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -137,7 +137,7 @@ class MongodbBaseUserValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.userRepository).findByEmail(email);
+        verify(this.mongoUserRepository).findByEmail(email);
     }
 
     @Test
@@ -145,8 +145,8 @@ class MongodbBaseUserValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var email = randomEmail();
-        var user = entity(DbUser.class);
-        when(this.userRepository.findByEmail(email)).thenReturn(user);
+        var user = entity(MongoDbUser.class);
+        when(this.mongoUserRepository.findByEmail(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -156,7 +156,7 @@ class MongodbBaseUserValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Attribute `email` is invalid");
-        verify(this.userRepository).findByEmail(email);
+        verify(this.mongoUserRepository).findByEmail(email);
     }
 
     @Test

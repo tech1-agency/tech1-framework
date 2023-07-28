@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -33,13 +33,13 @@ class RegistrationServiceImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        InvitationCodeRepository invitationCodeRepository() {
-            return mock(InvitationCodeRepository.class);
+        MongoInvitationCodesRepository invitationCodeRepository() {
+            return mock(MongoInvitationCodesRepository.class);
         }
 
         @Bean
-        UserRepository userRepository() {
-            return mock(UserRepository.class);
+        MongoUserRepository userRepository() {
+            return mock(MongoUserRepository.class);
         }
 
         @Bean
@@ -57,8 +57,8 @@ class RegistrationServiceImplTest {
         }
     }
 
-    private final InvitationCodeRepository invitationCodeRepository;
-    private final UserRepository userRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoUserRepository mongoUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final RegistrationService componentUnderTest;
@@ -66,8 +66,8 @@ class RegistrationServiceImplTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodeRepository,
-                this.userRepository,
+                this.mongoInvitationCodesRepository,
+                this.mongoUserRepository,
                 this.bCryptPasswordEncoder
         );
     }
@@ -75,8 +75,8 @@ class RegistrationServiceImplTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodeRepository,
-                this.userRepository,
+                this.mongoInvitationCodesRepository,
+                this.mongoUserRepository,
                 this.bCryptPasswordEncoder
         );
     }
@@ -91,26 +91,26 @@ class RegistrationServiceImplTest {
                 randomZoneId().getId(),
                 randomString()
         );
-        var dbInvitationCode = entity(DbInvitationCode.class);
-        when(this.invitationCodeRepository.findByValue(requestUserRegistration1.invitationCode())).thenReturn(dbInvitationCode);
+        var dbInvitationCode = entity(MongoDbInvitationCode.class);
+        when(this.mongoInvitationCodesRepository.findByValue(requestUserRegistration1.invitationCode())).thenReturn(dbInvitationCode);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var dbUserAC = ArgumentCaptor.forClass(DbUser.class);
-        var savedDbUser = entity(DbUser.class);
-        when(this.userRepository.save(any())).thenReturn(savedDbUser);
-        var dbInvitationCodeAC = ArgumentCaptor.forClass(DbInvitationCode.class);
+        var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
+        var savedDbUser = entity(MongoDbUser.class);
+        when(this.mongoUserRepository.save(any())).thenReturn(savedDbUser);
+        var dbInvitationCodeAC = ArgumentCaptor.forClass(MongoDbInvitationCode.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);
 
         // Assert
-        verify(this.invitationCodeRepository).findByValue(requestUserRegistration1.invitationCode());
+        verify(this.mongoInvitationCodesRepository).findByValue(requestUserRegistration1.invitationCode());
         verify(this.bCryptPasswordEncoder).encode(requestUserRegistration1.password().value());
-        verify(this.userRepository).save(dbUserAC.capture());
+        verify(this.mongoUserRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername()).isEqualTo(requestUserRegistration1.username());
         assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
         assertThat(dbUserAC.getValue().getAuthorities()).isEqualTo(dbInvitationCode.getAuthorities());
-        verify(this.invitationCodeRepository).save(dbInvitationCodeAC.capture());
+        verify(this.mongoInvitationCodesRepository).save(dbInvitationCodeAC.capture());
         assertThat(dbInvitationCodeAC.getValue().getInvited()).isEqualTo(savedDbUser.getUsername());
     }
 

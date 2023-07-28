@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserR
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1Failure;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -22,14 +22,14 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MongodbRegistrationRequestsValidator implements RegistrationRequestsValidator {
+public class MongoRegistrationRequestsValidator implements RegistrationRequestsValidator {
 
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Repositories
-    private final InvitationCodeRepository invitationCodeRepository;
-    private final UserRepository userRepository;
+    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoUserRepository mongoUserRepository;
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
@@ -46,7 +46,7 @@ public class MongodbRegistrationRequestsValidator implements RegistrationRequest
 
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        var user = this.userRepository.findByUsername(username);
+        var user = this.mongoUserRepository.findByUsername(username);
         if (nonNull(user)) {
             var exception = entityAlreadyUsed("Username");
             this.securityJwtPublisher.publishRegistration1Failure(
@@ -66,7 +66,7 @@ public class MongodbRegistrationRequestsValidator implements RegistrationRequest
             throw new RegistrationException(exception);
         }
 
-        var dbInvitationCode = this.invitationCodeRepository.findByValue(invitationCode);
+        var dbInvitationCode = this.mongoInvitationCodesRepository.findByValue(invitationCode);
         if (nonNull(dbInvitationCode)) {
             if (nonNull(dbInvitationCode.getInvited())) {
                 var exception = entityAlreadyUsed("InvitationCode");

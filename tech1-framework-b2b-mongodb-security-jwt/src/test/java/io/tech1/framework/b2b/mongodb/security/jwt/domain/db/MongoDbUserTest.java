@@ -9,12 +9,12 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DbUserTest {
+class MongoDbUserTest {
 
     @Test
     void getNotNullAttributesTest() {
         // Arrange
-        var user = new DbUser(
+        var user = new MongoDbUser(
                 randomUsername(),
                 randomPassword(),
                 randomZoneId().getId(),
@@ -33,7 +33,7 @@ class DbUserTest {
     @Test
     void getNotNullAttributesLegacyMigrationNullPointerExceptionTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
-        var user = new DbUser(
+        var user = new MongoDbUser(
                 randomUsername(),
                 randomPassword(),
                 randomZoneId().getId(),

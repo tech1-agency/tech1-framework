@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +17,17 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MongodbSessionsRequestsValidator implements SessionsRequestsValidator {
+public class MongoSessionsRequestsValidator implements SessionsRequestsValidator {
 
     // Repositories
-    private final UserSessionRepository userSessionRepository;
+    private final MongoUserSessionRepository mongoUserSessionRepository;
 
     @Override
     public void validateDeleteById(Username username, String sessionId) {
         assertNonNullNotBlankOrThrow(sessionId, invalidAttribute("sessionId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var session = this.userSessionRepository.requirePresence(sessionId);
+        var session = this.mongoUserSessionRepository.requirePresence(sessionId);
         if (!username.equals(session.getUsername())) {
             throw new IllegalArgumentException(accessDenied(username, "Session", sessionId));
         }

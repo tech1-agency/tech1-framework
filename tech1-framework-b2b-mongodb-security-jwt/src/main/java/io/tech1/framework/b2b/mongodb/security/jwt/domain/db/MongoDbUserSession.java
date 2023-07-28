@@ -15,14 +15,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 // Mongodb
 @Document(collection = "tech1_users_sessions")
-public class DbUserSession {
+public class MongoDbUserSession {
     @Id
     private String id;
     private Username username;
 
     private UserRequestMetadata requestMetadata;
 
-    public DbUserSession(
+    public MongoDbUserSession(
             JwtRefreshToken jwtRefreshToken,
             Username username,
             UserRequestMetadata requestMetadata

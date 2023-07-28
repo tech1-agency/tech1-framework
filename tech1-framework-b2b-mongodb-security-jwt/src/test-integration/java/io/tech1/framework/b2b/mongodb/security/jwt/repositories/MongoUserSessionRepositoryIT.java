@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -21,27 +21,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = {
-                UserSessionRepository.class
+                MongoUserSessionRepository.class
         }
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoUserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final UserSessionRepository userSessionRepository;
+    private final MongoUserSessionRepository mongoUserSessionRepository;
 
     @Override
-    public MongoRepository<DbUserSession, String> getMongoRepository() {
-        return this.userSessionRepository;
+    public MongoRepository<MongoDbUserSession, String> getMongoRepository() {
+        return this.mongoUserSessionRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.userSessionRepository.saveAll(dummyUserSessionsData1());
+        this.mongoUserSessionRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        var sessions = this.userSessionRepository.findByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
+        var sessions = this.mongoUserSessionRepository.findByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
         assertThat(sessions).hasSize(5);
@@ -50,12 +50,12 @@ class UserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.userSessionRepository.saveAll(dummyUserSessionsData1());
+        this.mongoUserSessionRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        this.userSessionRepository.deleteByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
+        this.mongoUserSessionRepository.deleteByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
-        assertThat(this.userSessionRepository.count()).isEqualTo(2);
+        assertThat(this.mongoUserSessionRepository.count()).isEqualTo(2);
     }
 }

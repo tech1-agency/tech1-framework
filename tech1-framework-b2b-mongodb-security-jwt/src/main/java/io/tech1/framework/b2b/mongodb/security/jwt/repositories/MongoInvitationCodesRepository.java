@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -12,19 +12,19 @@ import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @Repository
-public interface InvitationCodeRepository extends MongoRepository<DbInvitationCode, String> {
+public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbInvitationCode, String> {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    List<DbInvitationCode> findByOwner(Username username);
-    List<DbInvitationCode> findByInvitedIsNull();
-    DbInvitationCode findByValue(String value);
+    List<MongoDbInvitationCode> findByOwner(Username username);
+    List<MongoDbInvitationCode> findByInvitedIsNull();
+    MongoDbInvitationCode findByValue(String value);
 
-    default DbInvitationCode getById(String invitationCodeId) {
+    default MongoDbInvitationCode getById(String invitationCodeId) {
         return this.findById(invitationCodeId).orElse(null);
     }
 
-    default DbInvitationCode requirePresence(String invitationCodeId) {
+    default MongoDbInvitationCode requirePresence(String invitationCodeId) {
         var invitationCode = this.getById(invitationCodeId);
         assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId));
         return invitationCode;
@@ -35,11 +35,11 @@ public interface InvitationCodeRepository extends MongoRepository<DbInvitationCo
     // ================================================================================================================
     @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': true}}")
-    List<DbInvitationCode> findByInvitedAlreadyUsed();
+    List<MongoDbInvitationCode> findByInvitedAlreadyUsed();
 
     @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': false}}")
-    List<DbInvitationCode> findByInvitedNotUsed();
+    List<MongoDbInvitationCode> findByInvitedNotUsed();
 
     @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': true}}", delete = true)

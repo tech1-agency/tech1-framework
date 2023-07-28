@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.random;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
@@ -20,7 +20,7 @@ public class SecurityJwtDbRandomUtility {
     // =================================================================================================================
     // InvitationCodes: Dummy Data
     // =================================================================================================================
-    public static List<DbInvitationCode> dummyInvitationCodesData1() {
+    public static List<MongoDbInvitationCode> dummyInvitationCodesData1() {
         var invitationCode1 = invitationCodeByOwner("user1");
         var invitationCode2 = invitationCodeByOwner("user1");
         var invitationCode3 = invitationCodeByOwner("user2");
@@ -43,7 +43,7 @@ public class SecurityJwtDbRandomUtility {
     // =================================================================================================================
     // Users: Dummy Data
     // =================================================================================================================
-    public static List<DbUser> dummyUsersData1() {
+    public static List<MongoDbUser> dummyUsersData1() {
         return List.of(
                 superadmin("sa1"),
                 superadmin("sa2"),
@@ -57,7 +57,7 @@ public class SecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions: Dummy Data
     // =================================================================================================================
-    public static List<DbUserSession> dummyUserSessionsData1() {
+    public static List<MongoDbUserSession> dummyUserSessionsData1() {
         return List.of(
                 sessionByOwner("sa1"),
                 sessionByOwner("sa1"),
@@ -72,8 +72,8 @@ public class SecurityJwtDbRandomUtility {
     // =================================================================================================================
     // InvitationCodes
     // =================================================================================================================
-    public static DbInvitationCode invitationCodeByOwner(String owner) {
-        return new DbInvitationCode(
+    public static MongoDbInvitationCode invitationCodeByOwner(String owner) {
+        return new MongoDbInvitationCode(
                 Username.of(owner),
                 List.of(
                         new SimpleGrantedAuthority(randomString()),
@@ -86,24 +86,24 @@ public class SecurityJwtDbRandomUtility {
     // =================================================================================================================
     // Users
     // =================================================================================================================
-    public static DbUser superadmin(String username) {
+    public static MongoDbUser superadmin(String username) {
         return randomUserBy(username, SUPER_ADMIN);
     }
 
-    public static DbUser admin(String username) {
+    public static MongoDbUser admin(String username) {
         return randomUserBy(username, "admin");
     }
 
-    public static DbUser user(String username) {
+    public static MongoDbUser user(String username) {
         return randomUserBy(username, "user");
     }
 
-    public static DbUser randomUserBy(String username, String authority) {
+    public static MongoDbUser randomUserBy(String username, String authority) {
         return randomUserBy(username, List.of(authority));
     }
 
-    public static DbUser randomUserBy(String username, List<String> authorities) {
-        return new DbUser(
+    public static MongoDbUser randomUserBy(String username, List<String> authorities) {
+        return new MongoDbUser(
                 Username.of(username),
                 randomPassword(),
                 randomZoneId().getId(),
@@ -114,8 +114,8 @@ public class SecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions
     // =================================================================================================================
-    public static DbUserSession sessionByOwner(String owner) {
-        return new DbUserSession(
+    public static MongoDbUserSession sessionByOwner(String owner) {
+        return new MongoDbUserSession(
                 new JwtRefreshToken(randomString()),
                 Username.of(owner),
                 randomUserRequestMetadata()

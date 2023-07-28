@@ -2,19 +2,19 @@ package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +32,7 @@ import static io.tech1.framework.domain.enums.Status.COMPLETED;
 import static io.tech1.framework.domain.enums.Status.STARTED;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController

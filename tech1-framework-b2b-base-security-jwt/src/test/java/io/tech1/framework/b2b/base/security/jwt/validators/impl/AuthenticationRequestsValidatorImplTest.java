@@ -1,8 +1,7 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
+package io.tech1.framework.b2b.base.security.jwt.validators.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.AuthenticationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -30,11 +29,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 class AuthenticationRequestsValidatorImplTest {
 
     @Configuration
-    @Import({
-            TestsApplicationValidatorsContext.class
-    })
     static class ContextConfiguration {
-
+        @Bean
+        public AuthenticationRequestsValidator authenticationRequestsValidator() {
+            return new BaseAuthenticationRequestsValidator();
+        }
     }
 
     private static Stream<Arguments> validateLoginRequestTest() {

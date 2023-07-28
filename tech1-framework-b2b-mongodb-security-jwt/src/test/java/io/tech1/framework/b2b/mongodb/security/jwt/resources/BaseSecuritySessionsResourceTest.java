@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.Response
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.SessionsRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;

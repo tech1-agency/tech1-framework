@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
@@ -9,7 +9,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class RegistrationRequestsValidatorImplTest {
+class MongodbRegistrationRequestsValidatorTest {
 
     @Configuration
     @Import({

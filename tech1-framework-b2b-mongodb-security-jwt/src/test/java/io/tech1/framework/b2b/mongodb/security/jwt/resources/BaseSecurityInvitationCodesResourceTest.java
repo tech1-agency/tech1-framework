@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;

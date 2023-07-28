@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistrati
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;

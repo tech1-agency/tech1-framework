@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationSecurityJwtMvc;
+import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationResourcesContext;
@@ -24,7 +24,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        ApplicationSecurityJwtMvc.class,
+        ApplicationBaseSecurityJwtMvc.class,
         ApplicationFrameworkPropertiesContext.class,
         TestsApplicationResourcesContext.class
 })

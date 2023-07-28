@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.configurations;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.configurations.AbstractApplicationSecurityJwtConfigurer;
-import io.tech1.framework.b2b.mongodb.security.jwt.configurations.ApplicationBaseSecurityJwt;
+import io.tech1.framework.b2b.mongodb.security.jwt.configurations.ApplicationMongodbSecurityJwt;
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
 import io.tech1.framework.hardware.configurations.ApplicationHardwareMonitoring;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
@@ -29,7 +29,7 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 })
 @Import({
         ApplicationHardwareMonitoring.class,
-        ApplicationBaseSecurityJwt.class
+        ApplicationMongodbSecurityJwt.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigurer {

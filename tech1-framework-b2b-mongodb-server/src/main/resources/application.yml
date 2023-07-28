@@ -18,6 +18,13 @@ jasypt:
 
 # Tech1 Platform
 tech1:
+  emailConfigs:
+    enabled: true
+    host: smtp.gmail.com
+    port: 587
+    username: hq.tech1.io@gmail.com
+    from: "Tech1 Ops <hq.tech1.io@gmail.com>"
+    password: "frbmwkqeytrxihrt"
   serverConfigs:
     name: tech1-framework-b2b-mongodb-server
   asyncConfigs:

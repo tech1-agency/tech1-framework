@@ -1,10 +1,10 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class InvitationCodeRequestsValidatorImplTest {
+class MongodbInvitationCodeRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(

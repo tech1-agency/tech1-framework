@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewIn
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

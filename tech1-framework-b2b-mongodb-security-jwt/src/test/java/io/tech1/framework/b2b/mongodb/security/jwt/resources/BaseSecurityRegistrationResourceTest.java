@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

@@ -1,7 +1,7 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.SessionsRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SessionsRequestsValidatorImpl implements SessionsRequestsValidator {
+public class MongodbSessionsRequestsValidator implements SessionsRequestsValidator {
 
     // Repositories
     private final UserSessionRepository userSessionRepository;

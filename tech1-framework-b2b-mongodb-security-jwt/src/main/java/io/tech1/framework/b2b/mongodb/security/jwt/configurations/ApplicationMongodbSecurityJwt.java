@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.configurations;
 
-import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationSecurityJwtMvc;
+import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwt;
+import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.filters.JwtTokensFilter;
@@ -56,13 +57,14 @@ import static org.springframework.http.HttpMethod.*;
 @Import({
         ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
-        ApplicationSecurityJwtMvc.class,
+        ApplicationBaseSecurityJwtMvc.class,
+        ApplicationBaseSecurityJwt.class,
         ApplicationIncidents.class,
         ApplicationEmails.class,
         ApplicationMongodb.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
+public class ApplicationMongodbSecurityJwt extends WebSecurityConfigurerAdapter {
 
     // Assistants
     private final JwtUserDetailsAssistant jwtUserDetailsAssistant;

@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InvitationCodeRequestsValidatorImpl implements InvitationCodeRequestsValidator {
+public class MongodbInvitationCodeRequestsValidator implements InvitationCodeRequestsValidator {
 
     // Repositories
     private final InvitationCodeRepository invitationCodeRepository;

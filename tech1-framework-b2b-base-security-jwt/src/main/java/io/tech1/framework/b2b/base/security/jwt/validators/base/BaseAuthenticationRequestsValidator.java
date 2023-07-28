@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.base.security.jwt.validators.impl;
+package io.tech1.framework.b2b.base.security.jwt.validators.base;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;

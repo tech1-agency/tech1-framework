@@ -29,7 +29,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationSecurityJwtMvcTest {
+class ApplicationBaseSecurityJwtMvcTest {
 
     @Configuration
     @Import(
@@ -40,14 +40,14 @@ class ApplicationSecurityJwtMvcTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        ApplicationSecurityJwtMvc applicationMVC() {
-            return new ApplicationSecurityJwtMvc(
+        ApplicationBaseSecurityJwtMvc applicationMVC() {
+            return new ApplicationBaseSecurityJwtMvc(
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final ApplicationSecurityJwtMvc componentUnderTest;
+    private final ApplicationBaseSecurityJwtMvc componentUnderTest;
 
     @Test
     void beansTests() {

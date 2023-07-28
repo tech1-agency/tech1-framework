@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1Failure;
@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RegistrationRequestsValidatorImpl implements RegistrationRequestsValidator {
+public class MongodbRegistrationRequestsValidator implements RegistrationRequestsValidator {
 
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;

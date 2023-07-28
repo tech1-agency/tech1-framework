@@ -279,7 +279,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.refreshToken", equalTo(userSession1.refreshToken())));
+                .andExpect(jsonPath("$.refreshToken", equalTo(userSession1.refreshToken().value())));
 
         // Assert
         verify(this.tokenService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));

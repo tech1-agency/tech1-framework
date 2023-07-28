@@ -4,12 +4,11 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDe
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -57,8 +56,8 @@ class TokenServiceImplTest {
         }
 
         @Bean
-        UserSessionService userSessionService() {
-            return mock(UserSessionService.class);
+        DeleteService deleteService() {
+            return mock(DeleteService.class);
         }
 
         @Bean
@@ -77,7 +76,7 @@ class TokenServiceImplTest {
                     this.jwtUserDetailsAssistant(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
-                    this.userSessionService(),
+                    this.deleteService(),
                     this.cookieProvider(),
                     this.securityJwtTokenUtility()
             );
@@ -90,7 +89,7 @@ class TokenServiceImplTest {
     private final SessionRegistry sessionRegistry;
     // Services
     private final TokenContextThrowerService tokenContextThrowerService;
-    private final UserSessionService userSessionService;
+    private final DeleteService deleteService;
     // Cookie
     private final CookieProvider cookieProvider;
     // Utilities
@@ -104,7 +103,7 @@ class TokenServiceImplTest {
                 this.jwtUserDetailsService,
                 this.sessionRegistry,
                 this.tokenContextThrowerService,
-                this.userSessionService,
+                this.deleteService,
                 this.cookieProvider,
                 this.securityJwtTokenUtils
         );
@@ -116,7 +115,7 @@ class TokenServiceImplTest {
                 this.jwtUserDetailsService,
                 this.sessionRegistry,
                 this.tokenContextThrowerService,
-                this.userSessionService,
+                this.deleteService,
                 this.cookieProvider,
                 this.securityJwtTokenUtils
         );
@@ -160,13 +159,13 @@ class TokenServiceImplTest {
         var user = entity(JwtUser.class);
         var jwtAccessToken = entity(JwtAccessToken.class);
         var newJwtRefreshToken = entity(JwtRefreshToken.class);
-        var userSession = entity(MongoDbUserSession.class);
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(oldJwtRefreshToken)).thenReturn(validatedClaims);
         when(this.tokenContextThrowerService.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken)).thenReturn(user);
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
         when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newJwtRefreshToken);
-        when(this.userSessionService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(userSession);
+        when(this.deleteService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(jwtRefreshToken);
 
         // Act
         var responseUserSession1 = this.componentUnderTest.refreshSessionOrThrow(request, response);
@@ -178,7 +177,7 @@ class TokenServiceImplTest {
         verify(this.tokenContextThrowerService).verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.userSessionService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
+        verify(this.deleteService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
         verify(this.cookieProvider).createJwtAccessCookie(jwtAccessToken, response);
         verify(this.cookieProvider).createJwtRefreshCookie(newJwtRefreshToken, response);
         var oldSessionAC = ArgumentCaptor.forClass(Session.class);
@@ -193,6 +192,6 @@ class TokenServiceImplTest {
         assertThat(newSession.username()).isEqualTo(user.username());
         assertThat(newSession.refreshToken().value()).isEqualTo(newJwtRefreshToken.value());
         assertThat(responseUserSession1).isNotNull();
-        assertThat(responseUserSession1.refreshToken()).isEqualTo(userSession.getJwtRefreshToken().value());
+        assertThat(responseUserSession1.refreshToken()).isEqualTo(jwtRefreshToken);
     }
 }

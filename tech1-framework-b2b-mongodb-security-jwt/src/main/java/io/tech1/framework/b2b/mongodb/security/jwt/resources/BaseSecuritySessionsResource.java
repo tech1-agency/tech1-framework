@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessio
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class BaseSecuritySessionsResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final UserSessionService userSessionService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
     private final CookieProvider cookieProvider;
     // Validators
@@ -50,7 +50,7 @@ public class BaseSecuritySessionsResource {
     public void deleteById(@PathVariable UserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
         this.sessionsRequestsValidator.validateDeleteById(username, sessionId);
-        this.userSessionService.deleteById(sessionId);
+        this.baseUsersSessionsService.deleteById(sessionId);
     }
 
     // WARNING: should NOT be used, under development
@@ -59,7 +59,7 @@ public class BaseSecuritySessionsResource {
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
         var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
-        this.userSessionService.deleteAllExceptCurrent(username, cookie);
+        this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);
     }
 }
 

@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import org.springframework.context.annotation.Bean;
@@ -50,8 +50,8 @@ public class TestsApplicationValidatorsContext {
     }
 
     @Bean
-    MongoUserSessionsRepository userSessionRepository() {
-        return mock(MongoUserSessionsRepository.class);
+    MongoUsersSessionsRepository userSessionRepository() {
+        return mock(MongoUsersSessionsRepository.class);
     }
 
     @Bean

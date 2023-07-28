@@ -7,7 +7,7 @@ import io.tech1.framework.domain.tuples.Tuple3;
 
 import java.util.List;
 
-public record SessionsValidatedTuple2(
+public record SessionsExpiredTable(
         List<Tuple3<Username, UserRequestMetadata, JwtRefreshToken>> expiredSessions,
         List<String> expiredOrInvalidSessionIds
 ) {

@@ -12,7 +12,7 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
@@ -62,7 +62,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     // Session
     private final SessionRegistry sessionRegistry;
     // Services
-    private final UserSessionService userSessionService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokenService tokenService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -83,7 +83,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         reset(
                 this.authenticationManager,
                 this.sessionRegistry,
-                this.userSessionService,
+                this.baseUsersSessionsService,
                 this.tokenService,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
@@ -98,7 +98,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         verifyNoMoreInteractions(
                 this.authenticationManager,
                 this.sessionRegistry,
-                this.userSessionService,
+                this.baseUsersSessionsService,
                 this.tokenService,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
@@ -139,7 +139,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         verify(this.jwtUserDetailsService).loadUserByUsername(username.identifier());
         verify(this.securityJwtTokenUtils).createJwtAccessToken(jwtUser.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(jwtUser.getJwtTokenCreationParams());
-        verify(this.userSessionService).save(eq(jwtUser), eq(jwtRefreshToken), any(HttpServletRequest.class));
+        verify(this.baseUsersSessionsService).save(eq(jwtUser), eq(jwtRefreshToken), any(HttpServletRequest.class));
         verify(this.cookieProvider).createJwtAccessCookie(eq(jwtAccessToken), any(HttpServletResponse.class));
         verify(this.cookieProvider).createJwtRefreshCookie(eq(jwtRefreshToken), any(HttpServletResponse.class));
         // WARNING: no verifications on static SecurityContextHolder

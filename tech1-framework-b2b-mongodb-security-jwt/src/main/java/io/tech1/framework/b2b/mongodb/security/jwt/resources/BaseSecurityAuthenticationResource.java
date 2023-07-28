@@ -13,7 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ public class BaseSecurityAuthenticationResource {
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Services
-    private final UserSessionService userSessionService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokenService tokenService;
     // Cookies
     private final CookieProvider cookieProvider;
@@ -71,7 +71,7 @@ public class BaseSecurityAuthenticationResource {
         var jwtAccessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var jwtRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.userSessionService.save(user, jwtRefreshToken, request);
+        this.baseUsersSessionsService.save(user, jwtRefreshToken, request);
 
         this.cookieProvider.createJwtAccessCookie(jwtAccessToken, response);
         this.cookieProvider.createJwtRefreshCookie(jwtRefreshToken, response);

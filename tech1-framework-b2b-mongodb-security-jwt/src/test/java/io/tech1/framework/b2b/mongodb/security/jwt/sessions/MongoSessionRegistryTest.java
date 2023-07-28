@@ -8,13 +8,13 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefres
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -67,13 +67,13 @@ class MongoSessionRegistryTest {
         }
 
         @Bean
-        UserSessionService userSessionService() {
-            return mock(UserSessionService.class);
+        BaseUsersSessionsService userSessionService() {
+            return mock(BaseUsersSessionsService.class);
         }
 
         @Bean
-        MongoUserSessionsRepository mongoUserSessionsRepository() {
-            return mock(MongoUserSessionsRepository.class);
+        MongoUsersSessionsRepository mongoUserSessionsRepository() {
+            return mock(MongoUsersSessionsRepository.class);
         }
 
         @Bean
@@ -89,8 +89,8 @@ class MongoSessionRegistryTest {
 
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
-    private final UserSessionService userSessionService;
-    private final MongoUserSessionsRepository mongoUserSessionsRepository;
+    private final BaseUsersSessionsService baseUsersSessionsService;
+    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
 
     private final SessionRegistry componentUnderTest;
 
@@ -101,8 +101,8 @@ class MongoSessionRegistryTest {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
-                this.userSessionService,
-                this.mongoUserSessionsRepository
+                this.baseUsersSessionsService,
+                this.mongoUsersSessionsRepository
         );
     }
 
@@ -111,8 +111,8 @@ class MongoSessionRegistryTest {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
-                this.userSessionService,
-                this.mongoUserSessionsRepository
+                this.baseUsersSessionsService,
+                this.mongoUsersSessionsRepository
         );
     }
 
@@ -129,11 +129,11 @@ class MongoSessionRegistryTest {
         var dbUserSession3 = entity(MongoDbUserSession.class);
         var dbUserSession4 = entity(MongoDbUserSession.class);
         var rndDbUserSession = entity(MongoDbUserSession.class);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(session1.refreshToken())).thenReturn(dbUserSession1);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(session2.refreshToken())).thenReturn(dbUserSession2);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(session3.refreshToken())).thenReturn(dbUserSession3);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(session4.refreshToken())).thenReturn(dbUserSession4);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(rndSession.refreshToken())).thenReturn(rndDbUserSession);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(session1.refreshToken())).thenReturn(dbUserSession1);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(session2.refreshToken())).thenReturn(dbUserSession2);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(session3.refreshToken())).thenReturn(dbUserSession3);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(session4.refreshToken())).thenReturn(dbUserSession4);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(rndSession.refreshToken())).thenReturn(rndDbUserSession);
 
         // Iteration #1
         var activeSessionsUsernames1 = this.componentUnderTest.getActiveSessionsUsernamesIdentifiers();
@@ -171,11 +171,11 @@ class MongoSessionRegistryTest {
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).isEmpty();
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(session1.refreshToken());
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(session2.refreshToken());
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(session3.refreshToken());
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(session4.refreshToken());
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(rndSession.refreshToken());
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(session1.refreshToken());
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(session2.refreshToken());
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(session3.refreshToken());
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(session4.refreshToken());
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(rndSession.refreshToken());
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session1.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session2.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session3.username()));
@@ -190,11 +190,11 @@ class MongoSessionRegistryTest {
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.getRequestMetadata()));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session4.username(), dbUserSession4.getRequestMetadata()));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(rndSession.username(), rndDbUserSession.getRequestMetadata()));
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(session1.refreshToken());
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(session2.refreshToken());
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(session3.refreshToken());
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(session4.refreshToken());
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(rndSession.refreshToken());
+        verify(this.mongoUsersSessionsRepository).deleteByRefreshToken(session1.refreshToken());
+        verify(this.mongoUsersSessionsRepository).deleteByRefreshToken(session2.refreshToken());
+        verify(this.mongoUsersSessionsRepository).deleteByRefreshToken(session3.refreshToken());
+        verify(this.mongoUsersSessionsRepository).deleteByRefreshToken(session4.refreshToken());
+        verify(this.mongoUsersSessionsRepository).deleteByRefreshToken(rndSession.refreshToken());
     }
 
     @Test
@@ -244,13 +244,13 @@ class MongoSessionRegistryTest {
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
         var dbUserSession = entity(MongoDbUserSession.class);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(refreshToken)).thenReturn(dbUserSession);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(refreshToken)).thenReturn(dbUserSession);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(refreshToken);
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
@@ -259,7 +259,7 @@ class MongoSessionRegistryTest {
         var incident = incidentAC.getValue();
         assertThat(incident.username()).isEqualTo(username);
         assertThat(incident.userRequestMetadata()).isEqualTo(dbUserSession.getRequestMetadata());
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(refreshToken);
+        verify(this.mongoUsersSessionsRepository).deleteByRefreshToken(refreshToken);
     }
 
     @Test
@@ -268,13 +268,13 @@ class MongoSessionRegistryTest {
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(refreshToken)).thenReturn(null);
+        when(this.mongoUsersSessionsRepository.findByRefreshToken(refreshToken)).thenReturn(null);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(refreshToken);
+        verify(this.mongoUsersSessionsRepository).findByRefreshToken(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().session()).isEqualTo(session);
@@ -307,20 +307,19 @@ class MongoSessionRegistryTest {
         when(dbUserSession3.getId()).thenReturn(randomString());
         when(dbUserSession3.getRequestMetadata()).thenReturn(entity(UserRequestMetadata.class));
         var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
-        var sessionsValidatedTuple2 = new SessionsValidatedTuple2(
+        var sessionsExpiredTable = new SessionsExpiredTable(
                 List.of(new Tuple3<>(username1, dbUserSession3.getRequestMetadata(), dbUserSession3.getJwtRefreshToken())),
                 List.of(dbUserSession1.getId(), dbUserSession2.getId())
         );
         var usernames = Set.of(username1, username2, username3);
-        when(this.mongoUserSessionsRepository.findByUsernameIn(usernames)).thenReturn(usersSessions);
-        when(this.userSessionService.validate(usersSessions)).thenReturn(sessionsValidatedTuple2);
+        when(this.mongoUsersSessionsRepository.findByUsernameIn(usernames)).thenReturn(usersSessions);
+        when(this.baseUsersSessionsService.getExpiredSessions(usernames)).thenReturn(sessionsExpiredTable);
 
         // Act
         this.componentUnderTest.cleanByExpiredRefreshTokens(usernames);
 
         // Assert
-        verify(this.mongoUserSessionsRepository).findByUsernameIn(usernames);
-        verify(this.userSessionService).validate(usersSessions);
+        verify(this.baseUsersSessionsService).getExpiredSessions(usernames);
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(3);
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(3);
         var eseCaptor = ArgumentCaptor.forClass(EventSessionExpired.class);
@@ -333,7 +332,7 @@ class MongoSessionRegistryTest {
         var sessionExpiredIncident = seiCaptor.getValue();
         assertThat(sessionExpiredIncident.username()).isEqualTo(username1);
         assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.getRequestMetadata());
-        verify(this.mongoUserSessionsRepository).deleteByIdIn(List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+        verify(this.mongoUsersSessionsRepository).deleteByIdIn(List.of(dbUserSession1.getId(), dbUserSession2.getId()));
     }
 
     @Test
@@ -388,13 +387,13 @@ class MongoSessionRegistryTest {
             var userSessions = item.a();
             var expectedSessionSize = item.b();
             var expectedAnyProblems = item.c();
-            when(this.mongoUserSessionsRepository.findByUsername(username)).thenReturn(userSessions);
+            when(this.mongoUsersSessionsRepository.findByUsername(username)).thenReturn(userSessions);
 
             // Act
             var currentUserDbSessionsTable = this.componentUnderTest.getSessionsTable(username, cookie);
 
             // Assert
-            verify(this.mongoUserSessionsRepository).findByUsername(username);
+            verify(this.mongoUsersSessionsRepository).findByUsername(username);
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
             assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
@@ -402,7 +401,7 @@ class MongoSessionRegistryTest {
             assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 
             reset(
-                    this.mongoUserSessionsRepository
+                    this.mongoUsersSessionsRepository
             );
         });
     }

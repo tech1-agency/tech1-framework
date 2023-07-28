@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthent
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
-import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UserEmailService;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
@@ -24,7 +24,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
     private final UserEmailService userEmailService;
-    private final DeleteService deleteService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
 
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
@@ -64,7 +64,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     @Override
     public void onSessionAddUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
         LOGGER.debug(SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA, this.getType(), event.username());
-        var tuple2 = this.deleteService.saveUserRequestMetadata(event);
+        var tuple2 = this.baseUsersSessionsService.saveUserRequestMetadata(event);
         var requestMetadata = tuple2.b();
         if (event.isAuthenticationLoginEndpoint()) {
             this.userEmailService.executeAuthenticationLogin(

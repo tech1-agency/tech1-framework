@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ class MongoSessionsRequestsValidatorTest {
 
     }
 
-    private final MongoUserSessionsRepository mongoUserSessionsRepository;
+    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
 
     private final SessionsRequestsValidator componentUnderTest;
 
@@ -45,7 +45,7 @@ class MongoSessionsRequestsValidatorTest {
         var username = entity(Username.class);
         var sessionId = entity(UserSessionId.class);
         var session = entity(MongoDbUserSession.class);
-        when(this.mongoUserSessionsRepository.requirePresence(sessionId)).thenReturn(session);
+        when(this.mongoUsersSessionsRepository.requirePresence(sessionId)).thenReturn(session);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
@@ -54,7 +54,7 @@ class MongoSessionsRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `Session`. Value: `" + sessionId + "`");
-        verify(this.mongoUserSessionsRepository).requirePresence(sessionId);
+        verify(this.mongoUsersSessionsRepository).requirePresence(sessionId);
     }
 
     @Test
@@ -64,12 +64,12 @@ class MongoSessionsRequestsValidatorTest {
         var sessionId = entity(UserSessionId.class);
         var session = entity(MongoDbUserSession.class);
         session.setUsername(username);
-        when(this.mongoUserSessionsRepository.requirePresence(sessionId)).thenReturn(session);
+        when(this.mongoUsersSessionsRepository.requirePresence(sessionId)).thenReturn(session);
 
         // Act
         this.componentUnderTest.validateDeleteById(username, sessionId);
 
         // Assert
-        verify(this.mongoUserSessionsRepository).requirePresence(sessionId);
+        verify(this.mongoUsersSessionsRepository).requirePresence(sessionId);
     }
 }

@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.server.events.subscribers.framework;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.base.BaseSecurityJwtSubscriber;
-import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UserEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
     public SecurityJwtSubscriberImpl(
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
             UserEmailService userEmailService,
-            DeleteService deleteService
+            BaseUsersSessionsService baseUsersSessionsService
     ) {
         super(
                 securityJwtIncidentPublisher,
                 userEmailService,
-                deleteService
+                baseUsersSessionsService
         );
     }
 

@@ -4,11 +4,11 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDe
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -56,8 +56,8 @@ class MongoTokenServiceTest {
         }
 
         @Bean
-        DeleteService deleteService() {
-            return mock(DeleteService.class);
+        BaseUsersSessionsService baseUsersSessionsService() {
+            return mock(BaseUsersSessionsService.class);
         }
 
         @Bean
@@ -76,7 +76,7 @@ class MongoTokenServiceTest {
                     this.jwtUserDetailsAssistant(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),
-                    this.deleteService(),
+                    this.baseUsersSessionsService(),
                     this.cookieProvider(),
                     this.securityJwtTokenUtility()
             );
@@ -89,7 +89,7 @@ class MongoTokenServiceTest {
     private final SessionRegistry sessionRegistry;
     // Services
     private final TokenContextThrowerService tokenContextThrowerService;
-    private final DeleteService deleteService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
     private final CookieProvider cookieProvider;
     // Utilities
@@ -103,7 +103,7 @@ class MongoTokenServiceTest {
                 this.jwtUserDetailsService,
                 this.sessionRegistry,
                 this.tokenContextThrowerService,
-                this.deleteService,
+                this.baseUsersSessionsService,
                 this.cookieProvider,
                 this.securityJwtTokenUtils
         );
@@ -115,7 +115,7 @@ class MongoTokenServiceTest {
                 this.jwtUserDetailsService,
                 this.sessionRegistry,
                 this.tokenContextThrowerService,
-                this.deleteService,
+                this.baseUsersSessionsService,
                 this.cookieProvider,
                 this.securityJwtTokenUtils
         );
@@ -165,7 +165,7 @@ class MongoTokenServiceTest {
         when(this.tokenContextThrowerService.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken)).thenReturn(user);
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
         when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newJwtRefreshToken);
-        when(this.deleteService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(jwtRefreshToken);
+        when(this.baseUsersSessionsService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(jwtRefreshToken);
 
         // Act
         var responseUserSession1 = this.componentUnderTest.refreshSessionOrThrow(request, response);
@@ -177,7 +177,7 @@ class MongoTokenServiceTest {
         verify(this.tokenContextThrowerService).verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.deleteService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
+        verify(this.baseUsersSessionsService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
         verify(this.cookieProvider).createJwtAccessCookie(jwtAccessToken, response);
         verify(this.cookieProvider).createJwtRefreshCookie(newJwtRefreshToken, response);
         var oldSessionAC = ArgumentCaptor.forClass(Session.class);

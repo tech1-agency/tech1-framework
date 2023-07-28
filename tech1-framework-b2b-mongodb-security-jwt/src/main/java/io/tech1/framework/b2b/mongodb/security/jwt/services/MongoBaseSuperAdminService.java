@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class MongoBaseSuperAdminService implements BaseSuperAdminService {
     private final SessionRegistry sessionRegistry;
     // Repositories
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
-    private final MongoUserSessionsRepository mongoUserSessionsRepository;
+    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
 
     @Override
     public List<ResponseInvitationCode> findUnused() {
@@ -42,7 +42,7 @@ public class MongoBaseSuperAdminService implements BaseSuperAdminService {
 
     @Override
     public ResponseServerSessionsTable getServerSessions(CookieRefreshToken cookie) {
-        var dbUserSessions = this.mongoUserSessionsRepository.findAll();
+        var dbUserSessions = this.mongoUsersSessionsRepository.findAll();
         var activeSessionsRefreshTokens = this.sessionRegistry.getActiveSessionsRefreshTokens();
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
         List<ResponseUserSession2> inactiveSessions = new ArrayList<>();

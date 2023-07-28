@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUse
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final UserSessionService userSessionService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
     private final CookieProvider cookieProvider;
     // Validators
@@ -52,7 +52,7 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.userSessionService,
+                this.baseUsersSessionsService,
                 this.cookieProvider,
                 this.sessionsRequestsValidator
         );
@@ -62,7 +62,7 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.userSessionService,
+                this.baseUsersSessionsService,
                 this.cookieProvider,
                 this.sessionsRequestsValidator
         );
@@ -133,7 +133,7 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.sessionsRequestsValidator).validateDeleteById(username, sessionId);
-        verify(this.userSessionService).deleteById(sessionId);
+        verify(this.baseUsersSessionsService).deleteById(sessionId);
     }
 
     @Test
@@ -154,6 +154,6 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.userSessionService).deleteAllExceptCurrent(username, cookie);
+        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(username, cookie);
     }
 }

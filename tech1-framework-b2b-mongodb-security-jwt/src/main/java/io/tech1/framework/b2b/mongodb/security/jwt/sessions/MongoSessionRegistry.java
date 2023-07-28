@@ -12,8 +12,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
@@ -42,9 +42,9 @@ public class MongoSessionRegistry implements SessionRegistry {
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
-    private final UserSessionService userSessionService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Repositories
-    private final MongoUserSessionsRepository mongoUserSessionsRepository;
+    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
 
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {
@@ -98,11 +98,11 @@ public class MongoSessionRegistry implements SessionRegistry {
         this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
         var jwtRefreshToken = session.refreshToken();
-        var dbUserSession = this.mongoUserSessionsRepository.findByRefreshToken(jwtRefreshToken);
+        var dbUserSession = this.mongoUsersSessionsRepository.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
             this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.getRequestMetadata()));
-            this.mongoUserSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
+            this.mongoUsersSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
         } else {
             this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
         }
@@ -110,8 +110,7 @@ public class MongoSessionRegistry implements SessionRegistry {
 
     @Override
     public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
-        var usersSessions = this.mongoUserSessionsRepository.findByUsernameIn(usernames);
-        var sessionsValidatedTuple2 = this.userSessionService.validate(usersSessions);
+        var sessionsValidatedTuple2 = this.baseUsersSessionsService.getExpiredSessions(usernames);
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {
             var username = tuple2.a();
@@ -124,14 +123,14 @@ public class MongoSessionRegistry implements SessionRegistry {
             this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
         });
 
-        var deleted = this.mongoUserSessionsRepository.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
+        var deleted = this.mongoUsersSessionsRepository.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 
     @Override
     public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
         return ResponseUserSessionsTable.of(
-                this.mongoUserSessionsRepository.findByUsername(username).stream()
+                this.mongoUsersSessionsRepository.findByUsername(username).stream()
                         .map(session ->
                                 ResponseUserSession2.of(
                                         session.getUsername(),

@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSession
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
-import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UserEmailService;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -47,8 +47,8 @@ class BaseSecurityJwtSubscriberTest {
         }
 
         @Bean
-        DeleteService deleteService() {
-            return mock(DeleteService.class);
+        BaseUsersSessionsService baseUsersSessionsService() {
+            return mock(BaseUsersSessionsService.class);
         }
 
         @Bean
@@ -56,7 +56,7 @@ class BaseSecurityJwtSubscriberTest {
             return new BaseSecurityJwtSubscriber(
                     this.securityJwtIncidentPublisher(),
                     this.userEmailService(),
-                    this.deleteService()
+                    this.baseUsersSessionsService()
             );
         }
     }
@@ -65,7 +65,7 @@ class BaseSecurityJwtSubscriberTest {
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
     private final UserEmailService userEmailService;
-    private final DeleteService deleteService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
 
     private final SecurityJwtSubscriber componentUnderTest;
 
@@ -74,7 +74,7 @@ class BaseSecurityJwtSubscriberTest {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.userEmailService,
-                this.deleteService
+                this.baseUsersSessionsService
         );
     }
 
@@ -83,7 +83,7 @@ class BaseSecurityJwtSubscriberTest {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.userEmailService,
-                this.deleteService
+                this.baseUsersSessionsService
         );
     }
 
@@ -184,13 +184,13 @@ class BaseSecurityJwtSubscriberTest {
                 false
         );
         var tuple2 = new Tuple2<>(entity(UserSessionId.class), entity(UserRequestMetadata.class));
-        when(this.deleteService.saveUserRequestMetadata(event)).thenReturn(tuple2);
+        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(tuple2);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.deleteService).saveUserRequestMetadata(event);
+        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
     }
 
     @Test
@@ -206,13 +206,13 @@ class BaseSecurityJwtSubscriberTest {
                 false
         );
         var tuple2 = new Tuple2<>(entity(UserSessionId.class), entity(UserRequestMetadata.class));
-        when(this.deleteService.saveUserRequestMetadata(event)).thenReturn(tuple2);
+        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(tuple2);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.deleteService).saveUserRequestMetadata(event);
+        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         verify(this.userEmailService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), tuple2.b()));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), tuple2.b()));
     }
@@ -230,13 +230,13 @@ class BaseSecurityJwtSubscriberTest {
                 true
         );
         var tuple2 = new Tuple2<>(entity(UserSessionId.class), entity(UserRequestMetadata.class));
-        when(this.deleteService.saveUserRequestMetadata(event)).thenReturn(tuple2);
+        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(tuple2);
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
-        verify(this.deleteService).saveUserRequestMetadata(event);
+        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         verify(this.userEmailService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), tuple2.b()));
         verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), tuple2.b()));
     }

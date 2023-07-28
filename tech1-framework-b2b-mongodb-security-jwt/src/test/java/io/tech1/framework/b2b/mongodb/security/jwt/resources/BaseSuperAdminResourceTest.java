@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUse
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +32,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
     // Services
     private final BaseSuperAdminService baseSuperAdminService;
-    private final UserSessionService userSessionService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
     private final CookieProvider cookieProvider;
 
@@ -44,7 +44,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.baseSuperAdminService,
-                this.userSessionService,
+                this.baseUsersSessionsService,
                 this.cookieProvider
         );
     }
@@ -53,7 +53,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.baseSuperAdminService,
-                this.userSessionService,
+                this.baseUsersSessionsService,
                 this.cookieProvider
         );
     }
@@ -108,7 +108,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.userSessionService).deleteById(sessionId);
+        verify(this.baseUsersSessionsService).deleteById(sessionId);
     }
 
     @Test
@@ -126,6 +126,6 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.userSessionService).deleteAllExceptCurrentAsSuperuser(cookie);
+        verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

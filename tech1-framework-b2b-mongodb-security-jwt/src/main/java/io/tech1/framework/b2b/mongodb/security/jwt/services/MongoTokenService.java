@@ -8,11 +8,11 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.base.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class MongoTokenService implements TokenService {
     private final SessionRegistry sessionRegistry;
     // Services
     private final TokenContextThrowerService tokenContextThrowerService;
-    private final DeleteService deleteService;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
     private final CookieProvider cookieProvider;
     // Utilities
@@ -74,7 +74,7 @@ public class MongoTokenService implements TokenService {
         var jwtAccessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var newJwtRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        var jwtRefreshToken = this.deleteService.refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
+        var jwtRefreshToken = this.baseUsersSessionsService.refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
 
         this.cookieProvider.createJwtAccessCookie(jwtAccessToken, response);
         this.cookieProvider.createJwtRefreshCookie(newJwtRefreshToken, response);

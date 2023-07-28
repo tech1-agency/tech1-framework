@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.b2b.base.security.jwt.services.UserEmailService;
+import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -42,8 +42,8 @@ class BaseSecurityJwtSubscriberTest {
         }
 
         @Bean
-        UserEmailService userEmailService() {
-            return mock(UserEmailService.class);
+        UsersEmailsService userEmailService() {
+            return mock(UsersEmailsService.class);
         }
 
         @Bean
@@ -64,7 +64,7 @@ class BaseSecurityJwtSubscriberTest {
     // Publishers
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
-    private final UserEmailService userEmailService;
+    private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
 
     private final SecurityJwtSubscriber componentUnderTest;
@@ -73,7 +73,7 @@ class BaseSecurityJwtSubscriberTest {
     void beforeEach() {
         reset(
                 this.securityJwtIncidentPublisher,
-                this.userEmailService,
+                this.usersEmailsService,
                 this.baseUsersSessionsService
         );
     }
@@ -82,7 +82,7 @@ class BaseSecurityJwtSubscriberTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
-                this.userEmailService,
+                this.usersEmailsService,
                 this.baseUsersSessionsService
         );
     }
@@ -213,7 +213,7 @@ class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-        verify(this.userEmailService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), tuple2.b()));
+        verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), tuple2.b()));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), tuple2.b()));
     }
 
@@ -237,7 +237,7 @@ class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-        verify(this.userEmailService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), tuple2.b()));
+        verify(this.usersEmailsService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), tuple2.b()));
         verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), tuple2.b()));
     }
 }

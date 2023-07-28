@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSession
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.b2b.base.security.jwt.services.UserEmailService;
+import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
@@ -23,7 +23,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     // Publishers
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
-    private final UserEmailService userEmailService;
+    private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
 
     @Override
@@ -67,7 +67,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         var tuple2 = this.baseUsersSessionsService.saveUserRequestMetadata(event);
         var requestMetadata = tuple2.b();
         if (event.isAuthenticationLoginEndpoint()) {
-            this.userEmailService.executeAuthenticationLogin(
+            this.usersEmailsService.executeAuthenticationLogin(
                     new FunctionAuthenticationLoginEmail(
                             event.username(),
                             event.email(),
@@ -82,7 +82,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
             );
         }
         if (event.isAuthenticationRefreshTokenEndpoint()) {
-            this.userEmailService.executeSessionRefreshed(
+            this.usersEmailsService.executeSessionRefreshed(
                     new FunctionSessionRefreshedEmail(
                             event.username(),
                             event.email(),

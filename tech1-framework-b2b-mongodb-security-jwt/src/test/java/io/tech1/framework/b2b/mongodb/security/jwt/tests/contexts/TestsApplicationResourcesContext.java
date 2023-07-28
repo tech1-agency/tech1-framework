@@ -10,7 +10,6 @@ import io.tech1.framework.b2b.base.security.jwt.validators.*;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.*;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
@@ -54,8 +53,8 @@ public class TestsApplicationResourcesContext {
     // Services
     // =================================================================================================================
     @Bean
-    public BaseUserService userService() {
-        return mock(BaseUserService.class);
+    public BaseUsersService userService() {
+        return mock(BaseUsersService.class);
     }
 
     @Bean
@@ -74,8 +73,8 @@ public class TestsApplicationResourcesContext {
     }
 
     @Bean
-    public TokenService tokenService() {
-        return mock(TokenService.class);
+    public TokensService tokenService() {
+        return mock(TokensService.class);
     }
 
     @Bean
@@ -139,27 +138,27 @@ public class TestsApplicationResourcesContext {
     // Validators
     // =================================================================================================================
     @Bean
-    public AuthenticationRequestsValidator authenticationRequestsValidator() {
-        return mock(AuthenticationRequestsValidator.class);
+    public BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
+        return mock(BaseAuthenticationRequestsValidator.class);
     }
 
     @Bean
-    public InvitationCodeRequestsValidator invitationCodeRequestsValidator() {
-        return mock(InvitationCodeRequestsValidator.class);
+    public BaseInvitationCodesRequestsValidator invitationCodeRequestsValidator() {
+        return mock(BaseInvitationCodesRequestsValidator.class);
     }
 
     @Bean
-    public RegistrationRequestsValidator registrationRequestsValidator() {
-        return mock(RegistrationRequestsValidator.class);
+    public BaseRegistrationRequestsValidator registrationRequestsValidator() {
+        return mock(BaseRegistrationRequestsValidator.class);
     }
 
     @Bean
-    public SessionsRequestsValidator sessionsRequestsValidator() {
-        return mock(SessionsRequestsValidator.class);
+    public BaseUsersSessionsRequestsValidator sessionsRequestsValidator() {
+        return mock(BaseUsersSessionsRequestsValidator.class);
     }
 
     @Bean
-    public BaseUserValidator userRequestsValidator() {
-        return mock(BaseUserValidator.class);
+    public BaseUsersValidator userRequestsValidator() {
+        return mock(BaseUsersValidator.class);
     }
 }

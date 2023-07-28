@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenExpiredException;
 import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenInvalidException;
@@ -63,8 +63,8 @@ class JwtTokensFilterTest {
         }
 
         @Bean
-        TokenService tokenService() {
-            return mock(TokenService.class);
+        TokensService tokenService() {
+            return mock(TokensService.class);
         }
 
         @Bean
@@ -83,7 +83,7 @@ class JwtTokensFilterTest {
     }
 
     private final SessionRegistry sessionRegistry;
-    private final TokenService tokenService;
+    private final TokensService tokensService;
     private final CookieProvider cookieProvider;
 
     private final JwtTokensFilter componentUnderTest;
@@ -92,7 +92,7 @@ class JwtTokensFilterTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
-                this.tokenService,
+                this.tokensService,
                 this.cookieProvider
         );
     }
@@ -101,7 +101,7 @@ class JwtTokensFilterTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
-                this.tokenService,
+                this.tokensService,
                 this.cookieProvider
         );
     }
@@ -117,7 +117,7 @@ class JwtTokensFilterTest {
         var cookieRefreshToken = entity(CookieRefreshToken.class);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -125,7 +125,7 @@ class JwtTokensFilterTest {
         // Assert
         verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,
@@ -145,7 +145,7 @@ class JwtTokensFilterTest {
         var cookieRefreshToken = entity(CookieRefreshToken.class);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -153,7 +153,7 @@ class JwtTokensFilterTest {
         // Assert
         verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         verify(this.cookieProvider).clearCookies(response);
         verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
         verifyNoMoreInteractions(
@@ -175,7 +175,7 @@ class JwtTokensFilterTest {
         var cookieRefreshToken = entity(CookieRefreshToken.class);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokenService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -183,7 +183,7 @@ class JwtTokensFilterTest {
         // Assert
         verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.tokenService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         // WARNING: no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(jwtUser.username(), jwtRefreshToken));
         verify(filterChain).doFilter(request, response);

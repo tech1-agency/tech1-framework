@@ -8,10 +8,11 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserL
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityAuthenticationResource;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
-import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
@@ -63,14 +64,14 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     private final SessionRegistry sessionRegistry;
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
-    private final TokenService tokenService;
+    private final TokensService tokensService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JwtUserDetailsService jwtUserDetailsService;
     // Cookies
     private final CookieProvider cookieProvider;
     // Validators
-    private final AuthenticationRequestsValidator authenticationRequestsValidator;
+    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -84,11 +85,11 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 this.authenticationManager,
                 this.sessionRegistry,
                 this.baseUsersSessionsService,
-                this.tokenService,
+                this.tokensService,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.cookieProvider,
-                this.authenticationRequestsValidator,
+                this.baseAuthenticationRequestsValidator,
                 this.securityJwtTokenUtils
         );
     }
@@ -99,11 +100,11 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 this.authenticationManager,
                 this.sessionRegistry,
                 this.baseUsersSessionsService,
-                this.tokenService,
+                this.tokensService,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
                 this.cookieProvider,
-                this.authenticationRequestsValidator,
+                this.baseAuthenticationRequestsValidator,
                 this.securityJwtTokenUtils
         );
     }
@@ -134,7 +135,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())));
 
         // Assert
-        verify(this.authenticationRequestsValidator).validateLoginRequest(requestUserLogin);
+        verify(this.baseAuthenticationRequestsValidator).validateLoginRequest(requestUserLogin);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.identifier(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.identifier());
         verify(this.securityJwtTokenUtils).createJwtAccessToken(jwtUser.getJwtTokenCreationParams());
@@ -246,7 +247,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     @MethodSource("refreshTokenThrowCookieUnauthorizedExceptionsTest")
     void refreshTokenThrowCookieUnauthorizedExceptionsTest(Exception exception) throws Exception {
         // Arrange
-        when(this.tokenService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenThrow(exception);
+        when(this.tokensService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenThrow(exception);
 
         // Act
         this.mvc.perform(
@@ -259,10 +260,10 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.attributes.fullMessage", equalTo(exception.getMessage())));
 
         // Assert
-        verify(this.tokenService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));
+        verify(this.tokensService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));
         verify(this.cookieProvider).clearCookies(any());
         reset(
-                this.tokenService,
+                this.tokensService,
                 this.cookieProvider
         );
     }
@@ -271,7 +272,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     void refreshTokenValidTest() throws Exception {
         // Arrange
         var userSession1 = entity(ResponseUserSession1.class);
-        when(this.tokenService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenReturn(userSession1);
+        when(this.tokensService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenReturn(userSession1);
 
         // Act
         this.mvc.perform(
@@ -282,6 +283,6 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.refreshToken", equalTo(userSession1.refreshToken().value())));
 
         // Assert
-        verify(this.tokenService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));
+        verify(this.tokensService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));
     }
 }

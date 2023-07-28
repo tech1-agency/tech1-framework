@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.filters;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     // Session
     private final SessionRegistry sessionRegistry;
     // Services
-    private final TokenService tokenService;
+    private final TokensService tokensService;
     // Cookies
     private final CookieProvider cookieProvider;
 
@@ -38,7 +38,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
         try {
             var cookieAccessToken = this.cookieProvider.readJwtAccessToken(request);
             var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
-            var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+            var tuple2 = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
             var currentJwtUser = tuple2.a();
 
             var authentication = new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());

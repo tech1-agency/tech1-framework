@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.websockets.handshakes;
 
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
 
     // Services
-    private final TokenService tokenService;
+    private final TokensService tokensService;
     // Cookie
     private final CookieProvider cookieProvider;
 
@@ -37,7 +37,7 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
             var request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
             var cookieAccessToken = this.cookieProvider.readJwtAccessToken(request);
             var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
-            var tuple2 = this.tokenService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+            var tuple2 = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
             var currentJwtUser = tuple2.a();
             return new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());
         } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException |

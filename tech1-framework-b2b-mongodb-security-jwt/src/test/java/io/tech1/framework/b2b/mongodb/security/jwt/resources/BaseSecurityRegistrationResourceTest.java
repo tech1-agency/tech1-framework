@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityRegistrationResource;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +30,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Validators
-    private final RegistrationRequestsValidator registrationRequestsValidator;
+    private final BaseRegistrationRequestsValidator baseRegistrationRequestsValidator;
 
     // Resource
     private final BaseSecurityRegistrationResource componentUnderTest;
@@ -42,7 +42,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
                 this.baseRegistrationService,
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
-                this.registrationRequestsValidator
+                this.baseRegistrationRequestsValidator
         );
     }
 
@@ -52,7 +52,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
                 this.baseRegistrationService,
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
-                this.registrationRequestsValidator
+                this.baseRegistrationRequestsValidator
         );
     }
 
@@ -70,7 +70,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.registrationRequestsValidator).validateRegistrationRequest1(requestUserRegistration1);
+        verify(this.baseRegistrationRequestsValidator).validateRegistrationRequest1(requestUserRegistration1);
         verify(this.baseRegistrationService).register1(requestUserRegistration1);
         verify(this.securityJwtPublisher).publishRegistration1(new EventRegistration1(requestUserRegistration1));
         verify(this.securityJwtIncidentPublisher).publishRegistration1(new IncidentRegistration1(requestUserRegistration1.username()));

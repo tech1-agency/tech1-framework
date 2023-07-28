@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSer
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.resources.BaseSuperAdminResource;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;

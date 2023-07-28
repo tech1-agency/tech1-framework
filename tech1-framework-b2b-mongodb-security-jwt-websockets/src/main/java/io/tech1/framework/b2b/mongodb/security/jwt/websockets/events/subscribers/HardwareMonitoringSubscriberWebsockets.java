@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 public class HardwareMonitoringSubscriberWebsockets extends BaseHardwareMonitoringSubscriber {
@@ -24,7 +25,9 @@ public class HardwareMonitoringSubscriberWebsockets extends BaseHardwareMonitori
             HardwareBackPressureTimerTask hardwareBackPressureTimerTask,
             IncidentPublisher incidentPublisher
     ) {
-        super(hardwareMonitoringStore);
+        super(
+                hardwareMonitoringStore
+        );
         this.hardwareBackPressureTimerTask = hardwareBackPressureTimerTask;
         this.incidentPublisher = incidentPublisher;
     }

@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityInvitationCodesResource;
-import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.domain.base.Username;
@@ -36,7 +36,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
     // Services
     private final BaseInvitationCodesService baseInvitationCodesService;
     // Validators
-    private final InvitationCodeRequestsValidator invitationCodeRequestsValidator;
+    private final BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -98,7 +98,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
+        verify(this.baseInvitationCodesRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
         verify(this.baseInvitationCodesService).save(requestNewInvitationCodeParams, owner);
     }
 
@@ -118,7 +118,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeRequestsValidator).validateDeleteById(username, invitationCodeId);
+        verify(this.baseInvitationCodesRequestsValidator).validateDeleteById(username, invitationCodeId);
         verify(this.baseInvitationCodesService).deleteById(invitationCodeId);
     }
 }

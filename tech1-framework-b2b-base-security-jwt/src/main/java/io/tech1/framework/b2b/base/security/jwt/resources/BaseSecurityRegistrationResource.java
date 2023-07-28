@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
-import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +28,12 @@ public class BaseSecurityRegistrationResource {
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Validators
-    private final RegistrationRequestsValidator registrationRequestsValidator;
+    private final BaseRegistrationRequestsValidator baseRegistrationRequestsValidator;
 
     @PostMapping("/register1")
     @ResponseStatus(HttpStatus.OK)
     public void register1(@RequestBody RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
-        this.registrationRequestsValidator.validateRegistrationRequest1(requestUserRegistration1);
+        this.baseRegistrationRequestsValidator.validateRegistrationRequest1(requestUserRegistration1);
         this.baseRegistrationService.register1(requestUserRegistration1);
         this.securityJwtPublisher.publishRegistration1(new EventRegistration1(requestUserRegistration1));
         this.securityJwtIncidentPublisher.publishRegistration1(new IncidentRegistration1(requestUserRegistration1.username()));

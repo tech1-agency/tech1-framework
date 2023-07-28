@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessio
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class BaseSecurityInvitationCodesResource {
     // Services
     private final BaseInvitationCodesService baseInvitationCodesService;
     // Validators
-    private final InvitationCodeRequestsValidator invitationCodeRequestsValidator;
+    private final BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +38,7 @@ public class BaseSecurityInvitationCodesResource {
     @ResponseStatus(HttpStatus.OK)
     public void save(@RequestBody RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
         var owner = this.currentSessionAssistant.getCurrentUsername();
-        this.invitationCodeRequestsValidator.validateCreateNewInvitationCode(requestNewInvitationCodeParams);
+        this.baseInvitationCodesRequestsValidator.validateCreateNewInvitationCode(requestNewInvitationCodeParams);
         this.baseInvitationCodesService.save(requestNewInvitationCodeParams, owner);
     }
 
@@ -46,7 +46,7 @@ public class BaseSecurityInvitationCodesResource {
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable InvitationCodeId invitationCodeId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.invitationCodeRequestsValidator.validateDeleteById(username, invitationCodeId);
+        this.baseInvitationCodesRequestsValidator.validateDeleteById(username, invitationCodeId);
         this.baseInvitationCodesService.deleteById(invitationCodeId);
     }
 }

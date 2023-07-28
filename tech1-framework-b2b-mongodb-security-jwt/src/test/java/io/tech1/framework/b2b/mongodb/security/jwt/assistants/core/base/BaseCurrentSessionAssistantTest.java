@@ -1,21 +1,16 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.base;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
 import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
-import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -30,14 +25,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
 
-import static io.tech1.framework.domain.http.requests.UserRequestMetadata.processed;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -77,7 +67,6 @@ class BaseCurrentSessionAssistantTest {
         CurrentSessionAssistant currentSessionAssistant() {
             return new BaseCurrentSessionAssistant(
                     this.sessionRegistry(),
-                    this.userSessionService(),
                     this.hardwareMonitoringStore(),
                     this.securityPrincipalUtility(),
                     this.applicationFrameworkProperties()
@@ -86,7 +75,6 @@ class BaseCurrentSessionAssistantTest {
     }
 
     private final SessionRegistry sessionRegistry;
-    private final UserSessionService userSessionService;
     private final HardwareMonitoringStore hardwareMonitoringStore;
     private final SecurityPrincipalUtils securityPrincipalUtils;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
@@ -98,7 +86,6 @@ class BaseCurrentSessionAssistantTest {
         reset(
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
-                this.userSessionService,
                 this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
@@ -109,7 +96,6 @@ class BaseCurrentSessionAssistantTest {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
-                this.userSessionService,
                 this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
@@ -193,75 +179,18 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var username = entity(Username.class);
-        var validJwtRefreshToken = randomString();
-        var cookie = new CookieRefreshToken(validJwtRefreshToken);
-
-        Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
-                    tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
-
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
-        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
-        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), invalidUserAgentDetails()), randomString()));
-        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
-
-        // userSessions, expectedSessionSize, expectedAnyProblems
-        List<Tuple3<List<DbUserSession>, Integer, Boolean>> cases = new ArrayList<>();
-        cases.add(
-                new Tuple3<>(
-                        List.of(validSession),
-                        1,
-                        false
-                )
-        );
-        cases.add(
-                new Tuple3<>(
-                        List.of(validSession, invalidSession1),
-                        2,
-                        true
-                )
-        );
-        cases.add(
-                new Tuple3<>(
-                        List.of(validSession, invalidSession1, invalidSession2),
-                        3,
-                        true
-                )
-        );
-        cases.add(
-                new Tuple3<>(
-                        List.of(validSession, invalidSession1, invalidSession2, invalidSession3),
-                        4,
-                        true
-                )
-        );
+        var cookie = entity(CookieRefreshToken.class);
+        var sessionsTable = entity(ResponseUserSessionsTable.class);
+        when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
+        when(this.sessionRegistry.getSessionsTable(username, cookie)).thenReturn(sessionsTable);
 
         // Act
-        cases.forEach(item -> {
-            // Arrange
-            when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
-            var userSessions = item.a();
-            var expectedSessionSize = item.b();
-            var expectedAnyProblems = item.c();
-            when(this.userSessionService.findByUsername(username)).thenReturn(userSessions);
+        var actual = this.componentUnderTest.getCurrentUserDbSessionsTable(cookie);
 
-            // Act
-            var currentUserDbSessionsTable = this.componentUnderTest.getCurrentUserDbSessionsTable(cookie);
-
-            // Assert
-            verify(this.securityPrincipalUtils).getAuthenticatedUsername();
-            verify(this.userSessionService).findByUsername(username);
-            verify(this.sessionRegistry).cleanByExpiredRefreshTokens(Set.of(username));
-            assertThat(currentUserDbSessionsTable).isNotNull();
-            assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
-            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
-            assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.activity())).count()).isEqualTo(1);
-            assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
-
-            reset(
-                    this.sessionRegistry,
-                    this.userSessionService,
-                    this.securityPrincipalUtils
-            );
-        });
+        // Assert
+        verify(this.securityPrincipalUtils).getAuthenticatedUsername();
+        verify(this.sessionRegistry).cleanByExpiredRefreshTokens(Set.of(username));
+        verify(this.sessionRegistry).getSessionsTable(username, cookie);
+        assertThat(actual).isEqualTo(sessionsTable);
     }
 }

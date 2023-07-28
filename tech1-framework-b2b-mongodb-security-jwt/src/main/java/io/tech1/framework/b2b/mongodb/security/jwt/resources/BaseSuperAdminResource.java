@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;

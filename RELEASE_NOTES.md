@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.14
+- (!) Delete "sessionId" in ResponseUserSession2 
 - Add "mongodbSecurityJwtConfigs" property (migrate "securityJwtConfigs.mongodb" configs)
 - Started extraction of b2b base security JWT reused in mongodb/postgre modules
 - Started development on b2b postgres security JWT

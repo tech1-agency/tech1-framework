@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.domain.base.Username;
 
 import java.util.List;

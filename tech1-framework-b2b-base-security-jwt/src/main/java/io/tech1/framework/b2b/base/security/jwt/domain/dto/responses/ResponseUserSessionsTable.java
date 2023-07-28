@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
+package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 
 import java.util.List;
 

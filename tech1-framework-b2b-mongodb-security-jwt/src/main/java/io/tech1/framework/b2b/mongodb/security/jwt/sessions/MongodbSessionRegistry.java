@@ -1,5 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -11,7 +14,6 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.constants.FrameworkLogsConstants;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
@@ -112,7 +114,7 @@ public class MongodbSessionRegistry implements SessionRegistry {
             var requestMetadata = tuple2.b();
             var jwtRefreshToken = tuple2.c();
             var session = new Session(username, jwtRefreshToken);
-            LOGGER.debug(FrameworkLogsConstants.SESSION_REGISTRY_EXPIRE_SESSION, username);
+            LOGGER.debug(SESSION_REGISTRY_EXPIRE_SESSION, username);
             this.sessions.remove(session);
             this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
             this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
@@ -120,5 +122,21 @@ public class MongodbSessionRegistry implements SessionRegistry {
 
         var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
+    }
+
+    @Override
+    public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
+        return ResponseUserSessionsTable.of(
+                this.userSessionService.findByUsername(username).stream()
+                        .map(session ->
+                                ResponseUserSession2.of(
+                                        session.getUsername(),
+                                        session.getRequestMetadata(),
+                                        session.getJwtRefreshToken(),
+                                        cookie
+                                )
+                        )
+                        .collect(Collectors.toList())
+        );
     }
 }

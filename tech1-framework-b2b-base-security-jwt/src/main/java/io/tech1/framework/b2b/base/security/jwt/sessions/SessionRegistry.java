@@ -1,5 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.domain.base.Username;
@@ -19,5 +21,7 @@ public interface SessionRegistry {
     @Async
     void logout(Session session);
 
+    // WARNING: think about migrating to separate service/registry
     void cleanByExpiredRefreshTokens(Set<Username> usernames);
+    ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie);
 }

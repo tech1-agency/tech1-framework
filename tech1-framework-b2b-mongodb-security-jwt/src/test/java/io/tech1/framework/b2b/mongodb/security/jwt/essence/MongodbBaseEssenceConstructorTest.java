@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.essence.base;
+package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.essence.MongodbBaseEssenceConstructor;

@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.geo.GeoLocation;
@@ -34,33 +35,33 @@ class ResponseUserSessionsTableTest {
     void constructorTest() {
         // Arrange
         var username = randomUsername();
-        var dbUserSession1 = new DbUserSession(
-                new JwtRefreshToken("token1"),
+        var responseUserSession21 = ResponseUserSession2.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
                         randomUserAgentDetails()
-                )
+                ),
+                new JwtRefreshToken("token1"),
+                new CookieRefreshToken(randomString())
         );
-        var dbUserSession2 = new DbUserSession(
-                new JwtRefreshToken("token2"),
+        var responseUserSession22 = ResponseUserSession2.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", FLAG_USA, "New York"),
                         validUserAgentDetails()
-                )
+                ),
+                new JwtRefreshToken("token2"),
+                new CookieRefreshToken("token2")
         );
-        var dbUserSession3 = new DbUserSession(
-                new JwtRefreshToken("token3"),
+        var responseUserSession23 = ResponseUserSession2.of(
                 username,
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", FLAG_UK, "Liverpool"),
                         invalidUserAgentDetails()
-                )
+                ),
+                new JwtRefreshToken("token3"),
+                new CookieRefreshToken(randomString())
         );
-        var responseUserSession21 = ResponseUserSession2.of(dbUserSession1, new CookieRefreshToken(randomString()));
-        var responseUserSession22 = ResponseUserSession2.of(dbUserSession2, new CookieRefreshToken("token2"));
-        var responseUserSession23 = ResponseUserSession2.of(dbUserSession3, new CookieRefreshToken(randomString()));
 
         // Act
         var actual = ResponseUserSessionsTable.of(new ArrayList<>(List.of(responseUserSession21, responseUserSession22, responseUserSession23)));

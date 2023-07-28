@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.cookies;
+package io.tech1.framework.b2b.base.security.jwt.cookies;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;

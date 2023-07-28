@@ -1,12 +1,12 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
+package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 
 public record ResponseUserSession2(
-        String id,
         Username who,
         boolean current,
         String activity,
@@ -18,8 +18,13 @@ public record ResponseUserSession2(
         String what
 ) {
 
-    public static ResponseUserSession2 of(DbUserSession session, CookieRefreshToken cookie) {
-        var current = cookie.value().equals(session.getJwtRefreshToken().value());
+    public static ResponseUserSession2 of(
+            Username username,
+            UserRequestMetadata requestMetadata,
+            JwtRefreshToken jwtRefreshToken,
+            CookieRefreshToken cookie
+    ) {
+        var current = cookie.value().equals(jwtRefreshToken.value());
         var activity = "";
         if (current) {
             activity = "Current session";
@@ -27,15 +32,14 @@ public record ResponseUserSession2(
             activity = "—";
         }
 
-        var whereTuple3 = session.getRequestMetadata().getWhereTuple3();
-        var whatTuple2 = session.getRequestMetadata().getWhatTuple2();
+        var whereTuple3 = requestMetadata.getWhereTuple3();
+        var whatTuple2 = requestMetadata.getWhatTuple2();
 
         return new ResponseUserSession2(
-                session.getId(),
-                session.getUsername(),
+                username,
                 current,
                 activity,
-                session.getRequestMetadata().getException(),
+                requestMetadata.getException(),
                 whereTuple3.a(),
                 whereTuple3.b(),
                 whereTuple3.c(),

@@ -1,5 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -14,6 +16,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
@@ -31,14 +34,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
+import static io.tech1.framework.domain.http.requests.UserRequestMetadata.processed;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.invalidUserAgentDetails;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -319,5 +325,76 @@ class MongodbSessionRegistryTest {
         assertThat(sessionExpiredIncident.username()).isEqualTo(username1);
         assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.getRequestMetadata());
         verify(this.userSessionService).deleteByIdIn(List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+    }
+
+    @Test
+    void getSessionsTableTest() {
+        // Arrange
+        var username = entity(Username.class);
+        var validJwtRefreshToken = randomString();
+        var cookie = new CookieRefreshToken(validJwtRefreshToken);
+
+        Function<Tuple2<UserRequestMetadata, String>, DbUserSession> sessionFnc =
+                tuple2 -> new DbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
+
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), invalidUserAgentDetails()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
+
+        // userSessions, expectedSessionSize, expectedAnyProblems
+        List<Tuple3<List<DbUserSession>, Integer, Boolean>> cases = new ArrayList<>();
+        cases.add(
+                new Tuple3<>(
+                        List.of(validSession),
+                        1,
+                        false
+                )
+        );
+        cases.add(
+                new Tuple3<>(
+                        List.of(validSession, invalidSession1),
+                        2,
+                        true
+                )
+        );
+        cases.add(
+                new Tuple3<>(
+                        List.of(validSession, invalidSession1, invalidSession2),
+                        3,
+                        true
+                )
+        );
+        cases.add(
+                new Tuple3<>(
+                        List.of(validSession, invalidSession1, invalidSession2, invalidSession3),
+                        4,
+                        true
+                )
+        );
+
+        // Act
+        cases.forEach(item -> {
+            // Arrange
+            var userSessions = item.a();
+            var expectedSessionSize = item.b();
+            var expectedAnyProblems = item.c();
+            when(this.userSessionService.findByUsername(username)).thenReturn(userSessions);
+
+            // Act
+            var currentUserDbSessionsTable = this.componentUnderTest.getSessionsTable(username, cookie);
+
+            // Assert
+            verify(this.userSessionService).findByUsername(username);
+            assertThat(currentUserDbSessionsTable).isNotNull();
+            assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.sessions().stream().filter(session -> "Current session".equals(session.activity())).count()).isEqualTo(1);
+            assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
+
+            reset(
+                    this.userSessionService
+            );
+        });
     }
 }

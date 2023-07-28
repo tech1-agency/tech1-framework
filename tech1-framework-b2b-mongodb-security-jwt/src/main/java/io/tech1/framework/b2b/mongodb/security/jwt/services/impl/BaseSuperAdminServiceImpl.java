@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
@@ -46,7 +46,12 @@ public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
         List<ResponseUserSession2> inactiveSessions = new ArrayList<>();
         dbUserSessions.forEach(dbUserSession -> {
-            var session = ResponseUserSession2.of(dbUserSession, cookie);
+            var session = ResponseUserSession2.of(
+                    dbUserSession.getUsername(),
+                    dbUserSession.getRequestMetadata(),
+                    dbUserSession.getJwtRefreshToken(),
+                    cookie
+            );
             if (activeSessionsRefreshTokens.contains(dbUserSession.getJwtRefreshToken())) {
                 activeSessions.add(session);
             } else {

@@ -1,14 +1,12 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.base;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -31,8 +28,6 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
 
     // Sessions
     protected final SessionRegistry sessionRegistry;
-    // Service
-    protected final UserSessionService userSessionService;
     // Stores
     protected final HardwareMonitoringStore hardwareMonitoringStore;
     // Utilities
@@ -73,10 +68,6 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     public ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieRefreshToken cookie) {
         var username = this.getCurrentUsername();
         this.sessionRegistry.cleanByExpiredRefreshTokens(Set.of(username));
-        var activeUsersSessions = this.userSessionService.findByUsername(username);
-        var sessions = activeUsersSessions.stream()
-                .map(session -> ResponseUserSession2.of(session, cookie))
-                .collect(Collectors.toList());
-        return ResponseUserSessionsTable.of(sessions);
+        return this.sessionRegistry.getSessionsTable(username, cookie);
     }
 }

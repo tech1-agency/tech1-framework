@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.MongoTestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -37,7 +37,7 @@ class MongoBaseRegistrationRequestsValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            MongoTestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 

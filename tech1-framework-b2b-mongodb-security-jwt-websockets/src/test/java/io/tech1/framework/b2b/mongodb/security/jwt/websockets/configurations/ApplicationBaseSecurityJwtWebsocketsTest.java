@@ -60,7 +60,6 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
             return properties;
         }
 
-        // @Configuration
         @Bean
         CsrfInterceptorHandshake csrfInterceptorHandshake() {
             return mock(CsrfInterceptorHandshake.class);
@@ -71,7 +70,6 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
             return mock(SecurityHandshakeHandler.class);
         }
 
-        // @Beans
         @Bean
         SimpMessagingTemplate messagingTemplate() {
             return mock(SimpMessagingTemplate.class);

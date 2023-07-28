@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.MongoTestsApplicationValidatorsContext;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ class MongoBaseInvitationCodesRequestsValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            MongoTestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 

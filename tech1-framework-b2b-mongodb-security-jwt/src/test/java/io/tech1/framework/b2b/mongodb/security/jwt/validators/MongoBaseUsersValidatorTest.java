@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.MongoTestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
@@ -54,7 +54,7 @@ class MongoBaseUsersValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            MongoTestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 

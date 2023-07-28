@@ -51,7 +51,7 @@ class ApplicationMongodbTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(12)
+                .hasSize(13)
                 .contains("tech1MongoClient")
                 .contains("tech1MongoDatabaseFactory")
                 .contains("tech1MongoTemplate");

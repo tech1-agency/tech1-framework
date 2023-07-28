@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MongoTokensService implements TokensService {
+public class TokensServiceImpl implements TokensService {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;

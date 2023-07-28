@@ -15,7 +15,7 @@ import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
 @UtilityClass
-public class SecurityJwtDbRandomUtility {
+public class MongoSecurityJwtDbRandomUtility {
 
     // =================================================================================================================
     // InvitationCodes: Dummy Data

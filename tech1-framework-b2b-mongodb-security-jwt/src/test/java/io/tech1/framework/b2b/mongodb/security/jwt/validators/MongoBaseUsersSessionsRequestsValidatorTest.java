@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.MongoTestsApplicationValidatorsContext;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class MongoBaseUsersSessionsRequestsValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            MongoTestsApplicationValidatorsContext.class
     })
     static class ContextConfiguration {
 

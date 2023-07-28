@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
@@ -11,9 +10,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
@@ -131,14 +130,7 @@ public class MongoSessionRegistry implements SessionRegistry {
     public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
         return ResponseUserSessionsTable.of(
                 this.mongoUsersSessionsRepository.findByUsername(username).stream()
-                        .map(session ->
-                                ResponseUserSession2.of(
-                                        session.getUsername(),
-                                        session.getRequestMetadata(),
-                                        session.getJwtRefreshToken(),
-                                        cookie
-                                )
-                        )
+                        .map(session -> session.responseUserSession2(cookie))
                         .collect(Collectors.toList())
         );
     }

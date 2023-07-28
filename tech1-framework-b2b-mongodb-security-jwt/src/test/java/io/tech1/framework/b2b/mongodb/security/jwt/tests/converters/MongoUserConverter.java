@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
-public class UserConverter {
+public class MongoUserConverter {
 
     public static List<String> toUsernamesAsStrings(List<MongoDbUser> users) {
         return users.stream()

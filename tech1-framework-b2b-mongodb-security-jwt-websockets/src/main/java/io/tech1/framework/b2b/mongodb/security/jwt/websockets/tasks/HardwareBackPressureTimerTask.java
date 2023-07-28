@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.websockets.domain.events.WebsocketEvent.hardwareMonitoring;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {

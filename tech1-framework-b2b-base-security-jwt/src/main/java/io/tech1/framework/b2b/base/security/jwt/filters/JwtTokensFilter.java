@@ -1,9 +1,9 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.filters;
+package io.tech1.framework.b2b.base.security.jwt.filters;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

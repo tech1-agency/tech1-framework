@@ -2,15 +2,16 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
@@ -82,16 +83,16 @@ public class UserSessionServiceImpl implements UserSessionService {
                     userRequestMetadata
             );
         } else {
-            userSession.editRequestMetadata(userRequestMetadata);
+            userSession.setRequestMetadata(userRequestMetadata);
         }
         userSession = this.mongoUserSessionRepository.save(userSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                EventSessionAddUserRequestMetadata.of(
+                new EventSessionAddUserRequestMetadata(
                         username,
                         user.email(),
-                        userSession,
+                        userSession.userSessionId(),
                         clientIpAddr,
-                        httpServletRequest,
+                        new UserAgentHeader(httpServletRequest),
                         true,
                         false
                 )
@@ -111,12 +112,12 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.mongoUserSessionRepository.save(newUserSession);
         this.mongoUserSessionRepository.delete(oldUserSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                EventSessionAddUserRequestMetadata.of(
+                new EventSessionAddUserRequestMetadata(
                         username,
                         user.email(),
-                        newUserSession,
+                        newUserSession.userSessionId(),
                         getClientIpAddr(httpServletRequest),
-                        httpServletRequest,
+                        new UserAgentHeader(httpServletRequest),
                         false,
                         true
                 )
@@ -129,8 +130,8 @@ public class UserSessionServiceImpl implements UserSessionService {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = event.userSession();
-        userSession.editRequestMetadata(requestMetadata);
+        var userSession = this.mongoUserSessionRepository.getById(event.userSessionId().value());
+        userSession.setRequestMetadata(requestMetadata);
         return this.mongoUserSessionRepository.save(userSession);
     }
 

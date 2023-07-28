@@ -1,10 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 // Lombok
@@ -32,11 +35,16 @@ public class MongoDbUserSession {
         this.requestMetadata = requestMetadata;
     }
 
+    @Deprecated
+    @JsonIgnore
+    @Transient
     public JwtRefreshToken getJwtRefreshToken() {
         return new JwtRefreshToken(this.id);
     }
 
-    public void editRequestMetadata(UserRequestMetadata requestMetadata) {
-        this.requestMetadata = requestMetadata;
+    @JsonIgnore
+    @Transient
+    public UserSessionId userSessionId() {
+        return new UserSessionId(this.id);
     }
 }

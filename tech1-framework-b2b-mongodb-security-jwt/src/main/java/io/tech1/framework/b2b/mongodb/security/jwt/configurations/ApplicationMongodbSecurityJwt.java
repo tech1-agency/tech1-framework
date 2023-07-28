@@ -39,20 +39,13 @@ import static org.springframework.http.HttpMethod.*;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
-        "io.tech1.framework.b2b.mongodb.security.jwt.cookies",
         "io.tech1.framework.b2b.mongodb.security.jwt.events",
         "io.tech1.framework.b2b.mongodb.security.jwt.filters",
         "io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions",
-        "io.tech1.framework.b2b.mongodb.security.jwt.incidents.converters",
         "io.tech1.framework.b2b.mongodb.security.jwt.resources",
         "io.tech1.framework.b2b.mongodb.security.jwt.services",
         "io.tech1.framework.b2b.mongodb.security.jwt.sessions",
-        "io.tech1.framework.b2b.mongodb.security.jwt.utilities",
         "io.tech1.framework.b2b.mongodb.security.jwt.validators",
-        // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.utilities.browsers",
-        "io.tech1.framework.utilities.geo"
-        // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity
 @Import({

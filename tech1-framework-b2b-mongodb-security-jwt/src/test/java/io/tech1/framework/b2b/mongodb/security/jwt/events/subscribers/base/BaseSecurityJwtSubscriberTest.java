@@ -1,9 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.base;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
@@ -175,7 +176,7 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(MongoDbUserSession.class),
+                entity(UserSessionId.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 false,
@@ -197,7 +198,7 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(MongoDbUserSession.class),
+                entity(UserSessionId.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 true,
@@ -221,7 +222,7 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(MongoDbUserSession.class),
+                entity(UserSessionId.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 false,

@@ -2,11 +2,11 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -237,7 +237,7 @@ class UserSessionServiceImplTest {
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
-        assertThat(event.userSession()).isEqualTo(savedUserSession);
+        assertThat(event.userSessionId()).isEqualTo(savedUserSession.userSessionId());
         assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
     }
@@ -280,7 +280,7 @@ class UserSessionServiceImplTest {
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
-        assertThat(event.userSession()).isEqualTo(savedUserSession);
+        assertThat(event.userSessionId()).isEqualTo(savedUserSession.userSessionId());
         assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
     }
@@ -313,7 +313,7 @@ class UserSessionServiceImplTest {
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
-        assertThat(event.userSession()).isEqualTo(newUserSession);
+        assertThat(event.userSessionId()).isEqualTo(newUserSession.userSessionId());
         assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
         assertThat(dbUserSession).isEqualTo(newUserSession);
@@ -323,8 +323,10 @@ class UserSessionServiceImplTest {
     void saveUserRequestMetadataTest() {
         // Arrange
         var event = entity(EventSessionAddUserRequestMetadata.class);
+        var userSession = entity(MongoDbUserSession.class);
         var geoLocation = randomGeoLocation();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
+        when(this.mongoUserSessionRepository.getById(event.userSessionId().value())).thenReturn(userSession);
         var userSessionAC = ArgumentCaptor.forClass(MongoDbUserSession.class);
 
         // Act
@@ -332,10 +334,11 @@ class UserSessionServiceImplTest {
 
         // Assert
         verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
+        verify(this.mongoUserSessionRepository).getById(event.userSessionId().value());
         verify(this.mongoUserSessionRepository).save(userSessionAC.capture());
-        var userSession = userSessionAC.getValue();
-        assertThat(userSession.getRequestMetadata().getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(userSession.getRequestMetadata().getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
+        var requestMetadata = userSessionAC.getValue().getRequestMetadata();
+        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
+        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
     }
 
     @Test

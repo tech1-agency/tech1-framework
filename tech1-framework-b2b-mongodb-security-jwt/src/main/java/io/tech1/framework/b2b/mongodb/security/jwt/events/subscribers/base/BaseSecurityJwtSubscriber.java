@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.*;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
+import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
+import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;

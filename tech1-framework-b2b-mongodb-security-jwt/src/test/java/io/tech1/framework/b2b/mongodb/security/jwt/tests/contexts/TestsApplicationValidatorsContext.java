@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
+import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;

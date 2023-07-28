@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSe
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.filters.JwtTokensFilter;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
-import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
+import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
@@ -39,9 +39,7 @@ import static org.springframework.http.HttpMethod.*;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
-        "io.tech1.framework.b2b.mongodb.security.jwt.events",
         "io.tech1.framework.b2b.mongodb.security.jwt.filters",
-        "io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions",
         "io.tech1.framework.b2b.mongodb.security.jwt.resources",
         "io.tech1.framework.b2b.mongodb.security.jwt.services",
         "io.tech1.framework.b2b.mongodb.security.jwt.sessions",

@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventRegistration1Failure;
-import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1Failure;
+import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
+import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;

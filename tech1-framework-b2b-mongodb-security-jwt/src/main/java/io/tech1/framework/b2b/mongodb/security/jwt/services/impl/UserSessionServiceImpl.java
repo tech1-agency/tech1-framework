@@ -9,7 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidate
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;

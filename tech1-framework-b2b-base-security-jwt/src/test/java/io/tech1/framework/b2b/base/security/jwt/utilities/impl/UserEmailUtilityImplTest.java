@@ -1,7 +1,7 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.UserEmailUtility;
+import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
+import io.tech1.framework.b2b.base.security.jwt.utilities.UserEmailUtility;
 import io.tech1.framework.domain.utilities.time.LocalDateTimeUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;

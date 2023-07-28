@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClai
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

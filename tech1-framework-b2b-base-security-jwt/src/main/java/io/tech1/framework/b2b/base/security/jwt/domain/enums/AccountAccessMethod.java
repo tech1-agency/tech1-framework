@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.domain.enums;
+package io.tech1.framework.b2b.base.security.jwt.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

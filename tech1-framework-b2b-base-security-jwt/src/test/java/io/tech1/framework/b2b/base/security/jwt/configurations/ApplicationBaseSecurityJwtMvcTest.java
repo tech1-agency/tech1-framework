@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.configurations;
 
-import io.tech1.framework.b2b.base.security.jwt.tests.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.b2b.base.security.jwt.tests.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;

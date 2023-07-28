@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

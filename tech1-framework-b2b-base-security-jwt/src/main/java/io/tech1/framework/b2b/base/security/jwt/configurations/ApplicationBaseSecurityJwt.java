@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.base.security.jwt.crons",
+        "io.tech1.framework.b2b.base.security.jwt.utilities",
         "io.tech1.framework.b2b.base.security.jwt.validators"
         // -------------------------------------------------------------------------------------------------------------
 })

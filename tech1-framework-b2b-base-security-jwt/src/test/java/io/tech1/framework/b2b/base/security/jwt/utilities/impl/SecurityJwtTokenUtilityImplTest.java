@@ -1,14 +1,13 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.domain.enums.TestAuthority;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
+import io.tech1.framework.b2b.base.security.jwt.tests.domain.enums.TestAuthority;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
-import io.tech1.framework.domain.utilities.random.EntityUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +35,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static java.time.temporal.ChronoUnit.*;
@@ -140,17 +139,17 @@ class SecurityJwtTokenUtilityImplTest {
                 new SimpleGrantedAuthority(TestAuthority.ADMIN.getValue()),
                 new SimpleGrantedAuthority(TestAuthority.USER.getValue())
         );
-        var user = new DbUser(expectedUsername, randomPassword(), randomZoneId().getId(), authorities);
+        var creationParams = new JwtTokenCreationParams(expectedUsername, authorities, randomZoneId());
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
 
         // Act
-        var jwtAccessToken = this.componentUnderTest.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var jwtAccessToken = this.componentUnderTest.createJwtAccessToken(creationParams);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtAccessToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
         assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
-        var zoneId = user.getZoneId();
+        var zoneId = creationParams.zoneId();
         var timeAmount = accessToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
@@ -167,17 +166,17 @@ class SecurityJwtTokenUtilityImplTest {
                 new SimpleGrantedAuthority(TestAuthority.ADMIN.getValue()),
                 new SimpleGrantedAuthority(TestAuthority.USER.getValue())
         );
-        var user = new DbUser(expectedUsername, randomPassword(), randomZoneId().getId(), authorities);
+        var creationParams = new JwtTokenCreationParams(expectedUsername, authorities, randomZoneId());
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
-        var jwtRefreshToken = this.componentUnderTest.createJwtRefreshToken(user.getJwtTokenCreationParams());
+        var jwtRefreshToken = this.componentUnderTest.createJwtRefreshToken(creationParams);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtRefreshToken);
         assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
         assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
-        var zoneId = user.getZoneId();
+        var zoneId = creationParams.zoneId();
         var timeAmount = refreshToken.getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
@@ -190,16 +189,16 @@ class SecurityJwtTokenUtilityImplTest {
     @MethodSource("createJwtTokenTest")
     void createJwtTokenTest(TimeAmount timeAmount) {
         // Arrange
-        var user = EntityUtility.entity(DbUser.class);
+        var creationParams = new JwtTokenCreationParams(randomUsername(), List.of(), randomZoneId());
 
         // Act
-        var jwtToken = this.componentUnderTest.createJwtToken(user.getJwtTokenCreationParams(), timeAmount);
+        var jwtToken = this.componentUnderTest.createJwtToken(creationParams, timeAmount);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        assertThat(validatedClaims.safeGetUsername()).isEqualTo(user.getUsername());
+        assertThat(validatedClaims.safeGetUsername()).isEqualTo(creationParams.username());
         assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
-        var zoneId = nonNull(user.getZoneId()) ? user.getZoneId() : ZoneId.systemDefault();
+        var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId

@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities;
+package io.tech1.framework.b2b.base.security.jwt.utilities;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.enums.AccountAccessMethod;
+import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 

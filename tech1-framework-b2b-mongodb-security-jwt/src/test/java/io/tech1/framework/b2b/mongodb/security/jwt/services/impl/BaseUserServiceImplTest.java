@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -36,8 +36,8 @@ class BaseUserServiceImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        MongoUserRepository userRepository() {
-            return mock(MongoUserRepository.class);
+        MongoUsersRepository userRepository() {
+            return mock(MongoUsersRepository.class);
         }
 
         @Bean
@@ -54,7 +54,7 @@ class BaseUserServiceImplTest {
         }
     }
 
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final BaseUserService componentUnderTest;
@@ -62,7 +62,7 @@ class BaseUserServiceImplTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.mongoUserRepository,
+                this.mongoUsersRepository,
                 this.bCryptPasswordEncoder
         );
     }
@@ -70,7 +70,7 @@ class BaseUserServiceImplTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.mongoUserRepository,
+                this.mongoUsersRepository,
                 this.bCryptPasswordEncoder
         );
     }
@@ -85,15 +85,15 @@ class BaseUserServiceImplTest {
         );
         var jwtUser = entity(JwtUser.class);
         var dbUser = new MongoDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
-        when(this.mongoUserRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
+        when(this.mongoUsersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
 
         // Act
         this.componentUnderTest.updateUser1(jwtUser, requestUserUpdate1);
 
         // Assert
-        verify(this.mongoUserRepository).findByUsername(jwtUser.username());
-        verify(this.mongoUserRepository).save(dbUserAC.capture());
+        verify(this.mongoUsersRepository).findByUsername(jwtUser.username());
+        verify(this.mongoUsersRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
         assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
         assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate1.name());
@@ -110,15 +110,15 @@ class BaseUserServiceImplTest {
         );
         var jwtUser = entity(JwtUser.class);
         var dbUser = new MongoDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
-        when(this.mongoUserRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
+        when(this.mongoUsersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
 
         // Act
         this.componentUnderTest.updateUser2(jwtUser, requestUserUpdate2);
 
         // Assert
-        verify(this.mongoUserRepository).findByUsername(jwtUser.username());
-        verify(this.mongoUserRepository).save(dbUserAC.capture());
+        verify(this.mongoUsersRepository).findByUsername(jwtUser.username());
+        verify(this.mongoUsersRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
         assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
         assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate2.name());
@@ -131,7 +131,7 @@ class BaseUserServiceImplTest {
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
         var jwtUser = entity(JwtUser.class);
         var dbUser = new MongoDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
-        when(this.mongoUserRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
+        when(this.mongoUsersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value())).thenReturn(hashPassword);
         ArgumentCaptor<MongoDbUser> dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
@@ -140,9 +140,9 @@ class BaseUserServiceImplTest {
         this.componentUnderTest.changePassword1(jwtUser, requestUserChangePassword1);
 
         // Assert
-        verify(this.mongoUserRepository).findByUsername(jwtUser.username());
+        verify(this.mongoUsersRepository).findByUsername(jwtUser.username());
         verify(this.bCryptPasswordEncoder).encode(requestUserChangePassword1.newPassword().value());
-        verify(this.mongoUserRepository).save(dbUserAC.capture());
+        verify(this.mongoUsersRepository).save(dbUserAC.capture());
         assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
         assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder

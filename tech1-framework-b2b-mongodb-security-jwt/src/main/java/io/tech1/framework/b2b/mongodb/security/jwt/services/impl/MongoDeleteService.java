@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -31,7 +31,7 @@ public class MongoDeleteService implements DeleteService {
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
-    private final MongoUserSessionRepository mongoUserSessionRepository;
+    private final MongoUserSessionsRepository mongoUserSessionsRepository;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final UserAgentDetailsUtility userAgentDetailsUtility;
@@ -43,9 +43,9 @@ public class MongoDeleteService implements DeleteService {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = this.mongoUserSessionRepository.getById(event.userSessionId().value());
+        var userSession = this.mongoUserSessionsRepository.getById(event.userSessionId().value());
         userSession.setRequestMetadata(requestMetadata);
-        this.mongoUserSessionRepository.save(userSession);
+        this.mongoUserSessionsRepository.save(userSession);
         return new Tuple2<>(userSession.userSessionId(), userSession.getRequestMetadata());
     }
 
@@ -54,14 +54,14 @@ public class MongoDeleteService implements DeleteService {
     @Override
     public JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var oldUserSession = this.mongoUserSessionRepository.findByRefreshToken(oldJwtRefreshToken);
+        var oldUserSession = this.mongoUserSessionsRepository.findByRefreshToken(oldJwtRefreshToken);
         var newUserSession = new MongoDbUserSession(
                 newJwtRefreshToken,
                 username,
                 oldUserSession.getRequestMetadata()
         );
-        this.mongoUserSessionRepository.save(newUserSession);
-        this.mongoUserSessionRepository.delete(oldUserSession);
+        this.mongoUserSessionsRepository.save(newUserSession);
+        this.mongoUserSessionsRepository.delete(oldUserSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,

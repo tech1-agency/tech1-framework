@@ -15,7 +15,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 import static java.util.Objects.nonNull;
 
 @Repository
-public interface MongoUserSessionRepository extends MongoRepository<MongoDbUserSession, String> {
+public interface MongoUserSessionsRepository extends MongoRepository<MongoDbUserSession, String> {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

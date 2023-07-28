@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -51,8 +51,8 @@ class MongoBaseEssenceConstructorTest {
         }
 
         @Bean
-        MongoUserRepository userRepository() {
-            return mock(MongoUserRepository.class);
+        MongoUsersRepository userRepository() {
+            return mock(MongoUsersRepository.class);
         }
 
         @Bean
@@ -66,7 +66,7 @@ class MongoBaseEssenceConstructorTest {
     }
 
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final EssenceConstructor componentUnderTest;
@@ -75,7 +75,7 @@ class MongoBaseEssenceConstructorTest {
     void beforeEach() {
         reset(
                 this.mongoInvitationCodesRepository,
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
@@ -83,7 +83,7 @@ class MongoBaseEssenceConstructorTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.mongoInvitationCodesRepository,
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
@@ -114,13 +114,13 @@ class MongoBaseEssenceConstructorTest {
     @Test
     void addDefaultUsersNoActionsTest() {
         // Arrange
-        when(this.mongoUserRepository.count()).thenReturn(randomLongGreaterThanZero());
+        when(this.mongoUsersRepository.count()).thenReturn(randomLongGreaterThanZero());
 
         // Act
         this.componentUnderTest.addDefaultUsers();
 
         // Assert
-        verify(this.mongoUserRepository).count();
+        verify(this.mongoUsersRepository).count();
         // No Actions
     }
 
@@ -128,7 +128,7 @@ class MongoBaseEssenceConstructorTest {
     @Test
     void addDefaultUsersTest() {
         // Arrange
-        when(this.mongoUserRepository.count()).thenReturn(0L);
+        when(this.mongoUsersRepository.count()).thenReturn(0L);
         var dbUserAC = ArgumentCaptor.forClass(List.class);
         int usersCount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers().size();
 
@@ -136,8 +136,8 @@ class MongoBaseEssenceConstructorTest {
         this.componentUnderTest.addDefaultUsers();
 
         // Assert
-        verify(this.mongoUserRepository).count();
-        verify(this.mongoUserRepository).saveAll(dbUserAC.capture());
+        verify(this.mongoUsersRepository).count();
+        verify(this.mongoUsersRepository).saveAll(dbUserAC.capture());
         assertThat(dbUserAC.getValue()).hasSize(usersCount);
     }
 

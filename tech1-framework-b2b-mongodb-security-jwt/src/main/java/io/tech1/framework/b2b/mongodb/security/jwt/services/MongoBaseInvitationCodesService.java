@@ -1,11 +1,12 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import static java.util.Objects.isNull;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InvitationCodeServiceImpl implements InvitationCodeService {
+public class MongoBaseInvitationCodesService implements BaseInvitationCodesService {
 
     // Repositories
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
@@ -61,7 +62,7 @@ public class InvitationCodeServiceImpl implements InvitationCodeService {
     }
 
     @Override
-    public void deleteById(String invitationCodeId) {
-        this.mongoInvitationCodesRepository.deleteById(invitationCodeId);
+    public void deleteById(InvitationCodeId invitationCodeId) {
+        this.mongoInvitationCodesRepository.deleteById(invitationCodeId.value());
     }
 }

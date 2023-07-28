@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -20,13 +21,13 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     List<MongoDbInvitationCode> findByInvitedIsNull();
     MongoDbInvitationCode findByValue(String value);
 
-    default MongoDbInvitationCode getById(String invitationCodeId) {
-        return this.findById(invitationCodeId).orElse(null);
+    default MongoDbInvitationCode getById(InvitationCodeId invitationCodeId) {
+        return this.findById(invitationCodeId.value()).orElse(null);
     }
 
-    default MongoDbInvitationCode requirePresence(String invitationCodeId) {
+    default MongoDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
         var invitationCode = this.getById(invitationCodeId);
-        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId));
+        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId.value()));
         return invitationCode;
     }
 

@@ -36,15 +36,6 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
-@ComponentScan({
-        // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
-        "io.tech1.framework.b2b.mongodb.security.jwt.filters",
-        "io.tech1.framework.b2b.mongodb.security.jwt.resources",
-        "io.tech1.framework.b2b.mongodb.security.jwt.services",
-        "io.tech1.framework.b2b.mongodb.security.jwt.sessions",
-        "io.tech1.framework.b2b.mongodb.security.jwt.validators",
-})
 @EnableWebSecurity
 @Import({
         ApplicationSpringBootServer.class,
@@ -52,8 +43,7 @@ import static org.springframework.http.HttpMethod.*;
         ApplicationBaseSecurityJwtMvc.class,
         ApplicationBaseSecurityJwt.class,
         ApplicationIncidents.class,
-        ApplicationEmails.class,
-        ApplicationMongodb.class
+        ApplicationEmails.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationMongodbSecurityJwt extends WebSecurityConfigurerAdapter {

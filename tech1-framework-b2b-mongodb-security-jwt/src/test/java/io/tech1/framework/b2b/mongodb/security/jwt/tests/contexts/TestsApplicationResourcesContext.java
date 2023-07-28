@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
+        "io.tech1.framework.b2b.base.security.jwt.resources",
         "io.tech1.framework.b2b.mongodb.security.jwt.resources"
 })
 @EnableWebMvc
@@ -58,8 +60,8 @@ public class TestsApplicationResourcesContext {
     }
 
     @Bean
-    public InvitationCodeService invitationCodeService() {
-        return mock(InvitationCodeService.class);
+    public BaseInvitationCodesService invitationCodeService() {
+        return mock(BaseInvitationCodesService.class);
     }
 
     @Bean

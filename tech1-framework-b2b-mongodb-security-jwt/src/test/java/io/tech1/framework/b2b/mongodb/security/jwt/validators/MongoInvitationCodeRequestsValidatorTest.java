@@ -1,10 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
-import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,6 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,7 +80,7 @@ class MongoInvitationCodeRequestsValidatorTest {
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var username = entity(Username.class);
-        var invitationCodeId = randomString();
+        var invitationCodeId = entity(InvitationCodeId.class);
         var dbInvitationCode = entity(MongoDbInvitationCode.class);
         when(this.mongoInvitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
@@ -98,7 +98,7 @@ class MongoInvitationCodeRequestsValidatorTest {
     void validateDeleteByIdOkTest() {
         // Arrange
         var username = entity(Username.class);
-        var invitationCodeId = randomString();
+        var invitationCodeId = entity(InvitationCodeId.class);
         var dbInvitationCode = entity(MongoDbInvitationCode.class);
         dbInvitationCode.setOwner(username);
         when(this.mongoInvitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);

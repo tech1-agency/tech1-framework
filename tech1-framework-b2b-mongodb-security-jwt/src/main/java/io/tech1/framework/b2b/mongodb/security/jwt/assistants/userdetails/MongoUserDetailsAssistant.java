@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +20,11 @@ import static java.util.Objects.nonNull;
 public class MongoUserDetailsAssistant implements JwtUserDetailsService {
 
     // Repository
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     @Override
     public JwtUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = this.mongoUserRepository.findByUsername(Username.of(username));
+        var user = this.mongoUsersRepository.findByUsername(Username.of(username));
         if (nonNull(user)) {
             return user.getJwtUser();
         } else {

@@ -21,27 +21,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = {
-                MongoUserSessionRepository.class
+                MongoUserSessionsRepository.class
         }
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoUserSessionsRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final MongoUserSessionRepository mongoUserSessionRepository;
+    private final MongoUserSessionsRepository mongoUserSessionsRepository;
 
     @Override
     public MongoRepository<MongoDbUserSession, String> getMongoRepository() {
-        return this.mongoUserSessionRepository;
+        return this.mongoUserSessionsRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.mongoUserSessionRepository.saveAll(dummyUserSessionsData1());
+        this.mongoUserSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        var sessions = this.mongoUserSessionRepository.findByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
+        var sessions = this.mongoUserSessionsRepository.findByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
         assertThat(sessions).hasSize(5);
@@ -50,12 +50,12 @@ class MongoUserSessionRepositoryIT extends TestsApplicationRepositoriesRunner {
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.mongoUserSessionRepository.saveAll(dummyUserSessionsData1());
+        this.mongoUserSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        this.mongoUserSessionRepository.deleteByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
+        this.mongoUserSessionsRepository.deleteByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
-        assertThat(this.mongoUserSessionRepository.count()).isEqualTo(2);
+        assertThat(this.mongoUserSessionsRepository.count()).isEqualTo(2);
     }
 }

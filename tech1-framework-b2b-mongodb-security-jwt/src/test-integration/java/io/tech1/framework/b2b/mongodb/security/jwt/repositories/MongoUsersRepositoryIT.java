@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository.SUPERADMIN;
+import static io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository.SUPERADMIN;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.SecurityJwtDbRandomUtility.dummyUsersData1;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,32 +23,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = {
-                MongoUserRepository.class
+                MongoUsersRepository.class
         }
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUserRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     @Override
     public MongoRepository<MongoDbUser, String> getMongoRepository() {
-        return this.mongoUserRepository;
+        return this.mongoUsersRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.mongoUserRepository.saveAll(dummyUsersData1());
+        this.mongoUsersRepository.saveAll(dummyUsersData1());
 
         // Act
-        var superadmins = this.mongoUserRepository.findByAuthoritySuperadmin();
-        var notSuperadmins = this.mongoUserRepository.findByAuthorityNotSuperadmin();
-        var superadminsProjection = this.mongoUserRepository.findByAuthorityProjectionUsernames(SUPERADMIN);
-        var notSuperadminsProjection = this.mongoUserRepository.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN);
-        var superadminsUsernames = this.mongoUserRepository.findSuperadminsUsernames();
-        var notSuperadminsUsernames = this.mongoUserRepository.findNotSuperadminsUsernames();
+        var superadmins = this.mongoUsersRepository.findByAuthoritySuperadmin();
+        var notSuperadmins = this.mongoUsersRepository.findByAuthorityNotSuperadmin();
+        var superadminsProjection = this.mongoUsersRepository.findByAuthorityProjectionUsernames(SUPERADMIN);
+        var notSuperadminsProjection = this.mongoUsersRepository.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN);
+        var superadminsUsernames = this.mongoUsersRepository.findSuperadminsUsernames();
+        var notSuperadminsUsernames = this.mongoUsersRepository.findNotSuperadminsUsernames();
 
         // Assert
         assertThat(toUsernamesAsStrings(superadmins))
@@ -105,21 +105,21 @@ class MongoUserRepositoryIT extends TestsApplicationRepositoriesRunner {
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.mongoUserRepository.saveAll(dummyUsersData1());
+        this.mongoUsersRepository.saveAll(dummyUsersData1());
 
         // Act-Assert-0
-        assertThat(this.mongoUserRepository.count()).isEqualTo(6);
+        assertThat(this.mongoUsersRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.mongoUserRepository.deleteByAuthorityNotSuperadmin();
-        var users1 = this.mongoUserRepository.findAll();
+        this.mongoUsersRepository.deleteByAuthorityNotSuperadmin();
+        var users1 = this.mongoUsersRepository.findAll();
         assertThat(toUsernamesAsStrings(users1))
                 .hasSize(3)
                 .containsExactly("sa1", "sa2", "sa3");
 
         // Act-Assert-2
-        this.mongoUserRepository.deleteByAuthoritySuperadmin();
-        var users2 = this.mongoUserRepository.findAll();
+        this.mongoUsersRepository.deleteByAuthoritySuperadmin();
+        var users2 = this.mongoUsersRepository.findAll();
         assertThat(users2).isEmpty();
     }
 }

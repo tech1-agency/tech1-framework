@@ -1,8 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +36,13 @@ public class MongoInvitationCodeRequestsValidator implements InvitationCodeReque
     }
 
     @Override
-    public void validateDeleteById(Username username, String invitationCodeId) {
-        assertNonNullNotBlankOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
+    public void validateDeleteById(Username username, InvitationCodeId invitationCodeId) {
+        assertNonNullOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
         var invitationCode = this.mongoInvitationCodesRepository.requirePresence(invitationCodeId);
         if (!username.equals(invitationCode.getOwner())) {
-            throw new IllegalArgumentException(accessDenied(username, "InvitationCode", invitationCodeId));
+            throw new IllegalArgumentException(accessDenied(username, "InvitationCode", invitationCodeId.value()));
         }
     }
 }

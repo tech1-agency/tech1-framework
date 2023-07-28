@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
         "io.tech1.framework.b2b.base.security.jwt.filters",
         "io.tech1.framework.b2b.base.security.jwt.handlers.exceptions",
         "io.tech1.framework.b2b.base.security.jwt.incidents.converters",
+        "io.tech1.framework.b2b.base.security.jwt.resources",
         "io.tech1.framework.b2b.base.security.jwt.services",
         "io.tech1.framework.b2b.base.security.jwt.utils",
         "io.tech1.framework.b2b.base.security.jwt.validators",

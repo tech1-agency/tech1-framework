@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 
 @Repository
-public interface MongoUserRepository extends MongoRepository<MongoDbUser, String> {
+public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String> {
     // ================================================================================================================
     // Constants
     // ================================================================================================================

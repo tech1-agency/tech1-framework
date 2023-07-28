@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUserValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class MongoBaseUserValidator implements BaseUserValidator {
     private static final int NEW_PASSWORD_MIN_LENGTH = 8;
 
     // Repositories
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     @Override
     public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 requestUserUpdate1) {
@@ -40,7 +40,7 @@ public class MongoBaseUserValidator implements BaseUserValidator {
         if (!isEmail(email)) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
-        var user = this.mongoUserRepository.findByEmail(email);
+        var user = this.mongoUsersRepository.findByEmail(email);
         // `email` is already used by other user in the system
         if (nonNull(user) && !user.getUsername().equals(username)) {
             throw new IllegalArgumentException(invalidEmailMessage);

@@ -5,8 +5,10 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessio
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityInvitationCodesResource;
 import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -19,7 +21,6 @@ import org.springframework.http.MediaType;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
@@ -33,7 +34,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final InvitationCodeService invitationCodeService;
+    private final BaseInvitationCodesService baseInvitationCodesService;
     // Validators
     private final InvitationCodeRequestsValidator invitationCodeRequestsValidator;
     // Properties
@@ -47,7 +48,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.invitationCodeService
+                this.baseInvitationCodesService
         );
     }
 
@@ -55,7 +56,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.invitationCodeService
+                this.baseInvitationCodesService
         );
     }
 
@@ -67,7 +68,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(ResponseInvitationCode.class);
         var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
-        when(this.invitationCodeService.findByOwner(owner)).thenReturn(responseInvitationCodes);
+        when(this.baseInvitationCodesService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
         this.mvc.perform(get("/invitationCodes").contentType(MediaType.APPLICATION_JSON))
@@ -77,7 +78,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.invitationCodeService).findByOwner(owner);
+        verify(this.baseInvitationCodesService).findByOwner(owner);
     }
 
     @Test
@@ -98,15 +99,15 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.invitationCodeRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
-        verify(this.invitationCodeService).save(requestNewInvitationCodeParams, owner);
+        verify(this.baseInvitationCodesService).save(requestNewInvitationCodeParams, owner);
     }
 
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
         var username= entity(Username.class);
+        var invitationCodeId = entity(InvitationCodeId.class);
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        var invitationCodeId = randomString();
 
         // Act
         this.mvc.perform(
@@ -118,6 +119,6 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.invitationCodeRequestsValidator).validateDeleteById(username, invitationCodeId);
-        verify(this.invitationCodeService).deleteById(invitationCodeId);
+        verify(this.baseInvitationCodesService).deleteById(invitationCodeId);
     }
 }

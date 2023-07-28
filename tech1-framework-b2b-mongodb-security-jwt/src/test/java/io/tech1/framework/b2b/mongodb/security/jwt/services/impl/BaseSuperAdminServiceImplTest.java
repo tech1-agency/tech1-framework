@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +49,8 @@ class BaseSuperAdminServiceImplTest {
         }
 
         @Bean
-        MongoUserSessionRepository userSessionRepository() {
-            return mock(MongoUserSessionRepository.class);
+        MongoUserSessionsRepository userSessionRepository() {
+            return mock(MongoUserSessionsRepository.class);
         }
 
         @Bean
@@ -65,7 +65,7 @@ class BaseSuperAdminServiceImplTest {
 
     private final SessionRegistry sessionRegistry;
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
-    private final MongoUserSessionRepository mongoUserSessionRepository;
+    private final MongoUserSessionsRepository mongoUserSessionsRepository;
 
     private final BaseSuperAdminService componentUnderTest;
 
@@ -74,7 +74,7 @@ class BaseSuperAdminServiceImplTest {
         reset(
                 this.sessionRegistry,
                 this.mongoInvitationCodesRepository,
-                this.mongoUserSessionRepository
+                this.mongoUserSessionsRepository
         );
     }
 
@@ -83,7 +83,7 @@ class BaseSuperAdminServiceImplTest {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.mongoInvitationCodesRepository,
-                this.mongoUserSessionRepository
+                this.mongoUserSessionsRepository
         );
     }
 
@@ -112,7 +112,7 @@ class BaseSuperAdminServiceImplTest {
         var dbUserSession2 = entity(MongoDbUserSession.class);
         var dbUserSession3 = entity(MongoDbUserSession.class);
 
-        when(this.mongoUserSessionRepository.findAll()).thenReturn(asList(dbUserSession1, dbUserSession2, dbUserSession3));
+        when(this.mongoUserSessionsRepository.findAll()).thenReturn(asList(dbUserSession1, dbUserSession2, dbUserSession3));
         var activeSessions = Set.of(
                 dbUserSession1.getJwtRefreshToken(),
                 dbUserSession3.getJwtRefreshToken()
@@ -124,7 +124,7 @@ class BaseSuperAdminServiceImplTest {
         var serverSessions = this.componentUnderTest.getServerSessions(cookie);
 
         // Assert
-        verify(this.mongoUserSessionRepository).findAll();
+        verify(this.mongoUserSessionsRepository).findAll();
         verify(this.sessionRegistry).getActiveSessionsRefreshTokens();
         assertThat(serverSessions).isNotNull();
         assertThat(serverSessions.activeSessions()).hasSize(2);

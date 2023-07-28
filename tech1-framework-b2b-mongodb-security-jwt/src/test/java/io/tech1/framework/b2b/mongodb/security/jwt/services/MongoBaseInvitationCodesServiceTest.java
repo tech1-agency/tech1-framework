@@ -1,10 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -27,7 +28,8 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,7 +38,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class InvitationCodeServiceImplTest {
+class MongoBaseInvitationCodesServiceTest {
 
     @Configuration
     @Import({
@@ -54,8 +56,8 @@ class InvitationCodeServiceImplTest {
         }
 
         @Bean
-        InvitationCodeService invitationCodeService() {
-            return new InvitationCodeServiceImpl(
+        BaseInvitationCodesService invitationCodeService() {
+            return new MongoBaseInvitationCodesService(
                     this.invitationCodeRepository(),
                     this.applicationFrameworkProperties
             );
@@ -65,7 +67,7 @@ class InvitationCodeServiceImplTest {
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    private final InvitationCodeService componentUnderTest;
+    private final BaseInvitationCodesService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
@@ -134,12 +136,12 @@ class InvitationCodeServiceImplTest {
     @Test
     void deleteByIdTest() {
         // Arrange
-        var invitationCodeId = randomString();
+        var invitationCodeId = entity(InvitationCodeId.class);
 
         // Act
         this.componentUnderTest.deleteById(invitationCodeId);
 
         // Assert
-        verify(this.mongoInvitationCodesRepository).deleteById(invitationCodeId);
+        verify(this.mongoInvitationCodesRepository).deleteById(invitationCodeId.value());
     }
 }

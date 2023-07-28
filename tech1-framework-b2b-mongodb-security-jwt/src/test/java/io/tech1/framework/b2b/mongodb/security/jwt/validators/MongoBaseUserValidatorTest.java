@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserC
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUserValidator;
 import io.tech1.framework.domain.base.Email;
@@ -60,21 +60,21 @@ class MongoBaseUserValidatorTest {
 
     }
 
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     private final BaseUserValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
@@ -113,7 +113,7 @@ class MongoBaseUserValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var email = randomEmail();
-        when(this.mongoUserRepository.findByEmail(email)).thenReturn(null);
+        when(this.mongoUsersRepository.findByEmail(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -121,7 +121,7 @@ class MongoBaseUserValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.mongoUserRepository).findByEmail(email);
+        verify(this.mongoUsersRepository).findByEmail(email);
     }
 
     @Test
@@ -129,7 +129,7 @@ class MongoBaseUserValidatorTest {
         // Arrange
         var user= entity(MongoDbUser.class);
         var email = randomEmail();
-        when(this.mongoUserRepository.findByEmail(email)).thenReturn(user);
+        when(this.mongoUsersRepository.findByEmail(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -137,7 +137,7 @@ class MongoBaseUserValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.mongoUserRepository).findByEmail(email);
+        verify(this.mongoUsersRepository).findByEmail(email);
     }
 
     @Test
@@ -146,7 +146,7 @@ class MongoBaseUserValidatorTest {
         var username = entity(Username.class);
         var email = randomEmail();
         var user = entity(MongoDbUser.class);
-        when(this.mongoUserRepository.findByEmail(email)).thenReturn(user);
+        when(this.mongoUsersRepository.findByEmail(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -156,7 +156,7 @@ class MongoBaseUserValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Attribute `email` is invalid");
-        verify(this.mongoUserRepository).findByEmail(email);
+        verify(this.mongoUsersRepository).findByEmail(email);
     }
 
     @Test

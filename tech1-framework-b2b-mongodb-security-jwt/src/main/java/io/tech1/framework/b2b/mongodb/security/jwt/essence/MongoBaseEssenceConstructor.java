@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class MongoBaseEssenceConstructor implements EssenceConstructor {
 
     // Repositories
     protected final MongoInvitationCodesRepository mongoInvitationCodesRepository;
-    protected final MongoUserRepository mongoUserRepository;
+    protected final MongoUsersRepository mongoUsersRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -44,7 +44,7 @@ public class MongoBaseEssenceConstructor implements EssenceConstructor {
     @Override
     public void addDefaultUsers() {
         assertTrueOrThrow(this.isDefaultUsersEnabled(), invalidAttribute("essenceConfigs.defaultUsers.enabled == true"));
-        if (this.mongoUserRepository.count() == 0L) {
+        if (this.mongoUsersRepository.count() == 0L) {
             LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
             var defaultUsers = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().getUsers();
             var users = defaultUsers.stream().map(defaultUser -> {
@@ -59,7 +59,7 @@ public class MongoBaseEssenceConstructor implements EssenceConstructor {
                 LOGGER.debug(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Convert default user. Username: {}", username);
                 return user;
             }).collect(Collectors.toList());
-            this.mongoUserRepository.saveAll(users);
+            this.mongoUsersRepository.saveAll(users);
             LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", users.size());
         } else {
             LOGGER.warn(FRAMEWORK_B2B_MONGODB_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Users are already saved in database. Please double check");

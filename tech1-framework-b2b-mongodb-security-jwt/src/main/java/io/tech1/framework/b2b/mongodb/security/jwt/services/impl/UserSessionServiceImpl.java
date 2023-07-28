@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
@@ -39,7 +39,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
-    private final MongoUserSessionRepository mongoUserSessionRepository;
+    private final MongoUserSessionsRepository mongoUserSessionsRepository;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
@@ -47,33 +47,33 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public List<MongoDbUserSession> findByUsername(Username username) {
-        return this.mongoUserSessionRepository.findByUsername(username);
+        return this.mongoUserSessionsRepository.findByUsername(username);
     }
 
     @Override
     public List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames) {
-        return this.mongoUserSessionRepository.findByUsernameIn(usernames);
+        return this.mongoUserSessionsRepository.findByUsernameIn(usernames);
     }
 
     @Override
     public Long deleteByIdIn(List<String> ids) {
-        return this.mongoUserSessionRepository.deleteByIdIn(ids);
+        return this.mongoUserSessionsRepository.deleteByIdIn(ids);
     }
 
     @Override
     public MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        return this.mongoUserSessionRepository.findByRefreshToken(jwtRefreshToken);
+        return this.mongoUserSessionsRepository.findByRefreshToken(jwtRefreshToken);
     }
 
     @Override
     public void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.mongoUserSessionRepository.deleteByRefreshToken(jwtRefreshToken);
+        this.mongoUserSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
     }
 
     @Override
     public MongoDbUserSession save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var userSession = this.mongoUserSessionRepository.findByRefreshToken(jwtRefreshToken);
+        var userSession = this.mongoUserSessionsRepository.findByRefreshToken(jwtRefreshToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
         var userRequestMetadata = UserRequestMetadata.processing(clientIpAddr);
         if (isNull(userSession)) {
@@ -85,7 +85,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         } else {
             userSession.setRequestMetadata(userRequestMetadata);
         }
-        userSession = this.mongoUserSessionRepository.save(userSession);
+        userSession = this.mongoUserSessionsRepository.save(userSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
@@ -103,14 +103,14 @@ public class UserSessionServiceImpl implements UserSessionService {
     @Override
     public MongoDbUserSession refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var oldUserSession = this.mongoUserSessionRepository.findByRefreshToken(oldJwtRefreshToken);
+        var oldUserSession = this.mongoUserSessionsRepository.findByRefreshToken(oldJwtRefreshToken);
         var newUserSession = new MongoDbUserSession(
                 newJwtRefreshToken,
                 username,
                 oldUserSession.getRequestMetadata()
         );
-        this.mongoUserSessionRepository.save(newUserSession);
-        this.mongoUserSessionRepository.delete(oldUserSession);
+        this.mongoUserSessionsRepository.save(newUserSession);
+        this.mongoUserSessionsRepository.delete(oldUserSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
@@ -130,9 +130,9 @@ public class UserSessionServiceImpl implements UserSessionService {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = this.mongoUserSessionRepository.getById(event.userSessionId().value());
+        var userSession = this.mongoUserSessionsRepository.getById(event.userSessionId().value());
         userSession.setRequestMetadata(requestMetadata);
-        return this.mongoUserSessionRepository.save(userSession);
+        return this.mongoUserSessionsRepository.save(userSession);
     }
 
     @Override
@@ -169,22 +169,22 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public void deleteById(String sessionId) {
-        this.mongoUserSessionRepository.deleteById(sessionId);
+        this.mongoUserSessionsRepository.deleteById(sessionId);
     }
 
     @Override
     public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
-        var sessions = this.mongoUserSessionRepository.findByUsername(username);
-        var currentSession = this.mongoUserSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        var sessions = this.mongoUserSessionsRepository.findByUsername(username);
+        var currentSession = this.mongoUserSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
-        this.mongoUserSessionRepository.deleteAll(sessions);
+        this.mongoUserSessionsRepository.deleteAll(sessions);
     }
 
     @Override
     public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
-        var sessions = this.mongoUserSessionRepository.findAll();
-        var currentSession = this.mongoUserSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        var sessions = this.mongoUserSessionsRepository.findAll();
+        var currentSession = this.mongoUserSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
-        this.mongoUserSessionRepository.deleteAll(sessions);
+        this.mongoUserSessionsRepository.deleteAll(sessions);
     }
 }

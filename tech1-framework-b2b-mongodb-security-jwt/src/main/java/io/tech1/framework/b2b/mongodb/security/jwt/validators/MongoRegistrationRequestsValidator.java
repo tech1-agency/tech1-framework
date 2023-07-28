@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -29,7 +29,7 @@ public class MongoRegistrationRequestsValidator implements RegistrationRequestsV
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Repositories
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
@@ -46,7 +46,7 @@ public class MongoRegistrationRequestsValidator implements RegistrationRequestsV
 
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        var user = this.mongoUserRepository.findByUsername(username);
+        var user = this.mongoUsersRepository.findByUsername(username);
         if (nonNull(user)) {
             var exception = entityAlreadyUsed("Username");
             this.securityJwtPublisher.publishRegistration1Failure(

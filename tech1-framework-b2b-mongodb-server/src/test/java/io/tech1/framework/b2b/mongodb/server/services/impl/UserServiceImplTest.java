@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.services.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.mongodb.server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -28,8 +28,8 @@ class UserServiceImplTest  {
     static class ContextConfiguration {
 
         @Bean
-        MongoUserRepository userRepository() {
-            return mock(MongoUserRepository.class);
+        MongoUsersRepository userRepository() {
+            return mock(MongoUsersRepository.class);
         }
 
         @Bean
@@ -40,21 +40,21 @@ class UserServiceImplTest  {
         }
     }
 
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     private final UserService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
@@ -62,13 +62,13 @@ class UserServiceImplTest  {
     void findAll() {
         // Act
         var expected = list345(MongoDbUser.class);
-        when(this.mongoUserRepository.findAll()).thenReturn(expected);
+        when(this.mongoUsersRepository.findAll()).thenReturn(expected);
 
         // Act
         var actual = this.componentUnderTest.findAll();
 
         // Assert
-        verify(this.mongoUserRepository).findAll();
+        verify(this.mongoUsersRepository).findAll();
         assertThat(actual).isEqualTo(expected);
     }
 }

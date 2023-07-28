@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
@@ -46,7 +46,7 @@ class MongoRegistrationRequestsValidatorTest {
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
 
     private final RegistrationRequestsValidator componentUnderTest;
 
@@ -56,7 +56,7 @@ class MongoRegistrationRequestsValidatorTest {
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
                 this.mongoInvitationCodesRepository,
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
@@ -66,7 +66,7 @@ class MongoRegistrationRequestsValidatorTest {
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.mongoInvitationCodesRepository,
-                this.mongoUserRepository
+                this.mongoUsersRepository
         );
     }
 
@@ -83,7 +83,7 @@ class MongoRegistrationRequestsValidatorTest {
                 invitationCode
         );
         var currentDbUser = entity(MongoDbUser.class);
-        when(this.mongoUserRepository.findByUsername(username)).thenReturn(currentDbUser);
+        when(this.mongoUsersRepository.findByUsername(username)).thenReturn(currentDbUser);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
@@ -93,7 +93,7 @@ class MongoRegistrationRequestsValidatorTest {
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage("Username is already used");
         assertThat(throwable.getMessage()).isEqualTo("Username is already used");
-        verify(this.mongoUserRepository).findByUsername(username);
+        verify(this.mongoUsersRepository).findByUsername(username);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         username,
@@ -123,7 +123,7 @@ class MongoRegistrationRequestsValidatorTest {
                 invitationCode
         );
         var dbInvitationCode = entity(MongoDbInvitationCode.class);
-        when(this.mongoUserRepository.findByUsername(username)).thenReturn(null);
+        when(this.mongoUsersRepository.findByUsername(username)).thenReturn(null);
         when(this.mongoInvitationCodesRepository.findByValue(invitationCode)).thenReturn(dbInvitationCode);
 
         // Act
@@ -132,7 +132,7 @@ class MongoRegistrationRequestsValidatorTest {
         // Assert
         assertThat(throwable).isInstanceOf(RegistrationException.class);
         assertThat(throwable.getMessage()).isEqualTo("InvitationCode is already used");
-        verify(this.mongoUserRepository).findByUsername(username);
+        verify(this.mongoUsersRepository).findByUsername(username);
         verify(this.mongoInvitationCodesRepository).findByValue(invitationCode);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 new EventRegistration1Failure(
@@ -164,7 +164,7 @@ class MongoRegistrationRequestsValidatorTest {
                 randomZoneId().getId(),
                 invitationCode
         );
-        when(this.mongoUserRepository.findByUsername(username)).thenReturn(null);
+        when(this.mongoUsersRepository.findByUsername(username)).thenReturn(null);
         when(this.mongoInvitationCodesRepository.findByValue(invitationCode)).thenReturn(null);
 
         // Act
@@ -174,7 +174,7 @@ class MongoRegistrationRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage("InvitationCode is not found");
-        verify(this.mongoUserRepository).findByUsername(username);
+        verify(this.mongoUsersRepository).findByUsername(username);
         verify(this.mongoInvitationCodesRepository).findByValue(invitationCode);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
@@ -206,14 +206,14 @@ class MongoRegistrationRequestsValidatorTest {
         );
         var dbInvitationCode = entity(MongoDbInvitationCode.class);
         dbInvitationCode.setInvited(null);
-        when(this.mongoUserRepository.findByUsername(username)).thenReturn(null);
+        when(this.mongoUsersRepository.findByUsername(username)).thenReturn(null);
         when(this.mongoInvitationCodesRepository.findByValue(invitationCode)).thenReturn(dbInvitationCode);
 
         // Act
         this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1);
 
         // Assert
-        verify(this.mongoUserRepository).findByUsername(username);
+        verify(this.mongoUsersRepository).findByUsername(username);
         verify(this.mongoInvitationCodesRepository).findByValue(invitationCode);
     }
 }

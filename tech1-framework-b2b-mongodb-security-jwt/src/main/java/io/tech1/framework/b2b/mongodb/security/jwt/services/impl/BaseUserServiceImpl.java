@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
@@ -25,41 +25,41 @@ import java.time.ZoneId;
 public class BaseUserServiceImpl implements BaseUserService {
 
     // Repository
-    private final MongoUserRepository mongoUserRepository;
+    private final MongoUsersRepository mongoUsersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void updateUser1(JwtUser jwtUser, RequestUserUpdate1 requestUserUpdate1) {
-        var dbUser = this.mongoUserRepository.findByUsername(jwtUser.username());
+        var dbUser = this.mongoUsersRepository.findByUsername(jwtUser.username());
 
         dbUser.setZoneId(ZoneId.of(requestUserUpdate1.zoneId()));
         dbUser.setEmail(requestUserUpdate1.email());
         dbUser.setName(requestUserUpdate1.name());
-        this.mongoUserRepository.save(dbUser);
+        this.mongoUsersRepository.save(dbUser);
 
         this.reauthenticate(dbUser);
     }
 
     @Override
     public void updateUser2(JwtUser jwtUser, RequestUserUpdate2 requestUserUpdate2) {
-        var dbUser = this.mongoUserRepository.findByUsername(jwtUser.username());
+        var dbUser = this.mongoUsersRepository.findByUsername(jwtUser.username());
 
         dbUser.setZoneId(ZoneId.of(requestUserUpdate2.zoneId()));
         dbUser.setName(requestUserUpdate2.name());
-        this.mongoUserRepository.save(dbUser);
+        this.mongoUsersRepository.save(dbUser);
 
         this.reauthenticate(dbUser);
     }
 
     @Override
     public void changePassword1(JwtUser jwtUser, RequestUserChangePassword1 requestUserChangePassword1) {
-        var dbUser = this.mongoUserRepository.findByUsername(jwtUser.username());
+        var dbUser = this.mongoUsersRepository.findByUsername(jwtUser.username());
 
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value());
 
         dbUser.setPassword(Password.of(hashPassword));
-        this.mongoUserRepository.save(dbUser);
+        this.mongoUsersRepository.save(dbUser);
 
         this.reauthenticate(dbUser);
     }

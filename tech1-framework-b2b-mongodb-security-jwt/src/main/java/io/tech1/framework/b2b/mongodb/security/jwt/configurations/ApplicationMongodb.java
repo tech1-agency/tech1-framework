@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,6 +20,14 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
+@ComponentScan({
+        // -------------------------------------------------------------------------------------------------------------
+        "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
+        "io.tech1.framework.b2b.mongodb.security.jwt.resources",
+        "io.tech1.framework.b2b.mongodb.security.jwt.services",
+        "io.tech1.framework.b2b.mongodb.security.jwt.sessions",
+        "io.tech1.framework.b2b.mongodb.security.jwt.validators",
+})
 @EnableMongoRepositories(
         basePackages = "io.tech1.framework.b2b.mongodb.security.jwt.repositories",
         mongoTemplateRef = "tech1MongoTemplate"

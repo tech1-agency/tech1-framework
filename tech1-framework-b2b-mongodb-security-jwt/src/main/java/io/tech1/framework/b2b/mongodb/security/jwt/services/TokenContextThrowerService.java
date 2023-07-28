@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtTokenValidatedClaims;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.domain.exceptions.cookie.*;
 
 public interface TokenContextThrowerService {

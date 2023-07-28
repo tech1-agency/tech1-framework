@@ -1,10 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt;
+package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
 import io.jsonwebtoken.Jwts;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomDate;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -13,7 +14,7 @@ class JwtTokenValidatedClaimsTest {
     @Test
     void safeGetUsernameExceptionTest() {
         // Arrange
-        var validatedClaims = JwtTokenValidatedClaims.invalid(new JwtAccessToken(randomString()));
+        var validatedClaims = JwtTokenValidatedClaims.invalid(entity(JwtAccessToken.class));
 
         // Act
         var throwable = catchThrowable(validatedClaims::safeGetUsername);
@@ -29,7 +30,7 @@ class JwtTokenValidatedClaimsTest {
         // Arrange
         var username = randomUsername();
         var claims = Jwts.claims().setSubject(username.identifier());
-        var validatedClaims = JwtTokenValidatedClaims.valid(new JwtAccessToken(randomString()), claims);
+        var validatedClaims = JwtTokenValidatedClaims.valid(entity(JwtAccessToken.class), claims);
 
         // Act
         var actual = validatedClaims.safeGetUsername();
@@ -41,7 +42,7 @@ class JwtTokenValidatedClaimsTest {
     @Test
     void safeGetExpirationTimestampExceptionTest() {
         // Arrange
-        var validatedClaims = JwtTokenValidatedClaims.invalid(new JwtAccessToken(randomString()));
+        var validatedClaims = JwtTokenValidatedClaims.invalid(entity(JwtAccessToken.class));
 
         // Act
         var throwable = catchThrowable(validatedClaims::safeGetExpirationTimestamp);
@@ -57,7 +58,7 @@ class JwtTokenValidatedClaimsTest {
         // Arrange
         var date = randomDate();
         var claims = Jwts.claims().setExpiration(date);
-        var validatedClaims = JwtTokenValidatedClaims.valid(new JwtAccessToken(randomString()), claims);
+        var validatedClaims = JwtTokenValidatedClaims.valid(entity(JwtAccessToken.class), claims);
 
         // Act
         var actual = validatedClaims.safeGetExpirationTimestamp();

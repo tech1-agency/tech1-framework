@@ -4,19 +4,17 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtTokenValidatedClaims;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
@@ -27,23 +25,21 @@ import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalD
 
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
 
-    // TODO [YY] @PostConstruct -> constructor
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
     // Values
-    private String base64EncodedSecretKey;
+    private final String base64EncodedSecretKey;
 
-    @PostConstruct
-    public void postConstruct() {
-        assertProperties(
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs(),
-                "securityJwtConfigs.jwtTokensConfigs"
-        );
-        var secretKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getSecretKey();
-        this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    @Autowired
+    public SecurityJwtTokenUtilityImpl(
+            ApplicationFrameworkProperties applicationFrameworkProperties
+    ) {
+        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
+        assertProperties(jwtTokensConfigs, "securityJwtConfigs.jwtTokensConfigs");
+        this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(jwtTokensConfigs.getSecretKey().getBytes());
     }
 
     @Override

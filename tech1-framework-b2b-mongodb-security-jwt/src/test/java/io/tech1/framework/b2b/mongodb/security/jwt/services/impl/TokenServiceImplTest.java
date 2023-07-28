@@ -1,9 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;

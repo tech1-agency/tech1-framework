@@ -25,7 +25,6 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 
 @Configuration
 @ComponentScan({
-        // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
         "io.tech1.framework.b2b.mongodb.security.jwt.essence",
         "io.tech1.framework.b2b.mongodb.security.jwt.services",

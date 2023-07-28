@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthentica
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;

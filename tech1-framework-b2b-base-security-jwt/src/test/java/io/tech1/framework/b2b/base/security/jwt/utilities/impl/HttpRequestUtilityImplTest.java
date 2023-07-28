@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -22,7 +22,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl.HttpRequestUtilityImpl.CACHED_PAYLOAD_ATTRIBUTE;
+import static io.tech1.framework.b2b.base.security.jwt.utilities.impl.HttpRequestUtilityImpl.CACHED_PAYLOAD_ATTRIBUTE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

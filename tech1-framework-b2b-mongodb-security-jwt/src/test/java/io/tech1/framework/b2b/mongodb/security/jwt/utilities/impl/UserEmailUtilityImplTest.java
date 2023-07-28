@@ -22,8 +22,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 
+import static io.tech1.framework.domain.constants.DatetimeConstants.DTF1;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
@@ -36,8 +36,6 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class UserEmailUtilityImplTest {
-
-    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     @Configuration
     @Import({
@@ -97,7 +95,7 @@ class UserEmailUtilityImplTest {
                 .endsWith(" (UTC)");
         subject = subject.replace("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ", "");
         subject = subject.replace(" (UTC)", "");
-        var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF), ZoneOffset.UTC);
+        var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF1), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);
     }
 

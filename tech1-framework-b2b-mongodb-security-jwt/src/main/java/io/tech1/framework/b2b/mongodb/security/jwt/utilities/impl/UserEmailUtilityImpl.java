@@ -12,18 +12,16 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.tech1.framework.domain.constants.DatetimeConstants.DTF1;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
 import static java.time.ZoneOffset.UTC;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserEmailUtilityImpl implements UserEmailUtility {
-
-    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     // Resources
     private final ResourceLoader resourceLoader;
@@ -38,7 +36,7 @@ public class UserEmailUtilityImpl implements UserEmailUtility {
         var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
         var environment = this.environmentUtility.getActiveProfile();
         var server = "[" + serverConfigs.getName() + "@" + environment + "]";
-        var time = LocalDateTime.now(UTC).format(DTF) + " (UTC)";
+        var time = LocalDateTime.now(UTC).format(DTF1) + " (UTC)";
         return prefix + " " + eventName + " on " + server + " — " + time;
     }
 

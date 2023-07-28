@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.filters;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;

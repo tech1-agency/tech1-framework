@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core;
+package io.tech1.framework.b2b.base.security.jwt.assistants.current;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;

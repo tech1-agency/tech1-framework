@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class JwtUserDetailsAssistantTest {
+class MongoUserDetailsAssistantTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -34,8 +34,8 @@ class JwtUserDetailsAssistantTest {
         }
 
         @Bean
-        JwtUserDetailsAssistant jwtUserDetailsAssistant() {
-            return new JwtUserDetailsAssistant(
+        MongoUserDetailsAssistant jwtUserDetailsAssistant() {
+            return new MongoUserDetailsAssistant(
                     this.userRepository()
             );
         }
@@ -43,7 +43,7 @@ class JwtUserDetailsAssistantTest {
 
     private final UserRepository userRepository;
 
-    private final JwtUserDetailsAssistant componentUnderTest;
+    private final MongoUserDetailsAssistant componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

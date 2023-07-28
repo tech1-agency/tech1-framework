@@ -6,9 +6,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenServiceImpl implements TokenService {
 
     // Assistants
-    private final JwtUserDetailsAssistant jwtUserDetailsAssistant;
+    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
     // Session
     private final SessionRegistry sessionRegistry;
     // Services
@@ -55,7 +55,7 @@ public class TokenServiceImpl implements TokenService {
         this.tokenContextThrowerService.verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
 
         // JWT Access Token: isValid + isAlive
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
+        var jwtUser = this.mongoUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
         return new Tuple2<>(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.jwtToken()));
     }
 

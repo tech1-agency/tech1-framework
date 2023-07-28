@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
@@ -94,8 +94,8 @@ public class TestsApplicationResourcesContext {
     }
 
     @Bean
-    public JwtUserDetailsAssistant jwtUserDetailsAssistant() {
-        return mock(JwtUserDetailsAssistant.class);
+    public MongoUserDetailsAssistant jwtUserDetailsAssistant() {
+        return mock(MongoUserDetailsAssistant.class);
     }
 
     // =================================================================================================================

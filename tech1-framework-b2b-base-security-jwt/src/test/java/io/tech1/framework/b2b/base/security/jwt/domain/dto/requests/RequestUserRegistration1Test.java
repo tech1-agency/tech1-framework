@@ -26,7 +26,7 @@ class RequestUserRegistration1Test extends AbstractSerializationDeserializationR
 
     @Override
     protected String getFileName() {
-        return "user-registration-1.json";
+        return "user-registration-invitation-code-id-1.json";
     }
 
     // serialization is not required for request-based dtos

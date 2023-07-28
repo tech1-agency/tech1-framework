@@ -8,10 +8,10 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -48,7 +48,7 @@ public class BaseSecurityAuthenticationResource {
     private final TokenService tokenService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
-    private final JwtUserDetailsAssistant jwtUserDetailsAssistant;
+    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
     // Cookies
     private final CookieProvider cookieProvider;
     // Validators
@@ -67,7 +67,7 @@ public class BaseSecurityAuthenticationResource {
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.identifier(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
 
-        var user = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
+        var user = this.mongoUserDetailsAssistant.loadUserByUsername(username.identifier());
 
         var jwtAccessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var jwtRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());

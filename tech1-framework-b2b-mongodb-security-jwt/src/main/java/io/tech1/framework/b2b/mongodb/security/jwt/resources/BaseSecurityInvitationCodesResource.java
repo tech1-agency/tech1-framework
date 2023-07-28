@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCodes;
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import lombok.RequiredArgsConstructor;

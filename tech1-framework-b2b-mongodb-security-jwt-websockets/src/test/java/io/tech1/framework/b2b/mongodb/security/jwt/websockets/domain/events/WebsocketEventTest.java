@@ -28,7 +28,7 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var json = this.writeValueAsString(websocketEvent);
 
         // Assert
-        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-1.json"));
+        assertThat(json).isEqualTo(readFile(this.getFolder(), "websocket-event-invitation-code-id-1.json"));
     }
 
     @Test

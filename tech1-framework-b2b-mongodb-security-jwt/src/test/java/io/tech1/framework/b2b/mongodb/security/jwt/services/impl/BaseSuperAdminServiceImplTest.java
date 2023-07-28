@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
@@ -99,7 +99,7 @@ class BaseSuperAdminServiceImplTest {
         // Assert
         verify(this.invitationCodeRepository).findByInvitedIsNull();
         assertThat(unused).hasSize(invitationCodes.size());
-        assertThat(unused.stream().map(ResponseInvitationCode1::getValue).collect(Collectors.toSet()))
+        assertThat(unused.stream().map(ResponseInvitationCode::value).collect(Collectors.toSet()))
                 .isEqualTo(invitationCodes.stream().map(DbInvitationCode::getValue).collect(Collectors.toSet()));
     }
 

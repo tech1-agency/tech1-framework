@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -43,8 +43,8 @@ class TokenServiceImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JwtUserDetailsAssistant jwtUserDetailsAssistant() {
-            return mock(JwtUserDetailsAssistant.class);
+        MongoUserDetailsAssistant jwtUserDetailsAssistant() {
+            return mock(MongoUserDetailsAssistant.class);
         }
 
         @Bean
@@ -86,7 +86,7 @@ class TokenServiceImplTest {
     }
 
     // Assistants
-    private final JwtUserDetailsAssistant jwtUserDetailsAssistant;
+    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
     // Session
     private final SessionRegistry sessionRegistry;
     // Services
@@ -102,7 +102,7 @@ class TokenServiceImplTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.jwtUserDetailsAssistant,
+                this.mongoUserDetailsAssistant,
                 this.sessionRegistry,
                 this.tokenContextThrowerService,
                 this.userSessionService,
@@ -114,7 +114,7 @@ class TokenServiceImplTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.jwtUserDetailsAssistant,
+                this.mongoUserDetailsAssistant,
                 this.sessionRegistry,
                 this.tokenContextThrowerService,
                 this.userSessionService,
@@ -135,7 +135,7 @@ class TokenServiceImplTest {
         var jwtUser = entity(JwtUser.class);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(jwtAccessToken)).thenReturn(accessTokenValidatedClaims);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(jwtRefreshToken)).thenReturn(refreshTokenValidatedClaims);
-        when(this.jwtUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
+        when(this.mongoUserDetailsAssistant.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
 
         // Act
         var tuple2 = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
@@ -144,7 +144,7 @@ class TokenServiceImplTest {
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(jwtAccessToken);
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(jwtRefreshToken);
         verify(this.tokenContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
-        verify(this.jwtUserDetailsAssistant).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
+        verify(this.mongoUserDetailsAssistant).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
         assertThat(tuple2).isNotNull();
         assertThat(tuple2.a()).isEqualTo(jwtUser);
         assertThat(tuple2.b()).isEqualTo(jwtRefreshToken);

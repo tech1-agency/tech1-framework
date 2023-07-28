@@ -1,14 +1,13 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses;
+package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.domain.base.Username;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.SESSIONS_2;
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.SESSIONS_2;
 
 public record ResponseServerSessionsTable(
         List<ResponseUserSession2> activeSessions,

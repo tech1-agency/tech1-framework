@@ -21,7 +21,7 @@ class RequestUserChangePassword1Test extends AbstractSerializationDeserializatio
 
     @Override
     protected String getFileName() {
-        return "user-change-password-1.json";
+        return "user-change-password-invitation-code-id-1.json";
     }
 
     // serialization is not required for request-based dtos

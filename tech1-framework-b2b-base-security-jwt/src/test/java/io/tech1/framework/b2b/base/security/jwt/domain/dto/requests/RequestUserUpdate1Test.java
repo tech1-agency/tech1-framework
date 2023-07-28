@@ -23,7 +23,7 @@ class RequestUserUpdate1Test extends AbstractSerializationDeserializationRunner 
 
     @Override
     protected String getFileName() {
-        return "user-update-1.json";
+        return "user-update-invitation-code-id-1.json";
     }
 
     // serialization is not required for request-based dtos

@@ -23,7 +23,7 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.mongodb.security.jwt.assistants.core",
+        "io.tech1.framework.b2b.mongodb.security.jwt.assistants.current",
         "io.tech1.framework.b2b.mongodb.security.jwt.essence"
         // -------------------------------------------------------------------------------------------------------------
 })

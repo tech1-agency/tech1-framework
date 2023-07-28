@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.configurations;
 
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.filters.JwtTokensFilter;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
@@ -67,7 +67,7 @@ import static org.springframework.http.HttpMethod.*;
 public class ApplicationMongodbSecurityJwt extends WebSecurityConfigurerAdapter {
 
     // Assistants
-    private final JwtUserDetailsAssistant jwtUserDetailsAssistant;
+    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
     // Essence
     private final EssenceConstructor essenceConstructor;
     // Filters
@@ -92,7 +92,7 @@ public class ApplicationMongodbSecurityJwt extends WebSecurityConfigurerAdapter 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService(this.jwtUserDetailsAssistant)
+                .userDetailsService(this.mongoUserDetailsAssistant)
                 .passwordEncoder(this.bCryptPasswordEncoder());
     }
 

@@ -1,13 +1,14 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCode1;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tech1.framework.b2b.mongodb.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_1;
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_1;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
@@ -31,10 +32,10 @@ public class BaseSuperAdminServiceImpl implements BaseSuperAdminService {
     private final UserSessionRepository userSessionRepository;
 
     @Override
-    public List<ResponseInvitationCode1> findUnused() {
+    public List<ResponseInvitationCode> findUnused() {
         var invitationCodes = this.invitationCodeRepository.findByInvitedIsNull();
         return invitationCodes.stream()
-                .map(ResponseInvitationCode1::new)
+                .map(DbInvitationCode::getResponseInvitationCode)
                 .sorted(INVITATION_CODE_1)
                 .toList();
     }

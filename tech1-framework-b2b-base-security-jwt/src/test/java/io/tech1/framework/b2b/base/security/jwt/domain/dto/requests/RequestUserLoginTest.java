@@ -22,7 +22,7 @@ class RequestUserLoginTest extends AbstractSerializationDeserializationRunner {
 
     @Override
     protected String getFileName() {
-        return "user-login-1.json";
+        return "user-login-invitation-code-id-1.json";
     }
 
     // serialization is not required for request-based dtos

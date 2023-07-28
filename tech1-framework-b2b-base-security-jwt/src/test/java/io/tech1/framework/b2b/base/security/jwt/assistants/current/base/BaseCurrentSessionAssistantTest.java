@@ -1,12 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.base;
+package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
@@ -41,11 +40,6 @@ class BaseCurrentSessionAssistantTest {
         @Bean
         SessionRegistry sessionRegistry() {
             return mock(SessionRegistry.class);
-        }
-
-        @Bean
-        UserSessionService userSessionService() {
-            return mock(UserSessionService.class);
         }
 
         @Bean

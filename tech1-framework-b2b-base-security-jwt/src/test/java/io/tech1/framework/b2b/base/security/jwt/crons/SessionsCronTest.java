@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.crons;
+package io.tech1.framework.b2b.base.security.jwt.crons;
 
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;

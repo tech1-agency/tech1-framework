@@ -4,8 +4,9 @@ import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -98,7 +98,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        var sessionId = randomString();
+        var sessionId = entity(UserSessionId.class);
 
         // Act
         this.mvc.perform(

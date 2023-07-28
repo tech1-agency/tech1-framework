@@ -4,7 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBas
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseSuperAdminService;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class BaseSuperAdminResource {
     // WARNING: should NOT be used, under development
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable String sessionId) {
+    public void deleteById(@PathVariable UserSessionId sessionId) {
         this.userSessionService.deleteById(sessionId);
     }
 

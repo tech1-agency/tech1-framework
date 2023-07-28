@@ -2,16 +2,17 @@ package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefreshed;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -41,6 +43,8 @@ public class MongoSessionRegistry implements SessionRegistry {
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
     private final UserSessionService userSessionService;
+    // Repositories
+    private final MongoUserSessionsRepository mongoUserSessionsRepository;
 
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {
@@ -94,11 +98,11 @@ public class MongoSessionRegistry implements SessionRegistry {
         this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
         var jwtRefreshToken = session.refreshToken();
-        var dbUserSession = this.userSessionService.findByRefreshToken(jwtRefreshToken);
+        var dbUserSession = this.mongoUserSessionsRepository.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
             this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.getRequestMetadata()));
-            this.userSessionService.deleteByRefreshToken(jwtRefreshToken);
+            this.mongoUserSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
         } else {
             this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
         }
@@ -106,7 +110,7 @@ public class MongoSessionRegistry implements SessionRegistry {
 
     @Override
     public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
-        var usersSessions = this.userSessionService.findByUsernameIn(usernames);
+        var usersSessions = this.mongoUserSessionsRepository.findByUsernameIn(usernames);
         var sessionsValidatedTuple2 = this.userSessionService.validate(usersSessions);
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {
@@ -120,14 +124,14 @@ public class MongoSessionRegistry implements SessionRegistry {
             this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
         });
 
-        var deleted = this.userSessionService.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
+        var deleted = this.mongoUserSessionsRepository.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 
     @Override
     public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
         return ResponseUserSessionsTable.of(
-                this.userSessionService.findByUsername(username).stream()
+                this.mongoUserSessionsRepository.findByUsername(username).stream()
                         .map(session ->
                                 ResponseUserSession2.of(
                                         session.getUsername(),

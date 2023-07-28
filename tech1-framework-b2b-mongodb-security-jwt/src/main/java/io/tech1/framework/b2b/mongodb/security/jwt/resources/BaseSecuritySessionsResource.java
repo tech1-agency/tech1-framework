@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
@@ -46,7 +47,7 @@ public class BaseSecuritySessionsResource {
     // WARNING: should NOT be used, under development
     @DeleteMapping("/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable String sessionId) {
+    public void deleteById(@PathVariable UserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
         this.sessionsRequestsValidator.validateDeleteById(username, sessionId);
         this.userSessionService.deleteById(sessionId);

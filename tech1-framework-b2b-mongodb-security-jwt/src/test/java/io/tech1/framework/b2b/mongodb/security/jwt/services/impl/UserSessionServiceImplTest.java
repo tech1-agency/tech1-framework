@@ -1,13 +1,14 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -123,78 +124,6 @@ class UserSessionServiceImplTest {
                 this.mongoUserSessionsRepository,
                 this.geoLocationFacadeUtility
         );
-    }
-
-    @Test
-    void findByUsernameTest() {
-        // Arrange
-        var username = randomUsername();
-        var usersSessions = list345(MongoDbUserSession.class);
-        when(this.mongoUserSessionsRepository.findByUsername(username)).thenReturn(usersSessions);
-
-        // Act
-        var actual = this.componentUnderTest.findByUsername(username);
-
-        // Assert
-        verify(this.mongoUserSessionsRepository).findByUsername(username);
-        assertThat(actual).isEqualTo(usersSessions);
-    }
-
-    @Test
-    void findByUsernameInTest() {
-        // Arrange
-        var usernames = set345(Username.class);
-        var usersSessions = list345(MongoDbUserSession.class);
-        when(this.mongoUserSessionsRepository.findByUsernameIn(usernames)).thenReturn(usersSessions);
-
-        // Act
-        var actual = this.componentUnderTest.findByUsernameIn(usernames);
-
-        // Assert
-        verify(this.mongoUserSessionsRepository).findByUsernameIn(usernames);
-        assertThat(actual).isEqualTo(usersSessions);
-    }
-
-    @Test
-    void deleteByIdInTest() {
-        // Arrange
-        var ids = randomStringsAsList(3);
-        var deletedRecords = randomLongGreaterThanZero();
-        when(this.mongoUserSessionsRepository.deleteByIdIn(ids)).thenReturn(deletedRecords);
-
-        // Act
-        var actual = this.componentUnderTest.deleteByIdIn(ids);
-
-        // Assert
-        verify(this.mongoUserSessionsRepository).deleteByIdIn(ids);
-        assertThat(actual).isEqualTo(deletedRecords);
-    }
-
-    @Test
-    void findByRefreshTokenTest() {
-        // Arrange
-        var jwtRefreshToken = entity(JwtRefreshToken.class);
-        var userSession = entity(MongoDbUserSession.class);
-        when(this.mongoUserSessionsRepository.findByRefreshToken(jwtRefreshToken)).thenReturn(userSession);
-
-        // Act
-        var actual = this.componentUnderTest.findByRefreshToken(jwtRefreshToken);
-
-        // Assert
-        verify(this.mongoUserSessionsRepository).findByRefreshToken(jwtRefreshToken);
-        assertThat(actual).isEqualTo(userSession);
-    }
-
-    @Test
-    void deleteByRefreshTokenTest() {
-        // Arrange
-        var jwtRefreshToken = entity(JwtRefreshToken.class);
-
-        // Act
-        this.componentUnderTest.deleteByRefreshToken(jwtRefreshToken);
-
-        // Assert
-        verify(this.mongoUserSessionsRepository).deleteByRefreshToken(jwtRefreshToken);
     }
 
     @Test
@@ -326,7 +255,7 @@ class UserSessionServiceImplTest {
         var userSession = entity(MongoDbUserSession.class);
         var geoLocation = randomGeoLocation();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
-        when(this.mongoUserSessionsRepository.getById(event.userSessionId().value())).thenReturn(userSession);
+        when(this.mongoUserSessionsRepository.getById(event.userSessionId())).thenReturn(userSession);
         var userSessionAC = ArgumentCaptor.forClass(MongoDbUserSession.class);
 
         // Act
@@ -334,7 +263,7 @@ class UserSessionServiceImplTest {
 
         // Assert
         verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
-        verify(this.mongoUserSessionsRepository).getById(event.userSessionId().value());
+        verify(this.mongoUserSessionsRepository).getById(event.userSessionId());
         verify(this.mongoUserSessionsRepository).save(userSessionAC.capture());
         var requestMetadata = userSessionAC.getValue().getRequestMetadata();
         assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
@@ -380,13 +309,13 @@ class UserSessionServiceImplTest {
     @Test
     void deleteByIdTest() {
         // Arrange
-        var sessionId = randomString();
+        var sessionId = entity(UserSessionId.class);
 
         // Act
         this.componentUnderTest.deleteById(sessionId);
 
         // Assert
-        verify(this.mongoUserSessionsRepository).deleteById(sessionId);
+        verify(this.mongoUserSessionsRepository).deleteById(sessionId.value());
     }
 
     @SuppressWarnings("unchecked")

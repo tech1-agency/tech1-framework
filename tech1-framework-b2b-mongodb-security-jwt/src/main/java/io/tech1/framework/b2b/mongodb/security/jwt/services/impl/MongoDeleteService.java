@@ -43,7 +43,7 @@ public class MongoDeleteService implements DeleteService {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = this.mongoUserSessionsRepository.getById(event.userSessionId().value());
+        var userSession = this.mongoUserSessionsRepository.getById(event.userSessionId());
         userSession.setRequestMetadata(requestMetadata);
         this.mongoUserSessionsRepository.save(userSession);
         return new Tuple2<>(userSession.userSessionId(), userSession.getRequestMetadata());

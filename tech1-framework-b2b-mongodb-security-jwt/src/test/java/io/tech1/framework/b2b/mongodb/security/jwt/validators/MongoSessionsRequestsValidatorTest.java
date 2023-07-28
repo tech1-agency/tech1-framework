@@ -1,9 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
-import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.verify;
@@ -43,7 +43,7 @@ class MongoSessionsRequestsValidatorTest {
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var username = entity(Username.class);
-        var sessionId = randomString();
+        var sessionId = entity(UserSessionId.class);
         var session = entity(MongoDbUserSession.class);
         when(this.mongoUserSessionsRepository.requirePresence(sessionId)).thenReturn(session);
 
@@ -61,7 +61,7 @@ class MongoSessionsRequestsValidatorTest {
     void validateDeleteByIdOkTest() {
         // Arrange
         var username = entity(Username.class);
-        var sessionId = randomString();
+        var sessionId = entity(UserSessionId.class);
         var session = entity(MongoDbUserSession.class);
         session.setUsername(username);
         when(this.mongoUserSessionsRepository.requirePresence(sessionId)).thenReturn(session);

@@ -1,13 +1,14 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUserSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.base.Username;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
@@ -44,31 +44,6 @@ public class UserSessionServiceImpl implements UserSessionService {
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
     private final UserAgentDetailsUtility userAgentDetailsUtility;
-
-    @Override
-    public List<MongoDbUserSession> findByUsername(Username username) {
-        return this.mongoUserSessionsRepository.findByUsername(username);
-    }
-
-    @Override
-    public List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames) {
-        return this.mongoUserSessionsRepository.findByUsernameIn(usernames);
-    }
-
-    @Override
-    public Long deleteByIdIn(List<String> ids) {
-        return this.mongoUserSessionsRepository.deleteByIdIn(ids);
-    }
-
-    @Override
-    public MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        return this.mongoUserSessionsRepository.findByRefreshToken(jwtRefreshToken);
-    }
-
-    @Override
-    public void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.mongoUserSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
-    }
 
     @Override
     public MongoDbUserSession save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
@@ -130,7 +105,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = this.mongoUserSessionsRepository.getById(event.userSessionId().value());
+        var userSession = this.mongoUserSessionsRepository.getById(event.userSessionId());
         userSession.setRequestMetadata(requestMetadata);
         return this.mongoUserSessionsRepository.save(userSession);
     }
@@ -168,8 +143,8 @@ public class UserSessionServiceImpl implements UserSessionService {
     }
 
     @Override
-    public void deleteById(String sessionId) {
-        this.mongoUserSessionsRepository.deleteById(sessionId);
+    public void deleteById(UserSessionId sessionId) {
+        this.mongoUserSessionsRepository.deleteById(sessionId.value());
     }
 
     @Override

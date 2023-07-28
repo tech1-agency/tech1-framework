@@ -1,7 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -23,13 +24,13 @@ public interface MongoUserSessionsRepository extends MongoRepository<MongoDbUser
     List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
     Long deleteByIdIn(List<String> ids);
 
-    default MongoDbUserSession getById(String sessionId) {
-        return this.findById(sessionId).orElse(null);
+    default MongoDbUserSession getById(UserSessionId sessionId) {
+        return this.findById(sessionId.value()).orElse(null);
     }
 
-    default MongoDbUserSession requirePresence(String sessionId) {
+    default MongoDbUserSession requirePresence(UserSessionId sessionId) {
         var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFound("Session", sessionId));
+        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
         return session;
     }
 

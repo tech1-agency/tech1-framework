@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,9 +56,9 @@ public class BaseSecuritySessionsResource {
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
-        var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
+        var username = this.currentSessionAssistant.getCurrentUsername();
         var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
-        this.userSessionService.deleteAllExceptCurrent(currentDbUser, cookie);
+        this.userSessionService.deleteAllExceptCurrent(username, cookie);
     }
 }
 

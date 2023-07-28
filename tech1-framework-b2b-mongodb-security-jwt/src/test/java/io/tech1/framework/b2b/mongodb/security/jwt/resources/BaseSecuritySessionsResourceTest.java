@@ -1,14 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
@@ -140,9 +139,9 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
     @Test
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
-        var user = entity(DbUser.class);
+        var username = entity(Username.class);
         var cookie = entity(CookieRefreshToken.class);
-        when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(user);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
@@ -153,8 +152,8 @@ class BaseSecuritySessionsResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentDbUser();
+        verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.userSessionService).deleteAllExceptCurrent(user, cookie);
+        verify(this.userSessionService).deleteAllExceptCurrent(username, cookie);
     }
 }

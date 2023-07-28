@@ -22,7 +22,7 @@ public class CurrentClientUser {
     private final String name;
     private final ZoneId zoneId;
     private final List<String> authorities;
-    private Map<String, Object> attributes;
+    private final Map<String, Object> attributes;
 
     public CurrentClientUser(
             Username username,

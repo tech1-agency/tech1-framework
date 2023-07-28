@@ -1,26 +1,42 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.ZoneId;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-public record JwtUser(DbUser dbUser) implements UserDetails {
+public record JwtUser(
+        Username username,
+        Password password,
+        List<SimpleGrantedAuthority> authorities,
+        Email email,
+        String name,
+        ZoneId zoneId,
+        Map<String, Object> attributes
+) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.dbUser.getAuthorities();
+        return this.authorities;
     }
 
     @Override
     public String getPassword() {
-        return this.dbUser.getPassword().value();
+        return this.password.value();
     }
 
     @Override
     public String getUsername() {
-        return this.dbUser.getUsername().identifier();
+        return this.username.identifier();
     }
 
     @Override
@@ -41,6 +57,15 @@ public record JwtUser(DbUser dbUser) implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @JsonIgnore
+    public JwtTokenCreationParams getJwtTokenCreationParams() {
+        return new JwtTokenCreationParams(
+                this.username,
+                this.authorities,
+                this.zoneId
+        );
     }
 }
 

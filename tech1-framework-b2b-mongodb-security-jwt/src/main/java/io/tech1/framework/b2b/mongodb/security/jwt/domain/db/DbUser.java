@@ -1,9 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -46,12 +43,7 @@ public class DbUser {
     private Email email;
     private String name;
 
-    public DbUser(
-            Username username,
-            Password password,
-            String zoneId,
-            List<SimpleGrantedAuthority> authorities
-    ) {
+    public DbUser(Username username, Password password, String zoneId, List<SimpleGrantedAuthority> authorities) {
         assertNonNullOrThrow(username, invalidAttribute("DbUser.username"));
         assertNonNullOrThrow(password, invalidAttribute("DbUser.password"));
         assertZoneIdOrThrow(zoneId, invalidAttribute("DbUser.zoneId"));
@@ -63,34 +55,9 @@ public class DbUser {
         this.attributes = new HashMap<>();
     }
 
-    public void edit1(RequestUserUpdate1 requestUserUpdate1) {
-        this.zoneId = ZoneId.of(requestUserUpdate1.zoneId());
-        this.email = requestUserUpdate1.email();
-        this.name = requestUserUpdate1.name();
-    }
-
-    public void edit2(RequestUserUpdate2 requestUserUpdate2) {
-        this.zoneId = ZoneId.of(requestUserUpdate2.zoneId());
-        this.name = requestUserUpdate2.name();
-    }
-
-    public void changePassword(Password password) {
-        this.password = password;
-    }
-
     @JsonIgnore
     @Transient
     public Map<String, Object> getNotNullAttributes() {
         return nonNull(this.attributes) ? this.attributes : new HashMap<>();
-    }
-
-    @JsonIgnore
-    @Transient
-    public JwtTokenCreationParams getJwtTokenCreationParams() {
-        return new JwtTokenCreationParams(
-                this.username,
-                this.authorities,
-                this.zoneId
-        );
     }
 }

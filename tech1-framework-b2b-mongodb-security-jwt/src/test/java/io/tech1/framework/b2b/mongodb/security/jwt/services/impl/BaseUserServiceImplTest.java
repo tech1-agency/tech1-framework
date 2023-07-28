@@ -1,10 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
@@ -37,11 +36,6 @@ class BaseUserServiceImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        CurrentSessionAssistant currentSessionAssistant() {
-            return mock(CurrentSessionAssistant.class);
-        }
-
-        @Bean
         UserRepository userRepository() {
             return mock(UserRepository.class);
         }
@@ -54,14 +48,12 @@ class BaseUserServiceImplTest {
         @Bean
         BaseUserService baseUserService() {
             return new BaseUserServiceImpl(
-                    this.currentSessionAssistant(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
             );
         }
     }
 
-    private final CurrentSessionAssistant currentSessionAssistant;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -70,7 +62,6 @@ class BaseUserServiceImplTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.currentSessionAssistant,
                 this.userRepository,
                 this.bCryptPasswordEncoder
         );
@@ -79,7 +70,6 @@ class BaseUserServiceImplTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.currentSessionAssistant,
                 this.userRepository,
                 this.bCryptPasswordEncoder
         );
@@ -93,17 +83,18 @@ class BaseUserServiceImplTest {
                 randomEmail(),
                 randomString()
         );
-        var currentJwtUser = entity(JwtUser.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(currentJwtUser);
+        var jwtUser = entity(JwtUser.class);
+        var dbUser = new DbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
+        when(this.userRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var dbUserAC = ArgumentCaptor.forClass(DbUser.class);
 
         // Act
-        this.componentUnderTest.updateUser1(requestUserUpdate1);
+        this.componentUnderTest.updateUser1(jwtUser, requestUserUpdate1);
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.userRepository).findByUsername(jwtUser.username());
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.dbUser().getUsername());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
         assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
         assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate1.name());
         assertThat(dbUserAC.getValue().getEmail()).isEqualTo(requestUserUpdate1.email());
@@ -117,41 +108,42 @@ class BaseUserServiceImplTest {
                 randomZoneId().getId(),
                 randomString()
         );
-        var currentJwtUser = entity(JwtUser.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(currentJwtUser);
+        var jwtUser = entity(JwtUser.class);
+        var dbUser = new DbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
+        when(this.userRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var dbUserAC = ArgumentCaptor.forClass(DbUser.class);
 
         // Act
-        this.componentUnderTest.updateUser2(requestUserUpdate2);
+        this.componentUnderTest.updateUser2(jwtUser, requestUserUpdate2);
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.userRepository).findByUsername(jwtUser.username());
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.dbUser().getUsername());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
         assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
         assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate2.name());
-        assertThat(dbUserAC.getValue().getEmail()).isEqualTo(currentJwtUser.dbUser().getEmail());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
     @Test
-    void changePassword1Tes() {
+    void changePassword1Test() {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
-        var currentJwtUser = entity(JwtUser.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(currentJwtUser);
-        String hashPassword = randomString();
+        var jwtUser = entity(JwtUser.class);
+        var dbUser = new DbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
+        when(this.userRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
+        var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value())).thenReturn(hashPassword);
         ArgumentCaptor<DbUser> dbUserAC = ArgumentCaptor.forClass(DbUser.class);
 
         // Act
-        this.componentUnderTest.changePassword1(requestUserChangePassword1);
+        this.componentUnderTest.changePassword1(jwtUser, requestUserChangePassword1);
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.userRepository).findByUsername(jwtUser.username());
         verify(this.bCryptPasswordEncoder).encode(requestUserChangePassword1.newPassword().value());
         verify(this.userRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(currentJwtUser.dbUser().getUsername());
+        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
         assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder
     }

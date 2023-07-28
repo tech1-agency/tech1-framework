@@ -2,14 +2,14 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
@@ -29,6 +29,7 @@ import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
 import static java.util.Objects.isNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -69,8 +70,8 @@ public class UserSessionServiceImpl implements UserSessionService {
     }
 
     @Override
-    public DbUserSession save(DbUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
-        var username = user.getUsername();
+    public DbUserSession save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
+        var username = user.username();
         var userSession = this.userSessionRepository.findByRefreshToken(jwtRefreshToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
         var userRequestMetadata = UserRequestMetadata.processing(clientIpAddr);
@@ -87,7 +88,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 EventSessionAddUserRequestMetadata.of(
                         username,
-                        user.getEmail(),
+                        user.email(),
                         userSession,
                         clientIpAddr,
                         httpServletRequest,
@@ -99,8 +100,8 @@ public class UserSessionServiceImpl implements UserSessionService {
     }
 
     @Override
-    public DbUserSession refresh(DbUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
-        var username = user.getUsername();
+    public DbUserSession refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
+        var username = user.username();
         var oldUserSession = this.userSessionRepository.findByRefreshToken(oldJwtRefreshToken);
         var newUserSession = new DbUserSession(
                 newJwtRefreshToken,
@@ -112,7 +113,7 @@ public class UserSessionServiceImpl implements UserSessionService {
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 EventSessionAddUserRequestMetadata.of(
                         username,
-                        user.getEmail(),
+                        user.email(),
                         newUserSession,
                         getClientIpAddr(httpServletRequest),
                         httpServletRequest,
@@ -171,8 +172,8 @@ public class UserSessionServiceImpl implements UserSessionService {
     }
 
     @Override
-    public void deleteAllExceptCurrent(DbUser user, CookieRefreshToken cookie) {
-        var sessions = this.userSessionRepository.findByUsername(user.getUsername());
+    public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
+        var sessions = this.userSessionRepository.findByUsername(username);
         var currentSession = this.userSessionRepository.findByRefreshToken(cookie.getJwtRefreshToken());
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
         this.userSessionRepository.deleteAll(sessions);

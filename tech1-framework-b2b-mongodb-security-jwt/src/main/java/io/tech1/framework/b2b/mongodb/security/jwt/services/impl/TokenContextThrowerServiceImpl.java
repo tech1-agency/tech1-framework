@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -64,15 +65,14 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
     }
 
     @Override
-    public DbUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
+    public JwtUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
         var username = validatedClaims.safeGetUsername();
-        var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
-        var dbUser = jwtUser.dbUser();
+        var user = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
         var databasePresence = this.userSessionRepository.isPresent(oldJwtRefreshToken);
         if (!databasePresence) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenDbNotFoundException(username);
         }
-        return dbUser;
+        return user;
     }
 }

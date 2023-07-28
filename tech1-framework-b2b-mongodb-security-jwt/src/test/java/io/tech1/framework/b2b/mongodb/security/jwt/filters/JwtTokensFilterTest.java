@@ -1,14 +1,16 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.filters;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
+import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenExpiredException;
+import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenInvalidException;
+import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -183,7 +185,7 @@ class JwtTokensFilterTest {
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokenService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         // WARNING: no verifications on static SecurityContextHolder
-        verify(this.sessionRegistry).register(new Session(jwtUser.dbUser().getUsername(), jwtRefreshToken));
+        verify(this.sessionRegistry).register(new Session(jwtUser.username(), jwtRefreshToken));
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,

@@ -5,19 +5,19 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserL
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
@@ -122,8 +122,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier())).thenReturn(jwtUser);
         var jwtAccessToken = entity(JwtAccessToken.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
-        when(this.securityJwtTokenUtility.createJwtAccessToken(jwtUser.dbUser().getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
-        when(this.securityJwtTokenUtility.createJwtRefreshToken(jwtUser.dbUser().getJwtTokenCreationParams())).thenReturn(jwtRefreshToken);
+        when(this.securityJwtTokenUtility.createJwtAccessToken(jwtUser.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
+        when(this.securityJwtTokenUtility.createJwtRefreshToken(jwtUser.getJwtTokenCreationParams())).thenReturn(jwtRefreshToken);
         var currentClientUser = randomCurrentClientUser();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
 
@@ -141,9 +141,9 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         verify(this.authenticationRequestsValidator).validateLoginRequest(requestUserLogin);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.identifier(), password.value()));
         verify(this.jwtUserDetailsAssistant).loadUserByUsername(username.identifier());
-        verify(this.securityJwtTokenUtility).createJwtAccessToken(jwtUser.dbUser().getJwtTokenCreationParams());
-        verify(this.securityJwtTokenUtility).createJwtRefreshToken(jwtUser.dbUser().getJwtTokenCreationParams());
-        verify(this.userSessionService).save(eq(jwtUser.dbUser()), eq(jwtRefreshToken), any(HttpServletRequest.class));
+        verify(this.securityJwtTokenUtility).createJwtAccessToken(jwtUser.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtility).createJwtRefreshToken(jwtUser.getJwtTokenCreationParams());
+        verify(this.userSessionService).save(eq(jwtUser), eq(jwtRefreshToken), any(HttpServletRequest.class));
         verify(this.cookieProvider).createJwtAccessCookie(eq(jwtAccessToken), any(HttpServletResponse.class));
         verify(this.cookieProvider).createJwtRefreshCookie(eq(jwtRefreshToken), any(HttpServletResponse.class));
         // WARNING: no verifications on static SecurityContextHolder

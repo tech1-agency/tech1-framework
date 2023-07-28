@@ -26,7 +26,15 @@ public class JwtUserDetailsAssistant implements UserDetailsService {
     public JwtUser loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = this.userRepository.findByUsername(Username.of(username));
         if (nonNull(user)) {
-            return new JwtUser(user);
+            return new JwtUser(
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getAuthorities(),
+                    user.getEmail(),
+                    user.getName(),
+                    user.getZoneId(),
+                    user.getAttributes()
+            );
         } else {
             throw new UsernameNotFoundException(entityNotFound("Username", username));
         }

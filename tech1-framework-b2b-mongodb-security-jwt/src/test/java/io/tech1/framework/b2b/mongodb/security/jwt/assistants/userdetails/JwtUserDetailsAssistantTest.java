@@ -89,12 +89,19 @@ class JwtUserDetailsAssistantTest {
         // Assert
         verify(this.userRepository).findByUsername(username);
         assertThat(jwtUser).isNotNull();
-        assertThat(jwtUser.dbUser()).isEqualTo(dbUser);
         assertThat(jwtUser.getUsername()).isEqualTo(username.identifier());
         assertThat(jwtUser.getPassword()).isEqualTo(dbUser.getPassword().value());
         assertThat(jwtUser.isAccountNonExpired()).isTrue();
         assertThat(jwtUser.isAccountNonLocked()).isTrue();
         assertThat(jwtUser.isCredentialsNonExpired()).isTrue();
         assertThat(jwtUser.isEnabled()).isTrue();
+        assertThat(jwtUser.username()).isEqualTo(dbUser.getUsername());
+        assertThat(jwtUser.password()).isEqualTo(dbUser.getPassword());
+        assertThat(jwtUser.authorities()).isEqualTo(dbUser.getAuthorities());
+        assertThat(jwtUser.authorities()).isEqualTo(dbUser.getAuthorities());
+        assertThat(jwtUser.email()).isEqualTo(dbUser.getEmail());
+        assertThat(jwtUser.name()).isEqualTo(dbUser.getName());
+        assertThat(jwtUser.zoneId()).isEqualTo(dbUser.getZoneId());
+        assertThat(jwtUser.attributes()).isEqualTo(dbUser.getAttributes());
     }
 }

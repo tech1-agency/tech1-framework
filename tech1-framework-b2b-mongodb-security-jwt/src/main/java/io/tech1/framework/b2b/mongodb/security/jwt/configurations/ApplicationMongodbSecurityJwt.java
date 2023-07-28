@@ -93,7 +93,7 @@ public class ApplicationMongodbSecurityJwt extends WebSecurityConfigurerAdapter 
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(this.jwtUserDetailsAssistant)
-                .passwordEncoder(bCryptPasswordEncoder());
+                .passwordEncoder(this.bCryptPasswordEncoder());
     }
 
     @Bean

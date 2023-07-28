@@ -1,17 +1,16 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.*;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -159,7 +158,7 @@ class TokenServiceImplTest {
         var oldCookieRefreshToken = new CookieRefreshToken(randomString());
         var oldJwtRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
         var validatedClaims = JwtTokenValidatedClaims.valid(oldJwtRefreshToken, randomValidDefaultClaims());
-        var user = entity(DbUser.class);
+        var user = entity(JwtUser.class);
         var jwtAccessToken = entity(JwtAccessToken.class);
         var newJwtRefreshToken = entity(JwtRefreshToken.class);
         var userSession = entity(DbUserSession.class);
@@ -188,11 +187,11 @@ class TokenServiceImplTest {
         verify(this.sessionRegistry).renew(oldSessionAC.capture(), newSessionAC.capture());
         var oldSession = oldSessionAC.getValue();
         assertThat(oldSession).isNotNull();
-        assertThat(oldSession.username()).isEqualTo(user.getUsername());
+        assertThat(oldSession.username()).isEqualTo(user.username());
         assertThat(oldSession.refreshToken().value()).isEqualTo(oldJwtRefreshToken.value());
         var newSession = newSessionAC.getValue();
         assertThat(newSession).isNotNull();
-        assertThat(newSession.username()).isEqualTo(user.getUsername());
+        assertThat(newSession.username()).isEqualTo(user.username());
         assertThat(newSession.refreshToken().value()).isEqualTo(newJwtRefreshToken.value());
         assertThat(responseUserSession1).isNotNull();
         assertThat(responseUserSession1.refreshToken()).isEqualTo(userSession.getJwtRefreshToken().value());

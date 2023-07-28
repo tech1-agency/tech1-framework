@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;

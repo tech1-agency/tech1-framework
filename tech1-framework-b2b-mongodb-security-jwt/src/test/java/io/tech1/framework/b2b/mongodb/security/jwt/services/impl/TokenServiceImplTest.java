@@ -3,11 +3,11 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -68,8 +68,8 @@ class TokenServiceImplTest {
         }
 
         @Bean
-        SecurityJwtTokenUtility securityJwtTokenUtility() {
-            return mock(SecurityJwtTokenUtility.class);
+        SecurityJwtTokenUtils securityJwtTokenUtility() {
+            return mock(SecurityJwtTokenUtils.class);
         }
 
         @Bean
@@ -95,7 +95,7 @@ class TokenServiceImplTest {
     // Cookie
     private final CookieProvider cookieProvider;
     // Utilities
-    private final SecurityJwtTokenUtility securityJwtTokenUtility;
+    private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     private final TokenService componentUnderTest;
 
@@ -107,7 +107,7 @@ class TokenServiceImplTest {
                 this.tokenContextThrowerService,
                 this.userSessionService,
                 this.cookieProvider,
-                this.securityJwtTokenUtility
+                this.securityJwtTokenUtils
         );
     }
 
@@ -119,7 +119,7 @@ class TokenServiceImplTest {
                 this.tokenContextThrowerService,
                 this.userSessionService,
                 this.cookieProvider,
-                this.securityJwtTokenUtility
+                this.securityJwtTokenUtils
         );
     }
 
@@ -165,8 +165,8 @@ class TokenServiceImplTest {
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(oldJwtRefreshToken)).thenReturn(validatedClaims);
         when(this.tokenContextThrowerService.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken)).thenReturn(user);
-        when(this.securityJwtTokenUtility.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
-        when(this.securityJwtTokenUtility.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newJwtRefreshToken);
+        when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
+        when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newJwtRefreshToken);
         when(this.userSessionService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(userSession);
 
         // Act
@@ -177,8 +177,8 @@ class TokenServiceImplTest {
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(oldJwtRefreshToken);
         verify(this.tokenContextThrowerService).verifyRefreshTokenExpirationOrThrow(validatedClaims);
         verify(this.tokenContextThrowerService).verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
-        verify(this.securityJwtTokenUtility).createJwtAccessToken(user.getJwtTokenCreationParams());
-        verify(this.securityJwtTokenUtility).createJwtRefreshToken(user.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.userSessionService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
         verify(this.cookieProvider).createJwtAccessCookie(jwtAccessToken, response);
         verify(this.cookieProvider).createJwtRefreshCookie(newJwtRefreshToken, response);

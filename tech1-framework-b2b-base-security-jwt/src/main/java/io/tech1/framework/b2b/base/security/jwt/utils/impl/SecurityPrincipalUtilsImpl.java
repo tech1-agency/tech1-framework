@@ -1,7 +1,7 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityPrincipalUtilityImpl implements SecurityPrincipalUtility {
+public class SecurityPrincipalUtilsImpl implements SecurityPrincipalUtils {
 
     @Override
     public JwtUser getAuthenticatedJwtUser() {

@@ -6,9 +6,9 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -64,8 +64,8 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        SecurityPrincipalUtility securityPrincipalUtility() {
-            return mock(SecurityPrincipalUtility.class);
+        SecurityPrincipalUtils securityPrincipalUtility() {
+            return mock(SecurityPrincipalUtils.class);
         }
 
         @Bean
@@ -88,7 +88,7 @@ class BaseCurrentSessionAssistantTest {
     private final SessionRegistry sessionRegistry;
     private final UserSessionService userSessionService;
     private final HardwareMonitoringStore hardwareMonitoringStore;
-    private final SecurityPrincipalUtility securityPrincipalUtility;
+    private final SecurityPrincipalUtils securityPrincipalUtils;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final CurrentSessionAssistant componentUnderTest;
@@ -99,7 +99,7 @@ class BaseCurrentSessionAssistantTest {
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
                 this.userSessionService,
-                this.securityPrincipalUtility,
+                this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
     }
@@ -110,7 +110,7 @@ class BaseCurrentSessionAssistantTest {
                 this.sessionRegistry,
                 this.hardwareMonitoringStore,
                 this.userSessionService,
-                this.securityPrincipalUtility,
+                this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
     }
@@ -119,13 +119,13 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentUsernameTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
-        when(this.securityPrincipalUtility.getAuthenticatedUsername()).thenReturn(expectedJwtUser.getUsername());
+        when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(expectedJwtUser.getUsername());
 
         // Act
         var actualUsername = this.componentUnderTest.getCurrentUsername();
 
         // Assert
-        verify(this.securityPrincipalUtility).getAuthenticatedUsername();
+        verify(this.securityPrincipalUtils).getAuthenticatedUsername();
         assertThat(actualUsername).isEqualTo(expectedJwtUser.username());
     }
 
@@ -133,13 +133,13 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentJwtUserTest() {
         // Arrange
         var expectedJwtUser = entity(JwtUser.class);
-        when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
+        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(expectedJwtUser);
 
         // Act
         var actualJwtUser = this.componentUnderTest.getCurrentJwtUser();
 
         // Assert
-        verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
+        verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         assertThat(actualJwtUser).isEqualTo(expectedJwtUser);
     }
 
@@ -147,7 +147,7 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentClientUserTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
-        when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(TestsPropertiesConstants.HARDWARE_MONITORING_CONFIGS);
@@ -156,7 +156,7 @@ class BaseCurrentSessionAssistantTest {
         var currentClientUser = this.componentUnderTest.getCurrentClientUser();
 
         // Assert
-        verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
+        verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
@@ -171,7 +171,7 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentClientUserNoHardwareTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
-        when(this.securityPrincipalUtility.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
@@ -180,7 +180,7 @@ class BaseCurrentSessionAssistantTest {
         var currentClientUser = this.componentUnderTest.getCurrentClientUser();
 
         // Assert
-        verify(this.securityPrincipalUtility).getAuthenticatedJwtUser();
+        verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
         assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.email());
@@ -238,7 +238,7 @@ class BaseCurrentSessionAssistantTest {
         // Act
         cases.forEach(item -> {
             // Arrange
-            when(this.securityPrincipalUtility.getAuthenticatedUsername()).thenReturn(username.identifier());
+            when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
             var userSessions = item.a();
             var expectedSessionSize = item.b();
             var expectedAnyProblems = item.c();
@@ -248,7 +248,7 @@ class BaseCurrentSessionAssistantTest {
             var currentUserDbSessionsTable = this.componentUnderTest.getCurrentUserDbSessionsTable(cookie);
 
             // Assert
-            verify(this.securityPrincipalUtility).getAuthenticatedUsername();
+            verify(this.securityPrincipalUtils).getAuthenticatedUsername();
             verify(this.userSessionService).findByUsername(username);
             verify(this.sessionRegistry).cleanByExpiredRefreshTokens(Set.of(username));
             assertThat(currentUserDbSessionsTable).isNotNull();
@@ -260,7 +260,7 @@ class BaseCurrentSessionAssistantTest {
             reset(
                     this.sessionRegistry,
                     this.userSessionService,
-                    this.securityPrincipalUtility
+                    this.securityPrincipalUtils
             );
         });
     }

@@ -1,7 +1,7 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
-import io.tech1.framework.b2b.base.security.jwt.utilities.UserEmailUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.utilities.time.LocalDateTimeUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -35,7 +35,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserEmailUtilityImplTest {
+class UserEmailUtilsImplTest {
 
     @Configuration
     @Import({
@@ -52,8 +52,8 @@ class UserEmailUtilityImplTest {
         }
 
         @Bean
-        UserEmailUtility userEmailUtility() {
-            return new UserEmailUtilityImpl(
+        UserEmailUtils userEmailUtility() {
+            return new UserEmailUtilsImpl(
                     this.resourceLoader,
                     this.environmentUtility(),
                     this.applicationFrameworkProperties
@@ -64,7 +64,7 @@ class UserEmailUtilityImplTest {
     // Utilities
     private final EnvironmentUtility environmentUtility;
 
-    private final UserEmailUtility componentUnderTest;
+    private final UserEmailUtils componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

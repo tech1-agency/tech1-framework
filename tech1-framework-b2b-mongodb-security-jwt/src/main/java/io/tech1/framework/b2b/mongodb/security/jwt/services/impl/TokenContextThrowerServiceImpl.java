@@ -3,9 +3,9 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
@@ -26,11 +26,11 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
     // Repositories
     private final UserSessionRepository userSessionRepository;
     // Utilities
-    private final SecurityJwtTokenUtility securityJwtTokenUtility;
+    private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @Override
     public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken jwtAccessToken) throws CookieAccessTokenInvalidException {
-        var validatedClaims = this.securityJwtTokenUtility.validate(jwtAccessToken);
+        var validatedClaims = this.securityJwtTokenUtils.validate(jwtAccessToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
             throw new CookieAccessTokenInvalidException();
@@ -40,7 +40,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
 
     @Override
     public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken jwtRefreshToken) throws CookieRefreshTokenInvalidException {
-        var validatedClaims = this.securityJwtTokenUtility.validate(jwtRefreshToken);
+        var validatedClaims = this.securityJwtTokenUtils.validate(jwtRefreshToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenInvalidException();
@@ -50,7 +50,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
 
     @Override
     public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws CookieAccessTokenExpiredException {
-        if (this.securityJwtTokenUtility.isExpired(validatedClaims) && validatedClaims.isAccess()) {
+        if (this.securityJwtTokenUtils.isExpired(validatedClaims) && validatedClaims.isAccess()) {
             SecurityContextHolder.clearContext();
             throw new CookieAccessTokenExpiredException(validatedClaims.safeGetUsername());
         }
@@ -58,7 +58,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
 
     @Override
     public void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenExpiredException {
-        if (this.securityJwtTokenUtility.isExpired(validatedClaims) && validatedClaims.isRefresh()) {
+        if (this.securityJwtTokenUtils.isExpired(validatedClaims) && validatedClaims.isRefresh()) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenExpiredException(validatedClaims.safeGetUsername());
         }

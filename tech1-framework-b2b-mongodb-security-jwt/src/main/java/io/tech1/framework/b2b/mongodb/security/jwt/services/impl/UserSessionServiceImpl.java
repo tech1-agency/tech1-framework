@@ -3,10 +3,10 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsValidatedTuple2;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -41,7 +41,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     private final UserSessionRepository userSessionRepository;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
-    private final SecurityJwtTokenUtility securityJwtTokenUtility;
+    private final SecurityJwtTokenUtils securityJwtTokenUtils;
     private final UserAgentDetailsUtility userAgentDetailsUtility;
 
     @Override
@@ -141,7 +141,7 @@ public class UserSessionServiceImpl implements UserSessionService {
 
         usersSessions.forEach(userSession -> {
             var sessionId = userSession.getId();
-            var validatedClaims = this.securityJwtTokenUtility.validate(userSession.getJwtRefreshToken());
+            var validatedClaims = this.securityJwtTokenUtils.validate(userSession.getJwtRefreshToken());
             var isValid = validatedClaims.valid();
             if (isValid) {
                 var isExpired = isPast(validatedClaims.safeGetExpirationTimestamp());

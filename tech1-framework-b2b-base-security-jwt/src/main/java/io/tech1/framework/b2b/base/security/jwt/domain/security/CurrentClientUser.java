@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.domain.security;
+package io.tech1.framework.b2b.base.security.jwt.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.domain.base.AbstractAuthority;

@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities;
+package io.tech1.framework.b2b.base.security.jwt.utils;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.domain.base.Username;
@@ -6,7 +6,7 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 
 import java.util.Map;
 
-public interface UserEmailUtility {
+public interface UserEmailUtils {
     String getSubject(String eventName);
     String getAuthenticationLoginTemplateName();
     String getSessionRefreshedTemplateName();

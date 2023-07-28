@@ -6,13 +6,13 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserL
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.domain.exceptions.cookie.*;
@@ -54,7 +54,7 @@ public class BaseSecurityAuthenticationResource {
     // Validators
     private final AuthenticationRequestsValidator authenticationRequestsValidator;
     // Utilities
-    private final SecurityJwtTokenUtility securityJwtTokenUtility;
+    private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
@@ -69,8 +69,8 @@ public class BaseSecurityAuthenticationResource {
 
         var user = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
 
-        var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(user.getJwtTokenCreationParams());
-        var jwtRefreshToken = this.securityJwtTokenUtility.createJwtRefreshToken(user.getJwtTokenCreationParams());
+        var jwtAccessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var jwtRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
         this.userSessionService.save(user, jwtRefreshToken, request);
 
@@ -98,7 +98,7 @@ public class BaseSecurityAuthenticationResource {
         var refreshToken = cookieRefreshToken.value();
         if (nonNull(refreshToken)) {
             var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
-            var validatedClaims = this.securityJwtTokenUtility.validate(jwtRefreshToken);
+            var validatedClaims = this.securityJwtTokenUtils.validate(jwtRefreshToken);
             if (validatedClaims.valid()) {
                 var username = validatedClaims.safeGetUsername();
                 this.sessionRegistry.logout(

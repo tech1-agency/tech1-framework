@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserL
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthenticationLoginFailure;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -30,7 +30,7 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Utilities
-    private final HttpRequestUtility httpRequestUtility;
+    private final HttpRequestUtils httpRequestUtils;
     // JSONs
     private final ObjectMapper objectMapper;
 
@@ -45,8 +45,8 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
         response.getWriter().write(this.objectMapper.writeValueAsString(ExceptionEntity.of(exception)));
 
         // WARNING: in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
-        if (exception instanceof BadCredentialsException && this.httpRequestUtility.isCachedEndpoint(request)) {
-            var cachedPayload = this.httpRequestUtility.getCachedPayload(request);
+        if (exception instanceof BadCredentialsException && this.httpRequestUtils.isCachedEndpoint(request)) {
+            var cachedPayload = this.httpRequestUtils.getCachedPayload(request);
             var requestUserLogin = this.objectMapper.readValue(cachedPayload, RequestUserLogin.class);
 
             var username = requestUserLogin.username();

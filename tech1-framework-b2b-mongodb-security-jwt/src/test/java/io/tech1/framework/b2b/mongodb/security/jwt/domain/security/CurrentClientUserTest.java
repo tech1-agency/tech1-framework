@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.security;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.domain.enums.TestAuthority;
 import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.base.Email;

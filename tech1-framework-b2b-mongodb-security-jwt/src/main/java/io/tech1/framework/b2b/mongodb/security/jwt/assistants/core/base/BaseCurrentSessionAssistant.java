@@ -5,10 +5,10 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.security.CurrentClientUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -36,18 +36,18 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Stores
     protected final HardwareMonitoringStore hardwareMonitoringStore;
     // Utilities
-    protected final SecurityPrincipalUtility securityPrincipalUtility;
+    protected final SecurityPrincipalUtils securityPrincipalUtils;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
     public Username getCurrentUsername() {
-        return Username.of(this.securityPrincipalUtility.getAuthenticatedUsername());
+        return Username.of(this.securityPrincipalUtils.getAuthenticatedUsername());
     }
 
     @Override
     public JwtUser getCurrentJwtUser() {
-        return this.securityPrincipalUtility.getAuthenticatedJwtUser();
+        return this.securityPrincipalUtils.getAuthenticatedJwtUser();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.filters;
 
-import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
-import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityPrincipalUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.domain.http.cache.CachedBodyServletInputStream;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -42,13 +42,13 @@ class AdvancedRequestLoggingFilterTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        HttpRequestUtility httpRequestUtility() {
-            return mock(HttpRequestUtility.class);
+        HttpRequestUtils httpRequestUtility() {
+            return mock(HttpRequestUtils.class);
         }
 
         @Bean
-        SecurityPrincipalUtility securityPrincipalUtility() {
-            return mock(SecurityPrincipalUtility.class);
+        SecurityPrincipalUtils securityPrincipalUtility() {
+            return mock(SecurityPrincipalUtils.class);
         }
 
         @Bean
@@ -61,8 +61,8 @@ class AdvancedRequestLoggingFilterTest {
         }
     }
 
-    private final HttpRequestUtility httpRequestUtility;
-    private final SecurityPrincipalUtility securityPrincipalUtility;
+    private final HttpRequestUtils httpRequestUtils;
+    private final SecurityPrincipalUtils securityPrincipalUtils;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final AdvancedRequestLoggingFilter componentUnderTest;
@@ -70,16 +70,16 @@ class AdvancedRequestLoggingFilterTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.httpRequestUtility,
-                this.securityPrincipalUtility
+                this.httpRequestUtils,
+                this.securityPrincipalUtils
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.httpRequestUtility,
-                this.securityPrincipalUtility
+                this.httpRequestUtils,
+                this.securityPrincipalUtils
         );
     }
 
@@ -90,14 +90,14 @@ class AdvancedRequestLoggingFilterTest {
         var httpServletRequest = mock(HttpServletRequest.class);
         var httpServletResponse = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.httpRequestUtility.isCachedEndpoint(any())).thenReturn(true);
+        when(this.httpRequestUtils.isCachedEndpoint(any())).thenReturn(true);
 
         // Act
         this.componentUnderTest.doFilterInternal(httpServletRequest, httpServletResponse, filterChain);
 
         // Assert
-        verify(this.httpRequestUtility).isCachedEndpoint(any());
-        verify(this.httpRequestUtility).cachePayload(any(), anyString());
+        verify(this.httpRequestUtils).isCachedEndpoint(any());
+        verify(this.httpRequestUtils).cachePayload(any(), anyString());
         verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(httpServletResponse));
         verify(httpServletRequest).getInputStream();
         verifyNoMoreInteractions(
@@ -115,14 +115,14 @@ class AdvancedRequestLoggingFilterTest {
         var httpServletResponse = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         when(httpServletRequest.getInputStream()).thenReturn(new CachedBodyServletInputStream("".getBytes()));
-        when(this.httpRequestUtility.isCachedEndpoint(any())).thenReturn(false);
+        when(this.httpRequestUtils.isCachedEndpoint(any())).thenReturn(false);
 
         // Act
         this.componentUnderTest.doFilterInternal(httpServletRequest, httpServletResponse, filterChain);
 
         // Assert
-        verify(this.httpRequestUtility).isCachedEndpoint(any());
-        verify(this.securityPrincipalUtility).getAuthenticatedUsernameOrUnexpected();
+        verify(this.httpRequestUtils).isCachedEndpoint(any());
+        verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
         verify(httpServletRequest).getInputStream();
         verify(httpServletRequest).getMethod();
         verify(httpServletRequest).getServletPath();
@@ -142,14 +142,14 @@ class AdvancedRequestLoggingFilterTest {
         var httpServletResponse = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         when(httpServletRequest.getInputStream()).thenReturn(new CachedBodyServletInputStream("{}".getBytes()));
-        when(this.httpRequestUtility.isCachedEndpoint(any())).thenReturn(false);
+        when(this.httpRequestUtils.isCachedEndpoint(any())).thenReturn(false);
 
         // Act
         this.componentUnderTest.doFilterInternal(httpServletRequest, httpServletResponse, filterChain);
 
         // Assert
-        verify(this.httpRequestUtility).isCachedEndpoint(any());
-        verify(this.securityPrincipalUtility).getAuthenticatedUsernameOrUnexpected();
+        verify(this.httpRequestUtils).isCachedEndpoint(any());
+        verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
         verify(httpServletRequest).getInputStream();
         verify(httpServletRequest).getMethod();
         verify(httpServletRequest).getServletPath();

@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
-import io.tech1.framework.b2b.base.security.jwt.utilities.UserEmailUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.services.EmailService;
@@ -43,8 +43,8 @@ class UserEmailServiceImplTest {
         }
 
         @Bean
-        UserEmailUtility userEmailUtility() {
-            return mock(UserEmailUtility.class);
+        UserEmailUtils userEmailUtility() {
+            return mock(UserEmailUtils.class);
         }
 
         @Bean
@@ -65,7 +65,7 @@ class UserEmailServiceImplTest {
     // Services
     private final EmailService emailService;
     // Utilities
-    private final UserEmailUtility userEmailUtility;
+    private final UserEmailUtils userEmailUtils;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -75,7 +75,7 @@ class UserEmailServiceImplTest {
     void beforeEach() {
         reset(
                 this.emailService,
-                this.userEmailUtility,
+                this.userEmailUtils,
                 this.applicationFrameworkProperties
         );
     }
@@ -84,7 +84,7 @@ class UserEmailServiceImplTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.emailService,
-                this.userEmailUtility,
+                this.userEmailUtils,
                 this.applicationFrameworkProperties
         );
     }
@@ -104,7 +104,7 @@ class UserEmailServiceImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
+        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
     @Test
@@ -122,7 +122,7 @@ class UserEmailServiceImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
+        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
     @Test
@@ -140,7 +140,7 @@ class UserEmailServiceImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
+        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
     @Test
@@ -161,9 +161,9 @@ class UserEmailServiceImplTest {
                 randomString(), new Object()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
-        when(this.userEmailUtility.getAuthenticationLoginTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject("Account Accessed")).thenReturn(subject);
-        when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
+        when(this.userEmailUtils.getAuthenticationLoginTemplateName()).thenReturn("framework-account-accessed");
+        when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
+        when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
                 username,
                 userRequestMetadata,
                 AccountAccessMethod.USERNAME_PASSWORD
@@ -174,9 +174,9 @@ class UserEmailServiceImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtility).getAuthenticationLoginTemplateName();
-        verify(this.userEmailUtility).getSubject("Account Accessed");
-        verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
+        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
+        verify(this.userEmailUtils).getSubject("Account Accessed");
+        verify(this.userEmailUtils).getAuthenticationLoginOrSessionRefreshedVariables(
                 username,
                 userRequestMetadata,
                 AccountAccessMethod.USERNAME_PASSWORD
@@ -209,9 +209,9 @@ class UserEmailServiceImplTest {
                 randomString(), new Object()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
-        when(this.userEmailUtility.getSessionRefreshedTemplateName()).thenReturn("framework-account-accessed");
-        when(this.userEmailUtility.getSubject("Account Accessed")).thenReturn(subject);
-        when(this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
+        when(this.userEmailUtils.getSessionRefreshedTemplateName()).thenReturn("framework-account-accessed");
+        when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
+        when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
                 username,
                 userRequestMetadata,
                 AccountAccessMethod.SECURITY_TOKEN
@@ -222,9 +222,9 @@ class UserEmailServiceImplTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtility).getSessionRefreshedTemplateName();
-        verify(this.userEmailUtility).getSubject("Account Accessed");
-        verify(this.userEmailUtility).getAuthenticationLoginOrSessionRefreshedVariables(
+        verify(this.userEmailUtils).getSessionRefreshedTemplateName();
+        verify(this.userEmailUtils).getSubject("Account Accessed");
+        verify(this.userEmailUtils).getAuthenticationLoginOrSessionRefreshedVariables(
                 username,
                 userRequestMetadata,
                 AccountAccessMethod.SECURITY_TOKEN

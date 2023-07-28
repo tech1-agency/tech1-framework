@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
-import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -22,7 +22,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.b2b.base.security.jwt.utilities.impl.HttpRequestUtilityImpl.CACHED_PAYLOAD_ATTRIBUTE;
+import static io.tech1.framework.b2b.base.security.jwt.utils.impl.HttpRequestUtilsImpl.CACHED_PAYLOAD_ATTRIBUTE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class HttpRequestUtilityImplTest {
+class HttpRequestUtilsImplTest {
 
     private static Stream<Arguments> authenticationLoginEndpointCases() {
         return Stream.of(
@@ -67,14 +67,14 @@ class HttpRequestUtilityImplTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        HttpRequestUtility httpRequestUtility() {
-            return new HttpRequestUtilityImpl(
+        HttpRequestUtils httpRequestUtility() {
+            return new HttpRequestUtilsImpl(
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final HttpRequestUtility componentUnderTest;
+    private final HttpRequestUtils componentUnderTest;
 
     @ParameterizedTest
     @MethodSource("authenticationLoginEndpointCases")

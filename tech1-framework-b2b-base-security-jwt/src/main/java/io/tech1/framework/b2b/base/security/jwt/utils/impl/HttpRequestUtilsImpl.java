@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
-import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class HttpRequestUtilityImpl implements HttpRequestUtility {
+public class HttpRequestUtilsImpl implements HttpRequestUtils {
     protected static final String CACHED_PAYLOAD_ATTRIBUTE = "tech1-security-jwt-cached-payload-attribute";
 
     // Properties

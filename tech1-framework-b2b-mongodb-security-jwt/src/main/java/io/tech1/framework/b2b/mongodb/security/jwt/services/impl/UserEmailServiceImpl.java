@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserEmailService;
-import io.tech1.framework.b2b.base.security.jwt.utilities.UserEmailUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -28,7 +28,7 @@ public class UserEmailServiceImpl implements UserEmailService {
     // Services
     private final EmailService emailService;
     // Utilities
-    private final UserEmailUtility userEmailUtility;
+    private final UserEmailUtils userEmailUtils;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -37,7 +37,7 @@ public class UserEmailServiceImpl implements UserEmailService {
         this.executeBy(
                 function.getTuple3(),
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin(),
-                this.userEmailUtility.getAuthenticationLoginTemplateName(),
+                this.userEmailUtils.getAuthenticationLoginTemplateName(),
                 AccountAccessMethod.USERNAME_PASSWORD
         );
     }
@@ -47,7 +47,7 @@ public class UserEmailServiceImpl implements UserEmailService {
         this.executeBy(
                 function.getTuple3(),
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed(),
-                this.userEmailUtility.getSessionRefreshedTemplateName(),
+                this.userEmailUtils.getSessionRefreshedTemplateName(),
                 AccountAccessMethod.SECURITY_TOKEN
         );
     }
@@ -66,9 +66,9 @@ public class UserEmailServiceImpl implements UserEmailService {
             this.emailService.sendHTML(
                     new EmailHTML(
                             Set.of(email.value()),
-                            this.userEmailUtility.getSubject("Account Accessed"),
+                            this.userEmailUtils.getSubject("Account Accessed"),
                             templateName,
-                            this.userEmailUtility.getAuthenticationLoginOrSessionRefreshedVariables(
+                            this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
                                     tuple3.a(),
                                     tuple3.c(),
                                     accountAccessMethod

@@ -1,7 +1,7 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
-import io.tech1.framework.b2b.base.security.jwt.utilities.UserEmailUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -21,7 +21,7 @@ import static java.time.ZoneOffset.UTC;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserEmailUtilityImpl implements UserEmailUtility {
+public class UserEmailUtilsImpl implements UserEmailUtils {
 
     // Resources
     private final ResourceLoader resourceLoader;

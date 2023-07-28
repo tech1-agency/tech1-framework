@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 
 public interface BaseUserService {
     void updateUser1(JwtUser jwtUser, RequestUserUpdate1 requestUserUpdate1);

@@ -2,11 +2,11 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
-import io.tech1.framework.b2b.base.security.jwt.utilities.impl.SecurityJwtTokenUtilityImpl;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
@@ -74,8 +74,8 @@ class UserSessionServiceImplTest {
         }
 
         @Bean
-        public SecurityJwtTokenUtility securityJwtTokenUtility() {
-            return new SecurityJwtTokenUtilityImpl(
+        public SecurityJwtTokenUtils securityJwtTokenUtility() {
+            return new SecurityJwtTokenUtilsImpl(
                     this.applicationFrameworkProperties
             );
         }

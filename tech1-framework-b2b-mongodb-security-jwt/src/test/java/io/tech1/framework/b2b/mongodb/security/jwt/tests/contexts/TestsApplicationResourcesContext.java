@@ -9,7 +9,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwt
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.*;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUserValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
@@ -128,8 +128,8 @@ public class TestsApplicationResourcesContext {
     // Utilities
     // =================================================================================================================
     @Bean
-    public SecurityJwtTokenUtility securityJwtTokenUtility() {
-        return mock(SecurityJwtTokenUtility.class);
+    public SecurityJwtTokenUtils securityJwtTokenUtility() {
+        return mock(SecurityJwtTokenUtils.class);
     }
 
     @Bean

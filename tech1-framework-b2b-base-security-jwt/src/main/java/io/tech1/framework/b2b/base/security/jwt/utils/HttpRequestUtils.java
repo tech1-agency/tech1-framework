@@ -1,10 +1,10 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities;
+package io.tech1.framework.b2b.base.security.jwt.utils;
 
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface HttpRequestUtility {
+public interface HttpRequestUtils {
     boolean isCachedEndpoint(HttpServletRequest request);
     void cachePayload(CachedBodyHttpServletRequest cachedRequest, String payload);
     String getCachedPayload(HttpServletRequest request);

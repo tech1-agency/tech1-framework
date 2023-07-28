@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalD
 
 @Slf4j
 @Component
-public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
+public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
@@ -33,7 +33,7 @@ public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
     private final String base64EncodedSecretKey;
 
     @Autowired
-    public SecurityJwtTokenUtilityImpl(
+    public SecurityJwtTokenUtilsImpl(
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;

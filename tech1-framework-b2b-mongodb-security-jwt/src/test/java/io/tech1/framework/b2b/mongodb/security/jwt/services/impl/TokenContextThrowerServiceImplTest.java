@@ -3,9 +3,9 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
@@ -69,8 +69,8 @@ class TokenContextThrowerServiceImplTest {
         }
 
         @Bean
-        SecurityJwtTokenUtility securityJwtTokenUtility() {
-            return mock(SecurityJwtTokenUtility.class);
+        SecurityJwtTokenUtils securityJwtTokenUtility() {
+            return mock(SecurityJwtTokenUtils.class);
         }
 
         @Bean
@@ -88,7 +88,7 @@ class TokenContextThrowerServiceImplTest {
     // Repositories
     private final UserSessionRepository userSessionRepository;
     // Utilities
-    private final SecurityJwtTokenUtility securityJwtTokenUtility;
+    private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     private final TokenContextThrowerService componentUnderTest;
 
@@ -97,7 +97,7 @@ class TokenContextThrowerServiceImplTest {
         reset(
                 this.jwtUserDetailsAssistant,
                 this.userSessionRepository,
-                this.securityJwtTokenUtility
+                this.securityJwtTokenUtils
         );
     }
 
@@ -106,7 +106,7 @@ class TokenContextThrowerServiceImplTest {
         verifyNoMoreInteractions(
                 this.jwtUserDetailsAssistant,
                 this.userSessionRepository,
-                this.securityJwtTokenUtility
+                this.securityJwtTokenUtils
         );
     }
 
@@ -114,26 +114,26 @@ class TokenContextThrowerServiceImplTest {
     void verifyValidityAccessTokenTest() throws CookieAccessTokenInvalidException {
         // Arrange
         var jwtAccessToken = entity(JwtAccessToken.class);
-        when(this.securityJwtTokenUtility.validate(jwtAccessToken)).thenReturn(valid(jwtAccessToken, randomValidDefaultClaims()));
+        when(this.securityJwtTokenUtils.validate(jwtAccessToken)).thenReturn(valid(jwtAccessToken, randomValidDefaultClaims()));
 
         // Act
         this.componentUnderTest.verifyValidityOrThrow(jwtAccessToken);
 
         // Assert
-        verify(this.securityJwtTokenUtility).validate(jwtAccessToken);
+        verify(this.securityJwtTokenUtils).validate(jwtAccessToken);
     }
 
     @Test
     void verifyValidityAccessTokenThrowTest() {
         // Arrange
         var jwtAccessToken = entity(JwtAccessToken.class);
-        when(this.securityJwtTokenUtility.validate(jwtAccessToken)).thenReturn(JwtTokenValidatedClaims.invalid(jwtAccessToken));
+        when(this.securityJwtTokenUtils.validate(jwtAccessToken)).thenReturn(JwtTokenValidatedClaims.invalid(jwtAccessToken));
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyValidityOrThrow(jwtAccessToken));
 
         // Assert
-        verify(this.securityJwtTokenUtility).validate(jwtAccessToken);
+        verify(this.securityJwtTokenUtils).validate(jwtAccessToken);
         assertThat(throwable)
                 .isInstanceOf(CookieAccessTokenInvalidException.class)
                 .hasMessageContaining("JWT access token is invalid");
@@ -143,26 +143,26 @@ class TokenContextThrowerServiceImplTest {
     void verifyValidityRefreshTokenTest() throws CookieRefreshTokenInvalidException {
         // Arrange
         var jwtRefreshToken = entity(JwtRefreshToken.class);
-        when(this.securityJwtTokenUtility.validate(jwtRefreshToken)).thenReturn(valid(jwtRefreshToken, randomValidDefaultClaims()));
+        when(this.securityJwtTokenUtils.validate(jwtRefreshToken)).thenReturn(valid(jwtRefreshToken, randomValidDefaultClaims()));
 
         // Act
         this.componentUnderTest.verifyValidityOrThrow(jwtRefreshToken);
 
         // Assert
-        verify(this.securityJwtTokenUtility).validate(jwtRefreshToken);
+        verify(this.securityJwtTokenUtils).validate(jwtRefreshToken);
     }
 
     @Test
     void verifyValidityRefreshTokenThrowTest() {
         // Arrange
         var jwtRefreshToken = entity(JwtRefreshToken.class);
-        when(this.securityJwtTokenUtility.validate(jwtRefreshToken)).thenReturn(JwtTokenValidatedClaims.invalid(jwtRefreshToken));
+        when(this.securityJwtTokenUtils.validate(jwtRefreshToken)).thenReturn(JwtTokenValidatedClaims.invalid(jwtRefreshToken));
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyValidityOrThrow(jwtRefreshToken));
 
         // Assert
-        verify(this.securityJwtTokenUtility).validate(jwtRefreshToken);
+        verify(this.securityJwtTokenUtils).validate(jwtRefreshToken);
         assertThat(throwable)
                 .isInstanceOf(CookieRefreshTokenInvalidException.class)
                 .hasMessageContaining("JWT refresh token is invalid");
@@ -172,7 +172,7 @@ class TokenContextThrowerServiceImplTest {
     @MethodSource("verifyAccessTokenExpirationOrThrow")
     void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims, boolean expiredFlag, boolean throwableFlag) {
         // Arrange
-        when(this.securityJwtTokenUtility.isExpired(validatedClaims)).thenReturn(expiredFlag);
+        when(this.securityJwtTokenUtils.isExpired(validatedClaims)).thenReturn(expiredFlag);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyAccessTokenExpirationOrThrow(validatedClaims));
@@ -183,10 +183,10 @@ class TokenContextThrowerServiceImplTest {
                     .isInstanceOf(CookieAccessTokenExpiredException.class)
                     .hasMessageContaining("JWT access token is expired. Username: " + validatedClaims.safeGetUsername());
         } else {
-            verify(this.securityJwtTokenUtility).isExpired(validatedClaims);
+            verify(this.securityJwtTokenUtils).isExpired(validatedClaims);
         }
         reset(
-                this.securityJwtTokenUtility
+                this.securityJwtTokenUtils
         );
     }
 
@@ -194,7 +194,7 @@ class TokenContextThrowerServiceImplTest {
     @MethodSource("verifyRefreshTokenExpirationOrThrowTest")
     void verifyRefreshTokenExpirationOrThrowTest(JwtTokenValidatedClaims validatedClaims, boolean expiredFlag, boolean throwableFlag) {
         // Arrange
-        when(this.securityJwtTokenUtility.isExpired(validatedClaims)).thenReturn(expiredFlag);
+        when(this.securityJwtTokenUtils.isExpired(validatedClaims)).thenReturn(expiredFlag);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyRefreshTokenExpirationOrThrow(validatedClaims));
@@ -205,10 +205,10 @@ class TokenContextThrowerServiceImplTest {
                     .isInstanceOf(CookieRefreshTokenExpiredException.class)
                     .hasMessageContaining("JWT refresh token is expired. Username: " + validatedClaims.safeGetUsername());
         } else {
-            verify(this.securityJwtTokenUtility).isExpired(validatedClaims);
+            verify(this.securityJwtTokenUtils).isExpired(validatedClaims);
         }
         reset(
-                this.securityJwtTokenUtility
+                this.securityJwtTokenUtils
         );
     }
 

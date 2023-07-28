@@ -1,10 +1,10 @@
-package io.tech1.framework.b2b.base.security.jwt.utilities.impl;
+package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.b2b.base.security.jwt.tests.domain.enums.TestAuthority;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SecurityJwtTokenUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
@@ -45,7 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class SecurityJwtTokenUtilityImplTest {
+class SecurityJwtTokenUtilsImplTest {
 
     private static Stream<Arguments> createJwtTokenTest() {
         return Stream.of(
@@ -120,8 +120,8 @@ class SecurityJwtTokenUtilityImplTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        SecurityJwtTokenUtility securityJwtTokenUtility() {
-            return new SecurityJwtTokenUtilityImpl(
+        SecurityJwtTokenUtils securityJwtTokenUtility() {
+            return new SecurityJwtTokenUtilsImpl(
                     this.applicationFrameworkProperties
             );
         }
@@ -129,7 +129,7 @@ class SecurityJwtTokenUtilityImplTest {
 
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    private final SecurityJwtTokenUtility componentUnderTest;
+    private final SecurityJwtTokenUtils componentUnderTest;
 
     @Test
     void createJwtAccessTokenTest() {

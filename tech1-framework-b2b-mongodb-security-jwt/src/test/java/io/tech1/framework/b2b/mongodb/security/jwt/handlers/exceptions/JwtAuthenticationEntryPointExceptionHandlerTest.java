@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.events.EventAuthentica
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationHandlersContext;
-import io.tech1.framework.b2b.base.security.jwt.utilities.HttpRequestUtility;
+import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
@@ -53,7 +53,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
 
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
-    private final HttpRequestUtility httpRequestUtility;
+    private final HttpRequestUtils httpRequestUtils;
     private final ObjectMapper objectMapper;
 
     private final JwtAuthenticationEntryPointExceptionHandler componentUnderTest;
@@ -63,7 +63,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
-                this.httpRequestUtility
+                this.httpRequestUtils
         );
     }
 
@@ -72,7 +72,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
-                this.httpRequestUtility
+                this.httpRequestUtils
         );
     }
 
@@ -107,7 +107,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         var request = mock(HttpServletRequest.class);
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpRequestUtility.isCachedEndpoint(request)).thenReturn(false);
+        when(this.httpRequestUtils.isCachedEndpoint(request)).thenReturn(false);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -119,7 +119,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpRequestUtility).isCachedEndpoint(request);
+        verify(this.httpRequestUtils).isCachedEndpoint(request);
     }
 
     @Test
@@ -131,7 +131,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         var request = mock(HttpServletRequest.class);
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
-        when(this.httpRequestUtility.isCachedEndpoint(request)).thenReturn(true);
+        when(this.httpRequestUtils.isCachedEndpoint(request)).thenReturn(true);
         var usernameString = "admin11";
         var passwordString = "Admin11!";
         var payload = objectMapper.writeValueAsString(
@@ -140,7 +140,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
                         "password", passwordString
                 )
         );
-        when(this.httpRequestUtility.getCachedPayload(request)).thenReturn(payload);
+        when(this.httpRequestUtils.getCachedPayload(request)).thenReturn(payload);
 
         // Act
         this.componentUnderTest.commence(request, response, badCredentialsException);
@@ -152,8 +152,8 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
                 printWriter,
                 badCredentialsException
         );
-        verify(this.httpRequestUtility).isCachedEndpoint(request);
-        verify(this.httpRequestUtility).getCachedPayload(request);
+        verify(this.httpRequestUtils).isCachedEndpoint(request);
+        verify(this.httpRequestUtils).getCachedPayload(request);
         var username = Username.of(usernameString);
         var password = Password.of(passwordString);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(

@@ -166,8 +166,8 @@ class TokenServiceImplTest {
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
         when(this.tokenContextThrowerService.verifyValidityOrThrow(oldJwtRefreshToken)).thenReturn(validatedClaims);
         when(this.tokenContextThrowerService.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken)).thenReturn(user);
-        when(this.securityJwtTokenUtility.createJwtAccessToken(user)).thenReturn(jwtAccessToken);
-        when(this.securityJwtTokenUtility.createJwtRefreshToken(user)).thenReturn(newJwtRefreshToken);
+        when(this.securityJwtTokenUtility.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
+        when(this.securityJwtTokenUtility.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newJwtRefreshToken);
         when(this.userSessionService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(userSession);
 
         // Act
@@ -178,8 +178,8 @@ class TokenServiceImplTest {
         verify(this.tokenContextThrowerService).verifyValidityOrThrow(oldJwtRefreshToken);
         verify(this.tokenContextThrowerService).verifyRefreshTokenExpirationOrThrow(validatedClaims);
         verify(this.tokenContextThrowerService).verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
-        verify(this.securityJwtTokenUtility).createJwtAccessToken(user);
-        verify(this.securityJwtTokenUtility).createJwtRefreshToken(user);
+        verify(this.securityJwtTokenUtility).createJwtAccessToken(user.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtility).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.userSessionService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
         verify(this.cookieProvider).createJwtAccessCookie(jwtAccessToken, response);
         verify(this.cookieProvider).createJwtRefreshCookie(newJwtRefreshToken, response);

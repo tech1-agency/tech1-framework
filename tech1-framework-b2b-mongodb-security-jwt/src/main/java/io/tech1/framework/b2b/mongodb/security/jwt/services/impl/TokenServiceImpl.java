@@ -1,17 +1,17 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.JwtUserDetailsAssistant;
+import io.tech1.framework.b2b.mongodb.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -71,8 +71,8 @@ public class TokenServiceImpl implements TokenService {
         this.tokenContextThrowerService.verifyRefreshTokenExpirationOrThrow(refreshTokenValidatedClaims);
         var user = this.tokenContextThrowerService.verifyDbPresenceOrThrow(refreshTokenValidatedClaims, oldJwtRefreshToken);
 
-        var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(user);
-        var newJwtRefreshToken = this.securityJwtTokenUtility.createJwtRefreshToken(user);
+        var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var newJwtRefreshToken = this.securityJwtTokenUtility.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
         var userSession = this.userSessionService.refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
 

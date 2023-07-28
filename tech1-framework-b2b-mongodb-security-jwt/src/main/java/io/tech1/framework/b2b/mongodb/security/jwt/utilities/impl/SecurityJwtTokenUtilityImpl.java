@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.properties.base.TimeAmount;
@@ -43,24 +43,24 @@ public class SecurityJwtTokenUtilityImpl implements SecurityJwtTokenUtility {
     }
 
     @Override
-    public JwtAccessToken createJwtAccessToken(DbUser user) {
+    public JwtAccessToken createJwtAccessToken(JwtTokenCreationParams creationParams) {
         var accessTokenConfiguration = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
-        var jwtToken = this.createJwtToken(user, accessTokenConfiguration.getExpiration());
+        var jwtToken = this.createJwtToken(creationParams, accessTokenConfiguration.getExpiration());
         return new JwtAccessToken(jwtToken);
     }
 
     @Override
-    public JwtRefreshToken createJwtRefreshToken(DbUser user) {
+    public JwtRefreshToken createJwtRefreshToken(JwtTokenCreationParams creationParams) {
         var refreshTokenConfiguration = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
-        var jwtToken = this.createJwtToken(user, refreshTokenConfiguration.getExpiration());
+        var jwtToken = this.createJwtToken(creationParams, refreshTokenConfiguration.getExpiration());
         return new JwtRefreshToken(jwtToken);
     }
 
     @Override
-    public String createJwtToken(DbUser user, TimeAmount timeAmount) {
-        var claims = Jwts.claims().setSubject(user.getUsername().identifier());
-        claims.put("authorities", user.getAuthorities());
-        var zoneId = user.getZoneId();
+    public String createJwtToken(JwtTokenCreationParams creationParams, TimeAmount timeAmount) {
+        var claims = Jwts.claims().setSubject(creationParams.username().identifier());
+        claims.put("authorities", creationParams.authorities());
+        var zoneId = creationParams.zoneId();
         var expiration = LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit());
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())

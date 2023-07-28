@@ -122,8 +122,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier())).thenReturn(jwtUser);
         var jwtAccessToken = entity(JwtAccessToken.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
-        when(this.securityJwtTokenUtility.createJwtAccessToken(jwtUser.dbUser())).thenReturn(jwtAccessToken);
-        when(this.securityJwtTokenUtility.createJwtRefreshToken(jwtUser.dbUser())).thenReturn(jwtRefreshToken);
+        when(this.securityJwtTokenUtility.createJwtAccessToken(jwtUser.dbUser().getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
+        when(this.securityJwtTokenUtility.createJwtRefreshToken(jwtUser.dbUser().getJwtTokenCreationParams())).thenReturn(jwtRefreshToken);
         var currentClientUser = randomCurrentClientUser();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
 
@@ -141,8 +141,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         verify(this.authenticationRequestsValidator).validateLoginRequest(requestUserLogin);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.identifier(), password.value()));
         verify(this.jwtUserDetailsAssistant).loadUserByUsername(username.identifier());
-        verify(this.securityJwtTokenUtility).createJwtAccessToken(jwtUser.dbUser());
-        verify(this.securityJwtTokenUtility).createJwtRefreshToken(jwtUser.dbUser());
+        verify(this.securityJwtTokenUtility).createJwtAccessToken(jwtUser.dbUser().getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtility).createJwtRefreshToken(jwtUser.dbUser().getJwtTokenCreationParams());
         verify(this.userSessionService).save(eq(jwtUser.dbUser()), eq(jwtRefreshToken), any(HttpServletRequest.class));
         verify(this.cookieProvider).createJwtAccessCookie(eq(jwtAccessToken), any(HttpServletResponse.class));
         verify(this.cookieProvider).createJwtRefreshCookie(eq(jwtRefreshToken), any(HttpServletResponse.class));

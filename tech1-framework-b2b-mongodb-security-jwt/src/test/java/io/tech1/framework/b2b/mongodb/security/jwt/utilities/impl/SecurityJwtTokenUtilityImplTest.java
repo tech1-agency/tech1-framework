@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.utilities.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.domain.enums.TestAuthority;
 import io.tech1.framework.b2b.mongodb.security.jwt.utilities.SecurityJwtTokenUtility;
 import io.tech1.framework.domain.base.Username;
@@ -144,7 +144,7 @@ class SecurityJwtTokenUtilityImplTest {
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
 
         // Act
-        var jwtAccessToken = this.componentUnderTest.createJwtAccessToken(user);
+        var jwtAccessToken = this.componentUnderTest.createJwtAccessToken(user.getJwtTokenCreationParams());
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtAccessToken);
@@ -171,7 +171,7 @@ class SecurityJwtTokenUtilityImplTest {
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
-        var jwtRefreshToken = this.componentUnderTest.createJwtRefreshToken(user);
+        var jwtRefreshToken = this.componentUnderTest.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(jwtRefreshToken);
@@ -193,7 +193,7 @@ class SecurityJwtTokenUtilityImplTest {
         var user = EntityUtility.entity(DbUser.class);
 
         // Act
-        var jwtToken = this.componentUnderTest.createJwtToken(user, timeAmount);
+        var jwtToken = this.componentUnderTest.createJwtToken(user.getJwtTokenCreationParams(), timeAmount);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));

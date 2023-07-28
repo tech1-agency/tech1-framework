@@ -69,12 +69,12 @@ public class BaseSecurityAuthenticationResource {
         var authentication = this.authenticationManager.authenticate(authenticationToken);
 
         var jwtUser = this.jwtUserDetailsAssistant.loadUserByUsername(username.identifier());
-        var dbUser = jwtUser.dbUser();
+        var user = jwtUser.dbUser();
 
-        var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(dbUser);
-        var jwtRefreshToken = this.securityJwtTokenUtility.createJwtRefreshToken(dbUser);
+        var jwtAccessToken = this.securityJwtTokenUtility.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var jwtRefreshToken = this.securityJwtTokenUtility.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.userSessionService.save(dbUser, jwtRefreshToken, request);
+        this.userSessionService.save(user, jwtRefreshToken, request);
 
         this.cookieProvider.createJwtAccessCookie(jwtAccessToken, response);
         this.cookieProvider.createJwtRefreshCookie(jwtRefreshToken, response);

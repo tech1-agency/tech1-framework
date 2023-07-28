@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.startup;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;

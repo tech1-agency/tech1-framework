@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.essence.base;
+package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 
+import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -23,7 +23,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseEssenceConstructor implements EssenceConstructor {
+public class MongodbBaseEssenceConstructor implements EssenceConstructor {
 
     // Repositories
     protected final InvitationCodeRepository invitationCodeRepository;

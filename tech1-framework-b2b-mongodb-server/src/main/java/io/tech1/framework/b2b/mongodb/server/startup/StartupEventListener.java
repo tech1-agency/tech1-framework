@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.server.startup;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.startup.DefaultStartupEventListener;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;

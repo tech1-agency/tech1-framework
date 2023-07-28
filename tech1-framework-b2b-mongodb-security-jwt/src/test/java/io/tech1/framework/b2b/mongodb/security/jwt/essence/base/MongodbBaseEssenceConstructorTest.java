@@ -1,7 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.essence.base;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
+import io.tech1.framework.b2b.mongodb.security.jwt.essence.MongodbBaseEssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.domain.base.Username;
@@ -35,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseEssenceConstructorTest {
+class MongodbBaseEssenceConstructorTest {
 
     @Configuration
     @Import({
@@ -57,7 +58,7 @@ class BaseEssenceConstructorTest {
 
         @Bean
         EssenceConstructor essenceConstructor() {
-            return new BaseEssenceConstructor(
+            return new MongodbBaseEssenceConstructor(
                     this.invitationCodeRepository(),
                     this.userRepository(),
                     this.applicationFrameworkProperties

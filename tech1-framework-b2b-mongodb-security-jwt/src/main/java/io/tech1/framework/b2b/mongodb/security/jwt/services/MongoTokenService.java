@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
@@ -11,8 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.DeleteService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokenServiceImpl implements TokenService {
+public class MongoTokenService implements TokenService {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;

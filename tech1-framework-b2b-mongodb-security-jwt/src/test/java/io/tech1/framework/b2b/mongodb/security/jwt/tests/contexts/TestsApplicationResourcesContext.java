@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessio
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
@@ -65,8 +66,8 @@ public class TestsApplicationResourcesContext {
     }
 
     @Bean
-    public RegistrationService registrationService() {
-        return mock(RegistrationService.class);
+    public BaseRegistrationService registrationService() {
+        return mock(BaseRegistrationService.class);
     }
 
     @Bean

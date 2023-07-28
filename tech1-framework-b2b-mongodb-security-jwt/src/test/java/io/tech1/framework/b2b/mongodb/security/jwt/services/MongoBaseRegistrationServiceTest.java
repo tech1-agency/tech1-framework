@@ -1,11 +1,12 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
+package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.MongoBaseRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class RegistrationServiceImplTest {
+class MongoBaseRegistrationServiceTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -48,8 +49,8 @@ class RegistrationServiceImplTest {
         }
 
         @Bean
-        RegistrationService registrationService() {
-            return new RegistrationServiceImpl(
+        BaseRegistrationService registrationService() {
+            return new MongoBaseRegistrationService(
                     this.invitationCodeRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
@@ -61,7 +62,7 @@ class RegistrationServiceImplTest {
     private final MongoUsersRepository mongoUsersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final RegistrationService componentUnderTest;
+    private final BaseRegistrationService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {

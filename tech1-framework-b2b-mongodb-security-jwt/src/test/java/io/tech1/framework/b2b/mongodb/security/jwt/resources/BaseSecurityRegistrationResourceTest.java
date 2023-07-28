@@ -4,7 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserR
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.services.RegistrationService;
+import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityRegistrationResource;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
 
     // Services
-    private final RegistrationService registrationService;
+    private final BaseRegistrationService baseRegistrationService;
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
@@ -38,7 +39,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
-                this.registrationService,
+                this.baseRegistrationService,
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
                 this.registrationRequestsValidator
@@ -48,7 +49,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.registrationService,
+                this.baseRegistrationService,
                 this.securityJwtPublisher,
                 this.securityJwtIncidentPublisher,
                 this.registrationRequestsValidator
@@ -70,7 +71,7 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.registrationRequestsValidator).validateRegistrationRequest1(requestUserRegistration1);
-        verify(this.registrationService).register1(requestUserRegistration1);
+        verify(this.baseRegistrationService).register1(requestUserRegistration1);
         verify(this.securityJwtPublisher).publishRegistration1(new EventRegistration1(requestUserRegistration1));
         verify(this.securityJwtIncidentPublisher).publishRegistration1(new IncidentRegistration1(requestUserRegistration1.username()));
     }

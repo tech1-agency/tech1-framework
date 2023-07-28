@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -22,8 +23,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @Table(name = ANYTHING)
 public class PostgresDbAnything {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @Column(length = 36, nullable = false, updatable = false)
+    private String id;
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column

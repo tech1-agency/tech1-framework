@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.server.resources;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
-import io.tech1.framework.b2b.postgres.server.domain.CurrentClientUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

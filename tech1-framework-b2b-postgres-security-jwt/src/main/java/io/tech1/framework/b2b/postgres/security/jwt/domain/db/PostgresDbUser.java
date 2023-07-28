@@ -6,6 +6,7 @@ import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
@@ -29,8 +30,10 @@ import static java.util.Objects.nonNull;
 @Table(name = USERS)
 public class PostgresDbUser {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @Column(length = 36, nullable = false, updatable = false)
+    private String id;
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column

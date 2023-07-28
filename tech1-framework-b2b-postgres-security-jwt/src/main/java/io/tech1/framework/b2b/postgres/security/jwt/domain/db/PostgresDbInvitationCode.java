@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresS
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.domain.base.Username;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
@@ -24,8 +25,10 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @Table(name = INVITATION_CODES)
 public class PostgresDbInvitationCode {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @Column(length = 36, nullable = false, updatable = false)
+    private String id;
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column

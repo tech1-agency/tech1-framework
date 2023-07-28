@@ -1,11 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
-import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class TokenContextThrowerServiceImpl implements TokenContextThrowerService {
 
     // Assistants
-    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
+    private final JwtUserDetailsService jwtUserDetailsService;
     // Repositories
     private final UserSessionRepository userSessionRepository;
     // Utilities
@@ -67,7 +67,7 @@ public class TokenContextThrowerServiceImpl implements TokenContextThrowerServic
     @Override
     public JwtUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
         var username = validatedClaims.safeGetUsername();
-        var user = this.mongoUserDetailsAssistant.loadUserByUsername(username.identifier());
+        var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
         var databasePresence = this.userSessionRepository.isPresent(oldJwtRefreshToken);
         if (!databasePresence) {
             SecurityContextHolder.clearContext();

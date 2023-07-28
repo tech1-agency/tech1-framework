@@ -1,19 +1,15 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
 
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.b2b.base.security.jwt.validators.*;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.mongodb.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.*;
-import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.base.security.jwt.validators.BaseUserValidator;
-import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
-import io.tech1.framework.b2b.base.security.jwt.validators.RegistrationRequestsValidator;
-import io.tech1.framework.b2b.base.security.jwt.validators.SessionsRequestsValidator;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
@@ -94,8 +90,8 @@ public class TestsApplicationResourcesContext {
     }
 
     @Bean
-    public MongoUserDetailsAssistant jwtUserDetailsAssistant() {
-        return mock(MongoUserDetailsAssistant.class);
+    public JwtUserDetailsService jwtUserDetailsAssistant() {
+        return mock(JwtUserDetailsService.class);
     }
 
     // =================================================================================================================

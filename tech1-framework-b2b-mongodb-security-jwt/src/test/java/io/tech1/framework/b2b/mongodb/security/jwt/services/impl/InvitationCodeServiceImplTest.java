@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.domain.base.Username;
@@ -105,13 +105,12 @@ class InvitationCodeServiceImplTest {
 
         // Assert
         verify(this.invitationCodeRepository).findByOwner(owner);
-        assertThat(responseInvitationCodes.invitationCodes()).isEqualTo(invitationCodes);
-        assertThat(responseInvitationCodes.invitationCodes().get(0)).isEqualTo(invitationCode3);
-        assertThat(responseInvitationCodes.invitationCodes().get(1)).isEqualTo(invitationCode4);
-        assertThat(responseInvitationCodes.invitationCodes().get(2)).isEqualTo(invitationCode6);
-        assertThat(responseInvitationCodes.invitationCodes().get(3)).isEqualTo(invitationCode2);
-        assertThat(responseInvitationCodes.invitationCodes().get(4)).isEqualTo(invitationCode1);
-        assertThat(responseInvitationCodes.invitationCodes().get(5)).isEqualTo(invitationCode5);
+        assertThat(responseInvitationCodes.invitationCodes().get(0)).isEqualTo(invitationCode3.getResponseInvitationCode());
+        assertThat(responseInvitationCodes.invitationCodes().get(1)).isEqualTo(invitationCode4.getResponseInvitationCode());
+        assertThat(responseInvitationCodes.invitationCodes().get(2)).isEqualTo(invitationCode6.getResponseInvitationCode());
+        assertThat(responseInvitationCodes.invitationCodes().get(3)).isEqualTo(invitationCode2.getResponseInvitationCode());
+        assertThat(responseInvitationCodes.invitationCodes().get(4)).isEqualTo(invitationCode1.getResponseInvitationCode());
+        assertThat(responseInvitationCodes.invitationCodes().get(5)).isEqualTo(invitationCode5.getResponseInvitationCode());
         assertThat(responseInvitationCodes.authorities()).isEqualTo(this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
     }
 

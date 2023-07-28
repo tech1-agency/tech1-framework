@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static java.util.Objects.nonNull;
 
 // Lombok
 @NoArgsConstructor
@@ -49,7 +50,7 @@ public class DbInvitationCode {
         return new ResponseInvitationCode(
                 new InvitationCodeId(this.id),
                 this.owner,
-                this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()),
+                nonNull(this.authorities) ? this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()) : List.of(),
                 this.value,
                 this.invited
         );

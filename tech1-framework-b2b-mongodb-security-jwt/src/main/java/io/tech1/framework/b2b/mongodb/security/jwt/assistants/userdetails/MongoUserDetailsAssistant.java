@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MongoUserDetailsAssistant implements UserDetailsService {
+public class MongoUserDetailsAssistant implements JwtUserDetailsService {
 
     // Repository
     private final UserRepository userRepository;
@@ -26,15 +26,7 @@ public class MongoUserDetailsAssistant implements UserDetailsService {
     public JwtUser loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = this.userRepository.findByUsername(Username.of(username));
         if (nonNull(user)) {
-            return new JwtUser(
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getAuthorities(),
-                    user.getEmail(),
-                    user.getName(),
-                    user.getZoneId(),
-                    user.getAttributes()
-            );
+            return user.getJwtUser();
         } else {
             throw new UsernameNotFoundException(entityNotFound("Username", username));
         }

@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -59,5 +60,19 @@ public class DbUser {
     @Transient
     public Map<String, Object> getNotNullAttributes() {
         return nonNull(this.attributes) ? this.attributes : new HashMap<>();
+    }
+
+    @JsonIgnore
+    @Transient
+    public JwtUser getJwtUser() {
+        return new JwtUser(
+                this.username,
+                this.password,
+                this.authorities,
+                this.email,
+                this.name,
+                this.zoneId,
+                this.attributes
+        );
     }
 }

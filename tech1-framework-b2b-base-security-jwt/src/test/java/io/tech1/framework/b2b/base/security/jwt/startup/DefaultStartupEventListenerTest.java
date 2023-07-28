@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.startup;
+package io.tech1.framework.b2b.base.security.jwt.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

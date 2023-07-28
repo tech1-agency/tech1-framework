@@ -1,20 +1,16 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.jsonwebtoken.Claims;
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
+import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.AuthenticationRequestsValidator;
-import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenService;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.UserSessionService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
@@ -70,7 +66,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     private final TokenService tokenService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
-    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
+    private final JwtUserDetailsService jwtUserDetailsService;
     // Cookies
     private final CookieProvider cookieProvider;
     // Validators
@@ -90,7 +86,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 this.userSessionService,
                 this.tokenService,
                 this.currentSessionAssistant,
-                this.mongoUserDetailsAssistant,
+                this.jwtUserDetailsService,
                 this.cookieProvider,
                 this.authenticationRequestsValidator,
                 this.securityJwtTokenUtils
@@ -105,7 +101,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 this.userSessionService,
                 this.tokenService,
                 this.currentSessionAssistant,
-                this.mongoUserDetailsAssistant,
+                this.jwtUserDetailsService,
                 this.cookieProvider,
                 this.authenticationRequestsValidator,
                 this.securityJwtTokenUtils
@@ -119,7 +115,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         var username = requestUserLogin.username();
         var password = requestUserLogin.password();
         var jwtUser = entity(JwtUser.class);
-        when(this.mongoUserDetailsAssistant.loadUserByUsername(username.identifier())).thenReturn(jwtUser);
+        when(this.jwtUserDetailsService.loadUserByUsername(username.identifier())).thenReturn(jwtUser);
         var jwtAccessToken = entity(JwtAccessToken.class);
         var jwtRefreshToken = entity(JwtRefreshToken.class);
         when(this.securityJwtTokenUtils.createJwtAccessToken(jwtUser.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
@@ -140,7 +136,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.authenticationRequestsValidator).validateLoginRequest(requestUserLogin);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.identifier(), password.value()));
-        verify(this.mongoUserDetailsAssistant).loadUserByUsername(username.identifier());
+        verify(this.jwtUserDetailsService).loadUserByUsername(username.identifier());
         verify(this.securityJwtTokenUtils).createJwtAccessToken(jwtUser.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(jwtUser.getJwtTokenCreationParams());
         verify(this.userSessionService).save(eq(jwtUser), eq(jwtRefreshToken), any(HttpServletRequest.class));

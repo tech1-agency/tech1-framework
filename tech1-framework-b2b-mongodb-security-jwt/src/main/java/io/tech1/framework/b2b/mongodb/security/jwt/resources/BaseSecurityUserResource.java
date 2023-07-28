@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
@@ -20,10 +21,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityUserResource {
 
-    // Services
-    private final BaseUserService baseUserService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
+    // Services
+    private final BaseUserService baseUserService;
     // Validators
     private final BaseUserValidator baseUserValidator;
 

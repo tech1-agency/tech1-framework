@@ -1,11 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
-import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.TokenContextThrowerService;
 import io.tech1.framework.domain.exceptions.cookie.*;
@@ -59,8 +59,8 @@ class TokenContextThrowerServiceImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        MongoUserDetailsAssistant jwtUserDetailsAssistant() {
-            return mock(MongoUserDetailsAssistant.class);
+        JwtUserDetailsService jwtUserDetailsAssistant() {
+            return mock(JwtUserDetailsService.class);
         }
 
         @Bean
@@ -84,7 +84,7 @@ class TokenContextThrowerServiceImplTest {
     }
 
     // Assistants
-    private final MongoUserDetailsAssistant mongoUserDetailsAssistant;
+    private final JwtUserDetailsService jwtUserDetailsService;
     // Repositories
     private final UserSessionRepository userSessionRepository;
     // Utilities
@@ -95,7 +95,7 @@ class TokenContextThrowerServiceImplTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.mongoUserDetailsAssistant,
+                this.jwtUserDetailsService,
                 this.userSessionRepository,
                 this.securityJwtTokenUtils
         );
@@ -104,7 +104,7 @@ class TokenContextThrowerServiceImplTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.mongoUserDetailsAssistant,
+                this.jwtUserDetailsService,
                 this.userSessionRepository,
                 this.securityJwtTokenUtils
         );
@@ -218,14 +218,14 @@ class TokenContextThrowerServiceImplTest {
         var oldJwtRefreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
         var jwtUser = entity(JwtUser.class);
-        when(this.mongoUserDetailsAssistant.loadUserByUsername(validatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
+        when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
         when(this.userSessionRepository.isPresent(oldJwtRefreshToken)).thenReturn(true);
 
         // Act
         var dbUser = this.componentUnderTest.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
 
         // Assert
-        verify(this.mongoUserDetailsAssistant).loadUserByUsername(validatedClaims.safeGetUsername().identifier());
+        verify(this.jwtUserDetailsService).loadUserByUsername(validatedClaims.safeGetUsername().identifier());
         verify(this.userSessionRepository).isPresent(oldJwtRefreshToken);
         assertThat(dbUser).isEqualTo(jwtUser);
     }
@@ -236,14 +236,14 @@ class TokenContextThrowerServiceImplTest {
         var oldJwtRefreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
         var jwtUser = entity(JwtUser.class);
-        when(this.mongoUserDetailsAssistant.loadUserByUsername(validatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
+        when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
         when(this.userSessionRepository.isPresent(oldJwtRefreshToken)).thenReturn(false);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken));
 
         // Assert
-        verify(this.mongoUserDetailsAssistant).loadUserByUsername(validatedClaims.safeGetUsername().identifier());
+        verify(this.jwtUserDetailsService).loadUserByUsername(validatedClaims.safeGetUsername().identifier());
         verify(this.userSessionRepository).isPresent(oldJwtRefreshToken);
         assertThat(throwable)
                 .isInstanceOf(CookieRefreshTokenDbNotFoundException.class)

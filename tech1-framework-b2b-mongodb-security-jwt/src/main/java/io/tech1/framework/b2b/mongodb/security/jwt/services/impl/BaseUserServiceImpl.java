@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services.impl;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.domain.base.Password;
@@ -68,17 +68,7 @@ public class BaseUserServiceImpl implements BaseUserService {
     // PRIVATE METHODS
     // ================================================================================================================
     private void reauthenticate(DbUser dbUser) {
-        // TODO [YL] add static utility + rename utility -> utils
-        var jwtUser = new JwtUser(
-                dbUser.getUsername(),
-                dbUser.getPassword(),
-                dbUser.getAuthorities(),
-                dbUser.getEmail(),
-                dbUser.getName(),
-                dbUser.getZoneId(),
-                dbUser.getAttributes()
-        );
-
+        var jwtUser = dbUser.getJwtUser();
         var authentication = new UsernamePasswordAuthenticationToken(jwtUser, null, jwtUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

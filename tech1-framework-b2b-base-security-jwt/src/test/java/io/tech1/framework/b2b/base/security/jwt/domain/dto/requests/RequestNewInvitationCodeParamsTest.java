@@ -21,7 +21,7 @@ class RequestNewInvitationCodeParamsTest extends AbstractSerializationDeserializ
 
     @Override
     protected String getFileName() {
-        return "new-invitation-code-params-invitation-code-id-1.json";
+        return "new-invitation-code-params-1.json";
     }
 
     // serialization is not required for request-based dtos

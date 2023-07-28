@@ -1,12 +1,13 @@
 
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
+import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
-import io.tech1.framework.b2b.base.security.jwt.validators.InvitationCodeRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -64,10 +65,9 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         var owner = randomUsername();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
-        var invitationCodes = list345(DbInvitationCode.class);
-        // TODO [YY] fixme
-//        var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
-//        when(this.invitationCodeService.findByOwner(owner)).thenReturn(responseInvitationCodes);
+        var invitationCodes = list345(ResponseInvitationCode.class);
+        var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
+        when(this.invitationCodeService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
         this.mvc.perform(get("/invitationCodes").contentType(MediaType.APPLICATION_JSON))

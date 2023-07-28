@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.server.configurations;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.configurations.AbstractApplicationSecurityJwtConfigurer;
+import io.tech1.framework.b2b.base.security.jwt.configurations.AbstractApplicationSecurityJwtConfigurer;
 import io.tech1.framework.b2b.mongodb.security.jwt.configurations.ApplicationMongodbSecurityJwt;
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
 import io.tech1.framework.hardware.configurations.ApplicationHardwareMonitoring;
@@ -23,7 +23,8 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.mongodb.security.jwt.assistants.current",
+        "io.tech1.framework.b2b.base.security.jwt.assistants.current",
+        // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.mongodb.security.jwt.essence"
         // -------------------------------------------------------------------------------------------------------------
 })

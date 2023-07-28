@@ -43,14 +43,16 @@ public class BaseSecuritySessionsResource {
         return this.currentSessionAssistant.getCurrentClientUser();
     }
 
+    // WARNING: should NOT be used, under development
     @DeleteMapping("/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable String sessionId) {
-        var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
-        this.sessionsRequestsValidator.validateDeleteById(currentDbUser, sessionId);
+        var username = this.currentSessionAssistant.getCurrentUsername();
+        this.sessionsRequestsValidator.validateDeleteById(username, sessionId);
         this.userSessionService.deleteById(sessionId);
     }
 
+    // WARNING: should NOT be used, under development
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {

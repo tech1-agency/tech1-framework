@@ -1,14 +1,14 @@
 
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.InvitationCodeService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -104,8 +104,8 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        var user = entity(DbUser.class);
-        when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(user);
+        var username= entity(Username.class);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
         var invitationCodeId = randomString();
 
         // Act
@@ -116,8 +116,8 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.invitationCodeRequestsValidator).validateDeleteById(user, invitationCodeId);
+        verify(this.currentSessionAssistant).getCurrentUsername();
+        verify(this.invitationCodeRequestsValidator).validateDeleteById(username, invitationCodeId);
         verify(this.invitationCodeService).deleteById(invitationCodeId);
     }
 }

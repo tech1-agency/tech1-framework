@@ -40,12 +40,14 @@ public class BaseSuperAdminResource {
         return this.baseSuperAdminService.getServerSessions(cookie);
     }
 
+    // WARNING: should NOT be used, under development
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable String sessionId) {
         this.userSessionService.deleteById(sessionId);
     }
 
+    // WARNING: should NOT be used, under development
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {

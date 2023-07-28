@@ -1,14 +1,15 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,11 +81,11 @@ class BaseUserValidatorImplTest {
     @Test
     void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
-        var currentDbUser = entity(DbUser.class);
+        var username = entity(Username.class);
         var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
 
         // Assert
         assertThat(throwable)
@@ -95,11 +96,11 @@ class BaseUserValidatorImplTest {
     @Test
     void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
-        var currentDbUser = entity(DbUser.class);
+        var username = entity(Username.class);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), Email.of(randomString()), randomString());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
 
         // Assert
         assertThat(throwable)
@@ -110,13 +111,13 @@ class BaseUserValidatorImplTest {
     @Test
     void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
+        var username = entity(Username.class);
         var email = randomEmail();
-        var currentDbUser = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
 
         // Assert
         assertThat(throwable).isNull();
@@ -126,13 +127,13 @@ class BaseUserValidatorImplTest {
     @Test
     void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
+        var user= entity(DbUser.class);
         var email = randomEmail();
-        var currentDbUser = entity(DbUser.class);
-        when(this.userRepository.findByEmail(email)).thenReturn(currentDbUser);
+        when(this.userRepository.findByEmail(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(user.getUsername(), requestUserUpdate1));
 
         // Assert
         assertThat(throwable).isNull();
@@ -142,14 +143,14 @@ class BaseUserValidatorImplTest {
     @Test
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
+        var username = entity(Username.class);
         var email = randomEmail();
-        var currentDbUser = entity(DbUser.class);
         var user = entity(DbUser.class);
         when(this.userRepository.findByEmail(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
 
         // Assert
         assertThat(throwable)

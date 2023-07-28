@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class BaseSecurityUserResource {
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)
     public void update1(@RequestBody RequestUserUpdate1 requestUserUpdate1) {
-        var currentDbUser = this.currentSessionAssistant.getCurrentDbUser();
-        this.baseUserValidator.validateUserUpdateRequest1(currentDbUser, requestUserUpdate1);
+        var username = this.currentSessionAssistant.getCurrentUsername();
+        this.baseUserValidator.validateUserUpdateRequest1(username, requestUserUpdate1);
         this.baseUserService.updateUser1(requestUserUpdate1);
     }
 

@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.InvitationCodeRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.InvitationCodeRequestsValidator;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +14,7 @@ import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.accessDenied;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -34,13 +35,13 @@ public class InvitationCodeRequestsValidatorImpl implements InvitationCodeReques
     }
 
     @Override
-    public void validateDeleteById(DbUser currentUser, String invitationCodeId) {
+    public void validateDeleteById(Username username, String invitationCodeId) {
         assertNonNullNotBlankOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
-        assertNonNullOrThrow(currentUser.getUsername(), invalidAttribute("owner"));
+        assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var invitationCode = invitationCodeRepository.requirePresence(invitationCodeId);
-        if (!currentUser.getUsername().equals(invitationCode.getOwner())) {
-            throw new IllegalArgumentException(accessDenied(currentUser.getUsername(), "InvitationCode", invitationCodeId));
+        var invitationCode = this.invitationCodeRepository.requirePresence(invitationCodeId);
+        if (!username.equals(invitationCode.getOwner())) {
+            throw new IllegalArgumentException(accessDenied(username, "InvitationCode", invitationCodeId));
         }
     }
 }

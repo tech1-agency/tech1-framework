@@ -18,6 +18,7 @@ import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

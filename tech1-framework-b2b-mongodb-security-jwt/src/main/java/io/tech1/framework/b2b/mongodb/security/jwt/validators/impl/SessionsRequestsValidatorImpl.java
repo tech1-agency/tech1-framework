@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.SessionsRequestsValidator;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ public class SessionsRequestsValidatorImpl implements SessionsRequestsValidator 
     private final UserSessionRepository userSessionRepository;
 
     @Override
-    public void validateDeleteById(DbUser currentUser, String sessionId) {
+    public void validateDeleteById(Username username, String sessionId) {
         assertNonNullNotBlankOrThrow(sessionId, invalidAttribute("sessionId"));
-        assertNonNullOrThrow(currentUser.getUsername(), invalidAttribute("owner"));
+        assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var session = userSessionRepository.requirePresence(sessionId);
-        if (!currentUser.getUsername().equals(session.getUsername())) {
-            throw new IllegalArgumentException(accessDenied(currentUser.getUsername(), "Session", sessionId));
+        var session = this.userSessionRepository.requirePresence(sessionId);
+        if (!username.equals(session.getUsername())) {
+            throw new IllegalArgumentException(accessDenied(username, "Session", sessionId));
         }
     }
 }

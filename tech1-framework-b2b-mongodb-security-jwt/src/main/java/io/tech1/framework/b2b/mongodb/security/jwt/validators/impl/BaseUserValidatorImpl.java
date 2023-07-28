@@ -1,11 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -27,7 +28,7 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
     private final UserRepository userRepository;
 
     @Override
-    public void validateUserUpdateRequest1(DbUser currentDbUser, RequestUserUpdate1 requestUserUpdate1) {
+    public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 requestUserUpdate1) {
         var zoneId = requestUserUpdate1.zoneId();
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
@@ -41,7 +42,7 @@ public class BaseUserValidatorImpl implements BaseUserValidator {
         }
         var user = this.userRepository.findByEmail(email);
         // `email` is already used by other user in the system
-        if (nonNull(user) && !user.getUsername().equals(currentDbUser.getUsername())) {
+        if (nonNull(user) && !user.getUsername().equals(username)) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
     }

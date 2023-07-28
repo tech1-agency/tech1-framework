@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.UserSessionRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.SessionsRequestsValidator;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,32 +42,32 @@ class SessionsRequestsValidatorImplTest {
     @Test
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
-        var currentUser = entity(DbUser.class);
+        var username = entity(Username.class);
         var sessionId = randomString();
         var session = entity(DbUserSession.class);
         when(this.userSessionRepository.requirePresence(sessionId)).thenReturn(session);
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(currentUser, sessionId));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
 
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("Access denied. Username: `" + currentUser.getUsername()+ "`, Entity: `Session`. Value: `" + sessionId + "`");
+                .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `Session`. Value: `" + sessionId + "`");
         verify(this.userSessionRepository).requirePresence(sessionId);
     }
 
     @Test
     void validateDeleteByIdOkTest() {
         // Arrange
-        var currentUser = entity(DbUser.class);
+        var username = entity(Username.class);
         var sessionId = randomString();
         var session = entity(DbUserSession.class);
-        session.setUsername(currentUser.getUsername());
+        session.setUsername(username);
         when(this.userSessionRepository.requirePresence(sessionId)).thenReturn(session);
 
         // Act
-        this.componentUnderTest.validateDeleteById(currentUser, sessionId);
+        this.componentUnderTest.validateDeleteById(username, sessionId);
 
         // Assert
         verify(this.userSessionRepository).requirePresence(sessionId);

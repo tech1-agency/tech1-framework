@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.resources;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.DbUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.core.CurrentSessionAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.BaseUserService;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.b2b.mongodb.security.jwt.validators.BaseUserValidator;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,8 +56,8 @@ class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
     void update1Test() throws Exception {
         // Arrange
         var requestUserUpdate1 = entity(RequestUserUpdate1.class);
-        var currentDbUser = entity(DbUser.class);
-        when(this.currentSessionAssistant.getCurrentDbUser()).thenReturn(currentDbUser);
+        var username = entity(Username.class);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act
         this.mvc.perform(
@@ -68,8 +68,8 @@ class BaseSecurityUserResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentDbUser();
-        verify(this.baseUserValidator).validateUserUpdateRequest1(currentDbUser, requestUserUpdate1);
+        verify(this.currentSessionAssistant).getCurrentUsername();
+        verify(this.baseUserValidator).validateUserUpdateRequest1(username, requestUserUpdate1);
         verify(this.baseUserService).updateUser1(requestUserUpdate1);
     }
 

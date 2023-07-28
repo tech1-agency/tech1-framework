@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.resources;
+package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
@@ -6,10 +6,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUse
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityUsersSessionsResource;
-import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;

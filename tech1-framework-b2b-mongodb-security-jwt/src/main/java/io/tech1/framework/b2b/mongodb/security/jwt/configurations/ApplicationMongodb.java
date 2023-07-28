@@ -19,11 +19,14 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import javax.annotation.PostConstruct;
+
+import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
+
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
-        "io.tech1.framework.b2b.mongodb.security.jwt.resources",
         "io.tech1.framework.b2b.mongodb.security.jwt.services",
         "io.tech1.framework.b2b.mongodb.security.jwt.sessions",
         "io.tech1.framework.b2b.mongodb.security.jwt.validators",
@@ -37,6 +40,12 @@ public class ApplicationMongodb {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
+    @PostConstruct
+    public void init() {
+        var mongodbSecurityJwtConfigs = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs();
+        assertProperties(mongodbSecurityJwtConfigs, "mongodbSecurityJwtConfigs");
+    }
 
     @Bean(name = "tech1MongoClient")
     public MongoClient tech1MongoClient() {

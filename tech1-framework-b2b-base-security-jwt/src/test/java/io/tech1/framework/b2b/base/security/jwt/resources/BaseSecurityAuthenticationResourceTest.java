@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.resources;
+package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.jsonwebtoken.Claims;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
@@ -8,13 +8,12 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserL
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
-import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityAuthenticationResource;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
-import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;

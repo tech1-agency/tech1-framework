@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
@@ -17,8 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
-import static java.util.Comparator.comparing;
-import static java.util.Objects.isNull;
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_2;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
@@ -35,17 +33,8 @@ public class MongoBaseInvitationCodesService implements BaseInvitationCodesServi
     public ResponseInvitationCodes findByOwner(Username owner) {
         var invitationCodes = this.mongoInvitationCodesRepository.findByOwner(owner).stream()
                 .map(MongoDbInvitationCode::getResponseInvitationCode)
-                .sorted((o1, o2) -> {
-                    if (isNull(o1.invited()) && isNull(o2.invited())) {
-                        return 0;
-                    } else if (isNull(o1.invited())) {
-                        return -1;
-                    } else if (isNull(o2.invited())) {
-                        return 1;
-                    } else {
-                        return comparing((ResponseInvitationCode code) -> code.invited().identifier()).compare(o1, o2);
-                    }
-                }).collect(Collectors.toList());
+                .sorted(INVITATION_CODE_2)
+                .collect(Collectors.toList());
         return new ResponseInvitationCodes(
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
                 invitationCodes

@@ -1,14 +1,13 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.resources;
+package io.tech1.framework.b2b.base.security.jwt.resources;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityUsersResource;
-import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
-import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

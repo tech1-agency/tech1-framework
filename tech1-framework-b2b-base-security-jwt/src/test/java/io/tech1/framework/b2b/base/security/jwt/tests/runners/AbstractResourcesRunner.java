@@ -1,11 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts;
+package io.tech1.framework.b2b.base.security.jwt.tests.runners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts.TestsApplicationResourcesContext;
+import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationResourcesContext;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,15 +1,14 @@
 
-package io.tech1.framework.b2b.mongodb.security.jwt.resources;
+package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.resources.BaseSecurityInvitationCodesResource;
-import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.runnerts.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a343f775-35a5-4ca5-8266-fc3d33974fc1",
+		"_postman_id": "59af14f5-0d3f-403b-990f-54972563c97e",
 		"name": "_T1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28714756"
@@ -280,13 +280,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/user/changePassword1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/users/changePassword1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"user",
+								"users",
 								"changePassword1"
 							]
 						}
@@ -308,13 +308,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/user/update1",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/users/update1",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"user",
+								"users",
 								"update1"
 							]
 						}
@@ -336,13 +336,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/user/update2",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/users/update2",
 							"host": [
 								"{{serverURL}}"
 							],
 							"path": [
 								"{{frameworkBasePathPrefix}}",
-								"user",
+								"users",
 								"update2"
 							]
 						}

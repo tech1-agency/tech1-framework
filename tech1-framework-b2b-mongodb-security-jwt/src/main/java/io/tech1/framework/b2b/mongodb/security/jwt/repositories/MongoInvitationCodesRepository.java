@@ -8,7 +8,6 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCode
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
@@ -77,21 +76,6 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
         return this.findById(invitationCodeId.value()).orElse(null);
     }
 
-    // ================================================================================================================
-    // Queries
-    // ================================================================================================================
-    @Query(value = "{ 'invited': { '$exists': true}}")
-    List<MongoDbInvitationCode> findByInvitedAlreadyUsed();
-
-    @Deprecated(since = "v1.14, add spring-data methods")
-    @Query(value = "{ 'invited': { '$exists': false}}")
-    List<MongoDbInvitationCode> findByInvitedNotUsed();
-
-    @Deprecated(since = "v1.14, add spring-data methods")
-    @Query(value = "{ 'invited': { '$exists': true}}", delete = true)
-    void deleteByInvitedAlreadyUsed();
-
-    @Deprecated(since = "v1.14, add spring-data methods")
-    @Query(value = "{ 'invited': { '$exists': false}}", delete = true)
-    void deleteByInvitedNotUsed();
+    void deleteByInvitedIsNull();
+    void deleteByInvitedIsNotNull();
 }

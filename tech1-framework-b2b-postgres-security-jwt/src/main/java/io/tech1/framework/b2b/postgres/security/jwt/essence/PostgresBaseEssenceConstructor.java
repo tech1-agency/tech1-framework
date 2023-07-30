@@ -53,7 +53,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                     user.setEmail(defaultUser.getEmail());
                     return user;
                 })
-                .collect(Collectors.toList());
+                .toList();
         this.usersRepository.saveAll(dbUsers);
         return dbUsers.size();
     }
@@ -66,7 +66,8 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                                 defaultUser.getUsername(),
                                 authorities
                         )
-                ).collect(Collectors.toList());
+                )
+                .toList();
         this.invitationCodesRepository.saveAll(dbInvitationCodes);
     }
 }

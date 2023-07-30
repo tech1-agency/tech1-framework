@@ -54,8 +54,6 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         assertThat(this.invitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
         assertThat(this.invitationCodesRepository.findByOwner(Username.of("user3"))).hasSize(1);
         assertThat(this.invitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
-        assertThat(this.invitationCodesRepository.findByInvitedNotUsed()).hasSize(5);
-        assertThat(this.invitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
         assertThat(this.invitationCodesRepository.findByInvitedIsNull()).hasSize(5);
         assertThat(this.invitationCodesRepository.findByInvitedIsNotNull()).hasSize(1);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
@@ -73,11 +71,11 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodesRepository.deleteByInvitedAlreadyUsed();
+        this.invitationCodesRepository.deleteByInvitedIsNotNull();
         assertThat(this.invitationCodesRepository.count()).isEqualTo(5);
 
         // Act-Assert-2
-        this.invitationCodesRepository.deleteByInvitedNotUsed();
+        this.invitationCodesRepository.deleteByInvitedIsNull();
         assertThat(this.invitationCodesRepository.count()).isZero();
     }
 

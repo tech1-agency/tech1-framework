@@ -61,7 +61,7 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
 
         // Act
         this.mvc.perform(
-                post("/user/update1")
+                post("/users/update1")
                         .content(this.objectMapper.writeValueAsString(requestUserUpdate1))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -82,7 +82,7 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
 
         // Act
         this.mvc.perform(
-                        post("/user/update2")
+                        post("/users/update2")
                                 .content(this.objectMapper.writeValueAsString(requestUserUpdate2))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -103,7 +103,7 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
 
         // Act
         this.mvc.perform(
-                post("/user/changePassword1")
+                post("/users/changePassword1")
                         .content(this.objectMapper.writeValueAsString(requestUserChangePassword1))
                         .contentType(MediaType.APPLICATION_JSON)
                 )

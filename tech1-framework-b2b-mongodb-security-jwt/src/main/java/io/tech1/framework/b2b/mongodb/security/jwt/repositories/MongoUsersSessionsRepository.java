@@ -27,7 +27,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // Any
     // ================================================================================================================
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
-        return nonNull(this.findByRefreshToken(jwtRefreshToken));
+        return nonNull(this.findByRefreshTokenAnyDb(jwtRefreshToken));
     }
 
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
@@ -78,6 +78,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return this.findById(sessionId.value()).orElse(null);
     }
 
+    @Deprecated
     default MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).orElse(null);
     }

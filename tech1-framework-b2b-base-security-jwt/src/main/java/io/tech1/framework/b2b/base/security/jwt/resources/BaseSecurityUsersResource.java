@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
-import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
+import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
-// TODO [YY] /user -> /users
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityUsersResource {
 

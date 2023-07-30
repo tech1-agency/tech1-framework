@@ -29,7 +29,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // Any
     // ================================================================================================================
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
-        return nonNull(this.findByRefreshToken(jwtRefreshToken));
+        return nonNull(this.findByRefreshTokenAnyDb(jwtRefreshToken));
     }
 
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
@@ -78,10 +78,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default PostgresDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).orElse(null);
-    }
-
-    default PostgresDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.value()).orElse(null);
     }
 
     // ================================================================================================================

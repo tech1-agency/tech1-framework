@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
+package io.tech1.framework.b2b.postgres.security.jwt.sessions;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
@@ -9,7 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.AbstractSessionRegistry;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
@@ -28,24 +28,23 @@ import static java.util.Objects.nonNull;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
-public class MongoSessionRegistry extends AbstractSessionRegistry {
+public class PostgresSessionRegistry extends AbstractSessionRegistry {
 
-    // Repositories
-    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
+    private final PostgresUsersSessionsRepository postgresUsersSessionsRepository;
 
     @Autowired
-    public MongoSessionRegistry(
+    public PostgresSessionRegistry(
             SecurityJwtPublisher securityJwtPublisher,
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
             BaseUsersSessionsService baseUsersSessionsService,
-            MongoUsersSessionsRepository mongoUsersSessionsRepository
+            PostgresUsersSessionsRepository postgresUsersSessionsRepository
     ) {
         super(
                 securityJwtPublisher,
                 securityJwtIncidentPublisher,
                 baseUsersSessionsService
         );
-        this.mongoUsersSessionsRepository = mongoUsersSessionsRepository;
+        this.postgresUsersSessionsRepository = postgresUsersSessionsRepository;
     }
 
     @Override
@@ -57,11 +56,11 @@ public class MongoSessionRegistry extends AbstractSessionRegistry {
         this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
         var jwtRefreshToken = session.refreshToken();
-        var dbUserSession = this.mongoUsersSessionsRepository.findByRefreshToken(jwtRefreshToken);
+        var dbUserSession = this.postgresUsersSessionsRepository.findByRefreshToken(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.getRequestMetadata()));
-            this.mongoUsersSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
+            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.getMetadata()));
+            this.postgresUsersSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
         } else {
             this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
         }
@@ -82,14 +81,14 @@ public class MongoSessionRegistry extends AbstractSessionRegistry {
             this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
         });
 
-        var deleted = this.mongoUsersSessionsRepository.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
+        var deleted = this.postgresUsersSessionsRepository.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 
     @Override
     public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
         return ResponseUserSessionsTable.of(
-                this.mongoUsersSessionsRepository.findByUsername(username).stream()
+                this.postgresUsersSessionsRepository.findByUsername(username).stream()
                         .map(session -> session.responseUserSession2(cookie))
                         .collect(Collectors.toList())
         );

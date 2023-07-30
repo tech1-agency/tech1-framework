@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan({
-        "io.tech1.framework.b2b.postgres.security.jwt.assistants.userdetails"
+        "io.tech1.framework.b2b.postgres.security.jwt.assistants.userdetails",
+        "io.tech1.framework.b2b.postgres.security.jwt.sessions"
 })
 @EntityScan({
         "io.tech1.framework.b2b.postgres.security.jwt.domain.db"

@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;

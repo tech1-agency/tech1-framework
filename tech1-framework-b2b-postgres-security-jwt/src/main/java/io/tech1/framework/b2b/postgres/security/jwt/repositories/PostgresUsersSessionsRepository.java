@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
@@ -42,6 +43,10 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default PostgresDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).orElse(null);
+    }
+
+    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
+        return this.findById(jwtRefreshToken.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
     }
 
     default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {

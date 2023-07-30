@@ -1,5 +1,8 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresSimpleGrantedAuthoritiesConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.domain.base.Username;
@@ -49,5 +52,17 @@ public class PostgresDbInvitationCode {
         this.owner = owner;
         this.authorities = authorities;
         this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);
+    }
+
+    @JsonIgnore
+    @Transient
+    public AnyDbInvitationCode anyDbInvitationCode() {
+        return new AnyDbInvitationCode(
+                new InvitationCodeId(this.id),
+                this.owner,
+                this.authorities,
+                this.value,
+                this.invited
+        );
     }
 }

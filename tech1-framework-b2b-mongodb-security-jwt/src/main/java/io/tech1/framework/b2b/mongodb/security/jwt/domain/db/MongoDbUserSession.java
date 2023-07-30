@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
@@ -39,6 +40,16 @@ public class MongoDbUserSession {
     @Transient
     public JwtRefreshToken getJwtRefreshToken() {
         return new JwtRefreshToken(this.id);
+    }
+
+    @JsonIgnore
+    @Transient
+    public AnyDbUserSession anyDbUserSession() {
+        return new AnyDbUserSession(
+                new UserSessionId(this.id),
+                this.username,
+                this.requestMetadata
+        );
     }
 
     @JsonIgnore

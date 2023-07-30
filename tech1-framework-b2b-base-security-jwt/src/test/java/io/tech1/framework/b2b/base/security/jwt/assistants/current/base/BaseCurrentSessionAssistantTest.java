@@ -24,9 +24,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -126,7 +129,15 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserTest() {
         // Arrange
-        var jwtUser = entity(JwtUser.class);
+        var jwtUser = new JwtUser(
+                randomUsername(),
+                randomPassword(),
+                new ArrayList<>(),
+                randomEmail(),
+                randomString(),
+                randomZoneId(),
+                new HashMap<>()
+        );
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
@@ -148,7 +159,7 @@ class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    void getCurrentClientUserNoHardwareTest() {
+    void getCurrentClientUserNoAttributesNoHardwareTest() {
         // Arrange
         var jwtUser = entity(JwtUser.class);
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);

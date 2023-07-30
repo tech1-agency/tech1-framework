@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.Tuple2;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -31,9 +32,25 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return session.anyDbUserSession();
     }
 
-    default List<ResponseUserSession2> getSessions(Username username, CookieRefreshToken cookie) {
+    default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
+                .collect(Collectors.toList());
+    }
+
+    default List<Tuple2<ResponseUserSession2, JwtRefreshToken>> findAllByCookieAsSession2(CookieRefreshToken cookie) {
+        return this.findAll().stream()
+                .map(session ->
+                        new Tuple2<>(
+                                ResponseUserSession2.of(
+                                        session.getUsername(),
+                                        session.getRequestMetadata(),
+                                        session.getJwtRefreshToken(),
+                                        cookie
+                                ),
+                                session.getJwtRefreshToken()
+                        )
+                )
                 .collect(Collectors.toList());
     }
 

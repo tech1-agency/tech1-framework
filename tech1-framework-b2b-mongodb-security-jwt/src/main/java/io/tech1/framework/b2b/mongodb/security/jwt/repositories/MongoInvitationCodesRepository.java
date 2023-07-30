@@ -39,8 +39,13 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
         return nonNull(invitationCode) ? invitationCode.anyDbInvitationCode() : null;
     }
 
-    long countByOwner(Username username);
+    default List<ResponseInvitationCode> findUnused() {
+        return this.findByInvitedIsNull().stream()
+                .map(MongoDbInvitationCode::getResponseInvitationCode)
+                .collect(Collectors.toList());
+    }
 
+    long countByOwner(Username username);
 
     default void delete(InvitationCodeId invitationCodeId) {
         this.deleteById(invitationCodeId.value());

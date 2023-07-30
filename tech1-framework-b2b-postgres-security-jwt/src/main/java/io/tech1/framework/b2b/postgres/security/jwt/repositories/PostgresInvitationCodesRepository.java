@@ -39,6 +39,12 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
         return nonNull(invitationCode) ? invitationCode.anyDbInvitationCode() : null;
     }
 
+    default List<ResponseInvitationCode> findUnused() {
+        return this.findByInvitedIsNull().stream()
+                .map(PostgresDbInvitationCode::getResponseInvitationCode)
+                .collect(Collectors.toList());
+    }
+
     long countByOwner(Username username);
 
     default void delete(InvitationCodeId invitationCodeId) {

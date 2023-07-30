@@ -133,6 +133,6 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
 
     @Override
     public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
-        return ResponseUserSessionsTable.of(this.anyDbUsersSessionsRepository.getSessions(username, cookie));
+        return ResponseUserSessionsTable.of(this.anyDbUsersSessionsRepository.findByUsernameAndCookieAsSession2(username, cookie));
     }
 }

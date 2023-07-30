@@ -11,6 +11,7 @@ public interface AnyDbInvitationCodesRepository {
     AnyDbInvitationCode requirePresence(InvitationCodeId invitationCodeId);
     List<ResponseInvitationCode> findResponseCodesByOwner(Username owner);
     AnyDbInvitationCode findByValueAsAny(String value);
+    List<ResponseInvitationCode> findUnused();
     long countByOwner(Username username);
     void delete(InvitationCodeId invitationCodeId);
 }

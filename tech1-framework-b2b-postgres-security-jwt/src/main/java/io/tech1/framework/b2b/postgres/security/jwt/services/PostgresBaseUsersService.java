@@ -16,6 +16,9 @@ public class PostgresBaseUsersService extends AbstractBaseUsersService {
             PostgresUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
-        super(usersRepository, bCryptPasswordEncoder);
+        super(
+                usersRepository,
+                bCryptPasswordEncoder
+        );
     }
 }

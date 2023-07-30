@@ -114,7 +114,7 @@ class AbstractBaseInvitationCodesServiceTest {
         this.componentUnderTest.save(username, requestNewInvitationCodeParams);
 
         // Assert
-        verify(this.anyDbInvitationCodesRepository).save(username, requestNewInvitationCodeParams);
+        verify(this.anyDbInvitationCodesRepository).saveAs(username, requestNewInvitationCodeParams);
     }
 
     @Test

@@ -15,5 +15,6 @@ public interface AnyDbInvitationCodesRepository {
     List<ResponseInvitationCode> findUnused();
     long countByOwner(Username username);
     void delete(InvitationCodeId invitationCodeId);
-    void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
+    void saveAs(AnyDbInvitationCode invitationCode);
+    void saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
 }

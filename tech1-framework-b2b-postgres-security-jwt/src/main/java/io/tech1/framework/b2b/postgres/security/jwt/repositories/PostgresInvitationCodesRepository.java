@@ -53,7 +53,11 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
         this.deleteById(invitationCodeId.value());
     }
 
-    default void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    default void saveAs(AnyDbInvitationCode invitationCode) {
+        this.save(new PostgresDbInvitationCode(invitationCode));
+    }
+
+    default void saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
         var invitationCode = new PostgresDbInvitationCode(
                 owner,
                 requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())

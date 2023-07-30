@@ -57,6 +57,14 @@ public class PostgresDbInvitationCode {
         this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);
     }
 
+    public PostgresDbInvitationCode(AnyDbInvitationCode invitationCode) {
+        this.id = invitationCode.value();
+        this.owner = invitationCode.owner();
+        this.authorities = invitationCode.authorities();
+        this.value = invitationCode.value();
+        this.invited = invitationCode.invited();
+    }
+
     @JsonIgnore
     @Transient
     public AnyDbInvitationCode anyDbInvitationCode() {

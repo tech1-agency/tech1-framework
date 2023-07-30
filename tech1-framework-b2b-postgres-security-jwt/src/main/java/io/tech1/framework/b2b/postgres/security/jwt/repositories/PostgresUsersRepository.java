@@ -1,10 +1,13 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.projections.PostgresDbUserProjection1;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,6 +51,16 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
 
     default void saveAsJwtUser(JwtUser user) {
         this.save(new PostgresDbUser(user));
+    }
+
+    default void saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
+        var user = new PostgresDbUser(
+                requestUserRegistration1.username(),
+                password,
+                ZoneId.of(requestUserRegistration1.zoneId()),
+                invitationCode.authorities()
+        );
+        this.save(user);
     }
 
     // ================================================================================================================

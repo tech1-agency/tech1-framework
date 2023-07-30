@@ -1,11 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
+import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,18 +28,17 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoBaseRegistrationServiceTest {
-
+class AbstractBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        MongoInvitationCodesRepository invitationCodeRepository() {
-            return mock(MongoInvitationCodesRepository.class);
+        AnyDbInvitationCodesRepository invitationCodeRepository() {
+            return mock(AnyDbInvitationCodesRepository.class);
         }
 
         @Bean
-        MongoUsersRepository userRepository() {
-            return mock(MongoUsersRepository.class);
+        AnyDbUsersRepository userRepository() {
+            return mock(AnyDbUsersRepository.class);
         }
 
         @Bean
@@ -48,17 +47,17 @@ class MongoBaseRegistrationServiceTest {
         }
 
         @Bean
-        BaseRegistrationService registrationService() {
-            return new MongoBaseRegistrationService(
+        AbstractBaseRegistrationService registrationService() {
+            return new AbstractBaseRegistrationService(
                     this.invitationCodeRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
-            );
+            ) {};
         }
     }
 
-    private final MongoInvitationCodesRepository invitationCodesRepository;
-    private final MongoUsersRepository usersRepository;
+    private final AnyDbInvitationCodesRepository invitationCodesRepository;
+    private final AnyDbUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final BaseRegistrationService componentUnderTest;
@@ -91,24 +90,22 @@ class MongoBaseRegistrationServiceTest {
                 randomZoneId().getId(),
                 randomString()
         );
-        var dbInvitationCode = entity(MongoDbInvitationCode.class);
-        when(this.invitationCodesRepository.findByValue(requestUserRegistration1.invitationCode())).thenReturn(dbInvitationCode);
+        var invitationCode = entity(AnyDbInvitationCode.class);
+        when(this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode())).thenReturn(invitationCode);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
-        var dbInvitationCodeAC = ArgumentCaptor.forClass(MongoDbInvitationCode.class);
+        var invitationCodeAC1 = ArgumentCaptor.forClass(AnyDbInvitationCode.class);
+        var invitationCodeAC2 = ArgumentCaptor.forClass(AnyDbInvitationCode.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);
 
         // Assert
-        verify(this.invitationCodesRepository).findByValue(requestUserRegistration1.invitationCode());
+        verify(this.invitationCodesRepository).findByValueAsAny(requestUserRegistration1.invitationCode());
         verify(this.bCryptPasswordEncoder).encode(requestUserRegistration1.password().value());
-        verify(this.usersRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(requestUserRegistration1.username());
-        assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
-        assertThat(dbUserAC.getValue().getAuthorities()).isEqualTo(dbInvitationCode.getAuthorities());
-        verify(this.invitationCodesRepository).save(dbInvitationCodeAC.capture());
-        assertThat(dbInvitationCodeAC.getValue().getInvited()).isEqualTo(requestUserRegistration1.username());
+        verify(this.usersRepository).saveAs(eq(requestUserRegistration1), eq(Password.of(hashPassword)), invitationCodeAC1.capture());
+        assertThat(invitationCodeAC1.getValue().invited()).isEqualTo(requestUserRegistration1.username());
+        verify(this.invitationCodesRepository).saveAs(invitationCodeAC2.capture());
+        assertThat(invitationCodeAC2.getValue().invited()).isEqualTo(requestUserRegistration1.username());
     }
 }

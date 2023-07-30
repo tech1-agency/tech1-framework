@@ -91,7 +91,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodesRepository.save(TECH1, requestNewInvitationCodeParams);
+        this.invitationCodesRepository.saveAs(TECH1, requestNewInvitationCodeParams);
 
         // Act-Assert-2
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);

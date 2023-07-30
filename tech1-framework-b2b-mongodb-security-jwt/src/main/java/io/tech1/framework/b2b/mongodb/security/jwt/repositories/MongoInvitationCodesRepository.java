@@ -53,7 +53,11 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
         this.deleteById(invitationCodeId.value());
     }
 
-    default void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    default void saveAs(AnyDbInvitationCode invitationCode) {
+        this.save(new MongoDbInvitationCode(invitationCode));
+    }
+
+    default void saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
         var invitationCode = new MongoDbInvitationCode(
                 owner,
                 requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())

@@ -1,27 +1,23 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.tests.contexts;
+package io.tech1.framework.b2b.base.security.jwt.tests.contexts;
 
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import static org.mockito.Mockito.mock;
 
 @Configuration
-@ComponentScan({
-        "io.tech1.framework.b2b.mongodb.security.jwt.validators"
-})
 @Import({
         ApplicationFrameworkPropertiesContext.class
 })
-public class MongoTestsApplicationValidatorsContext {
+public class TestsApplicationValidatorsContext {
 
     // =================================================================================================================
     // Publishers
@@ -45,17 +41,17 @@ public class MongoTestsApplicationValidatorsContext {
     // Repositories
     // =================================================================================================================
     @Bean
-    MongoInvitationCodesRepository invitationCodeRepository() {
-        return mock(MongoInvitationCodesRepository.class);
+    AnyDbInvitationCodesRepository invitationCodeRepository() {
+        return mock(AnyDbInvitationCodesRepository.class);
     }
 
     @Bean
-    MongoUsersRepository userRepository() {
-        return mock(MongoUsersRepository.class);
+    AnyDbUsersRepository userRepository() {
+        return mock(AnyDbUsersRepository.class);
     }
 
     @Bean
-    MongoUsersSessionsRepository userSessionRepository() {
-        return mock(MongoUsersSessionsRepository.class);
+    AnyDbUsersSessionsRepository userSessionRepository() {
+        return mock(AnyDbUsersSessionsRepository.class);
     }
 }

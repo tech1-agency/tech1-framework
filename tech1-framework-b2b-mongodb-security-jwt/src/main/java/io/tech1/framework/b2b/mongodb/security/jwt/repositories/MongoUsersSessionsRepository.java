@@ -25,10 +25,26 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default AnyDbUserSession requirePresence(UserSessionId sessionId) {
+        var session = this.getById(sessionId);
+        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
+        return session.anyDbUserSession();
+    }
+
     default List<ResponseUserSession2> getSessions(Username username, CookieRefreshToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
                 .collect(Collectors.toList());
+    }
+
+    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
+        return this.findById(jwtRefreshToken.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
+    }
+
+    long deleteByIdIn(List<String> ids);
+
+    default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
+        this.deleteById(jwtRefreshToken.value());
     }
 
     // ================================================================================================================
@@ -36,16 +52,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     List<MongoDbUserSession> findByUsername(Username username);
     List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
-    long deleteByIdIn(List<String> ids);
 
     default MongoDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).orElse(null);
-    }
-
-    default MongoDbUserSession requirePresence(UserSessionId sessionId) {
-        var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
-        return session;
     }
 
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
@@ -54,14 +63,6 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
 
     default MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).orElse(null);
-    }
-
-    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
-    }
-
-    default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.deleteById(jwtRefreshToken.value());
     }
 
     // ================================================================================================================

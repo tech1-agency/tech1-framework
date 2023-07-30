@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.projections.PostgresDbUserProjection1;
@@ -16,11 +17,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
-import static io.tech1.framework.b2b.postgres.security.jwt.constants.UsersConstants.SUPERADMIN;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, AnyDbUsersRepository {
+    // ================================================================================================================
+    // Any
+    // ================================================================================================================
+    default JwtUser findByUsernameAsJwtUser(Username username) {
+        return this.findByUsername(username).getJwtUser();
+    }
+
+    default JwtUser findByEmailAsJwtUser(Email email) {
+        return this.findByEmail(email).getJwtUser();
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

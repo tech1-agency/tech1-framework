@@ -1,12 +1,13 @@
-package io.tech1.framework.b2b.postgres.security.jwt.validators;
+package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
-import io.tech1.framework.b2b.postgres.security.jwt.tests.contexts.PostgresTestsApplicationValidatorsContext;
+import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseUsersValidator;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -19,6 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
@@ -38,7 +40,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresBaseUsersValidatorTest {
+class AbstractBaseUsersValidatorTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
         return Stream.of(
@@ -54,27 +56,35 @@ class PostgresBaseUsersValidatorTest {
 
     @Configuration
     @Import({
-            PostgresTestsApplicationValidatorsContext.class
+            TestsApplicationValidatorsContext.class
     })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final AnyDbUsersRepository usersRepository;
 
+        @Bean
+        BaseUsersValidator baseUsersValidator() {
+            return new AbstractBaseUsersValidator(
+                    this.usersRepository
+            ) {};
+        }
     }
 
-    private final PostgresUsersRepository postgresUsersRepository;
+    private final AnyDbUsersRepository usersRepository;
 
     private final BaseUsersValidator componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.postgresUsersRepository
+                this.usersRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.postgresUsersRepository
+                this.usersRepository
         );
     }
 
@@ -113,7 +123,7 @@ class PostgresBaseUsersValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var email = randomEmail();
-        when(this.postgresUsersRepository.findByEmail(email)).thenReturn(null);
+        when(this.usersRepository.findByEmailAsJwtUser(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -121,23 +131,23 @@ class PostgresBaseUsersValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.postgresUsersRepository).findByEmail(email);
+        verify(this.usersRepository).findByEmailAsJwtUser(email);
     }
 
     @Test
     void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
-        var user= entity(PostgresDbUser.class);
+        var user= entity(JwtUser.class);
         var email = randomEmail();
-        when(this.postgresUsersRepository.findByEmail(email)).thenReturn(user);
+        when(this.usersRepository.findByEmailAsJwtUser(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(user.getUsername(), requestUserUpdate1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(user.username(), requestUserUpdate1));
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.postgresUsersRepository).findByEmail(email);
+        verify(this.usersRepository).findByEmailAsJwtUser(email);
     }
 
     @Test
@@ -145,8 +155,8 @@ class PostgresBaseUsersValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var email = randomEmail();
-        var user = entity(PostgresDbUser.class);
-        when(this.postgresUsersRepository.findByEmail(email)).thenReturn(user);
+        var user = entity(JwtUser.class);
+        when(this.usersRepository.findByEmailAsJwtUser(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -156,7 +166,7 @@ class PostgresBaseUsersValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Attribute `email` is invalid");
-        verify(this.postgresUsersRepository).findByEmail(email);
+        verify(this.usersRepository).findByEmailAsJwtUser(email);
     }
 
     @Test

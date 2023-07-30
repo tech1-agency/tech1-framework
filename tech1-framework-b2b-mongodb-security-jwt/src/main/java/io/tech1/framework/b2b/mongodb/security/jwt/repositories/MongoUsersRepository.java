@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.domain.base.Email;
@@ -13,14 +14,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
 
 @Repository
 public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, AnyDbUsersRepository {
     // ================================================================================================================
-    // Constants
+    // Any
     // ================================================================================================================
-    SimpleGrantedAuthority SUPERADMIN = new SimpleGrantedAuthority(SUPER_ADMIN);
+    default JwtUser findByUsernameAsJwtUser(Username username) {
+        return this.findByUsername(username).getJwtUser();
+    }
+
+    default JwtUser findByEmailAsJwtUser(Email email) {
+        return this.findByEmail(email).getJwtUser();
+    }
 
     // ================================================================================================================
     // Spring Data

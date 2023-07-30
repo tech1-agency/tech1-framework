@@ -32,7 +32,7 @@ class BaseAuthenticationRequestsValidatorImplTest {
     static class ContextConfiguration {
         @Bean
         public BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
-            return new BaseBaseAuthenticationRequestsValidator();
+            return new BaseBaseAuthenticationRequestsValidatorImpl();
         }
     }
 

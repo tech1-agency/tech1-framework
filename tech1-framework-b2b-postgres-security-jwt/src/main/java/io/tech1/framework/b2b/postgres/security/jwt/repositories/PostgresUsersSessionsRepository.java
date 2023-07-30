@@ -27,10 +27,26 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default AnyDbUserSession requirePresence(UserSessionId sessionId) {
+        var session = this.getById(sessionId);
+        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
+        return session.anyDbUserSession();
+    }
+
     default List<ResponseUserSession2> getSessions(Username username, CookieRefreshToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
                 .collect(Collectors.toList());
+    }
+
+    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
+        return this.findById(jwtRefreshToken.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
+    }
+
+    long deleteByIdIn(List<String> ids);
+
+    default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
+        this.deleteById(jwtRefreshToken.value());
     }
 
     // ================================================================================================================
@@ -38,16 +54,9 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     List<PostgresDbUserSession> findByUsername(Username username);
     List<PostgresDbUserSession> findByUsernameIn(Set<Username> usernames);
-    long deleteByIdIn(List<String> ids);
 
     default PostgresDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).orElse(null);
-    }
-
-    default PostgresDbUserSession requirePresence(UserSessionId sessionId) {
-        var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
-        return session;
     }
 
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
@@ -56,14 +65,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default PostgresDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).orElse(null);
-    }
-
-    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
-    }
-
-    default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.deleteById(jwtRefreshToken.value());
     }
 
     // ================================================================================================================

@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
@@ -12,25 +13,35 @@ import java.util.List;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static java.util.Objects.nonNull;
 
 @Repository
 public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbInvitationCode, String>, AnyDbInvitationCodesRepository {
+    // ================================================================================================================
+    // Any
+    // ================================================================================================================
+    default AnyDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
+        var invitationCode = this.getById(invitationCodeId);
+        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId.value()));
+        return invitationCode.anyDbInvitationCode();
+    }
+
+    long countByOwner(Username username);
+
+    default AnyDbInvitationCode findByValueAsAny(String value) {
+        var invitationCode = this.findByValue(value);
+        return nonNull(invitationCode) ? invitationCode.anyDbInvitationCode() : null;
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
     List<MongoDbInvitationCode> findByOwner(Username username);
     List<MongoDbInvitationCode> findByInvitedIsNull();
     MongoDbInvitationCode findByValue(String value);
-    long countByOwner(Username username);
 
     default MongoDbInvitationCode getById(InvitationCodeId invitationCodeId) {
         return this.findById(invitationCodeId.value()).orElse(null);
-    }
-
-    default MongoDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
-        var invitationCode = this.getById(invitationCodeId);
-        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId.value()));
-        return invitationCode;
     }
 
     // ================================================================================================================

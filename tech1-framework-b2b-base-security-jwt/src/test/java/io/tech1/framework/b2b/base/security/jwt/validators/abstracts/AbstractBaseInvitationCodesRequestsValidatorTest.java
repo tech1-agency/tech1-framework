@@ -1,12 +1,14 @@
-package io.tech1.framework.b2b.postgres.security.jwt.validators;
+package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
-import io.tech1.framework.b2b.postgres.security.jwt.tests.contexts.PostgresTestsApplicationValidatorsContext;
+import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
@@ -37,7 +40,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresBaseInvitationCodesRequestsValidatorTest {
+class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
@@ -50,13 +53,23 @@ class PostgresBaseInvitationCodesRequestsValidatorTest {
 
     @Configuration
     @Import({
-            PostgresTestsApplicationValidatorsContext.class
+            TestsApplicationValidatorsContext.class
     })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final AnyDbInvitationCodesRepository invitationCodesRepository;
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
+        @Bean
+        BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator() {
+            return new AbstractBaseInvitationCodesRequestsValidator(
+                    this.invitationCodesRepository,
+                    this.applicationFrameworkProperties
+            ) {};
+        }
     }
 
-    private final PostgresInvitationCodesRepository postgresInvitationCodesRepository;
+    private final AnyDbInvitationCodesRepository invitationCodesRepository;
 
     private final BaseInvitationCodesRequestsValidator componentUnderTest;
 
@@ -81,8 +94,8 @@ class PostgresBaseInvitationCodesRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(PostgresDbInvitationCode.class);
-        when(this.postgresInvitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
+        var dbInvitationCode = entity(AnyDbInvitationCode.class);
+        when(this.invitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
@@ -91,22 +104,20 @@ class PostgresBaseInvitationCodesRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `InvitationCode`. Value: `" + invitationCodeId+ "`");
-        verify(this.postgresInvitationCodesRepository).requirePresence(invitationCodeId);
+        verify(this.invitationCodesRepository).requirePresence(invitationCodeId);
     }
 
     @Test
     void validateDeleteByIdOkTest() {
         // Arrange
-        var username = entity(Username.class);
         var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(PostgresDbInvitationCode.class);
-        dbInvitationCode.setOwner(username);
-        when(this.postgresInvitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
+        var dbInvitationCode = entity(AnyDbInvitationCode.class);
+        when(this.invitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
 
         // Act
-        this.componentUnderTest.validateDeleteById(username, invitationCodeId);
+        this.componentUnderTest.validateDeleteById(dbInvitationCode.owner(), invitationCodeId);
 
         // Assert
-        verify(this.postgresInvitationCodesRepository).requirePresence(invitationCodeId);
+        verify(this.invitationCodesRepository).requirePresence(invitationCodeId);
     }
 }

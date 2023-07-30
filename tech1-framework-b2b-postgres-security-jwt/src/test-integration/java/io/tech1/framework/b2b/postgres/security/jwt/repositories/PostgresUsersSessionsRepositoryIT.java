@@ -29,21 +29,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final PostgresUsersSessionsRepository postgresUsersSessionsRepository;
+    private final PostgresUsersSessionsRepository usersSessionsRepository;
 
     @Override
     public JpaRepository<PostgresDbUserSession, String> getJpaRepository() {
-        return this.postgresUsersSessionsRepository;
+        return this.usersSessionsRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.postgresUsersSessionsRepository.saveAll(dummyUserSessionsData1());
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        var count = this.postgresUsersSessionsRepository.count();
-        var sessions = this.postgresUsersSessionsRepository.findByUsernameIn(Set.of(Username.of("sa1"), Username.of("admin")));
+        var count = this.usersSessionsRepository.count();
+        var sessions = this.usersSessionsRepository.findByUsernameIn(Set.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
         assertThat(count).isEqualTo(7);
@@ -53,12 +53,12 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.postgresUsersSessionsRepository.saveAll(dummyUserSessionsData1());
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        this.postgresUsersSessionsRepository.deleteByUsernames(Set.of(Username.of("sa1"), Username.of("admin")));
+        this.usersSessionsRepository.deleteByUsernames(Set.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
-        assertThat(this.postgresUsersSessionsRepository.count()).isEqualTo(2);
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(2);
     }
 }

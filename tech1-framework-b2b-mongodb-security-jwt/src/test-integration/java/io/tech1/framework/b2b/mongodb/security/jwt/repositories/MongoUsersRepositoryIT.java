@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -17,7 +18,10 @@ import java.util.List;
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toUsernamesAsStrings;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUsersData1;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 @ExtendWith({ SpringExtension.class })
 @SpringBootTest(
@@ -30,25 +34,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final MongoUsersRepository mongoUsersRepository;
+    private final MongoUsersRepository usersRepository;
 
     @Override
     public MongoRepository<MongoDbUser, String> getMongoRepository() {
-        return this.mongoUsersRepository;
+        return this.usersRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.mongoUsersRepository.saveAll(dummyUsersData1());
+        this.usersRepository.saveAll(dummyUsersData1());
 
         // Act
-        var superadmins = this.mongoUsersRepository.findByAuthoritySuperadmin();
-        var notSuperadmins = this.mongoUsersRepository.findByAuthorityNotSuperadmin();
-        var superadminsProjection = this.mongoUsersRepository.findByAuthorityProjectionUsernames(SUPERADMIN);
-        var notSuperadminsProjection = this.mongoUsersRepository.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN);
-        var superadminsUsernames = this.mongoUsersRepository.findSuperadminsUsernames();
-        var notSuperadminsUsernames = this.mongoUsersRepository.findNotSuperadminsUsernames();
+        var superadmins = this.usersRepository.findByAuthoritySuperadmin();
+        var notSuperadmins = this.usersRepository.findByAuthorityNotSuperadmin();
+        var superadminsProjection = this.usersRepository.findByAuthorityProjectionUsernames(SUPERADMIN);
+        var notSuperadminsProjection = this.usersRepository.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN);
+        var superadminsUsernames = this.usersRepository.findSuperadminsUsernames();
+        var notSuperadminsUsernames = this.usersRepository.findNotSuperadminsUsernames();
 
         // Assert
         assertThat(toUsernamesAsStrings(superadmins))
@@ -100,26 +104,42 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
                             Username.of("user2")
                     )
                 );
+
+        var jwtUser = this.usersRepository.loadUserByUsername(Username.of("sa1"));
+        assertThat(jwtUser).isNotNull();
+        assertThat(jwtUser.username()).isEqualTo(Username.of("sa1"));
+        assertThat(jwtUser.password()).isNotNull();
+        assertThat(jwtUser.authorities()).isNotNull();
+        assertThat(jwtUser.isAccountNonExpired()).isTrue();
+        assertThat(jwtUser.isAccountNonLocked()).isTrue();
+        assertThat(jwtUser.isCredentialsNonExpired()).isTrue();
+        assertThat(jwtUser.isEnabled()).isTrue();
+
+        var username = randomUsername();
+        var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
+        assertThat(throwable)
+                .isInstanceOf(UsernameNotFoundException.class)
+                .hasMessage(entityNotFound("Username", username.identifier()));
     }
 
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.mongoUsersRepository.saveAll(dummyUsersData1());
+        this.usersRepository.saveAll(dummyUsersData1());
 
         // Act-Assert-0
-        assertThat(this.mongoUsersRepository.count()).isEqualTo(6);
+        assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.mongoUsersRepository.deleteByAuthorityNotSuperadmin();
-        var users1 = this.mongoUsersRepository.findAll();
+        this.usersRepository.deleteByAuthorityNotSuperadmin();
+        var users1 = this.usersRepository.findAll();
         assertThat(toUsernamesAsStrings(users1))
                 .hasSize(3)
                 .containsExactly("sa1", "sa2", "sa3");
 
         // Act-Assert-2
-        this.mongoUsersRepository.deleteByAuthoritySuperadmin();
-        var users2 = this.mongoUsersRepository.findAll();
+        this.usersRepository.deleteByAuthoritySuperadmin();
+        var users2 = this.usersRepository.findAll();
         assertThat(users2).isEmpty();
     }
 }

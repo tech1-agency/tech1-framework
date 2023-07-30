@@ -8,6 +8,7 @@ import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static java.util.Objects.nonNull;
 
 @Repository
 public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, AnyDbUsersRepository {
@@ -23,6 +26,15 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
     // ================================================================================================================
     default JwtUser findByUsernameAsJwtUser(Username username) {
         return this.findByUsername(username).getJwtUser();
+    }
+
+    default JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            return user.getJwtUser();
+        } else {
+            throw new UsernameNotFoundException(entityNotFound("Username", username.identifier()));
+        }
     }
 
     default JwtUser findByEmailAsJwtUser(Email email) {

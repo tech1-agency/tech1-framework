@@ -26,49 +26,49 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    private final MongoInvitationCodesRepository invitationCodesRepository;
 
     @Override
     public MongoRepository<MongoDbInvitationCode, String> getMongoRepository() {
-        return this.mongoInvitationCodesRepository;
+        return this.invitationCodesRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.mongoInvitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
 
         // Act
-        var count = this.mongoInvitationCodesRepository.count();
+        var count = this.invitationCodesRepository.count();
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user1"))).hasSize(2);
-        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
-        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user3"))).hasSize(1);
-        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
-        assertThat(this.mongoInvitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
-        assertThat(this.mongoInvitationCodesRepository.findByInvitedNotUsed()).hasSize(5);
-        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
-        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
-        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
-        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user5"))).isZero();
+        assertThat(this.invitationCodesRepository.findByOwner(Username.of("user1"))).hasSize(2);
+        assertThat(this.invitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
+        assertThat(this.invitationCodesRepository.findByOwner(Username.of("user3"))).hasSize(1);
+        assertThat(this.invitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
+        assertThat(this.invitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
+        assertThat(this.invitationCodesRepository.findByInvitedNotUsed()).hasSize(5);
+        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
+        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
+        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
+        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user5"))).isZero();
     }
 
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.mongoInvitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
 
         // Act-Assert-0
-        assertThat(this.mongoInvitationCodesRepository.count()).isEqualTo(6);
+        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.mongoInvitationCodesRepository.deleteByInvitedAlreadyUsed();
-        assertThat(this.mongoInvitationCodesRepository.count()).isEqualTo(5);
+        this.invitationCodesRepository.deleteByInvitedAlreadyUsed();
+        assertThat(this.invitationCodesRepository.count()).isEqualTo(5);
 
         // Act-Assert-2
-        this.mongoInvitationCodesRepository.deleteByInvitedNotUsed();
-        assertThat(this.mongoInvitationCodesRepository.count()).isZero();
+        this.invitationCodesRepository.deleteByInvitedNotUsed();
+        assertThat(this.invitationCodesRepository.count()).isZero();
     }
 }

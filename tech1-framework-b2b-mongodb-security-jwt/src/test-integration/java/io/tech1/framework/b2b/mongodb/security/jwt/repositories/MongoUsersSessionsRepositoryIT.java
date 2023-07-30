@@ -28,20 +28,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner {
 
-    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
+    private final MongoUsersSessionsRepository usersSessionsRepository;
 
     @Override
     public MongoRepository<MongoDbUserSession, String> getMongoRepository() {
-        return this.mongoUsersSessionsRepository;
+        return this.usersSessionsRepository;
     }
 
     @Test
     void readIntegrationTests() {
         // Arrange
-        this.mongoUsersSessionsRepository.saveAll(dummyUserSessionsData1());
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        var sessions = this.mongoUsersSessionsRepository.findByUsernameIn(Set.of(Username.of("sa1"), Username.of("admin")));
+        var sessions = this.usersSessionsRepository.findByUsernameIn(Set.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
         assertThat(sessions).hasSize(5);
@@ -50,12 +50,12 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.mongoUsersSessionsRepository.saveAll(dummyUserSessionsData1());
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        this.mongoUsersSessionsRepository.deleteByUsernames(Set.of(Username.of("sa1"), Username.of("admin")));
+        this.usersSessionsRepository.deleteByUsernames(Set.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
-        assertThat(this.mongoUsersSessionsRepository.count()).isEqualTo(2);
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(2);
     }
 }

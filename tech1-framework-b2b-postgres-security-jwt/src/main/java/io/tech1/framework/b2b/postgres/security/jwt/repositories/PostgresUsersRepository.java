@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, AnyDbUsersRepository {
@@ -27,6 +30,15 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
     // ================================================================================================================
     default JwtUser findByUsernameAsJwtUser(Username username) {
         return this.findByUsername(username).getJwtUser();
+    }
+
+    default JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            return user.getJwtUser();
+        } else {
+            throw new UsernameNotFoundException(entityNotFound("Username", username.identifier()));
+        }
     }
 
     default JwtUser findByEmailAsJwtUser(Email email) {

@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
@@ -27,6 +28,11 @@ public abstract class AbstractBaseInvitationCodesService implements BaseInvitati
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
                 invitationCodes
         );
+    }
+
+    @Override
+    public void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+        this.anyDbInvitationCodesRepository.save(owner, requestNewInvitationCodeParams);
     }
 
     @Override

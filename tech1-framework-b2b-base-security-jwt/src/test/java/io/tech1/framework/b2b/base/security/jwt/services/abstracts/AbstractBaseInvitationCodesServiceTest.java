@@ -19,8 +19,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.HashSet;
+
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.getInvitationCode;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,12 +52,7 @@ class AbstractBaseInvitationCodesServiceTest {
             return new AbstractBaseInvitationCodesService(
                     this.anyDbInvitationCodesRepository(),
                     this.applicationFrameworkProperties
-            ) {
-                @Override
-                public void save(RequestNewInvitationCodeParams requestNewInvitationCodeParams, Username owner) {
-                    // no actions
-                }
-            };
+            ) {};
         }
     }
 
@@ -104,6 +102,19 @@ class AbstractBaseInvitationCodesServiceTest {
         assertThat(responseInvitationCodes.invitationCodes().get(4)).isEqualTo(invitationCode1);
         assertThat(responseInvitationCodes.invitationCodes().get(5)).isEqualTo(invitationCode5);
         assertThat(responseInvitationCodes.authorities()).isEqualTo(this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
+    }
+
+    @Test
+    void saveTest() {
+        // Arrange
+        var username = randomUsername();
+        var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
+
+        // Act
+        this.componentUnderTest.save(username, requestNewInvitationCodeParams);
+
+        // Assert
+        verify(this.anyDbInvitationCodesRepository).save(username, requestNewInvitationCodeParams);
     }
 
     @Test

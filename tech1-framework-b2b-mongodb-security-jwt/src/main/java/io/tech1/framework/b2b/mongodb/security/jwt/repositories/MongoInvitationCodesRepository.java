@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
@@ -8,6 +9,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCo
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -49,6 +51,14 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
 
     default void delete(InvitationCodeId invitationCodeId) {
         this.deleteById(invitationCodeId.value());
+    }
+
+    default void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+        var invitationCode = new MongoDbInvitationCode(
+                owner,
+                requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+        );
+        this.save(invitationCode);
     }
 
     // ================================================================================================================

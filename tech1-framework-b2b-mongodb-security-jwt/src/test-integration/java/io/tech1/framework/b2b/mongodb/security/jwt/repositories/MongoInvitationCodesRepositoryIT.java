@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
@@ -10,9 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.HashSet;
+import java.util.stream.Collectors;
+
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
+import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -72,5 +79,29 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         // Act-Assert-2
         this.invitationCodesRepository.deleteByInvitedNotUsed();
         assertThat(this.invitationCodesRepository.count()).isZero();
+    }
+
+    @Test
+    void saveIntegrationTests() {
+        // Arrange
+        this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
+
+        // Act-Assert-0
+        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+
+        // Act-Assert-1
+        this.invitationCodesRepository.save(TECH1, requestNewInvitationCodeParams);
+
+        // Act-Assert-2
+        assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
+
+        // Act-Assert-3
+        var invitationCodes = this.invitationCodesRepository.findByOwner(TECH1);
+        assertThat(invitationCodes).hasSize(1);
+        var invitationCode = invitationCodes.get(0);
+        assertThat(invitationCode.getOwner()).isEqualTo(TECH1);
+        assertThat(invitationCode.getAuthorities()).isEqualTo(requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        assertThat(invitationCode.getValue()).hasSize(40);
     }
 }

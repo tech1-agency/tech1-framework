@@ -98,7 +98,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.baseInvitationCodesRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
-        verify(this.baseInvitationCodesService).save(requestNewInvitationCodeParams, owner);
+        verify(this.baseInvitationCodesService).save(owner, requestNewInvitationCodeParams);
     }
 
     @Test

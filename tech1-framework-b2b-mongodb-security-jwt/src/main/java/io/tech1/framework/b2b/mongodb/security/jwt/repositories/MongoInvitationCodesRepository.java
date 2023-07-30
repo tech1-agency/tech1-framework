@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -13,7 +14,7 @@ import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @Repository
-public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbInvitationCode, String> {
+public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbInvitationCode, String>, AnyDbInvitationCodesRepository {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

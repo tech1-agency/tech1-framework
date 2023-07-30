@@ -26,20 +26,17 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     @Autowired
     public PostgresBaseEssenceConstructor(
-            ApplicationFrameworkProperties applicationFrameworkProperties,
             PostgresInvitationCodesRepository invitationCodesRepository,
-            PostgresUsersRepository usersRepository
+            PostgresUsersRepository usersRepository,
+            ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         super(
+                invitationCodesRepository,
+                usersRepository,
                 applicationFrameworkProperties
         );
         this.invitationCodesRepository = invitationCodesRepository;
         this.usersRepository = usersRepository;
-    }
-
-    @Override
-    public boolean noDefaultUsers() {
-        return this.usersRepository.count() == 0L;
     }
 
     @Override
@@ -59,11 +56,6 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                 .collect(Collectors.toList());
         this.usersRepository.saveAll(dbUsers);
         return dbUsers.size();
-    }
-
-    @Override
-    public boolean noInvitationCodes(DefaultUser defaultUser) {
-        return this.invitationCodesRepository.countByOwner(defaultUser.getUsername()) == 0L;
     }
 
     @Override

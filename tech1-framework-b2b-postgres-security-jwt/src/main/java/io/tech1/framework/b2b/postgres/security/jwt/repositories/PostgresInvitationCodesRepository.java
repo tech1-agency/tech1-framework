@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +14,7 @@ import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresInvitationCodesRepository extends JpaRepository<PostgresDbInvitationCode, String> {
+public interface PostgresInvitationCodesRepository extends JpaRepository<PostgresDbInvitationCode, String>, AnyDbInvitationCodesRepository {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

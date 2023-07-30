@@ -11,9 +11,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +22,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -37,20 +32,6 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class PostgresBaseEssenceConstructorTest {
-
-    private static Stream<Arguments> noDefaultUsersTest() {
-        return Stream.of(
-                Arguments.of(0, true),
-                Arguments.of(randomLongGreaterThanZero(), false)
-        );
-    }
-
-    private static Stream<Arguments> noInvitationCodesTest() {
-        return Stream.of(
-                Arguments.of(0, true),
-                Arguments.of(randomLongGreaterThanZero(), false)
-        );
-    }
 
     @Configuration
     @Import({
@@ -73,9 +54,9 @@ class PostgresBaseEssenceConstructorTest {
         @Bean
         EssenceConstructor essenceConstructor() {
             return new PostgresBaseEssenceConstructor(
-                    this.applicationFrameworkProperties,
                     this.invitationCodeRepository(),
-                    this.userRepository()
+                    this.userRepository(),
+                    this.applicationFrameworkProperties
             );
         }
     }
@@ -101,20 +82,6 @@ class PostgresBaseEssenceConstructorTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("noDefaultUsersTest")
-    void noDefaultUsersTest(long count, boolean expected) {
-        // Arrange
-        when(this.usersRepository.count()).thenReturn(count);
-
-        // Act
-        var actual = this.componentUnderTest.noDefaultUsers();
-
-        // Assert
-        verify(this.usersRepository).count();
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @SuppressWarnings("unchecked")
     @Test
     void saveDefaultUsersTest() {
@@ -130,22 +97,6 @@ class PostgresBaseEssenceConstructorTest {
         assertThat(actual)
                 .isEqualTo(defaultUsers.size())
                 .isEqualTo(userAC.getValue().size());
-    }
-
-    @ParameterizedTest
-    @MethodSource("noInvitationCodesTest")
-    void noInvitationCodesTest(long count, boolean expected) {
-        // Arrange
-        var defaultUser = entity(DefaultUser.class);
-        var username = defaultUser.getUsername();
-        when(this.invitationCodesRepository.countByOwner(username)).thenReturn(count);
-
-        // Act
-        var actual = this.componentUnderTest.noInvitationCodes(defaultUser);
-
-        // Assert
-        verify(this.invitationCodesRepository).countByOwner(username);
-        assertThat(actual).isEqualTo(expected);
     }
 
     @SuppressWarnings("unchecked")

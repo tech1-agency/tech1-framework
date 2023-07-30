@@ -6,9 +6,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 
 public interface EssenceConstructor {
-    boolean noDefaultUsers();
     long saveDefaultUsers(List<DefaultUser> defaultUsers);
-
-    boolean noInvitationCodes(DefaultUser defaultUser);
     void saveInvitationCodes(DefaultUser defaultUser, List<SimpleGrantedAuthority> authorities);
 }

@@ -1,5 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.essense;
 
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,10 +15,19 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @Slf4j
 public abstract class AbstractEssenceConstructor implements EssenceConstructor {
 
+    // Repositories
+    protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
+    protected final AnyDbUsersRepository anyDbUsersRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    protected AbstractEssenceConstructor(ApplicationFrameworkProperties applicationFrameworkProperties) {
+    protected AbstractEssenceConstructor(
+            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
+            AnyDbUsersRepository anyDbUsersRepository,
+            ApplicationFrameworkProperties applicationFrameworkProperties
+    ) {
+        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
+        this.anyDbUsersRepository = anyDbUsersRepository;
         this.applicationFrameworkProperties = applicationFrameworkProperties;
     }
 
@@ -26,7 +37,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 essenceConfigs.getDefaultUsers().isEnabled(),
                 invalidAttribute("essenceConfigs.defaultUsers.enabled == true")
         );
-        if (this.noDefaultUsers()) {
+        if (this.anyDbUsersRepository.count() == 0L) {
             LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
             var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
             LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", usersCount);
@@ -48,7 +59,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 .collect(Collectors.toList());
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
-            if (this.noInvitationCodes(defaultUser)) {
+            if (this.anyDbInvitationCodesRepository.countByOwner(username) == 0L) {
                 LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No invitation codes in database. Username: `{}`", username);
                 this.saveInvitationCodes(defaultUser, simpleGrantedAuthorities);
             } else {

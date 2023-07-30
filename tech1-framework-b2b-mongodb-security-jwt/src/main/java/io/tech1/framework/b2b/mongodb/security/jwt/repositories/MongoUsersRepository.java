@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 
 @Repository
-public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String> {
+public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, AnyDbUsersRepository {
     // ================================================================================================================
     // Constants
     // ================================================================================================================

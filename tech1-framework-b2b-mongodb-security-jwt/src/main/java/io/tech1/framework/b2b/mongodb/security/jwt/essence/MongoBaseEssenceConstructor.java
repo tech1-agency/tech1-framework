@@ -27,20 +27,17 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     @Autowired
     public MongoBaseEssenceConstructor(
-            ApplicationFrameworkProperties applicationFrameworkProperties,
             MongoInvitationCodesRepository invitationCodesRepository,
-            MongoUsersRepository usersRepository
+            MongoUsersRepository usersRepository,
+            ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         super(
+                invitationCodesRepository,
+                usersRepository,
                 applicationFrameworkProperties
         );
         this.invitationCodesRepository = invitationCodesRepository;
         this.usersRepository = usersRepository;
-    }
-
-    @Override
-    public boolean noDefaultUsers() {
-        return this.usersRepository.count() == 0L;
     }
 
     @Override
@@ -60,11 +57,6 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                 .collect(Collectors.toList());
         this.usersRepository.saveAll(dbUsers);
         return dbUsers.size();
-    }
-
-    @Override
-    public boolean noInvitationCodes(DefaultUser defaultUser) {
-        return this.invitationCodesRepository.countByOwner(defaultUser.getUsername()) == 0L;
     }
 
     @Override

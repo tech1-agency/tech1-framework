@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.projections.PostgresDbUserProjection1;
 import io.tech1.framework.domain.base.Email;
@@ -19,7 +20,7 @@ import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTabl
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.UsersConstants.SUPERADMIN;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String> {
+public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, AnyDbUsersRepository {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

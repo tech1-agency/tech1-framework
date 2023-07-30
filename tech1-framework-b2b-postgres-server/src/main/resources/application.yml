@@ -23,7 +23,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
-          auto: update
+          auto: none
+  liquibase:
+    change-log: classpath:postgres/changelog.yml
 
 # Tech1 Platform
 tech1:

@@ -37,19 +37,19 @@ public class PostgresDbUser {
     private String id;
 
     @Convert(converter = PostgresUsernameConverter.class)
-    @Column
+    @Column(nullable = false, updatable = false)
     private Username username;
 
     @Convert(converter = PostgresPasswordConverter.class)
-    @Column
+    @Column(nullable = false)
     private Password password;
 
     @Convert(converter = PostgresZoneIdConverter.class)
-    @Column(name = "zone_id")
+    @Column(name = "zone_id", nullable = false)
     private ZoneId zoneId;
 
     @Convert(converter = PostgresSimpleGrantedAuthoritiesConverter.class)
-    @Column
+    @Column(length = 1024, nullable = false)
     private List<SimpleGrantedAuthority> authorities;
 
     @Convert(converter = PostgresEmailConverter.class)
@@ -60,7 +60,7 @@ public class PostgresDbUser {
     private String name;
 
     @Convert(converter = PostgresMapStringsObjectsConverter.class)
-    @Column
+    @Column(length = 65535)
     private Map<String, Object> attributes;
 
     public PostgresDbUser(Username username, Password password, ZoneId zoneId, List<SimpleGrantedAuthority> authorities) {

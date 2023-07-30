@@ -6,4 +6,5 @@ import lombok.experimental.UtilityClass;
 public class PostgreTablesConstants {
     public static final String INVITATION_CODES = "tech1_invitation_codes";
     public static final String USERS = "tech1_users";
+    public static final String USERS_SESSIONS = "tech1_users_sessions";
 }

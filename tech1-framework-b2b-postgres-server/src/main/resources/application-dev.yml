@@ -9,9 +9,7 @@ spring:
     username: postgres
     password: postgres
   jpa:
-    show-sql: false
-  liquibase:
-    change-log: classpath:postgres/changelog.yml
+    show-sql: true
 
 # Tech1 Platform
 tech1:

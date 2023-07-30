@@ -24,7 +24,7 @@ public class GeoLocation {
     @JsonIgnore
     private final String exceptionDetails;
 
-    private GeoLocation(
+    public GeoLocation(
             String ipAddr,
             String country,
             String countryCode,

@@ -29,7 +29,7 @@ public class PostgresDbAnything {
     private String id;
 
     @Convert(converter = PostgresUsernameConverter.class)
-    @Column
+    @Column(nullable = false)
     private Username username;
 
     @Column

@@ -35,10 +35,7 @@ public class MongoDbInvitationCode {
 
     private Username invited;
 
-    public MongoDbInvitationCode(
-            Username owner,
-            List<SimpleGrantedAuthority> authorities
-    ) {
+    public MongoDbInvitationCode(Username owner, List<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
         this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);

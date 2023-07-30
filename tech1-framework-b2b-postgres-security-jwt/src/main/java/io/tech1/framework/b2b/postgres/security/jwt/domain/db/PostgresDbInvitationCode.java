@@ -31,14 +31,14 @@ public class PostgresDbInvitationCode {
     private String id;
 
     @Convert(converter = PostgresUsernameConverter.class)
-    @Column
+    @Column(nullable = false, updatable = false)
     private Username owner;
 
     @Convert(converter = PostgresSimpleGrantedAuthoritiesConverter.class)
-    @Column
+    @Column(length = 1024, nullable = false)
     private List<SimpleGrantedAuthority> authorities;
 
-    @Column
+    @Column(nullable = false)
     private String value;
 
     @Convert(converter = PostgresUsernameConverter.class)

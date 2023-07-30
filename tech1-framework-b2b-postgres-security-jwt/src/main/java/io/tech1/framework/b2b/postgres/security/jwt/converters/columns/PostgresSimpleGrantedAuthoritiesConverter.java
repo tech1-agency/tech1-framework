@@ -6,9 +6,9 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
+import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.joining;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -18,11 +18,11 @@ public class PostgresSimpleGrantedAuthoritiesConverter implements AttributeConve
 
     @Override
     public String convertToDatabaseColumn(List<SimpleGrantedAuthority> authorities) {
-        return isEmpty(authorities) ? "" : authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(joining(SPLIT_CHAR));
+        return isEmpty(authorities) ? null : authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(joining(SPLIT_CHAR));
     }
 
     @Override
     public List<SimpleGrantedAuthority> convertToEntityAttribute(String value) {
-        return Objects.isNull(value) ? new ArrayList<>() : Stream.of(value.split(SPLIT_CHAR)).map(SimpleGrantedAuthority::new).toList();
+        return isNull(value) ? new ArrayList<>() : Stream.of(value.split(SPLIT_CHAR)).map(SimpleGrantedAuthority::new).toList();
     }
 }

@@ -6,7 +6,10 @@ import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import static io.tech1.framework.domain.constants.StringConstants.NO_FLAG;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
@@ -23,7 +26,7 @@ import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLengt
         "exception"
 })
 // Lombok
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString

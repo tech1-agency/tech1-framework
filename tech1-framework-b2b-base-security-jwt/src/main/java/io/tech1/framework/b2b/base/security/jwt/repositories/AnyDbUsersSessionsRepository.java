@@ -11,6 +11,7 @@ import io.tech1.framework.domain.tuples.Tuple2;
 import java.util.List;
 
 public interface AnyDbUsersSessionsRepository {
+    boolean isPresent(JwtRefreshToken jwtRefreshToken);
     AnyDbUserSession requirePresence(UserSessionId sessionId);
     List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie);
     List<Tuple2<ResponseUserSession2, JwtRefreshToken>> findAllByCookieAsSession2(CookieRefreshToken cookie);

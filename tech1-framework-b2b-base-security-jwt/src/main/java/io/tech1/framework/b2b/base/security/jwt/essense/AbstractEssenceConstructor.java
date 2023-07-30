@@ -3,6 +3,8 @@ package io.tech1.framework.b2b.base.security.jwt.essense;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -13,6 +15,7 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWO
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 @Slf4j
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEssenceConstructor implements EssenceConstructor {
 
     // Repositories
@@ -20,16 +23,6 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
     protected final AnyDbUsersRepository anyDbUsersRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
-
-    protected AbstractEssenceConstructor(
-            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
-            AnyDbUsersRepository anyDbUsersRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
-    ) {
-        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
-        this.anyDbUsersRepository = anyDbUsersRepository;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
-    }
 
     public void addDefaultUsers() {
         var essenceConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs();

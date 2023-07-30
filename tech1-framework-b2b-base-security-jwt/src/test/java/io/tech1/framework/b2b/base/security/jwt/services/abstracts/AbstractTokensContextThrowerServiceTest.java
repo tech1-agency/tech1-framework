@@ -1,14 +1,13 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenExpiredException;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenInvalidException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
+import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +59,16 @@ class AbstractTokensContextThrowerServiceTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
+        JwtUserDetailsService jwtUserDetailsService() {
+            return mock(JwtUserDetailsService.class);
+        }
+
+        @Bean
+        AnyDbUsersSessionsRepository usersSessionsRepository() {
+            return mock(AnyDbUsersSessionsRepository.class);
+        }
+
+        @Bean
         SecurityJwtTokenUtils securityJwtTokenUtils() {
             return mock(SecurityJwtTokenUtils.class);
         }
@@ -67,16 +76,17 @@ class AbstractTokensContextThrowerServiceTest {
         @Bean
         AbstractTokensContextThrowerService abstractTokensContextThrowerService() {
             return new AbstractTokensContextThrowerService(
+                    this.jwtUserDetailsService(),
+                    this.usersSessionsRepository(),
                     this.securityJwtTokenUtils()
-            ) {
-                @Override
-                public JwtUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) {
-                    throw new RuntimeException("Mongodb/Postgres depending implementation");
-                }
-            };
+            ) {};
         }
     }
 
+    // Assistants
+    private final JwtUserDetailsService jwtUserDetailsService;
+    // Repositories
+    private final AnyDbUsersSessionsRepository usersSessionsRepository;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -196,5 +206,43 @@ class AbstractTokensContextThrowerServiceTest {
         reset(
                 this.securityJwtTokenUtils
         );
+    }
+
+    @Test
+    void verifyDbPresenceTest() throws CookieRefreshTokenDbNotFoundException {
+        // Arrange
+        var oldJwtRefreshToken = entity(JwtRefreshToken.class);
+        var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
+        var jwtUser = entity(JwtUser.class);
+        when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
+        when(this.usersSessionsRepository.isPresent(oldJwtRefreshToken)).thenReturn(true);
+
+        // Act
+        var dbUser = this.componentUnderTest.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
+
+        // Assert
+        verify(this.jwtUserDetailsService).loadUserByUsername(validatedClaims.safeGetUsername().identifier());
+        verify(this.usersSessionsRepository).isPresent(oldJwtRefreshToken);
+        assertThat(dbUser).isEqualTo(jwtUser);
+    }
+
+    @Test
+    void verifyDbPresenceThrowTest() {
+        // Arrange
+        var oldJwtRefreshToken = entity(JwtRefreshToken.class);
+        var validatedClaims = valid(oldJwtRefreshToken, randomValidDefaultClaims());
+        var jwtUser = entity(JwtUser.class);
+        when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
+        when(this.usersSessionsRepository.isPresent(oldJwtRefreshToken)).thenReturn(false);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken));
+
+        // Assert
+        verify(this.jwtUserDetailsService).loadUserByUsername(validatedClaims.safeGetUsername().identifier());
+        verify(this.usersSessionsRepository).isPresent(oldJwtRefreshToken);
+        assertThat(throwable)
+                .isInstanceOf(CookieRefreshTokenDbNotFoundException.class)
+                .hasMessageContaining("JWT refresh token is not present in database. Username: " + validatedClaims.safeGetUsername());
     }
 }

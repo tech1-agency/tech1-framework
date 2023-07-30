@@ -1,20 +1,25 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenExpiredException;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenInvalidException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
+import io.tech1.framework.domain.exceptions.cookie.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTokensContextThrowerService implements TokensContextThrowerService {
 
+    // Assistants
+    protected final JwtUserDetailsService jwtUserDetailsService;
+    // Repositories
+    protected final AnyDbUsersSessionsRepository usersSessionsRepository;
     // Utilities
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -52,5 +57,17 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenExpiredException(validatedClaims.safeGetUsername());
         }
+    }
+
+    @Override
+    public JwtUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
+        var username = validatedClaims.safeGetUsername();
+        var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
+        var databasePresence = this.usersSessionsRepository.isPresent(oldJwtRefreshToken);
+        if (!databasePresence) {
+            SecurityContextHolder.clearContext();
+            throw new CookieRefreshTokenDbNotFoundException(username);
+        }
+        return user;
     }
 }

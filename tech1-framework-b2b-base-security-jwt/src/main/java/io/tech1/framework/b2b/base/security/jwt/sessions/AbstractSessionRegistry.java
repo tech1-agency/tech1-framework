@@ -16,6 +16,8 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
@@ -26,6 +28,7 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
 import static java.util.Objects.nonNull;
 
 @Slf4j
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractSessionRegistry implements SessionRegistry {
 
     protected final Set<Session> sessions = ConcurrentHashMap.newKeySet();
@@ -37,18 +40,6 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     protected final BaseUsersSessionsService baseUsersSessionsService;
     // Repositories
     protected final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
-
-    protected AbstractSessionRegistry(
-            SecurityJwtPublisher securityJwtPublisher,
-            SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            BaseUsersSessionsService baseUsersSessionsService,
-            AnyDbUsersSessionsRepository anyDbUsersSessionsRepository
-    ) {
-        this.securityJwtPublisher = securityJwtPublisher;
-        this.securityJwtIncidentPublisher = securityJwtIncidentPublisher;
-        this.baseUsersSessionsService = baseUsersSessionsService;
-        this.anyDbUsersSessionsRepository = anyDbUsersSessionsRepository;
-    }
 
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {

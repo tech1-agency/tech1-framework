@@ -6,23 +6,18 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCode
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_2;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesService implements BaseInvitationCodesService {
 
     // Repositories
     protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
-
-    protected AbstractBaseInvitationCodesService(
-            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
-    ) {
-        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
-    }
 
     @Override
     public ResponseInvitationCodes findByOwner(Username owner) {

@@ -1,22 +1,21 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.postgres.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractTokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
-public class MongoTokensContextThrowerService extends AbstractTokensContextThrowerService {
+public class PostgresTokensContextThrowerService extends AbstractTokensContextThrowerService {
 
     @Autowired
-    public MongoTokensContextThrowerService(
+    public PostgresTokensContextThrowerService(
             JwtUserDetailsService jwtUserDetailsService,
-            MongoUsersSessionsRepository usersSessionsRepository,
+            PostgresUsersSessionsRepository usersSessionsRepository,
             SecurityJwtTokenUtils securityJwtTokenUtils
     ) {
         super(

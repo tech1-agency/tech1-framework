@@ -8,29 +8,22 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCode
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_1;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminService {
 
     // Sessions
-    private final SessionRegistry sessionRegistry;
+    protected final SessionRegistry sessionRegistry;
     // Repositories
-    private final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
-    private final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
-
-    protected AbstractBaseSuperAdminService(
-            SessionRegistry sessionRegistry,
-            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
-            AnyDbUsersSessionsRepository anyDbUsersSessionsRepository
-    ) {
-        this.sessionRegistry = sessionRegistry;
-        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
-        this.anyDbUsersSessionsRepository = anyDbUsersSessionsRepository;
-    }
+    protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
+    protected final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
 
     @Override
     public List<ResponseInvitationCode> findUnused() {

@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,9 +22,9 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     List<PostgresDbInvitationCode> findByInvitedIsNotNull();
     PostgresDbInvitationCode findByValue(String value);
 
-    default PostgresDbInvitationCode requirePresence(String invitationCodeId) {
-        var invitationCode = this.getReferenceById(invitationCodeId);
-        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId));
+    default PostgresDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
+        var invitationCode = this.getReferenceById(invitationCodeId.value());
+        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId.value()));
         return invitationCode;
     }
 

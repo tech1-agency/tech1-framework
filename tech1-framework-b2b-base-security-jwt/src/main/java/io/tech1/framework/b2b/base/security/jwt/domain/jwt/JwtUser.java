@@ -18,10 +18,10 @@ public record JwtUser(
         UserId id,
         Username username,
         Password password,
+        ZoneId zoneId,
         List<SimpleGrantedAuthority> authorities,
         Email email,
         String name,
-        ZoneId zoneId,
         Map<String, Object> attributes
 ) implements UserDetails {
 

@@ -71,6 +71,17 @@ public class PostgresDbUser {
         this.authorities = authorities;
     }
 
+    public PostgresDbUser(JwtUser user) {
+        this.id = user.id().value();
+        this.username = user.username();
+        this.password = user.password();
+        this.zoneId = user.zoneId();
+        this.authorities = user.authorities();
+        this.email = user.email();
+        this.name = user.name();
+        this.attributes = user.attributes();
+    }
+
     @JsonIgnore
     public Map<String, Object> getNotNullAttributes() {
         return nonNull(this.attributes) ? this.attributes : new HashMap<>();
@@ -83,10 +94,10 @@ public class PostgresDbUser {
                 new UserId(this.id),
                 this.username,
                 this.password,
+                this.zoneId,
                 this.authorities,
                 this.email,
                 this.name,
-                this.zoneId,
                 this.attributes
         );
     }

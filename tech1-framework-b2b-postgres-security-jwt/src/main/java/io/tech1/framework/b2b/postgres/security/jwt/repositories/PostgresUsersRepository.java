@@ -45,6 +45,10 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return this.findByEmail(email).asJwtUser();
     }
 
+    default void saveAsJwtUser(JwtUser user) {
+        this.save(new PostgresDbUser(user));
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

@@ -1,12 +1,10 @@
-package io.tech1.framework.b2b.postgres.security.jwt.services;
+package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +29,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresBaseUsersServiceTest {
-
+class AbstractBaseUsersServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        PostgresUsersRepository userRepository() {
-            return mock(PostgresUsersRepository.class);
+        AnyDbUsersRepository userRepository() {
+            return mock(AnyDbUsersRepository.class);
         }
 
         @Bean
@@ -46,18 +43,18 @@ class PostgresBaseUsersServiceTest {
         }
 
         @Bean
-        BaseUsersService baseUserService() {
-            return new PostgresBaseUsersService(
+        AbstractBaseUsersService baseUserService() {
+            return new AbstractBaseUsersService(
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
-            );
+            ) {};
         }
     }
 
-    private final PostgresUsersRepository usersRepository;
+    private final AnyDbUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final BaseUsersService componentUnderTest;
+    private final AbstractBaseUsersService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
@@ -84,20 +81,17 @@ class PostgresBaseUsersServiceTest {
                 randomString()
         );
         var jwtUser = entity(JwtUser.class);
-        var dbUser = new PostgresDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId(), jwtUser.authorities());
-        when(this.usersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
-        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
+        var jwtUserAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
         this.componentUnderTest.updateUser1(jwtUser, requestUserUpdate1);
 
         // Assert
-        verify(this.usersRepository).findByUsername(jwtUser.username());
-        verify(this.usersRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
-        assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
-        assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate1.name());
-        assertThat(dbUserAC.getValue().getEmail()).isEqualTo(requestUserUpdate1.email());
+        verify(this.usersRepository).saveAsJwtUser(jwtUserAC.capture());
+        assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
+        assertThat(jwtUserAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
+        assertThat(jwtUserAC.getValue().name()).isEqualTo(requestUserUpdate1.name());
+        assertThat(jwtUserAC.getValue().email()).isEqualTo(requestUserUpdate1.email());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
@@ -109,19 +103,16 @@ class PostgresBaseUsersServiceTest {
                 randomString()
         );
         var jwtUser = entity(JwtUser.class);
-        var dbUser = new PostgresDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId(), jwtUser.authorities());
-        when(this.usersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
-        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
+        var jwtUserAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
         this.componentUnderTest.updateUser2(jwtUser, requestUserUpdate2);
 
         // Assert
-        verify(this.usersRepository).findByUsername(jwtUser.username());
-        verify(this.usersRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
-        assertThat(dbUserAC.getValue().getZoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
-        assertThat(dbUserAC.getValue().getName()).isEqualTo(requestUserUpdate2.name());
+        verify(this.usersRepository).saveAsJwtUser(jwtUserAC.capture());
+        assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
+        assertThat(jwtUserAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
+        assertThat(jwtUserAC.getValue().name()).isEqualTo(requestUserUpdate2.name());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
@@ -130,21 +121,18 @@ class PostgresBaseUsersServiceTest {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
         var jwtUser = entity(JwtUser.class);
-        var dbUser = new PostgresDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId(), jwtUser.authorities());
-        when(this.usersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value())).thenReturn(hashPassword);
-        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
+        var jwtUserAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
         this.componentUnderTest.changePassword1(jwtUser, requestUserChangePassword1);
 
         // Assert
-        verify(this.usersRepository).findByUsername(jwtUser.username());
         verify(this.bCryptPasswordEncoder).encode(requestUserChangePassword1.newPassword().value());
-        verify(this.usersRepository).save(dbUserAC.capture());
-        assertThat(dbUserAC.getValue().getUsername()).isEqualTo(jwtUser.username());
-        assertThat(dbUserAC.getValue().getPassword().value()).isEqualTo(hashPassword);
+        verify(this.usersRepository).saveAsJwtUser(jwtUserAC.capture());
+        assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
+        assertThat(jwtUserAC.getValue().password().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
+// TODO [YY] /user -> /users
 @RequestMapping("/user")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityUsersResource {

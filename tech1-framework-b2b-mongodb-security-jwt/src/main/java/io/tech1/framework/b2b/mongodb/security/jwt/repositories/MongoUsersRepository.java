@@ -41,6 +41,10 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return this.findByEmail(email).asJwtUser();
     }
 
+    default void saveAsJwtUser(JwtUser user) {
+        this.save(new MongoDbUser(user));
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================

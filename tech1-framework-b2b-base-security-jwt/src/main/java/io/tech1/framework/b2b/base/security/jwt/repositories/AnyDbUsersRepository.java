@@ -10,4 +10,5 @@ public interface AnyDbUsersRepository {
     JwtUser findByUsernameAsJwtUser(Username username);
     JwtUser findByEmailAsJwtUser(Email email);
     long count();
+    void saveAsJwtUser(JwtUser user);
 }

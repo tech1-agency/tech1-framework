@@ -17,9 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertZoneIdOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.util.Objects.nonNull;
 
 // Lombok
@@ -35,21 +32,14 @@ public class MongoDbUser {
     private String id;
 
     private Username username;
-    private List<SimpleGrantedAuthority> authorities;
-
-    private Map<String, Object> attributes;
-
     private Password password;
     private ZoneId zoneId;
-
+    private List<SimpleGrantedAuthority> authorities;
     private Email email;
     private String name;
+    private Map<String, Object> attributes;
 
     public MongoDbUser(Username username, Password password, String zoneId, List<SimpleGrantedAuthority> authorities) {
-        assertNonNullOrThrow(username, invalidAttribute("DbUser.username"));
-        assertNonNullOrThrow(password, invalidAttribute("DbUser.password"));
-        assertZoneIdOrThrow(zoneId, invalidAttribute("DbUser.zoneId"));
-        assertNonNullOrThrow(authorities, invalidAttribute("DbUser.authorities"));
         this.username = username;
         this.password = password;
         this.zoneId = ZoneId.of(zoneId);
@@ -59,7 +49,13 @@ public class MongoDbUser {
 
     public MongoDbUser(JwtUser user) {
         this.id = user.id().value();
-        // TODO
+        this.username = user.username();
+        this.password = user.password();
+        this.zoneId = user.zoneId();
+        this.authorities = user.authorities();
+        this.email = user.email();
+        this.name = user.name();
+        this.attributes = user.attributes();
     }
 
     @JsonIgnore
@@ -75,10 +71,10 @@ public class MongoDbUser {
                 new UserId(this.id),
                 this.username,
                 this.password,
+                this.zoneId,
                 this.authorities,
                 this.email,
                 this.name,
-                this.zoneId,
                 this.attributes
         );
     }

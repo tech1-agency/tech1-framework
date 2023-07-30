@@ -134,10 +134,10 @@ class BaseCurrentSessionAssistantTest {
                 entity(UserId.class),
                 randomUsername(),
                 randomPassword(),
+                randomZoneId(),
                 new ArrayList<>(),
                 randomEmail(),
                 randomString(),
-                randomZoneId(),
                 new HashMap<>()
         );
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);

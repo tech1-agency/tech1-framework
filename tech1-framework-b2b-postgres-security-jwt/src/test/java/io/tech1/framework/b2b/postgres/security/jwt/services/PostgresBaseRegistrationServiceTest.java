@@ -1,11 +1,11 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.postgres.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,18 +28,18 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoBaseRegistrationServiceTest {
+class PostgresBaseRegistrationServiceTest {
 
     @Configuration
     static class ContextConfiguration {
         @Bean
-        MongoInvitationCodesRepository invitationCodeRepository() {
-            return mock(MongoInvitationCodesRepository.class);
+        PostgresInvitationCodesRepository invitationCodeRepository() {
+            return mock(PostgresInvitationCodesRepository.class);
         }
 
         @Bean
-        MongoUsersRepository userRepository() {
-            return mock(MongoUsersRepository.class);
+        PostgresUsersRepository userRepository() {
+            return mock(PostgresUsersRepository.class);
         }
 
         @Bean
@@ -49,7 +49,7 @@ class MongoBaseRegistrationServiceTest {
 
         @Bean
         BaseRegistrationService registrationService() {
-            return new MongoBaseRegistrationService(
+            return new PostgresBaseRegistrationService(
                     this.invitationCodeRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
@@ -57,8 +57,8 @@ class MongoBaseRegistrationServiceTest {
         }
     }
 
-    private final MongoInvitationCodesRepository invitationCodesRepository;
-    private final MongoUsersRepository usersRepository;
+    private final PostgresInvitationCodesRepository invitationCodesRepository;
+    private final PostgresUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final BaseRegistrationService componentUnderTest;
@@ -91,12 +91,12 @@ class MongoBaseRegistrationServiceTest {
                 randomZoneId().getId(),
                 randomString()
         );
-        var dbInvitationCode = entity(MongoDbInvitationCode.class);
+        var dbInvitationCode = entity(PostgresDbInvitationCode.class);
         when(this.invitationCodesRepository.findByValue(requestUserRegistration1.invitationCode())).thenReturn(dbInvitationCode);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
-        var dbInvitationCodeAC = ArgumentCaptor.forClass(MongoDbInvitationCode.class);
+        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
+        var dbInvitationCodeAC = ArgumentCaptor.forClass(PostgresDbInvitationCode.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);

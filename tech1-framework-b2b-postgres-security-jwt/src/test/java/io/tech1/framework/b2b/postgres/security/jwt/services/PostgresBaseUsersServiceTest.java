@@ -1,12 +1,12 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.postgres.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +31,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoBaseUsersServiceTest {
+class PostgresBaseUsersServiceTest {
 
     @Configuration
     static class ContextConfiguration {
         @Bean
-        MongoUsersRepository userRepository() {
-            return mock(MongoUsersRepository.class);
+        PostgresUsersRepository userRepository() {
+            return mock(PostgresUsersRepository.class);
         }
 
         @Bean
@@ -47,14 +47,14 @@ class MongoBaseUsersServiceTest {
 
         @Bean
         BaseUsersService baseUserService() {
-            return new MongoBaseUsersService(
+            return new PostgresBaseUsersService(
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
             );
         }
     }
 
-    private final MongoUsersRepository usersRepository;
+    private final PostgresUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final BaseUsersService componentUnderTest;
@@ -84,9 +84,9 @@ class MongoBaseUsersServiceTest {
                 randomString()
         );
         var jwtUser = entity(JwtUser.class);
-        var dbUser = new MongoDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
+        var dbUser = new PostgresDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId(), jwtUser.authorities());
         when(this.usersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
-        var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
+        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
 
         // Act
         this.componentUnderTest.updateUser1(jwtUser, requestUserUpdate1);
@@ -109,9 +109,9 @@ class MongoBaseUsersServiceTest {
                 randomString()
         );
         var jwtUser = entity(JwtUser.class);
-        var dbUser = new MongoDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
+        var dbUser = new PostgresDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId(), jwtUser.authorities());
         when(this.usersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
-        var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
+        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
 
         // Act
         this.componentUnderTest.updateUser2(jwtUser, requestUserUpdate2);
@@ -130,11 +130,11 @@ class MongoBaseUsersServiceTest {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
         var jwtUser = entity(JwtUser.class);
-        var dbUser = new MongoDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId().getId(), jwtUser.authorities());
+        var dbUser = new PostgresDbUser(jwtUser.username(), jwtUser.password(), jwtUser.zoneId(), jwtUser.authorities());
         when(this.usersRepository.findByUsername(jwtUser.username())).thenReturn(dbUser);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value())).thenReturn(hashPassword);
-        var dbUserAC = ArgumentCaptor.forClass(MongoDbUser.class);
+        var dbUserAC = ArgumentCaptor.forClass(PostgresDbUser.class);
 
         // Act
         this.componentUnderTest.changePassword1(jwtUser, requestUserChangePassword1);

@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -130,6 +131,7 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentClientUserTest() {
         // Arrange
         var jwtUser = new JwtUser(
+                entity(UserId.class),
                 randomUsername(),
                 randomPassword(),
                 new ArrayList<>(),

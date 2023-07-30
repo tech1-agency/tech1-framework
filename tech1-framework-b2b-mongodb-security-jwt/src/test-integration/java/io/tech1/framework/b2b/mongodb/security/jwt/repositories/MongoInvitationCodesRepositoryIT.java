@@ -47,8 +47,10 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         assertThat(this.invitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
         assertThat(this.invitationCodesRepository.findByOwner(Username.of("user3"))).hasSize(1);
         assertThat(this.invitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
-        assertThat(this.invitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
         assertThat(this.invitationCodesRepository.findByInvitedNotUsed()).hasSize(5);
+        assertThat(this.invitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
+        assertThat(this.invitationCodesRepository.findByInvitedIsNull()).hasSize(5);
+        assertThat(this.invitationCodesRepository.findByInvitedIsNotNull()).hasSize(1);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);

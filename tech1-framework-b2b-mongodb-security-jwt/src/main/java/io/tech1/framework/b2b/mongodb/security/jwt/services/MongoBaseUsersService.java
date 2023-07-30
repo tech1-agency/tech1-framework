@@ -35,7 +35,7 @@ public class MongoBaseUsersService extends AbstractBaseUsersService {
         dbUser.setName(requestUserUpdate1.name());
         this.usersRepository.save(dbUser);
 
-        this.reauthenticate(dbUser.getJwtUser());
+        this.reauthenticate(dbUser.asJwtUser());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MongoBaseUsersService extends AbstractBaseUsersService {
         dbUser.setName(requestUserUpdate2.name());
         this.usersRepository.save(dbUser);
 
-        this.reauthenticate(dbUser.getJwtUser());
+        this.reauthenticate(dbUser.asJwtUser());
     }
 
     @Override
@@ -58,6 +58,6 @@ public class MongoBaseUsersService extends AbstractBaseUsersService {
         dbUser.setPassword(Password.of(hashPassword));
         this.usersRepository.save(dbUser);
 
-        this.reauthenticate(dbUser.getJwtUser());
+        this.reauthenticate(dbUser.asJwtUser());
     }
 }

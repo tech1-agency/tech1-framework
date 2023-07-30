@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public record JwtUser(
+        UserId id,
         Username username,
         Password password,
         List<SimpleGrantedAuthority> authorities,

@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.*;
 import io.tech1.framework.domain.base.Email;
@@ -77,8 +78,9 @@ public class PostgresDbUser {
 
     @JsonIgnore
     @Transient
-    public JwtUser getJwtUser() {
+    public JwtUser asJwtUser() {
         return new JwtUser(
+                new UserId(this.id),
                 this.username,
                 this.password,
                 this.authorities,

@@ -28,21 +28,21 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default JwtUser findByUsernameAsJwtUser(Username username) {
-        return this.findByUsername(username).getJwtUser();
-    }
-
     default JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
         var user = this.findByUsername(username);
         if (nonNull(user)) {
-            return user.getJwtUser();
+            return user.asJwtUser();
         } else {
             throw new UsernameNotFoundException(entityNotFound("Username", username.identifier()));
         }
     }
 
+    default JwtUser findByUsernameAsJwtUser(Username username) {
+        return this.findByUsername(username).asJwtUser();
+    }
+
     default JwtUser findByEmailAsJwtUser(Email email) {
-        return this.findByEmail(email).getJwtUser();
+        return this.findByEmail(email).asJwtUser();
     }
 
     // ================================================================================================================

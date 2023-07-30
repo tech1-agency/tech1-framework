@@ -6,8 +6,8 @@ import io.tech1.framework.domain.base.Username;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface AnyDbUsersRepository {
-    JwtUser findByUsernameAsJwtUser(Username username);
     JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException;
+    JwtUser findByUsernameAsJwtUser(Username username);
     JwtUser findByEmailAsJwtUser(Email email);
     long count();
 }

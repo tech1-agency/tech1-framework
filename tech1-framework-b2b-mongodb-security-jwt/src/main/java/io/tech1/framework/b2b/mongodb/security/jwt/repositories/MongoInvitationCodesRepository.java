@@ -56,6 +56,7 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     // ================================================================================================================
     List<MongoDbInvitationCode> findByOwner(Username username);
     List<MongoDbInvitationCode> findByInvitedIsNull();
+    List<MongoDbInvitationCode> findByInvitedIsNotNull();
     MongoDbInvitationCode findByValue(String value);
 
     default MongoDbInvitationCode getById(InvitationCodeId invitationCodeId) {
@@ -65,7 +66,6 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     // ================================================================================================================
     // Queries
     // ================================================================================================================
-    @Deprecated(since = "v1.14, add spring-data methods")
     @Query(value = "{ 'invited': { '$exists': true}}")
     List<MongoDbInvitationCode> findByInvitedAlreadyUsed();
 

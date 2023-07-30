@@ -37,11 +37,13 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
     }
 
     default JwtUser findByUsernameAsJwtUser(Username username) {
-        return this.findByUsername(username).asJwtUser();
+        var user = this.findByUsername(username);
+        return nonNull(user) ? user.asJwtUser() : null;
     }
 
     default JwtUser findByEmailAsJwtUser(Email email) {
-        return this.findByEmail(email).asJwtUser();
+        var user = this.findByEmail(email);
+        return nonNull(user) ? user.asJwtUser() : null;
     }
 
     default void saveAsJwtUser(JwtUser user) {

@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresInvitationCodesRepository extends JpaRepository<PostgresDbInvitationCode, Long> {
+public interface PostgresInvitationCodesRepository extends JpaRepository<PostgresDbInvitationCode, String> {
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
@@ -21,7 +21,7 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     List<PostgresDbInvitationCode> findByInvitedIsNotNull();
     PostgresDbInvitationCode findByValue(String value);
 
-    default PostgresDbInvitationCode requirePresence(Long invitationCodeId) {
+    default PostgresDbInvitationCode requirePresence(String invitationCodeId) {
         var invitationCode = this.getReferenceById(invitationCodeId);
         assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId));
         return invitationCode;

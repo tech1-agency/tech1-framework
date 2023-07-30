@@ -49,9 +49,6 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Queries
     // ================================================================================================================
-    @Query(value = "{ 'username': { '$in': ?0}}")
-    List<MongoDbUserSession> findByUsernames(List<Username> usernames);
-
     @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
-    void deleteByUsernames(List<Username> usernames);
+    void deleteByUsernames(Set<Username> usernames);
 }

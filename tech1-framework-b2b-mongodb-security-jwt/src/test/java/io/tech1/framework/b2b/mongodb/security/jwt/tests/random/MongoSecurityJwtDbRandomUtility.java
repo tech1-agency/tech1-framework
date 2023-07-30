@@ -11,63 +11,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
 @UtilityClass
 public class MongoSecurityJwtDbRandomUtility {
-
-    // =================================================================================================================
-    // InvitationCodes: Dummy Data
-    // =================================================================================================================
-    public static List<MongoDbInvitationCode> dummyInvitationCodesData1() {
-        var invitationCode1 = invitationCodeByOwner("user1");
-        var invitationCode2 = invitationCodeByOwner("user1");
-        var invitationCode3 = invitationCodeByOwner("user2");
-        var invitationCode4 = invitationCodeByOwner("user2");
-        var invitationCode5 = invitationCodeByOwner("user2");
-        var invitationCode6 = invitationCodeByOwner("user3");
-
-        invitationCode4.setInvited(Username.of("superadmin"));
-
-        return List.of(
-                invitationCode1,
-                invitationCode2,
-                invitationCode3,
-                invitationCode4,
-                invitationCode5,
-                invitationCode6
-        );
-    }
-
-    // =================================================================================================================
-    // Users: Dummy Data
-    // =================================================================================================================
-    public static List<MongoDbUser> dummyUsersData1() {
-        return List.of(
-                superadmin("sa1"),
-                superadmin("sa2"),
-                admin("admin"),
-                randomUserBy("user1", List.of("user", INVITATION_CODE_WRITE)),
-                randomUserBy("user2", List.of("user", INVITATION_CODE_READ)),
-                randomUserBy("sa3", List.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))
-        );
-    }
-
-    // =================================================================================================================
-    // UserSessions: Dummy Data
-    // =================================================================================================================
-    public static List<MongoDbUserSession> dummyUserSessionsData1() {
-        return List.of(
-                sessionByOwner("sa1"),
-                sessionByOwner("sa1"),
-                sessionByOwner("sa1"),
-                sessionByOwner("user1"),
-                sessionByOwner("user2"),
-                sessionByOwner("admin"),
-                sessionByOwner("admin")
-        );
-    }
 
     // =================================================================================================================
     // InvitationCodes

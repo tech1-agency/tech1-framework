@@ -12,9 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+import java.util.Set;
 
-import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbRandomUtility.dummyUserSessionsData1;
+import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -41,7 +41,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         this.mongoUsersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        var sessions = this.mongoUsersSessionsRepository.findByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
+        var sessions = this.mongoUsersSessionsRepository.findByUsernameIn(Set.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
         assertThat(sessions).hasSize(5);
@@ -53,7 +53,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         this.mongoUsersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act
-        this.mongoUsersSessionsRepository.deleteByUsernames(List.of(Username.of("sa1"), Username.of("admin")));
+        this.mongoUsersSessionsRepository.deleteByUsernames(Set.of(Username.of("sa1"), Username.of("admin")));
 
         // Assert
         assertThat(this.mongoUsersSessionsRepository.count()).isEqualTo(2);

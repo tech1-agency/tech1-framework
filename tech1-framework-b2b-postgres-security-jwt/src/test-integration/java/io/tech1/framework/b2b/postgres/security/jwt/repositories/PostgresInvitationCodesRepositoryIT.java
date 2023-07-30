@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDummies.dummyInvitationCodesData1;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -30,7 +30,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
     private final PostgresInvitationCodesRepository postgresInvitationCodesRepository;
 
     @Override
-    public JpaRepository<PostgresDbInvitationCode, Long> getJpaRepository() {
+    public JpaRepository<PostgresDbInvitationCode, String> getJpaRepository() {
         return this.postgresInvitationCodesRepository;
     }
 

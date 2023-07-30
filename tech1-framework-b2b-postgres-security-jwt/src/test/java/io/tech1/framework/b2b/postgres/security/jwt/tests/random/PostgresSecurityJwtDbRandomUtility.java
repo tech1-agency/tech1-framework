@@ -1,7 +1,9 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
@@ -67,5 +69,16 @@ public class PostgresSecurityJwtDbRandomUtility {
                 )
         );
         return user;
+    }
+
+    // =================================================================================================================
+    // UserSessions
+    // =================================================================================================================
+    public static PostgresDbUserSession sessionByOwner(String owner) {
+        return new PostgresDbUserSession(
+                new JwtRefreshToken(randomString()),
+                Username.of(owner),
+                randomUserRequestMetadata()
+        );
     }
 }

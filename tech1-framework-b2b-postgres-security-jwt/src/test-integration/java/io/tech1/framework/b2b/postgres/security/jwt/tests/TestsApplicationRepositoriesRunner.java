@@ -24,7 +24,7 @@ public abstract class TestsApplicationRepositoriesRunner {
     public static final String POSTGRES_DATABASE_NAME = "integration-tests-db";
     public static final String POSTGRES_USERNAME = "sa";
     public static final String POSTGRES_PASSWORD = "sa";
-    public static final String POSTGRES_INIT_SQL = "database/schema.sql";
+     public static final String POSTGRES_INIT_SQL = "database/v001_tech1_framework_schema.sql";
 
     @Container
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>(POSTGRES_VERSION)
@@ -38,7 +38,7 @@ public abstract class TestsApplicationRepositoriesRunner {
         registry.add("spring.datasource.url", container::getJdbcUrl);
         registry.add("spring.datasource.username", container::getUsername);
         registry.add("spring.datasource.password", container::getPassword);
-        registry.add("spring.jpa.show-sql", () -> false);
+        registry.add("spring.jpa.show-sql", () -> true);
         registry.add("spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.PostgreSQLDialect");
     }
 
@@ -57,5 +57,5 @@ public abstract class TestsApplicationRepositoriesRunner {
         this.getJpaRepository().deleteAll();
     }
 
-    public abstract JpaRepository<?, Long> getJpaRepository();
+    public abstract JpaRepository<?, String> getJpaRepository();
 }

@@ -18,7 +18,7 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings0;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings1;
-import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDummies.dummyUsersData1;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -36,7 +36,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
     private final PostgresUsersRepository postgresUsersRepository;
 
     @Override
-    public JpaRepository<PostgresDbUser, Long> getJpaRepository() {
+    public JpaRepository<PostgresDbUser, String> getJpaRepository() {
         return this.postgresUsersRepository;
     }
 

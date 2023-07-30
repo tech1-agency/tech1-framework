@@ -12,12 +12,12 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 public abstract class AbstractBaseUsersSessionsRequestsValidator implements BaseUsersSessionsRequestsValidator {
 
     // Repositories
-    private final AnyDbUsersSessionsRepository usersSessionsRepository;
+    private final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
 
     protected AbstractBaseUsersSessionsRequestsValidator(
-            AnyDbUsersSessionsRepository usersSessionsRepository
+            AnyDbUsersSessionsRepository anyDbUsersSessionsRepository
     ) {
-        this.usersSessionsRepository = usersSessionsRepository;
+        this.anyDbUsersSessionsRepository = anyDbUsersSessionsRepository;
     }
 
     @Override
@@ -25,7 +25,7 @@ public abstract class AbstractBaseUsersSessionsRequestsValidator implements Base
         assertNonNullOrThrow(sessionId, invalidAttribute("sessionId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var session = this.usersSessionsRepository.requirePresence(sessionId);
+        var session = this.anyDbUsersSessionsRepository.requirePresence(sessionId);
         if (!username.equals(session.username())) {
             throw new IllegalArgumentException(accessDenied(username, "Session", sessionId.value()));
         }

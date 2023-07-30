@@ -1,9 +1,9 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.postgres.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseInvitationCodesService;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -13,17 +13,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
-public class MongoBaseInvitationCodesService extends AbstractBaseInvitationCodesService {
+public class PostgresBaseInvitationCodesService extends AbstractBaseInvitationCodesService {
 
     // Repositories
-    private final MongoInvitationCodesRepository invitationCodesRepository;
+    private final PostgresInvitationCodesRepository invitationCodesRepository;
 
     @Autowired
-    public MongoBaseInvitationCodesService(
-            MongoInvitationCodesRepository invitationCodesRepository,
+    public PostgresBaseInvitationCodesService(
+            PostgresInvitationCodesRepository invitationCodesRepository,
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         super(
@@ -35,7 +34,7 @@ public class MongoBaseInvitationCodesService extends AbstractBaseInvitationCodes
 
     @Override
     public void save(RequestNewInvitationCodeParams requestNewInvitationCodeParams, Username owner) {
-        var invitationCode = new MongoDbInvitationCode(
+        var invitationCode = new PostgresDbInvitationCode(
                 owner,
                 requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );

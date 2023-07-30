@@ -20,18 +20,18 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     protected final SecurityJwtPublisher securityJwtPublisher;
     protected final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Repositories
-    protected final AnyDbInvitationCodesRepository mongoInvitationCodesRepository;
+    protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
     protected final AnyDbUsersRepository mongoUsersRepository;
 
     protected AbstractBaseRegistrationRequestsValidator(
             SecurityJwtPublisher securityJwtPublisher,
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            AnyDbInvitationCodesRepository mongoInvitationCodesRepository,
+            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
             AnyDbUsersRepository mongoUsersRepository
     ) {
         this.securityJwtPublisher = securityJwtPublisher;
         this.securityJwtIncidentPublisher = securityJwtIncidentPublisher;
-        this.mongoInvitationCodesRepository = mongoInvitationCodesRepository;
+        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
         this.mongoUsersRepository = mongoUsersRepository;
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
             throw new RegistrationException(exception);
         }
 
-        var dbInvitationCode = this.mongoInvitationCodesRepository.findByValueAsAny(invitationCode);
+        var dbInvitationCode = this.anyDbInvitationCodesRepository.findByValueAsAny(invitationCode);
         if (nonNull(dbInvitationCode)) {
             if (nonNull(dbInvitationCode.invited())) {
                 var exception = entityAlreadyUsed("InvitationCode");

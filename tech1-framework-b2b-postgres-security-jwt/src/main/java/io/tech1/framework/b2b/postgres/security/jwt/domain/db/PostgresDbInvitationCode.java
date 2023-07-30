@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresSimpleGrantedAuthoritiesConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
@@ -12,10 +13,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.INVITATION_CODES;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static java.util.Objects.nonNull;
 
 // Lombok
 @NoArgsConstructor
@@ -61,6 +64,18 @@ public class PostgresDbInvitationCode {
                 new InvitationCodeId(this.id),
                 this.owner,
                 this.authorities,
+                this.value,
+                this.invited
+        );
+    }
+
+    @JsonIgnore
+    @Transient
+    public ResponseInvitationCode getResponseInvitationCode() {
+        return new ResponseInvitationCode(
+                new InvitationCodeId(this.id),
+                this.owner,
+                nonNull(this.authorities) ? this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()) : List.of(),
                 this.value,
                 this.invited
         );

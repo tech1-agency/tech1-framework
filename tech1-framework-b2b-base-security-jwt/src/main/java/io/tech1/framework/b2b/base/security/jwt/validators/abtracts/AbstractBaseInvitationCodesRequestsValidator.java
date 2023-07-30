@@ -14,15 +14,15 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {
 
     // Repositories
-    protected final AnyDbInvitationCodesRepository invitationCodesRepository;
+    protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     protected AbstractBaseInvitationCodesRequestsValidator(
-            AnyDbInvitationCodesRepository invitationCodesRepository,
+            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
-        this.invitationCodesRepository = invitationCodesRepository;
+        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
         this.applicationFrameworkProperties = applicationFrameworkProperties;
     }
 
@@ -40,7 +40,7 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
         assertNonNullOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var invitationCode = this.invitationCodesRepository.requirePresence(invitationCodeId);
+        var invitationCode = this.anyDbInvitationCodesRepository.requirePresence(invitationCodeId);
         if (!username.equals(invitationCode.owner())) {
             throw new IllegalArgumentException(accessDenied(username, "InvitationCode", invitationCodeId.value()));
         }

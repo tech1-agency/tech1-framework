@@ -1,10 +1,10 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.postgres.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoBaseInvitationCodesServiceTest {
+class PostgresBaseInvitationCodesServiceTest {
 
     @Configuration
     @Import({
@@ -44,20 +44,20 @@ class MongoBaseInvitationCodesServiceTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        MongoInvitationCodesRepository invitationCodeRepository() {
-            return mock(MongoInvitationCodesRepository.class);
+        PostgresInvitationCodesRepository invitationCodeRepository() {
+            return mock(PostgresInvitationCodesRepository.class);
         }
 
         @Bean
         BaseInvitationCodesService invitationCodeService() {
-            return new MongoBaseInvitationCodesService(
+            return new PostgresBaseInvitationCodesService(
                     this.invitationCodeRepository(),
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final MongoInvitationCodesRepository invitationCodesRepository;
+    private final PostgresInvitationCodesRepository invitationCodesRepository;
 
     private final BaseInvitationCodesService componentUnderTest;
 
@@ -78,9 +78,9 @@ class MongoBaseInvitationCodesServiceTest {
     @Test
     void saveTest() {
         // Arrange
-        var dbUser = entity(MongoDbUser.class);
+        var dbUser = entity(PostgresDbUser.class);
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
-        var dbInvitationCodeAC = ArgumentCaptor.forClass(MongoDbInvitationCode.class);
+        var dbInvitationCodeAC = ArgumentCaptor.forClass(PostgresDbInvitationCode.class);
 
         // Act
         this.componentUnderTest.save(requestNewInvitationCodeParams, dbUser.getUsername());

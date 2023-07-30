@@ -18,12 +18,12 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
     private static final int NEW_PASSWORD_MIN_LENGTH = 8;
 
     // Repositories
-    protected final AnyDbUsersRepository usersRepository;
+    protected final AnyDbUsersRepository anyDbUsersRepository;
 
     protected AbstractBaseUsersValidator(
-            AnyDbUsersRepository usersRepository
+            AnyDbUsersRepository anyDbUsersRepository
     ) {
-        this.usersRepository = usersRepository;
+        this.anyDbUsersRepository = anyDbUsersRepository;
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
         if (!isEmail(email)) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
-        var user = this.usersRepository.findByEmailAsJwtUser(email);
+        var user = this.anyDbUsersRepository.findByEmailAsJwtUser(email);
         // `email` is already used by other user in the system
         if (nonNull(user) && !user.username().equals(username)) {
             throw new IllegalArgumentException(invalidEmailMessage);

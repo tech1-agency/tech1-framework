@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
@@ -26,11 +28,21 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
         return invitationCode.anyDbInvitationCode();
     }
 
-    long countByOwner(Username username);
+    default List<ResponseInvitationCode> findResponseCodesByOwner(Username owner) {
+        return this.findByOwner(owner).stream()
+                .map(PostgresDbInvitationCode::getResponseInvitationCode)
+                .collect(Collectors.toList());
+    }
 
     default AnyDbInvitationCode findByValueAsAny(String value) {
         var invitationCode = this.findByValue(value);
         return nonNull(invitationCode) ? invitationCode.anyDbInvitationCode() : null;
+    }
+
+    long countByOwner(Username username);
+
+    default void delete(InvitationCodeId invitationCodeId) {
+        this.deleteById(invitationCodeId.value());
     }
 
     // ================================================================================================================

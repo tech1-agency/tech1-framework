@@ -1,5 +1,6 @@
-package io.tech1.framework.b2b.postgres.security.jwt.sessions;
+package io.tech1.framework.b2b.base.security.jwt.sessions;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
@@ -11,10 +12,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -52,7 +51,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresSessionRegistryTest {
+class AbstractSessionRegistryTest {
 
     @Configuration
     static class ContextConfiguration {
@@ -72,25 +71,28 @@ class PostgresSessionRegistryTest {
         }
 
         @Bean
-        PostgresUsersSessionsRepository postgresUsersSessionsRepository() {
-            return mock(PostgresUsersSessionsRepository.class);
+        AnyDbUsersSessionsRepository anyDbUsersSessionsRepository() {
+            return mock(AnyDbUsersSessionsRepository.class);
         }
 
         @Bean
-        SessionRegistry sessionRegistry() {
-            return new PostgresSessionRegistry(
+        AbstractSessionRegistry sessionRegistry() {
+            return new AbstractSessionRegistry(
                     this.securityJwtPublisher(),
                     this.securityJwtIncidentPublisher(),
                     this.userSessionService(),
-                    this.postgresUsersSessionsRepository()
-            );
+                    this.anyDbUsersSessionsRepository()
+            ) {};
         }
     }
 
+    // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
+    // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
-    private final PostgresUsersSessionsRepository postgresUsersSessionsRepository;
+    // Repositories
+    private final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
 
     private final SessionRegistry componentUnderTest;
 
@@ -102,7 +104,7 @@ class PostgresSessionRegistryTest {
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.baseUsersSessionsService,
-                this.postgresUsersSessionsRepository
+                this.anyDbUsersSessionsRepository
         );
     }
 
@@ -112,7 +114,7 @@ class PostgresSessionRegistryTest {
                 this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.baseUsersSessionsService,
-                this.postgresUsersSessionsRepository
+                this.anyDbUsersSessionsRepository
         );
     }
 
@@ -124,16 +126,16 @@ class PostgresSessionRegistryTest {
         var session3 = new Session(Username.of("username3"), new JwtRefreshToken(randomString()));
         var session4 = new Session(Username.of("username4"), new JwtRefreshToken(randomString()));
         var rndSession = new Session(randomUsername(), new JwtRefreshToken(randomString()));
-        var dbUserSession1 = entity(PostgresDbUserSession.class);
-        var dbUserSession2 = entity(PostgresDbUserSession.class);
-        var dbUserSession3 = entity(PostgresDbUserSession.class);
-        var dbUserSession4 = entity(PostgresDbUserSession.class);
-        var rndDbUserSession = entity(PostgresDbUserSession.class);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(session1.refreshToken())).thenReturn(dbUserSession1);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(session2.refreshToken())).thenReturn(dbUserSession2);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(session3.refreshToken())).thenReturn(dbUserSession3);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(session4.refreshToken())).thenReturn(dbUserSession4);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(rndSession.refreshToken())).thenReturn(rndDbUserSession);
+        var dbUserSession1 = entity(AnyDbUserSession.class);
+        var dbUserSession2 = entity(AnyDbUserSession.class);
+        var dbUserSession3 = entity(AnyDbUserSession.class);
+        var dbUserSession4 = entity(AnyDbUserSession.class);
+        var rndDbUserSession = entity(AnyDbUserSession.class);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session1.refreshToken())).thenReturn(dbUserSession1);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session2.refreshToken())).thenReturn(dbUserSession2);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session3.refreshToken())).thenReturn(dbUserSession3);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session4.refreshToken())).thenReturn(dbUserSession4);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(rndSession.refreshToken())).thenReturn(rndDbUserSession);
 
         // Iteration #1
         var activeSessionsUsernames1 = this.componentUnderTest.getActiveSessionsUsernamesIdentifiers();
@@ -171,11 +173,11 @@ class PostgresSessionRegistryTest {
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).isEmpty();
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(session1.refreshToken());
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(session2.refreshToken());
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(session3.refreshToken());
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(session4.refreshToken());
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(rndSession.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session1.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session2.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session3.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session4.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(rndSession.refreshToken());
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session1.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session2.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session3.username()));
@@ -185,16 +187,16 @@ class PostgresSessionRegistryTest {
         verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session3));
         verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(session4));
         verify(this.securityJwtPublisher).publishAuthenticationLogout(new EventAuthenticationLogout(rndSession));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session1.username(), dbUserSession1.getMetadata()));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session2.username(), dbUserSession2.getMetadata()));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.getMetadata()));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session4.username(), dbUserSession4.getMetadata()));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(rndSession.username(), rndDbUserSession.getMetadata()));
-        verify(this.postgresUsersSessionsRepository).deleteByRefreshToken(session1.refreshToken());
-        verify(this.postgresUsersSessionsRepository).deleteByRefreshToken(session2.refreshToken());
-        verify(this.postgresUsersSessionsRepository).deleteByRefreshToken(session3.refreshToken());
-        verify(this.postgresUsersSessionsRepository).deleteByRefreshToken(session4.refreshToken());
-        verify(this.postgresUsersSessionsRepository).deleteByRefreshToken(rndSession.refreshToken());
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session1.username(), dbUserSession1.metadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session2.username(), dbUserSession2.metadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session3.username(), dbUserSession3.metadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(session4.username(), dbUserSession4.metadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(rndSession.username(), rndDbUserSession.metadata()));
+        verify(this.anyDbUsersSessionsRepository).deleteByRefreshToken(session1.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).deleteByRefreshToken(session2.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).deleteByRefreshToken(session3.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).deleteByRefreshToken(session4.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).deleteByRefreshToken(rndSession.refreshToken());
     }
 
     @Test
@@ -243,14 +245,14 @@ class PostgresSessionRegistryTest {
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
-        var dbUserSession = entity(PostgresDbUserSession.class);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(refreshToken)).thenReturn(dbUserSession);
+        var dbUserSession = entity(AnyDbUserSession.class);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(refreshToken)).thenReturn(dbUserSession);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(refreshToken);
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
@@ -258,8 +260,8 @@ class PostgresSessionRegistryTest {
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogoutFull(incidentAC.capture());
         var incident = incidentAC.getValue();
         assertThat(incident.username()).isEqualTo(username);
-        assertThat(incident.userRequestMetadata()).isEqualTo(dbUserSession.getMetadata());
-        verify(this.postgresUsersSessionsRepository).deleteByRefreshToken(refreshToken);
+        assertThat(incident.userRequestMetadata()).isEqualTo(dbUserSession.metadata());
+        verify(this.anyDbUsersSessionsRepository).deleteByRefreshToken(refreshToken);
     }
 
     @Test
@@ -268,13 +270,13 @@ class PostgresSessionRegistryTest {
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
-        when(this.postgresUsersSessionsRepository.findByRefreshToken(refreshToken)).thenReturn(null);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(refreshToken)).thenReturn(null);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.postgresUsersSessionsRepository).findByRefreshToken(refreshToken);
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().session()).isEqualTo(session);
@@ -297,22 +299,14 @@ class PostgresSessionRegistryTest {
         sessions.add(session2);
         sessions.add(session3);
         setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
-        var dbUserSession1 = mock(PostgresDbUserSession.class);
-        when(dbUserSession1.getId()).thenReturn(randomString());
-        when(dbUserSession1.getMetadata()).thenReturn(entity(UserRequestMetadata.class));
-        var dbUserSession2 = mock(PostgresDbUserSession.class);
-        when(dbUserSession2.getId()).thenReturn(randomString());
-        when(dbUserSession2.getMetadata()).thenReturn(entity(UserRequestMetadata.class));
-        var dbUserSession3 = mock(PostgresDbUserSession.class);
-        when(dbUserSession3.getId()).thenReturn(randomString());
-        when(dbUserSession3.getMetadata()).thenReturn(entity(UserRequestMetadata.class));
-        var usersSessions = List.of(dbUserSession1, dbUserSession2, dbUserSession3);
+        var dbUserSession1 = entity(AnyDbUserSession.class);
+        var dbUserSession2 = entity(AnyDbUserSession.class);
+        var dbUserSession3 = entity(AnyDbUserSession.class);
         var sessionsExpiredTable = new SessionsExpiredTable(
-                List.of(new Tuple3<>(username1, dbUserSession3.getMetadata(), dbUserSession3.getJwtRefreshToken())),
-                List.of(dbUserSession1.getId(), dbUserSession2.getId())
+                List.of(new Tuple3<>(username1, dbUserSession3.metadata(), dbUserSession3.jwtRefreshToken())),
+                List.of(dbUserSession1.id().value(), dbUserSession2.id().value())
         );
         var usernames = Set.of(username1, username2, username3);
-        when(this.postgresUsersSessionsRepository.findByUsernameIn(usernames)).thenReturn(usersSessions);
         when(this.baseUsersSessionsService.getExpiredSessions(usernames)).thenReturn(sessionsExpiredTable);
 
         // Act
@@ -326,13 +320,13 @@ class PostgresSessionRegistryTest {
         verify(this.securityJwtPublisher).publishSessionExpired(eseCaptor.capture());
         var eventSessionExpired = eseCaptor.getValue();
         assertThat(eventSessionExpired.session().username()).isEqualTo(username1);
-        assertThat(eventSessionExpired.session().refreshToken()).isEqualTo(dbUserSession3.getJwtRefreshToken());
+        assertThat(eventSessionExpired.session().refreshToken()).isEqualTo(dbUserSession3.jwtRefreshToken());
         var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
         verify(this.securityJwtIncidentPublisher).publishSessionExpired(seiCaptor.capture());
         var sessionExpiredIncident = seiCaptor.getValue();
         assertThat(sessionExpiredIncident.username()).isEqualTo(username1);
-        assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.getMetadata());
-        verify(this.postgresUsersSessionsRepository).deleteByIdIn(List.of(dbUserSession1.getId(), dbUserSession2.getId()));
+        assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.metadata());
+        verify(this.anyDbUsersSessionsRepository).deleteByIdIn(List.of(dbUserSession1.id().value(), dbUserSession2.id().value()));
     }
 
     @Test
@@ -342,8 +336,8 @@ class PostgresSessionRegistryTest {
         var validJwtRefreshToken = randomString();
         var cookie = new CookieRefreshToken(validJwtRefreshToken);
 
-        Function<Tuple2<UserRequestMetadata, String>, PostgresDbUserSession> sessionFnc =
-                tuple2 -> new PostgresDbUserSession(new JwtRefreshToken(tuple2.b()), randomUsername(), tuple2.a());
+        Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
+                tuple2 -> ResponseUserSession2.of(randomUsername(), tuple2.a(), new JwtRefreshToken(tuple2.b()), cookie);
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), validJwtRefreshToken));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
@@ -351,35 +345,37 @@ class PostgresSessionRegistryTest {
         var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
-        List<Tuple3<List<PostgresDbUserSession>, Integer, Boolean>> cases = new ArrayList<>();
+        List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();
         cases.add(
                 new Tuple3<>(
-                        List.of(validSession),
+                        new ArrayList<>(List.of(validSession)),
                         1,
                         false
                 )
         );
         cases.add(
                 new Tuple3<>(
-                        List.of(validSession, invalidSession1),
+                        new ArrayList<>(List.of(validSession, invalidSession1)),
                         2,
                         true
                 )
         );
         cases.add(
                 new Tuple3<>(
-                        List.of(validSession, invalidSession1, invalidSession2),
+                        new ArrayList<>(List.of(validSession, invalidSession1, invalidSession2)),
                         3,
                         true
                 )
         );
         cases.add(
                 new Tuple3<>(
-                        List.of(validSession, invalidSession1, invalidSession2, invalidSession3),
+                        new ArrayList<>(List.of(validSession, invalidSession1, invalidSession2, invalidSession3)),
                         4,
                         true
                 )
         );
+
+
 
         // Act
         cases.forEach(item -> {
@@ -387,13 +383,13 @@ class PostgresSessionRegistryTest {
             var userSessions = item.a();
             var expectedSessionSize = item.b();
             var expectedAnyProblems = item.c();
-            when(this.postgresUsersSessionsRepository.findByUsername(username)).thenReturn(userSessions);
+            when(this.anyDbUsersSessionsRepository.getSessions(username, cookie)).thenReturn(userSessions);
 
             // Act
             var currentUserDbSessionsTable = this.componentUnderTest.getSessionsTable(username, cookie);
 
             // Assert
-            verify(this.postgresUsersSessionsRepository).findByUsername(username);
+            verify(this.anyDbUsersSessionsRepository).getSessions(username, cookie);
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
             assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);
@@ -401,7 +397,7 @@ class PostgresSessionRegistryTest {
             assertThat(currentUserDbSessionsTable.anyProblem()).isEqualTo(expectedAnyProblems);
 
             reset(
-                    this.postgresUsersSessionsRepository
+                    this.anyDbUsersSessionsRepository
             );
         });
     }

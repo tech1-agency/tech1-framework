@@ -31,14 +31,14 @@ public class PostgresUserRequestMetadataConverter extends AbstractAttributeConve
         json.put("platform", userAgentDetails.getPlatform());
         json.put("deviceType", userAgentDetails.getDeviceType());
         json.put("userAgentDetailsExceptionDetails", userAgentDetails.getExceptionDetails());
-        return OBJECT_MAPPER.writeValueAsString(json);
+        return objectMapper.writeValueAsString(json);
     }
 
     @SneakyThrows
     @Override
     public UserRequestMetadata convertToEntityAttribute(String value) {
         var typeReference = new TypeReference<Map<String, String>>() {};
-        var json = OBJECT_MAPPER.readValue(value, typeReference);
+        var json = objectMapper.readValue(value, typeReference);
         return new UserRequestMetadata(
                 Status.valueOf(json.get("status")),
                 new GeoLocation(

@@ -48,7 +48,8 @@ public class MongoDbUserSession {
         return new AnyDbUserSession(
                 new UserSessionId(this.id),
                 this.username,
-                this.requestMetadata
+                this.requestMetadata,
+                this.getJwtRefreshToken()
         );
     }
 

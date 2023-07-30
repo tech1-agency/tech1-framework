@@ -64,7 +64,8 @@ public class PostgresDbUserSession {
         return new AnyDbUserSession(
                 new UserSessionId(this.id),
                 this.username,
-                this.metadata
+                this.metadata,
+                this.getJwtRefreshToken()
         );
     }
 

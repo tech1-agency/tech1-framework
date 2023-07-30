@@ -1,8 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Username;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,19 +14,29 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @Repository
-public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String> {
+public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, AnyDbUsersSessionsRepository {
+    // ================================================================================================================
+    // Any
+    // ================================================================================================================
+    default List<ResponseUserSession2> getSessions(Username username, CookieRefreshToken cookie) {
+        return this.findByUsername(username).stream()
+                .map(session -> session.responseUserSession2(cookie))
+                .collect(Collectors.toList());
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
     List<MongoDbUserSession> findByUsername(Username username);
     List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
-    Long deleteByIdIn(List<String> ids);
+    long deleteByIdIn(List<String> ids);
 
     default MongoDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).orElse(null);

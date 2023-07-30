@@ -21,6 +21,7 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     List<PostgresDbInvitationCode> findByInvitedIsNull();
     List<PostgresDbInvitationCode> findByInvitedIsNotNull();
     PostgresDbInvitationCode findByValue(String value);
+    long countByOwner(Username username);
 
     default PostgresDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
         var invitationCode = this.getReferenceById(invitationCodeId.value());

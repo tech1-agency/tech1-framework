@@ -46,9 +46,14 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         assertThat(count).isEqualTo(6);
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user1"))).hasSize(2);
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
+        assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user3"))).hasSize(1);
         assertThat(this.postgresInvitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
         assertThat(this.postgresInvitationCodesRepository.findByInvitedIsNull()).hasSize(5);
         assertThat(this.postgresInvitationCodesRepository.findByInvitedIsNotNull()).hasSize(1);
+        assertThat(this.postgresInvitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
+        assertThat(this.postgresInvitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
+        assertThat(this.postgresInvitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
+        assertThat(this.postgresInvitationCodesRepository.countByOwner(Username.of("user5"))).isZero();
     }
 
     @Test

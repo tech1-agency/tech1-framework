@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.startup;
 
-import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
@@ -18,7 +18,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
     private static final String STARTUP_MESSAGE = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Default startup event listener. Status: `{}`";
 
     // Essence
-    protected final EssenceConstructor essenceConstructor;
+    protected final AbstractEssenceConstructor essenceConstructor;
     // Utilities
     protected final EnvironmentUtility environmentUtility;
     // Properties

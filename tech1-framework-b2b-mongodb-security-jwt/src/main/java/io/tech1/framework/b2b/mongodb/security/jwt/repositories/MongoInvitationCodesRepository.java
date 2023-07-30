@@ -20,6 +20,7 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     List<MongoDbInvitationCode> findByOwner(Username username);
     List<MongoDbInvitationCode> findByInvitedIsNull();
     MongoDbInvitationCode findByValue(String value);
+    long countByOwner(Username username);
 
     default MongoDbInvitationCode getById(InvitationCodeId invitationCodeId) {
         return this.findById(invitationCodeId.value()).orElse(null);

@@ -1,8 +1,8 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.essence;
+package io.tech1.framework.b2b.postgres.security.jwt.essence;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.domain.properties.base.DefaultUser;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoBaseEssenceConstructorTest {
+class PostgresBaseEssenceConstructorTest {
 
     private static Stream<Arguments> noDefaultUsersTest() {
         return Stream.of(
@@ -61,18 +61,18 @@ class MongoBaseEssenceConstructorTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        MongoInvitationCodesRepository invitationCodeRepository() {
-            return mock(MongoInvitationCodesRepository.class);
+        PostgresInvitationCodesRepository invitationCodeRepository() {
+            return mock(PostgresInvitationCodesRepository.class);
         }
 
         @Bean
-        MongoUsersRepository userRepository() {
-            return mock(MongoUsersRepository.class);
+        PostgresUsersRepository userRepository() {
+            return mock(PostgresUsersRepository.class);
         }
 
         @Bean
         EssenceConstructor essenceConstructor() {
-            return new MongoBaseEssenceConstructor(
+            return new PostgresBaseEssenceConstructor(
                     this.applicationFrameworkProperties,
                     this.invitationCodeRepository(),
                     this.userRepository()
@@ -80,8 +80,8 @@ class MongoBaseEssenceConstructorTest {
         }
     }
 
-    private final MongoInvitationCodesRepository invitationCodesRepository;
-    private final MongoUsersRepository usersRepository;
+    private final PostgresInvitationCodesRepository invitationCodesRepository;
+    private final PostgresUsersRepository usersRepository;
 
     private final EssenceConstructor componentUnderTest;
 

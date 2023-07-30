@@ -1,9 +1,11 @@
 package io.tech1.framework.b2b.base.security.jwt.startup;
 
-import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
+import io.tech1.framework.domain.properties.base.Authority;
 import io.tech1.framework.domain.properties.base.DefaultUsers;
 import io.tech1.framework.domain.properties.base.InvitationCodes;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.EssenceConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
@@ -22,9 +24,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith({ SpringExtension.class })
@@ -32,21 +36,32 @@ import static org.mockito.Mockito.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class DefaultStartupEventListenerTest {
 
+    private static Stream<Arguments> onStartupTest() {
+        return Stream.of(
+                Arguments.of(true, true),
+                Arguments.of(true, false),
+                Arguments.of(false, true),
+                Arguments.of(false, false)
+        );
+    }
+
     @Configuration
     static class ContextConfiguration {
         @Bean
-        EssenceConstructor essenceConstructor() {
-            return mock(EssenceConstructor.class);
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
+        }
+
+        @Bean
+        AbstractEssenceConstructor essenceConstructor() {
+            var essenceConstructor = mock(AbstractEssenceConstructor.class);
+            setField(essenceConstructor, "applicationFrameworkProperties", this.applicationFrameworkProperties());
+            return essenceConstructor;
         }
 
         @Bean
         EnvironmentUtility environmentUtility() {
             return mock(EnvironmentUtility.class);
-        }
-
-        @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
         }
 
         @Bean
@@ -59,7 +74,7 @@ class DefaultStartupEventListenerTest {
         }
     }
 
-    private final EssenceConstructor essenceConstructor;
+    private final AbstractEssenceConstructor essenceConstructor;
     private final EnvironmentUtility environmentUtility;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -83,21 +98,18 @@ class DefaultStartupEventListenerTest {
         );
     }
 
-    private static Stream<Arguments> onStartupTest() {
-        return Stream.of(
-                Arguments.of(true, true),
-                Arguments.of(true, false),
-                Arguments.of(false, true),
-                Arguments.of(false, false)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isDefaultUsersEnabled, boolean isInvitationCodesEnabled) {
         // Arrange
         SecurityJwtConfigs securityJwtConfigs = SecurityJwtConfigs.of(
-                null,
+                AuthoritiesConfigs.of(
+                        "io.tech1",
+                        Set.of(
+                                Authority.of("admin"),
+                                Authority.of("user")
+                        )
+                ),
                 null,
                 EssenceConfigs.of(
                         DefaultUsers.of(
@@ -130,7 +142,8 @@ class DefaultStartupEventListenerTest {
         }
         reset(
                 this.essenceConstructor,
-                this.environmentUtility
+                this.environmentUtility,
+                this.applicationFrameworkProperties
         );
     }
 }

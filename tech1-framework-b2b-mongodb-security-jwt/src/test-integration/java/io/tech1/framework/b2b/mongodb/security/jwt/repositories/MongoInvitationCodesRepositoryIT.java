@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,8 +43,16 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
 
         // Assert
         assertThat(count).isEqualTo(6);
+        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user1"))).hasSize(2);
+        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user2"))).hasSize(3);
+        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user3"))).hasSize(1);
+        assertThat(this.mongoInvitationCodesRepository.findByOwner(Username.of("user5"))).isEmpty();
         assertThat(this.mongoInvitationCodesRepository.findByInvitedAlreadyUsed()).hasSize(1);
         assertThat(this.mongoInvitationCodesRepository.findByInvitedNotUsed()).hasSize(5);
+        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
+        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
+        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
+        assertThat(this.mongoInvitationCodesRepository.countByOwner(Username.of("user5"))).isZero();
     }
 
     @Test

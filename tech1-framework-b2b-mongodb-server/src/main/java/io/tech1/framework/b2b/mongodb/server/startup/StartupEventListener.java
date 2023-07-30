@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.server.startup;
 
-import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
 import io.tech1.framework.b2b.base.security.jwt.startup.DefaultStartupEventListener;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -22,7 +22,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
 
     @Autowired
     public StartupEventListener(
-            EssenceConstructor essenceConstructor,
+            AbstractEssenceConstructor essenceConstructor,
             EnvironmentUtility environmentUtility,
             IncidentPublisher incidentPublisher,
             ApplicationFrameworkProperties applicationFrameworkProperties

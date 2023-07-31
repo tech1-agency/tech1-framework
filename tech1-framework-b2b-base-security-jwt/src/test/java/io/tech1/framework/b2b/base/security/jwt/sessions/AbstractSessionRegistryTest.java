@@ -131,11 +131,11 @@ class AbstractSessionRegistryTest {
         var dbUserSession3 = entity(AnyDbUserSession.class);
         var dbUserSession4 = entity(AnyDbUserSession.class);
         var rndDbUserSession = entity(AnyDbUserSession.class);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session1.refreshToken())).thenReturn(dbUserSession1);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session2.refreshToken())).thenReturn(dbUserSession2);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session3.refreshToken())).thenReturn(dbUserSession3);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(session4.refreshToken())).thenReturn(dbUserSession4);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(rndSession.refreshToken())).thenReturn(rndDbUserSession);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(session1.refreshToken())).thenReturn(dbUserSession1);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(session2.refreshToken())).thenReturn(dbUserSession2);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(session3.refreshToken())).thenReturn(dbUserSession3);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(session4.refreshToken())).thenReturn(dbUserSession4);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(rndSession.refreshToken())).thenReturn(rndDbUserSession);
 
         // Iteration #1
         var activeSessionsUsernames1 = this.componentUnderTest.getActiveSessionsUsernamesIdentifiers();
@@ -173,11 +173,11 @@ class AbstractSessionRegistryTest {
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsRefreshTokens()).isEmpty();
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session1.refreshToken());
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session2.refreshToken());
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session3.refreshToken());
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(session4.refreshToken());
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(rndSession.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(session1.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(session2.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(session3.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(session4.refreshToken());
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(rndSession.refreshToken());
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session1.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session2.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session3.username()));
@@ -246,13 +246,13 @@ class AbstractSessionRegistryTest {
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
         var dbUserSession = entity(AnyDbUserSession.class);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(refreshToken)).thenReturn(dbUserSession);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(refreshToken)).thenReturn(dbUserSession);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(refreshToken);
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
@@ -270,13 +270,13 @@ class AbstractSessionRegistryTest {
         var username = Username.of("incident");
         var refreshToken = entity(JwtRefreshToken.class);
         var session = new Session(username, refreshToken);
-        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(refreshToken)).thenReturn(null);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(refreshToken)).thenReturn(null);
 
         // Act
         this.componentUnderTest.logout(session);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAnyDb(refreshToken);
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(refreshToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().session()).isEqualTo(session);
@@ -304,7 +304,7 @@ class AbstractSessionRegistryTest {
         var dbUserSession3 = entity(AnyDbUserSession.class);
         var sessionsExpiredTable = new SessionsExpiredTable(
                 List.of(new Tuple3<>(username1, dbUserSession3.metadata(), dbUserSession3.jwtRefreshToken())),
-                List.of(dbUserSession1.id().value(), dbUserSession2.id().value())
+                List.of(dbUserSession1.id(), dbUserSession2.id())
         );
         var usernames = Set.of(username1, username2, username3);
         when(this.baseUsersSessionsService.getExpiredSessions(usernames)).thenReturn(sessionsExpiredTable);
@@ -326,7 +326,7 @@ class AbstractSessionRegistryTest {
         var sessionExpiredIncident = seiCaptor.getValue();
         assertThat(sessionExpiredIncident.username()).isEqualTo(username1);
         assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.metadata());
-        verify(this.anyDbUsersSessionsRepository).deleteByIdIn(List.of(dbUserSession1.id().value(), dbUserSession2.id().value()));
+        verify(this.anyDbUsersSessionsRepository).deleteByUsersSessionsIds(List.of(dbUserSession1.id(), dbUserSession2.id()));
     }
 
     @Test

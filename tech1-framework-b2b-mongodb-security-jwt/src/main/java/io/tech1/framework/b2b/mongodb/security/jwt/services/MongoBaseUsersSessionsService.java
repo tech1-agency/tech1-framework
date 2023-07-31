@@ -133,39 +133,6 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
     }
 
     @Override
-    public SessionsExpiredTable getExpiredSessions(Set<Username> usernames) {
-        var usersSessions = this.usersSessionsRepository.findByUsernameIn(usernames);
-        List<Tuple3<Username, UserRequestMetadata, JwtRefreshToken>> expiredSessions = new ArrayList<>();
-        List<String> expiredOrInvalidSessionIds = new ArrayList<>();
-
-        usersSessions.forEach(userSession -> {
-            var sessionId = userSession.getId();
-            var validatedClaims = this.securityJwtTokenUtils.validate(userSession.getJwtRefreshToken());
-            var isValid = validatedClaims.valid();
-            if (isValid) {
-                var isExpired = isPast(validatedClaims.safeGetExpirationTimestamp());
-                if (isExpired) {
-                    expiredOrInvalidSessionIds.add(sessionId);
-                    expiredSessions.add(
-                            new Tuple3<>(
-                                    validatedClaims.safeGetUsername(),
-                                    userSession.getRequestMetadata(),
-                                    userSession.getJwtRefreshToken()
-                            )
-                    );
-                }
-            } else {
-                expiredOrInvalidSessionIds.add(sessionId);
-            }
-        });
-
-        return new SessionsExpiredTable(
-                expiredSessions,
-                expiredOrInvalidSessionIds
-        );
-    }
-
-    @Override
     public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
         var sessions = this.usersSessionsRepository.findByUsername(username);
         var currentSession = this.usersSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());

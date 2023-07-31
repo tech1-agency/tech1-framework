@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,7 +29,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // Any
     // ================================================================================================================
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
-        return nonNull(this.findByRefreshTokenAnyDb(jwtRefreshToken));
+        return nonNull(this.findByRefreshTokenAsAny(jwtRefreshToken));
     }
 
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
@@ -61,7 +60,13 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
                 .collect(Collectors.toList());
     }
 
-    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
+    default List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames) {
+        return this.findByUsernameIn(usernames).stream()
+                .map(PostgresDbUserSession::anyDbUserSession)
+                .collect(Collectors.toList());
+    }
+
+    default AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
     }
 
@@ -69,7 +74,9 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteById(sessionId.value());
     }
 
-    long deleteByIdIn(List<String> ids);
+    default long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds) {
+        return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
+    }
 
     default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         this.deleteById(jwtRefreshToken.value());
@@ -84,6 +91,8 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     default PostgresDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).orElse(null);
     }
+
+    long deleteByIdIn(List<String> ids);
 
     // ================================================================================================================
     // Queries

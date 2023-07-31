@@ -27,7 +27,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // Any
     // ================================================================================================================
     default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
-        return nonNull(this.findByRefreshTokenAnyDb(jwtRefreshToken));
+        return nonNull(this.findByRefreshTokenAsAny(jwtRefreshToken));
     }
 
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
@@ -58,7 +58,13 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .collect(Collectors.toList());
     }
 
-    default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
+    default List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames) {
+        return this.findByUsernameIn(usernames).stream()
+                .map(MongoDbUserSession::anyDbUserSession)
+                .collect(Collectors.toList());
+    }
+
+    default AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
     }
 
@@ -66,7 +72,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteById(sessionId.value());
     }
 
-    long deleteByIdIn(List<String> ids);
+    default long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds) {
+        return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
+    }
 
     default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         this.deleteById(jwtRefreshToken.value());
@@ -86,6 +94,8 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     default MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).orElse(null);
     }
+
+    long deleteByIdIn(List<String> ids);
 
     // ================================================================================================================
     // Queries

@@ -93,7 +93,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
 
         var jwtRefreshToken = session.refreshToken();
-        var dbUserSession = this.anyDbUsersSessionsRepository.findByRefreshTokenAnyDb(jwtRefreshToken);
+        var dbUserSession = this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(jwtRefreshToken);
 
         if (nonNull(dbUserSession)) {
             this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.metadata()));
@@ -118,7 +118,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
         });
 
-        var deleted = this.anyDbUsersSessionsRepository.deleteByIdIn(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
+        var deleted = this.anyDbUsersSessionsRepository.deleteByUsersSessionsIds(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 

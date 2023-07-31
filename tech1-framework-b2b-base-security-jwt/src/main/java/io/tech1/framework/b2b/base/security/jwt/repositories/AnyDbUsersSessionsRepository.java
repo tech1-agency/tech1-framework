@@ -9,14 +9,16 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.Tuple2;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AnyDbUsersSessionsRepository {
     boolean isPresent(JwtRefreshToken jwtRefreshToken);
     AnyDbUserSession requirePresence(UserSessionId sessionId);
     List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie);
     List<Tuple2<ResponseUserSession2, JwtRefreshToken>> findAllByCookieAsSession2(CookieRefreshToken cookie);
-    AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken);
+    List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);
+    AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken jwtRefreshToken);
     void delete(UserSessionId sessionId);
-    long deleteByIdIn(List<String> ids);
+    long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds);
     void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken);
 }

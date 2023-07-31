@@ -273,45 +273,6 @@ class MongoBaseUsersSessionsServiceTest {
         assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
     }
 
-    @Test
-    void getExpiredSessionsTest() {
-        // Arrange
-        var usernames = new HashSet<>(Set.of(TestsConstants.TECH1));
-        var sessionInvalidUserSession = new MongoDbUserSession(
-                new JwtRefreshToken("<invalid>"),
-                randomUsername(),
-                entity(UserRequestMetadata.class)
-        );
-        var sessionExpiredUserSession = new MongoDbUserSession(
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8"),
-                randomUsername(),
-                entity(UserRequestMetadata.class)
-        );
-        var sessionAliveUserSession = new MongoDbUserSession(
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY"),
-                randomUsername(),
-                entity(UserRequestMetadata.class)
-        );
-        var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
-        when(this.mongoUsersSessionsRepository.findByUsernameIn(usernames)).thenReturn(usersSessions);
-
-        // Act
-        var sessionsValidatedTuple2 = this.componentUnderTest.getExpiredSessions(usernames);
-
-        // Assert
-        verify(this.mongoUsersSessionsRepository).findByUsernameIn(usernames);
-        assertThat(sessionsValidatedTuple2).isNotNull();
-        assertThat(sessionsValidatedTuple2.expiredOrInvalidSessionIds()).isNotNull();
-        assertThat(sessionsValidatedTuple2.expiredOrInvalidSessionIds()).hasSize(2);
-        assertThat(sessionsValidatedTuple2.expiredOrInvalidSessionIds()).containsExactlyInAnyOrder(
-                sessionInvalidUserSession.getId(),
-                sessionExpiredUserSession.getId()
-        );
-        assertThat(sessionsValidatedTuple2.expiredSessions()).isNotNull();
-        assertThat(sessionsValidatedTuple2.expiredSessions()).hasSize(1);
-        assertThat(sessionsValidatedTuple2.expiredSessions().get(0).a().identifier()).isEqualTo("multiuser43");
-    }
-
     @SuppressWarnings("unchecked")
     @Test
     void deleteAllExceptCurrentTest() {

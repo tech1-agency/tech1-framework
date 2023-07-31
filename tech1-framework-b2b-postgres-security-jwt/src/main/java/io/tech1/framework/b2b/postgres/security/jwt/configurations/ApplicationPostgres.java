@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan({
         "io.tech1.framework.b2b.postgres.security.jwt.assistants.userdetails",
-        "io.tech1.framework.b2b.postgres.security.jwt.sessions"
+        "io.tech1.framework.b2b.postgres.security.jwt.services",
+        "io.tech1.framework.b2b.postgres.security.jwt.sessions",
+        "io.tech1.framework.b2b.postgres.security.jwt.validators",
 })
 @EntityScan({
         "io.tech1.framework.b2b.postgres.security.jwt.domain.db"

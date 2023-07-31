@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.resources;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.server.services.UserService;
+import io.tech1.framework.b2b.mongodb.server.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +14,15 @@ import java.util.List;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserResource {
+public class UsersResource {
 
     // Services
-    private final UserService userService;
+    private final UsersService usersService;
 
-    @GetMapping
+    @GetMapping("/server")
     public List<MongoDbUser> findAll() {
-        return this.userService.findAll();
+        return this.usersService.findAll();
     }
 }

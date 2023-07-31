@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.mongodb.server.tests.contexts;
+package io.tech1.framework.b2b.postgres.server.tests.contexts;
 
-import io.tech1.framework.b2b.mongodb.server.services.UsersService;
+import io.tech1.framework.b2b.postgres.server.services.UsersService;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "io.tech1.framework.b2b.mongodb.server.resources"
+        "io.tech1.framework.b2b.postgres.server.resources"
 })
 @EnableWebMvc
 public class ApplicationResourcesContext {

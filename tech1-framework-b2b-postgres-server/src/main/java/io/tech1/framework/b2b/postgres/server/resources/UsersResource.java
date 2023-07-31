@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.server.resources;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.b2b.postgres.server.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UsersResource {
 
-    private final PostgresUsersRepository postgresUsersRepository;
+    // Services
+    private final UsersService usersService;
 
-    @GetMapping
-    public List<CurrentClientUser> findAll() {
-        return this.postgresUsersRepository.findAll().stream()
-                .map(user -> new CurrentClientUser(user.getUsername(), user.getEmail(), user.getName(), user.getZoneId(), user.getAuthorities(), user.getAttributes()))
-                .toList();
+    @GetMapping("/server")
+    public List<PostgresDbUser> findAll() {
+        return this.usersService.findAll();
     }
 }

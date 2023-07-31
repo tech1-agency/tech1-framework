@@ -1,7 +1,7 @@
-package io.tech1.framework.b2b.mongodb.server.resources;
+package io.tech1.framework.b2b.postgres.server.resources;
 
-import io.tech1.framework.b2b.mongodb.server.services.UserService;
-import io.tech1.framework.b2b.mongodb.server.tests.runners.ApplicationResourceRunner;
+import io.tech1.framework.b2b.postgres.server.services.UsersService;
+import io.tech1.framework.b2b.postgres.server.tests.runners.ApplicationResourceRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,35 +14,35 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserResourceTest extends ApplicationResourceRunner {
+class UsersResourceTest extends ApplicationResourceRunner {
 
     // Services
-    private final UserService userService;
+    private final UsersService usersService;
 
-    private final UserResource resourceUnderTest;
+    private final UsersResource resourceUnderTest;
 
     @BeforeEach
     void beforeEach() {
         this.beforeByResource(this.resourceUnderTest);
         reset(
-                this.userService
+                this.usersService
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.userService
+                this.usersService
         );
     }
 
     @Test
     void findAll() throws Exception {
         // Act
-        mvc.perform(get("/user").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/users/server").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.userService).findAll();
+        verify(this.usersService).findAll();
     }
 }

@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.server.services.impl;
 
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.b2b.mongodb.server.services.UserService;
+import io.tech1.framework.b2b.mongodb.server.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,39 +22,39 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UserServiceImplTest  {
+class UsersServiceImplTest {
 
     @Configuration
     static class ContextConfiguration {
 
         @Bean
-        MongoUsersRepository userRepository() {
+        MongoUsersRepository usersRepository() {
             return mock(MongoUsersRepository.class);
         }
 
         @Bean
-        UserService userService() {
-            return new UserServiceImpl(
-                    this.userRepository()
+        UsersService userService() {
+            return new UsersServiceImpl(
+                    this.usersRepository()
             );
         }
     }
 
-    private final MongoUsersRepository mongoUsersRepository;
+    private final MongoUsersRepository usersRepository;
 
-    private final UserService componentUnderTest;
+    private final UsersService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.mongoUsersRepository
+                this.usersRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.mongoUsersRepository
+                this.usersRepository
         );
     }
 
@@ -62,13 +62,13 @@ class UserServiceImplTest  {
     void findAll() {
         // Act
         var expected = list345(MongoDbUser.class);
-        when(this.mongoUsersRepository.findAll()).thenReturn(expected);
+        when(this.usersRepository.findAll()).thenReturn(expected);
 
         // Act
         var actual = this.componentUnderTest.findAll();
 
         // Assert
-        verify(this.mongoUsersRepository).findAll();
+        verify(this.usersRepository).findAll();
         assertThat(actual).isEqualTo(expected);
     }
 }

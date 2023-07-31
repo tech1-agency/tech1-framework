@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.AbstractSessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
+import io.tech1.framework.b2b.mongodb.security.jwt.services.MongoBaseUsersSessionsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class MongoSessionRegistry extends AbstractSessionRegistry {
     public MongoSessionRegistry(
             SecurityJwtPublisher securityJwtPublisher,
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            BaseUsersSessionsService baseUsersSessionsService,
+            MongoBaseUsersSessionsService baseUsersSessionsService,
             MongoUsersSessionsRepository usersSessionsRepository
     ) {
         super(

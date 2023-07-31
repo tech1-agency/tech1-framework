@@ -57,6 +57,30 @@ tech1:
       SERVER: 85
       SWAP: 95
       VIRTUAL: 85
+  securityJwtConfigs:
+    authoritiesConfigs:
+      authorities:
+        - value: superadmin
+        - value: user
+        - value: admin
+        - value: invitationCode:read
+        - value: invitationCode:write
+      packageName: io.tech1.framework.b2b.postgres.server
+    cookiesConfigs:
+      jwtAccessTokenCookieCreationLatency:
+        unit: SECONDS
+        amount: 5
+    jwtTokensConfigs:
+      accessToken:
+        cookieKey: ajwt
+      refreshToken:
+        cookieKey: rjwt
+    usersEmailsConfigs:
+      subjectPrefix: "[Tech1]"
+      authenticationLogin:
+        enabled: true
+      sessionRefreshed:
+        enabled: true
 
 # App
 app:

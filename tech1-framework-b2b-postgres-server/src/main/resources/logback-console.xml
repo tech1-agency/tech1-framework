@@ -13,7 +13,6 @@
 
     <logger name="com.ulisesbocchio" level="warn" />
     <logger name="org.apache" level="warn" />
-    <logger name="org.mongodb" level="warn" />
     <logger name="org.springframework" level="warn" />
 
     <root level="info">

@@ -26,4 +26,44 @@ tech1:
       allowedOrigins:
         - http://localhost:8686
         - http://localhost:8787
-
+  securityJwtConfigs:
+    cookiesConfigs:
+      domain: localhost
+    incidentsConfigs:
+      typesConfigs:
+        AUTHENTICATION_LOGIN: true
+        AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD: false
+        AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD: true
+        AUTHENTICATION_LOGOUT: false
+        AUTHENTICATION_LOGOUT_MIN: false
+        SESSION_REFRESHED: true
+        SESSION_EXPIRED: false
+        REGISTER1: true
+        REGISTER1_FAILURE: true
+    jwtTokensConfigs:
+      secretKey: ENC(G/ikUUQcuS4+pbN4dj1gPlGwm/Ht2a+8)
+      accessToken:
+        expiration:
+          amount: 30
+          unit: SECONDS # @java.time.temporal.ChronoUnit
+      refreshToken:
+        expiration:
+          amount: 60
+          unit: SECONDS # @java.time.temporal.ChronoUnit
+    loggingConfigs:
+      advancedRequestLoggingEnabled: false
+    sessionConfigs:
+      cleanSessionsByExpiredRefreshTokensCron:
+        enabled: true
+        expression: "*/30 * * * * *"
+        zoneId: "Europe/Kiev"
+    essenceConfigs:
+      defaultUsers:
+        enabled: true
+        users:
+          - username: admin11
+            password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
+            zoneId: "Europe/Kiev" # JavaScript: Intl.DateTimeFormat().resolvedOptions().timeZone
+            authorities: [ "admin", "invitationCode:write" ]
+      invitationCodes:
+        enabled: true

@@ -1,9 +1,9 @@
-package io.tech1.framework.b2b.mongodb.server.tests.runners;
+package io.tech1.framework.b2b.postgres.server.tests.runners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
-import io.tech1.framework.b2b.mongodb.server.tests.contexts.ApplicationResourcesContext;
+import io.tech1.framework.b2b.postgres.server.tests.contexts.ApplicationResourcesContext;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;

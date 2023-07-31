@@ -42,7 +42,7 @@ tech1:
           amount: 60
           unit: SECONDS # @java.time.temporal.ChronoUnit
     loggingConfigs:
-      advancedRequestLoggingEnabled: true
+      advancedRequestLoggingEnabled: false
     sessionConfigs:
       cleanSessionsByExpiredRefreshTokensCron:
         enabled: true

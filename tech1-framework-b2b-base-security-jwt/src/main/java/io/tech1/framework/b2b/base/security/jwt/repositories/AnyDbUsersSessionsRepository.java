@@ -13,6 +13,7 @@ import java.util.Set;
 
 public interface AnyDbUsersSessionsRepository {
     boolean isPresent(JwtRefreshToken jwtRefreshToken);
+    AnyDbUserSession getById(UserSessionId sessionId);
     AnyDbUserSession requirePresence(UserSessionId sessionId);
     List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie);
     List<Tuple2<ResponseUserSession2, JwtRefreshToken>> findAllByCookieAsSession2(CookieRefreshToken cookie);

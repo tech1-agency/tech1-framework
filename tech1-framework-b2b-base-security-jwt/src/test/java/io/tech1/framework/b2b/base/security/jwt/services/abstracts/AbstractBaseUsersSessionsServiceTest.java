@@ -15,10 +15,10 @@ import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
-import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
+import io.tech1.framework.utilities.browsers.impl.UserAgentDetailsUtilityImpl;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -82,7 +82,7 @@ class AbstractBaseUsersSessionsServiceTest {
 
         @Bean
         UserAgentDetailsUtility userAgentDetailsUtility() {
-            return mock(UserAgentDetailsUtility.class);
+            return new UserAgentDetailsUtilityImpl();
         }
 
         @Bean
@@ -94,11 +94,6 @@ class AbstractBaseUsersSessionsServiceTest {
                     this.securityJwtTokenUtils(),
                     this.userAgentDetailsUtility()
             ) {
-                @Override
-                public Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
-                    return null;
-                }
-
                 @Override
                 public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
 
@@ -128,8 +123,7 @@ class AbstractBaseUsersSessionsServiceTest {
         reset(
                 this.securityJwtPublisher,
                 this.anyDbUsersSessionsRepository,
-                this.geoLocationFacadeUtility,
-                this.userAgentDetailsUtility
+                this.geoLocationFacadeUtility
         );
     }
 
@@ -138,8 +132,7 @@ class AbstractBaseUsersSessionsServiceTest {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
                 this.anyDbUsersSessionsRepository,
-                this.geoLocationFacadeUtility,
-                this.userAgentDetailsUtility
+                this.geoLocationFacadeUtility
         );
     }
 
@@ -263,6 +256,28 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
         assertThat(jwtRefreshToken).isEqualTo(newUserSession.jwtRefreshToken());
+    }
+
+    @Test
+    void saveUserRequestMetadataTest() {
+        // Arrange
+        var event = entity(EventSessionAddUserRequestMetadata.class);
+        var userSession = entity(AnyDbUserSession.class);
+        var geoLocation = randomGeoLocation();
+        when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
+        when(this.anyDbUsersSessionsRepository.getById(event.userSessionId())).thenReturn(userSession);
+        var userSessionAC = ArgumentCaptor.forClass(AnyDbUserSession.class);
+
+        // Act
+        this.componentUnderTest.saveUserRequestMetadata(event);
+
+        // Assert
+        verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
+        verify(this.anyDbUsersSessionsRepository).getById(event.userSessionId());
+        verify(this.anyDbUsersSessionsRepository).saveAs(userSessionAC.capture());
+        var requestMetadata = userSessionAC.getValue().metadata();
+        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
+        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
     }
 
     @Test

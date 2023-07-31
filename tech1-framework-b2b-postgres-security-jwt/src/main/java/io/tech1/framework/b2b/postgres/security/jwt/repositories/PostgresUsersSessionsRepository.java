@@ -32,10 +32,14 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         return nonNull(this.findByRefreshTokenAsAny(jwtRefreshToken));
     }
 
+    default AnyDbUserSession getById(UserSessionId sessionId) {
+        return this.findById(sessionId.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
+    }
+
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
         var session = this.getById(sessionId);
         assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
-        return session.anyDbUserSession();
+        return session;
     }
 
     default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie) {
@@ -92,10 +96,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     List<PostgresDbUserSession> findByUsername(Username username);
     List<PostgresDbUserSession> findByUsernameIn(Set<Username> usernames);
-
-    default PostgresDbUserSession getById(UserSessionId sessionId) {
-        return this.findById(sessionId.value()).orElse(null);
-    }
 
     long deleteByIdIn(List<String> ids);
 

@@ -1,15 +1,11 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +19,6 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
 
     // Repositories
     private final MongoUsersSessionsRepository usersSessionsRepository;
-    // Utilities
-    private final GeoLocationFacadeUtility geoLocationFacadeUtility;
-    private final UserAgentDetailsUtility userAgentDetailsUtility;
 
     @Autowired
     public MongoBaseUsersSessionsService(
@@ -43,20 +36,8 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
                 userAgentDetailsUtility
         );
         this.usersSessionsRepository = usersSessionsRepository;
-        this.geoLocationFacadeUtility = geoLocationFacadeUtility;
-        this.userAgentDetailsUtility = userAgentDetailsUtility;
     }
 
-    @Override
-    public Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
-        var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = this.usersSessionsRepository.getById(event.userSessionId());
-        userSession.setRequestMetadata(requestMetadata);
-        this.usersSessionsRepository.save(userSession);
-        return new Tuple2<>(userSession.userSessionId(), userSession.getRequestMetadata());
-    }
 
     @Override
     public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {

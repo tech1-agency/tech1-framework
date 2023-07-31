@@ -30,10 +30,14 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return nonNull(this.findByRefreshTokenAsAny(jwtRefreshToken));
     }
 
+    default AnyDbUserSession getById(UserSessionId sessionId) {
+        return this.findById(sessionId.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
+    }
+
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
         var session = this.getById(sessionId);
         assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
-        return session.anyDbUserSession();
+        return session;
     }
 
     default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie) {
@@ -90,10 +94,6 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     List<MongoDbUserSession> findByUsername(Username username);
     List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
-
-    default MongoDbUserSession getById(UserSessionId sessionId) {
-        return this.findById(sessionId.value()).orElse(null);
-    }
 
     @Deprecated
     default MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {

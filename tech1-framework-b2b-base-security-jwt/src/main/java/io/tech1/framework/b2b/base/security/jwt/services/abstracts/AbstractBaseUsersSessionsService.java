@@ -13,6 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
@@ -99,6 +100,21 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 )
         );
         return newUserSession.jwtRefreshToken();
+    }
+
+    @Override
+    public Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
+        var userSession = this.anyDbUsersSessionsRepository.getById(event.userSessionId());
+        userSession = new AnyDbUserSession(
+                userSession.id(),
+                userSession.username(),
+                UserRequestMetadata.processed(geoLocation, userAgentDetails),
+                userSession.jwtRefreshToken()
+        );
+        this.anyDbUsersSessionsRepository.saveAs(userSession);
+        return new Tuple2<>(userSession.id(), userSession.metadata());
     }
 
     @Override

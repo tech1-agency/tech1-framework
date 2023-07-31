@@ -107,7 +107,6 @@ class MongoBaseUsersSessionsServiceTest {
     private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
-    private final UserAgentDetailsUtility userAgentDetailsUtility;
 
     private final BaseUsersSessionsService componentUnderTest;
 
@@ -127,28 +126,6 @@ class MongoBaseUsersSessionsServiceTest {
                 this.mongoUsersSessionsRepository,
                 this.geoLocationFacadeUtility
         );
-    }
-
-    @Test
-    void saveUserRequestMetadataTest() {
-        // Arrange
-        var event = entity(EventSessionAddUserRequestMetadata.class);
-        var userSession = entity(MongoDbUserSession.class);
-        var geoLocation = randomGeoLocation();
-        when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
-        when(this.mongoUsersSessionsRepository.getById(event.userSessionId())).thenReturn(userSession);
-        var userSessionAC = ArgumentCaptor.forClass(MongoDbUserSession.class);
-
-        // Act
-        this.componentUnderTest.saveUserRequestMetadata(event);
-
-        // Assert
-        verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
-        verify(this.mongoUsersSessionsRepository).getById(event.userSessionId());
-        verify(this.mongoUsersSessionsRepository).save(userSessionAC.capture());
-        var requestMetadata = userSessionAC.getValue().getRequestMetadata();
-        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
     }
 
     @SuppressWarnings("unchecked")

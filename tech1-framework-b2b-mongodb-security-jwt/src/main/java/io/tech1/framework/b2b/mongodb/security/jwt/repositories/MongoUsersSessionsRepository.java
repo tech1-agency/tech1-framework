@@ -68,6 +68,11 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return this.findById(jwtRefreshToken.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
     }
 
+    default UserSessionId saveAs(AnyDbUserSession userSession) {
+        var entity = this.save(new MongoDbUserSession(userSession));
+        return entity.userSessionId();
+    }
+
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }

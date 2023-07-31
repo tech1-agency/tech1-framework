@@ -70,6 +70,11 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         return this.findById(jwtRefreshToken.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
     }
 
+    default UserSessionId saveAs(AnyDbUserSession userSession) {
+        var entity = this.save(new PostgresDbUserSession(userSession));
+        return entity.userSessionId();
+    }
+
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }

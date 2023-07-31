@@ -11,6 +11,8 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsR
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.StringConstants;
+import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.tuples.Tuple2;
@@ -23,6 +25,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +39,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -91,11 +95,6 @@ class AbstractBaseUsersSessionsServiceTest {
                     this.userAgentDetailsUtility()
             ) {
                 @Override
-                public void save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
-
-                }
-
-                @Override
                 public JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
                     return null;
                 }
@@ -147,6 +146,94 @@ class AbstractBaseUsersSessionsServiceTest {
                 this.geoLocationFacadeUtility,
                 this.userAgentDetailsUtility
         );
+    }
+
+    @Test
+    void saveUserSessionNotNullTest() {
+        // Arrange
+        var ipAddr = randomIPv4();
+        var httpServletRequest = mock(HttpServletRequest.class);
+        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
+        when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
+        var jwtUser = entity(JwtUser.class);
+        var username = jwtUser.username();
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var userSession = new AnyDbUserSession(new UserSessionId(jwtRefreshToken.value()), username, entity(UserRequestMetadata.class), jwtRefreshToken);
+        var savedUserSessionId = entity(UserSessionId.class);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(jwtRefreshToken)).thenReturn(userSession);
+        when(this.anyDbUsersSessionsRepository.saveAs(any())).thenReturn(savedUserSessionId);
+
+        // Act
+        this.componentUnderTest.save(jwtUser, jwtRefreshToken, httpServletRequest);
+
+        // Assert
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(jwtRefreshToken);
+        var dbUserSessionAC = ArgumentCaptor.forClass(AnyDbUserSession.class);
+        verify(this.anyDbUsersSessionsRepository).saveAs(dbUserSessionAC.capture());
+        var actualDbUserSession = dbUserSessionAC.getValue();
+        assertThat(actualDbUserSession.username()).isEqualTo(username);
+        assertThat(actualDbUserSession.jwtRefreshToken()).isEqualTo(jwtRefreshToken);
+        var requestMetadata = actualDbUserSession.metadata();
+        assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
+        assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
+        var whereTuple3 = requestMetadata.getWhereTuple3();
+        assertThat(whereTuple3.a()).isEqualTo(ipAddr);
+        assertThat(whereTuple3.b()).isEqualTo(StringConstants.NO_FLAG);
+        assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
+        var whatTuple2 = requestMetadata.getWhatTuple2();
+        assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.b()).isEqualTo("—");
+        assertThat(actualDbUserSession.id()).isNotNull();
+        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.username()).isEqualTo(username);
+        assertThat(event.userSessionId()).isEqualTo(savedUserSessionId);
+        assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
+        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
+    }
+
+    @Test
+    void saveUserSessionNullTest() {
+        // Arrange
+        var ipAddr = randomIPv4();
+        var httpServletRequest = mock(HttpServletRequest.class);
+        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
+        when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
+        var jwtUser = entity(JwtUser.class);
+        var username = jwtUser.username();
+        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var savedUserSessionId = entity(UserSessionId.class);
+        when(this.anyDbUsersSessionsRepository.saveAs(any())).thenReturn(savedUserSessionId);
+
+        // Act
+        this.componentUnderTest.save(jwtUser, jwtRefreshToken, httpServletRequest);
+
+        // Assert
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(jwtRefreshToken);
+        var dbUserSessionAC = ArgumentCaptor.forClass(AnyDbUserSession.class);
+        verify(this.anyDbUsersSessionsRepository).saveAs(dbUserSessionAC.capture());
+        var actualDbUserSession = dbUserSessionAC.getValue();
+        assertThat(actualDbUserSession.username()).isEqualTo(username);
+        assertThat(actualDbUserSession.jwtRefreshToken()).isEqualTo(jwtRefreshToken);
+        var requestMetadata = actualDbUserSession.metadata();
+        assertThat(requestMetadata.getStatus()).isEqualTo(Status.STARTED);
+        assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
+        var whereTuple3 = requestMetadata.getWhereTuple3();
+        assertThat(whereTuple3.a()).isEqualTo(ipAddr);
+        assertThat(whereTuple3.b()).isEqualTo(StringConstants.NO_FLAG);
+        assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
+        var whatTuple2 = requestMetadata.getWhatTuple2();
+        assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.b()).isEqualTo("—");
+        assertThat(actualDbUserSession.id()).isNotNull();
+        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.username()).isEqualTo(username);
+        assertThat(event.userSessionId()).isEqualTo(savedUserSessionId);
+        assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
+        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
     }
 
     @Test

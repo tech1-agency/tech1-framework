@@ -35,6 +35,12 @@ public class MongoDbUserSession {
         this.requestMetadata = requestMetadata;
     }
 
+    public MongoDbUserSession(AnyDbUserSession session) {
+        this.id = session.id().value();
+        this.username = session.username();
+        this.requestMetadata = session.metadata();
+    }
+
     @Deprecated
     @JsonIgnore
     @Transient

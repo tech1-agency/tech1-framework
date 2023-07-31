@@ -18,6 +18,7 @@ public interface AnyDbUsersSessionsRepository {
     List<Tuple2<ResponseUserSession2, JwtRefreshToken>> findAllByCookieAsSession2(CookieRefreshToken cookie);
     List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);
     AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken jwtRefreshToken);
+    UserSessionId saveAs(AnyDbUserSession userSession);
     void delete(UserSessionId sessionId);
     long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds);
     void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken);

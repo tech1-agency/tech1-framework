@@ -41,14 +41,16 @@ public class PostgresDbUserSession {
     @Column(length = 65535, nullable = false)
     private UserRequestMetadata metadata;
 
-    public PostgresDbUserSession(
-            JwtRefreshToken jwtRefreshToken,
-            Username username,
-            UserRequestMetadata metadata
-    ) {
+    public PostgresDbUserSession(JwtRefreshToken jwtRefreshToken, Username username, UserRequestMetadata metadata) {
         this.id = jwtRefreshToken.value();
         this.username = username;
         this.metadata = metadata;
+    }
+
+    public PostgresDbUserSession(AnyDbUserSession session) {
+        this.id = session.id().value();
+        this.username = session.username();
+        this.metadata = session.metadata();
     }
 
     @Deprecated

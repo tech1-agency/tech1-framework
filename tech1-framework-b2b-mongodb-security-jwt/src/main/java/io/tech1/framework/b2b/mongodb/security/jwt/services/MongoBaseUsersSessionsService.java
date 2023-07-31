@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
@@ -65,35 +66,6 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
         this.geoLocationFacadeUtility = geoLocationFacadeUtility;
         this.securityJwtTokenUtils = securityJwtTokenUtils;
         this.userAgentDetailsUtility = userAgentDetailsUtility;
-    }
-
-    @Override
-    public void save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
-        var username = user.username();
-        var userSession = this.usersSessionsRepository.findByRefreshToken(jwtRefreshToken);
-        var clientIpAddr = getClientIpAddr(httpServletRequest);
-        var userRequestMetadata = UserRequestMetadata.processing(clientIpAddr);
-        if (isNull(userSession)) {
-            userSession = new MongoDbUserSession(
-                    jwtRefreshToken,
-                    username,
-                    userRequestMetadata
-            );
-        } else {
-            userSession.setRequestMetadata(userRequestMetadata);
-        }
-        userSession = this.usersSessionsRepository.save(userSession);
-        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                new EventSessionAddUserRequestMetadata(
-                        username,
-                        user.email(),
-                        userSession.userSessionId(),
-                        clientIpAddr,
-                        new UserAgentHeader(httpServletRequest),
-                        true,
-                        false
-                )
-        );
     }
 
     @Override

@@ -32,12 +32,8 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         );
         if (this.anyDbUsersRepository.count() == 0L) {
             LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
-            try {
-                var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
-                LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", usersCount);
-            } catch (RuntimeException ex) {
-                LOGGER.error("ex", ex);
-            }
+            var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
+            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", usersCount);
         } else {
             LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Users are already saved in database. Please double check");
         }

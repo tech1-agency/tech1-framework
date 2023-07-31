@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 
 public interface BaseUsersService {
-    void updateUser1(JwtUser jwtUser, RequestUserUpdate1 requestUserUpdate1);
-    void updateUser2(JwtUser jwtUser, RequestUserUpdate2 requestUserUpdate2);
-    void changePassword1(JwtUser jwtUser, RequestUserChangePassword1 requestUserChangePassword1);
+    void updateUser1(JwtUser user, RequestUserUpdate1 requestUserUpdate1);
+    void updateUser2(JwtUser user, RequestUserUpdate2 requestUserUpdate2);
+    void changePassword1(JwtUser user, RequestUserChangePassword1 requestUserChangePassword1);
 }

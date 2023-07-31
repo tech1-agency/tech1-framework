@@ -23,49 +23,49 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void updateUser1(JwtUser jwtUser, RequestUserUpdate1 requestUserUpdate1) {
-        jwtUser = new JwtUser(
-                jwtUser.id(),
-                jwtUser.username(),
-                jwtUser.password(),
+    public void updateUser1(JwtUser user, RequestUserUpdate1 requestUserUpdate1) {
+        user = new JwtUser(
+                user.id(),
+                user.username(),
+                user.password(),
                 ZoneId.of(requestUserUpdate1.zoneId()),
-                jwtUser.authorities(),
+                user.authorities(),
                 requestUserUpdate1.email(),
                 requestUserUpdate1.name(),
-                jwtUser.attributes()
+                user.attributes()
         );
-        this.saveAndReauthenticate(jwtUser);
+        this.saveAndReauthenticate(user);
     }
 
     @Override
-    public void updateUser2(JwtUser jwtUser, RequestUserUpdate2 requestUserUpdate2) {
-        jwtUser = new JwtUser(
-                jwtUser.id(),
-                jwtUser.username(),
-                jwtUser.password(),
+    public void updateUser2(JwtUser user, RequestUserUpdate2 requestUserUpdate2) {
+        user = new JwtUser(
+                user.id(),
+                user.username(),
+                user.password(),
                 ZoneId.of(requestUserUpdate2.zoneId()),
-                jwtUser.authorities(),
-                jwtUser.email(),
+                user.authorities(),
+                user.email(),
                 requestUserUpdate2.name(),
-                jwtUser.attributes()
+                user.attributes()
         );
-        this.saveAndReauthenticate(jwtUser);
+        this.saveAndReauthenticate(user);
     }
 
     @Override
-    public void changePassword1(JwtUser jwtUser, RequestUserChangePassword1 requestUserChangePassword1) {
+    public void changePassword1(JwtUser user, RequestUserChangePassword1 requestUserChangePassword1) {
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value());
-        jwtUser = new JwtUser(
-                jwtUser.id(),
-                jwtUser.username(),
+        user = new JwtUser(
+                user.id(),
+                user.username(),
                 Password.of(hashPassword),
-                jwtUser.zoneId(),
-                jwtUser.authorities(),
-                jwtUser.email(),
-                jwtUser.name(),
-                jwtUser.attributes()
+                user.zoneId(),
+                user.authorities(),
+                user.email(),
+                user.name(),
+                user.attributes()
         );
-        this.saveAndReauthenticate(jwtUser);
+        this.saveAndReauthenticate(user);
     }
 
     // ================================================================================================================

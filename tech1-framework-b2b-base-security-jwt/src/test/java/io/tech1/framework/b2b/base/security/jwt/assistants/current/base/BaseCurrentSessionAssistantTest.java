@@ -130,7 +130,7 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserTest() {
         // Arrange
-        var jwtUser = new JwtUser(
+        var user = new JwtUser(
                 entity(UserId.class),
                 randomUsername(),
                 randomPassword(),
@@ -140,7 +140,7 @@ class BaseCurrentSessionAssistantTest {
                 randomString(),
                 new HashMap<>()
         );
-        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(TestsPropertiesConstants.HARDWARE_MONITORING_CONFIGS);
@@ -152,9 +152,9 @@ class BaseCurrentSessionAssistantTest {
         verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
-        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.email());
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.name());
+        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(user.getUsername()));
+        assertThat(currentClientUser.getEmail()).isEqualTo(user.email());
+        assertThat(currentClientUser.getName()).isEqualTo(user.name());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).hasSize(1);
         assertThat(currentClientUser.getAttributes()).containsOnlyKeys("hardware");

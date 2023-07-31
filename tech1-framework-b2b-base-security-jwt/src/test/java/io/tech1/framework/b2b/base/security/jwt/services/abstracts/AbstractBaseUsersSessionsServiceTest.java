@@ -95,11 +95,6 @@ class AbstractBaseUsersSessionsServiceTest {
                     this.userAgentDetailsUtility()
             ) {
                 @Override
-                public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
-
-                }
-
-                @Override
                 public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
 
                 }
@@ -332,5 +327,18 @@ class AbstractBaseUsersSessionsServiceTest {
 
         // Assert
         verify(this.anyDbUsersSessionsRepository).delete(sessionId);
+    }
+
+    @Test
+    void deleteAllExceptCurrentTest() {
+        // Arrange
+        var username = entity(Username.class);
+        var cookie = entity(CookieRefreshToken.class);
+
+        // Act
+        this.componentUnderTest.deleteAllExceptCurrent(username, cookie);
+
+        // Assert
+        verify(this.anyDbUsersSessionsRepository).deleteByUsernameExceptSessionIdEqualsRefreshToken(username, cookie);
     }
 }

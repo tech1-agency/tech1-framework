@@ -23,4 +23,5 @@ public interface AnyDbUsersSessionsRepository {
     void delete(UserSessionId sessionId);
     long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds);
     void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken);
+    void deleteByUsernameExceptSessionIdEqualsRefreshToken(Username username, CookieRefreshToken cookie);
 }

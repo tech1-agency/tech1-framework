@@ -91,6 +91,11 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteById(jwtRefreshToken.value());
     }
 
+    @Transactional
+    default void deleteByUsernameExceptSessionIdEqualsRefreshToken(Username username, CookieRefreshToken cookie) {
+        this.deleteByUsernameExceptSessionId(username, cookie.value());
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
@@ -106,4 +111,9 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     @Modifying
     @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.username IN :usernames")
     void deleteByUsernames(@Param("usernames") Set<Username> usernames);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.username = :username AND s.id != :sessionId")
+    void deleteByUsernameExceptSessionId(@Param("username") Username username, @Param("sessionId") String sessionId);
 }

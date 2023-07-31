@@ -1,5 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
@@ -12,9 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
+import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -57,5 +63,28 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
 
         // Assert
         assertThat(this.usersSessionsRepository.count()).isEqualTo(2);
+    }
+
+    @Test
+    void deleteByUsernameExceptSessionIdEqualsRefreshTokenTest() {
+        // Arrange
+        var session1 = new MongoDbUserSession(new JwtRefreshToken("token1"), TECH1, randomUserRequestMetadata());
+        var session2 = new MongoDbUserSession(new JwtRefreshToken("token2"), TECH1, randomUserRequestMetadata());
+        var session3 = new MongoDbUserSession(new JwtRefreshToken("token3"), TECH1, randomUserRequestMetadata());
+        var session4 = new MongoDbUserSession(new JwtRefreshToken("token4"), Username.of("admin"), randomUserRequestMetadata());
+        this.usersSessionsRepository.saveAll(List.of(session1, session2, session3, session4));
+
+        // Act
+        var count1 = this.usersSessionsRepository.count();
+        this.usersSessionsRepository.deleteByUsernameExceptSessionIdEqualsRefreshToken(TECH1, new CookieRefreshToken("token2"));
+        var count2 = this.usersSessionsRepository.count();
+        var sessions = this.usersSessionsRepository.findAll();
+
+        assertThat(count1).isEqualTo(4);
+        assertThat(count2).isEqualTo(2);
+        var usernames = sessions.stream().map(MongoDbUserSession::getUsername).collect(Collectors.toSet());
+        var tokens = sessions.stream().map(session -> session.getJwtRefreshToken().value()).collect(Collectors.toSet());
+        assertThat(usernames).isEqualTo(Set.of(TECH1, Username.of("admin")));
+        assertThat(tokens).isEqualTo(Set.of("token2", "token4"));
     }
 }

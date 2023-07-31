@@ -130,36 +130,6 @@ class MongoBaseUsersSessionsServiceTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    void deleteAllExceptCurrentTest() {
-        // Arrange
-        var username = entity(Username.class);
-        var cookie = entity(CookieRefreshToken.class);
-        var session1 = new MongoDbUserSession(new JwtRefreshToken("session1"), randomUsername(), entity(UserRequestMetadata.class));
-        var session2 = new MongoDbUserSession(new JwtRefreshToken("session2"), randomUsername(), entity(UserRequestMetadata.class));
-        var session3 = new MongoDbUserSession(new JwtRefreshToken("session3"), randomUsername(), entity(UserRequestMetadata.class));
-        var session4 = new MongoDbUserSession(new JwtRefreshToken("session4"), randomUsername(), entity(UserRequestMetadata.class));
-        var sessions = new ArrayList<>(List.of(session1, session2, session3, session4));
-        when(this.mongoUsersSessionsRepository.findByUsername(username)).thenReturn(sessions);
-        when(this.mongoUsersSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken())).thenReturn(session3);
-
-        // Act
-        this.componentUnderTest.deleteAllExceptCurrent(username, cookie);
-
-        // Assert
-        verify(this.mongoUsersSessionsRepository).findByUsername(username);
-        verify(this.mongoUsersSessionsRepository).findByRefreshToken(cookie.getJwtRefreshToken());
-        var sessionsAC = ArgumentCaptor.forClass(List.class);
-        verify(this.mongoUsersSessionsRepository).deleteAll(sessionsAC.capture());
-        assertThat(sessionsAC.getValue()).hasSize(3);
-        assertThat(((List<MongoDbUserSession>) sessionsAC.getValue()).stream().map(MongoDbUserSession::getId).collect(Collectors.toSet())).containsExactlyInAnyOrder(
-                "session1",
-                "session2",
-                "session4"
-        );
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
     void deleteAllExceptCurrentAsSuperuserTest() {
         // Arrange
         var cookie = entity(CookieRefreshToken.class);

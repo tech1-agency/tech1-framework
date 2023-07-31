@@ -89,6 +89,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteById(jwtRefreshToken.value());
     }
 
+    default void deleteByUsernameExceptSessionIdEqualsRefreshToken(Username username, CookieRefreshToken cookie) {
+        this.deleteByUsernameExceptSessionId(username, cookie.value());
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
@@ -107,4 +111,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
     void deleteByUsernames(Set<Username> usernames);
+
+    @Query(value = "{ 'username': ?0, 'id': { $ne: ?1 } }", delete = true)
+    void deleteByUsernameExceptSessionId(Username username, String sessionId);
 }

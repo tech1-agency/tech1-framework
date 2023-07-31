@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.random;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
@@ -10,6 +11,8 @@ import java.util.List;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbRandomUtility.*;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 
 @UtilityClass
 public class MongoSecurityJwtDbDummies {
@@ -64,5 +67,13 @@ public class MongoSecurityJwtDbDummies {
                 sessionByOwner("admin"),
                 sessionByOwner("admin")
         );
+    }
+
+    public static List<MongoDbUserSession> dummyUserSessionsData2() {
+        var session1 = new MongoDbUserSession(new JwtRefreshToken("token1"), TECH1, randomUserRequestMetadata());
+        var session2 = new MongoDbUserSession(new JwtRefreshToken("token2"), TECH1, randomUserRequestMetadata());
+        var session3 = new MongoDbUserSession(new JwtRefreshToken("token3"), TECH1, randomUserRequestMetadata());
+        var session4 = new MongoDbUserSession(new JwtRefreshToken("token4"), Username.of("admin"), randomUserRequestMetadata());
+        return List.of(session1, session2, session3, session4);
     }
 }

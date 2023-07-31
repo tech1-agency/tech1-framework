@@ -1,24 +1,23 @@
-package io.tech1.framework.b2b.mongodb.security.jwt.services;
+package io.tech1.framework.b2b.postgres.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
+import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
-public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsService {
+public class PostgresBaseUsersSessionsService extends AbstractBaseUsersSessionsService {
 
     @Autowired
-    public MongoBaseUsersSessionsService(
+    public PostgresBaseUsersSessionsService(
             SecurityJwtPublisher securityJwtPublisher,
-            MongoUsersSessionsRepository usersSessionsRepository,
+            PostgresUsersSessionsRepository usersSessionsRepository,
             GeoLocationFacadeUtility geoLocationFacadeUtility,
             SecurityJwtTokenUtils securityJwtTokenUtils,
             UserAgentDetailsUtility userAgentDetailsUtility

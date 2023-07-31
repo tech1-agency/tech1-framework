@@ -1,12 +1,9 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
-import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,16 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData1;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData2;
 import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith({ SpringExtension.class })
@@ -75,11 +69,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     @Test
     void deleteByUsernameExceptSessionIdEqualsRefreshTokenTest() {
         // Arrange
-        var session1 = new PostgresDbUserSession(new JwtRefreshToken("token1"), TECH1, randomUserRequestMetadata());
-        var session2 = new PostgresDbUserSession(new JwtRefreshToken("token2"), TECH1, randomUserRequestMetadata());
-        var session3 = new PostgresDbUserSession(new JwtRefreshToken("token3"), TECH1, randomUserRequestMetadata());
-        var session4 = new PostgresDbUserSession(new JwtRefreshToken("token4"), Username.of("admin"), randomUserRequestMetadata());
-        this.usersSessionsRepository.saveAll(List.of(session1, session2, session3, session4));
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -93,5 +83,23 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         var tokens = sessions.stream().map(session -> session.getJwtRefreshToken().value()).collect(Collectors.toSet());
         assertThat(usernames).isEqualTo(Set.of(TECH1, Username.of("admin")));
         assertThat(tokens).isEqualTo(Set.of("token2", "token4"));
+    }
+
+    @Test
+    void deleteExceptSessionIdTest() {
+        // Arrange
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData2());
+
+        // Act
+        var count1 = this.usersSessionsRepository.count();
+        this.usersSessionsRepository.deleteExceptSessionIdEqualsRefreshToken(new CookieRefreshToken("token2"));
+        var count2 = this.usersSessionsRepository.count();
+        var sessions = this.usersSessionsRepository.findAll();
+
+        assertThat(count1).isEqualTo(4);
+        assertThat(count2).isEqualTo(1);
+        var session = sessions.get(0);
+        assertThat(session.getUsername()).isEqualTo(TECH1);
+        assertThat(session.getJwtRefreshToken().value()).isEqualTo("token2");
     }
 }

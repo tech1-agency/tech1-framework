@@ -160,4 +160,9 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
         this.anyDbUsersSessionsRepository.deleteByUsernameExceptSessionIdEqualsRefreshToken(username, cookie);
     }
+
+    @Override
+    public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
+        this.anyDbUsersSessionsRepository.deleteExceptSessionIdEqualsRefreshToken(cookie);
+    }
 }

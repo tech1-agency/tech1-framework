@@ -93,12 +93,7 @@ class AbstractBaseUsersSessionsServiceTest {
                     this.geoLocationFacadeUtility(),
                     this.securityJwtTokenUtils(),
                     this.userAgentDetailsUtility()
-            ) {
-                @Override
-                public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
-
-                }
-            };
+            ) {};
         }
     }
 
@@ -340,5 +335,17 @@ class AbstractBaseUsersSessionsServiceTest {
 
         // Assert
         verify(this.anyDbUsersSessionsRepository).deleteByUsernameExceptSessionIdEqualsRefreshToken(username, cookie);
+    }
+
+    @Test
+    void deleteAllExceptCurrentAsSuperuserTest() {
+        // Arrange
+        var cookie = entity(CookieRefreshToken.class);
+
+        // Act
+        this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(cookie);
+
+        // Assert
+        verify(this.anyDbUsersSessionsRepository).deleteExceptSessionIdEqualsRefreshToken(cookie);
     }
 }

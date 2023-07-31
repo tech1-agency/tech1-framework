@@ -11,6 +11,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.Tuple2;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -93,6 +94,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteByUsernameExceptSessionId(username, cookie.value());
     }
 
+    default void deleteExceptSessionIdEqualsRefreshToken(CookieRefreshToken cookie) {
+        this.deleteExceptSessionId(cookie.value());
+    }
+
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
@@ -114,4 +119,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
 
     @Query(value = "{ 'username': ?0, 'id': { $ne: ?1 } }", delete = true)
     void deleteByUsernameExceptSessionId(Username username, String sessionId);
+
+    @Query(value = "{ 'id': { $ne: ?0 } }", delete = true)
+    void deleteExceptSessionId(@Param("sessionId") String sessionId);
 }

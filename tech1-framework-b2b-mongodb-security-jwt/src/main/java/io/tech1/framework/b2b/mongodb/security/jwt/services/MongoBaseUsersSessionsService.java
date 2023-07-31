@@ -1,49 +1,30 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
-import static java.util.Objects.isNull;
-
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsService {
 
-    // Publishers
-    private final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
     private final MongoUsersSessionsRepository usersSessionsRepository;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
-    private final SecurityJwtTokenUtils securityJwtTokenUtils;
     private final UserAgentDetailsUtility userAgentDetailsUtility;
 
     @Autowired
@@ -61,36 +42,9 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
                 securityJwtTokenUtils,
                 userAgentDetailsUtility
         );
-        this.securityJwtPublisher = securityJwtPublisher;
         this.usersSessionsRepository = usersSessionsRepository;
         this.geoLocationFacadeUtility = geoLocationFacadeUtility;
-        this.securityJwtTokenUtils = securityJwtTokenUtils;
         this.userAgentDetailsUtility = userAgentDetailsUtility;
-    }
-
-    @Override
-    public JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
-        var username = user.username();
-        var oldUserSession = this.usersSessionsRepository.findByRefreshToken(oldJwtRefreshToken);
-        var newUserSession = new MongoDbUserSession(
-                newJwtRefreshToken,
-                username,
-                oldUserSession.getRequestMetadata()
-        );
-        this.usersSessionsRepository.save(newUserSession);
-        this.usersSessionsRepository.delete(oldUserSession);
-        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                new EventSessionAddUserRequestMetadata(
-                        username,
-                        user.email(),
-                        newUserSession.userSessionId(),
-                        getClientIpAddr(httpServletRequest),
-                        new UserAgentHeader(httpServletRequest),
-                        false,
-                        true
-                )
-        );
-        return newUserSession.getJwtRefreshToken();
     }
 
     @Override

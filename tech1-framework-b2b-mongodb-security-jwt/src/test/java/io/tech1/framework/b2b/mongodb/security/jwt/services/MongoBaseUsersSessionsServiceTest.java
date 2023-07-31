@@ -130,40 +130,6 @@ class MongoBaseUsersSessionsServiceTest {
     }
 
     @Test
-    void refreshTest() {
-        // Arrange
-        var httpServletRequest = mock(HttpServletRequest.class);
-        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
-        var jwtUser = entity(JwtUser.class);
-        var username = jwtUser.username();
-        var oldJwtRefreshToken = entity(JwtRefreshToken.class);
-        var newJwtRefreshToken = entity(JwtRefreshToken.class);
-        var oldUserSession = new MongoDbUserSession(oldJwtRefreshToken, randomUsername(), entity(UserRequestMetadata.class));
-        when(this.mongoUsersSessionsRepository.findByRefreshToken(oldJwtRefreshToken)).thenReturn(oldUserSession);
-
-        // Act
-        var jwtRefreshToken = this.componentUnderTest.refresh(jwtUser, oldJwtRefreshToken, newJwtRefreshToken, httpServletRequest);
-
-        // Assert
-        verify(this.mongoUsersSessionsRepository).findByRefreshToken(oldJwtRefreshToken);
-        var saveCaptor = ArgumentCaptor.forClass(MongoDbUserSession.class);
-        verify(this.mongoUsersSessionsRepository).save(saveCaptor.capture());
-        var newUserSession = saveCaptor.getValue();
-        assertThat(newUserSession.getUsername()).isEqualTo(username);
-        assertThat(newUserSession.getJwtRefreshToken()).isEqualTo(newJwtRefreshToken);
-        assertThat(newUserSession.getRequestMetadata()).isEqualTo(oldUserSession.getRequestMetadata());
-        verify(this.mongoUsersSessionsRepository).delete(oldUserSession);
-        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
-        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
-        var event = eventAC.getValue();
-        assertThat(event.username()).isEqualTo(username);
-        assertThat(event.userSessionId()).isEqualTo(newUserSession.userSessionId());
-        assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
-        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
-        assertThat(jwtRefreshToken).isEqualTo(newUserSession.getJwtRefreshToken());
-    }
-
-    @Test
     void saveUserRequestMetadataTest() {
         // Arrange
         var event = entity(EventSessionAddUserRequestMetadata.class);

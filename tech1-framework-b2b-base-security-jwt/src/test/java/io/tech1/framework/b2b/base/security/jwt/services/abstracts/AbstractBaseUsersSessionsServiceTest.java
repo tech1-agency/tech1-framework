@@ -95,11 +95,6 @@ class AbstractBaseUsersSessionsServiceTest {
                     this.userAgentDetailsUtility()
             ) {
                 @Override
-                public JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
-                    return null;
-                }
-
-                @Override
                 public Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
                     return null;
                 }
@@ -234,6 +229,40 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(event.userSessionId()).isEqualTo(savedUserSessionId);
         assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
+    }
+
+    @Test
+    void refreshTest() {
+        // Arrange
+        var httpServletRequest = mock(HttpServletRequest.class);
+        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
+        var jwtUser = entity(JwtUser.class);
+        var username = jwtUser.username();
+        var oldJwtRefreshToken = entity(JwtRefreshToken.class);
+        var newJwtRefreshToken = entity(JwtRefreshToken.class);
+        var oldUserSession = new AnyDbUserSession(new UserSessionId(oldJwtRefreshToken.value()), randomUsername(), entity(UserRequestMetadata.class), oldJwtRefreshToken);
+        when(this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(oldJwtRefreshToken)).thenReturn(oldUserSession);
+
+        // Act
+        var jwtRefreshToken = this.componentUnderTest.refresh(jwtUser, oldJwtRefreshToken, newJwtRefreshToken, httpServletRequest);
+
+        // Assert
+        verify(this.anyDbUsersSessionsRepository).findByRefreshTokenAsAny(oldJwtRefreshToken);
+        var saveCaptor = ArgumentCaptor.forClass(AnyDbUserSession.class);
+        verify(this.anyDbUsersSessionsRepository).saveAs(saveCaptor.capture());
+        var newUserSession = saveCaptor.getValue();
+        assertThat(newUserSession.username()).isEqualTo(username);
+        assertThat(newUserSession.jwtRefreshToken()).isEqualTo(newJwtRefreshToken);
+        assertThat(newUserSession.metadata()).isEqualTo(oldUserSession.metadata());
+        verify(this.anyDbUsersSessionsRepository).delete(oldUserSession.id());
+        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.username()).isEqualTo(username);
+        assertThat(event.userSessionId()).isEqualTo(newUserSession.id());
+        assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
+        assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
+        assertThat(jwtRefreshToken).isEqualTo(newUserSession.jwtRefreshToken());
     }
 
     @Test

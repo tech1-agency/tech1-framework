@@ -76,6 +76,32 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
+    public JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
+        var username = user.username();
+        var oldUserSession = this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(oldJwtRefreshToken);
+        var newUserSession = new AnyDbUserSession(
+                UserSessionId.of(newJwtRefreshToken.value()),
+                username,
+                oldUserSession.metadata(),
+                newJwtRefreshToken
+        );
+        this.anyDbUsersSessionsRepository.saveAs(newUserSession);
+        this.anyDbUsersSessionsRepository.delete(oldUserSession.id());
+        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
+                new EventSessionAddUserRequestMetadata(
+                        username,
+                        user.email(),
+                        newUserSession.id(),
+                        getClientIpAddr(httpServletRequest),
+                        new UserAgentHeader(httpServletRequest),
+                        false,
+                        true
+                )
+        );
+        return newUserSession.jwtRefreshToken();
+    }
+
+    @Override
     public SessionsExpiredTable getExpiredSessions(Set<Username> usernames) {
         var usersSessions = this.anyDbUsersSessionsRepository.findByUsernameInAsAny(usernames);
         List<Tuple3<Username, UserRequestMetadata, JwtRefreshToken>> expiredSessions = new ArrayList<>();

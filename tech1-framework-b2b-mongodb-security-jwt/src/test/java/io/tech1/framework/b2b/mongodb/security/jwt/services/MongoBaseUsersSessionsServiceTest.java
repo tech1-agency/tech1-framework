@@ -312,18 +312,6 @@ class MongoBaseUsersSessionsServiceTest {
         assertThat(sessionsValidatedTuple2.expiredSessions().get(0).a().identifier()).isEqualTo("multiuser43");
     }
 
-    @Test
-    void deleteByIdTest() {
-        // Arrange
-        var sessionId = entity(UserSessionId.class);
-
-        // Act
-        this.componentUnderTest.deleteById(sessionId);
-
-        // Assert
-        verify(this.mongoUsersSessionsRepository).deleteById(sessionId.value());
-    }
-
     @SuppressWarnings("unchecked")
     @Test
     void deleteAllExceptCurrentTest() {

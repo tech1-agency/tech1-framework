@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
+import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
@@ -18,7 +18,6 @@ import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,22 +34,43 @@ import static java.util.Objects.isNull;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MongoBaseUsersSessionsService implements BaseUsersSessionsService {
+public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsService {
 
     // Publishers
     private final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
-    private final MongoUsersSessionsRepository mongoUsersSessionsRepository;
+    private final MongoUsersSessionsRepository usersSessionsRepository;
     // Utilities
     private final GeoLocationFacadeUtility geoLocationFacadeUtility;
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
     private final UserAgentDetailsUtility userAgentDetailsUtility;
 
+    @Autowired
+    public MongoBaseUsersSessionsService(
+            SecurityJwtPublisher securityJwtPublisher,
+            MongoUsersSessionsRepository usersSessionsRepository,
+            GeoLocationFacadeUtility geoLocationFacadeUtility,
+            SecurityJwtTokenUtils securityJwtTokenUtils,
+            UserAgentDetailsUtility userAgentDetailsUtility
+    ) {
+        super(
+                securityJwtPublisher,
+                usersSessionsRepository,
+                geoLocationFacadeUtility,
+                securityJwtTokenUtils,
+                userAgentDetailsUtility
+        );
+        this.securityJwtPublisher = securityJwtPublisher;
+        this.usersSessionsRepository = usersSessionsRepository;
+        this.geoLocationFacadeUtility = geoLocationFacadeUtility;
+        this.securityJwtTokenUtils = securityJwtTokenUtils;
+        this.userAgentDetailsUtility = userAgentDetailsUtility;
+    }
+
     @Override
     public void save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var userSession = this.mongoUsersSessionsRepository.findByRefreshToken(jwtRefreshToken);
+        var userSession = this.usersSessionsRepository.findByRefreshToken(jwtRefreshToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
         var userRequestMetadata = UserRequestMetadata.processing(clientIpAddr);
         if (isNull(userSession)) {
@@ -62,7 +82,7 @@ public class MongoBaseUsersSessionsService implements BaseUsersSessionsService {
         } else {
             userSession.setRequestMetadata(userRequestMetadata);
         }
-        userSession = this.mongoUsersSessionsRepository.save(userSession);
+        userSession = this.usersSessionsRepository.save(userSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
@@ -79,14 +99,14 @@ public class MongoBaseUsersSessionsService implements BaseUsersSessionsService {
     @Override
     public JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var oldUserSession = this.mongoUsersSessionsRepository.findByRefreshToken(oldJwtRefreshToken);
+        var oldUserSession = this.usersSessionsRepository.findByRefreshToken(oldJwtRefreshToken);
         var newUserSession = new MongoDbUserSession(
                 newJwtRefreshToken,
                 username,
                 oldUserSession.getRequestMetadata()
         );
-        this.mongoUsersSessionsRepository.save(newUserSession);
-        this.mongoUsersSessionsRepository.delete(oldUserSession);
+        this.usersSessionsRepository.save(newUserSession);
+        this.usersSessionsRepository.delete(oldUserSession);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
@@ -106,15 +126,15 @@ public class MongoBaseUsersSessionsService implements BaseUsersSessionsService {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var requestMetadata = UserRequestMetadata.processed(geoLocation, userAgentDetails);
-        var userSession = this.mongoUsersSessionsRepository.getById(event.userSessionId());
+        var userSession = this.usersSessionsRepository.getById(event.userSessionId());
         userSession.setRequestMetadata(requestMetadata);
-        this.mongoUsersSessionsRepository.save(userSession);
+        this.usersSessionsRepository.save(userSession);
         return new Tuple2<>(userSession.userSessionId(), userSession.getRequestMetadata());
     }
 
     @Override
     public SessionsExpiredTable getExpiredSessions(Set<Username> usernames) {
-        var usersSessions = this.mongoUsersSessionsRepository.findByUsernameIn(usernames);
+        var usersSessions = this.usersSessionsRepository.findByUsernameIn(usernames);
         List<Tuple3<Username, UserRequestMetadata, JwtRefreshToken>> expiredSessions = new ArrayList<>();
         List<String> expiredOrInvalidSessionIds = new ArrayList<>();
 
@@ -146,23 +166,18 @@ public class MongoBaseUsersSessionsService implements BaseUsersSessionsService {
     }
 
     @Override
-    public void deleteById(UserSessionId sessionId) {
-        this.mongoUsersSessionsRepository.deleteById(sessionId.value());
-    }
-
-    @Override
     public void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie) {
-        var sessions = this.mongoUsersSessionsRepository.findByUsername(username);
-        var currentSession = this.mongoUsersSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        var sessions = this.usersSessionsRepository.findByUsername(username);
+        var currentSession = this.usersSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
-        this.mongoUsersSessionsRepository.deleteAll(sessions);
+        this.usersSessionsRepository.deleteAll(sessions);
     }
 
     @Override
     public void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie) {
-        var sessions = this.mongoUsersSessionsRepository.findAll();
-        var currentSession = this.mongoUsersSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());
+        var sessions = this.usersSessionsRepository.findAll();
+        var currentSession = this.usersSessionsRepository.findByRefreshToken(cookie.getJwtRefreshToken());
         sessions.removeIf(session -> session.getId().equals(currentSession.getId()));
-        this.mongoUsersSessionsRepository.deleteAll(sessions);
+        this.usersSessionsRepository.deleteAll(sessions);
     }
 }

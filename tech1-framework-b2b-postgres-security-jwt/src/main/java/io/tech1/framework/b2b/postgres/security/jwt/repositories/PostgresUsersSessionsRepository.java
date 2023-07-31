@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,6 +63,10 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default AnyDbUserSession findByRefreshTokenAnyDb(JwtRefreshToken jwtRefreshToken) {
         return this.findById(jwtRefreshToken.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
+    }
+
+    default void delete(UserSessionId sessionId) {
+        this.deleteById(sessionId.value());
     }
 
     long deleteByIdIn(List<String> ids);

@@ -4,6 +4,8 @@ import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validDefaultClaims;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
@@ -30,6 +32,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(INVALID);
         assertThat(validatedClaims.getExpirationTimestamp()).isZero();
+        assertThat(validatedClaims.authorities()).isEmpty();
     }
 
     @Test
@@ -49,6 +52,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(INVALID);
         assertThat(validatedClaims.getExpirationTimestamp()).isZero();
+        assertThat(validatedClaims.authorities()).isEmpty();
     }
 
     @RepeatedTest(10)
@@ -68,6 +72,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(TECH1);
         assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
+        assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
 
     @RepeatedTest(10)
@@ -87,5 +92,6 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(TECH1);
         assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
+        assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
 }

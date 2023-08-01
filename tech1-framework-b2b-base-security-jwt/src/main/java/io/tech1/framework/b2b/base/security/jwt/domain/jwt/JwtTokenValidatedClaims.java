@@ -2,17 +2,19 @@ package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.tech1.framework.domain.base.Username;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public record JwtTokenValidatedClaims(
         boolean valid,
         boolean isAccess,
         boolean isRefresh,
         String jwtToken,
-        @Deprecated Claims claims,
         Username username,
-        Date expirationDate
+        Date expirationDate,
+        List<SimpleGrantedAuthority> authorities
 ) {
     private static final Username INVALID = Username.of("invalid");
 
@@ -21,7 +23,7 @@ public record JwtTokenValidatedClaims(
     }
 
     public static JwtTokenValidatedClaims invalid(boolean isAccess, boolean isRefresh, String jwtToken) {
-        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, null, INVALID, new Date(0));
+        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, INVALID, new Date(0), new ArrayList<>());
     }
 
     public static JwtTokenValidatedClaims invalid(JwtAccessToken accessToken) {
@@ -35,7 +37,18 @@ public record JwtTokenValidatedClaims(
     public static JwtTokenValidatedClaims valid(boolean isAccess, boolean isRefresh, String jwtToken, Claims claims) {
         var username = Username.of(claims.getSubject());
         var expirationDate = claims.getExpiration();
-        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, claims, username, expirationDate);
+        var authorities = Arrays.stream(
+                claims.get("authorities").toString()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("{", "")
+                        .replace("}", "")
+                        .replace("authority=", "")
+                        .split(",")
+                )
+                .map(rawUserRole -> new SimpleGrantedAuthority(rawUserRole.trim()))
+                .toList();
+        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, username, expirationDate, authorities);
     }
 
     public static JwtTokenValidatedClaims valid(JwtAccessToken accessToken, Claims claims) {
@@ -56,5 +69,9 @@ public record JwtTokenValidatedClaims(
 
     public long getExpirationTimestamp() {
         return this.expirationDate.getTime();
+    }
+
+    public Set<String> authoritiesAsStrings() {
+        return this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toSet());
     }
 }

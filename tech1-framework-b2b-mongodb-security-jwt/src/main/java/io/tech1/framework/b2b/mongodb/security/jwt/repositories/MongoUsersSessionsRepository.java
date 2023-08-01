@@ -3,7 +3,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
@@ -11,24 +12,27 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.Tuple2;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
-import static java.util.Objects.nonNull;
 
 @Repository
 public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, AnyDbUsersSessionsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default boolean isPresent(JwtRefreshToken jwtRefreshToken) {
-        return nonNull(this.findByRefreshTokenAsAny(jwtRefreshToken));
+    default boolean isPresentByAccessToken(JwtAccessToken accessToken) {
+        return this.findByAccessToken(accessToken).isPresent();
+    }
+
+    default boolean isPresentByRefreshToken(JwtRefreshToken refreshToken) {
+        return this.findByRefreshToken(refreshToken).isPresent();
     }
 
     default AnyDbUserSession getById(UserSessionId sessionId) {
@@ -41,25 +45,15 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return session;
     }
 
-    default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieRefreshToken cookie) {
+    default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
                 .collect(Collectors.toList());
     }
 
-    default List<Tuple2<ResponseUserSession2, JwtRefreshToken>> findAllByCookieAsSession2(CookieRefreshToken cookie) {
+    default List<Tuple2<ResponseUserSession2, JwtAccessToken>> findAllByCookieAsSession2(CookieAccessToken cookie) {
         return this.findAll().stream()
-                .map(session ->
-                        new Tuple2<>(
-                                ResponseUserSession2.of(
-                                        session.getUsername(),
-                                        session.getRequestMetadata(),
-                                        session.getJwtRefreshToken(),
-                                        cookie
-                                ),
-                                session.getJwtRefreshToken()
-                        )
-                )
+                .map(session -> new Tuple2<>(session.responseUserSession2(cookie), session.getAccessToken()))
                 .collect(Collectors.toList());
     }
 
@@ -69,8 +63,12 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .collect(Collectors.toList());
     }
 
-    default AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
+    default AnyDbUserSession findByAccessTokenAsAny(JwtAccessToken accessToken) {
+        return this.findByAccessToken(accessToken).map(MongoDbUserSession::anyDbUserSession).orElse(null);
+    }
+
+    default AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken refreshToken) {
+        return this.findByRefreshToken(refreshToken).map(MongoDbUserSession::anyDbUserSession).orElse(null);
     }
 
     default UserSessionId saveAs(AnyDbUserSession userSession) {
@@ -86,16 +84,16 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
     }
 
-    default void deleteByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        this.deleteById(jwtRefreshToken.value());
+    default void deleteByRefreshToken(JwtRefreshToken refreshToken) {
+        this.deleteById(refreshToken.value());
     }
 
-    default void deleteByUsernameExceptSessionIdEqualsRefreshToken(Username username, CookieRefreshToken cookie) {
-        this.deleteByUsernameExceptSessionId(username, cookie.value());
+    default void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie) {
+        this.deleteByUsernameExceptAccessToken(username, cookie.getJwtAccessToken());
     }
 
-    default void deleteExceptSessionIdEqualsRefreshToken(CookieRefreshToken cookie) {
-        this.deleteExceptSessionId(cookie.value());
+    default void deleteExceptAccessToken(CookieAccessToken cookie) {
+        this.deleteExceptToken(cookie.getJwtAccessToken());
     }
 
     // ================================================================================================================
@@ -103,11 +101,8 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     List<MongoDbUserSession> findByUsername(Username username);
     List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
-
-    @Deprecated
-    default MongoDbUserSession findByRefreshToken(JwtRefreshToken jwtRefreshToken) {
-        return this.findById(jwtRefreshToken.value()).orElse(null);
-    }
+    Optional<MongoDbUserSession> findByAccessToken(JwtAccessToken accessToken);
+    Optional<MongoDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
 
     long deleteByIdIn(List<String> ids);
 
@@ -117,9 +112,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
     void deleteByUsernames(Set<Username> usernames);
 
-    @Query(value = "{ 'username': ?0, 'id': { $ne: ?1 } }", delete = true)
-    void deleteByUsernameExceptSessionId(Username username, String sessionId);
+    @Query(value = "{ 'username': ?0, 'accessToken': { $ne: ?1 } }", delete = true)
+    void deleteByUsernameExceptAccessToken(Username username, JwtAccessToken accessToken);
 
-    @Query(value = "{ 'id': { $ne: ?0 } }", delete = true)
-    void deleteExceptSessionId(@Param("sessionId") String sessionId);
+    @Query(value = "{ 'accessToken': { $ne: ?0 } }", delete = true)
+    void deleteExceptToken(JwtAccessToken accessToken);
 }

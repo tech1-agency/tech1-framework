@@ -1,5 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.tests.random;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
@@ -12,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
 @UtilityClass
@@ -62,11 +66,33 @@ public class MongoSecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions
     // =================================================================================================================
-    public static MongoDbUserSession sessionByOwner(String owner) {
-        return new MongoDbUserSession(
-                new JwtRefreshToken(randomString()),
+    // TODO [YY] migrate -> base
+    public static AnyDbUserSession anyDbUserSession(String owner) {
+        return AnyDbUserSession.ofPersisted(
+                entity(UserSessionId.class),
                 Username.of(owner),
+                entity(JwtAccessToken.class),
+                entity(JwtRefreshToken.class),
                 randomUserRequestMetadata()
         );
+    }
+
+    // TODO [YY] migrate -> base
+    public static AnyDbUserSession anyDbUserSession(String owner, String accessToken) {
+        return AnyDbUserSession.ofPersisted(
+                entity(UserSessionId.class),
+                Username.of(owner),
+                JwtAccessToken.of(accessToken),
+                entity(JwtRefreshToken.class),
+                randomUserRequestMetadata()
+        );
+    }
+
+    public static MongoDbUserSession sessionByOwner(String owner) {
+        return new MongoDbUserSession(anyDbUserSession(owner));
+    }
+
+    public static MongoDbUserSession session(Username owner, String accessToken) {
+        return new MongoDbUserSession(anyDbUserSession(owner.identifier(), accessToken));
     }
 }

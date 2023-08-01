@@ -70,10 +70,10 @@ public class MongoSecurityJwtDbDummies {
     }
 
     public static List<MongoDbUserSession> dummyUserSessionsData2() {
-        var session1 = new MongoDbUserSession(new JwtRefreshToken("token1"), TECH1, randomUserRequestMetadata());
-        var session2 = new MongoDbUserSession(new JwtRefreshToken("token2"), TECH1, randomUserRequestMetadata());
-        var session3 = new MongoDbUserSession(new JwtRefreshToken("token3"), TECH1, randomUserRequestMetadata());
-        var session4 = new MongoDbUserSession(new JwtRefreshToken("token4"), Username.of("admin"), randomUserRequestMetadata());
+        var session1 = MongoSecurityJwtDbRandomUtility.session(TECH1, "token1");
+        var session2 = MongoSecurityJwtDbRandomUtility.session(TECH1, "token2");
+        var session3 = MongoSecurityJwtDbRandomUtility.session(TECH1, "token3");
+        var session4 = MongoSecurityJwtDbRandomUtility.session(Username.of("admin"), "token4");
         return List.of(session1, session2, session3, session4);
     }
 }

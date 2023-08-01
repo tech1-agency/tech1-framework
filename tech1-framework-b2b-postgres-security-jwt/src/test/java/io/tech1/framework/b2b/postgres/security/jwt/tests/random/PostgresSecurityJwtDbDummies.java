@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
@@ -12,7 +11,6 @@ import java.util.List;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbRandomUtility.*;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 
 @UtilityClass
 public class PostgresSecurityJwtDbDummies {
@@ -70,10 +68,10 @@ public class PostgresSecurityJwtDbDummies {
     }
 
     public static List<PostgresDbUserSession> dummyUserSessionsData2() {
-        var session1 = new PostgresDbUserSession(new JwtRefreshToken("token1"), TECH1, randomUserRequestMetadata());
-        var session2 = new PostgresDbUserSession(new JwtRefreshToken("token2"), TECH1, randomUserRequestMetadata());
-        var session3 = new PostgresDbUserSession(new JwtRefreshToken("token3"), TECH1, randomUserRequestMetadata());
-        var session4 = new PostgresDbUserSession(new JwtRefreshToken("token4"), Username.of("admin"), randomUserRequestMetadata());
+        var session1 = PostgresSecurityJwtDbRandomUtility.session(TECH1, "token1");
+        var session2 = PostgresSecurityJwtDbRandomUtility.session(TECH1, "token2");
+        var session3 = PostgresSecurityJwtDbRandomUtility.session(TECH1, "token3");
+        var session4 = PostgresSecurityJwtDbRandomUtility.session(Username.of("admin"), "token4");
         return List.of(session1, session2, session3, session4);
     }
 }

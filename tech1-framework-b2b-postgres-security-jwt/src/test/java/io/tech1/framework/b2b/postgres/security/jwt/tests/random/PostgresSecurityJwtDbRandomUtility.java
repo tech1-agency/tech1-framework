@@ -1,5 +1,8 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
@@ -14,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.springframework.util.StringUtils.capitalize;
 
@@ -74,11 +78,33 @@ public class PostgresSecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions
     // =================================================================================================================
-    public static PostgresDbUserSession sessionByOwner(String owner) {
-        return new PostgresDbUserSession(
-                new JwtRefreshToken(randomString()),
+    // TODO [YY] migrate -> base
+    public static AnyDbUserSession anyDbUserSession(String owner) {
+        return AnyDbUserSession.ofPersisted(
+                entity(UserSessionId.class),
                 Username.of(owner),
+                entity(JwtAccessToken.class),
+                entity(JwtRefreshToken.class),
                 randomUserRequestMetadata()
         );
+    }
+
+    // TODO [YY] migrate -> base
+    public static AnyDbUserSession anyDbUserSession(String owner, String accessToken) {
+        return AnyDbUserSession.ofPersisted(
+                entity(UserSessionId.class),
+                Username.of(owner),
+                JwtAccessToken.of(accessToken),
+                entity(JwtRefreshToken.class),
+                randomUserRequestMetadata()
+        );
+    }
+
+    public static PostgresDbUserSession sessionByOwner(String owner) {
+        return new PostgresDbUserSession(anyDbUserSession(owner));
+    }
+
+    public static PostgresDbUserSession session(Username owner, String accessToken) {
+        return new PostgresDbUserSession(anyDbUserSession(owner.identifier(), accessToken));
     }
 }

@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
@@ -186,7 +186,7 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var username = entity(Username.class);
-        var cookie = entity(CookieRefreshToken.class);
+        var cookie = entity(CookieAccessToken.class);
         var sessionsTable = entity(ResponseUserSessionsTable.class);
         when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
         when(this.sessionRegistry.getSessionsTable(username, cookie)).thenReturn(sessionsTable);

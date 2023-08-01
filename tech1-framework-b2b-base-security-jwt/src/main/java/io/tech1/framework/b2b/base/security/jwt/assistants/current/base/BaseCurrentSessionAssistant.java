@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -20,6 +20,7 @@ import java.util.Set;
 
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -65,7 +66,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieRefreshToken cookie) {
+    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieAccessToken cookie) {
         var username = this.getCurrentUsername();
         this.sessionRegistry.cleanByExpiredRefreshTokens(Set.of(username));
         return this.sessionRegistry.getSessionsTable(username, cookie);

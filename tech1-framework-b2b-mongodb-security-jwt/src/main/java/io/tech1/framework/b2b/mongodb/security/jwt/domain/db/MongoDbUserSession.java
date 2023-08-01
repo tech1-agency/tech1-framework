@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -12,6 +13,10 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofNotPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofPersisted;
+import static java.util.Objects.nonNull;
 
 // Lombok
 @NoArgsConstructor
@@ -25,49 +30,34 @@ public class MongoDbUserSession {
     @Id
     private String id;
     private Username username;
-
-    // TODO [YY] rename -> metadata
-    private UserRequestMetadata requestMetadata;
-
-    public MongoDbUserSession(JwtRefreshToken jwtRefreshToken, Username username, UserRequestMetadata requestMetadata) {
-        this.id = jwtRefreshToken.value();
-        this.username = username;
-        this.requestMetadata = requestMetadata;
-    }
+    private JwtAccessToken accessToken;
+    private JwtRefreshToken refreshToken;
+    private UserRequestMetadata metadata;
 
     public MongoDbUserSession(AnyDbUserSession session) {
-        this.id = session.id().value();
+        if (session.persisted()) {
+            this.id = session.id().value();
+        }
         this.username = session.username();
-        this.requestMetadata = session.metadata();
-    }
-
-    @Deprecated
-    @JsonIgnore
-    @Transient
-    public JwtRefreshToken getJwtRefreshToken() {
-        return new JwtRefreshToken(this.id);
+        this.accessToken = session.accessToken();
+        this.refreshToken = session.refreshToken();
+        this.metadata = session.metadata();
     }
 
     @JsonIgnore
     @Transient
     public AnyDbUserSession anyDbUserSession() {
-        return new AnyDbUserSession(
-                new UserSessionId(this.id),
-                this.username,
-                this.requestMetadata,
-                this.getJwtRefreshToken()
-        );
+        if (nonNull(this.id)) {
+            return ofPersisted(new UserSessionId(this.id), this.username, this.accessToken, this.refreshToken, this.metadata);
+        } else {
+            return ofNotPersisted( this.username, this.accessToken, this.refreshToken, this.metadata);
+        }
     }
 
     @JsonIgnore
     @Transient
-    public ResponseUserSession2 responseUserSession2(CookieRefreshToken cookie) {
-        return ResponseUserSession2.of(
-                this.username,
-                this.requestMetadata,
-                this.getJwtRefreshToken(),
-                cookie
-        );
+    public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
+        return ResponseUserSession2.of(new UserSessionId(this.id), this.username, cookie, this.accessToken, this.metadata);
     }
 
     @JsonIgnore

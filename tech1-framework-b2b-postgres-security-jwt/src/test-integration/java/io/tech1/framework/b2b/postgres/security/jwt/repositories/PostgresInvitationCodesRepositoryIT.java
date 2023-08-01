@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
 import static org.assertj.core.api.Assertions.assertThat;
 

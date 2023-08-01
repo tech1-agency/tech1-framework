@@ -10,7 +10,7 @@ import java.util.List;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbRandomUtility.*;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 
 @UtilityClass
 public class PostgresSecurityJwtDbDummies {

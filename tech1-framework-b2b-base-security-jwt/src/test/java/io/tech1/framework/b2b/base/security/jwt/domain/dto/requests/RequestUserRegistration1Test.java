@@ -7,7 +7,7 @@ import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializat
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserRegistration1Test extends AbstractSerializationDeserializationRunner {

@@ -5,15 +5,14 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessio
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
+import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
-import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +30,7 @@ import static io.tech1.framework.domain.enums.Status.COMPLETED;
 import static io.tech1.framework.domain.enums.Status.STARTED;
 import static java.util.Objects.nonNull;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
@@ -68,45 +68,33 @@ public class BaseSecurityAuthenticationResource {
 
         var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
 
-        var jwtAccessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-        var jwtRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.baseUsersSessionsService.save(user, jwtRefreshToken, request);
+        this.baseUsersSessionsService.save(user, accessToken, refreshToken, request);
 
-        this.cookieProvider.createJwtAccessCookie(jwtAccessToken, response);
-        this.cookieProvider.createJwtRefreshCookie(jwtRefreshToken, response);
+        this.cookieProvider.createJwtAccessCookie(accessToken, response);
+        this.cookieProvider.createJwtRefreshCookie(refreshToken, response);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
 
-        this.sessionRegistry.register(
-                new Session(
-                        username,
-                        new JwtRefreshToken(jwtRefreshToken.value())
-                )
-        );
+        this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
 
         return this.currentSessionAssistant.getCurrentClientUser();
     }
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws CookieRefreshTokenNotFoundException {
-        var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
-        var refreshToken = cookieRefreshToken.value();
-        if (nonNull(refreshToken)) {
-            var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
-            var validatedClaims = this.securityJwtTokenUtils.validate(jwtRefreshToken);
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws CookieAccessTokenNotFoundException {
+        var cookie = this.cookieProvider.readJwtAccessToken(request);
+        if (nonNull(cookie.value())) {
+            var accessToken = cookie.getJwtAccessToken();
+            var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
             if (validatedClaims.valid()) {
                 var username = validatedClaims.safeGetUsername();
-                this.sessionRegistry.logout(
-                        new Session(
-                                username,
-                                jwtRefreshToken
-                        )
-                );
-
+                this.sessionRegistry.logout(username, accessToken);
                 this.cookieProvider.clearCookies(response);
                 SecurityContextHolder.clearContext();
                 var session = request.getSession(false);
@@ -120,7 +108,7 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/refreshToken")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseUserSession1 refreshToken(HttpServletRequest request, HttpServletResponse response) throws CookieUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest request, HttpServletResponse response) throws CookieUnauthorizedException {
         try {
             return this.tokensService.refreshSessionOrThrow(request, response);
         } catch (CookieRefreshTokenNotFoundException | CookieRefreshTokenInvalidException | CookieRefreshTokenExpiredException | CookieRefreshTokenDbNotFoundException ex) {

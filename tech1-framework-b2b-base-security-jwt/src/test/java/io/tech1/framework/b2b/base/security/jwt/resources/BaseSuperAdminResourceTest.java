@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
@@ -80,8 +80,8 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
                 list345(ResponseUserSession2.class),
                 list345(ResponseUserSession2.class)
         );
-        var cookie = entity(CookieRefreshToken.class);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        var cookie = entity(CookieAccessToken.class);
+        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.baseSuperAdminService.getServerSessions(cookie)).thenReturn(sessionsTable);
 
         // Act
@@ -91,7 +91,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.inactiveSessions().size())));
 
         // Assert
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.baseSuperAdminService).getServerSessions(cookie);
     }
 
@@ -114,8 +114,8 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     @Test
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
-        var cookie = entity(CookieRefreshToken.class);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        var cookie = entity(CookieAccessToken.class);
+        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
         this.mvc.perform(
@@ -125,7 +125,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

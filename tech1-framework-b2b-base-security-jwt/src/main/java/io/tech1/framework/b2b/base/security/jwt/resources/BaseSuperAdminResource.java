@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSer
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
@@ -36,8 +37,8 @@ public class BaseSuperAdminResource {
     }
 
     @GetMapping("/sessions")
-    public ResponseServerSessionsTable getServerSessions(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
+    public ResponseServerSessionsTable getServerSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
         return this.baseSuperAdminService.getServerSessions(cookie);
     }
 
@@ -48,11 +49,10 @@ public class BaseSuperAdminResource {
         this.baseUsersSessionsService.deleteById(sessionId);
     }
 
-    // WARNING: should NOT be used, under development
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtRefreshToken(httpServletRequest);
+    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

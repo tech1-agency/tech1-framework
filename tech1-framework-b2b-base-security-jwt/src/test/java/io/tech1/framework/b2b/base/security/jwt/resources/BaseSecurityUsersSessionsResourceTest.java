@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
@@ -100,8 +100,8 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
     void getCurrentUserDbSessionsTest() throws Exception {
         // Arrange
         var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
-        var cookie = entity(CookieRefreshToken.class);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        var cookie = entity(CookieAccessToken.class);
+        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie)).thenReturn(userSessionsTables);
 
         // Act
@@ -112,7 +112,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
                 .andExpect(jsonPath("$.anyProblem", instanceOf(Boolean.class)));
 
         // Assert
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.currentSessionAssistant).getCurrentUserDbSessionsTable(cookie);
     }
 
@@ -140,9 +140,9 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
         var username = entity(Username.class);
-        var cookie = entity(CookieRefreshToken.class);
+        var cookie = entity(CookieAccessToken.class);
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
         this.mvc.perform(
@@ -153,7 +153,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.baseUsersSessionsService).deleteAllExceptCurrent(username, cookie);
     }
 }

@@ -57,13 +57,13 @@ public class PostgresSecurityJwtDbDummies {
     // =================================================================================================================
     public static List<PostgresDbUserSession> dummyUserSessionsData1() {
         return List.of(
-                sessionByOwner("sa1"),
-                sessionByOwner("sa1"),
-                sessionByOwner("sa1"),
-                sessionByOwner("user1"),
-                sessionByOwner("user2"),
-                sessionByOwner("admin"),
-                sessionByOwner("admin")
+                PostgresSecurityJwtDbRandomUtility.session("sa1"),
+                PostgresSecurityJwtDbRandomUtility.session("sa1"),
+                PostgresSecurityJwtDbRandomUtility.session("sa1"),
+                PostgresSecurityJwtDbRandomUtility.session("user1"),
+                PostgresSecurityJwtDbRandomUtility.session("user2"),
+                PostgresSecurityJwtDbRandomUtility.session("admin"),
+                PostgresSecurityJwtDbRandomUtility.session("admin")
         );
     }
 

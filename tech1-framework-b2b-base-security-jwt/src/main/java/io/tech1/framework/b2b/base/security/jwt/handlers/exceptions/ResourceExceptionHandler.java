@@ -25,6 +25,7 @@ public class ResourceExceptionHandler {
             CookieAccessTokenNotFoundException.class,
             CookieAccessTokenInvalidException.class,
             CookieAccessTokenExpiredException.class,
+            CookieAccessTokenDbNotFoundException.class,
             CookieRefreshTokenNotFoundException.class,
             CookieRefreshTokenInvalidException.class,
             CookieRefreshTokenExpiredException.class,

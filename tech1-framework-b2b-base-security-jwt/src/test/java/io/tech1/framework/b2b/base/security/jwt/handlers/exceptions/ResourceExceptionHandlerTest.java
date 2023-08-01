@@ -47,6 +47,7 @@ class ResourceExceptionHandlerTest {
                 Arguments.of(new CookieAccessTokenNotFoundException()),
                 Arguments.of(new CookieAccessTokenInvalidException()),
                 Arguments.of(new CookieAccessTokenExpiredException(randomUsername())),
+                Arguments.of(new CookieAccessTokenDbNotFoundException(randomUsername())),
                 Arguments.of(new CookieRefreshTokenNotFoundException()),
                 Arguments.of( new CookieRefreshTokenInvalidException()),
                 Arguments.of(new CookieRefreshTokenExpiredException(randomUsername())),

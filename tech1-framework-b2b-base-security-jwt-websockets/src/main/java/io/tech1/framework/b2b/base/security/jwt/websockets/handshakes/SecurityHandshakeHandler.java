@@ -17,6 +17,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import java.security.Principal;
 import java.util.Map;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -37,11 +38,10 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
             var request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
             var cookieAccessToken = this.cookieProvider.readJwtAccessToken(request);
             var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
-            var tuple2 = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
-            var currentJwtUser = tuple2.a();
-            return new UsernamePasswordAuthenticationToken(currentJwtUser, null, currentJwtUser.getAuthorities());
-        } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException |
-                 CookieAccessTokenInvalidException | CookieRefreshTokenInvalidException | CookieAccessTokenExpiredException ex) {
+            var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+            return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException | CookieAccessTokenInvalidException |
+                 CookieRefreshTokenInvalidException | CookieAccessTokenExpiredException | CookieAccessTokenDbNotFoundException ex) {
             throw new IllegalArgumentException("WebSocket user not determined. Exception: " + ex.getMessage());
         }
     }

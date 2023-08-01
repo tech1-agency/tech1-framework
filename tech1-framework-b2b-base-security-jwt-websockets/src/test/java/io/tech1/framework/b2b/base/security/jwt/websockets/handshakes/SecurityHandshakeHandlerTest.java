@@ -3,11 +3,9 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.domain.exceptions.cookie.*;
-import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -103,7 +101,7 @@ class SecurityHandshakeHandlerTest {
 
     @ParameterizedTest
     @MethodSource("determineUserExceptionTest")
-    void determineUserExceptionTest(Exception exception) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException {
+    void determineUserExceptionTest(Exception exception) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
@@ -129,20 +127,19 @@ class SecurityHandshakeHandlerTest {
     }
 
     @Test
-    void determineUserTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException {
+    void determineUserTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
-        var jwtUser = entity(JwtUser.class);
-        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var user = entity(JwtUser.class);
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
         var cookieAccessToken = entity(CookieAccessToken.class);
         var cookieRefreshToken = entity(CookieRefreshToken.class);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(new Tuple2<>(jwtUser, jwtRefreshToken));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(user);
 
         // Act
         var actual = this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes);
@@ -152,6 +149,6 @@ class SecurityHandshakeHandlerTest {
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         assertThat(actual).isNotNull();
-        assertThat(actual.getName()).isEqualTo(jwtUser.getUsername());
+        assertThat(actual.getName()).isEqualTo(user.getUsername());
     }
 }

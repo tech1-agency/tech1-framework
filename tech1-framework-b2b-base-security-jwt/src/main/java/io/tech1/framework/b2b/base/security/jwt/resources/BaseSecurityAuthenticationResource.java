@@ -93,7 +93,7 @@ public class BaseSecurityAuthenticationResource {
             var accessToken = cookie.getJwtAccessToken();
             var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
             if (validatedClaims.valid()) {
-                var username = validatedClaims.safeGetUsername();
+                var username = validatedClaims.username();
                 this.sessionRegistry.logout(username, accessToken);
                 this.cookieProvider.clearCookies(response);
                 SecurityContextHolder.clearContext();

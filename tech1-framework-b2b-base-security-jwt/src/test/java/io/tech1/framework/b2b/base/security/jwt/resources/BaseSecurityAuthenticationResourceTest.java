@@ -194,7 +194,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
-        when(this.securityJwtTokenUtils.validate(cookie.getJwtAccessToken())).thenReturn(JwtTokenValidatedClaims.valid(accessToken, claims));
+        var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
+        when(this.securityJwtTokenUtils.validate(cookie.getJwtAccessToken())).thenReturn(validatedClaims);
 
         // Act
         this.mvc.perform(
@@ -225,7 +226,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
-        when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.valid(accessToken, claims));
+        var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
+        when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
 
         // Act
         this.mvc.perform(

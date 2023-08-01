@@ -42,7 +42,6 @@ public class BaseSuperAdminResource {
         return this.baseSuperAdminService.getServerSessions(cookie);
     }
 
-    // WARNING: should NOT be used, under development
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {

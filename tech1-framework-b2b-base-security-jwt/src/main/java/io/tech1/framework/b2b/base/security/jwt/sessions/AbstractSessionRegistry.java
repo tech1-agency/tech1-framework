@@ -75,7 +75,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
 
     @Override
     public void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken) {
-        this.sessions.removeIf(session -> session.username().equals(username) && session.refreshToken().equals(oldRefreshToken));
+        this.sessions.removeIf(session -> session.refreshToken().equals(oldRefreshToken));
         var newSession = new Session(username, newAccessToken, newRefreshToken);
         var added = this.sessions.add(newSession);
         if (added) {
@@ -89,7 +89,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
 
         var sessionOpt = this.sessions.stream()
-                .filter(session -> session.username().equals(username) && session.accessToken().equals(accessToken))
+                .filter(session -> session.accessToken().equals(accessToken))
                 .findFirst();
 
         if (sessionOpt.isPresent()) {
@@ -114,15 +114,14 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
         var sessionsValidatedTuple2 = this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames);
 
-        sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {
-            var username = tuple2.a();
-            var accessToken = tuple2.b();
-            var refreshToken = tuple2.c();
-            var metadata = tuple2.d();
+        sessionsValidatedTuple2.expiredSessions().forEach(tuple -> {
+            var username = tuple.a();
+            var refreshToken = tuple.b();
+            var metadata = tuple.c();
 
             LOGGER.debug(SESSION_REGISTRY_EXPIRE_SESSION, username);
             var sessionOpt = this.sessions.stream()
-                    .filter(session -> session.username().equals(username) && (session.accessToken().equals(accessToken) || session.refreshToken().equals(refreshToken)))
+                    .filter(session -> session.refreshToken().equals(refreshToken))
                     .findFirst();
 
             if (sessionOpt.isPresent()) {

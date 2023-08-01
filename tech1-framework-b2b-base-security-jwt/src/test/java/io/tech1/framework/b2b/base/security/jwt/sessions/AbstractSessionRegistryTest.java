@@ -305,7 +305,7 @@ class AbstractSessionRegistryTest {
         var dbUserSession2 = entity(AnyDbUserSession.class);
         var dbUserSession3 = entity(AnyDbUserSession.class);
         var sessionsExpiredTable = new SessionsExpiredTable(
-                List.of(new Tuple4<>(username3, session3.accessToken(), session3.refreshToken(), dbUserSession3.metadata())),
+                List.of(new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())),
                 List.of(dbUserSession1.id(), dbUserSession2.id())
         );
         var usernames = Set.of(username1, username2, username3);

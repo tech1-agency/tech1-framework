@@ -15,7 +15,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.tuples.Tuple4;
+import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.AccessLevel;
@@ -108,7 +108,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
         var usersSessions = this.anyDbUsersSessionsRepository.findByUsernameInAsAny(usernames);
-        List<Tuple4<Username, JwtAccessToken, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
+        List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
         List<UserSessionId> expiredOrInvalidSessionIds = new ArrayList<>();
 
         usersSessions.forEach(userSession -> {
@@ -120,9 +120,8 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 if (isExpired) {
                     expiredOrInvalidSessionIds.add(sessionId);
                     expiredSessions.add(
-                            new Tuple4<>(
+                            new Tuple3<>(
                                     validatedClaims.username(),
-                                    userSession.accessToken(),
                                     userSession.refreshToken(),
                                     userSession.metadata()
                             )

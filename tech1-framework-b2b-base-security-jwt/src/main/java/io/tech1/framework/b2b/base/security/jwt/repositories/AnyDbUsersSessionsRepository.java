@@ -12,6 +12,7 @@ import io.tech1.framework.domain.tuples.Tuple2;
 import java.util.List;
 import java.util.Set;
 
+// TODO [YY] add unit tests
 public interface AnyDbUsersSessionsRepository {
     boolean isPresentByAccessToken(JwtAccessToken accessToken);
     boolean isPresentByRefreshToken(JwtRefreshToken refreshToken);

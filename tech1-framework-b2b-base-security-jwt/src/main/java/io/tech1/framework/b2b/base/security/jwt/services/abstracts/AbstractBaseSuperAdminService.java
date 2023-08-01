@@ -29,6 +29,7 @@ public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminSer
     public List<ResponseInvitationCode> findUnused() {
         var invitationCodes = this.anyDbInvitationCodesRepository.findUnused();
         // WARNING: consider migrate sorting -> database
+        // TODO [YY] add sorting to database
         invitationCodes.sort(INVITATION_CODE_1);
         return invitationCodes;
     }

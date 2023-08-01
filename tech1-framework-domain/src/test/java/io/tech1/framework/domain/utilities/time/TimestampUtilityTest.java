@@ -52,11 +52,16 @@ class TimestampUtilityTest {
         );
     }
 
-    // TODO [YY] copy isBetweenTest
     private static Stream<Arguments> isBetweenInclusiveTest() {
         return Stream.of(
-                Arguments.of(2, 1, 3, true),
-                Arguments.of(2, 2, 3, true)
+                Arguments.of(1, 0, 2, true),
+                Arguments.of(1, 1, 2, true),
+                Arguments.of(1, 2, 2, false),
+                Arguments.of(1, 0, 1, true),
+                Arguments.of(1, 0, 0, false),
+                Arguments.of(1, 1, 1, true),
+                Arguments.of(1, -3, -2, false),
+                Arguments.of(1, 2, 3, false)
         );
     }
 

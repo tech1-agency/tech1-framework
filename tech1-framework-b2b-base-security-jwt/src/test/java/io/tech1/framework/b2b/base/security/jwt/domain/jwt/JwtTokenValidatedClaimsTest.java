@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validDefaultClaims;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -57,7 +58,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.authorities()).isEmpty();
     }
 
-    @RepeatedTest(10)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validAccessTokenTest() {
         // Arrange
         var token = entity(JwtAccessToken.class);
@@ -79,7 +80,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
 
-    @RepeatedTest(10)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validRefreshTokenTest() {
         // Arrange
         var token = entity(JwtRefreshToken.class);

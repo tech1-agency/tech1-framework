@@ -5,13 +5,14 @@ import org.junit.jupiter.api.RepeatedTest;
 
 import java.util.List;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 @Slf4j
 class PartitionsTest {
 
-    @RepeatedTest(10)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void integrationTest() {
         // Arrange
         var values = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);

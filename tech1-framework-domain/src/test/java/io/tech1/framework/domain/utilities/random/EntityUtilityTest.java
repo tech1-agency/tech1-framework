@@ -1,10 +1,10 @@
 package io.tech1.framework.domain.utilities.random;
 
 import io.tech1.framework.domain.tests.classes.*;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.one;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -170,7 +170,7 @@ class EntityUtilityTest {
         assertThat(random.getChild2().getNest2Value2()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void list345Test() {
         // Act
         var set = list345(Long.class);
@@ -180,7 +180,7 @@ class EntityUtilityTest {
         assertThat(set.size()).isBetween(1, 6);
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void set345Test() {
         // Act
         var set = set345(Long.class);

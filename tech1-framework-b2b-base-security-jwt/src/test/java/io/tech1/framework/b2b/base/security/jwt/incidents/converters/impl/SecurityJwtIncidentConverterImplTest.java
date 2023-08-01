@@ -24,8 +24,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.constants.StringConstants.NO_FLAG;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UK;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UK;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -76,7 +76,7 @@ class SecurityJwtIncidentConverterImplTest {
                 .containsEntry("incidentType", "Authentication Login")
                 .containsEntry("username", username)
                 .containsEntry("browser", "[?]")
-                .containsEntry("countryFlag", NO_FLAG)
+                .containsEntry("countryFlag", FLAG_UNKNOWN)
                 .containsEntry("ipAddress", "8.8.8.8")
                 .containsEntry("what", "[?], [?] on [?]")
                 .containsEntry("where", "Unknown, Unknown")
@@ -105,7 +105,7 @@ class SecurityJwtIncidentConverterImplTest {
                 .containsEntry("incidentType", "Authentication Login")
                 .containsEntry("username", username)
                 .containsEntry("browser", "[?]")
-                .containsEntry("countryFlag", NO_FLAG)
+                .containsEntry("countryFlag", FLAG_UNKNOWN)
                 .containsEntry("ipAddress", "127.0.0.1")
                 .containsEntry("what", "—")
                 .containsEntry("where", "Processing...Please wait!");

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUserSessionsData2;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.TECH1;
+import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

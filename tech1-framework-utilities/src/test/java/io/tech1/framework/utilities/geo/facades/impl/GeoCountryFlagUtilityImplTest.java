@@ -1,7 +1,5 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
-import io.tech1.framework.domain.constants.StringConstants;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +18,7 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -29,12 +28,12 @@ class GeoCountryFlagUtilityImplTest {
 
     private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
-                Arguments.of(null, null, StringConstants.NO_FLAG),
-                Arguments.of("Ukraine", "UA", TestsConstants.FLAG_UKRAINE),
-                Arguments.of("Portugal", "PT", TestsConstants.FLAG_PORTUGAL),
-                Arguments.of("United States", "US", TestsConstants.FLAG_USA),
-                Arguments.of(UNKNOWN, UNKNOWN, StringConstants.NO_FLAG),
-                Arguments.of(UNDEFINED, UNDEFINED, StringConstants.NO_FLAG)
+                Arguments.of(null, null, FLAG_UNKNOWN),
+                Arguments.of("Ukraine", "UA", FLAG_UKRAINE),
+                Arguments.of("Portugal", "PT", FLAG_PORTUGAL),
+                Arguments.of("United States", "US", FLAG_USA),
+                Arguments.of(UNKNOWN, UNKNOWN, FLAG_UNKNOWN),
+                Arguments.of(UNDEFINED, UNDEFINED, FLAG_UNKNOWN)
         );
     }
 

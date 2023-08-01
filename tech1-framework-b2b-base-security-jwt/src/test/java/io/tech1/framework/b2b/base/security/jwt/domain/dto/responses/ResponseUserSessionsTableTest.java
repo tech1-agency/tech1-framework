@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UK;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_USA;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UK;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_USA;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import static io.tech1.framework.domain.constants.StringConstants.NO_FLAG;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.ok;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
@@ -60,7 +60,7 @@ public class UserRequestMetadata {
         if (this.status.isCompleted()) {
             return new Tuple3<>(this.geoLocation.getIpAddr(), this.geoLocation.getCountryFlag(), this.geoLocation.getWhere());
         } else {
-            return new Tuple3<>(this.geoLocation.getIpAddr(), NO_FLAG, "Processing...Please wait!");
+            return new Tuple3<>(this.geoLocation.getIpAddr(), FLAG_UNKNOWN, "Processing...Please wait!");
         }
     }
 

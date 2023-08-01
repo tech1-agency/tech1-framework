@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.FLAG_UKRAINE;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UKRAINE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomFeignException;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPAddress;
 import static org.assertj.core.api.Assertions.catchThrowable;

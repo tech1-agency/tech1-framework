@@ -21,11 +21,4 @@ public class TestsConstants {
     // Standard Time; EET: Eastern European Time; UTC+2
     public static final TimeZone EET_TIME_ZONE = TimeZone.getTimeZone("Europe/Kiev");
     public static final ZoneId EET_ZONE_ID = ZoneId.of("Europe/Kiev");
-
-    // Flags
-    // TODO [YY] migrate -> TestsFlagsConstants
-    public static final String FLAG_UKRAINE = "🇺🇦";
-    public static final String FLAG_PORTUGAL = "🇵🇹";
-    public static final String FLAG_UK = "🇬🇧";
-    public static final String FLAG_USA = "🇺🇸";
 }

@@ -12,7 +12,6 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsR
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -40,6 +39,7 @@ import java.util.List;
 import java.util.Set;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
@@ -158,7 +158,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.a()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.b()).isEqualTo(StringConstants.NO_FLAG);
+        assertThat(whereTuple3.b()).isEqualTo(FLAG_UNKNOWN);
         assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
@@ -202,7 +202,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.a()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.b()).isEqualTo(StringConstants.NO_FLAG);
+        assertThat(whereTuple3.b()).isEqualTo(FLAG_UNKNOWN);
         assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);

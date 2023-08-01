@@ -6,25 +6,20 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCode
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.accessDenied;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {
 
     // Repositories
     protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
-
-    protected AbstractBaseInvitationCodesRequestsValidator(
-            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
-    ) {
-        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
-    }
 
     @Override
     public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams requestNewInvitationCodeParams) {

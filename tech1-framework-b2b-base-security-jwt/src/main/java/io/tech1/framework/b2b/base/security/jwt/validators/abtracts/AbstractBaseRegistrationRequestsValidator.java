@@ -9,11 +9,14 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepositor
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 import static java.util.Objects.nonNull;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseRegistrationRequestsValidator implements BaseRegistrationRequestsValidator {
 
     // Publishers
@@ -22,18 +25,6 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     // Repositories
     protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
     protected final AnyDbUsersRepository mongoUsersRepository;
-
-    protected AbstractBaseRegistrationRequestsValidator(
-            SecurityJwtPublisher securityJwtPublisher,
-            SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
-            AnyDbUsersRepository mongoUsersRepository
-    ) {
-        this.securityJwtPublisher = securityJwtPublisher;
-        this.securityJwtIncidentPublisher = securityJwtIncidentPublisher;
-        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
-        this.mongoUsersRepository = mongoUsersRepository;
-    }
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {

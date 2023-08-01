@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
@@ -73,11 +74,12 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     void validateDeleteByIdOkTest() {
         // Arrange
         var username = entity(Username.class);
-        var session = new AnyDbUserSession(
+        var session = AnyDbUserSession.ofPersisted(
                 entity(UserSessionId.class),
                 username,
-                randomUserRequestMetadata(),
-                entity(JwtRefreshToken.class)
+                entity(JwtAccessToken.class),
+                entity(JwtRefreshToken.class),
+                randomUserRequestMetadata()
         );
         when(this.usersSessionsRepository.requirePresence(session.id())).thenReturn(session);
 

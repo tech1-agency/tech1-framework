@@ -12,5 +12,4 @@ public interface SecurityJwtTokenUtils {
     String createJwtToken(JwtTokenCreationParams creationParams, TimeAmount timeAmount);
     JwtTokenValidatedClaims validate(JwtAccessToken jwtAccessToken);
     JwtTokenValidatedClaims validate(JwtRefreshToken jwtRefreshToken);
-    boolean isExpired(JwtTokenValidatedClaims jwtTokenValidatedClaims);
 }

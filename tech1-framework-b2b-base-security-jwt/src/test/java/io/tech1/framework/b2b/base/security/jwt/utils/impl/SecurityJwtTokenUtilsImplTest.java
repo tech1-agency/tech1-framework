@@ -29,13 +29,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
+import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static java.time.temporal.ChronoUnit.*;
@@ -73,7 +71,7 @@ class SecurityJwtTokenUtilsImplTest {
 
     private static Stream<Arguments> isExpiredTest() {
         return Stream.of(
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo1", false),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo1", true),
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo", false),
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.p9gNAWxL-vi81zy7ECfqqDnjQ7GfvhyDMJyKJ4iBQys", false),
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpYXQiOjE2NDE5MzE4MjYsImV4cCI6MTY0MTkzMTgzNn0.EhKtfHCgOGrJEGR0G8czSHf1T6MywDYIKYpxlxV8GxI", true)
@@ -134,76 +132,65 @@ class SecurityJwtTokenUtilsImplTest {
     @Test
     void createJwtAccessTokenTest() {
         // Arrange
-        var expectedUsername = Username.of("multiuser43");
-        var authorities = Arrays.asList(
-                new SimpleGrantedAuthority(TestAuthority.ADMIN.getValue()),
-                new SimpleGrantedAuthority(TestAuthority.USER.getValue())
-        );
-        var creationParams = new JwtTokenCreationParams(expectedUsername, authorities, randomZoneId());
-        var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+        var username = Username.of("multiuser43");
+        var authorities = authorities("admin", "user");
+        var creationParams = new JwtTokenCreationParams(username, authorities, randomZoneId());
 
         // Act
-        var jwtAccessToken = this.componentUnderTest.createJwtAccessToken(creationParams);
+        var accessToken = this.componentUnderTest.createJwtAccessToken(creationParams);
 
         // Assert
-        var validatedClaims = this.componentUnderTest.validate(jwtAccessToken);
-        assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
-        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        var validatedClaims = this.componentUnderTest.validate(accessToken);
+        assertThat(validatedClaims.username()).isEqualTo(username);
         var zoneId = creationParams.zoneId();
-        var timeAmount = accessToken.getExpiration();
+        var timeAmount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.expirationDate()).isBeforeOrEqualTo(expiration);
     }
 
     @Test
     void createJwtRefreshTokenTest() {
         // Arrange
         var expectedUsername = Username.of("multiuser43");
-        var authorities = Arrays.asList(
-                new SimpleGrantedAuthority(TestAuthority.ADMIN.getValue()),
-                new SimpleGrantedAuthority(TestAuthority.USER.getValue())
-        );
+        var authorities = authorities("admin", "user");
         var creationParams = new JwtTokenCreationParams(expectedUsername, authorities, randomZoneId());
-        var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
-        var jwtRefreshToken = this.componentUnderTest.createJwtRefreshToken(creationParams);
+        var refreshToken = this.componentUnderTest.createJwtRefreshToken(creationParams);
 
         // Assert
-        var validatedClaims = this.componentUnderTest.validate(jwtRefreshToken);
-        assertThat(validatedClaims.safeGetUsername()).isEqualTo(expectedUsername);
-        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        var validatedClaims = this.componentUnderTest.validate(refreshToken);
+        assertThat(validatedClaims.username()).isEqualTo(expectedUsername);
         var zoneId = creationParams.zoneId();
-        var timeAmount = refreshToken.getExpiration();
+        var timeAmount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.expirationDate()).isBeforeOrEqualTo(expiration);
     }
 
     @ParameterizedTest
     @MethodSource("createJwtTokenTest")
     void createJwtTokenTest(TimeAmount timeAmount) {
         // Arrange
-        var creationParams = new JwtTokenCreationParams(randomUsername(), List.of(), randomZoneId());
+        var creationParams = new JwtTokenCreationParams(TECH1, authorities("user"), randomZoneId());
 
         // Act
         var jwtToken = this.componentUnderTest.createJwtToken(creationParams, timeAmount);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        assertThat(validatedClaims.safeGetUsername()).isEqualTo(creationParams.username());
-        assertThat(validatedClaims.claims().getIssuedAt()).isBeforeOrEqualTo(new Date());
+        assertThat(validatedClaims.username()).isEqualTo(TECH1);
         var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
         );
-        assertThat(validatedClaims.claims().getExpiration()).isBeforeOrEqualTo(expiration);
+        assertThat(validatedClaims.expirationDate()).isBeforeOrEqualTo(expiration);
     }
 
     @ParameterizedTest
@@ -218,38 +205,39 @@ class SecurityJwtTokenUtilsImplTest {
         assertThat(accessValidatedClaims.jwtToken()).isEqualTo(jwtToken);
         assertThat(accessValidatedClaims.isAccess()).isTrue();
         assertThat(accessValidatedClaims.isRefresh()).isFalse();
+        assertThat(accessValidatedClaims.authorities()).isEmpty();
 
         assertThat(refreshValidatedClaims.valid()).isEqualTo(expected);
         assertThat(refreshValidatedClaims.jwtToken()).isEqualTo(jwtToken);
         assertThat(refreshValidatedClaims.isAccess()).isFalse();
         assertThat(refreshValidatedClaims.isRefresh()).isTrue();
+        assertThat(refreshValidatedClaims.authorities()).isEmpty();
     }
 
     @ParameterizedTest
     @MethodSource("isExpiredTest")
     void isExpiredTest(String jwtToken, boolean expected) {
         // Act
-        var jwtTokenValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        var actualExpired = this.componentUnderTest.isExpired(jwtTokenValidatedClaims);
+        var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
 
         // Assert
-        assertThat(actualExpired).isEqualTo(expected);
+        assertThat(validatedClaims.isExpired()).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("getUsernameByClaimsTest")
     void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
         // Act
-        var jwtTokenValidatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        var actualUsername = jwtTokenValidatedClaims.safeGetUsername();
+        var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
 
         // Assert
-        assertThat(actualUsername).isEqualTo(expectedUsername);
+        assertThat(validatedClaims.username()).isEqualTo(expectedUsername);
+        assertThat(validatedClaims.authorities()).isEmpty();
     }
 
     @ParameterizedTest
     @MethodSource("versionsTests")
-    void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> expectedAuthorities) throws ParseException {
+    void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> authorities) throws ParseException {
         // Arrange
         var sdf = new SimpleDateFormat(TestsConstants.DEFAULT_DATE_FORMAT_PATTERN);
         sdf.setTimeZone(TestsConstants.EET_TIME_ZONE);
@@ -258,19 +246,9 @@ class SecurityJwtTokenUtilsImplTest {
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
 
         // Assert
-        var claims = validatedClaims.claims();
-        assertThat(claims.getIssuedAt()).isEqualTo(sdf.parse(expectedIssuedAt));
-        assertThat(claims.getExpiration()).isEqualTo(sdf.parse(expectedExpiration));
-        var actualAuthorities = Arrays.stream(claims.get("authorities").toString()
-                        .replace("[", "")
-                        .replace("]", "")
-                        .replace("{", "")
-                        .replace("}", "")
-                        .replace("authority=", "")
-                        .split(","))
-                .map(rawUserRole -> new SimpleGrantedAuthority(rawUserRole.trim()))
-                .collect(Collectors.toList());
-        assertThat(actualAuthorities).isEqualTo(expectedAuthorities);
+        assertThat(validatedClaims.issuedAt()).isEqualTo(sdf.parse(expectedIssuedAt));
+        assertThat(validatedClaims.expirationDate()).isEqualTo(sdf.parse(expectedExpiration));
+        assertThat(validatedClaims.authorities()).isEqualTo(authorities);
     }
 
 }

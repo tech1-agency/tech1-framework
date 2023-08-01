@@ -7,12 +7,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 public record JwtTokenValidatedClaims(
         boolean valid,
         boolean isAccess,
         boolean isRefresh,
         String jwtToken,
         Username username,
+        Date issuedAt,
         Date expirationDate,
         List<SimpleGrantedAuthority> authorities
 ) {
@@ -23,7 +26,7 @@ public record JwtTokenValidatedClaims(
     }
 
     public static JwtTokenValidatedClaims invalid(boolean isAccess, boolean isRefresh, String jwtToken) {
-        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, INVALID, new Date(0), new ArrayList<>());
+        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, INVALID, new Date(0), new Date(0), new ArrayList<>());
     }
 
     public static JwtTokenValidatedClaims invalid(JwtAccessToken accessToken) {
@@ -36,19 +39,26 @@ public record JwtTokenValidatedClaims(
 
     public static JwtTokenValidatedClaims valid(boolean isAccess, boolean isRefresh, String jwtToken, Claims claims) {
         var username = Username.of(claims.getSubject());
+        var issuedAt = claims.getIssuedAt();
         var expirationDate = claims.getExpiration();
-        var authorities = Arrays.stream(
-                claims.get("authorities").toString()
-                        .replace("[", "")
-                        .replace("]", "")
-                        .replace("{", "")
-                        .replace("}", "")
-                        .replace("authority=", "")
-                        .split(",")
-                )
-                .map(rawUserRole -> new SimpleGrantedAuthority(rawUserRole.trim()))
-                .toList();
-        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, username, expirationDate, authorities);
+        List<SimpleGrantedAuthority> authorities;
+        var claimsAuthoritiesAttribute = claims.get("authorities");
+        if (nonNull(claimsAuthoritiesAttribute)) {
+            authorities = Arrays.stream(
+                            claimsAuthoritiesAttribute.toString()
+                                    .replace("[", "")
+                                    .replace("]", "")
+                                    .replace("{", "")
+                                    .replace("}", "")
+                                    .replace("authority=", "")
+                                    .split(",")
+                    )
+                    .map(rawUserRole -> new SimpleGrantedAuthority(rawUserRole.trim()))
+                    .toList();
+        } else {
+            authorities = new ArrayList<>();
+        }
+        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, username, issuedAt, expirationDate, authorities);
     }
 
     public static JwtTokenValidatedClaims valid(JwtAccessToken accessToken, Claims claims) {

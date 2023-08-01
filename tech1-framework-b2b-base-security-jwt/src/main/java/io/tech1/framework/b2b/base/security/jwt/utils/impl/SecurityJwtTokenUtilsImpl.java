@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.Date;
 import java.util.UUID;
 
+import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 
@@ -65,7 +65,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setClaims(claims)
-                .setIssuedAt(this.getIssuedAt())
+                .setIssuedAt(getIssuedAt())
                 .setExpiration(convertLocalDateTime(expiration, zoneId))
                 .signWith(SignatureAlgorithm.HS256, this.base64EncodedSecretKey)
                 .compact();
@@ -81,22 +81,13 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
         return this.validate(jwtRefreshToken.value(), false, true);
     }
 
-    @Override
-    public boolean isExpired(JwtTokenValidatedClaims jwtTokenValidatedClaims) {
-        return jwtTokenValidatedClaims.valid() && this.getIssuedAt().after(jwtTokenValidatedClaims.claims().getExpiration());
-    }
-
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private Date getIssuedAt() {
-        return new Date();
-    }
-
     private JwtTokenValidatedClaims validate(String jwtToken, boolean isAccess, boolean isRefresh) {
         try {
-            var claims = Jwts.parser().setSigningKey(this.base64EncodedSecretKey).parseClaimsJws(jwtToken);
-            return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims.getBody());
+            var claims = Jwts.parser().setSigningKey(this.base64EncodedSecretKey).parseClaimsJws(jwtToken).getBody();
+            return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims);
         } catch (ExpiredJwtException ex1) {
             LOGGER.error("JWT token expired", ex1);
             return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, ex1.getClaims());

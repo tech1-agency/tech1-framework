@@ -31,6 +31,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isRefresh()).isFalse();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(INVALID);
+        assertThat(validatedClaims.issuedAt().getTime()).isZero();
         assertThat(validatedClaims.getExpirationTimestamp()).isZero();
         assertThat(validatedClaims.authorities()).isEmpty();
     }
@@ -51,6 +52,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isRefresh()).isTrue();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(INVALID);
+        assertThat(validatedClaims.issuedAt().getTime()).isZero();
         assertThat(validatedClaims.getExpirationTimestamp()).isZero();
         assertThat(validatedClaims.authorities()).isEmpty();
     }
@@ -71,6 +73,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isRefresh()).isFalse();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
         assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
         assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
@@ -91,6 +94,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isRefresh()).isTrue();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
         assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
         assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }

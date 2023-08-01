@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -67,7 +68,12 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         // Act
         this.mvc.perform(get("/superadmin/invitationCodes/unused").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(codes.size())));
+                .andExpect(jsonPath("$", hasSize(codes.size())))
+                .andExpect(jsonPath("$.[0].id", notNullValue()))
+                .andExpect(jsonPath("$.[0].owner", notNullValue()))
+                .andExpect(jsonPath("$.[0].authorities", notNullValue()))
+                .andExpect(jsonPath("$.[0].value", notNullValue()))
+                .andExpect(jsonPath("$.[0].invited", notNullValue()));
 
         // Assert
         verify(this.baseSuperAdminService).findUnused();
@@ -88,7 +94,27 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         this.mvc.perform(get("/superadmin/sessions").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activeSessions", hasSize(sessionsTable.activeSessions().size())))
-                .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.inactiveSessions().size())));
+                .andExpect(jsonPath("$.activeSessions.[0].id", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].who", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].current", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].activity", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].exception", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].ipAddr", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].countryFlag", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].where", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].browser", notNullValue()))
+                .andExpect(jsonPath("$.activeSessions.[0].what", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions", hasSize(sessionsTable.inactiveSessions().size())))
+                .andExpect(jsonPath("$.inactiveSessions.[0].id", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].who", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].current", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].activity", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].exception", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].ipAddr", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].countryFlag", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].where", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].browser", notNullValue()))
+                .andExpect(jsonPath("$.inactiveSessions.[0].what", notNullValue()));
 
         // Assert
         verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));

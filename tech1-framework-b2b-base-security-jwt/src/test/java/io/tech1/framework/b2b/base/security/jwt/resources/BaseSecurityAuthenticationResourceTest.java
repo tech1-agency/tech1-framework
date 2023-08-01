@@ -40,6 +40,7 @@ import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -131,7 +132,11 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", equalTo(currentClientUser.getUsername().identifier())))
-                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())));
+                .andExpect(jsonPath("$.email", equalTo(currentClientUser.getEmail().value())))
+                .andExpect(jsonPath("$.name", equalTo(currentClientUser.getName())))
+                .andExpect(jsonPath("$.zoneId", equalTo(currentClientUser.getZoneId().getId())))
+                .andExpect(jsonPath("$.authorities", notNullValue()))
+                .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
         verify(this.baseAuthenticationRequestsValidator).validateLoginRequest(requestUserLogin);
@@ -281,6 +286,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.accessToken", equalTo(userSession1.accessToken().value())))
                 .andExpect(jsonPath("$.refreshToken", equalTo(userSession1.refreshToken().value())));
 
         // Assert

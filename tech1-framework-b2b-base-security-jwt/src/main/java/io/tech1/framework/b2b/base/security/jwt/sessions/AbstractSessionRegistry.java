@@ -73,7 +73,6 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         }
     }
 
-    // TODO [YY] add tests
     @Override
     public void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken) {
         this.sessions.removeIf(session -> session.username().equals(username) && session.refreshToken().equals(oldRefreshToken));
@@ -120,10 +119,12 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             var accessToken = tuple2.b();
             var refreshToken = tuple2.c();
             var metadata = tuple2.d();
+
             LOGGER.debug(SESSION_REGISTRY_EXPIRE_SESSION, username);
             var sessionOpt = this.sessions.stream()
                     .filter(session -> session.username().equals(username) && (session.accessToken().equals(accessToken) || session.refreshToken().equals(refreshToken)))
                     .findFirst();
+
             if (sessionOpt.isPresent()) {
                 var session = sessionOpt.get();
                 this.sessions.remove(session);

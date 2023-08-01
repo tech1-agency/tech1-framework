@@ -4,11 +4,14 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionExpired;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefreshed;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
@@ -17,8 +20,10 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
+import io.tech1.framework.domain.tuples.Tuple4;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -219,26 +224,24 @@ class AbstractSessionRegistryTest {
         verify(this.securityJwtPublisher, times(3)).publishAuthenticationLogin(new EventAuthenticationLogin(TECH1));
     }
 
-    // TODO [YY]
-//    @Test
-//    void renewTest() {
-//        // Arrange
-//        var username = Username.of("incident");
-//
-//        // Act
-//        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, entity(JwtRefreshToken.class)));
-//        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, entity(JwtRefreshToken.class)));
-//
-//        var duplicatedJwtRefreshToken = entity(JwtRefreshToken.class);
-//        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, duplicatedJwtRefreshToken));
-//        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, duplicatedJwtRefreshToken));
-//        this.componentUnderTest.renew(new Session(username, entity(JwtRefreshToken.class)), new Session(username, duplicatedJwtRefreshToken));
-//
-//        // Assert
-//        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(1);
-//        assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-//        verify(this.securityJwtPublisher, times(3)).publishSessionRefreshed(any(EventSessionRefreshed.class));
-//    }
+    @Test
+    void renewTest() {
+        // Act
+        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+
+        var duplicatedAccessToken = entity(JwtAccessToken.class);
+        var duplicatedRefreshToken = entity(JwtRefreshToken.class);
+        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
+
+        // Assert
+        assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
+        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("tech1"));
+        verify(this.securityJwtPublisher, times(3)).publishSessionRefreshed(any(EventSessionRefreshed.class));
+    }
 
     @Test
     void logoutDbUserSessionPresentTest() throws NoSuchFieldException, IllegalAccessException {
@@ -284,49 +287,50 @@ class AbstractSessionRegistryTest {
         assertThat(incidentAC.getValue().username()).isEqualTo(TECH1);
     }
 
-//    @Test
-//    void cleanByExpiredRefreshTokensEnabledTest() throws NoSuchFieldException, IllegalAccessException {
-//        // Arrange
-//        var username1 = Username.of("username1");
-//        var username2 = Username.of("username2");
-//        var username3 = Username.of("username3");
-//        var session1 = new Session(username1, entity(JwtRefreshToken.class));
-//        var session2 = new Session(username2, entity(JwtRefreshToken.class));
-//        var session3 = new Session(username3, entity(JwtRefreshToken.class));
-//        Set<Session> sessions = ConcurrentHashMap.newKeySet();
-//        sessions.add(session1);
-//        sessions.add(session2);
-//        sessions.add(session3);
-//        setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
-//        var dbUserSession1 = entity(AnyDbUserSession.class);
-//        var dbUserSession2 = entity(AnyDbUserSession.class);
-//        var dbUserSession3 = entity(AnyDbUserSession.class);
-//        var sessionsExpiredTable = new SessionsExpiredTable(
-//                List.of(new Tuple3<>(username1, dbUserSession3.metadata(), dbUserSession3.jwtRefreshToken())),
-//                List.of(dbUserSession1.id(), dbUserSession2.id())
-//        );
-//        var usernames = Set.of(username1, username2, username3);
-//        when(this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames)).thenReturn(sessionsExpiredTable);
-//
-//        // Act
-//        this.componentUnderTest.cleanByExpiredRefreshTokens(usernames);
-//
-//        // Assert
-//        verify(this.baseUsersSessionsService).getExpiredRefreshTokensSessions(usernames);
-//        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).hasSize(3);
-//        assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(3);
-//        var eseCaptor = ArgumentCaptor.forClass(EventSessionExpired.class);
-//        verify(this.securityJwtPublisher).publishSessionExpired(eseCaptor.capture());
-//        var eventSessionExpired = eseCaptor.getValue();
-//        assertThat(eventSessionExpired.session().username()).isEqualTo(username1);
-//        assertThat(eventSessionExpired.session().refreshToken()).isEqualTo(dbUserSession3.jwtRefreshToken());
-//        var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
-//        verify(this.securityJwtIncidentPublisher).publishSessionExpired(seiCaptor.capture());
-//        var sessionExpiredIncident = seiCaptor.getValue();
-//        assertThat(sessionExpiredIncident.username()).isEqualTo(username1);
-//        assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.metadata());
-//        verify(this.anyDbUsersSessionsRepository).deleteByUsersSessionsIds(List.of(dbUserSession1.id(), dbUserSession2.id()));
-//    }
+    @Test
+    void cleanByExpiredRefreshTokensEnabledTest() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        var username1 = Username.of("username1");
+        var username2 = Username.of("username2");
+        var username3 = Username.of("username3");
+        var session1 = new Session(username1, entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        var session2 = new Session(username2, entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        var session3 = new Session(username3, entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        Set<Session> sessions = ConcurrentHashMap.newKeySet();
+        sessions.add(session1);
+        sessions.add(session2);
+        sessions.add(session3);
+        setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
+        var dbUserSession1 = entity(AnyDbUserSession.class);
+        var dbUserSession2 = entity(AnyDbUserSession.class);
+        var dbUserSession3 = entity(AnyDbUserSession.class);
+        var sessionsExpiredTable = new SessionsExpiredTable(
+                List.of(new Tuple4<>(username3, session3.accessToken(), session3.refreshToken(), dbUserSession3.metadata())),
+                List.of(dbUserSession1.id(), dbUserSession2.id())
+        );
+        var usernames = Set.of(username1, username2, username3);
+        when(this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames)).thenReturn(sessionsExpiredTable);
+
+        // Act
+        this.componentUnderTest.cleanByExpiredRefreshTokens(usernames);
+
+        // Assert
+        verify(this.baseUsersSessionsService).getExpiredRefreshTokensSessions(usernames);
+        assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(2);
+        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("username1", "username2"));
+        var eseCaptor = ArgumentCaptor.forClass(EventSessionExpired.class);
+        verify(this.securityJwtPublisher).publishSessionExpired(eseCaptor.capture());
+        var eventSessionExpired = eseCaptor.getValue();
+        assertThat(eventSessionExpired.session().username()).isEqualTo(username3);
+        assertThat(eventSessionExpired.session().accessToken()).isEqualTo(session3.accessToken());
+        assertThat(eventSessionExpired.session().refreshToken()).isEqualTo(session3.refreshToken());
+        var seiCaptor = ArgumentCaptor.forClass(IncidentSessionExpired.class);
+        verify(this.securityJwtIncidentPublisher).publishSessionExpired(seiCaptor.capture());
+        var sessionExpiredIncident = seiCaptor.getValue();
+        assertThat(sessionExpiredIncident.username()).isEqualTo(username3);
+        assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.metadata());
+        verify(this.anyDbUsersSessionsRepository).deleteByUsersSessionsIds(List.of(dbUserSession1.id(), dbUserSession2.id()));
+    }
 
     @Test
     void getSessionsTableTest() {

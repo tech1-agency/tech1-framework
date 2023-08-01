@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implements SecurityJwtSubscriber {
@@ -38,7 +39,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onAuthenticationLogout(EventAuthenticationLogout event) {
-        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGOUT, this.getType(), event.session().username());
+        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGOUT, this.getType(), event.username());
     }
 
     @Override

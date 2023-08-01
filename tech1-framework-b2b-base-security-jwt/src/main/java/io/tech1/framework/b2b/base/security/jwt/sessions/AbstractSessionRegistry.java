@@ -87,16 +87,9 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     @Override
     public void logout(Username username, JwtAccessToken accessToken) {
         LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
-
-        var sessionOpt = this.sessions.stream()
-                .filter(session -> session.accessToken().equals(accessToken))
-                .findFirst();
-
-        if (sessionOpt.isPresent()) {
-            var session = sessionOpt.get();
-            this.sessions.remove(session);
-
-            this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
+        var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
+        if (removed) {
+            this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
 
             var dbUserSession = this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(accessToken);
 

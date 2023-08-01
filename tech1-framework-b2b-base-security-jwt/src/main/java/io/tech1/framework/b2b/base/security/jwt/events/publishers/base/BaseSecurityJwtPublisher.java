@@ -33,7 +33,7 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
 
     @Override
     public void publishAuthenticationLogout(EventAuthenticationLogout event) {
-        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGOUT, this.getType(), event.session().username());
+        LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGOUT, this.getType(), event.username());
         this.applicationEventPublisher.publishEvent(event);
     }
 

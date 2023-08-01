@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -122,30 +121,29 @@ class TokensServiceImplTest {
     }
 
     @Test
-    void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
+    void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException {
         // Arrange
         var cookieAccessToken = entity(CookieAccessToken.class);
         var cookieRefreshToken = entity(CookieRefreshToken.class);
-        var jwtAccessToken = cookieAccessToken.getJwtAccessToken();
-        var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
-        var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(jwtAccessToken, randomValidDefaultClaims());
-        var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(jwtRefreshToken, randomValidDefaultClaims());
-        var jwtUser = entity(JwtUser.class);
-        when(this.tokensContextThrowerService.verifyValidityOrThrow(jwtAccessToken)).thenReturn(accessTokenValidatedClaims);
-        when(this.tokensContextThrowerService.verifyValidityOrThrow(jwtRefreshToken)).thenReturn(refreshTokenValidatedClaims);
-        when(this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(jwtUser);
+        var accessToken = cookieAccessToken.getJwtAccessToken();
+        var refreshToken = cookieRefreshToken.getJwtRefreshToken();
+        var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(accessToken, randomValidDefaultClaims());
+        var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(refreshToken, randomValidDefaultClaims());
+        var user = entity(JwtUser.class);
+        when(this.tokensContextThrowerService.verifyValidityOrThrow(accessToken)).thenReturn(accessTokenValidatedClaims);
+        when(this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken)).thenReturn(refreshTokenValidatedClaims);
+        when(this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(user);
 
         // Act
-        var tuple2 = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+        var actual = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
 
         // Assert
-        verify(this.tokensContextThrowerService).verifyValidityOrThrow(jwtAccessToken);
-        verify(this.tokensContextThrowerService).verifyValidityOrThrow(jwtRefreshToken);
+        verify(this.tokensContextThrowerService).verifyValidityOrThrow(accessToken);
+        verify(this.tokensContextThrowerService).verifyValidityOrThrow(refreshToken);
         verify(this.tokensContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
+        verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(accessToken, accessTokenValidatedClaims);
         verify(this.jwtUserDetailsService).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
-        assertThat(tuple2).isNotNull();
-        assertThat(tuple2.a()).isEqualTo(jwtUser);
-        assertThat(tuple2.b()).isEqualTo(jwtRefreshToken);
+        assertThat(actual).isEqualTo(user);
     }
 
     @Test
@@ -154,44 +152,31 @@ class TokensServiceImplTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var oldCookieRefreshToken = new CookieRefreshToken(randomString());
-        var oldJwtRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
-        var validatedClaims = JwtTokenValidatedClaims.valid(oldJwtRefreshToken, randomValidDefaultClaims());
+        var oldRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
+        var validatedClaims = JwtTokenValidatedClaims.valid(oldRefreshToken, randomValidDefaultClaims());
         var user = entity(JwtUser.class);
-        var jwtAccessToken = entity(JwtAccessToken.class);
-        var newJwtRefreshToken = entity(JwtRefreshToken.class);
-        var jwtRefreshToken = entity(JwtRefreshToken.class);
+        var accessToken = entity(JwtAccessToken.class);
+        var newRefreshToken = entity(JwtRefreshToken.class);
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
-        when(this.tokensContextThrowerService.verifyValidityOrThrow(oldJwtRefreshToken)).thenReturn(validatedClaims);
-        when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken)).thenReturn(user);
-        when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(jwtAccessToken);
-        when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newJwtRefreshToken);
-        when(this.baseUsersSessionsService.refresh(user, oldCookieRefreshToken.getJwtRefreshToken(), newJwtRefreshToken, request)).thenReturn(jwtRefreshToken);
+        when(this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken)).thenReturn(validatedClaims);
+        when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims)).thenReturn(user);
+        when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
+        when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newRefreshToken);
 
         // Act
         var responseUserSession1 = this.componentUnderTest.refreshSessionOrThrow(request, response);
 
         // Assert
         verify(this.cookieProvider).readJwtRefreshToken(request);
-        verify(this.tokensContextThrowerService).verifyValidityOrThrow(oldJwtRefreshToken);
+        verify(this.tokensContextThrowerService).verifyValidityOrThrow(oldRefreshToken);
         verify(this.tokensContextThrowerService).verifyRefreshTokenExpirationOrThrow(validatedClaims);
-        verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(validatedClaims, oldJwtRefreshToken);
+        verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims);
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
-        verify(this.cookieProvider).createJwtAccessCookie(jwtAccessToken, response);
-        verify(this.cookieProvider).createJwtRefreshCookie(newJwtRefreshToken, response);
-        var oldSessionAC = ArgumentCaptor.forClass(Session.class);
-        var newSessionAC = ArgumentCaptor.forClass(Session.class);
-        verify(this.sessionRegistry).renew(oldSessionAC.capture(), newSessionAC.capture());
-        var oldSession = oldSessionAC.getValue();
-        assertThat(oldSession).isNotNull();
-        assertThat(oldSession.username()).isEqualTo(user.username());
-        assertThat(oldSession.refreshToken().value()).isEqualTo(oldJwtRefreshToken.value());
-        var newSession = newSessionAC.getValue();
-        assertThat(newSession).isNotNull();
-        assertThat(newSession.username()).isEqualTo(user.username());
-        assertThat(newSession.refreshToken().value()).isEqualTo(newJwtRefreshToken.value());
-        assertThat(responseUserSession1).isNotNull();
-        assertThat(responseUserSession1.refreshToken()).isEqualTo(jwtRefreshToken);
+        verify(this.baseUsersSessionsService).refresh(user, accessToken, oldRefreshToken, newRefreshToken, request);
+        verify(this.cookieProvider).createJwtAccessCookie(accessToken, response);
+        verify(this.cookieProvider).createJwtRefreshCookie(newRefreshToken, response);
+        verify(this.sessionRegistry).renew(user.username(), oldRefreshToken, accessToken, newRefreshToken);
+        assertThat(responseUserSession1).isEqualTo(new ResponseRefreshTokens(accessToken, newRefreshToken));
     }
 }

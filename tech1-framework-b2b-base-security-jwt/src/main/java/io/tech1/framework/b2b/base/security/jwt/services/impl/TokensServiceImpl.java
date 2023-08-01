@@ -2,19 +2,16 @@ package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.cookie.*;
-import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,58 +39,47 @@ public class TokensServiceImpl implements TokensService {
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @Override
-    public Tuple2<JwtUser, JwtRefreshToken> getJwtUserByAccessTokenOrThrow(
+    public JwtUser getJwtUserByAccessTokenOrThrow(
             CookieAccessToken cookieAccessToken,
             CookieRefreshToken cookieRefreshToken
-    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException {
+    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException {
+        var accessToken = cookieAccessToken.getJwtAccessToken();
+        var refreshToken = cookieRefreshToken.getJwtRefreshToken();
 
-        var jwtAccessToken = cookieAccessToken.getJwtAccessToken();
-        var jwtRefreshToken = cookieRefreshToken.getJwtRefreshToken();
-
-        var accessTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(jwtAccessToken);
-        var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(jwtRefreshToken);
+        var accessTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(accessToken);
+        this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken);
 
         this.tokensContextThrowerService.verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
+        this.tokensContextThrowerService.verifyDbPresenceOrThrow(accessToken, accessTokenValidatedClaims);
 
         // JWT Access Token: isValid + isAlive
-        var jwtUser = this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
-        return new Tuple2<>(jwtUser, new JwtRefreshToken(refreshTokenValidatedClaims.jwtToken()));
+        return this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
     }
 
     @Override
-    public ResponseUserSession1 refreshSessionOrThrow(
+    public ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
-        var oldCookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
-        var oldJwtRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
+        var oldRefreshToken = this.cookieProvider.readJwtRefreshToken(request).getJwtRefreshToken();
 
-        var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldJwtRefreshToken);
+        var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);
         this.tokensContextThrowerService.verifyRefreshTokenExpirationOrThrow(refreshTokenValidatedClaims);
-        var user = this.tokensContextThrowerService.verifyDbPresenceOrThrow(refreshTokenValidatedClaims, oldJwtRefreshToken);
+        var user = this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, refreshTokenValidatedClaims);
 
-        var jwtAccessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
-        var newJwtRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
+        var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
+        var newRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        var jwtRefreshToken = this.baseUsersSessionsService.refresh(user, oldJwtRefreshToken, newJwtRefreshToken, request);
+        this.baseUsersSessionsService.refresh(user, accessToken, oldRefreshToken, newRefreshToken, request);
 
-        this.cookieProvider.createJwtAccessCookie(jwtAccessToken, response);
-        this.cookieProvider.createJwtRefreshCookie(newJwtRefreshToken, response);
+        this.cookieProvider.createJwtAccessCookie(accessToken, response);
+        this.cookieProvider.createJwtRefreshCookie(newRefreshToken, response);
 
         var username = user.username();
         LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);
 
-        this.sessionRegistry.renew(
-                new Session(
-                        username,
-                        new JwtRefreshToken(oldCookieRefreshToken.value())
-                ),
-                new Session(
-                        username,
-                        newJwtRefreshToken
-                )
-        );
+        this.sessionRegistry.renew(username, oldRefreshToken, accessToken, newRefreshToken);
 
-        return new ResponseUserSession1(jwtRefreshToken);
+        return new ResponseRefreshTokens(accessToken, newRefreshToken);
     }
 }

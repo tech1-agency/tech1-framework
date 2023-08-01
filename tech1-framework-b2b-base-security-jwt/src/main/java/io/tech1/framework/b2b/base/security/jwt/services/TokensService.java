@@ -1,23 +1,21 @@
 package io.tech1.framework.b2b.base.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.exceptions.cookie.*;
-import io.tech1.framework.domain.tuples.Tuple2;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface TokensService {
-    Tuple2<JwtUser, JwtRefreshToken> getJwtUserByAccessTokenOrThrow(
+    JwtUser getJwtUserByAccessTokenOrThrow(
             CookieAccessToken cookieAccessToken,
             CookieRefreshToken cookieRefreshToken
-    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException;
+    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException;
 
-    ResponseUserSession1 refreshSessionOrThrow(
+    ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException;

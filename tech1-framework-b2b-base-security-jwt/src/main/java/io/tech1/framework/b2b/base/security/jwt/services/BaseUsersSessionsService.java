@@ -2,7 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
@@ -14,11 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 public interface BaseUsersSessionsService {
-    void save(JwtUser user, JwtRefreshToken jwtRefreshToken, HttpServletRequest httpServletRequest);
-    JwtRefreshToken refresh(JwtUser user, JwtRefreshToken oldJwtRefreshToken, JwtRefreshToken newJwtRefreshToken, HttpServletRequest httpServletRequest);
+    void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
+    void refresh(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken oldRefreshToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
     Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event);
-    SessionsExpiredTable getExpiredSessions(Set<Username> usernames);
+    SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
     void deleteById(UserSessionId sessionId);
-    void deleteAllExceptCurrent(Username username, CookieRefreshToken cookie);
-    void deleteAllExceptCurrentAsSuperuser(CookieRefreshToken cookie);
+    void deleteAllExceptCurrent(Username username, CookieAccessToken cookie);
+    void deleteAllExceptCurrentAsSuperuser(CookieAccessToken cookie);
 }

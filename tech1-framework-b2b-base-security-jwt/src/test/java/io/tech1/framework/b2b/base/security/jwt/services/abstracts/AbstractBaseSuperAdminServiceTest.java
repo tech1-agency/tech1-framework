@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -106,15 +106,15 @@ class AbstractBaseSuperAdminServiceTest {
     @Test
     void getServerSessionsTest() {
         // Arrange
-        var cookie = entity(CookieRefreshToken.class);
+        var cookie = entity(CookieAccessToken.class);
 
         var session1 = entity(ResponseUserSession2.class);
         var session2 = entity(ResponseUserSession2.class);
         var session3 = entity(ResponseUserSession2.class);
 
-        var token1 = entity(JwtRefreshToken.class);
-        var token2 = entity(JwtRefreshToken.class);
-        var token3 = entity(JwtRefreshToken.class);
+        var token1 = entity(JwtAccessToken.class);
+        var token2 = entity(JwtAccessToken.class);
+        var token3 = entity(JwtAccessToken.class);
 
         when(this.anyDbUsersSessionsRepository.findAllByCookieAsSession2(cookie)).thenReturn(
                 new ArrayList<>(
@@ -126,14 +126,14 @@ class AbstractBaseSuperAdminServiceTest {
                 )
         );
         var activeSessions = Set.of(token1, token3);
-        when(this.sessionRegistry.getActiveSessionsRefreshTokens()).thenReturn(activeSessions);
+        when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);
 
         // Act
         var serverSessions = this.componentUnderTest.getServerSessions(cookie);
 
         // Assert
         verify(this.anyDbUsersSessionsRepository).findAllByCookieAsSession2(cookie);
-        verify(this.sessionRegistry).getActiveSessionsRefreshTokens();
+        verify(this.sessionRegistry).getActiveSessionsAccessTokens();
         assertThat(serverSessions).isNotNull();
         assertThat(serverSessions.activeSessions()).hasSize(2);
         assertThat(serverSessions.getActiveUsernames()).containsExactlyInAnyOrder(session1.who(), session3.who());

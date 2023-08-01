@@ -1,7 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.sessions;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.domain.base.Username;
@@ -12,16 +13,16 @@ import java.util.Set;
 public interface SessionRegistry {
     Set<String> getActiveSessionsUsernamesIdentifiers();
     Set<Username> getActiveSessionsUsernames();
-    Set<JwtRefreshToken> getActiveSessionsRefreshTokens();
+    Set<JwtAccessToken> getActiveSessionsAccessTokens();
 
     @Async
     void register(Session session);
     @Async
-    void renew(Session oldSession, Session newSession);
+    void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken);
     @Async
-    void logout(Session session);
+    void logout(Username username, JwtAccessToken accessToken);
 
     // WARNING: think about migrating to separate service/registry
     void cleanByExpiredRefreshTokens(Set<Username> usernames);
-    ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie);
+    ResponseUserSessionsTable getSessionsTable(Username username, CookieAccessToken cookie);
 }

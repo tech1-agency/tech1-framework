@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.jsonwebtoken.Jwt;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
@@ -85,10 +84,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds) {
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
-    }
-
-    default void deleteByRefreshToken(JwtRefreshToken refreshToken) {
-        this.deleteById(refreshToken.value());
     }
 
     @Transactional

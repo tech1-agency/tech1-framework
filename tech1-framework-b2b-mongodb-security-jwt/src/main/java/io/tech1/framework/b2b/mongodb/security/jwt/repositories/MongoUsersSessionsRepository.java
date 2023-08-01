@@ -84,10 +84,6 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
     }
 
-    default void deleteByRefreshToken(JwtRefreshToken refreshToken) {
-        this.deleteById(refreshToken.value());
-    }
-
     default void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie) {
         this.deleteByUsernameExceptAccessToken(username, cookie.getJwtAccessToken());
     }

@@ -5,7 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticatio
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefreshed;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
@@ -56,9 +57,9 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     }
 
     @Override
-    public Set<JwtRefreshToken> getActiveSessionsRefreshTokens() {
+    public Set<JwtAccessToken> getActiveSessionsAccessTokens() {
         return this.sessions.stream()
-                .map(Session::refreshToken)
+                .map(Session::accessToken)
                 .collect(Collectors.toSet());
     }
 
@@ -72,50 +73,63 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         }
     }
 
+    // TODO [YY] add tests
     @Override
-    public void renew(Session oldSession, Session newSession) {
-        this.sessions.remove(oldSession);
-        boolean added = this.sessions.add(newSession);
+    public void renew(Username username, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken) {
+        this.sessions.removeIf(session -> session.username().equals(username) && session.refreshToken().equals(oldRefreshToken));
+        var newSession = new Session(username, newAccessToken, newRefreshToken);
+        var added = this.sessions.add(newSession);
         if (added) {
-            var username = newSession.username();
             LOGGER.debug(SESSION_REGISTRY_RENEW_SESSION, username);
-
             this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
     @Override
-    public void logout(Session session) {
-        var username = session.username();
+    public void logout(Username username, JwtAccessToken accessToken) {
         LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
-        this.sessions.remove(session);
 
-        this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
+        var sessionOpt = this.sessions.stream()
+                .filter(session -> session.username().equals(username) && session.accessToken().equals(accessToken))
+                .findFirst();
 
-        var jwtRefreshToken = session.refreshToken();
-        var dbUserSession = this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(jwtRefreshToken);
+        if (sessionOpt.isPresent()) {
+            var session = sessionOpt.get();
+            this.sessions.remove(session);
 
-        if (nonNull(dbUserSession)) {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.metadata()));
-            this.anyDbUsersSessionsRepository.deleteByRefreshToken(jwtRefreshToken);
-        } else {
-            this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
+            this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(session));
+
+            var dbUserSession = this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(accessToken);
+
+            if (nonNull(dbUserSession)) {
+                this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.metadata()));
+                this.anyDbUsersSessionsRepository.delete(dbUserSession.id());
+            } else {
+                this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
+            }
         }
+
     }
 
     @Override
     public void cleanByExpiredRefreshTokens(Set<Username> usernames) {
-        var sessionsValidatedTuple2 = this.baseUsersSessionsService.getExpiredSessions(usernames);
+        var sessionsValidatedTuple2 = this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames);
 
         sessionsValidatedTuple2.expiredSessions().forEach(tuple2 -> {
             var username = tuple2.a();
-            var requestMetadata = tuple2.b();
-            var jwtRefreshToken = tuple2.c();
-            var session = new Session(username, jwtRefreshToken);
+            var accessToken = tuple2.b();
+            var refreshToken = tuple2.c();
+            var metadata = tuple2.d();
             LOGGER.debug(SESSION_REGISTRY_EXPIRE_SESSION, username);
-            this.sessions.remove(session);
-            this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
-            this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, requestMetadata));
+            var sessionOpt = this.sessions.stream()
+                    .filter(session -> session.username().equals(username) && (session.accessToken().equals(accessToken) || session.refreshToken().equals(refreshToken)))
+                    .findFirst();
+            if (sessionOpt.isPresent()) {
+                var session = sessionOpt.get();
+                this.sessions.remove(session);
+                this.securityJwtPublisher.publishSessionExpired(new EventSessionExpired(session));
+                this.securityJwtIncidentPublisher.publishSessionExpired(new IncidentSessionExpired(username, metadata));
+            }
         });
 
         var deleted = this.anyDbUsersSessionsRepository.deleteByUsersSessionsIds(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
@@ -123,7 +137,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     }
 
     @Override
-    public ResponseUserSessionsTable getSessionsTable(Username username, CookieRefreshToken cookie) {
+    public ResponseUserSessionsTable getSessionsTable(Username username, CookieAccessToken cookie) {
         return ResponseUserSessionsTable.of(this.anyDbUsersSessionsRepository.findByUsernameAndCookieAsSession2(username, cookie));
     }
 }

@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.POLAND_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.POLAND_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;

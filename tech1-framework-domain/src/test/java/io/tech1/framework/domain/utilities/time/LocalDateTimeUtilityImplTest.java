@@ -13,7 +13,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.*;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.*;
+import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.*;
 import static java.time.Month.DECEMBER;
 import static java.time.ZoneOffset.UTC;

@@ -7,7 +7,6 @@ import io.tech1.framework.b2b.base.security.jwt.tests.domain.enums.TestAuthority
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +32,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_TIME_ZONE;
+import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
@@ -239,8 +240,8 @@ class SecurityJwtTokenUtilsImplTest {
     @MethodSource("versionsTests")
     void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> authorities) throws ParseException {
         // Arrange
-        var sdf = new SimpleDateFormat(TestsConstants.DEFAULT_DATE_FORMAT_PATTERN);
-        sdf.setTimeZone(TestsConstants.EET_TIME_ZONE);
+        var sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT_PATTERN);
+        sdf.setTimeZone(EET_TIME_ZONE);
 
         // Act
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));

@@ -6,12 +6,7 @@ import java.time.ZoneId;
 import java.util.TimeZone;
 
 @UtilityClass
-public class TestsConstants {
-    // TODO [YY] migrate -> TestsDTFs
-    // Date Formatters
-    public static final String DEFAULT_DATE_FORMAT_PATTERN = "dd.MM.yyyy HH:mm:ss";
-
-    // TODO [YY] migrate -> TestsZoneIdsConstants
+public class TestsZoneIdsConstants {
     // Poland
     public static final TimeZone POLAND_TIME_ZONE = TimeZone.getTimeZone("Poland");
     public static final ZoneId POLAND_ZONE_ID = ZoneId.of("Poland");

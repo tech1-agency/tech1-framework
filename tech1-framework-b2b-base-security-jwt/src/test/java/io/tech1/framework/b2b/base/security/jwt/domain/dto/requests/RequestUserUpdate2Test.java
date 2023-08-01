@@ -5,7 +5,7 @@ import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializat
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserUpdate2Test extends AbstractSerializationDeserializationRunner {

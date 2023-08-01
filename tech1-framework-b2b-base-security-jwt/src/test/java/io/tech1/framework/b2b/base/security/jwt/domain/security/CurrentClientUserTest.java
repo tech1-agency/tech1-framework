@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.domain.enums.TestAuthority
 import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
+import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -63,7 +63,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Username.of("tech1"),
                 Email.of("tech1@tech1.io"),
                 "Tech1",
-                TestsConstants.EET_ZONE_ID,
+                TestsZoneIdsConstants.EET_ZONE_ID,
                 List.of(
                         new SimpleGrantedAuthority("user"),
                         new SimpleGrantedAuthority("admin")

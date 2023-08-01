@@ -24,8 +24,8 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @Override
-    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken jwtAccessToken) throws CookieAccessTokenInvalidException {
-        var validatedClaims = this.securityJwtTokenUtils.validate(jwtAccessToken);
+    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws CookieAccessTokenInvalidException {
+        var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
             throw new CookieAccessTokenInvalidException();
@@ -34,8 +34,8 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     }
 
     @Override
-    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken jwtRefreshToken) throws CookieRefreshTokenInvalidException {
-        var validatedClaims = this.securityJwtTokenUtils.validate(jwtRefreshToken);
+    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws CookieRefreshTokenInvalidException {
+        var validatedClaims = this.securityJwtTokenUtils.validate(refreshToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenInvalidException();
@@ -45,29 +45,38 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
 
     @Override
     public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws CookieAccessTokenExpiredException {
-        if (this.securityJwtTokenUtils.isExpired(validatedClaims) && validatedClaims.isAccess()) {
+        if (validatedClaims.isExpired() && validatedClaims.isAccess()) {
             SecurityContextHolder.clearContext();
-            throw new CookieAccessTokenExpiredException(validatedClaims.safeGetUsername());
+            throw new CookieAccessTokenExpiredException(validatedClaims.username());
         }
     }
 
     @Override
     public void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenExpiredException {
-        if (this.securityJwtTokenUtils.isExpired(validatedClaims) && validatedClaims.isRefresh()) {
+        if (validatedClaims.isExpired() && validatedClaims.isRefresh()) {
             SecurityContextHolder.clearContext();
-            throw new CookieRefreshTokenExpiredException(validatedClaims.safeGetUsername());
+            throw new CookieRefreshTokenExpiredException(validatedClaims.username());
         }
     }
 
     @Override
-    public JwtUser verifyDbPresenceOrThrow(JwtTokenValidatedClaims validatedClaims, JwtRefreshToken oldJwtRefreshToken) throws CookieRefreshTokenDbNotFoundException {
-        var username = validatedClaims.safeGetUsername();
-        var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
-        var databasePresence = this.usersSessionsRepository.isPresent(oldJwtRefreshToken);
+    public void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws CookieAccessTokenDbNotFoundException {
+        var username = validatedClaims.username();
+        var databasePresence = this.usersSessionsRepository.isPresentByAccessToken(accessToken);
+        if (!databasePresence) {
+            SecurityContextHolder.clearContext();
+            throw new CookieAccessTokenDbNotFoundException(username);
+        }
+    }
+
+    @Override
+    public JwtUser verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenDbNotFoundException {
+        var username = validatedClaims.username();
+        var databasePresence = this.usersSessionsRepository.isPresentByRefreshToken(refreshToken);
         if (!databasePresence) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenDbNotFoundException(username);
         }
-        return user;
+        return this.jwtUserDetailsService.loadUserByUsername(username.identifier());
     }
 }

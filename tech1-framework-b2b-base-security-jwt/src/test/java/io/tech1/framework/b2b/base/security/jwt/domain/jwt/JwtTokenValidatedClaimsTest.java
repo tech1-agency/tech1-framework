@@ -68,13 +68,14 @@ class JwtTokenValidatedClaimsTest {
         // Assert
         assertThat(validatedClaims.valid()).isTrue();
         assertThat(validatedClaims.isInvalid()).isFalse();
-        assertThat(validatedClaims.isExpired()).isTrue();
+        assertThat(validatedClaims.isExpired()).isFalse();
         assertThat(validatedClaims.isAccess()).isTrue();
         assertThat(validatedClaims.isRefresh()).isFalse();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(TECH1);
         assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
-        assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
+        // 3600000L == 1 hour
+        assertThat(validatedClaims.getExpirationTimestamp() - validatedClaims.issuedAt().getTime()).isEqualTo(3600000L);
         assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
 
@@ -89,13 +90,14 @@ class JwtTokenValidatedClaimsTest {
         // Assert
         assertThat(validatedClaims.valid()).isTrue();
         assertThat(validatedClaims.isInvalid()).isFalse();
-        assertThat(validatedClaims.isExpired()).isTrue();
+        assertThat(validatedClaims.isExpired()).isFalse();
         assertThat(validatedClaims.isAccess()).isFalse();
         assertThat(validatedClaims.isRefresh()).isTrue();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
         assertThat(validatedClaims.username()).isEqualTo(TECH1);
         assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
-        assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
+        // 3600000L == 1 hour
+        assertThat(validatedClaims.getExpirationTimestamp() - validatedClaims.issuedAt().getTime()).isEqualTo(3600000L);
         assertThat(validatedClaims.authoritiesAsStrings()).isEqualTo(Set.of("admin", "user"));
     }
 }

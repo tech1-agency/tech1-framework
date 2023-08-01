@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomValidDefaultClaims;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validDefaultClaims;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -127,12 +127,12 @@ class TokensServiceImplTest {
         var cookieRefreshToken = entity(CookieRefreshToken.class);
         var accessToken = cookieAccessToken.getJwtAccessToken();
         var refreshToken = cookieRefreshToken.getJwtRefreshToken();
-        var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(accessToken, randomValidDefaultClaims());
-        var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(refreshToken, randomValidDefaultClaims());
+        var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(accessToken, validDefaultClaims());
+        var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(refreshToken, validDefaultClaims());
         var user = entity(JwtUser.class);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(accessToken)).thenReturn(accessTokenValidatedClaims);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken)).thenReturn(refreshTokenValidatedClaims);
-        when(this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier())).thenReturn(user);
+        when(this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.username().identifier())).thenReturn(user);
 
         // Act
         var actual = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
@@ -142,7 +142,7 @@ class TokensServiceImplTest {
         verify(this.tokensContextThrowerService).verifyValidityOrThrow(refreshToken);
         verify(this.tokensContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(accessToken, accessTokenValidatedClaims);
-        verify(this.jwtUserDetailsService).loadUserByUsername(accessTokenValidatedClaims.safeGetUsername().identifier());
+        verify(this.jwtUserDetailsService).loadUserByUsername(accessTokenValidatedClaims.username().identifier());
         assertThat(actual).isEqualTo(user);
     }
 
@@ -153,7 +153,7 @@ class TokensServiceImplTest {
         var response = mock(HttpServletResponse.class);
         var oldCookieRefreshToken = new CookieRefreshToken(randomString());
         var oldRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
-        var validatedClaims = JwtTokenValidatedClaims.valid(oldRefreshToken, randomValidDefaultClaims());
+        var validatedClaims = JwtTokenValidatedClaims.valid(oldRefreshToken, validDefaultClaims());
         var user = entity(JwtUser.class);
         var accessToken = entity(JwtAccessToken.class);
         var newRefreshToken = entity(JwtRefreshToken.class);

@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractTokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ public class MongoTokensContextThrowerService extends AbstractTokensContextThrow
 
     @Autowired
     public MongoTokensContextThrowerService(
-            JwtUserDetailsService jwtUserDetailsService,
+            MongoUserDetailsAssistant userDetailsAssistant,
             MongoUsersSessionsRepository usersSessionsRepository,
             SecurityJwtTokenUtils securityJwtTokenUtils
     ) {
         super(
-                jwtUserDetailsService,
+                userDetailsAssistant,
                 usersSessionsRepository,
                 securityJwtTokenUtils
         );

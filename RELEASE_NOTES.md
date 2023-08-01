@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.14
+- TimestampUtility: isBetweenInclusive
 - MongoDb: truncate/delete "tech1_user_sessions" (MongoDbUserSession: requestMetadata → metadata)
 - Users API: /user → /users + Postman
 - Delete "sessionId" in ResponseUserSession2 

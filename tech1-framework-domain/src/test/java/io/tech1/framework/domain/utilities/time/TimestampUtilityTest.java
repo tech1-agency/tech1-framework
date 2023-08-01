@@ -51,6 +51,23 @@ class TimestampUtilityTest {
         );
     }
 
+    private static Stream<Arguments> isBetweenInclusiveTest() {
+        return Stream.of(
+                Arguments.of(2, 1, 3, true),
+                Arguments.of(2, 2, 3, true),
+                Arguments.of(2, 3, 1, false),
+                Arguments.of(3, 1, 6, true),
+                Arguments.of(1, 2, 3, false),
+                Arguments.of(1, 5, 9, false),
+                Arguments.of(1689329944000L, 1689329943000L, 1689329945000L, true),
+                Arguments.of(1689329944000L, 1689329943000L, 1689329944000L, true),
+                Arguments.of(1689329944000L, 1689329944000L, 1689329944000L, true),
+                Arguments.of(1689329944000L, 1689329944000L, 1689329945000L, true),
+                Arguments.of(1689329944000L, 1689329945000L, 1689329946000L, false),
+                Arguments.of(1689329944000L, 1689329945000L, 1689329945000L, false)
+        );
+    }
+
     private static Stream<Arguments> isPastTest() {
         return Stream.of(
                 Arguments.of(1642767625000L, true),
@@ -134,8 +151,9 @@ class TimestampUtilityTest {
         var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID, 3);
 
         // Assert
-        assertThat(timestampUTC).isLessThan(timestampPoland);
-        assertThat(timestampUTC).isLessThan(timestampUkraine);
+        assertThat(timestampUTC)
+                .isLessThan(timestampPoland)
+                .isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
         var localDateTimeUTC = convertTimestamp(timestampUTC, UTC);
         var localDateTimeUkraine = convertTimestamp(timestampUkraine, EET_ZONE_ID);
@@ -150,6 +168,16 @@ class TimestampUtilityTest {
     void isBetweenTest(long past, long future, boolean expected) {
         // Act
         var actual = isBetween(getCurrentTimestamp(), past, future);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBetweenInclusiveTest")
+    void isBetweenInclusiveTest(long timestamp, long past, long future, boolean expected) {
+        // Act
+        var actual = isBetweenInclusive(timestamp, past, future);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

@@ -66,6 +66,10 @@ public class TimestampUtility {
         return timestamp > past && timestamp < future;
     }
 
+    public static boolean isBetweenInclusive(long timestamp, long past, long future) {
+        return timestamp >= past && timestamp <= future;
+    }
+
     public static boolean isPast(long timestamp) {
         return getCurrentTimestamp() > timestamp;
     }

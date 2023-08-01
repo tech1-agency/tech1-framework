@@ -1,69 +1,91 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
-import io.jsonwebtoken.Jwts;
+import io.tech1.framework.domain.base.Username;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validDefaultClaims;
+import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomDate;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 class JwtTokenValidatedClaimsTest {
+    private static final Username INVALID = Username.of("invalid");
 
     @Test
-    void safeGetUsernameExceptionTest() {
+    void invalidAccessTokenTest() {
         // Arrange
-        var validatedClaims = JwtTokenValidatedClaims.invalid(entity(JwtAccessToken.class));
+        var token = entity(JwtAccessToken.class);
 
         // Act
-        var throwable = catchThrowable(validatedClaims::safeGetUsername);
+        var validatedClaims = JwtTokenValidatedClaims.invalid(token);
 
         // Assert
-        assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("Attribute `JwtTokenValidatedClaims` is invalid");
+        assertThat(validatedClaims.valid()).isFalse();
+        assertThat(validatedClaims.isInvalid()).isTrue();
+        assertThat(validatedClaims.isExpired()).isTrue();
+        assertThat(validatedClaims.isAccess()).isTrue();
+        assertThat(validatedClaims.isRefresh()).isFalse();
+        assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
+        assertThat(validatedClaims.username()).isEqualTo(INVALID);
+        assertThat(validatedClaims.getExpirationTimestamp()).isZero();
     }
 
     @Test
-    void safeGetUsernameTest() {
+    void invalidRefreshTokenTest() {
         // Arrange
-        var username = randomUsername();
-        var claims = Jwts.claims().setSubject(username.identifier());
-        var validatedClaims = JwtTokenValidatedClaims.valid(entity(JwtAccessToken.class), claims);
+        var token = entity(JwtRefreshToken.class);
 
         // Act
-        var actual = validatedClaims.safeGetUsername();
+        var validatedClaims = JwtTokenValidatedClaims.invalid(token);
 
         // Assert
-        assertThat(actual).isEqualTo(username);
+        assertThat(validatedClaims.valid()).isFalse();
+        assertThat(validatedClaims.isInvalid()).isTrue();
+        assertThat(validatedClaims.isExpired()).isTrue();
+        assertThat(validatedClaims.isAccess()).isFalse();
+        assertThat(validatedClaims.isRefresh()).isTrue();
+        assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
+        assertThat(validatedClaims.username()).isEqualTo(INVALID);
+        assertThat(validatedClaims.getExpirationTimestamp()).isZero();
     }
 
-    @Test
-    void safeGetExpirationTimestampExceptionTest() {
+    @RepeatedTest(10)
+    void validAccessTokenTest() {
         // Arrange
-        var validatedClaims = JwtTokenValidatedClaims.invalid(entity(JwtAccessToken.class));
+        var token = entity(JwtAccessToken.class);
 
         // Act
-        var throwable = catchThrowable(validatedClaims::safeGetExpirationTimestamp);
+        var validatedClaims = JwtTokenValidatedClaims.valid(token, validDefaultClaims());
 
         // Assert
-        assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("Attribute `JwtTokenValidatedClaims` is invalid");
+        assertThat(validatedClaims.valid()).isTrue();
+        assertThat(validatedClaims.isInvalid()).isFalse();
+        assertThat(validatedClaims.isExpired()).isTrue();
+        assertThat(validatedClaims.isAccess()).isTrue();
+        assertThat(validatedClaims.isRefresh()).isFalse();
+        assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
+        assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
     }
 
-    @Test
-    void safeGetExpirationTimestampTest() {
+    @RepeatedTest(10)
+    void validRefreshTokenTest() {
         // Arrange
-        var date = randomDate();
-        var claims = Jwts.claims().setExpiration(date);
-        var validatedClaims = JwtTokenValidatedClaims.valid(entity(JwtAccessToken.class), claims);
+        var token = entity(JwtRefreshToken.class);
 
         // Act
-        var actual = validatedClaims.safeGetExpirationTimestamp();
+        var validatedClaims = JwtTokenValidatedClaims.valid(token, validDefaultClaims());
 
         // Assert
-        assertThat(actual).isEqualTo(date.getTime());
+        assertThat(validatedClaims.valid()).isTrue();
+        assertThat(validatedClaims.isInvalid()).isFalse();
+        assertThat(validatedClaims.isExpired()).isTrue();
+        assertThat(validatedClaims.isAccess()).isFalse();
+        assertThat(validatedClaims.isRefresh()).isTrue();
+        assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
+        assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.getExpirationTimestamp()).isLessThanOrEqualTo(getCurrentTimestamp());
     }
 }

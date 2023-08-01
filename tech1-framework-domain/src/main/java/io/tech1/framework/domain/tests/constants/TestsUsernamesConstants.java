@@ -6,5 +6,6 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class TestsUsernamesConstants {
+    public static final Username TECH1 = Username.of("tech1");
     public static final Username UNKNOWN = Username.of(StringConstants.UNKNOWN);
 }

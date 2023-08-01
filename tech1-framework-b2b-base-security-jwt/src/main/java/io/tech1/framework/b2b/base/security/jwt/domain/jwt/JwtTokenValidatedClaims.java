@@ -3,57 +3,58 @@ package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 import io.jsonwebtoken.Claims;
 import io.tech1.framework.domain.base.Username;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static java.util.Objects.nonNull;
+import java.util.Date;
 
 public record JwtTokenValidatedClaims(
         boolean valid,
         boolean isAccess,
         boolean isRefresh,
         String jwtToken,
-        Claims claims
+        @Deprecated Claims claims,
+        Username username,
+        Date expirationDate
 ) {
+    private static final Username INVALID = Username.of("invalid");
+
+    public static Date getIssuedAt() {
+        return new Date();
+    }
+
     public static JwtTokenValidatedClaims invalid(boolean isAccess, boolean isRefresh, String jwtToken) {
-        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, null);
+        return new JwtTokenValidatedClaims(false, isAccess, isRefresh, jwtToken, null, INVALID, new Date(0));
     }
 
-    public static JwtTokenValidatedClaims invalid(JwtAccessToken jwtAccessToken) {
-        return new JwtTokenValidatedClaims(false, true, false, jwtAccessToken.value(), null);
+    public static JwtTokenValidatedClaims invalid(JwtAccessToken accessToken) {
+        return invalid(true, false, accessToken.value());
     }
 
-    public static JwtTokenValidatedClaims invalid(JwtRefreshToken jwtRefreshToken) {
-        return new JwtTokenValidatedClaims(false, false, true, jwtRefreshToken.value(), null);
+    public static JwtTokenValidatedClaims invalid(JwtRefreshToken refreshToken) {
+        return invalid(false, true, refreshToken.value());
     }
 
     public static JwtTokenValidatedClaims valid(boolean isAccess, boolean isRefresh, String jwtToken, Claims claims) {
-        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, claims);
+        var username = Username.of(claims.getSubject());
+        var expirationDate = claims.getExpiration();
+        return new JwtTokenValidatedClaims(true, isAccess, isRefresh, jwtToken, claims, username, expirationDate);
     }
 
-    public static JwtTokenValidatedClaims valid(JwtAccessToken jwtAccessToken, Claims claims) {
-        return new JwtTokenValidatedClaims(true, true, false, jwtAccessToken.value(), claims);
+    public static JwtTokenValidatedClaims valid(JwtAccessToken accessToken, Claims claims) {
+        return valid(true, false, accessToken.value(), claims);
     }
 
-    public static JwtTokenValidatedClaims valid(JwtRefreshToken jwtRefreshToken, Claims claims) {
-        return new JwtTokenValidatedClaims(true, false, true, jwtRefreshToken.value(), claims);
+    public static JwtTokenValidatedClaims valid(JwtRefreshToken refreshToken, Claims claims) {
+        return valid(false, true, refreshToken.value(), claims);
     }
 
     public boolean isInvalid() {
         return !this.valid;
     }
 
-    public Username safeGetUsername() {
-        if (this.valid && nonNull(this.claims)) {
-            return Username.of(this.claims.getSubject());
-        } else {
-            throw new IllegalArgumentException(invalidAttribute("JwtTokenValidatedClaims"));
-        }
+    public boolean isExpired() {
+        return this.isInvalid() || getIssuedAt().after(this.expirationDate);
     }
 
-    public long safeGetExpirationTimestamp() {
-        if (this.valid && nonNull(this.claims)) {
-            return this.claims.getExpiration().getTime();
-        } else {
-            throw new IllegalArgumentException(invalidAttribute("JwtTokenValidatedClaims"));
-        }
+    public long getExpirationTimestamp() {
+        return this.expirationDate.getTime();
     }
 }

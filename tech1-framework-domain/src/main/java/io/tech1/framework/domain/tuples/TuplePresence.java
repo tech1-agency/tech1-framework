@@ -5,7 +5,7 @@ public record TuplePresence<A>(boolean present, A value) {
         return new TuplePresence<>(true, value);
     }
 
-    public static <A> TuplePresence<A> absent(A value) {
-        return new TuplePresence<>(false, value);
+    public static <A> TuplePresence<A> absent() {
+        return new TuplePresence<>(false, null);
     }
 }

@@ -10,8 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.accessDenied;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {
@@ -35,9 +34,14 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
         assertNonNullOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var invitationCode = this.anyDbInvitationCodesRepository.requirePresence(invitationCodeId);
-        if (!username.equals(invitationCode.owner())) {
-            throw new IllegalArgumentException(accessDenied(username, "InvitationCode", invitationCodeId.value()));
+        var tuplePresence = this.anyDbInvitationCodesRepository.isPresent(invitationCodeId);
+
+        if (!tuplePresence.present()) {
+            throw new IllegalArgumentException(entityNotFoundId("InvitationCode", invitationCodeId.value()));
+        }
+
+        if (!username.equals(tuplePresence.value().owner())) {
+            throw new IllegalArgumentException(accessDenied("InvitationCode", invitationCodeId.value()));
         }
     }
 }

@@ -5,16 +5,17 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewIn
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 
 import java.util.List;
 
 public interface AnyDbInvitationCodesRepository {
-    AnyDbInvitationCode requirePresence(InvitationCodeId invitationCodeId);
+    TuplePresence<AnyDbInvitationCode> isPresent(InvitationCodeId invitationCodeId);
     List<ResponseInvitationCode> findResponseCodesByOwner(Username owner);
     AnyDbInvitationCode findByValueAsAny(String value);
     List<ResponseInvitationCode> findUnused();
     long countByOwner(Username username);
     void delete(InvitationCodeId invitationCodeId);
-    void saveAs(AnyDbInvitationCode invitationCode);
-    void saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
+    InvitationCodeId saveAs(AnyDbInvitationCode invitationCode);
+    InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
 }

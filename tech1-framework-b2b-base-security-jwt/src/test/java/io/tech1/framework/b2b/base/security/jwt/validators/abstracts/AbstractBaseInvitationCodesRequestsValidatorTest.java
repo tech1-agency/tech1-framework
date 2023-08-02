@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationV
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -90,12 +91,11 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     }
 
     @Test
-    void validateDeleteByIdAccessDeniedTest() {
+    void validateDeleteByIdNotFoundTest() {
         // Arrange
         var username = entity(Username.class);
         var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(AnyDbInvitationCode.class);
-        when(this.invitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
+        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.absent());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
@@ -103,8 +103,26 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `InvitationCode`. Value: `" + invitationCodeId+ "`");
-        verify(this.invitationCodesRepository).requirePresence(invitationCodeId);
+                .hasMessage("InvitationCode: Not Found, id = " + invitationCodeId);
+        verify(this.invitationCodesRepository).isPresent(invitationCodeId);
+    }
+
+    @Test
+    void validateDeleteByIdAccessDeniedTest() {
+        // Arrange
+        var username = entity(Username.class);
+        var invitationCodeId = entity(InvitationCodeId.class);
+        var dbInvitationCode = entity(AnyDbInvitationCode.class);
+        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(dbInvitationCode));
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
+
+        // Assert
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("InvitationCode: Access Denied, id = " + invitationCodeId.value());
+        verify(this.invitationCodesRepository).isPresent(invitationCodeId);
     }
 
     @Test
@@ -112,12 +130,12 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         // Arrange
         var invitationCodeId = entity(InvitationCodeId.class);
         var dbInvitationCode = entity(AnyDbInvitationCode.class);
-        when(this.invitationCodesRepository.requirePresence(invitationCodeId)).thenReturn(dbInvitationCode);
+        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(dbInvitationCode));
 
         // Act
         this.componentUnderTest.validateDeleteById(dbInvitationCode.owner(), invitationCodeId);
 
         // Assert
-        verify(this.invitationCodesRepository).requirePresence(invitationCodeId);
+        verify(this.invitationCodesRepository).isPresent(invitationCodeId);
     }
 }

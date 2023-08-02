@@ -78,7 +78,7 @@ class ExceptionsMessagesUtilityTest {
         var value = randomString();
 
         // Act
-        var actual = accessDenied(username, entity, value);
+        var actual = accessDeniedV1(username, entity, value);
 
         // Assert
         assertThat(actual).isEqualTo("Access denied. Username: `" + username + "`, Entity: `" + entity + "`. Value: `" + value + "`");

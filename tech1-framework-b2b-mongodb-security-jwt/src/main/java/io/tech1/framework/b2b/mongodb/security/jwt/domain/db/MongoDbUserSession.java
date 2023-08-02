@@ -50,7 +50,7 @@ public class MongoDbUserSession {
         if (nonNull(this.id)) {
             return ofPersisted(new UserSessionId(this.id), this.username, this.accessToken, this.refreshToken, this.metadata);
         } else {
-            return ofNotPersisted( this.username, this.accessToken, this.refreshToken, this.metadata);
+            return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
         }
     }
 

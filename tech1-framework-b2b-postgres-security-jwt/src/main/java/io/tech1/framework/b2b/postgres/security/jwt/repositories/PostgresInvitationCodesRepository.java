@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")
@@ -24,10 +23,10 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default AnyDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
-        var invitationCode = this.getReferenceById(invitationCodeId.value());
-        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId.value()));
-        return invitationCode.anyDbInvitationCode();
+    default TuplePresence<AnyDbInvitationCode> isPresent(InvitationCodeId invitationCodeId) {
+        return this.findById(invitationCodeId.value())
+                .map(mongoDbInvitationCode -> TuplePresence.present(mongoDbInvitationCode.anyDbInvitationCode()))
+                .orElseGet(TuplePresence::absent);
     }
 
     default List<ResponseInvitationCode> findResponseCodesByOwner(Username owner) {
@@ -50,19 +49,24 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     long countByOwner(Username username);
 
     default void delete(InvitationCodeId invitationCodeId) {
-        this.deleteById(invitationCodeId.value());
+        var tuplePresence = this.isPresent(invitationCodeId);
+        if (tuplePresence.present()) {
+            this.deleteById(invitationCodeId.value());
+        }
     }
 
-    default void saveAs(AnyDbInvitationCode invitationCode) {
-        this.save(new PostgresDbInvitationCode(invitationCode));
+    default InvitationCodeId saveAs(AnyDbInvitationCode invitationCode) {
+        var entity = this.save(new PostgresDbInvitationCode(invitationCode));
+        return entity.invitationCodeId();
     }
 
-    default void saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
         var invitationCode = new PostgresDbInvitationCode(
                 owner,
                 requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
-        this.save(invitationCode);
+        var entity = this.save(invitationCode);
+        return entity.invitationCodeId();
     }
 
     // ================================================================================================================

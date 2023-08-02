@@ -43,7 +43,7 @@ public class MongoDbInvitationCode {
     }
 
     public MongoDbInvitationCode(AnyDbInvitationCode invitationCode) {
-        this.id = invitationCode.value();
+        this.id = invitationCode.id().value();
         this.owner = invitationCode.owner();
         this.authorities = invitationCode.authorities();
         this.value = invitationCode.value();
@@ -72,5 +72,11 @@ public class MongoDbInvitationCode {
                 this.value,
                 this.invited
         );
+    }
+
+    @JsonIgnore
+    @Transient
+    public InvitationCodeId invitationCodeId() {
+        return new InvitationCodeId(this.id);
     }
 }

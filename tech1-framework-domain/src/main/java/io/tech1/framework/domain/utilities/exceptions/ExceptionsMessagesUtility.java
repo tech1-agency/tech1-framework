@@ -20,20 +20,34 @@ public class ExceptionsMessagesUtility {
         return String.format(ENTITY_NOT_FOUND_SHORT, entity);
     }
 
+    // TODO [YY]
+    @Deprecated
     public static String entityNotFound(String entity, String value) {
         return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
     }
 
+    // TODO [YY]
+    @Deprecated
     public static String entityNotFound(String entity, Long value) {
         return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
+    }
+
+    public static String entityNotFoundId(String entity, String entityId) {
+        return String.format(ENTITY_NOT_FOUND_ID, entity, entityId);
     }
 
     public static String entityAlreadyUsed(String entity) {
         return String.format(ENTITY_ALREADY_USED, entity);
     }
 
-    public static String accessDenied(Username username, String entity, String value) {
-        return String.format(ACCESS_DENIED, username, entity, value);
+    // TODO [YY]
+    @Deprecated
+    public static String accessDeniedV1(Username username, String entity, String value) {
+        return String.format(ACCESS_DENIED_V1, username, entity, value);
+    }
+
+    public static String accessDenied(String entity, String entityId) {
+        return String.format(ENTITY_ACCESS_DENIED, entity, entityId);
     }
 
     public static String missingMappingsKeys(String attributeName, String requirements, String disjunction) {
@@ -43,6 +57,7 @@ public class ExceptionsMessagesUtility {
     // =================================================================================================================
     // Tests
     // =================================================================================================================
+    @Deprecated
     public static String parametrizedTestCase(Object source, Object actual, Object expected) {
         return String.format(PARAMETRIZED_TEST_CASE, source, actual, expected);
     }

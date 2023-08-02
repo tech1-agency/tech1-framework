@@ -36,6 +36,7 @@ public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminSer
 
     @Override
     public ResponseServerSessionsTable getServerSessions(CookieAccessToken cookie) {
+        // TODO [YY] add sorting
         var sessionsTuples2 = this.anyDbUsersSessionsRepository.findAllByCookieAsSession2(cookie);
         var activeSessionsAccessTokens = this.sessionRegistry.getActiveSessionsAccessTokens();
         List<ResponseUserSession2> activeSessions = new ArrayList<>();

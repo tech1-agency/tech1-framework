@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
@@ -14,8 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @Repository
@@ -23,10 +22,10 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default AnyDbInvitationCode requirePresence(InvitationCodeId invitationCodeId) {
-        var invitationCode = this.getById(invitationCodeId);
-        assertNonNullOrThrow(invitationCode, entityNotFound("DbInvitationCode", invitationCodeId.value()));
-        return invitationCode.anyDbInvitationCode();
+    default TuplePresence<AnyDbInvitationCode> isPresent(InvitationCodeId invitationCodeId) {
+        return this.findById(invitationCodeId.value())
+                .map(mongoDbInvitationCode -> TuplePresence.present(mongoDbInvitationCode.anyDbInvitationCode()))
+                .orElseGet(TuplePresence::absent);
     }
 
     default List<ResponseInvitationCode> findResponseCodesByOwner(Username owner) {
@@ -52,16 +51,18 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
         this.deleteById(invitationCodeId.value());
     }
 
-    default void saveAs(AnyDbInvitationCode invitationCode) {
-        this.save(new MongoDbInvitationCode(invitationCode));
+    default InvitationCodeId saveAs(AnyDbInvitationCode invitationCode) {
+        var entity = this.save(new MongoDbInvitationCode(invitationCode));
+        return entity.invitationCodeId();
     }
 
-    default void saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
         var invitationCode = new MongoDbInvitationCode(
                 owner,
                 requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
-        this.save(invitationCode);
+        var entity = this.save(invitationCode);
+        return entity.invitationCodeId();
     }
 
     // ================================================================================================================
@@ -71,10 +72,6 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     List<MongoDbInvitationCode> findByInvitedIsNull();
     List<MongoDbInvitationCode> findByInvitedIsNotNull();
     MongoDbInvitationCode findByValue(String value);
-
-    default MongoDbInvitationCode getById(InvitationCodeId invitationCodeId) {
-        return this.findById(invitationCodeId.value()).orElse(null);
-    }
 
     void deleteByInvitedIsNull();
     void deleteByInvitedIsNotNull();

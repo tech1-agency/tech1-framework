@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFoundId;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @Repository
 public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, AnyDbUsersSessionsRepository {
@@ -41,7 +41,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
 
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
         var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFoundId("Session", sessionId.value()));
+        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
         return session;
     }
 

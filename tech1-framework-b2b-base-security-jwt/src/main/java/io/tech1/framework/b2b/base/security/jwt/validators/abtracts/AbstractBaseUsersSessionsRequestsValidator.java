@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.accessDeniedV1;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,7 +24,7 @@ public abstract class AbstractBaseUsersSessionsRequestsValidator implements Base
 
         var session = this.anyDbUsersSessionsRepository.requirePresence(sessionId);
         if (!username.equals(session.username())) {
-            throw new IllegalArgumentException(accessDeniedV1(username, "Session", sessionId.value()));
+            throw new IllegalArgumentException(entityAccessDenied("Session", sessionId.value()));
         }
     }
 }

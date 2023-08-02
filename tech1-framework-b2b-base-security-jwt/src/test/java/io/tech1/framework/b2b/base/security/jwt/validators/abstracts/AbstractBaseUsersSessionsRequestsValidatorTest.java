@@ -66,7 +66,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("Access denied. Username: `" + username + "`, Entity: `Session`. Value: `" + sessionId + "`");
+                .hasMessageStartingWith("Session: Access Denied, id = " + sessionId);
         verify(this.usersSessionsRepository).requirePresence(sessionId);
     }
 

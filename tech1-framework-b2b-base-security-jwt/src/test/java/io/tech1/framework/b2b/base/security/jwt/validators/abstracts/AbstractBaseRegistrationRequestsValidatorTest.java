@@ -108,23 +108,23 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
 
         // Assert
+        var exception = "Username: Already Used, id = " + username;
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
-                .hasMessage("Username is already used");
-        assertThat(throwable.getMessage()).isEqualTo("Username is already used");
+                .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUser(username);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         username,
                         invitationCode,
-                        "Username is already used"
+                        exception
                 )
         );
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 IncidentRegistration1Failure.of(
                         username,
                         invitationCode,
-                        "Username is already used"
+                        exception
                 )
         );
     }
@@ -149,8 +149,10 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
 
         // Assert
-        assertThat(throwable).isInstanceOf(RegistrationException.class);
-        assertThat(throwable.getMessage()).isEqualTo("InvitationCode is already used");
+        var exception = "InvitationCode: Already Used, id = " + dbInvitationCode.value();
+        assertThat(throwable)
+                .isInstanceOf(RegistrationException.class)
+                .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUser(username);
         verify(this.invitationCodesRepository).findByValueAsAny(invitationCode);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
@@ -158,7 +160,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
                         username,
                         invitationCode,
                         dbInvitationCode.owner(),
-                        "InvitationCode is already used"
+                        exception
                 )
         );
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
@@ -166,7 +168,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
                         username,
                         invitationCode,
                         dbInvitationCode.owner(),
-                        "InvitationCode is already used"
+                        exception
                 )
         );
     }
@@ -190,23 +192,24 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
 
         // Assert
+        var exception = "InvitationCode: Not Found, id = " + invitationCode;
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
-                .hasMessage("InvitationCode is not found");
+                .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUser(username);
         verify(this.invitationCodesRepository).findByValueAsAny(invitationCode);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         username,
                         invitationCode,
-                        "InvitationCode is not found"
+                        exception
                 )
         );
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 IncidentRegistration1Failure.of(
                         username,
                         invitationCode,
-                        "InvitationCode is not found"
+                        exception
                 )
         );
     }

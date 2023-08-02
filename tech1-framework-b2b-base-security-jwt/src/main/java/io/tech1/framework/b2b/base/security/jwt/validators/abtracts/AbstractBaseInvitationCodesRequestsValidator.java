@@ -37,11 +37,11 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
         var tuplePresence = this.anyDbInvitationCodesRepository.isPresent(invitationCodeId);
 
         if (!tuplePresence.present()) {
-            throw new IllegalArgumentException(entityNotFoundId("InvitationCode", invitationCodeId.value()));
+            throw new IllegalArgumentException(entityNotFound("InvitationCode", invitationCodeId.value()));
         }
 
         if (!username.equals(tuplePresence.value().owner())) {
-            throw new IllegalArgumentException(accessDenied("InvitationCode", invitationCodeId.value()));
+            throw new IllegalArgumentException(entityAccessDenied("InvitationCode", invitationCodeId.value()));
         }
     }
 }

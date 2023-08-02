@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFoundId;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")
@@ -37,7 +37,7 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         if (nonNull(user)) {
             return user.asJwtUser();
         } else {
-            throw new UsernameNotFoundException(entityNotFoundId("Username", username.identifier()));
+            throw new UsernameNotFoundException(entityNotFound("Username", username.identifier()));
         }
     }
 

@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFoundId;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, AnyDbUsersSessionsRepository {
@@ -43,7 +43,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default AnyDbUserSession requirePresence(UserSessionId sessionId) {
         var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFoundId("Session", sessionId.value()));
+        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
         return session;
     }
 

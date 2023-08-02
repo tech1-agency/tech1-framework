@@ -43,7 +43,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
 
         var user = this.mongoUsersRepository.findByUsernameAsJwtUser(username);
         if (nonNull(user)) {
-            var exception = entityAlreadyUsed("Username");
+            var exception = entityAlreadyUsed("Username", username.identifier());
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             username,
@@ -64,7 +64,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
         var dbInvitationCode = this.anyDbInvitationCodesRepository.findByValueAsAny(invitationCode);
         if (nonNull(dbInvitationCode)) {
             if (nonNull(dbInvitationCode.invited())) {
-                var exception = entityAlreadyUsed("InvitationCode");
+                var exception = entityAlreadyUsed("InvitationCode", dbInvitationCode.value());
                 this.securityJwtPublisher.publishRegistration1Failure(
                         new EventRegistration1Failure(
                                 username,
@@ -84,7 +84,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                 throw new RegistrationException(exception);
             }
         } else {
-            var exception = entityNotFoundShort("InvitationCode");
+            var exception = entityNotFound("InvitationCode", invitationCode);
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             username,

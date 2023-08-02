@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.exceptions;
 
-import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import static io.tech1.framework.domain.constants.ExceptionsMessagesConstants.*;
@@ -16,26 +15,15 @@ public class ExceptionsMessagesUtility {
         return String.format(INVALID_ATTRIBUTE, attributeName);
     }
 
-    public static String entityNotFoundId(String entity, String entityId) {
+    public static String entityNotFound(String entity, String entityId) {
         return String.format(ENTITY_NOT_FOUND, entity, entityId);
     }
 
-    @Deprecated
-    public static String entityNotFoundShort(String entity) {
-        return String.format(ENTITY_NOT_FOUND_SHORT, entity);
+    public static String entityAlreadyUsed(String entity, String entityId) {
+        return String.format(ENTITY_ALREADY_USED, entity, entityId);
     }
 
-    public static String entityAlreadyUsed(String entity) {
-        return String.format(ENTITY_ALREADY_USED, entity);
-    }
-
-    // TODO [YY]
-    @Deprecated
-    public static String accessDeniedV1(Username username, String entity, String value) {
-        return String.format(ACCESS_DENIED_V1, username, entity, value);
-    }
-
-    public static String accessDenied(String entity, String entityId) {
+    public static String entityAccessDenied(String entity, String entityId) {
         return String.format(ENTITY_ACCESS_DENIED, entity, entityId);
     }
 

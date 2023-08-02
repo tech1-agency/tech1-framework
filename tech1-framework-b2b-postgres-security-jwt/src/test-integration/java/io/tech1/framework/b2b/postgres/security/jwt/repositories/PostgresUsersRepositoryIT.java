@@ -20,7 +20,6 @@ import java.util.Set;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings0;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -109,7 +108,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessage(entityNotFound("Username", username.identifier()));
+                .hasMessage("Username: Not Found, id = " + username.identifier());
     }
 
     @Test

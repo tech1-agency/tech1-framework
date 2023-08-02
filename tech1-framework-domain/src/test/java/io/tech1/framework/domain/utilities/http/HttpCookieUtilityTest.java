@@ -77,9 +77,9 @@ class HttpCookieUtilityTest {
         var throwable = catchThrowable(() -> readCookie(request, cookieKey));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(CookieNotFoundException.class);
-        assertThat(throwable.getMessage()).isEqualTo("CookieKey is not found. Value: `" + cookieKey + "`");
+        assertThat(throwable)
+                .isInstanceOf(CookieNotFoundException.class)
+                .hasMessage("Cookie: Not Found, id = " + cookieKey);
     }
 
     @Test
@@ -96,9 +96,9 @@ class HttpCookieUtilityTest {
         var throwable = catchThrowable(() -> readCookie(request, cookieKey));
 
         // Assert
-        assertThat(throwable).isNotNull();
-        assertThat(throwable.getClass()).isEqualTo(CookieNotFoundException.class);
-        assertThat(throwable.getMessage()).isEqualTo("CookieKey is not found. Value: `" + cookieKey + "`");
+        assertThat(throwable)
+                .isInstanceOf(CookieNotFoundException.class)
+                .hasMessage("Cookie: Not Found, id = " + cookieKey);
     }
 
     @RepeatedTest(5)

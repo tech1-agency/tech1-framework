@@ -16,24 +16,13 @@ public class ExceptionsMessagesUtility {
         return String.format(INVALID_ATTRIBUTE, attributeName);
     }
 
+    public static String entityNotFoundId(String entity, String entityId) {
+        return String.format(ENTITY_NOT_FOUND, entity, entityId);
+    }
+
+    @Deprecated
     public static String entityNotFoundShort(String entity) {
         return String.format(ENTITY_NOT_FOUND_SHORT, entity);
-    }
-
-    // TODO [YY]
-    @Deprecated
-    public static String entityNotFound(String entity, String value) {
-        return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
-    }
-
-    // TODO [YY]
-    @Deprecated
-    public static String entityNotFound(String entity, Long value) {
-        return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
-    }
-
-    public static String entityNotFoundId(String entity, String entityId) {
-        return String.format(ENTITY_NOT_FOUND_ID, entity, entityId);
     }
 
     public static String entityAlreadyUsed(String entity) {

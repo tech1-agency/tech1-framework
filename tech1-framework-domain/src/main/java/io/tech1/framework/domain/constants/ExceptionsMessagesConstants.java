@@ -8,9 +8,7 @@ public class ExceptionsMessagesConstants {
 
     public static final String INVALID_ATTRIBUTE = "Attribute `%s` is invalid";
 
-    @Deprecated
-    public static final String ENTITY_NOT_FOUND_FULL = "%s is not found. Value: `%s`";
-    public static final String ENTITY_NOT_FOUND_ID = "%s: Not Found, id = %s";
+    public static final String ENTITY_NOT_FOUND = "%s: Not Found, id = %s";
     public static final String ENTITY_NOT_FOUND_SHORT = "%s is not found";
     public static final String ENTITY_ALREADY_USED = "%s is already used";
 

@@ -34,6 +34,19 @@ class ExceptionsMessagesUtilityTest {
     }
 
     @Test
+    void entityNotFoundTest() {
+        // Arrange
+        var entity = randomString();
+        var entityId = randomString();
+
+        // Act
+        var actual = entityNotFoundId(entity, entityId);
+
+        // Assert
+        assertThat(actual).isEqualTo(entity + ": Not Found, id = " + entityId);
+    }
+
+    @Test
     void entityNotFoundShortTest() {
         // Arrange
         var entity = randomString();
@@ -43,19 +56,6 @@ class ExceptionsMessagesUtilityTest {
 
         // Assert
         assertThat(actual).isEqualTo(entity + " is not found");
-    }
-
-    @Test
-    void entityNotFoundTest() {
-        // Arrange
-        var entity = randomString();
-        var value = randomString();
-
-        // Act
-        var actual = entityNotFound(entity, value);
-
-        // Assert
-        assertThat(actual).isEqualTo(entity + " is not found. Value: `" + value + "`");
     }
 
     @Test

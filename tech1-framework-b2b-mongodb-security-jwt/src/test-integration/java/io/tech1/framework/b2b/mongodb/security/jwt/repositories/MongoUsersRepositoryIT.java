@@ -18,7 +18,6 @@ import java.util.List;
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toUsernamesAsStrings;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUsersData1;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -119,7 +118,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessage(entityNotFound("Username", username.identifier()));
+                .hasMessage("Username: Not Found, id = " + username.identifier());
     }
 
     @Test

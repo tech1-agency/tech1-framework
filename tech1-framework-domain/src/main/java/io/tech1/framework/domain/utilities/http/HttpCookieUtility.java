@@ -8,7 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFoundId;
 import static java.util.Objects.nonNull;
 
 @UtilityClass
@@ -49,6 +49,6 @@ public class HttpCookieUtility {
                 return cookieOpt.get().getValue();
             }
         }
-        throw new CookieNotFoundException(entityNotFound("CookieKey", cookieKey));
+        throw new CookieNotFoundException(entityNotFoundId("Cookie", cookieKey));
     }
 }

@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface AnyDbInvitationCodesRepository {
     void delete(InvitationCodeId invitationCodeId);
     InvitationCodeId saveAs(AnyDbInvitationCode invitationCode);
     InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
+
+    default Sort getUnusedSort() {
+        return Sort.by("owner").ascending()
+                .and(Sort.by("value").ascending());
+    }
 }

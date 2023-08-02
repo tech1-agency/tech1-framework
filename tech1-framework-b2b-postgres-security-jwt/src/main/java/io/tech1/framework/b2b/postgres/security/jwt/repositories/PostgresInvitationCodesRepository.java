@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCode
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,7 +42,7 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     }
 
     default List<ResponseInvitationCode> findUnused() {
-        return this.findByInvitedIsNull().stream()
+        return this.findByInvitedIsNull(this.getUnusedSort()).stream()
                 .map(PostgresDbInvitationCode::getResponseInvitationCode)
                 .collect(Collectors.toList());
     }
@@ -74,7 +75,9 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     // ================================================================================================================
     List<PostgresDbInvitationCode> findByOwner(Username username);
     List<PostgresDbInvitationCode> findByInvitedIsNull();
+    List<PostgresDbInvitationCode> findByInvitedIsNull(Sort sort);
     List<PostgresDbInvitationCode> findByInvitedIsNotNull();
+    List<PostgresDbInvitationCode> findByInvitedIsNotNull(Sort sort);
     PostgresDbInvitationCode findByValue(String value);
 
     @Transactional

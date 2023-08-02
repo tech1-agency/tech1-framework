@@ -19,12 +19,12 @@ public class PostgresSecurityJwtDbDummies {
     // InvitationCodes
     // =================================================================================================================
     public static List<PostgresDbInvitationCode> dummyInvitationCodesData1() {
-        var invitationCode1 = invitationCodeByOwner("user1");
-        var invitationCode2 = invitationCodeByOwner("user1");
-        var invitationCode3 = invitationCodeByOwner("user2");
-        var invitationCode4 = invitationCodeByOwner("user2");
-        var invitationCode5 = invitationCodeByOwner("user2");
-        var invitationCode6 = invitationCodeByOwner("user3");
+        var invitationCode1 = PostgresSecurityJwtDbRandomUtility.invitationCode("user1");
+        var invitationCode2 = PostgresSecurityJwtDbRandomUtility.invitationCode("user1");
+        var invitationCode3 = PostgresSecurityJwtDbRandomUtility.invitationCode("user2");
+        var invitationCode4 = PostgresSecurityJwtDbRandomUtility.invitationCode("user2");
+        var invitationCode5 = PostgresSecurityJwtDbRandomUtility.invitationCode("user2");
+        var invitationCode6 = PostgresSecurityJwtDbRandomUtility.invitationCode("user3");
 
         invitationCode4.setInvited(Username.of("superadmin"));
 
@@ -35,6 +35,25 @@ public class PostgresSecurityJwtDbDummies {
                 invitationCode4,
                 invitationCode5,
                 invitationCode6
+        );
+    }
+
+    public static List<PostgresDbInvitationCode> dummyInvitationCodesData2() {
+        var invitationCode1 = invitationCode("owner22", "value22");
+        var invitationCode2 = invitationCode("owner22", "abc");
+        var invitationCode3 = invitationCode("owner22", "value44");
+        var invitationCode4 = invitationCode("owner11", "value222");
+        var invitationCode5 = invitationCode("owner11", "value111");
+        var invitationCode6 = invitationCode("owner33", "value123", "invited1");
+        var invitationCode7 = invitationCode("owner34", "value234", "invited2");
+        return List.of(
+                invitationCode1,
+                invitationCode2,
+                invitationCode3,
+                invitationCode4,
+                invitationCode5,
+                invitationCode6,
+                invitationCode7
         );
     }
 

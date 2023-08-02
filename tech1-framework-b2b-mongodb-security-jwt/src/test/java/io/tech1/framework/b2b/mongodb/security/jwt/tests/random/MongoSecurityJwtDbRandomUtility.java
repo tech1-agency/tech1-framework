@@ -11,8 +11,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 
 @UtilityClass
 public class MongoSecurityJwtDbRandomUtility {
@@ -20,15 +22,20 @@ public class MongoSecurityJwtDbRandomUtility {
     // =================================================================================================================
     // InvitationCodes
     // =================================================================================================================
-    public static MongoDbInvitationCode invitationCodeByOwner(String owner) {
-        return new MongoDbInvitationCode(
-                Username.of(owner),
-                List.of(
-                        new SimpleGrantedAuthority(randomString()),
-                        new SimpleGrantedAuthority(randomString()),
-                        new SimpleGrantedAuthority(randomString())
-                )
-        );
+    public static MongoDbInvitationCode invitationCode(String owner) {
+        return new MongoDbInvitationCode(Username.of(owner), authorities("admin"));
+    }
+
+    public static MongoDbInvitationCode invitationCode(String owner, String value) {
+        var invitationCode = invitationCode(owner);
+        invitationCode.setValue(value);
+        return invitationCode;
+    }
+
+    public static MongoDbInvitationCode invitationCode(String owner, String value, String invited) {
+        var invitationCode = invitationCode(owner, value);
+        invitationCode.setInvited(Username.of(invited));
+        return invitationCode;
     }
 
     // =================================================================================================================

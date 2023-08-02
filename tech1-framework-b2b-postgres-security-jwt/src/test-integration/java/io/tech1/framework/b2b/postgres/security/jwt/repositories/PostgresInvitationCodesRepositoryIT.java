@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
@@ -14,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
@@ -73,13 +74,35 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user5"))).isEmpty();
         assertThat(this.invitationCodesRepository.findByValueAsAny(notExistentInvitationCode)).isNull();
         assertThat(this.invitationCodesRepository.findByValueAsAny(existentInvitationCode)).isNotNull();
-        // TODO [YY] -> findUnused
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
         assertThat(this.invitationCodesRepository.countByOwner(Username.of("user5"))).isZero();
         assertThat(this.invitationCodesRepository.findByInvitedIsNull()).hasSize(5);
         assertThat(this.invitationCodesRepository.findByInvitedIsNotNull()).hasSize(1);
+    }
+
+    @Test
+    void findUnusedAndSortingTests() {
+        // Arrange
+        this.invitationCodesRepository.saveAll(dummyInvitationCodesData2());
+
+        // Act
+        var count = this.invitationCodesRepository.count();
+
+        // Assert
+        assertThat(count).isEqualTo(7);
+        var unused = this.invitationCodesRepository.findUnused();
+        assertThat(unused).hasSize(5);
+        assertThat(unused.get(0).value()).isEqualTo("value111");
+        assertThat(unused.get(1).value()).isEqualTo("value222");
+        assertThat(unused.get(2).value()).isEqualTo("abc");
+        assertThat(unused.get(3).value()).isEqualTo("value22");
+        assertThat(unused.get(4).value()).isEqualTo("value44");
+        var codes = this.invitationCodesRepository.findByInvitedIsNotNull(Sort.by("value").descending());
+        assertThat(codes).hasSize(2);
+        assertThat(codes.get(0).getValue()).isEqualTo("value234");
+        assertThat(codes.get(1).getValue()).isEqualTo("value123");
     }
 
     @Test

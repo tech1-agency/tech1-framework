@@ -14,8 +14,6 @@ import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.INVITATION_CODE_1;
-
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminService {
 
@@ -27,11 +25,7 @@ public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminSer
 
     @Override
     public List<ResponseInvitationCode> findUnused() {
-        var invitationCodes = this.anyDbInvitationCodesRepository.findUnused();
-        // WARNING: consider migrate sorting -> database
-        // TODO [YY] add sorting to database
-        invitationCodes.sort(INVITATION_CODE_1);
-        return invitationCodes;
+        return this.anyDbInvitationCodesRepository.findUnused();
     }
 
     @Override

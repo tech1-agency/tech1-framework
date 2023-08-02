@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCode
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
@@ -40,7 +41,7 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     }
 
     default List<ResponseInvitationCode> findUnused() {
-        return this.findByInvitedIsNull().stream()
+        return this.findByInvitedIsNull(this.getUnusedSort()).stream()
                 .map(MongoDbInvitationCode::getResponseInvitationCode)
                 .collect(Collectors.toList());
     }
@@ -70,7 +71,9 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     // ================================================================================================================
     List<MongoDbInvitationCode> findByOwner(Username username);
     List<MongoDbInvitationCode> findByInvitedIsNull();
+    List<MongoDbInvitationCode> findByInvitedIsNull(Sort sort);
     List<MongoDbInvitationCode> findByInvitedIsNotNull();
+    List<MongoDbInvitationCode> findByInvitedIsNotNull(Sort sort);
     MongoDbInvitationCode findByValue(String value);
 
     void deleteByInvitedIsNull();

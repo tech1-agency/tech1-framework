@@ -11,10 +11,6 @@ import static java.util.Objects.isNull;
 
 @UtilityClass
 public class SecurityJwtComparators {
-    public static final Comparator<ResponseInvitationCode> INVITATION_CODE_1 =
-            comparing((ResponseInvitationCode code) -> code.owner().identifier())
-                    .thenComparing(ResponseInvitationCode::value);
-
     public static final Comparator<ResponseInvitationCode> INVITATION_CODE_2 = (o1, o2) -> {
         if (isNull(o1.invited()) && isNull(o2.invited())) {
             return 0;

@@ -76,21 +76,40 @@ public class PostgresSecurityJwtDbDummies {
     // =================================================================================================================
     public static List<PostgresDbUserSession> dummyUserSessionsData1() {
         return List.of(
-                PostgresSecurityJwtDbRandomUtility.session("sa1"),
-                PostgresSecurityJwtDbRandomUtility.session("sa1"),
-                PostgresSecurityJwtDbRandomUtility.session("sa1"),
-                PostgresSecurityJwtDbRandomUtility.session("user1"),
-                PostgresSecurityJwtDbRandomUtility.session("user2"),
-                PostgresSecurityJwtDbRandomUtility.session("admin"),
-                PostgresSecurityJwtDbRandomUtility.session("admin")
+                session("sa1"),
+                session("sa1"),
+                session("sa1"),
+                session("user1"),
+                session("user2"),
+                session("admin"),
+                session("admin")
         );
     }
 
     public static List<PostgresDbUserSession> dummyUserSessionsData2() {
-        var session1 = PostgresSecurityJwtDbRandomUtility.session(TECH1, "token1");
-        var session2 = PostgresSecurityJwtDbRandomUtility.session(TECH1, "token2");
-        var session3 = PostgresSecurityJwtDbRandomUtility.session(TECH1, "token3");
-        var session4 = PostgresSecurityJwtDbRandomUtility.session(Username.of("admin"), "token4");
+        var session1 = session(TECH1, "token1");
+        var session2 = session(TECH1, "token2");
+        var session3 = session(TECH1, "token3");
+        var session4 = session(Username.of("admin"), "token4");
         return List.of(session1, session2, session3, session4);
+    }
+
+    public static List<PostgresDbUserSession> dummyUserSessionsData3() {
+        var session1 = session(TECH1.identifier(), "awt1", "rwt1");
+        var session2 = session(TECH1.identifier(), "awt2", "rwt2");
+        var session3 = session(TECH1.identifier(), "awt3", "rwt3");
+        var session4 = session(TECH1.identifier(), "awt4", "rwt4");
+        var session5 = session("user1", "atoken11", "rtoken11");
+        var session6 = session("user1", "atoken12", "rtoken12");
+        var session7 = session("sa", "atoken", "rtoken");
+        return List.of(
+                session1,
+                session2,
+                session3,
+                session4,
+                session5,
+                session6,
+                session7
+        );
     }
 }

@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.DateUtility.getAbsDifferenceByTimeUnit;
 import static java.time.LocalDateTime.of;

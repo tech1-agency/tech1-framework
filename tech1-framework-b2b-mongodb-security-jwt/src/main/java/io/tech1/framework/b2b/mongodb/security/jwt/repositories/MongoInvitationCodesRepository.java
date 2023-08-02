@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
 @Repository
@@ -25,7 +26,7 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     // ================================================================================================================
     default TuplePresence<AnyDbInvitationCode> isPresent(InvitationCodeId invitationCodeId) {
         return this.findById(invitationCodeId.value())
-                .map(mongoDbInvitationCode -> TuplePresence.present(mongoDbInvitationCode.anyDbInvitationCode()))
+                .map(entity -> present(entity.anyDbInvitationCode()))
                 .orElseGet(TuplePresence::absent);
     }
 

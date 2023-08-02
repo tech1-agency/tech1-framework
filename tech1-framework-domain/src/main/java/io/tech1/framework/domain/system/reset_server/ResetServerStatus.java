@@ -8,7 +8,8 @@ import lombok.Getter;
 
 import java.time.ZoneOffset;
 
-import static io.tech1.framework.domain.tuples.TuplePercentage.*;
+import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
+import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;

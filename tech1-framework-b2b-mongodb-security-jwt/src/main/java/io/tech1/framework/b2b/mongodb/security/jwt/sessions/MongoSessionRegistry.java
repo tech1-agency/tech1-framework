@@ -2,7 +2,6 @@ package io.tech1.framework.b2b.mongodb.security.jwt.sessions;
 
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.AbstractSessionRegistry;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.services.MongoBaseUsersSessionsService;

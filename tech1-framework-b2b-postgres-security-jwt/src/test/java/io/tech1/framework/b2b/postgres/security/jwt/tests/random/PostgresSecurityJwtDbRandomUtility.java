@@ -87,4 +87,8 @@ public class PostgresSecurityJwtDbRandomUtility {
     public static PostgresDbUserSession session(Username owner, String accessToken) {
         return new PostgresDbUserSession(BaseSecurityJwtDbRandomUtility.session(owner, accessToken));
     }
+
+    public static PostgresDbUserSession session(String owner, String accessToken, String refreshToken) {
+        return new PostgresDbUserSession(BaseSecurityJwtDbRandomUtility.session(owner, accessToken, refreshToken));
+    }
 }

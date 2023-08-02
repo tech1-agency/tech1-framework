@@ -10,6 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsR
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings("JpaQlInspection")
@@ -29,6 +31,12 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default TuplePresence<AnyDbUserSession> isPresent(UserSessionId sessionId) {
+        return this.findById(sessionId.value())
+                .map(entity -> present(entity.anyDbUserSession()))
+                .orElseGet(TuplePresence::absent);
+    }
+
     default boolean isPresentByAccessToken(JwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken).isPresent();
     }

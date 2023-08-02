@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
@@ -22,13 +21,13 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validAnyDbInvitationCode;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

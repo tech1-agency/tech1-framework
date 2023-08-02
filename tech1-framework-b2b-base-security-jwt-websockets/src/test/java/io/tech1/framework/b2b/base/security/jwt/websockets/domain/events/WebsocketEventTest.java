@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.domain.events;
 
-import io.tech1.framework.b2b.base.security.jwt.websockets.domain.events.WebsocketEvent;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;

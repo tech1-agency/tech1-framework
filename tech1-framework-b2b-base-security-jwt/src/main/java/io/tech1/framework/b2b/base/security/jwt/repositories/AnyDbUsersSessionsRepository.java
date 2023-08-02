@@ -8,12 +8,14 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;
 
 // TODO [YY] add unit tests
 public interface AnyDbUsersSessionsRepository {
+    TuplePresence<AnyDbUserSession> isPresent(UserSessionId userSessionId);
     boolean isPresentByAccessToken(JwtAccessToken accessToken);
     boolean isPresentByRefreshToken(JwtRefreshToken refreshToken);
     AnyDbUserSession getById(UserSessionId sessionId);

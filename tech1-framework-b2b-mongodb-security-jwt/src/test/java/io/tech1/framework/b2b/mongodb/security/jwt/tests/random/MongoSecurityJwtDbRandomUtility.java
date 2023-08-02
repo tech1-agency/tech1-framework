@@ -87,4 +87,8 @@ public class MongoSecurityJwtDbRandomUtility {
     public static MongoDbUserSession session(Username owner, String accessToken) {
         return new MongoDbUserSession(BaseSecurityJwtDbRandomUtility.session(owner, accessToken));
     }
+
+    public static MongoDbUserSession session(String owner, String accessToken, String refreshToken) {
+        return new MongoDbUserSession(BaseSecurityJwtDbRandomUtility.session(owner, accessToken, refreshToken));
+    }
 }

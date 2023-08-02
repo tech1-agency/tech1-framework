@@ -43,14 +43,18 @@ public class BaseSecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions
     // =================================================================================================================
-    public static AnyDbUserSession session(Username owner, String accessToken) {
+    public static AnyDbUserSession session(String owner, String accessToken, String refreshToken) {
         return AnyDbUserSession.ofPersisted(
                 entity(UserSessionId.class),
-                owner,
+                Username.of(owner),
                 JwtAccessToken.of(accessToken),
-                entity(JwtRefreshToken.class),
+                JwtRefreshToken.of(refreshToken),
                 randomUserRequestMetadata()
         );
+    }
+
+    public static AnyDbUserSession session(Username owner, String accessToken) {
+        return session(owner.identifier(), accessToken, entity(JwtRefreshToken.class).value());
     }
 
     public static AnyDbUserSession session(String owner) {

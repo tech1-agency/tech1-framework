@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
@@ -9,6 +10,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.projections.PostgresD
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +34,12 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default TuplePresence<JwtUser> isPresent(UserId userId) {
+        return this.findById(userId.value())
+                .map(user -> TuplePresence.present(user.asJwtUser()))
+                .orElseGet(TuplePresence::absent);
+    }
+
     default JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
         var user = this.findByUsername(username);
         if (nonNull(user)) {
@@ -41,28 +49,30 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         }
     }
 
-    default JwtUser findByUsernameAsJwtUser(Username username) {
+    default JwtUser findByUsernameAsJwtUserOrNull(Username username) {
         var user = this.findByUsername(username);
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default JwtUser findByEmailAsJwtUser(Email email) {
+    default JwtUser findByEmailAsJwtUserOrNull(Email email) {
         var user = this.findByEmail(email);
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default void saveAsJwtUser(JwtUser user) {
-        this.save(new PostgresDbUser(user));
+    default UserId saveAsJwtUser(JwtUser user) {
+        var entity = this.save(new PostgresDbUser(user));
+        return entity.userId();
     }
 
-    default void saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
         var user = new PostgresDbUser(
                 requestUserRegistration1.username(),
                 password,
                 ZoneId.of(requestUserRegistration1.zoneId()),
                 invitationCode.authorities()
         );
-        this.save(user);
+        var entity = this.save(user);
+        return entity.userId();
     }
 
     // ================================================================================================================

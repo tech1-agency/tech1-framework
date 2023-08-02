@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validAnyDbInvitationCode;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
@@ -137,13 +138,12 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         // Arrange
         this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
-        var invitationCode = new AnyDbInvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities("admin"), randomString(), randomUsername());
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(invitationCode);
+        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(validAnyDbInvitationCode());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();

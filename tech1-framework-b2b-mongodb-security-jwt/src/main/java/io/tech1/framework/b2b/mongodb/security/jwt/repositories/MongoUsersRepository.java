@@ -2,12 +2,14 @@ package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +29,12 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default TuplePresence<JwtUser> isPresent(UserId userId) {
+        return this.findById(userId.value())
+                .map(user -> TuplePresence.present(user.asJwtUser()))
+                .orElseGet(TuplePresence::absent);
+    }
+
     default JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException {
         var user = this.findByUsername(username);
         if (nonNull(user)) {
@@ -36,28 +44,30 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         }
     }
 
-    default JwtUser findByUsernameAsJwtUser(Username username) {
+    default JwtUser findByUsernameAsJwtUserOrNull(Username username) {
         var user = this.findByUsername(username);
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default JwtUser findByEmailAsJwtUser(Email email) {
+    default JwtUser findByEmailAsJwtUserOrNull(Email email) {
         var user = this.findByEmail(email);
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default void saveAsJwtUser(JwtUser user) {
-        this.save(new MongoDbUser(user));
+    default UserId saveAsJwtUser(JwtUser user) {
+        var entity = this.save(new MongoDbUser(user));
+        return entity.userId();
     }
 
-    default void saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
         var user = new MongoDbUser(
                 requestUserRegistration1.username(),
                 password,
                 requestUserRegistration1.zoneId(),
                 invitationCode.authorities()
         );
-        this.save(user);
+        var entity = this.save(user);
+        return entity.userId();
     }
 
     // ================================================================================================================

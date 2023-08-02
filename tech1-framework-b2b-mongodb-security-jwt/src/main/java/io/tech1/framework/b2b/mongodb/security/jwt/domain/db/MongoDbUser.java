@@ -66,9 +66,15 @@ public class MongoDbUser {
 
     @JsonIgnore
     @Transient
+    public UserId userId() {
+        return new UserId(this.id);
+    }
+
+    @JsonIgnore
+    @Transient
     public JwtUser asJwtUser() {
         return new JwtUser(
-                new UserId(this.id),
+                this.userId(),
                 this.username,
                 this.password,
                 this.zoneId,

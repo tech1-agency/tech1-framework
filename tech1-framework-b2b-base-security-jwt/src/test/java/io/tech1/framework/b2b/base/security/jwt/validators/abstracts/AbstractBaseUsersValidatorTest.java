@@ -123,7 +123,7 @@ class AbstractBaseUsersValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var email = randomEmail();
-        when(this.usersRepository.findByEmailAsJwtUser(email)).thenReturn(null);
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -131,7 +131,7 @@ class AbstractBaseUsersValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.usersRepository).findByEmailAsJwtUser(email);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
     @Test
@@ -139,7 +139,7 @@ class AbstractBaseUsersValidatorTest {
         // Arrange
         var user= entity(JwtUser.class);
         var email = randomEmail();
-        when(this.usersRepository.findByEmailAsJwtUser(email)).thenReturn(user);
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -147,7 +147,7 @@ class AbstractBaseUsersValidatorTest {
 
         // Assert
         assertThat(throwable).isNull();
-        verify(this.usersRepository).findByEmailAsJwtUser(email);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
     @Test
@@ -156,7 +156,7 @@ class AbstractBaseUsersValidatorTest {
         var username = entity(Username.class);
         var email = randomEmail();
         var user = entity(JwtUser.class);
-        when(this.usersRepository.findByEmailAsJwtUser(email)).thenReturn(user);
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
         // Act
@@ -166,7 +166,7 @@ class AbstractBaseUsersValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Attribute `email` is invalid");
-        verify(this.usersRepository).findByEmailAsJwtUser(email);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
     @Test

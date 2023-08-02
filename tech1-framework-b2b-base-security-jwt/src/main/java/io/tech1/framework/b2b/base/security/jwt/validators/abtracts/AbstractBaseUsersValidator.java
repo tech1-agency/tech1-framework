@@ -35,7 +35,7 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
         if (!isEmail(email)) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
-        var user = this.anyDbUsersRepository.findByEmailAsJwtUser(email);
+        var user = this.anyDbUsersRepository.findByEmailAsJwtUserOrNull(email);
         // `email` is already used by other user in the system
         if (nonNull(user) && !user.username().equals(username)) {
             throw new IllegalArgumentException(invalidEmailMessage);

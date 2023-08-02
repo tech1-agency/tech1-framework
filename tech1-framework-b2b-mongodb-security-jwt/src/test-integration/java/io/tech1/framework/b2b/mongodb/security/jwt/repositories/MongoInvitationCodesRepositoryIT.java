@@ -1,6 +1,5 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
@@ -22,12 +21,13 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validAnyDbInvitationCode;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -136,13 +136,12 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         // Arrange
         this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
-        var invitationCode = new AnyDbInvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities("admin"), randomString(), randomUsername());
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(invitationCode);
+        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(validAnyDbInvitationCode());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();

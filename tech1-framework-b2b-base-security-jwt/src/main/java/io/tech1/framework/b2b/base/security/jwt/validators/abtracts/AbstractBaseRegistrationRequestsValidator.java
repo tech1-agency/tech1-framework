@@ -41,7 +41,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
 
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        var user = this.mongoUsersRepository.findByUsernameAsJwtUser(username);
+        var user = this.mongoUsersRepository.findByUsernameAsJwtUserOrNull(username);
         if (nonNull(user)) {
             var exception = entityAlreadyUsed("Username", username.identifier());
             this.securityJwtPublisher.publishRegistration1Failure(

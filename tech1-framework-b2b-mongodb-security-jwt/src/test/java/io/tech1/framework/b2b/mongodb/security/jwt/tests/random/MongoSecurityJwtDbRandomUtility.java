@@ -4,17 +4,19 @@ import io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRa
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static org.springframework.util.StringUtils.capitalize;
 
 @UtilityClass
 public class MongoSecurityJwtDbRandomUtility {
@@ -58,12 +60,21 @@ public class MongoSecurityJwtDbRandomUtility {
     }
 
     public static MongoDbUser randomUserBy(String username, List<String> authorities) {
-        return new MongoDbUser(
+        var user = new MongoDbUser(
                 Username.of(username),
                 randomPassword(),
                 randomZoneId().getId(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
+        user.setEmail(Email.of(username + "@tech1.io"));
+        user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
+        user.setAttributes(
+                Map.of(
+                        randomString(), randomString(),
+                        randomString(), randomLong()
+                )
+        );
+        return user;
     }
 
     // =================================================================================================================

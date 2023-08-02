@@ -52,9 +52,15 @@ public class MongoDbInvitationCode {
 
     @JsonIgnore
     @Transient
+    public InvitationCodeId invitationCodeId() {
+        return new InvitationCodeId(this.id);
+    }
+
+    @JsonIgnore
+    @Transient
     public AnyDbInvitationCode anyDbInvitationCode() {
         return new AnyDbInvitationCode(
-                new InvitationCodeId(this.id),
+                this.invitationCodeId(),
                 this.owner,
                 this.authorities,
                 this.value,
@@ -66,17 +72,11 @@ public class MongoDbInvitationCode {
     @Transient
     public ResponseInvitationCode getResponseInvitationCode() {
         return new ResponseInvitationCode(
-                new InvitationCodeId(this.id),
+                this.invitationCodeId(),
                 this.owner,
                 nonNull(this.authorities) ? this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()) : List.of(),
                 this.value,
                 this.invited
         );
-    }
-
-    @JsonIgnore
-    @Transient
-    public InvitationCodeId invitationCodeId() {
-        return new InvitationCodeId(this.id);
     }
 }

@@ -4,6 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.domain.base.Username;

@@ -13,9 +13,4 @@ public class ExceptionsMessagesConstants {
     public static final String ENTITY_ACCESS_DENIED = "%s: Access Denied, id = %s";
 
     public static final String MISSING_MAPPINGS_KEYS = "Attribute `%s` requirements: `[%s]`, disjunction: `[%s]`";
-
-    // =================================================================================================================
-    // Tests
-    // =================================================================================================================
-    public static final String PARAMETRIZED_TEST_CASE = "Execute parametrized test case. Source: `%s`. Actual: `%s`. Expected: `%s`";
 }

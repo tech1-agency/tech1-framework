@@ -30,12 +30,4 @@ public class ExceptionsMessagesUtility {
     public static String missingMappingsKeys(String attributeName, String requirements, String disjunction) {
         return String.format(MISSING_MAPPINGS_KEYS, attributeName, requirements, disjunction);
     }
-
-    // =================================================================================================================
-    // Tests
-    // =================================================================================================================
-    @Deprecated
-    public static String parametrizedTestCase(Object source, Object actual, Object expected) {
-        return String.format(PARAMETRIZED_TEST_CASE, source, actual, expected);
-    }
 }

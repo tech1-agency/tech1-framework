@@ -57,18 +57,4 @@ class ExceptionsMessagesUtilityTest {
         // Assert
         assertThat(actual).isEqualTo(entity + ": Already Used, id = " + entityId);
     }
-
-    @Test
-    void parametrizedTestCaseTest() {
-        // Arrange
-        var sourceObj = randomString();
-        var actualObj = randomString();
-        var expectedObj = randomString();
-
-        // Act
-        var actual = parametrizedTestCase(sourceObj, actualObj, expectedObj);
-
-        // Assert
-        assertThat(actual).isEqualTo("Execute parametrized test case. Source: `" + sourceObj + "`. Actual: `" + actualObj + "`. Expected: `" + expectedObj + "`");
-    }
 }

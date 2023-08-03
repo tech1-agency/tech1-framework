@@ -22,9 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, AnyDbUsersSessionsRepository {
@@ -47,12 +45,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
 
     default AnyDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
-    }
-
-    default AnyDbUserSession requirePresence(UserSessionId sessionId) {
-        var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
-        return session;
     }
 
     default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie) {

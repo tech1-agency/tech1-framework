@@ -9,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationV
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseUsersSessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,12 +54,29 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     private final BaseUsersSessionsRequestsValidator componentUnderTest;
 
     @Test
+    void validateDeleteByIdNotFoundTest() {
+        // Arrange
+        var username = entity(Username.class);
+        var sessionId = entity(UserSessionId.class);
+        when(this.usersSessionsRepository.isPresent(sessionId)).thenReturn(TuplePresence.absent());
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
+
+        // Assert
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Session: Not Found, id = " + sessionId);
+        verify(this.usersSessionsRepository).isPresent(sessionId);
+    }
+
+    @Test
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var username = entity(Username.class);
         var sessionId = entity(UserSessionId.class);
         var session = entity(AnyDbUserSession.class);
-        when(this.usersSessionsRepository.requirePresence(sessionId)).thenReturn(session);
+        when(this.usersSessionsRepository.isPresent(sessionId)).thenReturn(TuplePresence.present(session));
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
@@ -67,7 +85,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("Session: Access Denied, id = " + sessionId);
-        verify(this.usersSessionsRepository).requirePresence(sessionId);
+        verify(this.usersSessionsRepository).isPresent(sessionId);
     }
 
     @Test
@@ -81,12 +99,12 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
                 entity(JwtRefreshToken.class),
                 randomUserRequestMetadata()
         );
-        when(this.usersSessionsRepository.requirePresence(session.id())).thenReturn(session);
+        when(this.usersSessionsRepository.isPresent(session.id())).thenReturn(TuplePresence.present(session));
 
         // Act
         this.componentUnderTest.validateDeleteById(username, session.id());
 
         // Assert
-        verify(this.usersSessionsRepository).requirePresence(session.id());
+        verify(this.usersSessionsRepository).isPresent(session.id());
     }
 }

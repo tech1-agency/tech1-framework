@@ -8,8 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsRequestsValidator implements BaseUsersSessionsRequestsValidator {
@@ -22,8 +21,13 @@ public abstract class AbstractBaseUsersSessionsRequestsValidator implements Base
         assertNonNullOrThrow(sessionId, invalidAttribute("sessionId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var session = this.anyDbUsersSessionsRepository.requirePresence(sessionId);
-        if (!username.equals(session.username())) {
+        var tuplePresence = this.anyDbUsersSessionsRepository.isPresent(sessionId);
+
+        if (!tuplePresence.present()) {
+            throw new IllegalArgumentException(entityNotFound("Session", sessionId.value()));
+        }
+
+        if (!username.equals(tuplePresence.value().username())) {
             throw new IllegalArgumentException(entityAccessDenied("Session", sessionId.value()));
         }
     }

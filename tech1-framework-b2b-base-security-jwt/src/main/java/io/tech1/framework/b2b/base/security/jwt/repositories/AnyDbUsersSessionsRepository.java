@@ -19,8 +19,6 @@ public interface AnyDbUsersSessionsRepository {
     boolean isPresentByAccessToken(JwtAccessToken accessToken);
     boolean isPresentByRefreshToken(JwtRefreshToken refreshToken);
     AnyDbUserSession getById(UserSessionId sessionId);
-    @Deprecated
-    AnyDbUserSession requirePresence(UserSessionId sessionId);
     List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie);
     List<Tuple2<ResponseUserSession2, JwtAccessToken>> findAllByCookieAsSession2(CookieAccessToken cookie);
     List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);

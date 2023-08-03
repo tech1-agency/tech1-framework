@@ -20,9 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @Repository
 public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, AnyDbUsersSessionsRepository {
@@ -45,12 +43,6 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
 
     default AnyDbUserSession getById(UserSessionId sessionId) {
         return this.findById(sessionId.value()).map(MongoDbUserSession::anyDbUserSession).orElse(null);
-    }
-
-    default AnyDbUserSession requirePresence(UserSessionId sessionId) {
-        var session = this.getById(sessionId);
-        assertNonNullOrThrow(session, entityNotFound("Session", sessionId.value()));
-        return session;
     }
 
     default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie) {

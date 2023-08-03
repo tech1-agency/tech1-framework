@@ -51,18 +51,18 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var userSessionTP = this.anyDbUsersSessionsRepository.isPresent(accessToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
         var metadata = UserRequestMetadata.processing(clientIpAddr);
-        var userSession = userSessionTP.value();
+        var session = userSessionTP.value();
         if (userSessionTP.present()) {
-            userSession = ofPersisted(userSession.id(), userSession.username(), userSession.accessToken(), userSession.refreshToken(), metadata);
+            session = ofPersisted(session.id(), session.username(), session.accessToken(), session.refreshToken(), metadata);
         } else {
-            userSession = ofNotPersisted(username, accessToken, refreshToken, metadata);
+            session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
-        var sessionId = this.anyDbUsersSessionsRepository.saveAs(userSession);
+        this.anyDbUsersSessionsRepository.saveAs(session);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
                         user.email(),
-                        sessionId,
+                        session,
                         clientIpAddr,
                         new UserAgentHeader(httpServletRequest),
                         true,
@@ -74,14 +74,14 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public void refresh(JwtUser user, AnyDbUserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var newUserSession = ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata());
-        this.anyDbUsersSessionsRepository.saveAs(newUserSession);
+        var newSession = ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata());
+        this.anyDbUsersSessionsRepository.saveAs(newSession);
         this.anyDbUsersSessionsRepository.delete(oldSession.id());
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
                         user.email(),
-                        newUserSession.id(),
+                        newSession,
                         getClientIpAddr(httpServletRequest),
                         new UserAgentHeader(httpServletRequest),
                         false,
@@ -94,18 +94,15 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     public Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
-        // TODO [YY] consider event.userSessionId() -> event.anyDb
-        // WARNING: already validated and present in database
-        var userSession = this.anyDbUsersSessionsRepository.isPresent(event.userSessionId()).value();
-        userSession = ofPersisted(
-                userSession.id(),
-                userSession.username(),
-                userSession.accessToken(),
-                userSession.refreshToken(),
+        var session = ofPersisted(
+                event.session().id(),
+                event.session().username(),
+                event.session().accessToken(),
+                event.session().refreshToken(),
                 UserRequestMetadata.processed(geoLocation, userAgentDetails)
         );
-        this.anyDbUsersSessionsRepository.saveAs(userSession);
-        return new Tuple2<>(userSession.id(), userSession.metadata());
+        this.anyDbUsersSessionsRepository.saveAs(session);
+        return new Tuple2<>(session.id(), session.metadata());
     }
 
     @Override

@@ -102,6 +102,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteExceptToken(cookie.getJwtAccessToken());
     }
 
+    // TODO [YY] add tests that saveAs on present entity is saved and NOT created
     default UserSessionId saveAs(AnyDbUserSession userSession) {
         var entity = this.save(new PostgresDbUserSession(userSession));
         return entity.userSessionId();

@@ -77,7 +77,7 @@ class AbstractBaseSuperAdminServiceTest {
                 }
 
                 @Override
-                public void resetOnServer(JwtUser user) {
+                public void resetOnServer(JwtUser initiator) {
                     abstractMockService().executeInheritedMethod();
                 }
 

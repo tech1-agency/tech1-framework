@@ -17,20 +17,20 @@ public abstract class AbstractSuperAdminResetServerTask {
     protected final IncidentPublisher incidentPublisher;
 
     public abstract ResetServerStatus getStatus();
-    public abstract void resetOnServer(JwtUser user);
+    public abstract void resetOnServer(JwtUser initiator);
 
-    public final void reset(JwtUser user) {
+    public final void reset(JwtUser initiator) {
         if (this.getStatus().getState().isResetting()) {
             return;
         }
-        LOGGER.info(SERVER_RESET_SERVER_TASK, user.username(), STARTED);
+        LOGGER.info(SERVER_RESET_SERVER_TASK, initiator.username(), STARTED);
 
         try {
-            this.resetOnServer(user);
+            this.resetOnServer(initiator);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }
 
-        LOGGER.info(SERVER_RESET_SERVER_TASK, user.username(), COMPLETED);
+        LOGGER.info(SERVER_RESET_SERVER_TASK, initiator.username(), COMPLETED);
     }
 }

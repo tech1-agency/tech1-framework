@@ -237,8 +237,9 @@ class AbstractTokensContextThrowerServiceTest {
         var refreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(refreshToken, validDefaultClaims());
         var user = entity(JwtUser.class);
+        var session = entity(AnyDbUserSession.class);
         when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.username().identifier())).thenReturn(user);
-        when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.present(entity(AnyDbUserSession.class)));
+        when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.present(session));
 
         // Act
         var actual = this.componentUnderTest.verifyDbPresenceOrThrow(refreshToken, validatedClaims);
@@ -246,7 +247,8 @@ class AbstractTokensContextThrowerServiceTest {
         // Assert
         verify(this.jwtUserDetailsService).loadUserByUsername(validatedClaims.username().identifier());
         verify(this.usersSessionsRepository).isPresent(refreshToken);
-        assertThat(actual).isEqualTo(user);
+        assertThat(actual.a()).isEqualTo(user);
+        assertThat(actual.b()).isEqualTo(session);
     }
 
     @Test

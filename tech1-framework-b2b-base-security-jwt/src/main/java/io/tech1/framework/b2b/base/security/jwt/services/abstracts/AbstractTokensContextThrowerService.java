@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
@@ -9,6 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsR
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -70,13 +72,14 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     }
 
     @Override
-    public JwtUser verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenDbNotFoundException {
+    public Tuple2<JwtUser, AnyDbUserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenDbNotFoundException {
         var username = validatedClaims.username();
         var databasePresence = this.usersSessionsRepository.isPresent(refreshToken);
         if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenDbNotFoundException(username);
         }
-        return this.jwtUserDetailsService.loadUserByUsername(username.identifier());
+        var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
+        return new Tuple2<>(user, databasePresence.value());
     }
 }

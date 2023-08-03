@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.SESSIONS_2;
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.SESSIONS22;
 
 public record ResponseServerSessionsTable(
         List<ResponseUserSession2> activeSessions,
@@ -17,8 +17,8 @@ public record ResponseServerSessionsTable(
             List<ResponseUserSession2> activeSessions,
             List<ResponseUserSession2> inactiveSessions
     ) {
-        activeSessions.sort(SESSIONS_2);
-        inactiveSessions.sort(SESSIONS_2);
+        activeSessions.sort(SESSIONS22);
+        inactiveSessions.sort(SESSIONS22);
         return new ResponseServerSessionsTable(
                 activeSessions,
                 inactiveSessions

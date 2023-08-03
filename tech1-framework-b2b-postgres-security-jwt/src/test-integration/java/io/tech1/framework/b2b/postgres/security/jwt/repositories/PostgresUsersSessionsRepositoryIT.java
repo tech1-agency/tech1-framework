@@ -67,6 +67,15 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt1")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt2")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt777")).present()).isFalse();
+        assertThat(this.usersSessionsRepository.findByUsernameAndCookieAsSession2(Username.of("user777"), new CookieAccessToken("awt2"))).isEmpty();
+        var usersSessions = this.usersSessionsRepository.findByUsernameAndCookieAsSession2(TECH1, new CookieAccessToken("awt2"));
+        assertThat(usersSessions).hasSize(4);
+        assertThat(usersSessions.get(0).current()).isTrue();
+        assertThat(usersSessions.get(0).activity()).isEqualTo("Current session");
+        usersSessions.stream().skip(1).forEach(userSession -> {
+            assertThat(userSession.current()).isFalse();
+            assertThat(userSession.activity()).isEqualTo("—");
+        });
     }
 
     @Test

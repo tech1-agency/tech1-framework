@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.SESSIONS21;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 
 @Repository
@@ -48,6 +49,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
+                .sorted(SESSIONS21)
                 .collect(Collectors.toList());
     }
 

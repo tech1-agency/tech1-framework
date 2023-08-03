@@ -30,6 +30,7 @@ public record ResponseUserSession2(
         var current = cookie.value().equals(accessToken.value());
         var activity = "";
         if (current) {
+            System.out.println("cookie.value(): " + cookie.value());
             activity = "Current session";
         } else {
             activity = "—";

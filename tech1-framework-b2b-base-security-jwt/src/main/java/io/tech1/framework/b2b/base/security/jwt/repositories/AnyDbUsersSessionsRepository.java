@@ -24,5 +24,5 @@ public interface AnyDbUsersSessionsRepository {
     long delete(Set<UserSessionId> sessionsIds);
     void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie);
     void deleteExceptAccessToken(CookieAccessToken cookie);
-    UserSessionId saveAs(AnyDbUserSession userSession);
+    AnyDbUserSession saveAs(AnyDbUserSession userSession);
 }

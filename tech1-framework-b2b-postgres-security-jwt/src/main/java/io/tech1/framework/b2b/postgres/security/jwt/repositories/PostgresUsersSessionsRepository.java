@@ -103,9 +103,9 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     }
 
     // TODO [YY] return AnyDbUserSession
-    default UserSessionId saveAs(AnyDbUserSession userSession) {
+    default AnyDbUserSession saveAs(AnyDbUserSession userSession) {
         var entity = this.save(new PostgresDbUserSession(userSession));
-        return entity.userSessionId();
+        return entity.anyDbUserSession();
     }
 
     // ================================================================================================================

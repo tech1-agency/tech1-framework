@@ -97,9 +97,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteExceptToken(cookie.getJwtAccessToken());
     }
 
-    default UserSessionId saveAs(AnyDbUserSession userSession) {
+    default AnyDbUserSession saveAs(AnyDbUserSession userSession) {
         var entity = this.save(new MongoDbUserSession(userSession));
-        return entity.userSessionId();
+        return entity.anyDbUserSession();
     }
 
     // ================================================================================================================

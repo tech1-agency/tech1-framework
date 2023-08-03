@@ -101,8 +101,8 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 event.session().refreshToken(),
                 UserRequestMetadata.processed(geoLocation, userAgentDetails)
         );
-        this.anyDbUsersSessionsRepository.saveAs(session);
-        // TODO: return any session
+        // TODO: return session
+        session = this.anyDbUsersSessionsRepository.saveAs(session);
         return new Tuple2<>(session.id(), session.metadata());
     }
 

@@ -26,6 +26,10 @@ public class SecurityJwtComparators {
     public static final Comparator<ResponseUserSession2> SESSIONS21 = comparing((ResponseUserSession2 session) -> !session.current())
             .thenComparing(ResponseUserSession2::where);
 
-    public static final Comparator<ResponseUserSession2> SESSIONS22 = comparing((ResponseUserSession2 session) -> session.who().identifier())
+    public static final Comparator<ResponseUserSession2> SESSIONS22 = comparing((ResponseUserSession2 session) -> !session.current())
+            .thenComparing((ResponseUserSession2 session) -> session.who().identifier())
+            .thenComparing(ResponseUserSession2::where);
+
+    public static final Comparator<ResponseUserSession2> SESSIONS23 = comparing((ResponseUserSession2 session) -> session.who().identifier())
             .thenComparing(ResponseUserSession2::where);
 }

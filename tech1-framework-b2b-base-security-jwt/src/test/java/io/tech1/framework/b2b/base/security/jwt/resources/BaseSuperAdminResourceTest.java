@@ -82,7 +82,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     @Test
     void getServerSessions() throws Exception {
         // Arrange
-        var sessionsTable = ResponseServerSessionsTable.of(
+        var sessionsTable = new ResponseServerSessionsTable(
                 list345(ResponseUserSession2.class),
                 list345(ResponseUserSession2.class)
         );

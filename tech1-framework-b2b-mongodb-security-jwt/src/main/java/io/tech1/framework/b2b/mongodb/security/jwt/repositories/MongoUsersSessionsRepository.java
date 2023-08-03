@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -9,18 +10,18 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.SESSIONS21;
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.*;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 
 @Repository
@@ -53,10 +54,25 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .collect(Collectors.toList());
     }
 
-    default List<Tuple2<ResponseUserSession2, JwtAccessToken>> findAllByCookieAsSession2(CookieAccessToken cookie) {
-        return this.findAll().stream()
-                .map(session -> new Tuple2<>(session.responseUserSession2(cookie), session.getAccessToken()))
-                .collect(Collectors.toList());
+    default ResponseServerSessionsTable findAllByCookieAsSession2(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie) {
+        var sessions = this.findAll();
+
+        List<ResponseUserSession2> activeSessions = new ArrayList<>();
+        List<ResponseUserSession2> inactiveSessions = new ArrayList<>();
+
+        sessions.forEach(session -> {
+            var session2 = session.responseUserSession2(cookie);
+            if (activeAccessTokens.contains(session.getAccessToken())) {
+                activeSessions.add(session2);
+            } else {
+                inactiveSessions.add(session2);
+            }
+        });
+
+        activeSessions.sort(SESSIONS22);
+        inactiveSessions.sort(SESSIONS23);
+
+        return new ResponseServerSessionsTable(activeSessions, inactiveSessions);
     }
 
     default List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames) {
@@ -89,10 +105,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    List<MongoDbUserSession> findByUsername(Username username);
-    List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
     Optional<MongoDbUserSession> findByAccessToken(JwtAccessToken accessToken);
     Optional<MongoDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
+    List<MongoDbUserSession> findByUsername(Username username);
+    List<MongoDbUserSession> findByUsernameIn(Set<Username> usernames);
 
     long deleteByIdIn(List<String> ids);
 

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -9,7 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.Username;
@@ -28,8 +28,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofNotPersisted;
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
 
@@ -39,7 +39,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     // Publishers
     protected final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
-    protected final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
+    protected final UsersSessionsRepository usersSessionsRepository;
     // Utilities
     protected final GeoLocationFacadeUtility geoLocationFacadeUtility;
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
@@ -48,7 +48,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var userSessionTP = this.anyDbUsersSessionsRepository.isPresent(accessToken);
+        var userSessionTP = this.usersSessionsRepository.isPresent(accessToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
         var metadata = UserRequestMetadata.processing(clientIpAddr);
         var session = userSessionTP.value();
@@ -57,7 +57,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         } else {
             session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
-        this.anyDbUsersSessionsRepository.saveAs(session);
+        this.usersSessionsRepository.saveAs(session);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
@@ -72,11 +72,11 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void refresh(JwtUser user, AnyDbUserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
+    public void refresh(JwtUser user, UserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
         var newSession = ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata());
-        this.anyDbUsersSessionsRepository.saveAs(newSession);
-        this.anyDbUsersSessionsRepository.delete(oldSession.id());
+        this.usersSessionsRepository.saveAs(newSession);
+        this.usersSessionsRepository.delete(oldSession.id());
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,
@@ -102,13 +102,13 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 UserRequestMetadata.processed(geoLocation, userAgentDetails)
         );
         // TODO: return session
-        session = this.anyDbUsersSessionsRepository.saveAs(session);
+        session = this.usersSessionsRepository.saveAs(session);
         return new Tuple2<>(session.id(), session.metadata());
     }
 
     @Override
     public SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
-        var usersSessions = this.anyDbUsersSessionsRepository.findByUsernameInAsAny(usernames);
+        var usersSessions = this.usersSessionsRepository.findByUsernameInAsAny(usernames);
         List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
         Set<UserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
 
@@ -141,16 +141,16 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
 
     @Override
     public void deleteById(UserSessionId sessionId) {
-        this.anyDbUsersSessionsRepository.delete(sessionId);
+        this.usersSessionsRepository.delete(sessionId);
     }
 
     @Override
     public void deleteAllExceptCurrent(Username username, CookieAccessToken cookie) {
-        this.anyDbUsersSessionsRepository.deleteByUsernameExceptAccessToken(username, cookie);
+        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(username, cookie);
     }
 
     @Override
     public void deleteAllExceptCurrentAsSuperuser(CookieAccessToken cookie) {
-        this.anyDbUsersSessionsRepository.deleteExceptAccessToken(cookie);
+        this.usersSessionsRepository.deleteExceptAccessToken(cookie);
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
-public record AnyDbInvitationCode(
+public record InvitationCode(
         InvitationCodeId id,
         Username owner,
         List<SimpleGrantedAuthority> authorities,

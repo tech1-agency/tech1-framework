@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserC
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
 import io.tech1.framework.domain.base.Password;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.time.ZoneId;
 public abstract class AbstractBaseUsersService implements BaseUsersService {
 
     // Repository
-    private final AnyDbUsersRepository usersRepository;
+    private final UsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

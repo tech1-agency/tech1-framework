@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseUsersSessionsRequestsValidator;
@@ -39,7 +39,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final AnyDbUsersSessionsRepository usersSessionsRepository;
+        private final UsersSessionsRepository usersSessionsRepository;
 
         @Bean
         BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator() {
@@ -49,7 +49,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
         }
     }
 
-    private final AnyDbUsersSessionsRepository usersSessionsRepository;
+    private final UsersSessionsRepository usersSessionsRepository;
 
     private final BaseUsersSessionsRequestsValidator componentUnderTest;
 
@@ -75,7 +75,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var sessionId = entity(UserSessionId.class);
-        var session = entity(AnyDbUserSession.class);
+        var session = entity(UserSession.class);
         when(this.usersSessionsRepository.isPresent(sessionId)).thenReturn(TuplePresence.present(session));
 
         // Act
@@ -92,7 +92,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     void validateDeleteByIdOkTest() {
         // Arrange
         var username = entity(Username.class);
-        var session = AnyDbUserSession.ofPersisted(
+        var session = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 username,
                 entity(JwtAccessToken.class),

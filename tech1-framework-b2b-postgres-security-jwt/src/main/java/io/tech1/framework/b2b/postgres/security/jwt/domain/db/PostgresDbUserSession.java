@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -18,8 +18,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofNotPersisted;
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS_SESSIONS;
 import static java.util.Objects.nonNull;
 
@@ -56,7 +56,7 @@ public class PostgresDbUserSession {
     @Column(length = 65535, nullable = false)
     private UserRequestMetadata metadata;
 
-    public PostgresDbUserSession(AnyDbUserSession session) {
+    public PostgresDbUserSession(UserSession session) {
         if (session.persisted()) {
             this.id = session.id().value();
         }
@@ -68,7 +68,7 @@ public class PostgresDbUserSession {
 
     @JsonIgnore
     @Transient
-    public AnyDbUserSession anyDbUserSession() {
+    public UserSession userSession() {
         if (nonNull(this.id)) {
             return ofPersisted(new UserSessionId(this.id), this.username, this.accessToken, this.refreshToken, this.metadata);
         } else {

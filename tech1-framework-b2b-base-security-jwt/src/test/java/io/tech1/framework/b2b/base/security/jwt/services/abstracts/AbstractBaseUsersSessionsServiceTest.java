@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
@@ -68,8 +68,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        AnyDbUsersSessionsRepository usersSessionsRepository() {
-            return mock(AnyDbUsersSessionsRepository.class);
+        UsersSessionsRepository usersSessionsRepository() {
+            return mock(UsersSessionsRepository.class);
         }
 
         @Bean
@@ -104,7 +104,7 @@ class AbstractBaseUsersSessionsServiceTest {
     // Publishers
     protected final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
-    protected final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
+    protected final UsersSessionsRepository usersSessionsRepository;
     // Utilities
     protected final GeoLocationFacadeUtility geoLocationFacadeUtility;
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
@@ -116,7 +116,7 @@ class AbstractBaseUsersSessionsServiceTest {
     void beforeEach() {
         reset(
                 this.securityJwtPublisher,
-                this.anyDbUsersSessionsRepository,
+                this.usersSessionsRepository,
                 this.geoLocationFacadeUtility
         );
     }
@@ -125,7 +125,7 @@ class AbstractBaseUsersSessionsServiceTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
-                this.anyDbUsersSessionsRepository,
+                this.usersSessionsRepository,
                 this.geoLocationFacadeUtility
         );
     }
@@ -141,16 +141,16 @@ class AbstractBaseUsersSessionsServiceTest {
         var username = user.username();
         var accessToken = entity(JwtAccessToken.class);
         var refreshToken = entity(JwtRefreshToken.class);
-        var userSession = AnyDbUserSession.ofPersisted(entity(UserSessionId.class), username, accessToken, refreshToken, entity(UserRequestMetadata.class));
-        when(this.anyDbUsersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
+        var userSession = UserSession.ofPersisted(entity(UserSessionId.class), username, accessToken, refreshToken, entity(UserRequestMetadata.class));
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
 
         // Act
         this.componentUnderTest.save(user, accessToken, refreshToken, httpServletRequest);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).isPresent(accessToken);
-        var dbUserSessionAC = ArgumentCaptor.forClass(AnyDbUserSession.class);
-        verify(this.anyDbUsersSessionsRepository).saveAs(dbUserSessionAC.capture());
+        verify(this.usersSessionsRepository).isPresent(accessToken);
+        var dbUserSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        verify(this.usersSessionsRepository).saveAs(dbUserSessionAC.capture());
         var actualDbUserSession = dbUserSessionAC.getValue();
         assertThat(actualDbUserSession.username()).isEqualTo(username);
         assertThat(actualDbUserSession.refreshToken()).isEqualTo(refreshToken);
@@ -185,15 +185,15 @@ class AbstractBaseUsersSessionsServiceTest {
         var username = user.username();
         var accessToken = entity(JwtAccessToken.class);
         var refreshToken = entity(JwtRefreshToken.class);
-        when(this.anyDbUsersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
 
         // Act
         this.componentUnderTest.save(user, accessToken, refreshToken, httpServletRequest);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).isPresent(accessToken);
-        var dbUserSessionAC = ArgumentCaptor.forClass(AnyDbUserSession.class);
-        verify(this.anyDbUsersSessionsRepository).saveAs(dbUserSessionAC.capture());
+        verify(this.usersSessionsRepository).isPresent(accessToken);
+        var dbUserSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        verify(this.usersSessionsRepository).saveAs(dbUserSessionAC.capture());
         var actualDbUserSession = dbUserSessionAC.getValue();
         assertThat(actualDbUserSession.username()).isEqualTo(username);
         assertThat(actualDbUserSession.refreshToken()).isEqualTo(refreshToken);
@@ -232,13 +232,13 @@ class AbstractBaseUsersSessionsServiceTest {
         this.componentUnderTest.refresh(user, oldSession, newAccessToken, newRefreshToken, httpServletRequest);
 
         // Assert
-        var saveCaptor = ArgumentCaptor.forClass(AnyDbUserSession.class);
-        verify(this.anyDbUsersSessionsRepository).saveAs(saveCaptor.capture());
+        var saveCaptor = ArgumentCaptor.forClass(UserSession.class);
+        verify(this.usersSessionsRepository).saveAs(saveCaptor.capture());
         var newUserSession = saveCaptor.getValue();
         assertThat(newUserSession.username()).isEqualTo(username);
         assertThat(newUserSession.refreshToken()).isEqualTo(newRefreshToken);
         assertThat(newUserSession.metadata()).isEqualTo(oldSession.metadata());
-        verify(this.anyDbUsersSessionsRepository).delete(oldSession.id());
+        verify(this.usersSessionsRepository).delete(oldSession.id());
         var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
@@ -255,14 +255,15 @@ class AbstractBaseUsersSessionsServiceTest {
         var event = entity(EventSessionAddUserRequestMetadata.class);
         var geoLocation = randomGeoLocation();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
-        var userSessionAC = ArgumentCaptor.forClass(AnyDbUserSession.class);
+        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
         verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
-        verify(this.anyDbUsersSessionsRepository).saveAs(userSessionAC.capture());
+        verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         var requestMetadata = userSessionAC.getValue().metadata();
         assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
         assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
@@ -272,21 +273,21 @@ class AbstractBaseUsersSessionsServiceTest {
     void getExpiredSessionsTest() {
         // Arrange
         var usernames = new HashSet<>(Set.of(TECH1));
-        var sessionInvalidUserSession = AnyDbUserSession.ofPersisted(
+        var sessionInvalidUserSession = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 randomUsername(),
                 entity(JwtAccessToken.class),
                 new JwtRefreshToken("<invalid>"),
                 entity(UserRequestMetadata.class)
         );
-        var sessionExpiredUserSession = AnyDbUserSession.ofPersisted(
+        var sessionExpiredUserSession = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 randomUsername(),
                 entity(JwtAccessToken.class),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8"),
                 entity(UserRequestMetadata.class)
         );
-        var sessionAliveUserSession = AnyDbUserSession.ofPersisted(
+        var sessionAliveUserSession = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 randomUsername(),
                 entity(JwtAccessToken.class),
@@ -294,13 +295,13 @@ class AbstractBaseUsersSessionsServiceTest {
                 entity(UserRequestMetadata.class)
         );
         var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
-        when(this.anyDbUsersSessionsRepository.findByUsernameInAsAny(usernames)).thenReturn(usersSessions);
+        when(this.usersSessionsRepository.findByUsernameInAsAny(usernames)).thenReturn(usersSessions);
 
         // Act
         var sessionsValidatedTuple2 = this.componentUnderTest.getExpiredRefreshTokensSessions(usernames);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).findByUsernameInAsAny(usernames);
+        verify(this.usersSessionsRepository).findByUsernameInAsAny(usernames);
         assertThat(sessionsValidatedTuple2).isNotNull();
         assertThat(sessionsValidatedTuple2.expiredOrInvalidSessionIds()).isNotNull();
         assertThat(sessionsValidatedTuple2.expiredOrInvalidSessionIds()).hasSize(2);
@@ -322,7 +323,7 @@ class AbstractBaseUsersSessionsServiceTest {
         this.componentUnderTest.deleteById(sessionId);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).delete(sessionId);
+        verify(this.usersSessionsRepository).delete(sessionId);
     }
 
     @Test
@@ -335,7 +336,7 @@ class AbstractBaseUsersSessionsServiceTest {
         this.componentUnderTest.deleteAllExceptCurrent(username, cookie);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).deleteByUsernameExceptAccessToken(username, cookie);
+        verify(this.usersSessionsRepository).deleteByUsernameExceptAccessToken(username, cookie);
     }
 
     @Test
@@ -347,6 +348,6 @@ class AbstractBaseUsersSessionsServiceTest {
         this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(cookie);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).deleteExceptAccessToken(cookie);
+        verify(this.usersSessionsRepository).deleteExceptAccessToken(cookie);
     }
 }

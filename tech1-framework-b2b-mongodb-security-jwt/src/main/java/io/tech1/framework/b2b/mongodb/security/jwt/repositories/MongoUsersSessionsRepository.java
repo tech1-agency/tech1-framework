@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -25,25 +25,25 @@ import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtCo
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 
 @Repository
-public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, AnyDbUsersSessionsRepository {
+public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, UsersSessionsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<AnyDbUserSession> isPresent(UserSessionId sessionId) {
+    default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
         return this.findById(sessionId.value())
-                .map(entity -> present(entity.anyDbUserSession()))
+                .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<AnyDbUserSession> isPresent(JwtAccessToken accessToken) {
+    default TuplePresence<UserSession> isPresent(JwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken)
-                .map(entity -> present(entity.anyDbUserSession()))
+                .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<AnyDbUserSession> isPresent(JwtRefreshToken refreshToken) {
+    default TuplePresence<UserSession> isPresent(JwtRefreshToken refreshToken) {
         return this.findByRefreshToken(refreshToken)
-                .map(entity -> present(entity.anyDbUserSession()))
+                .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
@@ -75,9 +75,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return new ResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
     }
 
-    default List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames) {
+    default List<UserSession> findByUsernameInAsAny(Set<Username> usernames) {
         return this.findByUsernameIn(usernames).stream()
-                .map(MongoDbUserSession::anyDbUserSession)
+                .map(MongoDbUserSession::userSession)
                 .collect(Collectors.toList());
     }
 
@@ -97,9 +97,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteExceptToken(cookie.getJwtAccessToken());
     }
 
-    default AnyDbUserSession saveAs(AnyDbUserSession userSession) {
+    default UserSession saveAs(UserSession userSession) {
         var entity = this.save(new MongoDbUserSession(userSession));
-        return entity.anyDbUserSession();
+        return entity.userSession();
     }
 
     // ================================================================================================================

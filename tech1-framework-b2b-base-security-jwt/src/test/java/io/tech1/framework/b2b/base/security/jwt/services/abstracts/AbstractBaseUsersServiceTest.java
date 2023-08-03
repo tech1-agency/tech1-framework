@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserC
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +33,8 @@ class AbstractBaseUsersServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        AnyDbUsersRepository userRepository() {
-            return mock(AnyDbUsersRepository.class);
+        UsersRepository userRepository() {
+            return mock(UsersRepository.class);
         }
 
         @Bean
@@ -51,7 +51,7 @@ class AbstractBaseUsersServiceTest {
         }
     }
 
-    private final AnyDbUsersRepository usersRepository;
+    private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final AbstractBaseUsersService componentUnderTest;

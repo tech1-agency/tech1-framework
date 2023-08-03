@@ -2,9 +2,9 @@ package io.tech1.framework.b2b.base.security.jwt.tests.contexts;
 
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import org.springframework.context.annotation.Bean;
@@ -41,17 +41,17 @@ public class TestsApplicationValidatorsContext {
     // Repositories
     // =================================================================================================================
     @Bean
-    AnyDbInvitationCodesRepository invitationCodeRepository() {
-        return mock(AnyDbInvitationCodesRepository.class);
+    InvitationCodesRepository invitationCodeRepository() {
+        return mock(InvitationCodesRepository.class);
     }
 
     @Bean
-    AnyDbUsersRepository userRepository() {
-        return mock(AnyDbUsersRepository.class);
+    UsersRepository userRepository() {
+        return mock(UsersRepository.class);
     }
 
     @Bean
-    AnyDbUsersSessionsRepository userSessionRepository() {
-        return mock(AnyDbUsersSessionsRepository.class);
+    UsersSessionsRepository userSessionRepository() {
+        return mock(UsersSessionsRepository.class);
     }
 }

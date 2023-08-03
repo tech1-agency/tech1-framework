@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserR
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1Failure;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -23,8 +23,8 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     protected final SecurityJwtPublisher securityJwtPublisher;
     protected final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Repositories
-    protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
-    protected final AnyDbUsersRepository mongoUsersRepository;
+    protected final InvitationCodesRepository invitationCodesRepository;
+    protected final UsersRepository mongoUsersRepository;
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
@@ -61,7 +61,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
             throw new RegistrationException(exception);
         }
 
-        var dbInvitationCode = this.anyDbInvitationCodesRepository.findByValueAsAny(invitationCode);
+        var dbInvitationCode = this.invitationCodesRepository.findByValueAsAny(invitationCode);
         if (nonNull(dbInvitationCode)) {
             if (nonNull(dbInvitationCode.invited())) {
                 var exception = entityAlreadyUsed("InvitationCode", dbInvitationCode.value());

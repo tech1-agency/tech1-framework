@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.essence;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.stubbers.AbstractMockService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.DefaultUser;
@@ -57,13 +57,13 @@ class AbstractEssenceConstructorTest {
         }
 
         @Bean
-        AnyDbInvitationCodesRepository anyDbInvitationCodesRepository() {
-            return mock(AnyDbInvitationCodesRepository.class);
+        InvitationCodesRepository invitationCodesRepository() {
+            return mock(InvitationCodesRepository.class);
         }
 
         @Bean
-        AnyDbUsersRepository anyDbUsersRepository() {
-            return mock(AnyDbUsersRepository.class);
+        UsersRepository usersRepository() {
+            return mock(UsersRepository.class);
         }
 
         @Bean
@@ -74,8 +74,8 @@ class AbstractEssenceConstructorTest {
         @Bean("abstractEssenceConstructor")
         AbstractEssenceConstructor abstractEssenceConstructor() {
             return new AbstractEssenceConstructor(
-                    this.anyDbInvitationCodesRepository(),
-                    this.anyDbUsersRepository(),
+                    this.invitationCodesRepository(),
+                    this.usersRepository(),
                     this.applicationFrameworkProperties()
             ) {
                 @Override
@@ -93,8 +93,8 @@ class AbstractEssenceConstructorTest {
     }
 
     // Repositories
-    private final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
-    private final AnyDbUsersRepository anyDbUsersRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
+    private final UsersRepository usersRepository;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
     // Mock
@@ -104,14 +104,14 @@ class AbstractEssenceConstructorTest {
 
     @Autowired
     AbstractEssenceConstructorTest(
-            AnyDbInvitationCodesRepository anyDbInvitationCodesRepository,
-            AnyDbUsersRepository anyDbUsersRepository,
+            InvitationCodesRepository invitationCodesRepository,
+            UsersRepository usersRepository,
             ApplicationFrameworkProperties applicationFrameworkProperties,
             AbstractMockService abstractMockService,
             @Qualifier("abstractEssenceConstructor") AbstractEssenceConstructor componentUnderTest
     ) {
-        this.anyDbInvitationCodesRepository = anyDbInvitationCodesRepository;
-        this.anyDbUsersRepository = anyDbUsersRepository;
+        this.invitationCodesRepository = invitationCodesRepository;
+        this.usersRepository = usersRepository;
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         this.abstractMockService = abstractMockService;
         this.componentUnderTest = componentUnderTest;
@@ -120,8 +120,8 @@ class AbstractEssenceConstructorTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.anyDbInvitationCodesRepository,
-                this.anyDbUsersRepository,
+                this.invitationCodesRepository,
+                this.usersRepository,
                 this.applicationFrameworkProperties,
                 this.abstractMockService
         );
@@ -130,8 +130,8 @@ class AbstractEssenceConstructorTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.anyDbInvitationCodesRepository,
-                this.anyDbUsersRepository,
+                this.invitationCodesRepository,
+                this.usersRepository,
                 this.applicationFrameworkProperties,
                 this.abstractMockService
         );
@@ -142,14 +142,14 @@ class AbstractEssenceConstructorTest {
     void addDefaultUsersPresentTest(long count) {
         // Arrange
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
-        when(this.anyDbUsersRepository.count()).thenReturn(count);
+        when(this.usersRepository.count()).thenReturn(count);
 
         // Act
         this.componentUnderTest.addDefaultUsers();
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.anyDbUsersRepository).count();
+        verify(this.usersRepository).count();
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();
         }
@@ -161,14 +161,14 @@ class AbstractEssenceConstructorTest {
         // Arrange
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
         var username = Username.of("admin12");
-        when(this.anyDbInvitationCodesRepository.countByOwner(username)).thenReturn(count);
+        when(this.invitationCodesRepository.countByOwner(username)).thenReturn(count);
 
         // Act
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
-        verify(this.anyDbInvitationCodesRepository).countByOwner(username);
+        verify(this.invitationCodesRepository).countByOwner(username);
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();
         }

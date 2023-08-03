@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.validators.abtracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -16,7 +16,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {
 
     // Repositories
-    protected final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
+    protected final InvitationCodesRepository invitationCodesRepository;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -34,7 +34,7 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
         assertNonNullOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var tuplePresence = this.anyDbInvitationCodesRepository.isPresent(invitationCodeId);
+        var tuplePresence = this.invitationCodesRepository.isPresent(invitationCodeId);
 
         if (!tuplePresence.present()) {
             throw new IllegalArgumentException(entityNotFound("InvitationCode", invitationCodeId.value()));

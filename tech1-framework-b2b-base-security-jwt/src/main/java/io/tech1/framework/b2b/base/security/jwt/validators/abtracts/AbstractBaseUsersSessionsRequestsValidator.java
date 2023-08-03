@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.validators.abtracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.AccessLevel;
@@ -14,14 +14,14 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 public abstract class AbstractBaseUsersSessionsRequestsValidator implements BaseUsersSessionsRequestsValidator {
 
     // Repositories
-    protected final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
+    protected final UsersSessionsRepository usersSessionsRepository;
 
     @Override
     public void validateDeleteById(Username username, UserSessionId sessionId) {
         assertNonNullOrThrow(sessionId, invalidAttribute("sessionId"));
         assertNonNullOrThrow(username, invalidAttribute("owner"));
 
-        var tuplePresence = this.anyDbUsersSessionsRepository.isPresent(sessionId);
+        var tuplePresence = this.usersSessionsRepository.isPresent(sessionId);
 
         if (!tuplePresence.present()) {
             throw new IllegalArgumentException(entityNotFound("Session", sessionId.value()));

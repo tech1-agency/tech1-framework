@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
@@ -43,8 +43,8 @@ public class BaseSecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions
     // =================================================================================================================
-    public static AnyDbUserSession session(String owner, String accessToken, String refreshToken) {
-        return AnyDbUserSession.ofPersisted(
+    public static UserSession session(String owner, String accessToken, String refreshToken) {
+        return UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 Username.of(owner),
                 JwtAccessToken.of(accessToken),
@@ -53,11 +53,11 @@ public class BaseSecurityJwtDbRandomUtility {
         );
     }
 
-    public static AnyDbUserSession session(Username owner, String accessToken) {
+    public static UserSession session(Username owner, String accessToken) {
         return session(owner.identifier(), accessToken, entity(JwtRefreshToken.class).value());
     }
 
-    public static AnyDbUserSession session(String owner) {
+    public static UserSession session(String owner) {
         return session(Username.of(owner), entity(JwtAccessToken.class).value());
     }
 }

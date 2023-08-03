@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserC
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseUsersValidator;
@@ -60,7 +60,7 @@ class AbstractBaseUsersValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final AnyDbUsersRepository usersRepository;
+        private final UsersRepository usersRepository;
 
         @Bean
         BaseUsersValidator baseUsersValidator() {
@@ -70,7 +70,7 @@ class AbstractBaseUsersValidatorTest {
         }
     }
 
-    private final AnyDbUsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
     private final BaseUsersValidator componentUnderTest;
 

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresSimpleGrantedAuthoritiesConverter;
@@ -57,7 +57,7 @@ public class PostgresDbInvitationCode {
         this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);
     }
 
-    public PostgresDbInvitationCode(AnyDbInvitationCode invitationCode) {
+    public PostgresDbInvitationCode(InvitationCode invitationCode) {
         this.id = invitationCode.id().value();
         this.owner = invitationCode.owner();
         this.authorities = invitationCode.authorities();
@@ -73,8 +73,8 @@ public class PostgresDbInvitationCode {
 
     @JsonIgnore
     @Transient
-    public AnyDbInvitationCode anyDbInvitationCode() {
-        return new AnyDbInvitationCode(
+    public InvitationCode invitationCode() {
+        return new InvitationCode(
                 this.invitationCodeId(),
                 this.owner,
                 this.authorities,
@@ -85,7 +85,7 @@ public class PostgresDbInvitationCode {
 
     @JsonIgnore
     @Transient
-    public ResponseInvitationCode getResponseInvitationCode() {
+    public ResponseInvitationCode responseInvitationCode() {
         return new ResponseInvitationCode(
                 this.invitationCodeId(),
                 this.owner,

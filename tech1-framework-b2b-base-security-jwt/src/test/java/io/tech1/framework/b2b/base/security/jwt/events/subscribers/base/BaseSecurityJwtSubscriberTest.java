@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.events.subscribers.base;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
@@ -178,7 +178,7 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(AnyDbUserSession.class),
+                entity(UserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 false,
@@ -200,7 +200,7 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(AnyDbUserSession.class),
+                entity(UserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 true,
@@ -224,7 +224,7 @@ class BaseSecurityJwtSubscriberTest {
         var event = new EventSessionAddUserRequestMetadata(
                 randomUsername(),
                 randomEmail(),
-                entity(AnyDbUserSession.class),
+                entity(UserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
                 false,

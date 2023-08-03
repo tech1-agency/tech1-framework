@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
@@ -58,7 +58,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final AnyDbInvitationCodesRepository invitationCodesRepository;
+        private final InvitationCodesRepository invitationCodesRepository;
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
@@ -70,7 +70,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         }
     }
 
-    private final AnyDbInvitationCodesRepository invitationCodesRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
 
     private final BaseInvitationCodesRequestsValidator componentUnderTest;
 
@@ -112,7 +112,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         // Arrange
         var username = entity(Username.class);
         var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(AnyDbInvitationCode.class);
+        var dbInvitationCode = entity(InvitationCode.class);
         when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(dbInvitationCode));
 
         // Act
@@ -129,7 +129,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     void validateDeleteByIdOkTest() {
         // Arrange
         var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(AnyDbInvitationCode.class);
+        var dbInvitationCode = entity(InvitationCode.class);
         when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(dbInvitationCode));
 
         // Act

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -64,7 +64,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
 
         // Assert
         assertThat(count).isEqualTo(7);
-        assertThat(this.usersSessionsRepository.isPresent(existentSessionId)).isEqualTo(TuplePresence.present(savedSession.anyDbUserSession()));
+        assertThat(this.usersSessionsRepository.isPresent(existentSessionId)).isEqualTo(TuplePresence.present(savedSession.userSession()));
         assertThat(this.usersSessionsRepository.isPresent(notExistentSessionId)).isEqualTo(TuplePresence.absent());
         assertThat(this.usersSessionsRepository.isPresent(JwtAccessToken.of("awt1")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtAccessToken.of("awt2")).present()).isTrue();
@@ -169,11 +169,11 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-1
-        this.usersSessionsRepository.saveAs(randomElement(saved).anyDbUserSession());
+        this.usersSessionsRepository.saveAs(randomElement(saved).userSession());
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-2
-        var existentSessionId = this.usersSessionsRepository.saveAs(entity(AnyDbUserSession.class));
+        var existentSessionId = this.usersSessionsRepository.saveAs(entity(UserSession.class));
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
         var notExistentSessionId = entity(UserSessionId.class);
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();

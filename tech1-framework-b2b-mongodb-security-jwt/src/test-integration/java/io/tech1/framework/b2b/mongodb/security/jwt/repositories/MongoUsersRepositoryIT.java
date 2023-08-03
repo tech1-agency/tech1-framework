@@ -157,7 +157,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var user = randomJwtUser();
+        var user = randomSuperadmin();
         var userId1 = this.usersRepository.saveAs(user);
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();

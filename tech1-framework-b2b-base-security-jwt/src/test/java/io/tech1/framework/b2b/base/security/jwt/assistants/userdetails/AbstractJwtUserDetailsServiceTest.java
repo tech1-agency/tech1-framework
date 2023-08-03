@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.assistants.userdetails;
 
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -24,8 +24,8 @@ class AbstractJwtUserDetailsServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        AnyDbUsersRepository usersRepository() {
-            return mock(AnyDbUsersRepository.class);
+        UsersRepository usersRepository() {
+            return mock(UsersRepository.class);
         }
 
         @Bean
@@ -36,7 +36,7 @@ class AbstractJwtUserDetailsServiceTest {
         }
     }
 
-    private final AnyDbUsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
     private final AbstractJwtUserDetailsService jwtUserDetailsService;
 

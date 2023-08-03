@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -68,8 +68,8 @@ class AbstractTokensContextThrowerServiceTest {
         }
 
         @Bean
-        AnyDbUsersSessionsRepository usersSessionsRepository() {
-            return mock(AnyDbUsersSessionsRepository.class);
+        UsersSessionsRepository usersSessionsRepository() {
+            return mock(UsersSessionsRepository.class);
         }
 
         @Bean
@@ -90,7 +90,7 @@ class AbstractTokensContextThrowerServiceTest {
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;
     // Repositories
-    private final AnyDbUsersSessionsRepository usersSessionsRepository;
+    private final UsersSessionsRepository usersSessionsRepository;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -205,7 +205,7 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
         var validatedClaims = valid(accessToken, validClaims());
-        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(AnyDbUserSession.class)));
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(UserSession.class)));
 
         // Act
         this.componentUnderTest.verifyDbPresenceOrThrow(accessToken, validatedClaims);
@@ -237,7 +237,7 @@ class AbstractTokensContextThrowerServiceTest {
         var refreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(refreshToken, validClaims());
         var user = entity(JwtUser.class);
-        var session = entity(AnyDbUserSession.class);
+        var session = entity(UserSession.class);
         when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.username().identifier())).thenReturn(user);
         when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.present(session));
 

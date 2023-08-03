@@ -11,7 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
@@ -39,7 +39,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     // Services
     protected final BaseUsersSessionsService baseUsersSessionsService;
     // Repositories
-    protected final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
+    protected final UsersSessionsRepository usersSessionsRepository;
 
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {
@@ -90,12 +90,12 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         if (removed) {
             this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
 
-            var sessionTP = this.anyDbUsersSessionsRepository.isPresent(accessToken);
+            var sessionTP = this.usersSessionsRepository.isPresent(accessToken);
 
             if (sessionTP.present()) {
                 var session = sessionTP.value();
                 this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, session.metadata()));
-                this.anyDbUsersSessionsRepository.delete(session.id());
+                this.usersSessionsRepository.delete(session.id());
             } else {
                 this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
             }
@@ -125,12 +125,12 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             }
         });
 
-        var deleted = this.anyDbUsersSessionsRepository.delete(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
+        var deleted = this.usersSessionsRepository.delete(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 
     @Override
     public ResponseUserSessionsTable getSessionsTable(Username username, CookieAccessToken cookie) {
-        return ResponseUserSessionsTable.of(this.anyDbUsersSessionsRepository.getUsersSessionsTable(username, cookie));
+        return ResponseUserSessionsTable.of(this.usersSessionsRepository.getUsersSessionsTable(username, cookie));
     }
 }

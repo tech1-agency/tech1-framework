@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -14,8 +14,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofNotPersisted;
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
 import static java.util.Objects.nonNull;
 
 // Lombok
@@ -34,7 +34,7 @@ public class MongoDbUserSession {
     private JwtRefreshToken refreshToken;
     private UserRequestMetadata metadata;
 
-    public MongoDbUserSession(AnyDbUserSession session) {
+    public MongoDbUserSession(UserSession session) {
         if (session.persisted()) {
             this.id = session.id().value();
         }
@@ -46,7 +46,7 @@ public class MongoDbUserSession {
 
     @JsonIgnore
     @Transient
-    public AnyDbUserSession anyDbUserSession() {
+    public UserSession userSession() {
         if (nonNull(this.id)) {
             return ofPersisted(new UserSessionId(this.id), this.username, this.accessToken, this.refreshToken, this.metadata);
         } else {

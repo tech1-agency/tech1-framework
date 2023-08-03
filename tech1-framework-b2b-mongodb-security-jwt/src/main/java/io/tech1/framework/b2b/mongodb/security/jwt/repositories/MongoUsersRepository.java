@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
@@ -26,7 +26,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 import static java.util.Objects.nonNull;
 
 @Repository
-public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, AnyDbUsersRepository {
+public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, UsersRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
@@ -60,7 +60,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, InvitationCode invitationCode) {
         var user = new MongoDbUser(
                 requestUserRegistration1.username(),
                 password,

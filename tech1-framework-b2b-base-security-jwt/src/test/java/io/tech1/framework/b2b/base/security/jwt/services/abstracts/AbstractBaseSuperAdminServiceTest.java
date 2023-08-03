@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -41,21 +41,21 @@ class AbstractBaseSuperAdminServiceTest {
         }
 
         @Bean
-        AnyDbInvitationCodesRepository anyDbInvitationCodesRepository() {
-            return mock(AnyDbInvitationCodesRepository.class);
+        InvitationCodesRepository invitationCodesRepository() {
+            return mock(InvitationCodesRepository.class);
         }
 
         @Bean
-        AnyDbUsersSessionsRepository anyDbUsersSessionsRepository() {
-            return mock(AnyDbUsersSessionsRepository.class);
+        UsersSessionsRepository usersSessionsRepository() {
+            return mock(UsersSessionsRepository.class);
         }
 
         @Bean
         AbstractBaseSuperAdminService abstractBaseInvitationCodesService() {
             return new AbstractBaseSuperAdminService(
                     this.sessionRegistry(),
-                    this.anyDbInvitationCodesRepository(),
-                    this.anyDbUsersSessionsRepository()
+                    this.invitationCodesRepository(),
+                    this.usersSessionsRepository()
             ) {};
         }
     }
@@ -63,8 +63,8 @@ class AbstractBaseSuperAdminServiceTest {
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Repositories
-    private final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
-    private final AnyDbUsersSessionsRepository anyDbUsersSessionsRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
+    private final UsersSessionsRepository usersSessionsRepository;
 
     private final AbstractBaseSuperAdminService componentUnderTest;
 
@@ -72,8 +72,8 @@ class AbstractBaseSuperAdminServiceTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
-                this.anyDbInvitationCodesRepository,
-                this.anyDbUsersSessionsRepository
+                this.invitationCodesRepository,
+                this.usersSessionsRepository
         );
     }
 
@@ -81,8 +81,8 @@ class AbstractBaseSuperAdminServiceTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
-                this.anyDbInvitationCodesRepository,
-                this.anyDbUsersSessionsRepository
+                this.invitationCodesRepository,
+                this.usersSessionsRepository
         );
     }
 
@@ -90,13 +90,13 @@ class AbstractBaseSuperAdminServiceTest {
     void findUnusedTest() {
         // Arrange
         var invitationCodes = list345(ResponseInvitationCode.class);
-        when(this.anyDbInvitationCodesRepository.findUnused()).thenReturn(invitationCodes);
+        when(this.invitationCodesRepository.findUnused()).thenReturn(invitationCodes);
 
         // Act
         var unused = this.componentUnderTest.findUnused();
 
         // Assert
-        verify(this.anyDbInvitationCodesRepository).findUnused();
+        verify(this.invitationCodesRepository).findUnused();
         assertThat(unused).isEqualTo(invitationCodes);
     }
 
@@ -108,7 +108,7 @@ class AbstractBaseSuperAdminServiceTest {
         var serverSessionsTable = entity(ResponseSuperadminSessionsTable.class);
 
         when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);
-        when(this.anyDbUsersSessionsRepository.getSessionsTable(activeSessions, cookie)).thenReturn(serverSessionsTable);
+        when(this.usersSessionsRepository.getSessionsTable(activeSessions, cookie)).thenReturn(serverSessionsTable);
 
 
         // Act
@@ -116,7 +116,7 @@ class AbstractBaseSuperAdminServiceTest {
 
         // Assert
         verify(this.sessionRegistry).getActiveSessionsAccessTokens();
-        verify(this.anyDbUsersSessionsRepository).getSessionsTable(activeSessions, cookie);
+        verify(this.usersSessionsRepository).getSessionsTable(activeSessions, cookie);
         assertThat(actual).isEqualTo(serverSessionsTable);
     }
 }

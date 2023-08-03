@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitati
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
@@ -67,7 +65,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId)).isEqualTo(TuplePresence.present(savedInvitationCode.anyDbInvitationCode()));
+        assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId)).isEqualTo(TuplePresence.present(savedInvitationCode.invitationCode()));
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId)).isEqualTo(TuplePresence.absent());
         assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user1"))).hasSize(2);
         assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user2"))).hasSize(3);
@@ -143,7 +141,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodesRepository.saveAs(randomElement(saved).anyDbInvitationCode());
+        this.invitationCodesRepository.saveAs(randomElement(saved).invitationCode());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-2

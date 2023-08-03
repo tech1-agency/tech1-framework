@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.validators.abtracts;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.AccessLevel;
@@ -20,7 +20,7 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
     protected static final int NEW_PASSWORD_MIN_LENGTH = 8;
 
     // Repositories
-    protected final AnyDbUsersRepository anyDbUsersRepository;
+    protected final UsersRepository usersRepository;
 
     @Override
     public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 requestUserUpdate1) {
@@ -35,7 +35,7 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
         if (!isEmail(email)) {
             throw new IllegalArgumentException(invalidEmailMessage);
         }
-        var user = this.anyDbUsersRepository.findByEmailAsJwtUserOrNull(email);
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
         // `email` is already used by other user in the system
         if (nonNull(user) && !user.username().equals(username)) {
             throw new IllegalArgumentException(invalidEmailMessage);

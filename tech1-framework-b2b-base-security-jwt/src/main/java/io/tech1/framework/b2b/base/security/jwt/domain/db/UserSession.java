@@ -8,7 +8,7 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 
-public record AnyDbUserSession(
+public record UserSession(
         boolean persisted,
         UserSessionId id,
         Username username,
@@ -17,22 +17,22 @@ public record AnyDbUserSession(
         UserRequestMetadata metadata
 ) {
 
-    public static AnyDbUserSession ofPersisted(
+    public static UserSession ofPersisted(
             UserSessionId id,
             Username username,
             JwtAccessToken accessToken,
             JwtRefreshToken refreshToken,
             UserRequestMetadata metadata
     ) {
-        return new AnyDbUserSession(true, id, username, accessToken, refreshToken, metadata);
+        return new UserSession(true, id, username, accessToken, refreshToken, metadata);
     }
 
-    public static AnyDbUserSession ofNotPersisted(
+    public static UserSession ofNotPersisted(
             Username username,
             JwtAccessToken accessToken,
             JwtRefreshToken refreshToken,
             UserRequestMetadata metadata
     ) {
-        return new AnyDbUserSession(false, new UserSessionId(UNDEFINED), username, accessToken, refreshToken, metadata);
+        return new UserSession(false, new UserSessionId(UNDEFINED), username, accessToken, refreshToken, metadata);
     }
 }

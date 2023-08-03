@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.projections.PostgresDbUserProjection1;
 import io.tech1.framework.domain.base.Email;
@@ -31,7 +31,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, AnyDbUsersRepository {
+public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, UsersRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
@@ -65,7 +65,7 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, InvitationCode invitationCode) {
         var user = new PostgresDbUser(
                 requestUserRegistration1.username(),
                 password,

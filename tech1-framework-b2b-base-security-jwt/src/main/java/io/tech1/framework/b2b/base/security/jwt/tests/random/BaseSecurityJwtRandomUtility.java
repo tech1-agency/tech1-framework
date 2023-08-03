@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
@@ -37,7 +37,7 @@ import static java.time.ZoneOffset.UTC;
 @UtilityClass
 public class BaseSecurityJwtRandomUtility {
 
-    public static JwtUser randomJwtUser() {
+    public static JwtUser randomSuperadmin() {
         return new JwtUser(
                 entity(UserId.class),
                 randomUsername(),
@@ -81,12 +81,12 @@ public class BaseSecurityJwtRandomUtility {
         return claims;
     }
 
-    public static AnyDbInvitationCode randomInvitationCode() {
-        return new AnyDbInvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities(SUPER_ADMIN), randomString(), randomUsername());
+    public static InvitationCode randomInvitationCode() {
+        return new InvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities(SUPER_ADMIN), randomString(), randomUsername());
     }
 
-    public static AnyDbUserSession randomPersistedSession() {
-        return AnyDbUserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class), randomUserRequestMetadata());
+    public static UserSession randomPersistedSession() {
+        return UserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class), randomUserRequestMetadata());
     }
 
     public static RequestUserRegistration1 registration1() {

@@ -1,14 +1,14 @@
 package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1Failure;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
@@ -46,8 +46,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final AnyDbInvitationCodesRepository invitationCodesRepository;
-        private final AnyDbUsersRepository usersRepository;
+        private final InvitationCodesRepository invitationCodesRepository;
+        private final UsersRepository usersRepository;
         private final SecurityJwtPublisher securityJwtPublisher;
         private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
 
@@ -64,8 +64,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
 
     private final SecurityJwtPublisher securityJwtPublisher;
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
-    private final AnyDbInvitationCodesRepository invitationCodesRepository;
-    private final AnyDbUsersRepository usersRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
+    private final UsersRepository usersRepository;
 
     private final BaseRegistrationRequestsValidator componentUnderTest;
 
@@ -141,7 +141,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
                 randomZoneId().getId(),
                 invitationCode
         );
-        var dbInvitationCode = entity(AnyDbInvitationCode.class);
+        var dbInvitationCode = entity(InvitationCode.class);
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(null);
         when(this.invitationCodesRepository.findByValueAsAny(invitationCode)).thenReturn(dbInvitationCode);
 
@@ -226,7 +226,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
                 randomZoneId().getId(),
                 invitationCode
         );
-        var dbInvitationCode = new AnyDbInvitationCode(
+        var dbInvitationCode = new InvitationCode(
                 entity(InvitationCodeId.class),
                 randomUsername(),
                 new ArrayList<>(),

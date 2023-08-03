@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -27,25 +27,25 @@ import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtCo
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, AnyDbUsersSessionsRepository {
+public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, UsersSessionsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<AnyDbUserSession> isPresent(UserSessionId sessionId) {
+    default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
         return this.findById(sessionId.value())
-                .map(entity -> present(entity.anyDbUserSession()))
+                .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<AnyDbUserSession> isPresent(JwtAccessToken accessToken) {
+    default TuplePresence<UserSession> isPresent(JwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken)
-                .map(entity -> present(entity.anyDbUserSession()))
+                .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default TuplePresence<AnyDbUserSession> isPresent(JwtRefreshToken refreshToken) {
+    default TuplePresence<UserSession> isPresent(JwtRefreshToken refreshToken) {
         return this.findByRefreshToken(refreshToken)
-                .map(entity -> present(entity.anyDbUserSession()))
+                .map(entity -> present(entity.userSession()))
                 .orElseGet(TuplePresence::absent);
     }
 
@@ -77,9 +77,9 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         return new ResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
     }
 
-    default List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames) {
+    default List<UserSession> findByUsernameInAsAny(Set<Username> usernames) {
         return this.findByUsernameIn(usernames).stream()
-                .map(PostgresDbUserSession::anyDbUserSession)
+                .map(PostgresDbUserSession::userSession)
                 .collect(Collectors.toList());
     }
 
@@ -102,10 +102,9 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteExceptToken(cookie.getJwtAccessToken());
     }
 
-    // TODO [YY] return AnyDbUserSession
-    default AnyDbUserSession saveAs(AnyDbUserSession userSession) {
+    default UserSession saveAs(UserSession userSession) {
         var entity = this.save(new PostgresDbUserSession(userSession));
-        return entity.anyDbUserSession();
+        return entity.userSession();
     }
 
     // ================================================================================================================

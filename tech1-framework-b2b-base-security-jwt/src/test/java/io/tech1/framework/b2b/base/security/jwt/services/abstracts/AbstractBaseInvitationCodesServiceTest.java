@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -43,20 +43,20 @@ class AbstractBaseInvitationCodesServiceTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        AnyDbInvitationCodesRepository anyDbInvitationCodesRepository() {
-            return mock(AnyDbInvitationCodesRepository.class);
+        InvitationCodesRepository invitationCodesRepository() {
+            return mock(InvitationCodesRepository.class);
         }
 
         @Bean
         AbstractBaseInvitationCodesService abstractBaseInvitationCodesService() {
             return new AbstractBaseInvitationCodesService(
-                    this.anyDbInvitationCodesRepository(),
+                    this.invitationCodesRepository(),
                     this.applicationFrameworkProperties
             ) {};
         }
     }
 
-    private final AnyDbInvitationCodesRepository anyDbInvitationCodesRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final AbstractBaseInvitationCodesService componentUnderTest;
@@ -64,14 +64,14 @@ class AbstractBaseInvitationCodesServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.anyDbInvitationCodesRepository
+                this.invitationCodesRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.anyDbInvitationCodesRepository
+                this.invitationCodesRepository
         );
     }
 
@@ -88,13 +88,13 @@ class AbstractBaseInvitationCodesServiceTest {
         var invitationCode6 = getInvitationCode(owner);
 
         var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
-        when(this.anyDbInvitationCodesRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);
+        when(this.invitationCodesRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);
 
         // Act
         var responseInvitationCodes = this.componentUnderTest.findByOwner(owner);
 
         // Assert
-        verify(this.anyDbInvitationCodesRepository).findResponseCodesByOwner(owner);
+        verify(this.invitationCodesRepository).findResponseCodesByOwner(owner);
         assertThat(responseInvitationCodes.invitationCodes().get(0)).isEqualTo(invitationCode3);
         assertThat(responseInvitationCodes.invitationCodes().get(1)).isEqualTo(invitationCode4);
         assertThat(responseInvitationCodes.invitationCodes().get(2)).isEqualTo(invitationCode6);
@@ -114,7 +114,7 @@ class AbstractBaseInvitationCodesServiceTest {
         this.componentUnderTest.save(username, requestNewInvitationCodeParams);
 
         // Assert
-        verify(this.anyDbInvitationCodesRepository).saveAs(username, requestNewInvitationCodeParams);
+        verify(this.invitationCodesRepository).saveAs(username, requestNewInvitationCodeParams);
     }
 
     @Test
@@ -126,6 +126,6 @@ class AbstractBaseInvitationCodesServiceTest {
         this.componentUnderTest.deleteById(invitationCodeId);
 
         // Assert
-        verify(this.anyDbInvitationCodesRepository).delete(invitationCodeId);
+        verify(this.invitationCodesRepository).delete(invitationCodeId);
     }
 }

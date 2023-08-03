@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.domain.base.Password;
 import lombok.AccessLevel;
@@ -14,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public abstract class AbstractBaseRegistrationService implements BaseRegistrationService {
 
     // Repository
-    private final AnyDbInvitationCodesRepository invitationCodesRepository;
-    private final AnyDbUsersRepository usersRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
+    private final UsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -23,7 +23,7 @@ public abstract class AbstractBaseRegistrationService implements BaseRegistratio
     public void register1(RequestUserRegistration1 requestUserRegistration1) {
         var invitationCode = this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode());
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value());
-        invitationCode = new AnyDbInvitationCode(
+        invitationCode = new InvitationCode(
                 invitationCode.id(),
                 invitationCode.owner(),
                 invitationCode.authorities(),

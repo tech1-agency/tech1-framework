@@ -1,9 +1,9 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
-import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.domain.base.Password;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +32,13 @@ class AbstractBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        AnyDbInvitationCodesRepository invitationCodeRepository() {
-            return mock(AnyDbInvitationCodesRepository.class);
+        InvitationCodesRepository invitationCodeRepository() {
+            return mock(InvitationCodesRepository.class);
         }
 
         @Bean
-        AnyDbUsersRepository userRepository() {
-            return mock(AnyDbUsersRepository.class);
+        UsersRepository userRepository() {
+            return mock(UsersRepository.class);
         }
 
         @Bean
@@ -56,8 +56,8 @@ class AbstractBaseRegistrationServiceTest {
         }
     }
 
-    private final AnyDbInvitationCodesRepository invitationCodesRepository;
-    private final AnyDbUsersRepository usersRepository;
+    private final InvitationCodesRepository invitationCodesRepository;
+    private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final BaseRegistrationService componentUnderTest;
@@ -90,12 +90,12 @@ class AbstractBaseRegistrationServiceTest {
                 randomZoneId().getId(),
                 randomString()
         );
-        var invitationCode = entity(AnyDbInvitationCode.class);
+        var invitationCode = entity(InvitationCode.class);
         when(this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode())).thenReturn(invitationCode);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var invitationCodeAC1 = ArgumentCaptor.forClass(AnyDbInvitationCode.class);
-        var invitationCodeAC2 = ArgumentCaptor.forClass(AnyDbInvitationCode.class);
+        var invitationCodeAC1 = ArgumentCaptor.forClass(InvitationCode.class);
+        var invitationCodeAC2 = ArgumentCaptor.forClass(InvitationCode.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);

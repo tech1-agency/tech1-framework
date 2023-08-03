@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomInvitationCode;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
@@ -46,6 +47,12 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
     @Override
     public JpaRepository<PostgresDbInvitationCode, String> getJpaRepository() {
         return this.invitationCodesRepository;
+    }
+
+    @Test
+    void findUnusedSortTest() {
+        // Assert
+        assertThat(INVITATION_CODES_UNUSED).hasToString("owner: ASC,value: ASC");
     }
 
     @Test

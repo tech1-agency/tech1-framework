@@ -4,14 +4,11 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 import lombok.RequiredArgsConstructor;
@@ -184,8 +181,7 @@ class BaseSecurityJwtSubscriberTest {
                 false,
                 false
         );
-        var tuple2 = new Tuple2<>(entity(UserSessionId.class), entity(UserRequestMetadata.class));
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(tuple2);
+        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
@@ -206,16 +202,15 @@ class BaseSecurityJwtSubscriberTest {
                 true,
                 false
         );
-        var tuple2 = new Tuple2<>(entity(UserSessionId.class), entity(UserRequestMetadata.class));
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(tuple2);
+        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-        verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), tuple2.b()));
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), tuple2.b()));
+        verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), event.session().metadata()));
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), event.session().metadata()));
     }
 
     @Test
@@ -230,15 +225,14 @@ class BaseSecurityJwtSubscriberTest {
                 false,
                 true
         );
-        var tuple2 = new Tuple2<>(entity(UserSessionId.class), entity(UserRequestMetadata.class));
-        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(tuple2);
+        when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.onSessionAddUserRequestMetadata(event);
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-        verify(this.usersEmailsService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), tuple2.b()));
-        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), tuple2.b()));
+        verify(this.usersEmailsService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), event.session().metadata()));
+        verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), event.session().metadata()));
     }
 }

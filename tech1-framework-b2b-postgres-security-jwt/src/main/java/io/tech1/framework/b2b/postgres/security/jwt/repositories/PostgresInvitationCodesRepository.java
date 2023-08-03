@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
@@ -43,7 +44,7 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     }
 
     default List<ResponseInvitationCode> findUnused() {
-        return this.findByInvitedIsNull(this.getUnusedSort()).stream()
+        return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
                 .map(PostgresDbInvitationCode::responseInvitationCode)
                 .collect(Collectors.toList());
     }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
@@ -42,7 +43,7 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     }
 
     default List<ResponseInvitationCode> findUnused() {
-        return this.findByInvitedIsNull(this.getUnusedSort()).stream()
+        return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
                 .map(MongoDbInvitationCode::responseInvitationCode)
                 .collect(Collectors.toList());
     }

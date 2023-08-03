@@ -57,4 +57,17 @@ class ExceptionsMessagesUtilityTest {
         // Assert
         assertThat(actual).isEqualTo(entity + ": Already Used, id = " + entityId);
     }
+
+    @Test
+    void entityAccessDeniedTest() {
+        // Arrange
+        var entity = randomString();
+        var entityId = randomString();
+
+        // Act
+        var actual = entityAccessDenied(entity, entityId);
+
+        // Assert
+        assertThat(actual).isEqualTo(entity + ": Access Denied, id = " + entityId);
+    }
 }

@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.14
+- Completed abstract accessToken/refreshToken database security flow 
 - TimestampUtility: isBetweenInclusive
 - MongoDb: truncate/delete "tech1_user_sessions" (MongoDbUserSession: requestMetadata → metadata)
 - Users API: /user → /users + Postman

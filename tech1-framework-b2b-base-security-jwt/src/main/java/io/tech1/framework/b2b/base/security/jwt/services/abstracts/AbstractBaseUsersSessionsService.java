@@ -71,12 +71,12 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void refresh(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken oldRefreshToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
+    public void refresh(JwtUser user, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
         // TODO [YY] change oldRefreshToken:  JwtRefreshToken -> AnyDbUserSession
         // WARNING: old refresh token already validated and present in database
         var oldUserSession = this.anyDbUsersSessionsRepository.isPresent(oldRefreshToken).value();
-        var newUserSession = ofNotPersisted(username, accessToken, newRefreshToken, oldUserSession.metadata());
+        var newUserSession = ofNotPersisted(username, newAccessToken, newRefreshToken, oldUserSession.metadata());
         this.anyDbUsersSessionsRepository.saveAs(newUserSession);
         this.anyDbUsersSessionsRepository.delete(oldUserSession.id());
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(

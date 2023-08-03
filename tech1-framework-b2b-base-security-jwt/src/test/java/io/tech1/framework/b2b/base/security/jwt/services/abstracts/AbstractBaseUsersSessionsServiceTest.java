@@ -227,22 +227,22 @@ class AbstractBaseUsersSessionsServiceTest {
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         var user = entity(JwtUser.class);
         var username = user.username();
-        var accessToken = entity(JwtAccessToken.class);
-        var oldJwtRefreshToken = entity(JwtRefreshToken.class);
-        var newJwtRefreshToken = entity(JwtRefreshToken.class);
-        var oldUserSession = AnyDbUserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), oldJwtRefreshToken, entity(UserRequestMetadata.class));
-        when(this.anyDbUsersSessionsRepository.isPresent(oldJwtRefreshToken)).thenReturn(present(oldUserSession));
+        var newAccessToken = entity(JwtAccessToken.class);
+        var oldRefreshToken = entity(JwtRefreshToken.class);
+        var newRefreshToken = entity(JwtRefreshToken.class);
+        var oldUserSession = AnyDbUserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), oldRefreshToken, entity(UserRequestMetadata.class));
+        when(this.anyDbUsersSessionsRepository.isPresent(oldRefreshToken)).thenReturn(present(oldUserSession));
 
         // Act
-        this.componentUnderTest.refresh(user,accessToken, oldJwtRefreshToken, newJwtRefreshToken, httpServletRequest);
+        this.componentUnderTest.refresh(user, oldRefreshToken, newAccessToken, newRefreshToken, httpServletRequest);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).isPresent(oldJwtRefreshToken);
+        verify(this.anyDbUsersSessionsRepository).isPresent(oldRefreshToken);
         var saveCaptor = ArgumentCaptor.forClass(AnyDbUserSession.class);
         verify(this.anyDbUsersSessionsRepository).saveAs(saveCaptor.capture());
         var newUserSession = saveCaptor.getValue();
         assertThat(newUserSession.username()).isEqualTo(username);
-        assertThat(newUserSession.refreshToken()).isEqualTo(newJwtRefreshToken);
+        assertThat(newUserSession.refreshToken()).isEqualTo(newRefreshToken);
         assertThat(newUserSession.metadata()).isEqualTo(oldUserSession.metadata());
         verify(this.anyDbUsersSessionsRepository).delete(oldUserSession.id());
         var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);

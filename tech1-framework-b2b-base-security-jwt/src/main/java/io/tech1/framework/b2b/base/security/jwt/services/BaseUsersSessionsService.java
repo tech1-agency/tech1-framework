@@ -16,7 +16,7 @@ import java.util.Set;
 
 public interface BaseUsersSessionsService {
     void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
-    void refresh(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken oldRefreshToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
+    void refresh(JwtUser user, JwtRefreshToken oldRefreshToken, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
     Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event);
     SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
     void deleteById(UserSessionId sessionId);

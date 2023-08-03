@@ -143,6 +143,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var refreshToken = entity(JwtRefreshToken.class);
         var userSession = UserSession.ofPersisted(entity(UserSessionId.class), username, accessToken, refreshToken, entity(UserRequestMetadata.class));
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
+        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.save(user, accessToken, refreshToken, httpServletRequest);
@@ -169,7 +170,8 @@ class AbstractBaseUsersSessionsServiceTest {
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
-        assertThat(event.session()).isEqualTo(actualDbUserSession);
+        assertThat(event.session().id()).isEqualTo(actualDbUserSession.id());
+        assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
         assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
     }
@@ -186,6 +188,8 @@ class AbstractBaseUsersSessionsServiceTest {
         var accessToken = entity(JwtAccessToken.class);
         var refreshToken = entity(JwtRefreshToken.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
+        var userSession = UserSession.ofPersisted(entity(UserSessionId.class), username, accessToken, refreshToken, entity(UserRequestMetadata.class));
+        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
 
         // Act
         this.componentUnderTest.save(user, accessToken, refreshToken, httpServletRequest);
@@ -212,7 +216,8 @@ class AbstractBaseUsersSessionsServiceTest {
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
-        assertThat(event.session()).isEqualTo(actualDbUserSession);
+        assertThat(event.session().id()).isNotEqualTo(actualDbUserSession.id());
+        assertThat(event.session().metadata()).isNotEqualTo(actualDbUserSession.metadata());
         assertThat(event.isAuthenticationLoginEndpoint()).isTrue();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isFalse();
     }

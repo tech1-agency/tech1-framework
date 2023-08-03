@@ -56,7 +56,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         } else {
             session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
-        this.usersSessionsRepository.saveAs(session);
+        session = this.usersSessionsRepository.saveAs(session);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(
                         username,

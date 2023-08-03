@@ -62,8 +62,8 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     @Override
     public void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws CookieAccessTokenDbNotFoundException {
         var username = validatedClaims.username();
-        var databasePresence = this.usersSessionsRepository.isPresentByAccessToken(accessToken);
-        if (!databasePresence) {
+        var databasePresence = this.usersSessionsRepository.isPresent(accessToken);
+        if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
             throw new CookieAccessTokenDbNotFoundException(username);
         }
@@ -72,8 +72,8 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     @Override
     public JwtUser verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenDbNotFoundException {
         var username = validatedClaims.username();
-        var databasePresence = this.usersSessionsRepository.isPresentByRefreshToken(refreshToken);
-        if (!databasePresence) {
+        var databasePresence = this.usersSessionsRepository.isPresent(refreshToken);
+        if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
             throw new CookieRefreshTokenDbNotFoundException(username);
         }

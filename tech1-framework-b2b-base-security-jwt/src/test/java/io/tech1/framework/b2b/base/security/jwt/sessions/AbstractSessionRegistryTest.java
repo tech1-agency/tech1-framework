@@ -44,6 +44,8 @@ import java.util.function.Function;
 
 import static io.tech1.framework.domain.http.requests.UserRequestMetadata.processed;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
+import static io.tech1.framework.domain.tuples.TuplePresence.absent;
+import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
@@ -141,11 +143,11 @@ class AbstractSessionRegistryTest {
         var dbUserSession3 = entity(AnyDbUserSession.class);
         var dbUserSession4 = entity(AnyDbUserSession.class);
         var rndDbUserSession = entity(AnyDbUserSession.class);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(session1.accessToken())).thenReturn(dbUserSession1);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(session2.accessToken())).thenReturn(dbUserSession2);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(session3.accessToken())).thenReturn(dbUserSession3);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(session4.accessToken())).thenReturn(dbUserSession4);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(rndSession.accessToken())).thenReturn(rndDbUserSession);
+        when(this.anyDbUsersSessionsRepository.isPresent(session1.accessToken())).thenReturn(present(dbUserSession1));
+        when(this.anyDbUsersSessionsRepository.isPresent(session2.accessToken())).thenReturn(present(dbUserSession2));
+        when(this.anyDbUsersSessionsRepository.isPresent(session3.accessToken())).thenReturn(present(dbUserSession3));
+        when(this.anyDbUsersSessionsRepository.isPresent(session4.accessToken())).thenReturn(present(dbUserSession4));
+        when(this.anyDbUsersSessionsRepository.isPresent(rndSession.accessToken())).thenReturn(present(rndDbUserSession));
 
         // Iteration #1
         var activeSessionsUsernames1 = this.componentUnderTest.getActiveSessionsUsernamesIdentifiers();
@@ -183,10 +185,10 @@ class AbstractSessionRegistryTest {
         assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).isEmpty();
         assertThat(this.componentUnderTest.getActiveSessionsAccessTokens()).isEmpty();
-        verify(this.anyDbUsersSessionsRepository).findByAccessTokenAsAny(session1.accessToken());
-        verify(this.anyDbUsersSessionsRepository).findByAccessTokenAsAny(session2.accessToken());
-        verify(this.anyDbUsersSessionsRepository).findByAccessTokenAsAny(session3.accessToken());
-        verify(this.anyDbUsersSessionsRepository).findByAccessTokenAsAny(session4.accessToken());
+        verify(this.anyDbUsersSessionsRepository).isPresent(session1.accessToken());
+        verify(this.anyDbUsersSessionsRepository).isPresent(session2.accessToken());
+        verify(this.anyDbUsersSessionsRepository).isPresent(session3.accessToken());
+        verify(this.anyDbUsersSessionsRepository).isPresent(session4.accessToken());
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session1.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session2.username()));
         verify(this.securityJwtPublisher).publishAuthenticationLogin(new EventAuthenticationLogin(session3.username()));
@@ -248,13 +250,13 @@ class AbstractSessionRegistryTest {
         var accessToken = entity(JwtAccessToken.class);
         this.authenticateTech1(accessToken);
         var dbUserSession = entity(AnyDbUserSession.class);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(accessToken)).thenReturn(dbUserSession);
+        when(this.anyDbUsersSessionsRepository.isPresent(accessToken)).thenReturn(present(dbUserSession));
 
         // Act
         this.componentUnderTest.logout(TECH1, accessToken);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).findByAccessTokenAsAny(accessToken);
+        verify(this.anyDbUsersSessionsRepository).isPresent(accessToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
@@ -271,13 +273,13 @@ class AbstractSessionRegistryTest {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
         var session = this.authenticateTech1(accessToken);
-        when(this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(accessToken)).thenReturn(null);
+        when(this.anyDbUsersSessionsRepository.isPresent(accessToken)).thenReturn(absent());
 
         // Act
         this.componentUnderTest.logout(TECH1, accessToken);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).findByAccessTokenAsAny(accessToken);
+        verify(this.anyDbUsersSessionsRepository).isPresent(accessToken);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLogout.class);
         verify(this.securityJwtPublisher).publishAuthenticationLogout(eventAC.capture());
         assertThat(eventAC.getValue().username()).isEqualTo(session.username());

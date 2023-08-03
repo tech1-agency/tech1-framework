@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
@@ -8,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbUsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -203,13 +205,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
         var validatedClaims = valid(accessToken, validDefaultClaims());
-        when(this.usersSessionsRepository.isPresentByAccessToken(accessToken)).thenReturn(true);
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(AnyDbUserSession.class)));
 
         // Act
         this.componentUnderTest.verifyDbPresenceOrThrow(accessToken, validatedClaims);
 
         // Assert
-        verify(this.usersSessionsRepository).isPresentByAccessToken(accessToken);
+        verify(this.usersSessionsRepository).isPresent(accessToken);
     }
 
     @Test
@@ -217,13 +219,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
         var validatedClaims = valid(accessToken, validDefaultClaims());
-        when(this.usersSessionsRepository.isPresentByAccessToken(accessToken)).thenReturn(false);
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyDbPresenceOrThrow(accessToken, validatedClaims));
 
         // Assert
-        verify(this.usersSessionsRepository).isPresentByAccessToken(accessToken);
+        verify(this.usersSessionsRepository).isPresent(accessToken);
         assertThat(throwable)
                 .isInstanceOf(CookieAccessTokenDbNotFoundException.class)
                 .hasMessageContaining("JWT access token is not present in database. Username: " + validatedClaims.username());
@@ -236,14 +238,14 @@ class AbstractTokensContextThrowerServiceTest {
         var validatedClaims = valid(refreshToken, validDefaultClaims());
         var user = entity(JwtUser.class);
         when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.username().identifier())).thenReturn(user);
-        when(this.usersSessionsRepository.isPresentByRefreshToken(refreshToken)).thenReturn(true);
+        when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.present(entity(AnyDbUserSession.class)));
 
         // Act
         var actual = this.componentUnderTest.verifyDbPresenceOrThrow(refreshToken, validatedClaims);
 
         // Assert
         verify(this.jwtUserDetailsService).loadUserByUsername(validatedClaims.username().identifier());
-        verify(this.usersSessionsRepository).isPresentByRefreshToken(refreshToken);
+        verify(this.usersSessionsRepository).isPresent(refreshToken);
         assertThat(actual).isEqualTo(user);
     }
 
@@ -252,13 +254,13 @@ class AbstractTokensContextThrowerServiceTest {
         // Arrange
         var refreshToken = entity(JwtRefreshToken.class);
         var validatedClaims = valid(refreshToken, validDefaultClaims());
-        when(this.usersSessionsRepository.isPresentByRefreshToken(refreshToken)).thenReturn(false);
+        when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.absent());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.verifyDbPresenceOrThrow(refreshToken, validatedClaims));
 
         // Assert
-        verify(this.usersSessionsRepository).isPresentByRefreshToken(refreshToken);
+        verify(this.usersSessionsRepository).isPresent(refreshToken);
         assertThat(throwable)
                 .isInstanceOf(CookieRefreshTokenDbNotFoundException.class)
                 .hasMessageContaining("JWT refresh token is not present in database. Username: " + validatedClaims.username());

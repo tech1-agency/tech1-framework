@@ -26,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
-import static java.util.Objects.nonNull;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -91,11 +90,12 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         if (removed) {
             this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
 
-            var dbUserSession = this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(accessToken);
+            var sessionTP = this.anyDbUsersSessionsRepository.isPresent(accessToken);
 
-            if (nonNull(dbUserSession)) {
-                this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, dbUserSession.metadata()));
-                this.anyDbUsersSessionsRepository.delete(dbUserSession.id());
+            if (sessionTP.present()) {
+                var session = sessionTP.value();
+                this.securityJwtIncidentPublisher.publishAuthenticationLogoutFull(new IncidentAuthenticationLogoutFull(username, session.metadata()));
+                this.anyDbUsersSessionsRepository.delete(session.id());
             } else {
                 this.securityJwtIncidentPublisher.publishAuthenticationLogoutMin(new IncidentAuthenticationLogoutMin(username));
             }

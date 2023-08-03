@@ -30,7 +30,6 @@ import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSessio
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession.ofPersisted;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
-import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {
@@ -47,10 +46,11 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var userSession = this.anyDbUsersSessionsRepository.findByAccessTokenAsAny(accessToken);
+        var userSessionTP = this.anyDbUsersSessionsRepository.isPresent(accessToken);
         var clientIpAddr = getClientIpAddr(httpServletRequest);
         var metadata = UserRequestMetadata.processing(clientIpAddr);
-        if (nonNull(userSession)) {
+        var userSession = userSessionTP.value();
+        if (userSessionTP.present()) {
             userSession = ofPersisted(userSession.id(), userSession.username(), userSession.accessToken(), userSession.refreshToken(), metadata);
         } else {
             userSession = ofNotPersisted(username, accessToken, refreshToken, metadata);
@@ -72,7 +72,9 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public void refresh(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken oldRefreshToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var oldUserSession = this.anyDbUsersSessionsRepository.findByRefreshTokenAsAny(oldRefreshToken);
+        // TODO [YY] change oldRefreshToken:  JwtRefreshToken -> AnyDbUserSession
+        // WARNING: old refresh token already validated and present in database
+        var oldUserSession = this.anyDbUsersSessionsRepository.isPresent(oldRefreshToken).value();
         var newUserSession = ofNotPersisted(username, accessToken, newRefreshToken, oldUserSession.metadata());
         this.anyDbUsersSessionsRepository.saveAs(newUserSession);
         this.anyDbUsersSessionsRepository.delete(oldUserSession.id());
@@ -93,7 +95,9 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     public Tuple2<UserSessionId, UserRequestMetadata> saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
-        var userSession = this.anyDbUsersSessionsRepository.getById(event.userSessionId());
+        // TODO [YY] consider event.userSessionId() -> event.anyDb
+        // WARNING: already validated and present in database
+        var userSession = this.anyDbUsersSessionsRepository.isPresent(event.userSessionId()).value();
         userSession = ofPersisted(
                 userSession.id(),
                 userSession.username(),

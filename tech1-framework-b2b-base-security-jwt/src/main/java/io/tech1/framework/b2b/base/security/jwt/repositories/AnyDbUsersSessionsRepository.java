@@ -18,18 +18,9 @@ public interface AnyDbUsersSessionsRepository {
     TuplePresence<AnyDbUserSession> isPresent(UserSessionId userSessionId);
     TuplePresence<AnyDbUserSession> isPresent(JwtAccessToken accessToken);
     TuplePresence<AnyDbUserSession> isPresent(JwtRefreshToken refreshToken);
-    @Deprecated
-    boolean isPresentByAccessToken(JwtAccessToken accessToken);
-    @Deprecated
-    boolean isPresentByRefreshToken(JwtRefreshToken refreshToken);
-    AnyDbUserSession getById(UserSessionId sessionId);
     List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie);
     List<Tuple2<ResponseUserSession2, JwtAccessToken>> findAllByCookieAsSession2(CookieAccessToken cookie);
     List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);
-    @Deprecated
-    AnyDbUserSession findByAccessTokenAsAny(JwtAccessToken accessToken);
-    @Deprecated
-    AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken refreshToken);
     UserSessionId saveAs(AnyDbUserSession userSession);
     void delete(UserSessionId sessionId);
     long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds);

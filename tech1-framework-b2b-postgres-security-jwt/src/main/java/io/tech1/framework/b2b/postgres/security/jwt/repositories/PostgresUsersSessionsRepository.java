@@ -47,18 +47,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
                 .orElseGet(TuplePresence::absent);
     }
 
-    default boolean isPresentByAccessToken(JwtAccessToken accessToken) {
-        return this.findByAccessToken(accessToken).isPresent();
-    }
-
-    default boolean isPresentByRefreshToken(JwtRefreshToken refreshToken) {
-        return this.findByRefreshToken(refreshToken).isPresent();
-    }
-
-    default AnyDbUserSession getById(UserSessionId sessionId) {
-        return this.findById(sessionId.value()).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
-    }
-
     default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
@@ -75,14 +63,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         return this.findByUsernameIn(usernames).stream()
                 .map(PostgresDbUserSession::anyDbUserSession)
                 .collect(Collectors.toList());
-    }
-
-    default AnyDbUserSession findByAccessTokenAsAny(JwtAccessToken accessToken) {
-        return this.findByAccessToken(accessToken).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
-    }
-
-    default AnyDbUserSession findByRefreshTokenAsAny(JwtRefreshToken refreshToken) {
-        return this.findByRefreshToken(refreshToken).map(PostgresDbUserSession::anyDbUserSession).orElse(null);
     }
 
     default UserSessionId saveAs(AnyDbUserSession userSession) {

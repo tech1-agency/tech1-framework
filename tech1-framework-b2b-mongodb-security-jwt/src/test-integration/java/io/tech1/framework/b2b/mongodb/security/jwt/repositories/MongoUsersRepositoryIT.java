@@ -94,19 +94,19 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
 
         assertThat(toUsernamesAsStrings1(this.usersRepository.findByAuthoritySuperadmin()))
                 .hasSize(3)
-                .containsExactly("sa1", "sa2", "sa3");
+                .containsExactlyInAnyOrder("sa1", "sa2", "sa3");
 
         assertThat(toUsernamesAsStrings1(this.usersRepository.findByAuthorityNotSuperadmin()))
                 .hasSize(3)
-                .containsExactly("admin", "user1", "user2");
+                .containsExactlyInAnyOrder("admin", "user1", "user2");
 
         assertThat(toUsernamesAsStrings0(this.usersRepository.findSuperadminsUsernames()))
                 .hasSize(3)
-                .containsExactly("sa1", "sa2", "sa3");
+                .containsExactlyInAnyOrder("sa1", "sa2", "sa3");
 
         assertThat(toUsernamesAsStrings0(this.usersRepository.findNotSuperadminsUsernames()))
                 .hasSize(3)
-                .containsExactly("admin", "user1", "user2");
+                .containsExactlyInAnyOrder("admin", "user1", "user2");
 
         var jwtUser = this.usersRepository.loadUserByUsername(Username.of("sa1"));
         assertThat(jwtUser).isNotNull();
@@ -137,7 +137,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         this.usersRepository.deleteByAuthorityNotSuperadmin();
         assertThat(toUsernamesAsStrings1(this.usersRepository.findAll()))
                 .hasSize(3)
-                .containsExactly("sa1", "sa2", "sa3");
+                .containsExactlyInAnyOrder("sa1", "sa2", "sa3");
 
         // Act-Assert-2
         this.usersRepository.deleteByAuthoritySuperadmin();

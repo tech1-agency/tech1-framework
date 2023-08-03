@@ -70,7 +70,9 @@ class AbstractBaseSuperAdminServiceTest {
 
         @Bean
         AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask() {
-            return new AbstractSuperAdminResetServerTask() {
+            return new AbstractSuperAdminResetServerTask(
+                    this.incidentPublisher()
+            ) {
                 @Override
                 public ResetServerStatus getStatus() {
                     return randomResetServerStatus();
@@ -79,11 +81,6 @@ class AbstractBaseSuperAdminServiceTest {
                 @Override
                 public void resetOnServer(JwtUser initiator) {
                     abstractMockService().executeInheritedMethod();
-                }
-
-                @Override
-                public void publishRuntimeExceptionOnServer(RuntimeException ex) {
-                    // no actions
                 }
             };
         }
@@ -107,8 +104,6 @@ class AbstractBaseSuperAdminServiceTest {
     // Repositories
     private final InvitationCodesRepository invitationCodesRepository;
     private final UsersSessionsRepository usersSessionsRepository;
-    // Tasks
-    private final AbstractSuperAdminResetServerTask resetServerTask;
     // Mocks
     private final AbstractMockService abstractMockService;
 

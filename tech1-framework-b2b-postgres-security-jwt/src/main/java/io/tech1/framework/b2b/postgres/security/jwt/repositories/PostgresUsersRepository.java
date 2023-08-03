@@ -113,16 +113,16 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return this.findByAuthority(SUPERADMIN);
     }
 
-    default List<Username> findSuperadminsUsernames() {
-        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toList());
+    default Set<Username> findSuperadminsUsernames() {
+        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toSet());
     }
 
     default List<PostgresDbUser> findByAuthorityNotSuperadmin() {
         return this.findByAuthorityNotEqual(SUPERADMIN);
     }
 
-    default List<Username> findNotSuperadminsUsernames() {
-        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toList());
+    default Set<Username> findNotSuperadminsUsernames() {
+        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toSet());
     }
 
     @Transactional

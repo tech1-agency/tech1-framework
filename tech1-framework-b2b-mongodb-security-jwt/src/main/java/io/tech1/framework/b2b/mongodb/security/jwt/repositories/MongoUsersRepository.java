@@ -104,16 +104,16 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return this.findByAuthority(SUPERADMIN);
     }
 
-    default List<Username> findSuperadminsUsernames() {
-        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(MongoDbUser::getUsername).collect(Collectors.toList());
+    default Set<Username> findSuperadminsUsernames() {
+        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(MongoDbUser::getUsername).collect(Collectors.toSet());
     }
 
     default List<MongoDbUser> findByAuthorityNotSuperadmin() {
         return this.findByAuthorityNotEqual(SUPERADMIN);
     }
 
-    default List<Username> findNotSuperadminsUsernames() {
-        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(MongoDbUser::getUsername).collect(Collectors.toList());
+    default Set<Username> findNotSuperadminsUsernames() {
+        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(MongoDbUser::getUsername).collect(Collectors.toSet());
     }
 
     default void deleteByAuthoritySuperadmin() {

@@ -125,7 +125,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             }
         });
 
-        var deleted = this.anyDbUsersSessionsRepository.deleteByUsersSessionsIds(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
+        var deleted = this.anyDbUsersSessionsRepository.delete(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
         LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 

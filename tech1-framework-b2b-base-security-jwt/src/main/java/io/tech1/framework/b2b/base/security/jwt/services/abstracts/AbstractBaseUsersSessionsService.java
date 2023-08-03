@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -113,7 +114,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     public SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames) {
         var usersSessions = this.anyDbUsersSessionsRepository.findByUsernameInAsAny(usernames);
         List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions = new ArrayList<>();
-        List<UserSessionId> expiredOrInvalidSessionIds = new ArrayList<>();
+        Set<UserSessionId> expiredOrInvalidSessionIds = new HashSet<>();
 
         usersSessions.forEach(userSession -> {
             var sessionId = userSession.id();

@@ -87,7 +87,8 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
         this.deleteById(sessionId.value());
     }
 
-    default long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds) {
+    @Transactional
+    default long delete(Set<UserSessionId> sessionsIds) {
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
     }
 
@@ -114,6 +115,8 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     List<PostgresDbUserSession> findByUsername(Username username);
     List<PostgresDbUserSession> findByUsernameIn(Set<Username> usernames);
 
+    @Transactional
+    @Modifying
     long deleteByIdIn(List<String> ids);
 
     // ================================================================================================================

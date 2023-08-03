@@ -7,9 +7,10 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
 
 import java.util.List;
+import java.util.Set;
 
 public record SessionsExpiredTable(
         List<Tuple3<Username, JwtRefreshToken, UserRequestMetadata>> expiredSessions,
-        List<UserSessionId> expiredOrInvalidSessionIds
+        Set<UserSessionId> expiredOrInvalidSessionIds
 ) {
 }

@@ -13,7 +13,6 @@ import io.tech1.framework.domain.tuples.TuplePresence;
 import java.util.List;
 import java.util.Set;
 
-// TODO [YY] add unit tests
 public interface AnyDbUsersSessionsRepository {
     TuplePresence<AnyDbUserSession> isPresent(UserSessionId userSessionId);
     TuplePresence<AnyDbUserSession> isPresent(JwtAccessToken accessToken);
@@ -22,7 +21,7 @@ public interface AnyDbUsersSessionsRepository {
     ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie);
     List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);
     void delete(UserSessionId sessionId);
-    long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds);
+    long delete(Set<UserSessionId> sessionsIds);
     void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie);
     void deleteExceptAccessToken(CookieAccessToken cookie);
     UserSessionId saveAs(AnyDbUserSession userSession);

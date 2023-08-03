@@ -21,7 +21,7 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.*;
 import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
-import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.UserConverter.toUsernamesAsStrings1;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;

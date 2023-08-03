@@ -85,7 +85,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.deleteById(sessionId.value());
     }
 
-    default long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds) {
+    default long delete(Set<UserSessionId> sessionsIds) {
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
     }
 

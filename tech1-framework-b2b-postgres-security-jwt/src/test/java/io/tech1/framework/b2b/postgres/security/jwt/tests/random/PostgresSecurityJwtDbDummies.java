@@ -75,26 +75,6 @@ public class PostgresSecurityJwtDbDummies {
     // UserSessions
     // =================================================================================================================
     public static List<PostgresDbUserSession> dummyUserSessionsData1() {
-        return List.of(
-                session("sa1"),
-                session("sa1"),
-                session("sa1"),
-                session("user1"),
-                session("user2"),
-                session("admin"),
-                session("admin")
-        );
-    }
-
-    public static List<PostgresDbUserSession> dummyUserSessionsData2() {
-        var session1 = session(TECH1, "token1");
-        var session2 = session(TECH1, "token2");
-        var session3 = session(TECH1, "token3");
-        var session4 = session(Username.of("admin"), "token4");
-        return List.of(session1, session2, session3, session4);
-    }
-
-    public static List<PostgresDbUserSession> dummyUserSessionsData3() {
         var session1 = session(TECH1.identifier(), "awt1", "rwt1");
         var session2 = session(TECH1.identifier(), "awt2", "rwt2");
         var session3 = session(TECH1.identifier(), "awt3", "rwt3");
@@ -111,5 +91,13 @@ public class PostgresSecurityJwtDbDummies {
                 session6,
                 session7
         );
+    }
+
+    public static List<PostgresDbUserSession> dummyUserSessionsData2() {
+        var session1 = session(TECH1, "token1");
+        var session2 = session(TECH1, "token2");
+        var session3 = session(TECH1, "token3");
+        var session4 = session(Username.of("admin"), "token4");
+        return List.of(session1, session2, session3, session4);
     }
 }

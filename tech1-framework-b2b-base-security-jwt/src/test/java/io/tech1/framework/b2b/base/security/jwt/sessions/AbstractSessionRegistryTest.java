@@ -310,7 +310,7 @@ class AbstractSessionRegistryTest {
                         new Tuple3<>(TECH1, entity(JwtRefreshToken.class), randomUserRequestMetadata()),
                         new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())
                 ),
-                List.of(dbUserSession1.id(), dbUserSession2.id())
+                Set.of(dbUserSession1.id(), dbUserSession2.id())
         );
         var usernames = Set.of(username1, username2, username3);
         when(this.baseUsersSessionsService.getExpiredRefreshTokensSessions(usernames)).thenReturn(sessionsExpiredTable);
@@ -333,7 +333,7 @@ class AbstractSessionRegistryTest {
         var sessionExpiredIncident = seiCaptor.getValue();
         assertThat(sessionExpiredIncident.username()).isEqualTo(username3);
         assertThat(sessionExpiredIncident.userRequestMetadata()).isEqualTo(dbUserSession3.metadata());
-        verify(this.anyDbUsersSessionsRepository).deleteByUsersSessionsIds(List.of(dbUserSession1.id(), dbUserSession2.id()));
+        verify(this.anyDbUsersSessionsRepository).delete(Set.of(dbUserSession1.id(), dbUserSession2.id()));
     }
 
     @Test

@@ -18,11 +18,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.accessTokens;
-import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.*;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toAccessTokensAsStrings2;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings2;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData1;
+import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +52,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData3());
+        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         var notExistentSessionId = entity(UserSessionId.class);
 
@@ -101,13 +104,26 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
-        // Act
-        this.usersSessionsRepository.deleteByUsernames(Set.of(Username.of("sa1"), Username.of("admin")));
+        var existentSessionId = saved.get(0).userSessionId();
+        var existentSessionsIds = Set.of(saved.get(1).userSessionId(), saved.get(5).userSessionId());
 
-        // Assert
-        assertThat(this.usersSessionsRepository.count()).isEqualTo(2);
+        // Act-Assert-0
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
+
+        // Act-Assert-1
+        this.usersSessionsRepository.delete(existentSessionId);
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(6);
+
+        // Act-Assert-2
+        this.usersSessionsRepository.delete(existentSessionsIds);
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(4);
+
+        // Act-Assert-1
+        this.usersSessionsRepository.deleteByUsernames(Set.of(TECH1, Username.of("sa")));
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(1);
+        assertThat(this.usersSessionsRepository.findAll().get(0).getUsername().identifier()).isEqualTo("user1");
     }
 
     @Test
@@ -120,13 +136,10 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         this.usersSessionsRepository.deleteByUsernameExceptAccessToken(TECH1, new CookieAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
-
         assertThat(count1).isEqualTo(4);
         assertThat(count2).isEqualTo(2);
-        var usernames = sessions.stream().map(PostgresDbUserSession::getUsername).collect(Collectors.toSet());
-        var tokens = sessions.stream().map(session -> session.getAccessToken().value()).collect(Collectors.toSet());
-        assertThat(usernames).isEqualTo(Set.of(TECH1, Username.of("admin")));
-        assertThat(tokens).isEqualTo(Set.of("token2", "token4"));
+        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(TECH1.identifier(), "admin"));
+        assertThat(toAccessTokensAsStrings2(sessions)).isEqualTo(List.of("token2", "token4"));
     }
 
     @Test
@@ -150,7 +163,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     @Test
     void saveIntegrationTests() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData3());
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act-Assert-0
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);

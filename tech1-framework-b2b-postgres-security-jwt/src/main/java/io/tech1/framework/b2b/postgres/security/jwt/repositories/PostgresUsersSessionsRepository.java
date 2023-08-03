@@ -83,11 +83,6 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
                 .collect(Collectors.toList());
     }
 
-    default UserSessionId saveAs(AnyDbUserSession userSession) {
-        var entity = this.save(new PostgresDbUserSession(userSession));
-        return entity.userSessionId();
-    }
-
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }
@@ -104,6 +99,11 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     @Transactional
     default void deleteExceptAccessToken(CookieAccessToken cookie) {
         this.deleteExceptToken(cookie.getJwtAccessToken());
+    }
+
+    default UserSessionId saveAs(AnyDbUserSession userSession) {
+        var entity = this.save(new PostgresDbUserSession(userSession));
+        return entity.userSessionId();
     }
 
     // ================================================================================================================

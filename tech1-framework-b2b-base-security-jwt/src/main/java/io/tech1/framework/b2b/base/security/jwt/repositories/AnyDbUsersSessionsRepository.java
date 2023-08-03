@@ -21,9 +21,9 @@ public interface AnyDbUsersSessionsRepository {
     List<ResponseUserSession2> getUsersSessionsTable(Username username, CookieAccessToken cookie);
     ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie);
     List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);
-    UserSessionId saveAs(AnyDbUserSession userSession);
     void delete(UserSessionId sessionId);
     long deleteByUsersSessionsIds(List<UserSessionId> sessionsIds);
     void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie);
     void deleteExceptAccessToken(CookieAccessToken cookie);
+    UserSessionId saveAs(AnyDbUserSession userSession);
 }

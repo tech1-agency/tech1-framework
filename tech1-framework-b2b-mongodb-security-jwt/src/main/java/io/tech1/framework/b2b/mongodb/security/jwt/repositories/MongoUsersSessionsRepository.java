@@ -81,11 +81,6 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .collect(Collectors.toList());
     }
 
-    default UserSessionId saveAs(AnyDbUserSession userSession) {
-        var entity = this.save(new MongoDbUserSession(userSession));
-        return entity.userSessionId();
-    }
-
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }
@@ -100,6 +95,11 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
 
     default void deleteExceptAccessToken(CookieAccessToken cookie) {
         this.deleteExceptToken(cookie.getJwtAccessToken());
+    }
+
+    default UserSessionId saveAs(AnyDbUserSession userSession) {
+        var entity = this.save(new MongoDbUserSession(userSession));
+        return entity.userSessionId();
     }
 
     // ================================================================================================================

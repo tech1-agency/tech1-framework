@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -90,18 +91,10 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         assertThat(sessionsTable.inactiveSessions().get(1).who().identifier()).isEqualTo("tech1");
         assertThat(sessionsTable.inactiveSessions().get(2).who().identifier()).isEqualTo("tech1");
         assertThat(sessionsTable.inactiveSessions().get(3).who().identifier()).isEqualTo("user1");
-    }
-
-    @Test
-    void readIntegrationV1Tests() {
-        // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
-
-        // Act
-        var sessions = this.usersSessionsRepository.findByUsernameIn(Set.of(Username.of("sa1"), Username.of("admin")));
-
-        // Assert
-        assertThat(sessions).hasSize(5);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(TECH1, Username.of("sa")))).hasSize(5);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(TECH1, Username.of("user1")))).hasSize(6);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user1"), Username.of("sa")))).hasSize(3);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user777"), Username.of("sa777")))).isEmpty();
     }
 
     @Test
@@ -151,5 +144,21 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         var session = sessions.get(0);
         assertThat(session.getUsername()).isEqualTo(TECH1);
         assertThat(session.getAccessToken().value()).isEqualTo("token2");
+    }
+
+    @Test
+    void saveIntegrationTests() {
+        // Arrange
+        this.usersSessionsRepository.saveAll(dummyUserSessionsData3());
+
+        // Act-Assert-0
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
+
+        // Act-Assert-1
+        var existentSessionId = this.usersSessionsRepository.saveAs(entity(AnyDbUserSession.class));
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
+        var notExistentSessionId = entity(UserSessionId.class);
+        assertThat(this.usersSessionsRepository.isPresent(existentSessionId).present()).isTrue();
+        assertThat(this.usersSessionsRepository.isPresent(notExistentSessionId).present()).isFalse();
     }
 }

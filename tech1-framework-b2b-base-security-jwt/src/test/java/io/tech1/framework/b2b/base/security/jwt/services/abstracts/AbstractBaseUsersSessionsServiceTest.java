@@ -39,6 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomPersistedSession;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
@@ -228,23 +229,20 @@ class AbstractBaseUsersSessionsServiceTest {
         var user = entity(JwtUser.class);
         var username = user.username();
         var newAccessToken = entity(JwtAccessToken.class);
-        var oldRefreshToken = entity(JwtRefreshToken.class);
         var newRefreshToken = entity(JwtRefreshToken.class);
-        var oldUserSession = AnyDbUserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), oldRefreshToken, entity(UserRequestMetadata.class));
-        when(this.anyDbUsersSessionsRepository.isPresent(oldRefreshToken)).thenReturn(present(oldUserSession));
+        var oldSession = randomPersistedSession();
 
         // Act
-        this.componentUnderTest.refresh(user, oldRefreshToken, newAccessToken, newRefreshToken, httpServletRequest);
+        this.componentUnderTest.refresh(user, oldSession, newAccessToken, newRefreshToken, httpServletRequest);
 
         // Assert
-        verify(this.anyDbUsersSessionsRepository).isPresent(oldRefreshToken);
         var saveCaptor = ArgumentCaptor.forClass(AnyDbUserSession.class);
         verify(this.anyDbUsersSessionsRepository).saveAs(saveCaptor.capture());
         var newUserSession = saveCaptor.getValue();
         assertThat(newUserSession.username()).isEqualTo(username);
         assertThat(newUserSession.refreshToken()).isEqualTo(newRefreshToken);
-        assertThat(newUserSession.metadata()).isEqualTo(oldUserSession.metadata());
-        verify(this.anyDbUsersSessionsRepository).delete(oldUserSession.id());
+        assertThat(newUserSession.metadata()).isEqualTo(oldSession.metadata());
+        verify(this.anyDbUsersSessionsRepository).delete(oldSession.id());
         var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();

@@ -29,8 +29,8 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.valid;
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.expiredDefaultClaims;
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validDefaultClaims;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.expiredClaims;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validClaims;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -43,19 +43,19 @@ class AbstractTokensContextThrowerServiceTest {
 
     private static Stream<Arguments> verifyAccessTokenExpirationOrThrow() {
         return Stream.of(
-                Arguments.of(valid(entity(JwtAccessToken.class), validDefaultClaims()), false),
-                Arguments.of(valid(entity(JwtRefreshToken.class), validDefaultClaims()), false),
-                Arguments.of(valid(entity(JwtAccessToken.class), expiredDefaultClaims()), true),
-                Arguments.of(valid(entity(JwtRefreshToken.class), expiredDefaultClaims()), false)
+                Arguments.of(valid(entity(JwtAccessToken.class), validClaims()), false),
+                Arguments.of(valid(entity(JwtRefreshToken.class), validClaims()), false),
+                Arguments.of(valid(entity(JwtAccessToken.class), expiredClaims()), true),
+                Arguments.of(valid(entity(JwtRefreshToken.class), expiredClaims()), false)
         );
     }
 
     private static Stream<Arguments> verifyRefreshTokenExpirationOrThrowTest() {
         return Stream.of(
-                Arguments.of(valid(entity(JwtAccessToken.class), validDefaultClaims()), false),
-                Arguments.of(valid(entity(JwtRefreshToken.class), validDefaultClaims()), false),
-                Arguments.of(valid(entity(JwtAccessToken.class), expiredDefaultClaims()), false),
-                Arguments.of(valid(entity(JwtRefreshToken.class), expiredDefaultClaims()), true)
+                Arguments.of(valid(entity(JwtAccessToken.class), validClaims()), false),
+                Arguments.of(valid(entity(JwtRefreshToken.class), validClaims()), false),
+                Arguments.of(valid(entity(JwtAccessToken.class), expiredClaims()), false),
+                Arguments.of(valid(entity(JwtRefreshToken.class), expiredClaims()), true)
         );
     }
 
@@ -114,7 +114,7 @@ class AbstractTokensContextThrowerServiceTest {
     void verifyValidityAccessTokenTest() throws CookieAccessTokenInvalidException {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
-        var validatedClaims = valid(accessToken, validDefaultClaims());
+        var validatedClaims = valid(accessToken, validClaims());
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
 
         // Act
@@ -145,7 +145,7 @@ class AbstractTokensContextThrowerServiceTest {
     void verifyValidityRefreshTokenTest() throws CookieRefreshTokenInvalidException {
         // Arrange
         var refreshToken = entity(JwtRefreshToken.class);
-        var validatedClaims = valid(refreshToken, validDefaultClaims());
+        var validatedClaims = valid(refreshToken, validClaims());
         when(this.securityJwtTokenUtils.validate(refreshToken)).thenReturn(validatedClaims);
 
         // Act
@@ -204,7 +204,7 @@ class AbstractTokensContextThrowerServiceTest {
     void verifyAccessTokenDbPresenceTest() throws CookieAccessTokenDbNotFoundException {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
-        var validatedClaims = valid(accessToken, validDefaultClaims());
+        var validatedClaims = valid(accessToken, validClaims());
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(entity(AnyDbUserSession.class)));
 
         // Act
@@ -218,7 +218,7 @@ class AbstractTokensContextThrowerServiceTest {
     void verifyAccessTokenDbPresenceThrowTest() {
         // Arrange
         var accessToken = entity(JwtAccessToken.class);
-        var validatedClaims = valid(accessToken, validDefaultClaims());
+        var validatedClaims = valid(accessToken, validClaims());
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
 
         // Act
@@ -235,7 +235,7 @@ class AbstractTokensContextThrowerServiceTest {
     void verifyRefreshTokenDbPresenceTest() throws CookieRefreshTokenDbNotFoundException {
         // Arrange
         var refreshToken = entity(JwtRefreshToken.class);
-        var validatedClaims = valid(refreshToken, validDefaultClaims());
+        var validatedClaims = valid(refreshToken, validClaims());
         var user = entity(JwtUser.class);
         var session = entity(AnyDbUserSession.class);
         when(this.jwtUserDetailsService.loadUserByUsername(validatedClaims.username().identifier())).thenReturn(user);
@@ -255,7 +255,7 @@ class AbstractTokensContextThrowerServiceTest {
     void verifyRefreshTokenDbPresenceThrowTest() {
         // Arrange
         var refreshToken = entity(JwtRefreshToken.class);
-        var validatedClaims = valid(refreshToken, validDefaultClaims());
+        var validatedClaims = valid(refreshToken, validClaims());
         when(this.usersSessionsRepository.isPresent(refreshToken)).thenReturn(TuplePresence.absent());
 
         // Act

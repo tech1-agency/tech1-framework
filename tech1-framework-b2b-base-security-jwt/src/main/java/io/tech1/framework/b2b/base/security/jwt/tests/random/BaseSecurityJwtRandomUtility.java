@@ -1,11 +1,15 @@
 package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
+import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
@@ -54,7 +58,7 @@ public class BaseSecurityJwtRandomUtility {
         return Stream.of(accessTokens).map(JwtAccessToken::new).collect(Collectors.toSet());
     }
 
-    public static DefaultClaims validDefaultClaims() {
+    public static Claims validClaims() {
         var claims = new DefaultClaims();
         claims.setSubject(TECH1.identifier());
         var timeAmount = TimeAmount.of(1, ChronoUnit.HOURS);
@@ -65,7 +69,7 @@ public class BaseSecurityJwtRandomUtility {
         return claims;
     }
 
-    public static DefaultClaims expiredDefaultClaims() {
+    public static Claims expiredClaims() {
         var claims = new DefaultClaims();
         claims.setSubject(TECH1.identifier());
         var currentTimestamp = TimestampUtility.getCurrentTimestamp();
@@ -77,11 +81,15 @@ public class BaseSecurityJwtRandomUtility {
         return claims;
     }
 
-    public static AnyDbInvitationCode validAnyDbInvitationCode() {
+    public static AnyDbInvitationCode randomInvitationCode() {
         return new AnyDbInvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities(SUPER_ADMIN), randomString(), randomUsername());
     }
 
-    public static RequestUserRegistration1 validRegistration1() {
+    public static AnyDbUserSession randomPersistedSession() {
+        return AnyDbUserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class), randomUserRequestMetadata());
+    }
+
+    public static RequestUserRegistration1 registration1() {
         return new RequestUserRegistration1(Username.of("registration11"), randomPassword(), randomPassword(), randomZoneId().getId(), randomString());
     }
 }

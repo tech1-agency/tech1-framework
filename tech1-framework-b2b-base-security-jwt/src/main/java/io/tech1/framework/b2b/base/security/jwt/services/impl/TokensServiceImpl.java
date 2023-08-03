@@ -65,13 +65,14 @@ public class TokensServiceImpl implements TokensService {
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);
         this.tokensContextThrowerService.verifyRefreshTokenExpirationOrThrow(refreshTokenValidatedClaims);
-        // TODO [YY] tuple.a() -> tuple usage
-        var user = this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, refreshTokenValidatedClaims).a();
+        var refreshTokenValidatedTuple = this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, refreshTokenValidatedClaims);
+        var user = refreshTokenValidatedTuple.a();
+        var session = refreshTokenValidatedTuple.b();
 
         var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var newRefreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.baseUsersSessionsService.refresh(user, oldRefreshToken, accessToken, newRefreshToken, request);
+        this.baseUsersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
 
         this.cookieProvider.createJwtAccessCookie(accessToken, response);
         this.cookieProvider.createJwtRefreshCookie(newRefreshToken, response);

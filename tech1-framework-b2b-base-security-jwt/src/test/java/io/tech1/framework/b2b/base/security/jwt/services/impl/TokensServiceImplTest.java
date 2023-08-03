@@ -26,7 +26,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validDefaultClaims;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomPersistedSession;
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validClaims;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -128,8 +129,8 @@ class TokensServiceImplTest {
         var cookieRefreshToken = entity(CookieRefreshToken.class);
         var accessToken = cookieAccessToken.getJwtAccessToken();
         var refreshToken = cookieRefreshToken.getJwtRefreshToken();
-        var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(accessToken, validDefaultClaims());
-        var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(refreshToken, validDefaultClaims());
+        var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(accessToken, validClaims());
+        var refreshTokenValidatedClaims = JwtTokenValidatedClaims.valid(refreshToken, validClaims());
         var user = entity(JwtUser.class);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(accessToken)).thenReturn(accessTokenValidatedClaims);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken)).thenReturn(refreshTokenValidatedClaims);
@@ -154,14 +155,15 @@ class TokensServiceImplTest {
         var response = mock(HttpServletResponse.class);
         var oldCookieRefreshToken = new CookieRefreshToken(randomString());
         var oldRefreshToken = oldCookieRefreshToken.getJwtRefreshToken();
-        var validatedClaims = JwtTokenValidatedClaims.valid(oldRefreshToken, validDefaultClaims());
+        var validatedClaims = JwtTokenValidatedClaims.valid(oldRefreshToken, validClaims());
         var user = entity(JwtUser.class);
+        var session = randomPersistedSession();
         var newAccessToken = entity(JwtAccessToken.class);
         var newRefreshToken = entity(JwtRefreshToken.class);
+
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken)).thenReturn(validatedClaims);
-        // TODO [YY] null -> session
-        when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims)).thenReturn(new Tuple2<>(user, null));
+        when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims)).thenReturn(new Tuple2<>(user, session));
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(newAccessToken);
         when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(newRefreshToken);
 
@@ -175,7 +177,7 @@ class TokensServiceImplTest {
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims);
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).refresh(user, oldRefreshToken, newAccessToken, newRefreshToken, request);
+        verify(this.baseUsersSessionsService).refresh(user, session, newAccessToken, newRefreshToken, request);
         verify(this.cookieProvider).createJwtAccessCookie(newAccessToken, response);
         verify(this.cookieProvider).createJwtRefreshCookie(newRefreshToken, response);
         verify(this.sessionRegistry).renew(user.username(), oldRefreshToken, newAccessToken, newRefreshToken);

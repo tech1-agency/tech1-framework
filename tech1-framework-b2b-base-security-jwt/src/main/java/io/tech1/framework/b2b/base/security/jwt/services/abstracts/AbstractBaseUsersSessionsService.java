@@ -73,8 +73,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public void refresh(JwtUser user, UserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var newSession = ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata());
-        this.usersSessionsRepository.saveAs(newSession);
+        var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
                 new EventSessionAddUserRequestMetadata(

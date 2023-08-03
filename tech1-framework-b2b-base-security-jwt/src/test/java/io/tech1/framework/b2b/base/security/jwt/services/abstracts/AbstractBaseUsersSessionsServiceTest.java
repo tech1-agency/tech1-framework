@@ -232,6 +232,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var newAccessToken = entity(JwtAccessToken.class);
         var newRefreshToken = entity(JwtRefreshToken.class);
         var oldSession = randomPersistedSession();
+        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(randomPersistedSession());
 
         // Act
         this.componentUnderTest.refresh(user, oldSession, newAccessToken, newRefreshToken, httpServletRequest);
@@ -249,7 +250,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
         assertThat(event.email()).isEqualTo(user.email());
-        assertThat(event.session()).isEqualTo(newUserSession);
+        assertThat(event.session().id()).isNotEqualTo(newUserSession.id());
         assertThat(event.isAuthenticationLoginEndpoint()).isFalse();
         assertThat(event.isAuthenticationRefreshTokenEndpoint()).isTrue();
     }

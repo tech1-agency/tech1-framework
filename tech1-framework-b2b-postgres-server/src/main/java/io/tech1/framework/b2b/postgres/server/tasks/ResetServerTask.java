@@ -27,6 +27,6 @@ public class ResetServerTask extends AbstractSuperAdminResetServerTask {
 
     @Override
     public void resetOnServer(JwtUser initiator) {
-        this.status.complete();
+        this.status.complete(initiator.zoneId());
     }
 }

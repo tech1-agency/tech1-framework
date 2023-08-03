@@ -58,5 +58,5 @@ public class FrameworkLogsConstants {
     // =================================================================================================================
     // Server
     // =================================================================================================================
-    public static final String SERVER_RESET_SERVER_TASK = FRAMEWORK_SERVER + " Reset Server: {}. Status: `{}`";
+    public static final String SERVER_RESET_SERVER_TASK = FRAMEWORK_SERVER + " Reset Server Initiator: `{}`. Status: `{}`";
 }

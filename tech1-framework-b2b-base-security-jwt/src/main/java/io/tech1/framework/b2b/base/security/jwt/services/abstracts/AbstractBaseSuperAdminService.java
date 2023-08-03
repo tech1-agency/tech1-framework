@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepo
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.tasks.SuperAdminResetServerTask;
+import io.tech1.framework.b2b.base.security.jwt.tasks.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -29,7 +29,7 @@ public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminSer
     protected final InvitationCodesRepository invitationCodesRepository;
     protected final UsersSessionsRepository usersSessionsRepository;
     // Tasks
-    protected final SuperAdminResetServerTask resetServerTask;
+    protected final AbstractSuperAdminResetServerTask resetServerTask;
 
     // =================================================================================================================
     // Server

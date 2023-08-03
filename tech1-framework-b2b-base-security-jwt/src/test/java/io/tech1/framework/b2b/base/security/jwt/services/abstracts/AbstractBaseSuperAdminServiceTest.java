@@ -8,7 +8,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.tasks.SuperAdminResetServerTask;
+import io.tech1.framework.b2b.base.security.jwt.tasks.AbstractSuperAdminResetServerTask;
+import io.tech1.framework.b2b.base.security.jwt.tests.stubbers.AbstractMockService;
+import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -62,8 +64,28 @@ class AbstractBaseSuperAdminServiceTest {
         }
 
         @Bean
-        SuperAdminResetServerTask superAdminResetServerTask() {
-            return mock(SuperAdminResetServerTask.class);
+        AbstractMockService abstractMockService() {
+            return mock(AbstractMockService.class);
+        }
+
+        @Bean
+        AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask() {
+            return new AbstractSuperAdminResetServerTask() {
+                @Override
+                public ResetServerStatus getStatus() {
+                    return randomResetServerStatus();
+                }
+
+                @Override
+                public void resetOnServer(JwtUser user) {
+                    abstractMockService().executeInheritedMethod();
+                }
+
+                @Override
+                public void publishRuntimeExceptionOnServer(RuntimeException ex) {
+                    // no actions
+                }
+            };
         }
 
         @Bean
@@ -73,7 +95,7 @@ class AbstractBaseSuperAdminServiceTest {
                     this.sessionRegistry(),
                     this.invitationCodesRepository(),
                     this.usersSessionsRepository(),
-                    this.superAdminResetServerTask()
+                    this.abstractSuperAdminResetServerTask()
             ) {};
         }
     }
@@ -86,7 +108,9 @@ class AbstractBaseSuperAdminServiceTest {
     private final InvitationCodesRepository invitationCodesRepository;
     private final UsersSessionsRepository usersSessionsRepository;
     // Tasks
-    private final SuperAdminResetServerTask resetServerTask;
+    private final AbstractSuperAdminResetServerTask resetServerTask;
+    // Mocks
+    private final AbstractMockService abstractMockService;
 
     private final AbstractBaseSuperAdminService componentUnderTest;
 
@@ -97,7 +121,7 @@ class AbstractBaseSuperAdminServiceTest {
                 this.sessionRegistry,
                 this.invitationCodesRepository,
                 this.usersSessionsRepository,
-                this.resetServerTask
+                this.abstractMockService
         );
     }
 
@@ -108,20 +132,16 @@ class AbstractBaseSuperAdminServiceTest {
                 this.sessionRegistry,
                 this.invitationCodesRepository,
                 this.usersSessionsRepository,
-                this.resetServerTask
+                this.abstractMockService
         );
     }
 
     @Test
     void getResetServerStatusTest() {
-        // Arrange
-        when(this.resetServerTask.getStatus()).thenReturn(randomResetServerStatus());
-
         // Act
         var actual = this.componentUnderTest.getResetServerStatus();
 
         // Assert
-        verify(this.resetServerTask).getStatus();
         assertThat(actual).isEqualTo(randomResetServerStatus());
     }
 
@@ -135,7 +155,7 @@ class AbstractBaseSuperAdminServiceTest {
 
         // Assert
         verify(this.incidentPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
-        verify(this.resetServerTask).reset(user);
+        verify(this.abstractMockService).executeInheritedMethod();
         verify(this.incidentPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
     }
 

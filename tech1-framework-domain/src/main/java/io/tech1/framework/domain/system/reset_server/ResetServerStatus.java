@@ -5,6 +5,7 @@ import io.tech1.framework.domain.constants.DatetimeConstants;
 import io.tech1.framework.domain.tuples.TuplePercentage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.ZoneOffset;
 
@@ -17,6 +18,7 @@ import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurre
 // Lombok
 @Getter
 @EqualsAndHashCode
+@ToString
 public class ResetServerStatus {
 
     @JsonIgnore

@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.tasks.SuperAdminResetServerTask;
+import io.tech1.framework.b2b.base.security.jwt.tasks.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -21,14 +21,14 @@ public class MongoBaseSuperAdminService extends AbstractBaseSuperAdminService {
             SessionRegistry sessionRegistry,
             MongoInvitationCodesRepository invitationCodesRepository,
             MongoUsersSessionsRepository usersSessionsRepository,
-            SuperAdminResetServerTask superAdminResetServerTask
+            AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {
         super(
                 incidentPublisher,
                 sessionRegistry,
                 invitationCodesRepository,
                 usersSessionsRepository,
-                superAdminResetServerTask
+                abstractSuperAdminResetServerTask
         );
     }
 }

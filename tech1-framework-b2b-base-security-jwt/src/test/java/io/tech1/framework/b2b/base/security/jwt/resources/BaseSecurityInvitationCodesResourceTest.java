@@ -70,7 +70,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         when(this.baseInvitationCodesService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
-        this.mvc.perform(get("/invitationCodes").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/invitationCodes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authorities", hasSize(4)))
                 .andExpect(jsonPath("$.invitationCodes", hasSize(invitationCodes.size())));
@@ -109,10 +109,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act
-        this.mvc.perform(
-                        delete("/invitationCodes/" + invitationCodeId)
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(delete("/invitationCodes/" + invitationCodeId))
                 .andExpect(status().isOk());
 
         // Assert

@@ -159,10 +159,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
 
         // Act
-        this.mvc.perform(
-                        post("/authentication/logout")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(post("/authentication/logout"))
                 .andExpect(status().isOk());
 
         // Assert
@@ -178,10 +175,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.invalid(accessToken));
 
         // Act
-        this.mvc.perform(
-                        post("/authentication/logout")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(post("/authentication/logout"))
                 .andExpect(status().isOk());
 
         // Assert
@@ -203,9 +197,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.securityJwtTokenUtils.validate(cookie.getJwtAccessToken())).thenReturn(validatedClaims);
 
         // Act
-        this.mvc.perform(
-                post("/authentication/logout")
-                        .contentType(MediaType.APPLICATION_JSON)
+        this.mvc.perform(post("/authentication/logout")
                         .with(request -> {
                             request.setSession(httpSession);
                             return request;
@@ -235,10 +227,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
 
         // Act
-        this.mvc.perform(
-                post("/authentication/logout")
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(post("/authentication/logout"))
                 .andExpect(status().isOk());
 
         // Assert
@@ -256,10 +245,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.tokensService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenThrow(exception);
 
         // Act
-        this.mvc.perform(
-                        post("/authentication/refreshToken")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(post("/authentication/refreshToken"))
                 .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()))
                 .andExpect(jsonPath("$.exceptionEntityType", equalTo("ERROR")))
                 .andExpect(jsonPath("$.attributes.shortMessage", equalTo(exception.getMessage())))
@@ -281,10 +267,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         when(this.tokensService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenReturn(userSession1);
 
         // Act
-        this.mvc.perform(
-                        post("/authentication/refreshToken")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(post("/authentication/refreshToken"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken", equalTo(userSession1.accessToken().value())))
                 .andExpect(jsonPath("$.refreshToken", equalTo(userSession1.refreshToken().value())));

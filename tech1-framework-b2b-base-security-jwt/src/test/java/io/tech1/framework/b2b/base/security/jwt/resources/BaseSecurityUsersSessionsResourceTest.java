@@ -17,7 +17,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
@@ -75,7 +74,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
 
         // Act
-        this.mvc.perform(get("/sessions/current").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/sessions/current"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(currentClientUser.getUsername().identifier()))
                 .andExpect(jsonPath("$.email").value(currentClientUser.getEmail().value()))
@@ -110,7 +109,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie)).thenReturn(userSessionsTables);
 
         // Act
-        this.mvc.perform(get("/sessions").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/sessions"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.sessions", hasSize(userSessionsTables.sessions().size())))
                 .andExpect(jsonPath("$.anyPresent", instanceOf(Boolean.class)))
@@ -129,10 +128,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act
-        this.mvc.perform(
-                        delete("/sessions/" + sessionId)
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(delete("/sessions/" + sessionId))
                 .andExpect(status().isOk());
 
         // Assert
@@ -150,10 +146,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
-        this.mvc.perform(
-                        delete("/sessions")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(delete("/sessions"))
                 .andExpect(status().isOk());
 
         // Assert

@@ -28,6 +28,7 @@ import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.Postgres
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -163,12 +164,16 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     @Test
     void saveIntegrationTests() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
         // Act-Assert-0
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
 
         // Act-Assert-1
+        this.usersSessionsRepository.saveAs(randomElement(saved).anyDbUserSession());
+        assertThat(this.usersSessionsRepository.count()).isEqualTo(7);
+
+        // Act-Assert-2
         var existentSessionId = this.usersSessionsRepository.saveAs(entity(AnyDbUserSession.class));
         assertThat(this.usersSessionsRepository.count()).isEqualTo(8);
         var notExistentSessionId = entity(UserSessionId.class);

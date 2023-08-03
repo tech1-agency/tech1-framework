@@ -26,8 +26,7 @@ import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecu
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -134,20 +133,24 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
     @Test
     void saveIntegrationTests() {
         // Arrange
-        this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
+        this.invitationCodesRepository.saveAs(randomElement(saved).anyDbInvitationCode());
+        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+
+        // Act-Assert-2
         var existentInvitationCodeId = this.invitationCodesRepository.saveAs(randomInvitationCode());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
 
-        // Act-Assert-2
+        // Act-Assert-3
         this.invitationCodesRepository.saveAs(TECH1, requestNewInvitationCodeParams);
         assertThat(this.invitationCodesRepository.count()).isEqualTo(8);
         var ownedInvitationCodes = this.invitationCodesRepository.findByOwner(TECH1);

@@ -24,8 +24,7 @@ import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecur
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomPassword;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -148,20 +147,24 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
     @Test
     void saveIntegrationTests() {
         // Arrange
-        this.usersRepository.saveAll(dummyUsersData1());
+        var saved = this.usersRepository.saveAll(dummyUsersData1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
+        this.usersRepository.saveAs(randomElement(saved).asJwtUser());
+        assertThat(this.usersRepository.count()).isEqualTo(6);
+
+        // Act-Assert-2
         var user = randomJwtUser();
-        var userId1 = this.usersRepository.saveAsJwtUser(user);
+        var userId1 = this.usersRepository.saveAs(user);
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
-        // Act-Assert-2
+        // Act-Assert-1
         var userId2 = this.usersRepository.saveAs(registration1(), randomPassword(), randomInvitationCode());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);

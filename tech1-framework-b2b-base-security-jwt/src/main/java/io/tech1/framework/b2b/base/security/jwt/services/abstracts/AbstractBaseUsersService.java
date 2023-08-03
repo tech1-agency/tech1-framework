@@ -72,7 +72,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     // PROTECTED METHODS
     // ================================================================================================================
     protected void saveAndReauthenticate(JwtUser jwtUser) {
-        this.usersRepository.saveAsJwtUser(jwtUser);
+        this.usersRepository.saveAs(jwtUser);
         var authentication = new UsernamePasswordAuthenticationToken(jwtUser, null, jwtUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

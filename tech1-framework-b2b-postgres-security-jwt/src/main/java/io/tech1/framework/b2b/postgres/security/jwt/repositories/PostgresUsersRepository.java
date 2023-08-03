@@ -60,7 +60,7 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default UserId saveAsJwtUser(JwtUser user) {
+    default UserId saveAs(JwtUser user) {
         var entity = this.save(new PostgresDbUser(user));
         return entity.userId();
     }

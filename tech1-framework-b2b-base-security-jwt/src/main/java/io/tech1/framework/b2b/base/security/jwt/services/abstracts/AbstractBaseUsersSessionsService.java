@@ -102,6 +102,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 UserRequestMetadata.processed(geoLocation, userAgentDetails)
         );
         this.anyDbUsersSessionsRepository.saveAs(session);
+        // TODO: return any session
         return new Tuple2<>(session.id(), session.metadata());
     }
 

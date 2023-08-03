@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitati
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
@@ -26,8 +28,7 @@ import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.Postgres
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -135,20 +136,24 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
     @Test
     void saveIntegrationTests() {
         // Arrange
-        this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
+        this.invitationCodesRepository.saveAs(randomElement(saved).anyDbInvitationCode());
+        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+
+        // Act-Assert-2
         var existentInvitationCodeId = this.invitationCodesRepository.saveAs(randomInvitationCode());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
 
-        // Act-Assert-2
+        // Act-Assert-3
         this.invitationCodesRepository.saveAs(TECH1, requestNewInvitationCodeParams);
         assertThat(this.invitationCodesRepository.count()).isEqualTo(8);
         var ownedInvitationCodes = this.invitationCodesRepository.findByOwner(TECH1);

@@ -87,7 +87,7 @@ class AbstractBaseUsersServiceTest {
         this.componentUnderTest.updateUser1(jwtUser, requestUserUpdate1);
 
         // Assert
-        verify(this.usersRepository).saveAsJwtUser(jwtUserAC.capture());
+        verify(this.usersRepository).saveAs(jwtUserAC.capture());
         assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
         assertThat(jwtUserAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
         assertThat(jwtUserAC.getValue().name()).isEqualTo(requestUserUpdate1.name());
@@ -109,7 +109,7 @@ class AbstractBaseUsersServiceTest {
         this.componentUnderTest.updateUser2(jwtUser, requestUserUpdate2);
 
         // Assert
-        verify(this.usersRepository).saveAsJwtUser(jwtUserAC.capture());
+        verify(this.usersRepository).saveAs(jwtUserAC.capture());
         assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
         assertThat(jwtUserAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
         assertThat(jwtUserAC.getValue().name()).isEqualTo(requestUserUpdate2.name());
@@ -130,7 +130,7 @@ class AbstractBaseUsersServiceTest {
 
         // Assert
         verify(this.bCryptPasswordEncoder).encode(requestUserChangePassword1.newPassword().value());
-        verify(this.usersRepository).saveAsJwtUser(jwtUserAC.capture());
+        verify(this.usersRepository).saveAs(jwtUserAC.capture());
         assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
         assertThat(jwtUserAC.getValue().password().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder

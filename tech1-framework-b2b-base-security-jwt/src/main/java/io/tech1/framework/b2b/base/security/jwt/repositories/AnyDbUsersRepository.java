@@ -16,6 +16,6 @@ public interface AnyDbUsersRepository {
     JwtUser findByUsernameAsJwtUserOrNull(Username username);
     JwtUser findByEmailAsJwtUserOrNull(Email email);
     long count();
-    UserId saveAsJwtUser(JwtUser user);
+    UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, AnyDbInvitationCode invitationCode);
 }

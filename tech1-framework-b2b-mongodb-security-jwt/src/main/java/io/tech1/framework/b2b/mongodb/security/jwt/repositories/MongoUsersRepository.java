@@ -55,7 +55,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return nonNull(user) ? user.asJwtUser() : null;
     }
 
-    default UserId saveAsJwtUser(JwtUser user) {
+    default UserId saveAs(JwtUser user) {
         var entity = this.save(new MongoDbUser(user));
         return entity.userId();
     }

@@ -33,6 +33,18 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .orElseGet(TuplePresence::absent);
     }
 
+    default TuplePresence<AnyDbUserSession> isPresent(JwtAccessToken accessToken) {
+        return this.findByAccessToken(accessToken)
+                .map(entity -> present(entity.anyDbUserSession()))
+                .orElseGet(TuplePresence::absent);
+    }
+
+    default TuplePresence<AnyDbUserSession> isPresent(JwtRefreshToken refreshToken) {
+        return this.findByRefreshToken(refreshToken)
+                .map(entity -> present(entity.anyDbUserSession()))
+                .orElseGet(TuplePresence::absent);
+    }
+
     default boolean isPresentByAccessToken(JwtAccessToken accessToken) {
         return this.findByAccessToken(accessToken).isPresent();
     }

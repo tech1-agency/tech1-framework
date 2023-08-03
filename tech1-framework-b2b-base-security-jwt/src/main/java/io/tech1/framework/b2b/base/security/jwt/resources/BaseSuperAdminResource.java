@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
@@ -37,9 +37,9 @@ public class BaseSuperAdminResource {
     }
 
     @GetMapping("/sessions")
-    public ResponseServerSessionsTable getServerSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
         var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
-        return this.baseSuperAdminService.getServerSessions(cookie);
+        return this.baseSuperAdminService.getSessions(cookie);
     }
 
     @DeleteMapping("/sessions/{sessionId}")

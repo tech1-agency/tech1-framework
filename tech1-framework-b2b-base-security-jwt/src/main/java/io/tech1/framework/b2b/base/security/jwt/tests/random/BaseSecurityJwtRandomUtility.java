@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
@@ -17,6 +18,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
@@ -45,6 +48,10 @@ public class BaseSecurityJwtRandomUtility {
 
     public static List<SimpleGrantedAuthority> authorities(String... authorities) {
         return Stream.of(authorities).map(SimpleGrantedAuthority::new).toList();
+    }
+
+    public static Set<JwtAccessToken> accessTokens(String... accessTokens) {
+        return Stream.of(accessTokens).map(JwtAccessToken::new).collect(Collectors.toSet());
     }
 
     public static DefaultClaims validDefaultClaims() {

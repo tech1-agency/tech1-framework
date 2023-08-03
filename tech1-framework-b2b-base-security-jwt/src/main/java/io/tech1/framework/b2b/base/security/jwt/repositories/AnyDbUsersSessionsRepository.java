@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -18,8 +18,8 @@ public interface AnyDbUsersSessionsRepository {
     TuplePresence<AnyDbUserSession> isPresent(UserSessionId userSessionId);
     TuplePresence<AnyDbUserSession> isPresent(JwtAccessToken accessToken);
     TuplePresence<AnyDbUserSession> isPresent(JwtRefreshToken refreshToken);
-    List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie);
-    ResponseServerSessionsTable findAllByCookieAsSession2(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie);
+    List<ResponseUserSession2> getUsersSessionsTable(Username username, CookieAccessToken cookie);
+    ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie);
     List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames);
     UserSessionId saveAs(AnyDbUserSession userSession);
     void delete(UserSessionId sessionId);

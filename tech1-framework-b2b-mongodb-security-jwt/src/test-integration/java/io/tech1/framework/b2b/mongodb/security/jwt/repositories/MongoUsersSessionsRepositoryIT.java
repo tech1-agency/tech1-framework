@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.accessTokens;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.*;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
@@ -66,8 +67,8 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt1")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt2")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt777")).present()).isFalse();
-        assertThat(this.usersSessionsRepository.findByUsernameAndCookieAsSession2(Username.of("user777"), new CookieAccessToken("awt2"))).isEmpty();
-        var usersSessions = this.usersSessionsRepository.findByUsernameAndCookieAsSession2(TECH1, new CookieAccessToken("awt2"));
+        assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new CookieAccessToken("awt2"))).isEmpty();
+        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(TECH1, new CookieAccessToken("awt2"));
         assertThat(usersSessions).hasSize(4);
         assertThat(usersSessions.get(0).current()).isTrue();
         assertThat(usersSessions.get(0).activity()).isEqualTo("Current session");
@@ -75,6 +76,20 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
             assertThat(userSession.current()).isFalse();
             assertThat(userSession.activity()).isEqualTo("—");
         });
+        var sessionsTable = this.usersSessionsRepository.getSessionsTable(accessTokens("awt3", "atoken11", "atoken"), new CookieAccessToken("atoken"));
+        assertThat(sessionsTable.activeSessions()).hasSize(3);
+        assertThat(sessionsTable.activeSessions().get(0).current()).isTrue();
+        assertThat(sessionsTable.activeSessions().get(0).who().identifier()).isEqualTo("sa");
+        assertThat(sessionsTable.activeSessions().get(1).current()).isFalse();
+        assertThat(sessionsTable.activeSessions().get(1).who().identifier()).isEqualTo("tech1");
+        assertThat(sessionsTable.activeSessions().get(2).current()).isFalse();
+        assertThat(sessionsTable.activeSessions().get(2).who().identifier()).isEqualTo("user1");
+        assertThat(sessionsTable.inactiveSessions()).hasSize(4);
+        sessionsTable.inactiveSessions().forEach(inactiveSession -> assertThat(inactiveSession.current()).isFalse());
+        assertThat(sessionsTable.inactiveSessions().get(0).who().identifier()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(1).who().identifier()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(2).who().identifier()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(3).who().identifier()).isEqualTo("user1");
     }
 
     @Test

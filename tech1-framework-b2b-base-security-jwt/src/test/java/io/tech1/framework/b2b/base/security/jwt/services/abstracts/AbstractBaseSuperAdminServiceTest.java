@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.AnyDbInvitationCodesRepository;
@@ -105,18 +105,18 @@ class AbstractBaseSuperAdminServiceTest {
         // Arrange
         var cookie = entity(CookieAccessToken.class);
         var activeSessions = Set.of(entity(JwtAccessToken.class), entity(JwtAccessToken.class));
-        var serverSessionsTable = entity(ResponseServerSessionsTable.class);
+        var serverSessionsTable = entity(ResponseSuperadminSessionsTable.class);
 
         when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);
-        when(this.anyDbUsersSessionsRepository.findAllByCookieAsSession2(activeSessions, cookie)).thenReturn(serverSessionsTable);
+        when(this.anyDbUsersSessionsRepository.getSessionsTable(activeSessions, cookie)).thenReturn(serverSessionsTable);
 
 
         // Act
-        var actual = this.componentUnderTest.getServerSessions(cookie);
+        var actual = this.componentUnderTest.getSessions(cookie);
 
         // Assert
         verify(this.sessionRegistry).getActiveSessionsAccessTokens();
-        verify(this.anyDbUsersSessionsRepository).findAllByCookieAsSession2(activeSessions, cookie);
+        verify(this.anyDbUsersSessionsRepository).getSessionsTable(activeSessions, cookie);
         assertThat(actual).isEqualTo(serverSessionsTable);
     }
 }

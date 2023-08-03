@@ -23,13 +23,13 @@ public class SecurityJwtComparators {
         }
     };
 
-    public static final Comparator<ResponseUserSession2> SESSIONS21 = comparing((ResponseUserSession2 session) -> !session.current())
+    public static final Comparator<ResponseUserSession2> USERS_SESSIONS = comparing(ResponseUserSession2::current).reversed()
             .thenComparing(ResponseUserSession2::where);
 
-    public static final Comparator<ResponseUserSession2> SESSIONS22 = comparing((ResponseUserSession2 session) -> !session.current())
+    public static final Comparator<ResponseUserSession2> ACTIVE_SESSIONS_AS_SUPERADMIN = comparing(ResponseUserSession2::current).reversed()
             .thenComparing((ResponseUserSession2 session) -> session.who().identifier())
             .thenComparing(ResponseUserSession2::where);
 
-    public static final Comparator<ResponseUserSession2> SESSIONS23 = comparing((ResponseUserSession2 session) -> session.who().identifier())
+    public static final Comparator<ResponseUserSession2> INACTIVE_SESSIONS_AS_SUPERADMIN = comparing((ResponseUserSession2 session) -> session.who().identifier())
             .thenComparing(ResponseUserSession2::where);
 }

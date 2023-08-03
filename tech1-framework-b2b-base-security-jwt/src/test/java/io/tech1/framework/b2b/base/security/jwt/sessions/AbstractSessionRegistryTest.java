@@ -387,13 +387,13 @@ class AbstractSessionRegistryTest {
             var userSessions = item.a();
             var expectedSessionSize = item.b();
             var expectedAnyProblems = item.c();
-            when(this.anyDbUsersSessionsRepository.findByUsernameAndCookieAsSession2(username, cookie)).thenReturn(userSessions);
+            when(this.anyDbUsersSessionsRepository.getUsersSessionsTable(username, cookie)).thenReturn(userSessions);
 
             // Act
             var currentUserDbSessionsTable = this.componentUnderTest.getSessionsTable(username, cookie);
 
             // Assert
-            verify(this.anyDbUsersSessionsRepository).findByUsernameAndCookieAsSession2(username, cookie);
+            verify(this.anyDbUsersSessionsRepository).getUsersSessionsTable(username, cookie);
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
             assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);

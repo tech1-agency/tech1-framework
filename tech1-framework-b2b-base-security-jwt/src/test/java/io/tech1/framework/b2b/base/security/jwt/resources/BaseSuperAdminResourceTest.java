@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -80,15 +80,15 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     }
 
     @Test
-    void getServerSessions() throws Exception {
+    void getSessionsTest() throws Exception {
         // Arrange
-        var sessionsTable = new ResponseServerSessionsTable(
+        var sessionsTable = new ResponseSuperadminSessionsTable(
                 list345(ResponseUserSession2.class),
                 list345(ResponseUserSession2.class)
         );
         var cookie = entity(CookieAccessToken.class);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
-        when(this.baseSuperAdminService.getServerSessions(cookie)).thenReturn(sessionsTable);
+        when(this.baseSuperAdminService.getSessions(cookie)).thenReturn(sessionsTable);
 
         // Act
         this.mvc.perform(get("/superadmin/sessions").contentType(MediaType.APPLICATION_JSON))
@@ -118,7 +118,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.baseSuperAdminService).getServerSessions(cookie);
+        verify(this.baseSuperAdminService).getSessions(cookie);
     }
 
     @Test
@@ -138,7 +138,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     }
 
     @Test
-    void deleteAllExceptCurrent() throws Exception {
+    void deleteAllExceptCurrentTest() throws Exception {
         // Arrange
         var cookie = entity(CookieAccessToken.class);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);

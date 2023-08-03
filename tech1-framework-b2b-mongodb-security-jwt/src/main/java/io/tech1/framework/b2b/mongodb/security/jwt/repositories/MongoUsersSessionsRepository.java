@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.AnyDbUserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseServerSessionsTable;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -47,14 +47,14 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .orElseGet(TuplePresence::absent);
     }
 
-    default List<ResponseUserSession2> findByUsernameAndCookieAsSession2(Username username, CookieAccessToken cookie) {
+    default List<ResponseUserSession2> getUsersSessionsTable(Username username, CookieAccessToken cookie) {
         return this.findByUsername(username).stream()
                 .map(session -> session.responseUserSession2(cookie))
-                .sorted(SESSIONS21)
+                .sorted(USERS_SESSIONS)
                 .collect(Collectors.toList());
     }
 
-    default ResponseServerSessionsTable findAllByCookieAsSession2(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie) {
+    default ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie) {
         var sessions = this.findAll();
 
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
@@ -69,10 +69,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
             }
         });
 
-        activeSessions.sort(SESSIONS22);
-        inactiveSessions.sort(SESSIONS23);
+        activeSessions.sort(ACTIVE_SESSIONS_AS_SUPERADMIN);
+        inactiveSessions.sort(INACTIVE_SESSIONS_AS_SUPERADMIN);
 
-        return new ResponseServerSessionsTable(activeSessions, inactiveSessions);
+        return new ResponseSuperadminSessionsTable(activeSessions, inactiveSessions);
     }
 
     default List<AnyDbUserSession> findByUsernameInAsAny(Set<Username> usernames) {

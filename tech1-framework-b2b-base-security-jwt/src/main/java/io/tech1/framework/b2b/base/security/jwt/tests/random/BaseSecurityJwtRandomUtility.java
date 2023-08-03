@@ -13,6 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
+import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.domain.utilities.time.TimestampUtility;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -91,5 +92,9 @@ public class BaseSecurityJwtRandomUtility {
 
     public static RequestUserRegistration1 registration1() {
         return new RequestUserRegistration1(Username.of("registration11"), randomPassword(), randomPassword(), randomZoneId().getId(), randomString());
+    }
+
+    public static ResetServerStatus randomResetServerStatus() {
+        return new ResetServerStatus(10);
     }
 }

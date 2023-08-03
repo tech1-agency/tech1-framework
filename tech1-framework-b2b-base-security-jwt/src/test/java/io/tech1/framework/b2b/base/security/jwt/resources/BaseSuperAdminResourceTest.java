@@ -1,11 +1,13 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
+import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
@@ -14,23 +16,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomResetServerStatus;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
 
+    // Assistants
+    private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseSuperAdminService baseSuperAdminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
@@ -44,6 +47,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
+                this.currentSessionAssistant,
                 this.baseSuperAdminService,
                 this.baseUsersSessionsService,
                 this.cookieProvider
@@ -53,10 +57,44 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
+                this.currentSessionAssistant,
                 this.baseSuperAdminService,
                 this.baseUsersSessionsService,
                 this.cookieProvider
         );
+    }
+
+    @Test
+    void getResetServerStatusTest() throws Exception {
+        // Arrange
+        when(this.baseSuperAdminService.getResetServerStatus()).thenReturn(randomResetServerStatus());
+
+        // Act
+        this.mvc.perform(get("/superadmin/server/reset/status"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.state").doesNotExist())
+                .andExpect(jsonPath("$.stage").doesNotExist())
+                .andExpect(jsonPath("$.stagesCount").doesNotExist())
+                .andExpect(jsonPath("$.percentage").exists())
+                .andExpect(jsonPath("$.description").exists());
+
+        // Assert
+        verify(this.baseSuperAdminService).getResetServerStatus();
+    }
+
+    @Test
+    void resetServerTest() throws Exception {
+        // Arrange
+        var user = entity(JwtUser.class);
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
+
+        // Act
+        this.mvc.perform(post("/superadmin/server/reset"))
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.baseSuperAdminService).resetServerBy(user);
     }
 
     @Test
@@ -66,7 +104,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         when(this.baseSuperAdminService.findUnused()).thenReturn(codes);
 
         // Act
-        this.mvc.perform(get("/superadmin/invitationCodes/unused").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/superadmin/invitationCodes/unused"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(codes.size())))
                 .andExpect(jsonPath("$.[0].id", notNullValue()))
@@ -91,7 +129,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         when(this.baseSuperAdminService.getSessions(cookie)).thenReturn(sessionsTable);
 
         // Act
-        this.mvc.perform(get("/superadmin/sessions").contentType(MediaType.APPLICATION_JSON))
+        this.mvc.perform(get("/superadmin/sessions"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activeSessions", hasSize(sessionsTable.activeSessions().size())))
                 .andExpect(jsonPath("$.activeSessions.[0].id", notNullValue()))
@@ -127,10 +165,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         var sessionId = entity(UserSessionId.class);
 
         // Act
-        this.mvc.perform(
-                        delete("/superadmin/sessions/" + sessionId)
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(delete("/superadmin/sessions/" + sessionId))
                 .andExpect(status().isOk());
 
         // Assert
@@ -144,10 +179,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner {
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
-        this.mvc.perform(
-                        delete("/superadmin/sessions/")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
+        this.mvc.perform(delete("/superadmin/sessions/"))
                 .andExpect(status().isOk());
 
         // Assert

@@ -4,9 +4,14 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tasks.SuperAdminResetServerTask;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
+import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +26,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Set;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomResetServerStatus;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,6 +40,11 @@ class AbstractBaseSuperAdminServiceTest {
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+
+        @Bean
+        IncidentPublisher incidentPublisher() {
+            return mock(IncidentPublisher.class);
+        }
 
         @Bean
         SessionRegistry sessionRegistry() {
@@ -51,39 +62,81 @@ class AbstractBaseSuperAdminServiceTest {
         }
 
         @Bean
+        SuperAdminResetServerTask superAdminResetServerTask() {
+            return mock(SuperAdminResetServerTask.class);
+        }
+
+        @Bean
         AbstractBaseSuperAdminService abstractBaseInvitationCodesService() {
             return new AbstractBaseSuperAdminService(
+                    this.incidentPublisher(),
                     this.sessionRegistry(),
                     this.invitationCodesRepository(),
-                    this.usersSessionsRepository()
+                    this.usersSessionsRepository(),
+                    this.superAdminResetServerTask()
             ) {};
         }
     }
 
+    // Incidents
+    private final IncidentPublisher incidentPublisher;
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Repositories
     private final InvitationCodesRepository invitationCodesRepository;
     private final UsersSessionsRepository usersSessionsRepository;
+    // Tasks
+    private final SuperAdminResetServerTask resetServerTask;
 
     private final AbstractBaseSuperAdminService componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
+                this.incidentPublisher,
                 this.sessionRegistry,
                 this.invitationCodesRepository,
-                this.usersSessionsRepository
+                this.usersSessionsRepository,
+                this.resetServerTask
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
+                this.incidentPublisher,
                 this.sessionRegistry,
                 this.invitationCodesRepository,
-                this.usersSessionsRepository
+                this.usersSessionsRepository,
+                this.resetServerTask
         );
+    }
+
+    @Test
+    void getResetServerStatusTest() {
+        // Arrange
+        when(this.resetServerTask.getStatus()).thenReturn(randomResetServerStatus());
+
+        // Act
+        var actual = this.componentUnderTest.getResetServerStatus();
+
+        // Assert
+        verify(this.resetServerTask).getStatus();
+        assertThat(actual).isEqualTo(randomResetServerStatus());
+    }
+
+    @Test
+    void resetServerByTest() {
+        // Arrange
+        var user = entity(JwtUser.class);
+
+        // Act
+        this.componentUnderTest.resetServerBy(user);
+
+        // Assert
+        verify(this.incidentPublisher).publishResetServerStarted(new IncidentSystemResetServerStarted(user.username()));
+        verify(this.resetServerTask).reset(user);
+        verify(this.incidentPublisher).publishResetServerCompleted(new IncidentSystemResetServerCompleted(user.username()));
     }
 
     @Test

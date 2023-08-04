@@ -20,7 +20,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class TestsApplicationRepositoriesRunner {
-    public static final String POSTGRES_VERSION = "postgres:15.3";
+    public static final String POSTGRES_VERSION = "postgres:11.1";
     public static final String POSTGRES_DATABASE_NAME = "integration-tests-db";
     public static final String POSTGRES_USERNAME = "sa";
     public static final String POSTGRES_PASSWORD = "sa";

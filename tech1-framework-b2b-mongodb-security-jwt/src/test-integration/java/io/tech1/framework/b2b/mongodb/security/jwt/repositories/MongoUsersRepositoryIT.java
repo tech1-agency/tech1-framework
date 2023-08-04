@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsAbstractMongoRepositoriesRunner;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsMongoRepositoriesContextClasses;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -26,13 +27,12 @@ import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ExtendWith({ SpringExtension.class })
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = {
-                MongoUsersRepository.class
-        }
+        webEnvironment = RANDOM_PORT,
+        classes = TestsMongoRepositoriesContextClasses.class
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

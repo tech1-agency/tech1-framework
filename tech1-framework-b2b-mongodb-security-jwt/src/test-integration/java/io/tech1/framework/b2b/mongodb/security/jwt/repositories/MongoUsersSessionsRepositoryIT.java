@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsAbstractMongoRepositoriesRunner;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsMongoRepositoriesContextClasses;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +30,12 @@ import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ExtendWith({ SpringExtension.class })
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = {
-                MongoUsersSessionsRepository.class
-        }
+        webEnvironment = RANDOM_PORT,
+        classes = TestsMongoRepositoriesContextClasses.class
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

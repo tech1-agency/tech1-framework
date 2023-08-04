@@ -5,8 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsAbstractMongoRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -40,13 +39,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoUsersSessionsRepositoryIT extends TestsAbstractMongoRepositoriesRunner {
 
     private final MongoUsersSessionsRepository usersSessionsRepository;
 
     @Override
-    public MongoRepository<MongoDbUserSession, String> getMongoRepository() {
-        return this.usersSessionsRepository;
+    public List<MongoRepository<?, String>> getMongoRepositories() {
+        return List.of(
+                this.usersSessionsRepository
+        );
     }
 
     @Test

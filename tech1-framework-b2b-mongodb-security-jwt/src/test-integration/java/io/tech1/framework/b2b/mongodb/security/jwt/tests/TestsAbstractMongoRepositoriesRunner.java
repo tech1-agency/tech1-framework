@@ -6,40 +6,44 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.List;
+
 @Testcontainers
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class TestsApplicationRepositoriesRunner {
+public abstract class TestsAbstractMongoRepositoriesRunner {
     public static final String MONGO_DB_VERSION = "mongo:5.0.6";
     public static final int MONGO_DB_PORT = 27017;
 
     @Container
-    private static final MongoDBContainer container = new MongoDBContainer(MONGO_DB_VERSION).withExposedPorts(MONGO_DB_PORT);
+    private static final MongoDBContainer CONTAINER = new MongoDBContainer(MONGO_DB_VERSION)
+            .withExposedPorts(MONGO_DB_PORT);
 
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", container::getReplicaSetUrl);
+        registry.add("spring.data.mongodb.uri", CONTAINER::getReplicaSetUrl);
     }
 
     @BeforeAll
     public static void beforeAll() {
-        container.start();
+        CONTAINER.start();
     }
 
     @AfterAll
     public static void afterAll() {
-        container.stop();
+        CONTAINER.stop();
     }
 
     @AfterEach
     void afterEach() {
-        this.getMongoRepository().deleteAll();
+        this.getMongoRepositories().forEach(CrudRepository::deleteAll);
     }
 
-    public abstract MongoRepository<?, String> getMongoRepository();
+    public abstract List<MongoRepository<?, String>> getMongoRepositories();
 }

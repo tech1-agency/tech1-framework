@@ -2,8 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsAbstractMongoRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
@@ -39,13 +39,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoInvitationCodesRepositoryIT extends TestsAbstractMongoRepositoriesRunner {
 
     private final MongoInvitationCodesRepository invitationCodesRepository;
 
     @Override
-    public MongoRepository<MongoDbInvitationCode, String> getMongoRepository() {
-        return this.invitationCodesRepository;
+    public List<MongoRepository<?, String>> getMongoRepositories() {
+        return List.of(
+                this.invitationCodesRepository
+        );
     }
 
     @Test

@@ -1,8 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
+import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsAbstractMongoRepositoriesRunner;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -37,13 +36,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
+class MongoUsersRepositoryIT extends TestsAbstractMongoRepositoriesRunner {
 
     private final MongoUsersRepository usersRepository;
 
     @Override
-    public MongoRepository<MongoDbUser, String> getMongoRepository() {
-        return this.usersRepository;
+    public List<MongoRepository<?, String>> getMongoRepositories() {
+        return List.of(
+                this.usersRepository
+        );
     }
 
     @Test

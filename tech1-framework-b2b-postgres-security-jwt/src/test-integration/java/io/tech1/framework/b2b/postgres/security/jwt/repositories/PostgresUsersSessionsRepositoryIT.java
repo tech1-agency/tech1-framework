@@ -5,7 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsAbstractPostgresRepositoriesRunner;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
+import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -40,15 +41,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersSessionsRepositoryIT extends TestsAbstractPostgresRepositoriesRunner {
+class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     private final PostgresUsersSessionsRepository usersSessionsRepository;
 
     @Override
-    public List<JpaRepository<?, String>> getJpaRepositories() {
-        return List.of(
-                this.usersSessionsRepository
-        );
+    public JpaRepository<PostgresDbUserSession, String> getJpaRepository() {
+        return this.usersSessionsRepository;
     }
 
     @Test

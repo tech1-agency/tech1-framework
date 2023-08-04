@@ -1,7 +1,8 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsAbstractPostgresRepositoriesRunner;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
+import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -37,15 +38,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersRepositoryIT extends TestsAbstractPostgresRepositoriesRunner {
+class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     private final PostgresUsersRepository usersRepository;
 
     @Override
-    public List<JpaRepository<?, String>> getJpaRepositories() {
-        return List.of(
-                this.usersRepository
-        );
+    public JpaRepository<PostgresDbUser, String> getJpaRepository() {
+        return this.usersRepository;
     }
 
     @Test

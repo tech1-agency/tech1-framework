@@ -2,7 +2,8 @@ package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsAbstractPostgresRepositoriesRunner;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
+import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
@@ -40,15 +40,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresInvitationCodesRepositoryIT extends TestsAbstractPostgresRepositoriesRunner {
+class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunner {
 
     private final PostgresInvitationCodesRepository invitationCodesRepository;
 
     @Override
-    public List<JpaRepository<?, String>> getJpaRepositories() {
-        return List.of(
-                this.invitationCodesRepository
-        );
+    public JpaRepository<PostgresDbInvitationCode, String> getJpaRepository() {
+        return this.invitationCodesRepository;
     }
 
     @Test

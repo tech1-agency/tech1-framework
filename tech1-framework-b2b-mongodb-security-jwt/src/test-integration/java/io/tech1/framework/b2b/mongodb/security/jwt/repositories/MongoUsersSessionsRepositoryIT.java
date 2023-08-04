@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsAbstractMongoRepositoriesRunner;
-import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsMongoRepositoriesContextClasses;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +34,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ExtendWith({ SpringExtension.class })
 @SpringBootTest(
         webEnvironment = RANDOM_PORT,
-        classes = TestsMongoRepositoriesContextClasses.class
+        classes = {
+                MongoInvitationCodesRepository.class,
+                MongoUsersRepository.class,
+                MongoUsersSessionsRepository.class
+        }
 )
 @EnableAutoConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

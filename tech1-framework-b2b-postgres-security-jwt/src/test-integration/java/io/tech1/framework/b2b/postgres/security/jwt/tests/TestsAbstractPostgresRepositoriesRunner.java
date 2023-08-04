@@ -23,8 +23,7 @@ import java.util.List;
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class TestsAbstractPostgresRepositoriesRunner {
-    // WARNING: ubuntu-based issue https://github.com/docker-library/postgres/issues/1046
-    public static final String POSTGRES_VERSION = "postgres:11.1";
+    public static final String POSTGRES_VERSION = "postgres:15.3";
     public static final String POSTGRES_DATABASE_NAME = "integration-tests-db";
     public static final String POSTGRES_USERNAME = "sa";
     public static final String POSTGRES_PASSWORD = "sa";

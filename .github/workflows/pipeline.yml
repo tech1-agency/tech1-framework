@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Maven
-        run: mvn clean compile test
+        run: mvn clean install
 
       - name: Sonar
         if: github.ref == 'refs/heads/dev'
@@ -43,7 +43,7 @@ jobs:
           html_body: |
             <b>Status</b>: ${{ job.status }}<br>
             <b>CommitterId</b>: ${{ github.actor }}<br>
-            <b>URL</b>: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}<br>
+            <b>Actions</b>: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}<br>
             <b>Changes</b>: https://github.com/${{ github.repository }}/commit/${{ github.sha }}<br>
             <b>Committer</b>: ${{ github.event.commits[0].committer.name }}<br>
             <b>Message</b>: ${{ github.event.commits[0].message }}<br>

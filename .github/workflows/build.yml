@@ -46,44 +46,46 @@ jobs:
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
 
       - name: Maven [dev]
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          mvn clean install \
+            -Dossrh_username=${{ secrets.OSSRH_USERNAME }} -Dossrh_password=${{ secrets.OSSRH_PASSWORD }} \
+            -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -s release/m2-settings.xml deploy -Prelease
+
+      - name: Maven [main]
+        if: github.ref == 'refs/heads/main'
         run: |
           mvn clean install \
             -Dossrh_username=${{ secrets.OSSRH_USERNAME }} -Dossrh_password=${{ secrets.OSSRH_PASSWORD }} \
             -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
             -Dmaven.test.skip -DskipTests -s release/m2-settings.xml deploy -Prelease
-#      - name: Maven [dev]
-#        if: github.ref == 'refs/heads/dev'
-#        run: mvn clean install
-#
-#      - name: Maven [main]
-#        if: github.ref == 'refs/heads/main'
-#        run: mvn clean install -Dmaven.test.skip -DskipTests -T 4
 
-#      - name: Sonar
-#        if: github.ref == 'refs/heads/dev'
-#        uses: sonarsource/sonarqube-scan-action@master
-#        env:
-#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#
-#      - name: Docker login
-#        env:
-#          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-#          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-#        run: |
-#          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_TOKEN
-#
-#      - name: Docker [mongo]
-#        run: |
-#          cd $MONGODB_DOCKERHUB_REPOSITORY
-#          docker build -t $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
-#          docker push $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
-#
-#      - name: Docker [postgres]
-#        run: |
-#          cd $POSTGRES_DOCKERHUB_REPOSITORY
-#          docker build -t $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
-#          docker push $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+      - name: Sonar
+        if: github.ref == 'refs/heads/dev'
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Docker login
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+        run: |
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_TOKEN
+
+      - name: Docker [mongo]
+        run: |
+          cd $MONGODB_DOCKERHUB_REPOSITORY
+          docker build -t $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+          docker push $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+
+      - name: Docker [postgres]
+        run: |
+          cd $POSTGRES_DOCKERHUB_REPOSITORY
+          docker build -t $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+          docker push $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
       - name: Mails
         if: always()

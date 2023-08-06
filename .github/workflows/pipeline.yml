@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - main
   workflow_dispatch:
 
 env:
@@ -41,7 +42,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Maven
+      - name: Maven [dev]
+        if: github.ref == 'refs/heads/dev'
+        run: mvn clean install
+
+      - name: Maven [main]
+        if: github.ref == 'refs/heads/main'
         run: mvn clean install -Dmaven.test.skip -DskipTests -T 4
 
       - name: Sonar

@@ -1,15 +1,15 @@
-name: maven publish
+name: dev
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: M2
-        run: echo ">>> M2 <<<<"
-
       - name: Mails
         if: always()
         uses: dawidd6/action-send-mail@v3
@@ -18,7 +18,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_GMAIL_USERNAME }}
           password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
-          subject: 'PUBLISH >>> ${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.job }} # ${{ github.run_number }}'
+          subject: 'MAIN >>> ${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.job }} # ${{ github.run_number }}'
           to: ${{ secrets.EMAILS_ADMINS }}
           from: Tech1 Ops
           html_body: |
@@ -28,4 +28,3 @@ jobs:
             <b>Changes</b>: https://github.com/${{ github.repository }}/commit/${{ github.sha }}<br>
             <b>Committer</b>: ${{ github.event.commits[0].committer.name }}<br>
             <b>Message</b>: ${{ github.event.commits[0].message }}<br>
-            <b>DockerTag</b>: ${{ needs.init.outputs.docker_tag }}<br>

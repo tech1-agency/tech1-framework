@@ -41,13 +41,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Maven [dev]
-        if: github.ref == 'refs/heads/dev'
-        run: mvn clean install
+      - name: Install GPG secret key
+        run: |
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
 
-      - name: Maven [main]
-        if: github.ref == 'refs/heads/main'
-        run: mvn clean install -Dmaven.test.skip -DskipTests -T 4
+#      - name: Maven [dev]
+#        if: github.ref == 'refs/heads/dev'
+#        run: mvn clean install
+#
+#      - name: Maven [main]
+#        if: github.ref == 'refs/heads/main'
+#        run: mvn clean install -Dmaven.test.skip -DskipTests -T 4
 
 #      - name: Sonar
 #        if: github.ref == 'refs/heads/dev'

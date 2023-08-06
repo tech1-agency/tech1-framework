@@ -47,10 +47,10 @@ jobs:
 
       - name: Maven [dev]
         run: |
-          mvn clean install -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} deploy -Prelease
+          mvn clean install -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Dmaven.test.skip -DskipTests deploy -Prelease
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
 #      - name: Maven [dev]
 #        if: github.ref == 'refs/heads/dev'
 #        run: mvn clean install

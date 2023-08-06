@@ -6,12 +6,74 @@ on:
       - dev
       - main
 
+env:
+  DOCKERHUB_ORG: tech1io
+  MONGODB_DOCKERHUB_REPOSITORY: tech1-framework-b2b-mongodb-server
+  POSTGRES_DOCKERHUB_REPOSITORY: tech1-framework-b2b-postgres-server
+
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    outputs:
+      docker_tag: ${{ steps.setvars.outputs.docker_tag }}
+    steps:
+      - name: Set variables
+        id: setvars
+        run: |
+          if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
+            echo "docker_tag=dev" >> $GITHUB_OUTPUT
+          fi
+
+          if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
+            echo "docker_tag=prod" >> $GITHUB_OUTPUT
+          fi
+
   build:
     runs-on: ubuntu-latest
+    needs: init
     steps:
-      - name: M2
-        run: echo ">>>> M2 <<<< "
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Java17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Maven [dev]
+        if: github.ref == 'refs/heads/dev'
+        run: mvn clean install
+
+      - name: Maven [main]
+        if: github.ref == 'refs/heads/main'
+        run: mvn clean install -Dmaven.test.skip -DskipTests -T 4
+
+#      - name: Sonar
+#        if: github.ref == 'refs/heads/dev'
+#        uses: sonarsource/sonarqube-scan-action@master
+#        env:
+#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#
+#      - name: Docker login
+#        env:
+#          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+#          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+#        run: |
+#          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_TOKEN
+#
+#      - name: Docker [mongo]
+#        run: |
+#          cd $MONGODB_DOCKERHUB_REPOSITORY
+#          docker build -t $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+#          docker push $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+#
+#      - name: Docker [postgres]
+#        run: |
+#          cd $POSTGRES_DOCKERHUB_REPOSITORY
+#          docker build -t $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+#          docker push $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
       - name: Mails
         if: always()

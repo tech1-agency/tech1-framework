@@ -7,12 +7,31 @@ on:
   workflow_dispatch:
 
 env:
-  MONGODB_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-mongodb-server:dev
-  POSTGRES_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-postgres-server:dev
+  DOCKERHUB_ORG: tech1io
+  MONGODB_DOCKERHUB_REPOSITORY: tech1-framework-b2b-mongodb-server
+#  MONGODB_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-mongodb-server:dev
+#  POSTGRES_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-postgres-server:dev
 
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    outputs:
+      docker_tag: ${{ steps.setvars.outputs.docker_tag }}
+    steps:
+      - name: Set variables
+        id: setvars
+        run: |
+          if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
+            echo "::set-output name=docker_tag::dev2"
+          fi
+
+          if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
+            echo "::set-output name=docker_tag::prod"
+          fi
+
   pipeline:
     runs-on: ubuntu-latest
+    needs: init
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,15 +61,15 @@ jobs:
 
       - name: Docker [Mongo]
         run: |
-          cd tech1-framework-b2b-mongodb-server
-          docker build -t $MONGODB_DOCKERHUB_REPOSITORY .
-          docker push $MONGODB_DOCKERHUB_REPOSITORY
+          cd $MONGODB_DOCKERHUB_REPOSITORY
+          docker build -t $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+          docker push $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
-      - name: Docker [Postgres]
-        run: |
-          cd tech1-framework-b2b-postgres-server
-          docker build -t $POSTGRES_DOCKERHUB_REPOSITORY .
-          docker push $POSTGRES_DOCKERHUB_REPOSITORY
+#      - name: Docker [Postgres]
+#        run: |
+#          cd tech1-framework-b2b-postgres-server
+#          docker build -t $POSTGRES_DOCKERHUB_REPOSITORY .
+#          docker push $POSTGRES_DOCKERHUB_REPOSITORY
 
       - name: Mails
         if: always()

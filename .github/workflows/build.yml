@@ -1,4 +1,4 @@
-name: trigger
+name: build
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  trigger:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Mails

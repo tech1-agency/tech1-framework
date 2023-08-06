@@ -2,8 +2,8 @@ name: m2
 
 on:
   push:
-    branches:
-      - dev
+#    branches:
+#      - dev
   workflow_dispatch:
 
 jobs:

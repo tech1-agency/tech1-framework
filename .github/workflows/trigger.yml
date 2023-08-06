@@ -17,7 +17,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_GMAIL_USERNAME }}
           password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
-          subject: 'TRIGGER >>> ${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.job }} # ${{ github.run_number }}'
+          subject: 'TRIGGER#2 >>> ${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.job }} # ${{ github.run_number }}'
           to: ${{ secrets.EMAILS_ADMINS }}
           from: Tech1 Ops
           html_body: |

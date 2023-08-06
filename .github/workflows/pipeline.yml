@@ -9,8 +9,7 @@ on:
 env:
   DOCKERHUB_ORG: tech1io
   MONGODB_DOCKERHUB_REPOSITORY: tech1-framework-b2b-mongodb-server
-#  MONGODB_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-mongodb-server:dev
-#  POSTGRES_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-postgres-server:dev
+  POSTGRES_DOCKERHUB_REPOSITORY: tech1-framework-b2b-postgres-server
 
 jobs:
   init:
@@ -22,7 +21,7 @@ jobs:
         id: setvars
         run: |
           if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
-            echo "::set-output name=docker_tag::dev2"
+            echo "::set-output name=docker_tag::dev"
           fi
 
           if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
@@ -65,11 +64,11 @@ jobs:
           docker build -t $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
           docker push $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
-#      - name: Docker [Postgres]
-#        run: |
-#          cd tech1-framework-b2b-postgres-server
-#          docker build -t $POSTGRES_DOCKERHUB_REPOSITORY .
-#          docker push $POSTGRES_DOCKERHUB_REPOSITORY
+      - name: Docker [Postgres]
+        run: |
+          cd $POSTGRES_DOCKERHUB_REPOSITORY
+          docker build -t $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+          docker push $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
       - name: Mails
         if: always()

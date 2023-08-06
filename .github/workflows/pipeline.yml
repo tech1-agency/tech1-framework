@@ -8,6 +8,7 @@ on:
 
 env:
   MONGODB_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-mongodb-server:dev
+  POSTGRES_DOCKERHUB_REPOSITORY: tech1io/tech1-framework-b2b-postgres-server:dev
 
 jobs:
   pipeline:
@@ -39,10 +40,17 @@ jobs:
         run: |
           docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_TOKEN
 
-      - name: Docker build [Mongo]
+      - name: Docker [Mongo]
         run: |
           cd tech1-framework-b2b-mongodb-server
           docker build -t $MONGODB_DOCKERHUB_REPOSITORY .
+          docker push $MONGODB_DOCKERHUB_REPOSITORY
+
+      - name: Docker [Postgres]
+        run: |
+          cd tech1-framework-b2b-postgres-server
+          docker build -t $POSTGRES_DOCKERHUB_REPOSITORY .
+          docker push $POSTGRES_DOCKERHUB_REPOSITORY
 
       - name: Mails
         if: always()

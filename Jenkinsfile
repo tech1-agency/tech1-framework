@@ -23,19 +23,6 @@ pipeline {
                 sh 'mvn -s $MVN_SETTINGS clean install deploy -Prelease'
             }
         }
-        stage('sonar') {
-            when {
-                branch 'dev'
-            }
-            steps {
-                script {
-                    def scannerHome = tool 'Tech1 SonarQube Scanner';
-                    withSonarQubeEnv('Tech1 SonarQube') {
-                        sh "${scannerHome}/bin/sonar-scanner";
-                    }
-                }
-            }
-        }
         stage('docker :dev') {
             when {
                 branch 'dev'

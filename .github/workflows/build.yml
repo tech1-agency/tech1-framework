@@ -8,8 +8,8 @@ on:
 
 env:
   DOCKERHUB_ORG: tech1io
-  MONGODB_DOCKERHUB_REPOSITORY: tech1-framework-b2b-mongodb-server
-  POSTGRES_DOCKERHUB_REPOSITORY: tech1-framework-b2b-postgres-server
+  DOCKERHUB_MONGODB_REPOSITORY: tech1-framework-b2b-mongodb-server
+  DOCKERHUB_POSTGRES_REPOSITORY: tech1-framework-b2b-postgres-server
 
 jobs:
   init:
@@ -77,15 +77,15 @@ jobs:
 
       - name: Docker [mongo]
         run: |
-          cd $MONGODB_DOCKERHUB_REPOSITORY
-          docker build -t $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
-          docker push $DOCKERHUB_ORG/$MONGODB_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+          cd $DOCKERHUB_MONGODB_REPOSITORY
+          docker build -t $DOCKERHUB_ORG/$DOCKERHUB_MONGODB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+          docker push $DOCKERHUB_ORG/$DOCKERHUB_MONGODB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
       - name: Docker [postgres]
         run: |
-          cd $POSTGRES_DOCKERHUB_REPOSITORY
-          docker build -t $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
-          docker push $DOCKERHUB_ORG/$POSTGRES_DOCKERHUB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+          cd $DOCKERHUB_POSTGRES_REPOSITORY
+          docker build -t $DOCKERHUB_ORG/$DOCKERHUB_POSTGRES_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
+          docker push $DOCKERHUB_ORG/$DOCKERHUB_POSTGRES_REPOSITORY:${{ needs.init.outputs.docker_tag }}
 
       - name: Mails
         if: always()

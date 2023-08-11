@@ -1,6 +1,7 @@
 # Release Notes
 
 ### v1.14
+- Add next-****.sh scripts
 - Add abstract reset server flow
 - Add abstract accessToken/refreshToken database security flow 
 - TimestampUtility: isBetweenInclusive

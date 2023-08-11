@@ -160,6 +160,32 @@ class TimestampUtilityTest {
         assertThat(localDateTimePoland.toString()).endsWith("00:00");
     }
 
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void getPastRangeTest() {
+        // Arrange
+        var currentTimestamp = getCurrentTimestamp();
+
+        // Act
+        var actual = getPastRange(currentTimestamp, TimeAmount.of(5, SECONDS));
+
+        // Assert
+        assertThat(actual.to()).isGreaterThan(actual.from());
+        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp - 5000);
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void getFutureRangeTest() {
+        // Arrange
+        var currentTimestamp = getCurrentTimestamp();
+
+        // Act
+        var actual = getFutureRange(currentTimestamp, TimeAmount.of(5, SECONDS));
+
+        // Assert
+        assertThat(actual.to()).isGreaterThan(actual.from());
+        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp + 5000);
+    }
+
     @ParameterizedTest
     @MethodSource("isBetweenTest")
     void isBetweenTest(long past, long future, boolean expected) {

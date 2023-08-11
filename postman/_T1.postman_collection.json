@@ -263,7 +263,7 @@
 			]
 		},
 		{
-			"name": "User",
+			"name": "Users",
 			"item": [
 				{
 					"name": "ChangePassword1",

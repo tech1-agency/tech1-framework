@@ -22,8 +22,8 @@ import java.util.stream.IntStream;
 public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
-    protected final PostgresInvitationCodesRepository invitationCodesRepository;
-    protected final PostgresUsersRepository usersRepository;
+    protected final PostgresInvitationCodesRepository postgresInvitationCodesRepository;
+    protected final PostgresUsersRepository postgresUsersRepository;
 
     @Autowired
     public PostgresBaseEssenceConstructor(
@@ -36,8 +36,8 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                 usersRepository,
                 applicationFrameworkProperties
         );
-        this.invitationCodesRepository = invitationCodesRepository;
-        this.usersRepository = usersRepository;
+        this.postgresInvitationCodesRepository = invitationCodesRepository;
+        this.postgresUsersRepository = usersRepository;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                     return user;
                 })
                 .toList();
-        this.usersRepository.saveAll(dbUsers);
+        this.postgresUsersRepository.saveAll(dbUsers);
         return dbUsers.size();
     }
 
@@ -69,6 +69,6 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                         )
                 )
                 .toList();
-        this.invitationCodesRepository.saveAll(dbInvitationCodes);
+        this.postgresInvitationCodesRepository.saveAll(dbInvitationCodes);
     }
 }

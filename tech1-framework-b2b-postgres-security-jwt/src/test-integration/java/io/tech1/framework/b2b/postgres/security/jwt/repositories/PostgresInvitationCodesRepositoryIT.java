@@ -29,11 +29,12 @@ import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @ExtendWith({ SpringExtension.class })
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        webEnvironment = RANDOM_PORT,
         classes = {
                 PostgresInvitationCodesRepository.class,
         }

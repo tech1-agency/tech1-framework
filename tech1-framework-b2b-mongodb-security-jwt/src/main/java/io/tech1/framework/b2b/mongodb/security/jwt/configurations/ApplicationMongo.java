@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
@@ -24,6 +25,9 @@ import javax.annotation.PostConstruct;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 
 @Configuration
+@Import({
+        ApplicationMongoRepositories.class
+})
 @ComponentScan({
         "io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails",
         "io.tech1.framework.b2b.mongodb.security.jwt.services",

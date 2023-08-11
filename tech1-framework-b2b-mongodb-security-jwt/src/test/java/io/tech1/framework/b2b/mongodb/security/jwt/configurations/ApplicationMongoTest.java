@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationMongodbTest {
+class ApplicationMongoTest {
 
     @Configuration
     @Import({
@@ -33,14 +33,14 @@ class ApplicationMongodbTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        ApplicationMongodb applicationMongodb() {
-            return new ApplicationMongodb(
+        ApplicationMongo applicationMongodb() {
+            return new ApplicationMongo(
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final ApplicationMongodb componentUnderTest;
+    private final ApplicationMongo componentUnderTest;
 
     @Test
     void beansTests() {

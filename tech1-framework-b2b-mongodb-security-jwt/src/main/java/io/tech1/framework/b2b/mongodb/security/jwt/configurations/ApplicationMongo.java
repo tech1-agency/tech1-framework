@@ -35,7 +35,7 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
         mongoTemplateRef = "tech1MongoTemplate"
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationMongodb {
+public class ApplicationMongo {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

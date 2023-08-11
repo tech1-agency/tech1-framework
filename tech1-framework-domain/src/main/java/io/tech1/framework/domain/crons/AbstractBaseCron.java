@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public abstract class AbstractBaseCron {
 
-    public abstract void processRuntimeException(RuntimeException ex);
+    public abstract void processException(Exception ex);
 
     public void executeCron(Cron cron, AbstractCronAction action) {
         this.executeCron(
@@ -30,8 +30,8 @@ public abstract class AbstractBaseCron {
             if (enabled) {
                 action.execute();
             }
-        } catch (RuntimeException ex) {
-            this.processRuntimeException(ex);
+        } catch (Exception ex) {
+            this.processException(ex);
         }
     }
 }

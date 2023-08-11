@@ -4,5 +4,5 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class FrameworkConstants {
-    public static final String VERSION_RUNTIME = "tech1-framework v1.14";
+    public static final String VERSION_RUNTIME = "tech1-framework v1.15-SNAPSHOT";
 }

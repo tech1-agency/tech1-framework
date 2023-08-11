@@ -5,10 +5,12 @@ import io.tech1.framework.domain.constants.DatetimeConstants;
 import io.tech1.framework.domain.tuples.TuplePercentage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 
-import static io.tech1.framework.domain.tuples.TuplePercentage.*;
+import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
+import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -16,6 +18,7 @@ import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurre
 // Lombok
 @Getter
 @EqualsAndHashCode
+@ToString
 public class ResetServerStatus {
 
     @JsonIgnore
@@ -57,11 +60,11 @@ public class ResetServerStatus {
         this.description = contactDevelopmentTeam(ex.getMessage());
     }
 
-    public void complete() {
+    public void complete(ZoneId zoneId) {
         this.state = ResetServerState.READY;
         this.stage = this.stagesCount;
         this.percentage = progressTuplePercentage(this.stage, this.stagesCount);
-        var time = convertTimestamp(getCurrentTimestamp(), ZoneOffset.UTC).format(DatetimeConstants.DTF1) + " (UTC)";
+        var time = convertTimestamp(getCurrentTimestamp(), zoneId).format(DatetimeConstants.DTF1);
         this.description = "Successfully completed at " + time;
     }
 }

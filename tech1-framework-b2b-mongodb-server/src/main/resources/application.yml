@@ -1,14 +1,14 @@
+# Server
+server:
+  servlet:
+    context-path: /api
+
 # Spring Security: actuator endpoints (no security check)
 management:
   endpoints:
     web:
       exposure:
         include: ["health", "info"]
-
-# Server
-server:
-  servlet:
-    context-path: /api
 
 # Jasypt
 jasypt:

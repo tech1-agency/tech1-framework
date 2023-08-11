@@ -22,6 +22,7 @@ public class ApplicationFrameworkPropertiesContext {
         properties.setHardwareServerConfigs(HARDWARE_SERVER_CONFIGS);
         properties.setSecurityJwtConfigs(SECURITY_JWT_CONFIGS);
         properties.setSecurityJwtWebsocketsConfigs(SECURITY_JWT_WEBSOCKETS_CONFIGS);
+        properties.setMongodbSecurityJwtConfigs(MONGODB_SECURITY_JWT_CONFIGS);
         return properties;
     }
 }

@@ -5,7 +5,6 @@ import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
 import io.tech1.framework.domain.tests.enums.EnumUnderTests;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
@@ -117,7 +118,7 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomIntegerGreaterThanZeroTest() {
         // Act
         var actual = randomIntegerGreaterThanZero();
@@ -126,7 +127,7 @@ class RandomUtilityTest {
         assertThat(actual).isPositive();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomIntegerLessThanZeroTest() {
         // Act
         var actual = randomIntegerLessThanZero();
@@ -135,7 +136,7 @@ class RandomUtilityTest {
         assertThat(actual).isNegative();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomIntegerGreaterThanZeroByBounds(50, 75);
@@ -159,7 +160,7 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLongGreaterThanZeroTest() {
         // Act
         var actual = randomLongGreaterThanZero();
@@ -168,7 +169,7 @@ class RandomUtilityTest {
         assertThat(actual).isPositive();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLongLessThanZeroTest() {
         // Act
         var actual = randomLongLessThanZero();
@@ -177,7 +178,7 @@ class RandomUtilityTest {
         assertThat(actual).isNegative();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLongGreaterThanZeroByBoundsTest() {
         // Arrange
         var lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -201,7 +202,7 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigDecimalGreaterThanZeroTest() {
         // Act
         var actual = randomBigDecimalGreaterThanZero();
@@ -210,7 +211,7 @@ class RandomUtilityTest {
         assertThat(actual).isGreaterThan(BigDecimal.ZERO);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigDecimalLessThanZeroTest() {
         // Act
         var actual = randomBigDecimalLessThanZero();
@@ -219,7 +220,7 @@ class RandomUtilityTest {
         assertThat(actual).isLessThan(BigDecimal.ZERO);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigDecimalGreaterThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -234,7 +235,7 @@ class RandomUtilityTest {
                 .isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigDecimalLessThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -249,7 +250,7 @@ class RandomUtilityTest {
                 .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigDecimalByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -273,7 +274,7 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigIntegerGreaterThanZeroTest() {
         // Act
         var actual = randomBigIntegerGreaterThanZero();
@@ -282,7 +283,7 @@ class RandomUtilityTest {
         assertThat(actual).isGreaterThan(BigInteger.ZERO);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigIntegerLessThanZeroTestt() {
         // Act
         var actual = randomBigIntegerLessThanZero();
@@ -291,7 +292,7 @@ class RandomUtilityTest {
         assertThat(actual).isLessThan(BigInteger.ZERO);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigIntegerGreaterThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -306,7 +307,7 @@ class RandomUtilityTest {
                 .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigIntegerLessThanZeroByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -321,7 +322,7 @@ class RandomUtilityTest {
                 .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomBigIntegerByBoundsTest() {
         // Arrange
         long lowerBound = randomLongGreaterThanZeroByBounds(50, 75);
@@ -336,7 +337,7 @@ class RandomUtilityTest {
                 .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomStringTest() {
         // Act
         var actual = randomString();
@@ -345,7 +346,7 @@ class RandomUtilityTest {
         assertThat(actual).hasSize(32);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomStringLetterOrNumbersOnlyTest() {
         // Arrange
         var regex = "[^a-z0-9 ]";
@@ -359,7 +360,7 @@ class RandomUtilityTest {
         assertThat(Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(actual).find()).isFalse();
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomIPv4Test() {
         // Act
         var actual = randomIPv4();
@@ -375,7 +376,7 @@ class RandomUtilityTest {
         });
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomIPAddressTest() {
         // Act
         var actual = randomIPAddress();
@@ -391,7 +392,7 @@ class RandomUtilityTest {
         });
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void localhostTest() {
         // Act
         var actual = localhost();
@@ -400,7 +401,7 @@ class RandomUtilityTest {
         assertThat(actual.value()).isEqualTo("127.0.0.1");
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomServerURLTest() {
         // Arrange
         var pattern = Pattern.compile("^"
@@ -531,7 +532,7 @@ class RandomUtilityTest {
         assertThat(set).contains(actual);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLocalDateTest() {
         // Act
         var actual = randomLocalDate();
@@ -542,7 +543,7 @@ class RandomUtilityTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLocalDateByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
@@ -557,7 +558,7 @@ class RandomUtilityTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLocalDateTimeTest() {
         // Act
         var actual = randomLocalDateTime();
@@ -568,7 +569,7 @@ class RandomUtilityTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLocalDateTimeByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
@@ -583,7 +584,7 @@ class RandomUtilityTest {
         assertThat(actual.getYear()).isLessThanOrEqualTo(2022);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomDateTest() {
         // Act
         var actual = randomDate();
@@ -597,7 +598,7 @@ class RandomUtilityTest {
         assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomDateByBoundsTest() {
         // Arrange
         var minYear = randomIntegerGreaterThanZeroByBounds(2000, 2002);
@@ -615,7 +616,7 @@ class RandomUtilityTest {
         assertThat(calendar.get(Calendar.YEAR)).isLessThanOrEqualTo(LocalDate.now().getYear());
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomEnumTest() {
         // Act
         var actual1 = randomEnum(EnumUnderTests.class);
@@ -626,7 +627,7 @@ class RandomUtilityTest {
         assertThat(EnumUnderTests.values()).contains(actual2);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomEnumExceptExceptionTest() {
         // Act
         var throwable1 = catchThrowable(() -> randomEnumExcept(EnumOneValueUnderTests.class, EnumOneValueUnderTests.ONE_VALUE));
@@ -640,7 +641,7 @@ class RandomUtilityTest {
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomEnumExceptWildcardTest() {
         // Arrange
         var enumValues = List.of(EnumUnderTests.values());
@@ -660,7 +661,7 @@ class RandomUtilityTest {
         assertThat(actual1).isNotEqualTo(randomEnum);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomEnumExceptCaseAsListTest() {
         // Arrange
         var enumValues = List.of(EnumUnderTests.values());
@@ -686,7 +687,7 @@ class RandomUtilityTest {
         assertThat(randomEnum1).isNotEqualTo(randomEnum2);
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomEnumExceptCaseAsListExceptionTest() {
         // Arrange
         var clazz = EnumUnderTests.class;
@@ -736,7 +737,7 @@ class RandomUtilityTest {
         }
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomMethodTest() {
         // Act
         var actual = randomMethod();
@@ -745,7 +746,7 @@ class RandomUtilityTest {
         assertThat(actual.getName()).isEqualTo("finalize");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomZoneIdTest() {
         // Act
         var actual = randomZoneId();
@@ -754,7 +755,7 @@ class RandomUtilityTest {
         assertThat(getAvailableZoneIds()).contains(actual.getId());
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomTimeZoneTest() {
         // Act
         var actual = randomTimeZone();
@@ -763,7 +764,7 @@ class RandomUtilityTest {
         assertThat(getAvailableZoneIds()).contains(actual.toZoneId().getId());
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomUsernameTest() {
         // Act
         var actual = randomUsername();
@@ -773,7 +774,7 @@ class RandomUtilityTest {
         assertThat(actual.identifier()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomPasswordTest() {
         // Act
         var actual = randomPassword();
@@ -783,7 +784,7 @@ class RandomUtilityTest {
         assertThat(actual.value()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomFeignExceptionTest() {
         // Act
         var actual = randomFeignException();
@@ -794,7 +795,7 @@ class RandomUtilityTest {
         assertThat(actual.request().url()).isEqualTo("/endpoint");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validGeoLocationTest() {
         // Act
         var actual = validGeoLocation();
@@ -810,7 +811,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void invalidGeoLocationTest() {
         // Act
         var actual = invalidGeoLocation();
@@ -824,7 +825,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhere()).isEqualTo("Unknown, Unknown");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomGeoLocationTest() {
         // Act
         var actual = randomGeoLocation();
@@ -837,7 +838,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhere()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validUserAgentDetailsTest() {
         // Act
         var actual = validUserAgentDetails();
@@ -851,7 +852,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhat()).isEqualTo("Chrome, macOS on Desktop");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void invalidUserAgentDetailsTest() {
         // Act
         var actual = invalidUserAgentDetails();
@@ -865,7 +866,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomUserAgentDetailsTest() {
         // Act
         var userAgentDetails = randomUserAgentDetails();
@@ -879,7 +880,7 @@ class RandomUtilityTest {
         assertThat(userAgentDetails.getWhat()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validUserRequestMetadataTest() {
         // Act
         var actual = validUserRequestMetadata();
@@ -905,7 +906,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhereTuple3().c()).isEqualTo("Ukraine, Lviv");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void invalidUserRequestMetadataTest() {
         // Act
         var actual = invalidUserRequestMetadata();
@@ -931,7 +932,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhereTuple3().c()).isEqualTo("Unknown, Unknown");
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomUserRequestMetadataTest() {
         // Act
         var actual = randomUserRequestMetadata();
@@ -956,7 +957,7 @@ class RandomUtilityTest {
         assertThat(actual.getWhereTuple3().c()).isNotNull();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomHardwareMonitoringThresholdTest() {
         // Act
         var actual = randomHardwareMonitoringThreshold();
@@ -967,7 +968,7 @@ class RandomUtilityTest {
         assertThat(actual.value()).isLessThanOrEqualTo(new BigDecimal("100"));
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomHardwareMonitoringThresholdsTest() {
         // Act
         var actual = randomHardwareMonitoringThresholds();
@@ -981,7 +982,7 @@ class RandomUtilityTest {
         });
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomHardwareMonitoringDatapointTableRowTest() {
         // Act
         var actual = randomHardwareMonitoringDatapointTableRow();

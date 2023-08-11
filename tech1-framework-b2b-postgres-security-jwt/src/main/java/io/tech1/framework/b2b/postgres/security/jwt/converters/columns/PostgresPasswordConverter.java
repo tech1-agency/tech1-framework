@@ -1,0 +1,20 @@
+package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
+
+import io.tech1.framework.domain.base.Password;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
+@Converter
+public class PostgresPasswordConverter implements AttributeConverter<Password, String> {
+
+    @Override
+    public String convertToDatabaseColumn(Password password) {
+        return password.value();
+    }
+
+    @Override
+    public Password convertToEntityAttribute(String value) {
+        return Password.of(value);
+    }
+}

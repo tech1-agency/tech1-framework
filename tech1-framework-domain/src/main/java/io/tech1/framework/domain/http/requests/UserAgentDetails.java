@@ -19,7 +19,7 @@ public class UserAgentDetails {
     private final String deviceType;
     private final String exceptionDetails;
 
-    private UserAgentDetails(
+    public UserAgentDetails(
             String browser,
             String platform,
             String deviceType,

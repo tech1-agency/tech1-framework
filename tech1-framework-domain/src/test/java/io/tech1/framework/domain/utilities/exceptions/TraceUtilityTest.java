@@ -1,14 +1,14 @@
 package io.tech1.framework.domain.utilities.exceptions;
 
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import org.junit.jupiter.api.RepeatedTest;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.utilities.exceptions.TraceUtility.getTrace;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TraceUtilityTest {
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void getTraceTest() {
         // Arrange
         var npe = new NullPointerException("Tech1");

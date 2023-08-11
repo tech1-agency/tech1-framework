@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ExceptionsMessagesUtilityTest {
@@ -34,67 +33,41 @@ class ExceptionsMessagesUtilityTest {
     }
 
     @Test
-    void entityNotFoundShortTest() {
-        // Arrange
-        var entity = randomString();
-
-        // Act
-        var actual = entityNotFoundShort(entity);
-
-        // Assert
-        assertThat(actual).isEqualTo(entity + " is not found");
-    }
-
-    @Test
     void entityNotFoundTest() {
         // Arrange
         var entity = randomString();
-        var value = randomString();
+        var entityId = randomString();
 
         // Act
-        var actual = entityNotFound(entity, value);
+        var actual = entityNotFound(entity, entityId);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + " is not found. Value: `" + value + "`");
+        assertThat(actual).isEqualTo(entity + ": Not Found, id = " + entityId);
     }
 
     @Test
     void entityAlreadyUsedTest() {
         // Arrange
         var entity = randomString();
+        var entityId = randomString();
 
         // Act
-        var actual = entityAlreadyUsed(entity);
+        var actual = entityAlreadyUsed(entity, entityId);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + " is already used");
+        assertThat(actual).isEqualTo(entity + ": Already Used, id = " + entityId);
     }
 
     @Test
-    void accessDeniedTest() {
+    void entityAccessDeniedTest() {
         // Arrange
-        var username = randomUsername();
         var entity = randomString();
-        var value = randomString();
+        var entityId = randomString();
 
         // Act
-        var actual = accessDenied(username, entity, value);
+        var actual = entityAccessDenied(entity, entityId);
 
         // Assert
-        assertThat(actual).isEqualTo("Access denied. Username: `" + username + "`, Entity: `" + entity + "`. Value: `" + value + "`");
-    }
-
-    @Test
-    void parametrizedTestCaseTest() {
-        // Arrange
-        var sourceObj = randomString();
-        var actualObj = randomString();
-        var expectedObj = randomString();
-
-        // Act
-        var actual = parametrizedTestCase(sourceObj, actualObj, expectedObj);
-
-        // Assert
-        assertThat(actual).isEqualTo("Execute parametrized test case. Source: `" + sourceObj + "`. Actual: `" + actualObj + "`. Expected: `" + expectedObj + "`");
+        assertThat(actual).isEqualTo(entity + ": Access Denied, id = " + entityId);
     }
 }

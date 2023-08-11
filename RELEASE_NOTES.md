@@ -1,9 +1,21 @@
 # Release Notes
 
+### v1.14
+- Add next-****.sh scripts
+- Add abstract reset server flow
+- Add abstract accessToken/refreshToken database security flow 
+- TimestampUtility: isBetweenInclusive
+- MongoDb: truncate/delete "tech1_user_sessions" (MongoDbUserSession: requestMetadata → metadata)
+- Users API: /user → /users + Postman
+- Delete "sessionId" in ResponseUserSession2 
+- Add "mongodbSecurityJwtConfigs" property (migrate "securityJwtConfigs.mongodb" configs)
+- Started extraction of b2b base security JWT reused in mongodb/postgre modules
+- Started development on b2b postgres security JWT
+
 ### v1.13
 - Superuser API: terminate by sessionId, terminate all except current + Postman
 - Sessions API: terminate by sessionId, terminate all except current + Postman
-- Sessions API: /session → sessions + Postman
+- Sessions API: /session → /sessions + Postman
 - InvitationCodes API: /invitationCode → /invitationCodes + Postman
 - Java17: records, serialization/deserialization, junit tests sonar suggestions
 

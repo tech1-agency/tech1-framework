@@ -49,6 +49,6 @@ public class HttpCookieUtility {
                 return cookieOpt.get().getValue();
             }
         }
-        throw new CookieNotFoundException(entityNotFound("CookieKey", cookieKey));
+        throw new CookieNotFoundException(entityNotFound("Cookie", cookieKey));
     }
 }

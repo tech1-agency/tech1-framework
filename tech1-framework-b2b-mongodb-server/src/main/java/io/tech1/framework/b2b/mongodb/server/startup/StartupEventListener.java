@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.startup;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.essence.EssenceConstructor;
-import io.tech1.framework.b2b.mongodb.security.jwt.startup.DefaultStartupEventListener;
+import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.startup.DefaultStartupEventListener;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
@@ -19,19 +19,20 @@ public class StartupEventListener extends DefaultStartupEventListener {
 
     // Publishers
     private final IncidentPublisher incidentPublisher;
-    // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Autowired
     public StartupEventListener(
-            EssenceConstructor essenceConstructor,
+            AbstractEssenceConstructor essenceConstructor,
             EnvironmentUtility environmentUtility,
             IncidentPublisher incidentPublisher,
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
-        super(essenceConstructor, environmentUtility);
+        super(
+                essenceConstructor,
+                environmentUtility,
+                applicationFrameworkProperties
+        );
         this.incidentPublisher = incidentPublisher;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
     }
 
     @Override

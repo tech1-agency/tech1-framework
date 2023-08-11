@@ -2,7 +2,10 @@ package io.tech1.framework.domain.utilities.collections;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collector;
+
+import static java.util.stream.Collectors.toCollection;
 
 @UtilityClass
 public class CollectorUtility {
@@ -17,5 +20,9 @@ public class CollectorUtility {
                     return list.get(0);
                 }
         );
+    }
+
+    public static <T> Collector<T, ?, ConcurrentHashMap.KeySetView<T, Boolean>> toConcurrentKeySet() {
+        return toCollection(ConcurrentHashMap::newKeySet);
     }
 }

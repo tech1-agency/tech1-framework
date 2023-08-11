@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--suppress VulnerableLibrariesLocal -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,7 +8,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.13</version>
+        <version>1.14-SNAPSHOT</version>
     </parent>
 
     <artifactId>tech1-framework-b2b-mongodb-security-jwt</artifactId>
@@ -16,25 +17,7 @@
         <!-- Tech1: Framework -->
         <dependency>
             <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-configurations</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-hardware</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-incidents</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-emails</artifactId>
+            <artifactId>tech1-framework-b2b-base-security-jwt</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -43,14 +26,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <!-- Jwt Security -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- FailSafe: unit vs. integration testcontainers tests  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <!-- Tests: integration testcontainers folder -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

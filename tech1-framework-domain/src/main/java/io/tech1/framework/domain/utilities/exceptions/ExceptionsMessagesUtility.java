@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.exceptions;
 
-import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import static io.tech1.framework.domain.constants.ExceptionsMessagesConstants.*;
@@ -16,30 +15,19 @@ public class ExceptionsMessagesUtility {
         return String.format(INVALID_ATTRIBUTE, attributeName);
     }
 
-    public static String entityNotFoundShort(String entity) {
-        return String.format(ENTITY_NOT_FOUND_SHORT, entity);
+    public static String entityNotFound(String entity, String entityId) {
+        return String.format(ENTITY_NOT_FOUND, entity, entityId);
     }
 
-    public static String entityNotFound(String entity, String value) {
-        return String.format(ENTITY_NOT_FOUND_FULL, entity, value);
+    public static String entityAlreadyUsed(String entity, String entityId) {
+        return String.format(ENTITY_ALREADY_USED, entity, entityId);
     }
 
-    public static String entityAlreadyUsed(String entity) {
-        return String.format(ENTITY_ALREADY_USED, entity);
-    }
-
-    public static String accessDenied(Username username, String entity, String value) {
-        return String.format(ACCESS_DENIED, username, entity, value);
+    public static String entityAccessDenied(String entity, String entityId) {
+        return String.format(ENTITY_ACCESS_DENIED, entity, entityId);
     }
 
     public static String missingMappingsKeys(String attributeName, String requirements, String disjunction) {
         return String.format(MISSING_MAPPINGS_KEYS, attributeName, requirements, disjunction);
-    }
-
-    // =================================================================================================================
-    // Tests
-    // =================================================================================================================
-    public static String parametrizedTestCase(Object source, Object actual, Object expected) {
-        return String.format(PARAMETRIZED_TEST_CASE, source, actual, expected);
     }
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 
 // Lombok
 @AllArgsConstructor
+@Getter
 public enum Status {
     // Major
     STARTED("Started"),
@@ -23,7 +24,6 @@ public enum Status {
     PROGRESS_75("Progress, 75%"),
     PROGRESS_80("Progress, 80%");
 
-    @Getter
     private final String value;
 
     @Override

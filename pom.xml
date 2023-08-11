@@ -8,7 +8,7 @@
     <groupId>io.tech1.framework</groupId>
     <artifactId>tech1-framework</artifactId>
     <packaging>pom</packaging>
-    <version>1.13</version>
+    <version>1.14-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <description>Tech1 Framework</description>
@@ -60,10 +60,13 @@
         <module>tech1-framework-emails</module>
         <module>tech1-framework-hardware</module>
         <module>tech1-framework-incidents</module>
+        <module>tech1-framework-b2b-base-security-jwt</module>
+        <module>tech1-framework-b2b-base-security-jwt-websockets</module>
         <module>tech1-framework-b2b-mongodb-security-jwt</module>
-        <module>tech1-framework-b2b-mongodb-security-jwt-websockets</module>
+        <module>tech1-framework-b2b-postgres-security-jwt</module>
         <!-- Servers -->
         <module>tech1-framework-b2b-mongodb-server</module>
+        <module>tech1-framework-b2b-postgres-server</module>
     </modules>
 
     <properties>
@@ -82,7 +85,9 @@
         <version.dependency.jakarta>2.3.3</version.dependency.jakarta>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
+        <version.dependency.liquibase>4.21.1</version.dependency.liquibase>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
+        <version.dependency.postresql.hibernate.types>2.21.1</version.dependency.postresql.hibernate.types>
         <version.dependency.springframework.boot>2.7.11</version.dependency.springframework.boot>
         <version.dependency.tomcat.embed>9.0.74</version.dependency.tomcat.embed>
         <!-- dependencies, scope == test -->
@@ -92,7 +97,9 @@
         <version.dependency.testcontainers>1.18.0</version.dependency.testcontainers>
         <!-- plugins -->
         <version.plugin.compiler>3.11.0</version.plugin.compiler>
+        <version.plugin.build.helper>3.4.0</version.plugin.build.helper>
         <version.plugin.dependency>3.5.0</version.plugin.dependency>
+        <version.plugin.failsafe>3.1.2</version.plugin.failsafe>
         <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
         <version.plugin.gpg>3.0.1</version.plugin.gpg>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
@@ -128,6 +135,18 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
+            </dependency>
+            <!-- PostgreSQL -->
+            <dependency>
+                <groupId>com.vladmihalcea</groupId>
+                <artifactId>hibernate-types-52</artifactId>
+                <version>${version.dependency.postresql.hibernate.types}</version>
+            </dependency>
+            <!-- Liquibase -->
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${version.dependency.liquibase}</version>
             </dependency>
             <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
             <dependency>
@@ -226,6 +245,12 @@
                 <version>${version.dependency.testcontainers}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.dependency.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
             <!-- JUnit -->
             <dependency>
                 <groupId>org.junit</groupId>
@@ -300,6 +325,11 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mongodb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- JUnit -->
@@ -439,6 +469,41 @@
                             <goals>
                                 <goal>repackage</goal>
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- FailSafe: unit vs. integration testcontainers tests  -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${version.plugin.failsafe}</version>
+                    <executions>
+                        <execution>
+                            <id>integration-tests</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Tests: integration testcontainers folder -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${version.plugin.build.helper}</version>
+                    <executions>
+                        <execution>
+                            <id>add-integration-test-source</id>
+                            <phase>generate-test-sources</phase>
+                            <goals>
+                                <goal>add-test-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>src/test-integration/java</source>
+                                </sources>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

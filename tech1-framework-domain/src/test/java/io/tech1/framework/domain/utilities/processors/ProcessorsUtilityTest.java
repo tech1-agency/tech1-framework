@@ -1,15 +1,15 @@
 package io.tech1.framework.domain.utilities.processors;
 
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import org.junit.jupiter.api.RepeatedTest;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProcessorsUtilityTest {
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void getNumOfCoresTest() {
         // Act
         int cores = getNumOfCores();
@@ -18,7 +18,7 @@ class ProcessorsUtilityTest {
         assertThat(cores).isPositive();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void getHalfOfCoresTest() {
         // Act
         int cores = getHalfOfCores();
@@ -27,7 +27,7 @@ class ProcessorsUtilityTest {
         assertThat(cores).isPositive();
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void integrationComparisonTest() {
         // Act
         int numOfCores = getNumOfCores();

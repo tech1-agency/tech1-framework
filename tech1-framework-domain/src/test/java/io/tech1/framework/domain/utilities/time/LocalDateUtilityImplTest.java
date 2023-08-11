@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.*;
 import static java.time.Month.*;

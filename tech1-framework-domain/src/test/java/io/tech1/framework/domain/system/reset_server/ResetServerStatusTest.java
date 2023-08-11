@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.system.reset_server.ResetServerState.READY;
 import static io.tech1.framework.domain.system.reset_server.ResetServerState.RESETTING;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
@@ -58,7 +59,7 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
         assertThat(this.writeValueAsString(status)).isEqualTo(readFile(this.getFolder(), "reset-server-status-3.json"));
 
         // Act-4
-        status.complete();
+        status.complete(EET_ZONE_ID);
 
         // Assert-4
         assertThat(status.getState()).isEqualTo(READY);
@@ -66,7 +67,6 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
         assertThat(status.getStagesCount()).isEqualTo(9);
         assertThat(status.getPercentage()).isEqualTo(progressTuplePercentage(9, 9));
         assertThat(status.getDescription()).startsWith("Successfully completed at ");
-        assertThat(status.getDescription()).endsWith(" (UTC)");
         assertThat(status.isStarted()).isFalse();
 
         // Act-5

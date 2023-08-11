@@ -17,7 +17,7 @@ class TuplePresenceTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(TuplePresence.present("PRESENT"), "tuple-presence-present.json"),
-                Arguments.of(TuplePresence.absent("ABSENT"), "tuple-presence-absent.json")
+                Arguments.of(TuplePresence.absent(), "tuple-presence-absent.json")
         );
     }
 

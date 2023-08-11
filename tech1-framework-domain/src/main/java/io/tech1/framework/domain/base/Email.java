@@ -2,8 +2,9 @@ package io.tech1.framework.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import org.jetbrains.annotations.NotNull;
 
-public record Email(String value) {
+public record Email(@NotNull String value) {
 
     @JsonCreator
     public static Email of(String value) {

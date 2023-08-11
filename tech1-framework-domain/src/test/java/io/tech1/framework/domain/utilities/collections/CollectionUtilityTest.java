@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.utilities.collections;
 
-import io.tech1.framework.domain.tests.constants.TestsConstants;
+import io.tech1.framework.domain.tests.constants.TestsJunitConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -201,7 +201,7 @@ class CollectionUtilityTest {
         });
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)
     void safeGetters() {
         // Arrange
         var list = List.of(1, 2, 3, 4, 5);

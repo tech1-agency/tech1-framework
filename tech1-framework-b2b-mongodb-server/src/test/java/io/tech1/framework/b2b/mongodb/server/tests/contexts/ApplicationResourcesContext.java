@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.server.tests.contexts;
 
-import io.tech1.framework.b2b.mongodb.server.services.UserService;
+import io.tech1.framework.b2b.mongodb.server.services.UsersService;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,8 +18,8 @@ public class ApplicationResourcesContext {
 
     // Services
     @Bean
-    public UserService userService() {
-        return mock(UserService.class);
+    public UsersService usersService() {
+        return mock(UsersService.class);
     }
 
     // Utilities

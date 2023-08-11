@@ -1,18 +1,14 @@
 package io.tech1.framework.domain.utilities.numbers;
 
-import io.tech1.framework.domain.tuples.Tuple4;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.parametrizedTestCase;
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.*;
+import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -41,6 +37,15 @@ class RoundingUtilityTest {
                 Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, BigDecimal.valueOf(3.333)),
                 Arguments.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ZERO),
                 Arguments.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ZERO)
+        );
+    }
+
+    private static Stream<Arguments> divideOrOneTest() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3),  3, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE),
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE),
+                Arguments.of(BigDecimal.valueOf(10), null, 5, BigDecimal.ONE)
         );
     }
 
@@ -92,33 +97,20 @@ class RoundingUtilityTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    void divideOrOneTest() {
+    @ParameterizedTest
+    @MethodSource("divideOrOneTest")
+    void divideOrOneTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal expected) {
         // Arrange
-        var exception = mock(BigDecimal.class);
-        when(exception.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
+        if (isNull(divisor)) {
+            divisor = mock(BigDecimal.class);
+            when(divisor.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
+        }
 
-        List<Tuple4<BigDecimal, BigDecimal, Integer, BigDecimal>> cases = new ArrayList<>();
-        cases.add(new Tuple4<>(BigDecimal.valueOf(10), BigDecimal.valueOf(3),  3, BigDecimal.valueOf(3.333)));
-        cases.add(new Tuple4<>(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE));
-        cases.add(new Tuple4<>(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE));
-        cases.add(new Tuple4<>(BigDecimal.valueOf(10), exception, 5, BigDecimal.ONE));
+        // Act
+        var actual = divideOrOne(divider, divisor, scale);
 
-        cases.forEach(source -> {
-            // Arrange
-            var divider = source.a();
-            var divisor = source.b();
-            var scale = source.c();
-            var expected = source.d();
-
-            // Act
-            var actual = divideOrOne(divider, divisor, scale);
-
-            // Assert
-            assertThat(actual)
-                    .withFailMessage(parametrizedTestCase(source, actual, expected))
-                    .isEqualTo(expected);
-        });
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest

@@ -254,7 +254,6 @@ class PropertiesAsserterAndPrinterTest {
         securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
         securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
         securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
-        securityJwtConfigs.setMongodb(SECURITY_JWT_CONFIGS.getMongodb());
         securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
         securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
 
@@ -287,7 +286,6 @@ class PropertiesAsserterAndPrinterTest {
         securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
         securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
         securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
-        securityJwtConfigs.setMongodb(SECURITY_JWT_CONFIGS.getMongodb());
         securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
         securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
 
@@ -322,7 +320,6 @@ class PropertiesAsserterAndPrinterTest {
         securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
         securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
         securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
-        securityJwtConfigs.setMongodb(SECURITY_JWT_CONFIGS.getMongodb());
         securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
         securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
 
@@ -340,6 +337,16 @@ class PropertiesAsserterAndPrinterTest {
         // Act
         assertProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS, "securityJwtWebsocketsConfigs");
         printProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS);
+
+        // Assert
+        // no asserts
+    }
+
+    @Test
+    void mongodbSecurityJwtConfigsTest() {
+        // Act
+        assertProperties(MONGODB_SECURITY_JWT_CONFIGS, "mongodbSecurityJwtConfigs");
+        printProperties(MONGODB_SECURITY_JWT_CONFIGS);
 
         // Assert
         // no asserts

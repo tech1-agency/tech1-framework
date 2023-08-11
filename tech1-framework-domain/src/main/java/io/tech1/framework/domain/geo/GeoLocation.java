@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import static io.tech1.framework.domain.constants.StringConstants.*;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.nonNull;
 
@@ -24,7 +25,7 @@ public class GeoLocation {
     @JsonIgnore
     private final String exceptionDetails;
 
-    private GeoLocation(
+    public GeoLocation(
             String ipAddr,
             String country,
             String countryCode,
@@ -41,7 +42,7 @@ public class GeoLocation {
         if (nonNull(countryFlag)) {
             this.countryFlag = countryFlag;
         } else {
-            this.countryFlag = NO_FLAG;
+            this.countryFlag = FLAG_UNKNOWN;
         }
         if (nonNull(country)) {
             this.country = country.trim();
@@ -61,7 +62,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 UNKNOWN,
                 UNKNOWN,
-                NO_FLAG,
+                FLAG_UNKNOWN,
                 UNKNOWN,
                 exceptionDetails
         );
@@ -74,7 +75,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 UNDEFINED,
                 UNDEFINED,
-                NO_FLAG,
+                FLAG_UNKNOWN,
                 UNDEFINED,
                 EMPTY
         );

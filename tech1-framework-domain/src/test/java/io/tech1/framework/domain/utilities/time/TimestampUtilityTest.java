@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.time;
 
-import io.tech1.framework.domain.tests.constants.TestsConstants;
 import io.tech1.framework.domain.time.TimeAmount;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,8 +8,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsConstants.EET_ZONE_ID;
-import static io.tech1.framework.domain.tests.constants.TestsConstants.POLAND_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.POLAND_ZONE_ID;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.*;
 import static java.time.ZoneOffset.UTC;
@@ -51,6 +52,19 @@ class TimestampUtilityTest {
         );
     }
 
+    private static Stream<Arguments> isBetweenInclusiveTest() {
+        return Stream.of(
+                Arguments.of(1, 0, 2, true),
+                Arguments.of(1, 1, 2, true),
+                Arguments.of(1, 2, 2, false),
+                Arguments.of(1, 0, 1, true),
+                Arguments.of(1, 0, 0, false),
+                Arguments.of(1, 1, 1, true),
+                Arguments.of(1, -3, -2, false),
+                Arguments.of(1, 2, 3, false)
+        );
+    }
+
     private static Stream<Arguments> isPastTest() {
         return Stream.of(
                 Arguments.of(1642767625000L, true),
@@ -78,7 +92,7 @@ class TimestampUtilityTest {
         );
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void getCurrentTimestampTest() {
         // Arrange
         var expected = System.currentTimeMillis();
@@ -100,7 +114,7 @@ class TimestampUtilityTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
@@ -113,7 +127,7 @@ class TimestampUtilityTest {
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
-    @RepeatedTest(TestsConstants.RANDOM_ITERATIONS_COUNT)
+    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
@@ -126,7 +140,7 @@ class TimestampUtilityTest {
         assertThat(timestampPoland - timestampUkraine).isEqualTo(3600000L);
     }
 
-    @RepeatedTest(TestsConstants.SMALL_ITERATIONS_COUNT)
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
@@ -134,8 +148,9 @@ class TimestampUtilityTest {
         var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID, 3);
 
         // Assert
-        assertThat(timestampUTC).isLessThan(timestampPoland);
-        assertThat(timestampUTC).isLessThan(timestampUkraine);
+        assertThat(timestampUTC)
+                .isLessThan(timestampPoland)
+                .isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
         var localDateTimeUTC = convertTimestamp(timestampUTC, UTC);
         var localDateTimeUkraine = convertTimestamp(timestampUkraine, EET_ZONE_ID);
@@ -145,11 +160,47 @@ class TimestampUtilityTest {
         assertThat(localDateTimePoland.toString()).endsWith("00:00");
     }
 
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void getPastRangeTest() {
+        // Arrange
+        var currentTimestamp = getCurrentTimestamp();
+
+        // Act
+        var actual = getPastRange(currentTimestamp, TimeAmount.of(5, SECONDS));
+
+        // Assert
+        assertThat(actual.to()).isGreaterThan(actual.from());
+        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp - 5000);
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void getFutureRangeTest() {
+        // Arrange
+        var currentTimestamp = getCurrentTimestamp();
+
+        // Act
+        var actual = getFutureRange(currentTimestamp, TimeAmount.of(5, SECONDS));
+
+        // Assert
+        assertThat(actual.to()).isGreaterThan(actual.from());
+        assertThat(actual.to()).isGreaterThanOrEqualTo(currentTimestamp + 5000);
+    }
+
     @ParameterizedTest
     @MethodSource("isBetweenTest")
     void isBetweenTest(long past, long future, boolean expected) {
         // Act
         var actual = isBetween(getCurrentTimestamp(), past, future);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBetweenInclusiveTest")
+    void isBetweenInclusiveTest(long timestamp, long past, long future, boolean expected) {
+        // Act
+        var actual = isBetweenInclusive(timestamp, past, future);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

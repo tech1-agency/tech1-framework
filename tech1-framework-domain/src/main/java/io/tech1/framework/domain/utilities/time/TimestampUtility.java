@@ -56,14 +56,28 @@ public class TimestampUtility {
         return new TupleRange<>(past, currentTimestamp);
     }
 
+    static TupleRange<Long> getPastRange(long timestamp, TimeAmount timeAmount) {
+        var past = timestamp - timeAmount.toMillis();
+        return new TupleRange<>(past, timestamp);
+    }
+
     public static TupleRange<Long> getFutureRange(TimeAmount timeAmount) {
         var currentTimestamp = getCurrentTimestamp();
         var future = currentTimestamp + timeAmount.toMillis();
         return new TupleRange<>(currentTimestamp, future);
     }
 
+    public static TupleRange<Long> getFutureRange(long timestamp, TimeAmount timeAmount) {
+        var future = timestamp + timeAmount.toMillis();
+        return new TupleRange<>(timestamp, future);
+    }
+
     public static boolean isBetween(long timestamp, long past, long future) {
         return timestamp > past && timestamp < future;
+    }
+
+    public static boolean isBetweenInclusive(long timestamp, long past, long future) {
+        return timestamp >= past && timestamp <= future;
     }
 
     public static boolean isPast(long timestamp) {

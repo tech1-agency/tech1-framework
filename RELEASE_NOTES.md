@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.15
+- Move <distributionManagement> ossrh → "release" profile
+
 ### v1.14
 - Add next-****.sh scripts
 - Add abstract reset server flow

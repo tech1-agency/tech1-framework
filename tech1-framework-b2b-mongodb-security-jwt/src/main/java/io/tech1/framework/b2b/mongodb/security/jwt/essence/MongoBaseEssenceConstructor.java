@@ -22,8 +22,8 @@ import java.util.stream.IntStream;
 public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
-    protected final MongoInvitationCodesRepository invitationCodesRepository;
-    protected final MongoUsersRepository usersRepository;
+    protected final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    protected final MongoUsersRepository mongoUsersRepository;
 
     @Autowired
     public MongoBaseEssenceConstructor(
@@ -36,8 +36,8 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                 usersRepository,
                 applicationFrameworkProperties
         );
-        this.invitationCodesRepository = invitationCodesRepository;
-        this.usersRepository = usersRepository;
+        this.mongoInvitationCodesRepository = invitationCodesRepository;
+        this.mongoUsersRepository = usersRepository;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                     return user;
                 })
                 .toList();
-        this.usersRepository.saveAll(dbUsers);
+        this.mongoUsersRepository.saveAll(dbUsers);
         return dbUsers.size();
     }
 
@@ -69,6 +69,6 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                         )
                 )
                 .toList();
-        this.invitationCodesRepository.saveAll(dbInvitationCodes);
+        this.mongoInvitationCodesRepository.saveAll(dbInvitationCodes);
     }
 }

@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.15
-- TBD
+- Move <distributionManagement> ossrh → "release" profile
 
 ### v1.14
 - Add next-****.sh scripts

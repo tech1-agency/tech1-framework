@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.16
+- TBD
+
 ### v1.15
 - Move <distributionManagement> ossrh → "release" profile
 

@@ -7,9 +7,9 @@ on:
       - main
 
 env:
-  DOCKERHUB_ORG: tech1io
-  DOCKERHUB_MONGODB_REPOSITORY: tech1-framework-b2b-mongodb-server
-  DOCKERHUB_POSTGRES_REPOSITORY: tech1-framework-b2b-postgres-server
+  REGISTRY: ghcr.io
+  MONGODB_REPO: tech1-io/tech1-framework-b2b-mongodb-server
+  POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
 
 jobs:
   init:
@@ -69,23 +69,19 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Docker login
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-        run: |
-          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_TOKEN
+        run: docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker [mongo]
+      - name: Docker [mongodb]
         run: |
-          cd $DOCKERHUB_MONGODB_REPOSITORY
-          docker build -t $DOCKERHUB_ORG/$DOCKERHUB_MONGODB_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
-          docker push $DOCKERHUB_ORG/$DOCKERHUB_MONGODB_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+          cd tech1-framework-b2b-mongodb-server
+          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{ needs.init.outputs.docker_tag }} .
+          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{ needs.init.outputs.docker_tag }}
 
       - name: Docker [postgres]
         run: |
-          cd $DOCKERHUB_POSTGRES_REPOSITORY
-          docker build -t $DOCKERHUB_ORG/$DOCKERHUB_POSTGRES_REPOSITORY:${{ needs.init.outputs.docker_tag }} .
-          docker push $DOCKERHUB_ORG/$DOCKERHUB_POSTGRES_REPOSITORY:${{ needs.init.outputs.docker_tag }}
+          cd tech1-framework-b2b-postgres-server
+          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{ needs.init.outputs.docker_tag }} .
+          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{ needs.init.outputs.docker_tag }}
 
       - name: Mails
         if: always()

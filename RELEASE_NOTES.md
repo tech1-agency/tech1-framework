@@ -1,7 +1,7 @@
 # Release Notes
 
 ### v1.16
-- TBD
+- Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages
 
 ### v1.15
 - Move <distributionManagement> ossrh → "release" profile

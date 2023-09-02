@@ -6,8 +6,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
-
 public record UserSession(
         boolean persisted,
         UserSessionId id,
@@ -33,6 +31,6 @@ public record UserSession(
             JwtRefreshToken refreshToken,
             UserRequestMetadata metadata
     ) {
-        return new UserSession(false, new UserSessionId(UNDEFINED), username, accessToken, refreshToken, metadata);
+        return new UserSession(false, UserSessionId.undefined(), username, accessToken, refreshToken, metadata);
     }
 }

@@ -26,7 +26,7 @@ public class TestsPropertiesConstants {
     public static final ServerConfigs SERVER_CONFIGS = new ServerConfigs("tech1-spring-boot-server", "http://127.0.0.1:3000");
     public static final AsyncConfigs ASYNC_CONFIGS = new AsyncConfigs("tech1-async");
     public static final EventsConfigs EVENTS_CONFIGS = new EventsConfigs("tech1-events");
-    public static final MvcConfigs MVC_CONFIGS = MvcConfigs.of(
+    public static final MvcConfigs MVC_CONFIGS = new MvcConfigs(
             true,
             "/framework/security",
             CorsConfigs.of(

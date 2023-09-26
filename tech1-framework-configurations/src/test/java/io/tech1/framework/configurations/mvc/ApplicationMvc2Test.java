@@ -33,7 +33,7 @@ class ApplicationMvc2Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            var mvcConfigs = MvcConfigs.of(
+            var mvcConfigs = new MvcConfigs(
                     true,
                     randomString(),
                     CorsConfigs.of(

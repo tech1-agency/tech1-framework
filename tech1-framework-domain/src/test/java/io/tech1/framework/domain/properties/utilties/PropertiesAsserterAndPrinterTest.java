@@ -82,7 +82,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsDisabledTest() {
         // Arrange
-        var mvcConfigs = MvcConfigs.of(
+        var mvcConfigs = new MvcConfigs(
                 false,
                 null,
                 null

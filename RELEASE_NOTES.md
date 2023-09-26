@@ -5,6 +5,7 @@
 - Add "create_at", "updated_at", "metadata_renew_cron", "metadata_renew_manually" → tech1_users_sessions (PostgreSQL) + liquibase
 - Add "create_at", "updated_at", "metadata_renew_cron", "metadata_renew_manually" → tech1_users_sessions (MongoDB) + MIGRATION
 - Add "enableSessionsMetadataRenewCron" configuration
+- Add properties 2.0: @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 
 ### v1.15
 - Move <distributionManagement> ossrh → "release" profile

@@ -67,7 +67,7 @@ public class TestsPropertiesConstants {
                     )
             )
     );
-    public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = HardwareServerConfigs.of(
+    public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = new HardwareServerConfigs(
             "http://localhost:8484"
     );
     public static final SecurityJwtConfigs SECURITY_JWT_CONFIGS = SecurityJwtConfigs.of(

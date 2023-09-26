@@ -28,5 +28,5 @@ public interface SecurityJwtSubscriber {
     void onSessionExpired(EventSessionExpired event);
     @Async
     @EventListener
-    void onSessionAddUserRequestMetadata(EventSessionAddUserRequestMetadata event);
+    void onSessionAddUserRequestMetadata(EventSessionUserRequestMetadataAdd event);
 }

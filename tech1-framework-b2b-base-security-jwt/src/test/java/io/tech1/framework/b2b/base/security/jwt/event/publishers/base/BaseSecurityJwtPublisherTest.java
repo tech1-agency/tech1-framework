@@ -146,7 +146,7 @@ class BaseSecurityJwtPublisherTest {
     @Test
     void publishSessionAddUserRequestMetadataTest() {
         // Arrange
-        var event = entity(EventSessionAddUserRequestMetadata.class);
+        var event = entity(EventSessionUserRequestMetadataAdd.class);
 
         // Act
         this.componentUnderTest.publishSessionAddUserRequestMetadata(event);

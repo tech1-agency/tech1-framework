@@ -62,7 +62,7 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
     }
 
     @Override
-    public void publishSessionAddUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
+    public void publishSessionAddUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
         LOGGER.debug(SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA, this.getType(), event.username());
         this.applicationEventPublisher.publishEvent(event);
     }

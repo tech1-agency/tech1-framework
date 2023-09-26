@@ -172,7 +172,7 @@ class BaseSecurityJwtSubscriberTest {
     @Test
     void onSessionAddUserRequestMetadataNotAuthenticationEndpointTest() {
         // Arrange
-        var event = new EventSessionAddUserRequestMetadata(
+        var event = new EventSessionUserRequestMetadataAdd(
                 randomUsername(),
                 randomEmail(),
                 entity(UserSession.class),
@@ -193,7 +193,7 @@ class BaseSecurityJwtSubscriberTest {
     @Test
     void onSessionAddUserRequestMetadataIsAuthenticationLoginEndpointTest() {
         // Arrange
-        var event = new EventSessionAddUserRequestMetadata(
+        var event = new EventSessionUserRequestMetadataAdd(
                 randomUsername(),
                 randomEmail(),
                 entity(UserSession.class),
@@ -216,7 +216,7 @@ class BaseSecurityJwtSubscriberTest {
     @Test
     void onSessionAddUserRequestMetadataIsAuthenticationRefreshTokenEndpointTest() {
         // Arrange
-        var event = new EventSessionAddUserRequestMetadata(
+        var event = new EventSessionUserRequestMetadataAdd(
                 randomUsername(),
                 randomEmail(),
                 entity(UserSession.class),

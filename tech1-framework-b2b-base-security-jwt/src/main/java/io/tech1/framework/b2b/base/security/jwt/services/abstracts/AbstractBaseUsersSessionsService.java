@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -68,7 +68,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         }
         session = this.usersSessionsRepository.saveAs(session);
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                new EventSessionAddUserRequestMetadata(
+                new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
                         session,
@@ -86,7 +86,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
         this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                new EventSessionAddUserRequestMetadata(
+                new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
                         newSession,
@@ -99,7 +99,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public UserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
+    public UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var session = ofPersisted(

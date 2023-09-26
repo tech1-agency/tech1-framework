@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -16,7 +16,7 @@ import java.util.Set;
 public interface BaseUsersSessionsService {
     void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
     void refresh(JwtUser user, UserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
-    UserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event);
+    UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event);
     SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
     void enableMetadataRenewCron();
     void enableMetadataRenewManually(UserSessionId sessionId);

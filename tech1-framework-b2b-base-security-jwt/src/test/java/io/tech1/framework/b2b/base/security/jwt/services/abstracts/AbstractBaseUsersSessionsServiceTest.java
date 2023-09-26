@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -166,7 +166,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
         assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.id()).isNotNull();
-        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
@@ -212,7 +212,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
         assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.id()).isNotNull();
-        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
@@ -245,7 +245,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(newUserSession.refreshToken()).isEqualTo(newRefreshToken);
         assertThat(newUserSession.metadata()).isEqualTo(oldSession.metadata());
         verify(this.usersSessionsRepository).delete(oldSession.id());
-        var eventAC = ArgumentCaptor.forClass(EventSessionAddUserRequestMetadata.class);
+        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
         verify(this.securityJwtPublisher).publishSessionAddUserRequestMetadata(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(username);
@@ -258,7 +258,7 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void saveUserRequestMetadataTest() {
         // Arrange
-        var event = entity(EventSessionAddUserRequestMetadata.class);
+        var event = entity(EventSessionUserRequestMetadataAdd.class);
         var geoLocation = randomGeoLocation();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
         var userSessionAC = ArgumentCaptor.forClass(UserSession.class);

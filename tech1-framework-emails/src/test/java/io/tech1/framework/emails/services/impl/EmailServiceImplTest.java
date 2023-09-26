@@ -142,9 +142,7 @@ class EmailServiceImplTest {
         var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -169,9 +167,7 @@ class EmailServiceImplTest {
         var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         emailConfigs.setTo(new String[] { to1, to2 } );
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
@@ -196,9 +192,7 @@ class EmailServiceImplTest {
         var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -222,9 +216,7 @@ class EmailServiceImplTest {
         var from = randomEmailAsValue();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act

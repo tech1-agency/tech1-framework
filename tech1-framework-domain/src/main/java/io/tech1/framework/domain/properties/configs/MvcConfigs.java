@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class MvcConfigs extends AbstractPropertiesToggleConfigs {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
     @NonMandatoryProperty
     private String frameworkBasePathPrefix;
     @NonMandatoryProperty

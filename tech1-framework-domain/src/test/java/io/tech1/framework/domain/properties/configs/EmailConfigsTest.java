@@ -10,7 +10,7 @@ class EmailConfigsTest {
     @Test
     void constructorTest() {
         // Act
-        var emailConfigs = EmailConfigs.of(
+        var emailConfigs = new EmailConfigs(
                 true,
                 randomString(),
                 randomIntegerGreaterThanZero(),

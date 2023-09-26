@@ -38,7 +38,7 @@ public class TestsPropertiesConstants {
                     null
             )
     );
-    public static final EmailConfigs EMAIL_CONFIGS = EmailConfigs.of(
+    public static final EmailConfigs EMAIL_CONFIGS = new EmailConfigs(
             false,
             "smtp.gmail.com",
             587,

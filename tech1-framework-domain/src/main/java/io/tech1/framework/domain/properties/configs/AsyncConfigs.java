@@ -12,5 +12,5 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class AsyncConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String threadNamePrefix;
+    private final String threadNamePrefix;
 }

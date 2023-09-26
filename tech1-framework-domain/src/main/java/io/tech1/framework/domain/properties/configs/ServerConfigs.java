@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String name;
+    private final String name;
     @NonMandatoryProperty
     private String webclientURL;
 }

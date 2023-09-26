@@ -109,15 +109,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsDisabledTest() {
         // Arrange
-        var emailConfigs = EmailConfigs.of(
-                false,
-                null,
-                0,
-                null,
-                null,
-                null,
-                null
-        );
+        var emailConfigs = EmailConfigs.disabled();
 
         // Act
         assertProperties(emailConfigs, "emailConfigs");

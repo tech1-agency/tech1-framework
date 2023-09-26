@@ -227,9 +227,15 @@
 					"name": "Renew Manually",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Proxy-Client-IP",
+								"value": "1.1.1.1",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/renew/manually/03892f67-c02c-4b84-8ec8-fc13d31ee65b",
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/renew/manually/d4833f00-38a8-43e3-9ec2-82ff63c3de62",
 							"host": [
 								"{{serverURL}}"
 							],
@@ -238,7 +244,7 @@
 								"sessions",
 								"renew",
 								"manually",
-								"03892f67-c02c-4b84-8ec8-fc13d31ee65b"
+								"d4833f00-38a8-43e3-9ec2-82ff63c3de62"
 							]
 						}
 					},

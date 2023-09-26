@@ -3,8 +3,10 @@ package io.tech1.framework.domain.properties.configs;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.utilities.enums.EnumUtility;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 import java.math.BigDecimal;
 import java.util.EnumMap;
@@ -18,28 +20,17 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
     @MandatoryProperty
     private Map<HardwareName, BigDecimal> thresholdsConfigs;
 
-    // NOTE: test-purposes
-    public static HardwareMonitoringConfigs of(
-            boolean enabled,
-            Map<HardwareName, BigDecimal> thresholdsConfigs
-    ) {
-        var instance = new HardwareMonitoringConfigs();
-        instance.enabled = enabled;
-        instance.thresholdsConfigs = thresholdsConfigs;
-        return instance;
-    }
-
-    // NOTE: test-purposes
     public static HardwareMonitoringConfigs disabled() {
-        return of(
+        return new HardwareMonitoringConfigs(
                 false,
                 new EnumMap<>(HardwareName.class)
         );

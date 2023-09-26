@@ -47,7 +47,7 @@ public class TestsPropertiesConstants {
             "Password123!",
             new String[] { randomEmailAsValue(), randomEmailAsValue() }
     );
-    public static final IncidentConfigs INCIDENT_CONFIGS = IncidentConfigs.of(
+    public static final IncidentConfigs INCIDENT_CONFIGS = new IncidentConfigs(
             true,
             RemoteServer.of(
                     "http://localhost:8973",
@@ -55,7 +55,7 @@ public class TestsPropertiesConstants {
                     "incident-password"
             )
     );
-    public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = HardwareMonitoringConfigs.of(
+    public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = new HardwareMonitoringConfigs(
             true,
             new EnumMap<>(
                     Map.of(

@@ -157,7 +157,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void hardwareMonitoringConfigsExceptionTest() {
         // Arrange
-        var hardwareMonitoringConfigs = HardwareMonitoringConfigs.of(
+        var hardwareMonitoringConfigs = new HardwareMonitoringConfigs(
                 true,
                 new HashMap<>() {{
                     put(HardwareName.CPU, new BigDecimal("80"));

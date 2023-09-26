@@ -28,12 +28,7 @@ public record ResponseUserSession2(
             UserRequestMetadata metadata
     ) {
         var current = cookie.value().equals(accessToken.value());
-        var activity = "";
-        if (current) {
-            activity = "Current session";
-        } else {
-            activity = "—";
-        }
+        var activity = current ? "Current session" : "—";
 
         var whereTuple3 = metadata.getWhereTuple3();
         var whatTuple2 = metadata.getWhatTuple2();

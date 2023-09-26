@@ -16,7 +16,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
-import static java.util.Objects.nonNull;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static java.util.Objects.isNull;
 
 // Lombok
 @NoArgsConstructor
@@ -29,40 +30,64 @@ import static java.util.Objects.nonNull;
 public class MongoDbUserSession {
     @Id
     private String id;
+    private long createdAt;
+    private long updatedAt;
     private Username username;
     private JwtAccessToken accessToken;
     private JwtRefreshToken refreshToken;
     private UserRequestMetadata metadata;
+    private boolean metadataRenewCron;
+    private boolean metadataRenewManually;
 
     public MongoDbUserSession(UserSession session) {
         if (session.persisted()) {
             this.id = session.id().value();
         }
+        var currentTimestamp = getCurrentTimestamp();
+        this.createdAt = currentTimestamp;
+        this.updatedAt = currentTimestamp;
         this.username = session.username();
         this.accessToken = session.accessToken();
         this.refreshToken = session.refreshToken();
         this.metadata = session.metadata();
-    }
-
-    @JsonIgnore
-    @Transient
-    public UserSession userSession() {
-        if (nonNull(this.id)) {
-            return ofPersisted(new UserSessionId(this.id), this.username, this.accessToken, this.refreshToken, this.metadata);
-        } else {
-            return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
-        }
-    }
-
-    @JsonIgnore
-    @Transient
-    public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
-        return ResponseUserSession2.of(new UserSessionId(this.id), this.username, cookie, this.accessToken, this.metadata);
+        this.metadataRenewCron = false;
+        this.metadataRenewManually = false;
     }
 
     @JsonIgnore
     @Transient
     public UserSessionId userSessionId() {
         return new UserSessionId(this.id);
+    }
+
+    @JsonIgnore
+    @Transient
+    public UserSession userSession() {
+        if (isNull(this.id)) {
+            return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
+        } else {
+            return ofPersisted(
+                    this.userSessionId(),
+                    this.createdAt,
+                    this.updatedAt,
+                    this.username,
+                    this.accessToken,
+                    this.refreshToken,
+                    this.metadata,
+                    this.metadataRenewCron,
+                    this.metadataRenewManually
+            );
+        }
+    }
+
+    @JsonIgnore
+    @Transient
+    public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
+        return ResponseUserSession2.of(
+                this.userSessionId(),
+                this.username, cookie,
+                this.accessToken,
+                this.metadata
+        );
     }
 }

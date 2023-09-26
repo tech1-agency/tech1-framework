@@ -10,8 +10,8 @@ import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.util.Collections.singletonList;
 
 @UtilityClass
@@ -43,13 +43,25 @@ public class BaseSecurityJwtDbRandomUtility {
     // =================================================================================================================
     // UserSessions
     // =================================================================================================================
-    public static UserSession session(String owner, String accessToken, String refreshToken) {
+    public static UserSession session(Username owner, JwtAccessToken accessToken, JwtRefreshToken refreshToken) {
         return UserSession.ofPersisted(
                 entity(UserSessionId.class),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                owner,
+                accessToken,
+                refreshToken,
+                randomUserRequestMetadata(),
+                randomBoolean(),
+                randomBoolean()
+        );
+    }
+
+    public static UserSession session(String owner, String accessToken, String refreshToken) {
+        return session(
                 Username.of(owner),
                 JwtAccessToken.of(accessToken),
-                JwtRefreshToken.of(refreshToken),
-                randomUserRequestMetadata()
+                JwtRefreshToken.of(refreshToken)
         );
     }
 

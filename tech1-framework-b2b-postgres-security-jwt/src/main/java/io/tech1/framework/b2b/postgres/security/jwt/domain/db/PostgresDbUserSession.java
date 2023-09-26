@@ -11,34 +11,28 @@ import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJ
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJwtRefreshTokenConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUserRequestMetadataConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgreDbAbstractPersistable1;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS_SESSIONS;
-import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 // JPA
 @Entity
 @Table(name = USERS_SESSIONS)
-public class PostgresDbUserSession {
-    @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-    @Column(length = 36, nullable = false, updatable = false)
-    private String id;
+public class PostgresDbUserSession extends PostgreDbAbstractPersistable1 {
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false)
@@ -56,6 +50,12 @@ public class PostgresDbUserSession {
     @Column(length = 65535, nullable = false)
     private UserRequestMetadata metadata;
 
+    @Column(name = "metadata_renew_cron",nullable = false)
+    private boolean metadataRenewCron;
+
+    @Column(name = "metadata_renew_manually",nullable = false)
+    private boolean metadataRenewManually;
+
     public PostgresDbUserSession(UserSession session) {
         if (session.persisted()) {
             this.id = session.id().value();
@@ -64,27 +64,44 @@ public class PostgresDbUserSession {
         this.accessToken = session.accessToken();
         this.refreshToken = session.refreshToken();
         this.metadata = session.metadata();
-    }
-
-    @JsonIgnore
-    @Transient
-    public UserSession userSession() {
-        if (nonNull(this.id)) {
-            return ofPersisted(new UserSessionId(this.id), this.username, this.accessToken, this.refreshToken, this.metadata);
-        } else {
-            return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
-        }
-    }
-
-    @JsonIgnore
-    @Transient
-    public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
-        return ResponseUserSession2.of(new UserSessionId(this.id), this.username, cookie, this.accessToken, this.metadata);
+        this.metadataRenewCron = false;
+        this.metadataRenewManually = false;
     }
 
     @JsonIgnore
     @Transient
     public UserSessionId userSessionId() {
         return new UserSessionId(this.id);
+    }
+
+    @JsonIgnore
+    @Transient
+    public UserSession userSession() {
+        if (this.isNew()) {
+            return ofNotPersisted(this.username, this.accessToken, this.refreshToken, this.metadata);
+        } else {
+            return ofPersisted(
+                    this.userSessionId(),
+                    this.createdAt,
+                    this.updatedAt,
+                    this.username,
+                    this.accessToken,
+                    this.refreshToken,
+                    this.metadata,
+                    this.metadataRenewCron,
+                    this.metadataRenewManually
+            );
+        }
+    }
+
+    @JsonIgnore
+    @Transient
+    public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
+        return ResponseUserSession2.of(
+                this.userSessionId(),
+                this.username, cookie,
+                this.accessToken,
+                this.metadata
+        );
     }
 }

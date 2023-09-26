@@ -14,7 +14,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
-import io.tech1.framework.domain.utilities.time.TimestampUtility;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -33,6 +32,7 @@ import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
 
 @UtilityClass
@@ -73,7 +73,7 @@ public class BaseSecurityJwtRandomUtility {
     public static Claims expiredClaims() {
         var claims = new DefaultClaims();
         claims.setSubject(TECH1.identifier());
-        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
+        var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);
         claims.setIssuedAt(issuedAt);
@@ -87,7 +87,17 @@ public class BaseSecurityJwtRandomUtility {
     }
 
     public static UserSession randomPersistedSession() {
-        return UserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class), randomUserRequestMetadata());
+        return UserSession.ofPersisted(
+                entity(UserSessionId.class),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                randomUsername(),
+                entity(JwtAccessToken.class),
+                entity(JwtRefreshToken.class),
+                randomUserRequestMetadata(),
+                randomBoolean(),
+                randomBoolean()
+        );
     }
 
     public static RequestUserRegistration1 registration1() {

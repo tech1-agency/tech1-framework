@@ -13,7 +13,6 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.enums.Status;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -39,6 +38,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.session;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomPersistedSession;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
@@ -141,7 +141,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var username = user.username();
         var accessToken = entity(JwtAccessToken.class);
         var refreshToken = entity(JwtRefreshToken.class);
-        var userSession = UserSession.ofPersisted(entity(UserSessionId.class), username, accessToken, refreshToken, entity(UserRequestMetadata.class));
+        var userSession = session(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
 
@@ -188,7 +188,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var accessToken = entity(JwtAccessToken.class);
         var refreshToken = entity(JwtRefreshToken.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
-        var userSession = UserSession.ofPersisted(entity(UserSessionId.class), username, accessToken, refreshToken, entity(UserRequestMetadata.class));
+        var userSession = session(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
 
         // Act
@@ -279,26 +279,20 @@ class AbstractBaseUsersSessionsServiceTest {
     void getExpiredSessionsTest() {
         // Arrange
         var usernames = new HashSet<>(Set.of(TECH1));
-        var sessionInvalidUserSession = UserSession.ofPersisted(
-                entity(UserSessionId.class),
+        var sessionInvalidUserSession = session(
                 randomUsername(),
                 entity(JwtAccessToken.class),
-                new JwtRefreshToken("<invalid>"),
-                entity(UserRequestMetadata.class)
+                new JwtRefreshToken("<invalid>")
         );
-        var sessionExpiredUserSession = UserSession.ofPersisted(
-                entity(UserSessionId.class),
+        var sessionExpiredUserSession = session(
                 randomUsername(),
                 entity(JwtAccessToken.class),
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8"),
-                entity(UserRequestMetadata.class)
+                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8")
         );
-        var sessionAliveUserSession = UserSession.ofPersisted(
-                entity(UserSessionId.class),
+        var sessionAliveUserSession = session(
                 randomUsername(),
                 entity(JwtAccessToken.class),
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY"),
-                entity(UserRequestMetadata.class)
+                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY")
         );
         var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
         when(this.usersSessionsRepository.findByUsernameInAsAny(usernames)).thenReturn(usersSessions);

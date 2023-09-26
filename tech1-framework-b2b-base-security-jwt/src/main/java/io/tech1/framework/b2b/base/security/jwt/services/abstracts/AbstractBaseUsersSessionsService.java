@@ -52,7 +52,17 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var metadata = UserRequestMetadata.processing(clientIpAddr);
         var session = userSessionTP.value();
         if (userSessionTP.present()) {
-            session = ofPersisted(session.id(), session.username(), session.accessToken(), session.refreshToken(), metadata);
+            session = ofPersisted(
+                    session.id(),
+                    session.createdAt(),
+                    session.updatedAt(),
+                    session.username(),
+                    session.accessToken(),
+                    session.refreshToken(),
+                    metadata,
+                    session.metadataRenewCron(),
+                    session.metadataRenewManually()
+            );
         } else {
             session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
@@ -94,10 +104,14 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
         var session = ofPersisted(
                 event.session().id(),
+                event.session().createdAt(),
+                event.session().updatedAt(),
                 event.session().username(),
                 event.session().accessToken(),
                 event.session().refreshToken(),
-                UserRequestMetadata.processed(geoLocation, userAgentDetails)
+                UserRequestMetadata.processed(geoLocation, userAgentDetails),
+                event.session().metadataRenewCron(),
+                event.session().metadataRenewManually()
         );
         return this.usersSessionsRepository.saveAs(session);
     }

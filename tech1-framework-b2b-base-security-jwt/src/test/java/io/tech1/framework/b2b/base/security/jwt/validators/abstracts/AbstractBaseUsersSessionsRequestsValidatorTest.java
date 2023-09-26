@@ -2,8 +2,6 @@ package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
@@ -22,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.verify;
@@ -91,18 +88,11 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     @Test
     void validateDeleteByIdOkTest() {
         // Arrange
-        var username = entity(Username.class);
-        var session = UserSession.ofPersisted(
-                entity(UserSessionId.class),
-                username,
-                entity(JwtAccessToken.class),
-                entity(JwtRefreshToken.class),
-                randomUserRequestMetadata()
-        );
+        var session = entity(UserSession.class);
         when(this.usersSessionsRepository.isPresent(session.id())).thenReturn(TuplePresence.present(session));
 
         // Act
-        this.componentUnderTest.validateDeleteById(username, session.id());
+        this.componentUnderTest.validateDeleteById(session.username(), session.id());
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(session.id());

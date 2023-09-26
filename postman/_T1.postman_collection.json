@@ -224,6 +224,27 @@
 					"response": []
 				},
 				{
+					"name": "Renew Manually",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/renew/manually/03892f67-c02c-4b84-8ec8-fc13d31ee65b",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions",
+								"renew",
+								"manually",
+								"03892f67-c02c-4b84-8ec8-fc13d31ee65b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete By Id",
 					"request": {
 						"method": "DELETE",

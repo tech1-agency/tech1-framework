@@ -51,14 +51,14 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     private final BaseUsersSessionsRequestsValidator componentUnderTest;
 
     @Test
-    void validateDeleteByIdNotFoundTest() {
+    void validateAccessNotFoundTest() {
         // Arrange
         var username = entity(Username.class);
         var sessionId = entity(UserSessionId.class);
         when(this.usersSessionsRepository.isPresent(sessionId)).thenReturn(TuplePresence.absent());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateAccess(username, sessionId));
 
         // Assert
         assertThat(throwable)
@@ -68,7 +68,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     }
 
     @Test
-    void validateDeleteByIdAccessDeniedTest() {
+    void validateAccessDeniedTest() {
         // Arrange
         var username = entity(Username.class);
         var sessionId = entity(UserSessionId.class);
@@ -76,7 +76,7 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
         when(this.usersSessionsRepository.isPresent(sessionId)).thenReturn(TuplePresence.present(session));
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, sessionId));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateAccess(username, sessionId));
 
         // Assert
         assertThat(throwable)
@@ -86,13 +86,13 @@ class AbstractBaseUsersSessionsRequestsValidatorTest {
     }
 
     @Test
-    void validateDeleteByIdOkTest() {
+    void validateAccessOkTest() {
         // Arrange
         var session = entity(UserSession.class);
         when(this.usersSessionsRepository.isPresent(session.id())).thenReturn(TuplePresence.present(session));
 
         // Act
-        this.componentUnderTest.validateDeleteById(session.username(), session.id());
+        this.componentUnderTest.validateAccess(session.username(), session.id());
 
         // Assert
         verify(this.usersSessionsRepository).isPresent(session.id());

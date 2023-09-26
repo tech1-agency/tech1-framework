@@ -12,25 +12,8 @@ env:
   POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
 
 jobs:
-  init:
-    runs-on: ubuntu-latest
-    outputs:
-      docker_tag: ${{ steps.setvars.outputs.docker_tag }}
-    steps:
-      - name: Set variables
-        id: setvars
-        run: |
-          if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
-            echo "docker_tag=dev" >> $GITHUB_OUTPUT
-          fi
-
-          if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
-            echo "docker_tag=prod" >> $GITHUB_OUTPUT
-          fi
-
   build:
     runs-on: ubuntu-latest
-    needs: init
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -74,14 +57,14 @@ jobs:
       - name: Docker [mongodb]
         run: |
           cd tech1-framework-b2b-mongodb-server
-          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{ needs.init.outputs.docker_tag }} .
-          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{ needs.init.outputs.docker_tag }}
+          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}} .
+          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}}
 
       - name: Docker [postgres]
         run: |
           cd tech1-framework-b2b-postgres-server
-          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{ needs.init.outputs.docker_tag }} .
-          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{ needs.init.outputs.docker_tag }}
+          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}} .
+          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}}
 
       - name: Mails
         if: always()

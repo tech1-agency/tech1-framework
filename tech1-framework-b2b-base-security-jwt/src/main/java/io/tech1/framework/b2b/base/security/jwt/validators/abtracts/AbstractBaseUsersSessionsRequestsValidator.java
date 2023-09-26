@@ -7,8 +7,8 @@ import io.tech1.framework.domain.base.Username;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsRequestsValidator implements BaseUsersSessionsRequestsValidator {
@@ -17,10 +17,7 @@ public abstract class AbstractBaseUsersSessionsRequestsValidator implements Base
     protected final UsersSessionsRepository usersSessionsRepository;
 
     @Override
-    public void validateDeleteById(Username username, UserSessionId sessionId) {
-        assertNonNullOrThrow(sessionId, invalidAttribute("sessionId"));
-        assertNonNullOrThrow(username, invalidAttribute("owner"));
-
+    public void validateAccess(Username username, UserSessionId sessionId) {
         var tuplePresence = this.usersSessionsRepository.isPresent(sessionId);
 
         if (!tuplePresence.present()) {

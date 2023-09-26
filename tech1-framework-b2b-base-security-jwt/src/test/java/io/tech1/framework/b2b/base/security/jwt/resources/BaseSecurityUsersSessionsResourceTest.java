@@ -26,8 +26,7 @@ import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -121,6 +120,25 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
     }
 
     @Test
+    void renewManuallyTest() throws Exception {
+        // Arrange
+        var username = entity(Username.class);
+        var sessionId = entity(UserSessionId.class);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
+
+        // Act
+        this.mvc.perform(
+                        post("/sessions/renew/manually/" + sessionId)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.currentSessionAssistant).getCurrentUsername();
+        verify(this.baseUsersSessionsRequestsValidator).validateAccess(username, sessionId);
+        verify(this.baseUsersSessionsService).enableMetadataRenewManually(sessionId);
+    }
+
+    @Test
     void deleteByIdTest() throws Exception {
         // Arrange
         var username = entity(Username.class);
@@ -133,7 +151,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsRequestsValidator).validateDeleteById(username, sessionId);
+        verify(this.baseUsersSessionsRequestsValidator).validateAccess(username, sessionId);
         verify(this.baseUsersSessionsService).deleteById(sessionId);
     }
 

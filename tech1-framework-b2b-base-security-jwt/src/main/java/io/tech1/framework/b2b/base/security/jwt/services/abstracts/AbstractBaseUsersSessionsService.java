@@ -170,16 +170,30 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void enableMetadataRenewCron() {
+    public void enableUserRequestMetadataRenewCron() {
         this.usersSessionsRepository.enableMetadataRenewCron();
     }
 
     @Override
-    public void enableMetadataRenewManually(JwtUser user, UserSessionId sessionId, HttpServletRequest httpServletRequest) {
+    public void renewUserRequestMetadataCron(Username username, UserSession session, HttpServletRequest httpServletRequest) {
+        if (session.metadataRenewCron()) {
+            this.securityJwtPublisher.publishSessionUserRequestMetadataRenewCron(
+                    new EventSessionUserRequestMetadataRenewCron(
+                            username,
+                            session,
+                            getClientIpAddr(httpServletRequest),
+                            new UserAgentHeader(httpServletRequest)
+                    )
+            );
+        }
+    }
+
+    @Override
+    public void renewUserRequestMetadataManually(Username username, UserSessionId sessionId, HttpServletRequest httpServletRequest) {
         var session = this.usersSessionsRepository.enableMetadataRenewManually(sessionId);
         this.securityJwtPublisher.publishSessionUserRequestMetadataRenewManually(
                 new EventSessionUserRequestMetadataRenewManually(
-                        user.username(),
+                        username,
                         session,
                         getClientIpAddr(httpServletRequest),
                         new UserAgentHeader(httpServletRequest)

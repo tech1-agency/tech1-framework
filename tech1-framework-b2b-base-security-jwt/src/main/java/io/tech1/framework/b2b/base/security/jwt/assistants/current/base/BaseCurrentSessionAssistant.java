@@ -1,13 +1,18 @@
 package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
+import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -29,8 +35,12 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
 
     // Sessions
     protected final SessionRegistry sessionRegistry;
+    // Repositories
+    protected final UsersSessionsRepository usersSessionsRepository;
     // Stores
     protected final HardwareMonitoringStore hardwareMonitoringStore;
+    // Cookies
+    protected final CookieProvider cookieProvider;
     // Utilities
     protected final SecurityPrincipalUtils securityPrincipalUtils;
     // Properties
@@ -63,6 +73,12 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
                 user.authorities(),
                 attributes
         );
+    }
+
+    @Override
+    public UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+        return this.usersSessionsRepository.isPresent(JwtAccessToken.of(cookie.value())).value();
     }
 
     @Override

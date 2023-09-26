@@ -145,7 +145,7 @@ class SessionsCronTest {
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         if (cron.isEnabled()) {
-            verify(this.baseUsersSessionsService).enableMetadataRenewCron();
+            verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewCron();
         }
     }
 }

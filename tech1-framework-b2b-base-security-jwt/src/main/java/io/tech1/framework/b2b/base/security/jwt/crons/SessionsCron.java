@@ -53,7 +53,7 @@ public class SessionsCron extends AbstractBaseCron {
     public void enableSessionsMetadataRenew() {
         this.executeCron(
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
-                this.baseUsersSessionsService::enableMetadataRenewCron
+                this.baseUsersSessionsService::enableUserRequestMetadataRenewCron
         );
     }
 }

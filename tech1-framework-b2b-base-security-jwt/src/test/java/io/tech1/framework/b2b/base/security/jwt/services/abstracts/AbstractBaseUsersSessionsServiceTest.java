@@ -425,33 +425,87 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
-    void enableMetadataRenewCronTest() {
+    void enableUserRequestMetadataRenewCronTest() {
         // Act
-        this.componentUnderTest.enableMetadataRenewCron();
+        this.componentUnderTest.enableUserRequestMetadataRenewCron();
 
         // Assert
         verify(this.usersSessionsRepository).enableMetadataRenewCron();
     }
 
     @Test
-    void enableMetadataRenewManuallyTest() {
+    void renewUserRequestMetadataCronDisabledTest() {
+        // Arrange
+        var httpServletRequest = mock(HttpServletRequest.class);
+        var username = entity(Username.class);
+        var session = UserSession.ofPersisted(
+                entity(UserSessionId.class),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                randomUsername(),
+                entity(JwtAccessToken.class),
+                entity(JwtRefreshToken.class),
+                randomUserRequestMetadata(),
+                false,
+                randomBoolean()
+        );
+
+        // Act
+        this.componentUnderTest.renewUserRequestMetadataCron(username, session, httpServletRequest);
+
+        // Assert
+        verifyNoMoreInteractions(this.securityJwtPublisher);
+    }
+
+    @Test
+    void renewUserRequestMetadataCronEnabledTest() {
+        // Arrange
+        var httpServletRequest = mock(HttpServletRequest.class);
+        var username = entity(Username.class);
+        var session = UserSession.ofPersisted(
+                entity(UserSessionId.class),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                randomUsername(),
+                entity(JwtAccessToken.class),
+                entity(JwtRefreshToken.class),
+                randomUserRequestMetadata(),
+                true,
+                randomBoolean()
+        );
+
+        // Act
+        this.componentUnderTest.renewUserRequestMetadataCron(username, session, httpServletRequest);
+
+        // Assert
+        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenewCron.class);
+        verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenewCron(eventAC.capture());
+        var event = eventAC.getValue();
+        assertThat(event.username()).isEqualTo(username);
+        assertThat(event.session()).isEqualTo(session);
+        assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
+        assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
+    }
+
+    @Test
+    void renewUserRequestMetadataManuallyTest() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
-        var user = entity(JwtUser.class);
+        var username = entity(Username.class);
         var session = entity(UserSession.class);
         var sessionId = entity(UserSessionId.class);
         when(this.usersSessionsRepository.enableMetadataRenewManually(sessionId)).thenReturn(session);
 
         // Act
-        this.componentUnderTest.enableMetadataRenewManually(user, sessionId, httpServletRequest);
+        this.componentUnderTest.renewUserRequestMetadataManually(username, sessionId, httpServletRequest);
 
         // Assert
         verify(this.usersSessionsRepository).enableMetadataRenewManually(sessionId);
         var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenewManually.class);
         verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenewManually(eventAC.capture());
         var event = eventAC.getValue();
-        assertThat(event.username()).isEqualTo(user.username());
+        assertThat(event.username()).isEqualTo(username);
         assertThat(event.session()).isEqualTo(session);
         assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
         assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));

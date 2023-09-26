@@ -9,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUse
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class BaseSecurityUsersSessionsResource {
     private final CookieProvider cookieProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
+    // Properties
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @GetMapping
     public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
@@ -41,15 +44,20 @@ public class BaseSecurityUsersSessionsResource {
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser() {
-        return this.currentSessionAssistant.getCurrentClientUser();
+    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+        var user = this.currentSessionAssistant.getCurrentClientUser();
+        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled()) {
+            var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
+            this.baseUsersSessionsService.renewUserRequestMetadataCron(user.getUsername(), session, httpServletRequest);
+        }
+        return user;
     }
 
     @PostMapping("/renew/manually/{sessionId}")
     public void renewManually(@PathVariable UserSessionId sessionId, HttpServletRequest httpServletRequest) {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersSessionsRequestsValidator.validateAccess(user.username(), sessionId);
-        this.baseUsersSessionsService.enableMetadataRenewManually(user, sessionId, httpServletRequest);
+        this.baseUsersSessionsService.renewUserRequestMetadataManually(user.username(), sessionId, httpServletRequest);
     }
 
     @DeleteMapping("/{sessionId}")

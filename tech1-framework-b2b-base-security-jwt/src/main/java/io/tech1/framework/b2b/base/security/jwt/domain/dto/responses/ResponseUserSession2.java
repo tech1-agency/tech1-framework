@@ -7,6 +7,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 
+// TODO [yy] add new fields
 public record ResponseUserSession2(
         UserSessionId id,
         Username who,

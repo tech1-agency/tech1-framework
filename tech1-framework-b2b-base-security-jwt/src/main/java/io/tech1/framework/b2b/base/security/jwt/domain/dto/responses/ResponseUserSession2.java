@@ -5,14 +5,15 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.time.TimeAgo;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 
-// TODO [yy] add new fields
 public record ResponseUserSession2(
         UserSessionId id,
         Username who,
         boolean current,
         String activity,
+        TimeAgo when,
         TupleExceptionDetails exception,
         String ipAddr,
         String countryFlag,
@@ -23,6 +24,7 @@ public record ResponseUserSession2(
 
     public static ResponseUserSession2 of(
             UserSessionId id,
+            long updatedAt,
             Username username,
             CookieAccessToken cookie,
             JwtAccessToken accessToken,
@@ -39,6 +41,7 @@ public record ResponseUserSession2(
                 username,
                 current,
                 activity,
+                new TimeAgo(updatedAt),
                 metadata.getException(),
                 whereTuple3.a(),
                 whereTuple3.b(),

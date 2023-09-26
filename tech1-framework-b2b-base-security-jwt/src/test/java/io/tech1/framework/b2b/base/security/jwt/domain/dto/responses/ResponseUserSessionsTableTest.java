@@ -15,6 +15,7 @@ import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_USA;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResponseUserSessionsTableTest {
@@ -37,6 +38,7 @@ class ResponseUserSessionsTableTest {
         var username = randomUsername();
         var responseUserSession21 = ResponseUserSession2.of(
                 entity(UserSessionId.class),
+                getCurrentTimestamp(),
                 username,
                 new CookieAccessToken(randomString()),
                 new JwtAccessToken("token1"),
@@ -47,6 +49,7 @@ class ResponseUserSessionsTableTest {
         );
         var responseUserSession22 = ResponseUserSession2.of(
                 entity(UserSessionId.class),
+                getCurrentTimestamp(),
                 username,
                 new CookieAccessToken("token2"),
                 new JwtAccessToken("token2"),
@@ -57,6 +60,7 @@ class ResponseUserSessionsTableTest {
         );
         var responseUserSession23 = ResponseUserSession2.of(
                 entity(UserSessionId.class),
+                getCurrentTimestamp(),
                 username,
                 new CookieAccessToken(randomString()),
                 new JwtAccessToken("token3"),

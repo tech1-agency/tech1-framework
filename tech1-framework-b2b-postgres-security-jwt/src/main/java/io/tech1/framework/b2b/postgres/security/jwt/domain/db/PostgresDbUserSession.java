@@ -99,7 +99,9 @@ public class PostgresDbUserSession extends PostgreDbAbstractPersistable1 {
     public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
         return ResponseUserSession2.of(
                 this.userSessionId(),
-                this.username, cookie,
+                this.updatedAt,
+                this.username,
+                cookie,
                 this.accessToken,
                 this.metadata
         );

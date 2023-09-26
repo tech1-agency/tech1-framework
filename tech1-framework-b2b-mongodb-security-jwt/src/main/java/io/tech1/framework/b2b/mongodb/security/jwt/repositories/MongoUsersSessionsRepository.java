@@ -86,6 +86,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.setMetadataRenewCron(true);
     }
 
+    default void enableMetadataRenewManually(UserSessionId sessionId) {
+        this.setMetadataRenewManually(sessionId.value(), true);
+    }
+
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }
@@ -123,6 +127,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     @Query("{}")
     @Update("{ '$set': { 'metadataRenewCron': ?0 } }")
     void setMetadataRenewCron(boolean flag);
+
+    @Query("{ 'id' : ?0}")
+    @Update("{ '$set': { 'metadataRenewManually': ?1 } }")
+    void setMetadataRenewManually(String sessionId, boolean flag);
 
     @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
     void deleteByUsernames(Set<Username> usernames);

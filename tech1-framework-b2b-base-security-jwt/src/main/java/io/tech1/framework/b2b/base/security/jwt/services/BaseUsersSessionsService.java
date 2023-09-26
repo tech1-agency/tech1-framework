@@ -19,6 +19,7 @@ public interface BaseUsersSessionsService {
     UserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event);
     SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
     void enableMetadataRenewCron();
+    void enableMetadataRenewManually(UserSessionId sessionId);
     void deleteById(UserSessionId sessionId);
     void deleteAllExceptCurrent(Username username, CookieAccessToken cookie);
     void deleteAllExceptCurrentAsSuperuser(CookieAccessToken cookie);

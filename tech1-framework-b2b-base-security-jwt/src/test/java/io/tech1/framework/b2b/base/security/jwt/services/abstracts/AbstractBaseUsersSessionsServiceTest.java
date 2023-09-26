@@ -324,6 +324,18 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
+    void enableMetadataRenewManuallyTest() {
+        // Arrange
+        var sessionId = entity(UserSessionId.class);
+
+        // Act
+        this.componentUnderTest.enableMetadataRenewManually(sessionId);
+
+        // Assert
+        verify(this.usersSessionsRepository).enableMetadataRenewManually(sessionId);
+    }
+
+    @Test
     void deleteByIdTest() {
         // Arrange
         var sessionId = entity(UserSessionId.class);

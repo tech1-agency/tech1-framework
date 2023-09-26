@@ -124,6 +124,34 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
     }
 
     @Test
+    void enableMetadataRenewManuallyTest() {
+        // Arrange
+        var saved1 = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+
+        // Assert-0
+        assertThat(toMetadataRenewCron(saved1))
+                .hasSize(1)
+                .contains(false);
+        var sessionId1 = UserSessionId.of(saved1.get(2).getId());
+        var sessionId2 = UserSessionId.of(saved1.get(5).getId());
+
+        // Act
+        this.usersSessionsRepository.enableMetadataRenewManually(sessionId1);
+        this.usersSessionsRepository.enableMetadataRenewManually(sessionId2);
+
+        // Assert-1
+        var sessions = this.usersSessionsRepository.findAll();
+        sessions.forEach(session -> {
+            var sessionId = session.getId();
+            if (sessionId1.value().equals(sessionId) || sessionId2.value().equals(sessionId)) {
+                assertThat(session.isMetadataRenewManually()).isTrue();
+            } else {
+                assertThat(session.isMetadataRenewManually()).isFalse();
+            }
+        });
+    }
+
+    @Test
     void deletionIntegrationTests() {
         // Arrange
         var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());

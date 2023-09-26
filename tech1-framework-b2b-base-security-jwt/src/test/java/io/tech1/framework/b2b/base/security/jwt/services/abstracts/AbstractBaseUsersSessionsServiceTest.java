@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -13,6 +14,8 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.enums.Status;
+import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -256,12 +259,10 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
-    void saveUserRequestMetadataTest() {
-        // Arrange
+    void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(EventSessionUserRequestMetadataAdd.class);
         var geoLocation = randomGeoLocation();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
-        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
 
         // Act
@@ -269,10 +270,52 @@ class AbstractBaseUsersSessionsServiceTest {
 
         // Assert
         verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
+        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         var requestMetadata = userSessionAC.getValue().metadata();
         assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
         assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
+    }
+
+    @Test
+    void saveUserRequestMetadataEventSessionUserRequestMetadataRenewTest() {
+        var event = entity(EventSessionUserRequestMetadataRenew.class);
+        var geoLocation = randomGeoLocation();
+        when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
+        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
+
+        // Act
+        this.componentUnderTest.saveUserRequestMetadata(event);
+
+        // Assert
+        verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
+        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
+        var requestMetadata = userSessionAC.getValue().metadata();
+        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
+        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
+    }
+
+    @Test
+    void saveUserRequestMetadataTest() {
+        // Arrange
+        var session = entity(UserSession.class);
+        var clientIpAddr = entity(IPAddress.class);
+        var userAgentHeader = entity(UserAgentHeader.class);
+        var geoLocation = randomGeoLocation();
+        when(this.geoLocationFacadeUtility.getGeoLocation(clientIpAddr)).thenReturn(geoLocation);
+        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(session);
+
+        // Act
+        this.componentUnderTest.saveUserRequestMetadata(session, clientIpAddr, userAgentHeader);
+
+        // Assert
+        verify(this.geoLocationFacadeUtility).getGeoLocation(clientIpAddr);
+        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
+        verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
+        var requestMetadata = userSessionAC.getValue().metadata();
+        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
+        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(userAgentHeader));
     }
 
     @Test

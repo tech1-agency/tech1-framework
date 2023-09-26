@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -13,6 +14,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsReposi
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
@@ -100,20 +102,38 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
 
     @Override
     public UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
-        var session = ofPersisted(
-                event.session().id(),
-                event.session().createdAt(),
-                event.session().updatedAt(),
-                event.session().username(),
-                event.session().accessToken(),
-                event.session().refreshToken(),
-                UserRequestMetadata.processed(geoLocation, userAgentDetails),
-                event.session().metadataRenewCron(),
-                event.session().metadataRenewManually()
+        return this.saveUserRequestMetadata(
+                event.session(),
+                event.clientIpAddr(),
+                event.userAgentHeader()
         );
-        return this.usersSessionsRepository.saveAs(session);
+    }
+
+    @Override
+    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenew event) {
+        this.saveUserRequestMetadata(
+                event.session(),
+                event.clientIpAddr(),
+                event.userAgentHeader()
+        );
+    }
+
+    @Override
+    public UserSession saveUserRequestMetadata(UserSession session, IPAddress clientIpAddr, UserAgentHeader userAgentHeader) {
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(clientIpAddr);
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(userAgentHeader);
+        var sessionProcessedMetadata = ofPersisted(
+                session.id(),
+                session.createdAt(),
+                session.updatedAt(),
+                session.username(),
+                session.accessToken(),
+                session.refreshToken(),
+                UserRequestMetadata.processed(geoLocation, userAgentDetails),
+                session.metadataRenewCron(),
+                session.metadataRenewManually()
+        );
+        return this.usersSessionsRepository.saveAs(sessionProcessedMetadata);
     }
 
     @Override

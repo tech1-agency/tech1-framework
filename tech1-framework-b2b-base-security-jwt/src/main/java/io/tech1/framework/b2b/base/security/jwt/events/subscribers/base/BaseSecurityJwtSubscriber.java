@@ -98,4 +98,10 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
             );
         }
     }
+
+    @Override
+    public void onSessionRenewUserRequestMetadata(EventSessionUserRequestMetadataRenew event) {
+        LOGGER.debug(SECURITY_JWT_SESSION_RENEW_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
+        this.baseUsersSessionsService.saveUserRequestMetadata(event);
+    }
 }

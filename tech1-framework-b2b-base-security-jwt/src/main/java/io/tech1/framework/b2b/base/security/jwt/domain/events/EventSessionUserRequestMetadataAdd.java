@@ -16,5 +16,4 @@ public record EventSessionUserRequestMetadataAdd(
         boolean isAuthenticationLoginEndpoint,
         boolean isAuthenticationRefreshTokenEndpoint
 ) {
-
 }

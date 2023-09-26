@@ -121,7 +121,7 @@ public class TestsPropertiesConstants {
                     Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
                     Cron.enabled("*/15 * * * * *", "Europe/Kiev")
             ),
-            UsersEmailsConfigs.of(
+            new UsersEmailsConfigs(
                     "[Tech1]",
                     Checkbox.enabled(),
                     Checkbox.enabled()

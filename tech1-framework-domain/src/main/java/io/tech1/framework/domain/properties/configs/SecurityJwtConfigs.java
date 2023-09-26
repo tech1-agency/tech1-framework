@@ -75,7 +75,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     // NOTE: test-purposes
     public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
         var instance = new SecurityJwtConfigs();
-        instance.usersEmailsConfigs = UsersEmailsConfigs.of(
+        instance.usersEmailsConfigs = new UsersEmailsConfigs(
                 "[Tech1]",
                 Checkbox.disabled(),
                 Checkbox.disabled()

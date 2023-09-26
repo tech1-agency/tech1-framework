@@ -1,6 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.crons;
 
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.domain.crons.AbstractBaseCron;
+import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,25 +14,33 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SessionsCron {
+public class SessionsCron extends AbstractBaseCron {
 
     // Sessions
     private final SessionRegistry sessionRegistry;
+    // Incidents
+    private final IncidentPublisher incidentPublisher;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
+    @Override
+    public void processException(Exception ex) {
+        this.incidentPublisher.publishThrowable(ex);
+    }
 
     @Scheduled(
             cron = "${tech1.securityJwtConfigs.sessionConfigs.cleanSessionsByExpiredRefreshTokensCron.expression}",
             zone = "${tech1.securityJwtConfigs.sessionConfigs.cleanSessionsByExpiredRefreshTokensCron.zoneId}"
     )
     public void cleanByExpiredRefreshTokens() {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled()) {
-            var usernames = this.sessionRegistry.getActiveSessionsUsernames();
-            LOGGER.debug("Sessions cleanup by expired JWT refresh tokens executed. Alive users: `{}`", usernames.size());
-            this.sessionRegistry.cleanByExpiredRefreshTokens(usernames);
-        } else {
-            LOGGER.debug("Sessions cleanup by expired JWT refresh tokens is disabled");
-        }
+        this.executeCron(
+                this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
+                () -> {
+                    var usernames = this.sessionRegistry.getActiveSessionsUsernames();
+                    LOGGER.warn("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: `{}`", usernames.size());
+                    this.sessionRegistry.cleanByExpiredRefreshTokens(usernames);
+                }
+        );
     }
 
     @Scheduled(
@@ -38,10 +48,11 @@ public class SessionsCron {
             zone = "${tech1.securityJwtConfigs.sessionConfigs.cleanSessionsByExpiredRefreshTokensCron.zoneId}"
     )
     public void enableSessionsMetadataRenew() {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled()) {
-            // WARNING: add session registry business method
-        } else {
-            LOGGER.debug("Sessions renew metadata cron is disabled");
-        }
+        this.executeCron(
+                this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
+                () -> {
+                    // WARNING: add session registry business method
+                }
+        );
     }
 }

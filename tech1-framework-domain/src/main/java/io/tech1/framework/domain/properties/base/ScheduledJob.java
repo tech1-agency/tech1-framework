@@ -1,39 +1,29 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 public class ScheduledJob implements AbstractToggleProperty {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
     @MandatoryProperty
     private SchedulerConfiguration configuration;
 
-    // NOTE: test-purposes
-    public static ScheduledJob of(
-            boolean enabled,
-            SchedulerConfiguration configuration
-    ) {
-        var instance = new ScheduledJob();
-        instance.enabled = enabled;
-        instance.configuration = configuration;
-        return instance;
-    }
-
-    // NOTE: test-purposes
     public static ScheduledJob enabled() {
-        return ScheduledJob.of(
+        return new ScheduledJob(
                 true,
                 null
         );
     }
 
 
-    // NOTE: test-purposes
     public static ScheduledJob disabled() {
-        return ScheduledJob.of(
+        return new ScheduledJob(
                 false,
                 null
         );

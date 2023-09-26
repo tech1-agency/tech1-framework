@@ -1,24 +1,19 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
-public class JwtToken {
+@EqualsAndHashCode(callSuper = true)
+public class JwtToken extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String cookieKey;
+    private final String cookieKey;
     @MandatoryProperty
-    private TimeAmount expiration;
-
-    // NOTE: test-purposes
-    public static JwtToken of(
-            String cookieKey,
-            TimeAmount expiration
-    ) {
-        var instance = new JwtToken();
-        instance.cookieKey = cookieKey;
-        instance.expiration = expiration;
-        return instance;
-    }
+    private final TimeAmount expiration;
 }

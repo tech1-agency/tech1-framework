@@ -29,7 +29,7 @@ public class TestsPropertiesConstants {
     public static final MvcConfigs MVC_CONFIGS = new MvcConfigs(
             true,
             "/framework/security",
-            CorsConfigs.of(
+            new CorsConfigs(
                     "/api/**",
                     new String[] { "http://localhost:8080", "http://localhost:8081" },
                     new String[] { "GET", "POST" },
@@ -49,7 +49,7 @@ public class TestsPropertiesConstants {
     );
     public static final IncidentConfigs INCIDENT_CONFIGS = new IncidentConfigs(
             true,
-            RemoteServer.of(
+            new RemoteServer(
                     "http://localhost:8973",
                     "incident-username",
                     "incident-password"
@@ -70,33 +70,34 @@ public class TestsPropertiesConstants {
     public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = new HardwareServerConfigs(
             "http://localhost:8484"
     );
-    public static final SecurityJwtConfigs SECURITY_JWT_CONFIGS = SecurityJwtConfigs.of(
-            AuthoritiesConfigs.of(
+    public static final SecurityJwtConfigs SECURITY_JWT_CONFIGS = new SecurityJwtConfigs(
+            new AuthoritiesConfigs(
                     "io.tech1",
                     Set.of(
-                            Authority.of(SUPER_ADMIN),
-                            Authority.of("admin"),
-                            Authority.of("user"),
-                            Authority.of(INVITATION_CODE_READ),
-                            Authority.of(INVITATION_CODE_WRITE)
+                            new Authority(SUPER_ADMIN),
+                            new Authority("admin"),
+                            new Authority("user"),
+                            new Authority(INVITATION_CODE_READ),
+                            new Authority(INVITATION_CODE_WRITE)
                     )
             ),
-            CookiesConfigs.of("tech1.io", TimeAmount.of(5L, SECONDS)),
-            EssenceConfigs.of(
-                    DefaultUsers.of(
+            new CookiesConfigs("tech1.io", new TimeAmount(5L, SECONDS)),
+            new EssenceConfigs(
+                    new DefaultUsers(
                             true,
                             List.of(
-                                    DefaultUser.of(
+                                   new DefaultUser(
                                             "admin12",
                                             "password12",
                                             ZoneId.systemDefault(),
+                                            null,
                                             List.of("admin")
                                     )
                             )
                     ),
                     InvitationCodes.enabled()
             ),
-            IncidentsConfigs.of(
+            new IncidentsConfigs(
                     new EnumMap<>(
                             Map.of(
                                     AUTHENTICATION_LOGIN, true,
@@ -111,13 +112,13 @@ public class TestsPropertiesConstants {
                             )
                     )
             ),
-            JwtTokensConfigs.of(
+            new JwtTokensConfigs(
                     "TECH1",
-                    JwtToken.of("ajwt", TimeAmount.of(30L, SECONDS)),
-                    JwtToken.of("rjwt", TimeAmount.of(12L, HOURS))
+                    new JwtToken("ajwt", new TimeAmount(30L, SECONDS)),
+                    new JwtToken("rjwt", new TimeAmount(12L, HOURS))
             ),
-            LoggingConfigs.of(true),
-            SessionConfigs.of(
+            new LoggingConfigs(true),
+            new SessionConfigs(
                     Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
                     Cron.enabled("*/15 * * * * *", "Europe/Kiev")
             ),
@@ -128,16 +129,16 @@ public class TestsPropertiesConstants {
             )
     );
 
-    public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = SecurityJwtWebsocketsConfigs.of(
-            CsrfConfigs.of("csrf-cookie", "csrf-header", "csrf-parameter"),
-            StompEndpointRegistryConfigs.of("/endpoint"),
-            MessageBrokerRegistryConfigs.of("/app", "/queue", "/user"),
-            WebsocketsFeaturesConfigs.of(
-                    WebsocketsFeatureHardwareConfigs.of(true, "/account")
+    public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = new SecurityJwtWebsocketsConfigs(
+            new CsrfConfigs("csrf-cookie", "csrf-header", "csrf-parameter"),
+            new StompEndpointRegistryConfigs("/endpoint"),
+            new MessageBrokerRegistryConfigs("/app", "/queue", "/user"),
+            new WebsocketsFeaturesConfigs(
+                    new WebsocketsFeatureHardwareConfigs(true, "/account")
             )
     );
 
-    public static final MongodbSecurityJwtConfigs MONGODB_SECURITY_JWT_CONFIGS = MongodbSecurityJwtConfigs.of(
-            Mongodb.of("127.0.0.1", 27017, "tech1_framework_server")
+    public static final MongodbSecurityJwtConfigs MONGODB_SECURITY_JWT_CONFIGS = new MongodbSecurityJwtConfigs(
+            Mongodb.noSecurity("127.0.0.1", 27017, "tech1_framework_server")
     );
 }

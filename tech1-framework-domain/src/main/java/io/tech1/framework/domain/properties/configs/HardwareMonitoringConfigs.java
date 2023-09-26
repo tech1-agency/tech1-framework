@@ -2,6 +2,7 @@ package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.utilities.enums.EnumUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,7 @@ import static org.apache.commons.collections4.SetUtils.disjunction;
 public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryProperty
+    @NonMandatoryProperty
     private Map<HardwareName, BigDecimal> thresholdsConfigs;
 
     public static HardwareMonitoringConfigs disabled() {

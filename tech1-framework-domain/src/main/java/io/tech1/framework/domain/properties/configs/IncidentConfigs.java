@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.base.RemoteServer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class IncidentConfigs extends AbstractPropertiesToggleConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryProperty
+    @NonMandatoryProperty
     private RemoteServer remoteServer;
 
     public static IncidentConfigs disabled() {

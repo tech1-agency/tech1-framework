@@ -101,7 +101,7 @@ public class PropertiesAsserter {
                         var propertyName = getPropertyName(method);
                         var declaredField = property.getClass().getDeclaredField(propertyName);
                         return declaredField.isAnnotationPresent(MandatoryProperty.class) && !declaredField.isAnnotationPresent(NonMandatoryProperty.class);
-                    } catch (NoSuchFieldException e) {
+                    } catch (NoSuchFieldException ex) {
                         return true;
                     }
                 })

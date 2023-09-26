@@ -62,7 +62,7 @@ public class BaseSecurityJwtRandomUtility {
     public static Claims validClaims() {
         var claims = new DefaultClaims();
         claims.setSubject(TECH1.identifier());
-        var timeAmount = TimeAmount.of(1, ChronoUnit.HOURS);
+        var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.setIssuedAt(getIssuedAt());
         claims.setExpiration(expiration);

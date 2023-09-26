@@ -3,27 +3,18 @@ package io.tech1.framework.domain.properties.configs.security.jwt;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Cron;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
-// TODO [yy] -> properties V2.0
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SessionConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private Cron cleanSessionsByExpiredRefreshTokensCron;
+    private final Cron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty
-    private Cron enableSessionsMetadataRenewCron;
-
-    // NOTE: test-purposes
-    public static SessionConfigs of(
-            Cron cleanSessionsByExpiredRefreshTokensCron,
-            Cron enableSessionsMetadataRenewCron
-    ) {
-        var instance = new SessionConfigs();
-        instance.cleanSessionsByExpiredRefreshTokensCron = cleanSessionsByExpiredRefreshTokensCron;
-        instance.enableSessionsMetadataRenewCron = enableSessionsMetadataRenewCron;
-        return instance;
-    }
+    private final Cron enableSessionsMetadataRenewCron;
 }

@@ -4,30 +4,20 @@ package io.tech1.framework.domain.properties.base;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 public class RemoteServer {
     @MandatoryProperty
-    private String baseURL;
+    private final String baseURL;
     @MandatoryProperty
-    private String username;
+    private final String username;
     @MandatoryProperty
-    private String password;
-
-    // NOTE: test-purposes
-    public static RemoteServer of(
-            String baseURL,
-            String username,
-            String password
-    ) {
-        var instance = new RemoteServer();
-        instance.baseURL = baseURL;
-        instance.username = username;
-        instance.password = password;
-        return instance;
-    }
+    private final String password;
 
     public Username getUsername() {
         return new Username(this.username);

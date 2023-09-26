@@ -19,14 +19,14 @@ class DefaultUsersTest {
                 Arguments.of(null, emptySet()),
                 Arguments.of(
                         List.of(
-                                DefaultUser.of("user1", "pass1", systemDefault(), null)
+                                new DefaultUser("user1", "pass1", systemDefault(), null, null)
                         ),
                         emptySet()
                 ),
                 Arguments.of(
                         List.of(
-                                DefaultUser.of("user1", "pass1", systemDefault(), List.of("user")),
-                                DefaultUser.of("user2", "pass2", systemDefault(), List.of("admin", "user"))
+                                new DefaultUser("user1", "pass1", systemDefault(), null, List.of("user")),
+                                new DefaultUser("user2", "pass2", systemDefault(), null, List.of("admin", "user"))
                         ),
                         Set.of("user", "admin")
                 )
@@ -37,7 +37,7 @@ class DefaultUsersTest {
     @MethodSource("getDefaultUsersAuthoritiesTest")
     void getDefaultUsersAuthoritiesTest(List<DefaultUser> users, Set<String> expected) {
         // Arrange
-        var defaultUsers = DefaultUsers.of(true, users);
+        var defaultUsers = new DefaultUsers(true, users);
 
         // Act
        var actual = defaultUsers.getDefaultUsersAuthorities();

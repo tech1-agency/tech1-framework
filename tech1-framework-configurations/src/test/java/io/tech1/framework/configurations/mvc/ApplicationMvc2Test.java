@@ -36,7 +36,7 @@ class ApplicationMvc2Test {
             var mvcConfigs = new MvcConfigs(
                     true,
                     randomString(),
-                    CorsConfigs.of(
+                    new CorsConfigs(
                             "/api/**",
                             null,
                             null,

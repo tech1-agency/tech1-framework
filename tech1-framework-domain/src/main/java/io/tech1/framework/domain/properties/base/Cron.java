@@ -1,58 +1,51 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConstructorBinding;
+
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 public class Cron implements AbstractToggleProperty {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
     @MandatoryProperty
     private String expression;
     @MandatoryProperty
     private String zoneId;
 
-    // NOTE: test-purposes
-    public static Cron of(
-            boolean enabled,
-            String expression,
-            String zoneId
-    ) {
-        var instance = new Cron();
-        instance.enabled = enabled;
-        instance.expression = expression;
-        instance.zoneId = zoneId;
-        return instance;
-    }
-
-    // NOTE: test-purposes
     public static Cron enabled(
             String expression,
             String zoneId
     ) {
-        return Cron.of(
+        return new Cron(
                 true,
                 expression,
                 zoneId
         );
     }
 
-    // NOTE: test-purposes
     public static Cron enabled() {
-        return Cron.of(
+        return new Cron(
                 true,
                 "*/30 * * * * *",
                 "Europe/Kiev"
         );
     }
 
-    // NOTE: test-purposes
     public static Cron disabled() {
-        return Cron.of(
+        return new Cron(
                 false,
                 null,
                 null
         );
+    }
+
+    public static Cron random() {
+        return randomBoolean() ? enabled() : disabled();
     }
 }

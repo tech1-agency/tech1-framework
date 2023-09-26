@@ -2,32 +2,22 @@ package io.tech1.framework.domain.properties.configs.security.jwt.websockets;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MessageBrokerRegistryConfigs extends AbstractPropertiesConfigs {
     // INFO: spring support list of prefixes as varargs
     @MandatoryProperty
-    private String applicationDestinationPrefix;
+    private final String applicationDestinationPrefix;
     // INFO: spring support list of destinations as varargs
     @MandatoryProperty
-    private String simpleDestination;
+    private final String simpleDestination;
     @MandatoryProperty
-    private String userDestinationPrefix;
-
-    // NOTE: test-purposes
-    public static MessageBrokerRegistryConfigs of(
-            String applicationDestinationPrefix,
-            String simpleDestination,
-            String userDestinationPrefix
-    ) {
-        var instance = new MessageBrokerRegistryConfigs();
-        instance.applicationDestinationPrefix = applicationDestinationPrefix;
-        instance.simpleDestination = simpleDestination;
-        instance.userDestinationPrefix = userDestinationPrefix;
-        return instance;
-    }
+    private final String userDestinationPrefix;
 }

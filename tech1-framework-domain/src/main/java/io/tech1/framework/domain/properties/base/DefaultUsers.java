@@ -2,7 +2,9 @@ package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,35 +12,23 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 public class DefaultUsers implements AbstractToggleProperty {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
     @NonMandatoryProperty
     private List<DefaultUser> users;
 
-    // NOTE: test-purposes
-    public static DefaultUsers of(
-            boolean enabled,
-            List<DefaultUser> users
-    ) {
-        var instance = new DefaultUsers();
-        instance.enabled = enabled;
-        instance.users = users;
-        return instance;
-    }
-
-    // NOTE: test-purposes
     public static DefaultUsers enabled() {
-        return of(
+        return new DefaultUsers(
                 true,
                 new ArrayList<>()
         );
     }
 
-    // NOTE: test-purposes
     public static DefaultUsers disabled() {
-        return of(
+        return new DefaultUsers(
                 false,
                 new ArrayList<>()
         );

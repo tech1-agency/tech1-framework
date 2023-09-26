@@ -4,8 +4,9 @@ import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.domain.http.cache.CachedBodyServletInputStream;
+import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.security.jwt.LoggingConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -33,13 +33,12 @@ import static org.mockito.Mockito.*;
 class AdvancedRequestLoggingFilterTest {
 
     @Configuration
-    @Import({
-            ApplicationFrameworkPropertiesContext.class
-    })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        // Properties
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        @Bean
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
+        }
 
         @Bean
         HttpRequestUtils httpRequestUtility() {
@@ -56,7 +55,7 @@ class AdvancedRequestLoggingFilterTest {
             return new AdvancedRequestLoggingFilter(
                     this.httpRequestUtility(),
                     this.securityPrincipalUtility(),
-                    this.applicationFrameworkProperties
+                    this.applicationFrameworkProperties()
             );
         }
     }
@@ -86,7 +85,7 @@ class AdvancedRequestLoggingFilterTest {
     @Test
     void disabledLoggingCachedEndpointTest() throws ServletException, IOException {
         // Arrange
-        this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().setAdvancedRequestLoggingEnabled(false);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.disabled()));
         var httpServletRequest = mock(HttpServletRequest.class);
         var httpServletResponse = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -110,7 +109,7 @@ class AdvancedRequestLoggingFilterTest {
     @Test
     void enabledLoggingEmptyPayloadTest() throws ServletException, IOException {
         // Arrange
-        this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().setAdvancedRequestLoggingEnabled(true);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.enabled()));
         var httpServletRequest = mock(HttpServletRequest.class);
         var httpServletResponse = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
@@ -137,7 +136,7 @@ class AdvancedRequestLoggingFilterTest {
     @Test
     void enabledLoggingTest() throws ServletException, IOException {
         // Arrange
-        this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().setAdvancedRequestLoggingEnabled(true);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.enabled()));
         var httpServletRequest = mock(HttpServletRequest.class);
         var httpServletResponse = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);

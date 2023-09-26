@@ -160,6 +160,19 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     }
 
     @Test
+    void renewManuallyTest() throws Exception {
+        // Arrange
+        var sessionId = entity(UserSessionId.class);
+
+        // Act
+        this.mvc.perform(post("/superadmin/sessions/" + sessionId + "/renew/manually"))
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.baseUsersSessionsService).renewUserRequestMetadataManually(eq(sessionId), any(HttpServletRequest.class));
+    }
+
+    @Test
     void deleteByIdTest() throws Exception {
         // Arrange
         var sessionId = entity(UserSessionId.class);

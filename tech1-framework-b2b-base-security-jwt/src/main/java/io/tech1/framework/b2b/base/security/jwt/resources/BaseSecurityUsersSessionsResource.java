@@ -48,16 +48,16 @@ public class BaseSecurityUsersSessionsResource {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled()) {
             var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
-            this.baseUsersSessionsService.renewUserRequestMetadataCron(user.getUsername(), session, httpServletRequest);
+            this.baseUsersSessionsService.renewUserRequestMetadataCron(session, httpServletRequest);
         }
         return user;
     }
 
-    @PostMapping("/renew/manually/{sessionId}")
+    @PostMapping("/{sessionId}/renew/manually")
     public void renewManually(@PathVariable UserSessionId sessionId, HttpServletRequest httpServletRequest) {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersSessionsRequestsValidator.validateAccess(user.username(), sessionId);
-        this.baseUsersSessionsService.renewUserRequestMetadataManually(user.username(), sessionId, httpServletRequest);
+        this.baseUsersSessionsService.renewUserRequestMetadataManually(sessionId, httpServletRequest);
     }
 
     @DeleteMapping("/{sessionId}")

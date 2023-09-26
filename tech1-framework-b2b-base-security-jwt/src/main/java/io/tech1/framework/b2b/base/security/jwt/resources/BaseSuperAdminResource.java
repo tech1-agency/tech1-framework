@@ -69,6 +69,11 @@ public class BaseSuperAdminResource {
         return this.baseSuperAdminService.getSessions(cookie);
     }
 
+    @PostMapping("/sessions/{sessionId}/renew/manually")
+    public void renewManually(@PathVariable UserSessionId sessionId, HttpServletRequest httpServletRequest) {
+        this.baseUsersSessionsService.renewUserRequestMetadataManually(sessionId, httpServletRequest);
+    }
+
     @DeleteMapping("/sessions/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {

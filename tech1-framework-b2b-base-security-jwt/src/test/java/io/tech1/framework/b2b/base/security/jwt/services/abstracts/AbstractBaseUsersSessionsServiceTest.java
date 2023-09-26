@@ -437,7 +437,6 @@ class AbstractBaseUsersSessionsServiceTest {
     void renewUserRequestMetadataCronDisabledTest() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
-        var username = entity(Username.class);
         var session = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
@@ -451,7 +450,7 @@ class AbstractBaseUsersSessionsServiceTest {
         );
 
         // Act
-        this.componentUnderTest.renewUserRequestMetadataCron(username, session, httpServletRequest);
+        this.componentUnderTest.renewUserRequestMetadataCron(session, httpServletRequest);
 
         // Assert
         verifyNoMoreInteractions(this.securityJwtPublisher);
@@ -461,7 +460,6 @@ class AbstractBaseUsersSessionsServiceTest {
     void renewUserRequestMetadataCronEnabledTest() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
-        var username = entity(Username.class);
         var session = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
@@ -475,13 +473,13 @@ class AbstractBaseUsersSessionsServiceTest {
         );
 
         // Act
-        this.componentUnderTest.renewUserRequestMetadataCron(username, session, httpServletRequest);
+        this.componentUnderTest.renewUserRequestMetadataCron(session, httpServletRequest);
 
         // Assert
         var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenewCron.class);
         verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenewCron(eventAC.capture());
         var event = eventAC.getValue();
-        assertThat(event.username()).isEqualTo(username);
+        assertThat(event.username()).isEqualTo(session.username());
         assertThat(event.session()).isEqualTo(session);
         assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
         assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
@@ -492,20 +490,19 @@ class AbstractBaseUsersSessionsServiceTest {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
-        var username = entity(Username.class);
         var session = entity(UserSession.class);
         var sessionId = entity(UserSessionId.class);
         when(this.usersSessionsRepository.enableMetadataRenewManually(sessionId)).thenReturn(session);
 
         // Act
-        this.componentUnderTest.renewUserRequestMetadataManually(username, sessionId, httpServletRequest);
+        this.componentUnderTest.renewUserRequestMetadataManually(sessionId, httpServletRequest);
 
         // Assert
         verify(this.usersSessionsRepository).enableMetadataRenewManually(sessionId);
         var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenewManually.class);
         verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenewManually(eventAC.capture());
         var event = eventAC.getValue();
-        assertThat(event.username()).isEqualTo(username);
+        assertThat(event.username()).isEqualTo(session.username());
         assertThat(event.session()).isEqualTo(session);
         assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
         assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));

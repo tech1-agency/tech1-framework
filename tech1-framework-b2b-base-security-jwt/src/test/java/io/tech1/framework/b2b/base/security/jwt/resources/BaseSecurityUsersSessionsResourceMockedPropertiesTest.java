@@ -138,6 +138,6 @@ class BaseSecurityUsersSessionsResourceMockedPropertiesTest extends AbstractReso
         verify(this.currentSessionAssistant).getCurrentClientUser();
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
         verify(this.currentSessionAssistant).getCurrentUserSession(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).renewUserRequestMetadataCron(eq(currentClientUser.getUsername()), eq(session), any(HttpServletRequest.class));
+        verify(this.baseUsersSessionsService).renewUserRequestMetadataCron(eq(session), any(HttpServletRequest.class));
     }
 }

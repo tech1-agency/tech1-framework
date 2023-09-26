@@ -93,14 +93,14 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
 
         // Act
         this.mvc.perform(
-                        post("/sessions/renew/manually/" + sessionId)
+                        post("/sessions/" + sessionId + "/renew/manually")
                 )
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersSessionsRequestsValidator).validateAccess(user.username(), sessionId);
-        verify(this.baseUsersSessionsService).renewUserRequestMetadataManually(eq(user.username()), eq(sessionId), any(HttpServletRequest.class));
+        verify(this.baseUsersSessionsService).renewUserRequestMetadataManually(eq(sessionId), any(HttpServletRequest.class));
     }
 
     @Test

@@ -150,6 +150,11 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
+    public void enableMetadataRenewCron() {
+        this.usersSessionsRepository.enableMetadataRenewCron();
+    }
+
+    @Override
     public void deleteById(UserSessionId sessionId) {
         this.usersSessionsRepository.delete(sessionId);
     }

@@ -24,6 +24,7 @@ import java.util.Set;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.accessTokens;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toAccessTokensAsStrings2;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toUsernamesAsStrings2;
+import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserSessionConverter.toMetadataRenewCron;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUserSessionsData2;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
@@ -100,6 +101,25 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(TECH1, Username.of("user1")))).hasSize(6);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user1"), Username.of("sa")))).hasSize(3);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user777"), Username.of("sa777")))).isEmpty();
+    }
+
+    @Test
+    void enableMetadataRenewCronTest() {
+        // Arrange
+        var saved1 = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+
+        // Assert-0
+        assertThat(toMetadataRenewCron(saved1))
+                .hasSize(1)
+                .contains(false);
+
+        // Act
+        this.usersSessionsRepository.enableMetadataRenewCron();
+
+        // Assert-1
+        assertThat(toMetadataRenewCron(this.usersSessionsRepository.findAll()))
+                .hasSize(1)
+                .contains(true);
     }
 
     @Test

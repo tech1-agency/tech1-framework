@@ -315,6 +315,15 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
+    void enableMetadataRenewCronTest() {
+        // Act
+        this.componentUnderTest.enableMetadataRenewCron();
+
+        // Assert
+        verify(this.usersSessionsRepository).enableMetadataRenewCron();
+    }
+
+    @Test
     void deleteByIdTest() {
         // Arrange
         var sessionId = entity(UserSessionId.class);

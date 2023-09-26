@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.crons;
 
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.crons.AbstractBaseCron;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -18,6 +19,8 @@ public class SessionsCron extends AbstractBaseCron {
 
     // Sessions
     private final SessionRegistry sessionRegistry;
+    // Services
+    private final BaseUsersSessionsService baseUsersSessionsService;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Properties
@@ -50,9 +53,7 @@ public class SessionsCron extends AbstractBaseCron {
     public void enableSessionsMetadataRenew() {
         this.executeCron(
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
-                () -> {
-                    // WARNING: add session registry business method
-                }
+                this.baseUsersSessionsService::enableMetadataRenewCron
         );
     }
 }

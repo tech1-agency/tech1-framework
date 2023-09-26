@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.crons;
 
+import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.Cron;
@@ -42,8 +43,13 @@ class SessionsCronTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        SessionRegistry sessionRegistry() {
+            return mock(SessionRegistry.class);
+        }
+
+        @Bean
+        BaseUsersSessionsService baseUsersSessionsService() {
+            return mock(BaseUsersSessionsService.class);
         }
 
         @Bean
@@ -52,14 +58,15 @@ class SessionsCronTest {
         }
 
         @Bean
-        SessionRegistry sessionRegistry() {
-            return mock(SessionRegistry.class);
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
         }
 
         @Bean
         SessionsCron sessionsCron() {
             return new SessionsCron(
                     this.sessionRegistry(),
+                    this.baseUsersSessionsService(),
                     this.incidentPublisher(),
                     this.applicationFrameworkProperties()
             );
@@ -67,6 +74,7 @@ class SessionsCronTest {
     }
 
     private final SessionRegistry sessionRegistry;
+    private final BaseUsersSessionsService baseUsersSessionsService;
     private final IncidentPublisher incidentPublisher;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -76,6 +84,7 @@ class SessionsCronTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
+                this.baseUsersSessionsService,
                 this.incidentPublisher,
                 this.applicationFrameworkProperties
         );
@@ -85,6 +94,7 @@ class SessionsCronTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
+                this.baseUsersSessionsService,
                 this.incidentPublisher,
                 this.applicationFrameworkProperties
         );
@@ -109,7 +119,6 @@ class SessionsCronTest {
             verify(this.sessionRegistry).getActiveSessionsUsernames();
             verify(this.sessionRegistry).cleanByExpiredRefreshTokens(usernames);
         }
-        verifyNoMoreInteractions(this.sessionRegistry);
     }
 
     @ParameterizedTest
@@ -122,5 +131,8 @@ class SessionsCronTest {
 
         // Assert
         verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        if (cron.isEnabled()) {
+            verify(this.baseUsersSessionsService).enableMetadataRenewCron();
+        }
     }
 }

@@ -13,6 +13,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.mongodb.repository.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -81,6 +82,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .collect(Collectors.toList());
     }
 
+    default void enableMetadataRenewCron() {
+        this.setMetadataRenewCron(true);
+    }
+
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }
@@ -115,6 +120,10 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Queries
     // ================================================================================================================
+    @Query("{}")
+    @Update("{ '$set': { 'metadataRenewCron': ?0 } }")
+    void setMetadataRenewCron(boolean flag);
+
     @Query(value = "{ 'username': { '$in': ?0}}", delete = true)
     void deleteByUsernames(Set<Username> usernames);
 

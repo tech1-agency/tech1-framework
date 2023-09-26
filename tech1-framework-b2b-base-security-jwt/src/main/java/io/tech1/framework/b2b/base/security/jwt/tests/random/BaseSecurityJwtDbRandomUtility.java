@@ -10,7 +10,8 @@ import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.util.Collections.singletonList;
 
@@ -52,8 +53,8 @@ public class BaseSecurityJwtDbRandomUtility {
                 accessToken,
                 refreshToken,
                 randomUserRequestMetadata(),
-                randomBoolean(),
-                randomBoolean()
+                false,
+                false
         );
     }
 

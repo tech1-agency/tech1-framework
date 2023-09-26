@@ -2,17 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.tests.runners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
-import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationResourcesContext;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -21,14 +12,6 @@ import java.util.HashMap;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
-@WebAppConfiguration
-@ExtendWith({ SpringExtension.class })
-@ContextConfiguration(classes = {
-        ApplicationBaseSecurityJwtMvc.class,
-        ApplicationFrameworkPropertiesContext.class,
-        TestsApplicationResourcesContext.class
-})
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public abstract class AbstractResourcesRunner {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();

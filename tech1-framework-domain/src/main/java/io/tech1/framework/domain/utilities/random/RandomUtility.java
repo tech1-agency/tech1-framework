@@ -225,6 +225,7 @@ public class RandomUtility {
         return randomString() + "@tech1.io";
     }
 
+    @Deprecated(since = "v1.16")
     public static Email randomEmail() {
         return Email.of(randomEmailAsValue());
     }
@@ -349,10 +350,12 @@ public class RandomUtility {
         return TimeZone.getTimeZone(randomZoneId());
     }
 
+    @Deprecated(since = "v1.16")
     public static Username randomUsername() {
         return Username.of(randomString());
     }
 
+    @Deprecated(since = "v1.16")
     public static Password randomPassword() {
         return Password.of(randomString());
     }

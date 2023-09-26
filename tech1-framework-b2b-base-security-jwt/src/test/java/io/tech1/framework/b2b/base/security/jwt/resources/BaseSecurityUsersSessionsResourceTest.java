@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUse
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
@@ -122,9 +123,9 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
     @Test
     void renewManuallyTest() throws Exception {
         // Arrange
-        var username = entity(Username.class);
+        var user = entity(JwtUser.class);
         var sessionId = entity(UserSessionId.class);
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
@@ -133,9 +134,9 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsRequestsValidator).validateAccess(username, sessionId);
-        verify(this.baseUsersSessionsService).enableMetadataRenewManually(sessionId);
+        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.baseUsersSessionsRequestsValidator).validateAccess(user.username(), sessionId);
+        verify(this.baseUsersSessionsService).enableMetadataRenewManually(eq(user), eq(sessionId), any(HttpServletRequest.class));
     }
 
     @Test

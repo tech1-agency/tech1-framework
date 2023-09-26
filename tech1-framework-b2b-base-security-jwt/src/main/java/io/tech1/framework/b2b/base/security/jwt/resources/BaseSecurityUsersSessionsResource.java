@@ -46,10 +46,10 @@ public class BaseSecurityUsersSessionsResource {
     }
 
     @PostMapping("/renew/manually/{sessionId}")
-    public void renewManually(@PathVariable UserSessionId sessionId) {
-        var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseUsersSessionsRequestsValidator.validateAccess(username, sessionId);
-        this.baseUsersSessionsService.enableMetadataRenewManually(sessionId);
+    public void renewManually(@PathVariable UserSessionId sessionId, HttpServletRequest httpServletRequest) {
+        var user = this.currentSessionAssistant.getCurrentJwtUser();
+        this.baseUsersSessionsRequestsValidator.validateAccess(user.username(), sessionId);
+        this.baseUsersSessionsService.enableMetadataRenewManually(user, sessionId, httpServletRequest);
     }
 
     @DeleteMapping("/{sessionId}")

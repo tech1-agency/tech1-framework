@@ -10,6 +10,7 @@ public interface SecurityJwtPublisher {
     void publishRegistration1Failure(EventRegistration1Failure event);
     void publishSessionRefreshed(EventSessionRefreshed event);
     void publishSessionExpired(EventSessionExpired event);
-    void publishSessionAddUserRequestMetadata(EventSessionUserRequestMetadataAdd event);
-    void publishSessionRenewUserRequestMetadata(EventSessionUserRequestMetadataRenew event);
+    void publishSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event);
+    void publishSessionUserRequestMetadataRenewCron(EventSessionUserRequestMetadataRenewCron event);
+    void publishSessionUserRequestMetadataRenewManually(EventSessionUserRequestMetadataRenewManually event);
 }

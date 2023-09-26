@@ -63,7 +63,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onSessionAddUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
+    public void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
         LOGGER.debug(SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA, this.getType(), event.username());
         var session = this.baseUsersSessionsService.saveUserRequestMetadata(event);
         var metadata = session.metadata();
@@ -100,8 +100,14 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onSessionRenewUserRequestMetadata(EventSessionUserRequestMetadataRenew event) {
-        LOGGER.debug(SECURITY_JWT_SESSION_RENEW_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
+    public void onSessionUserRequestMetadataRenewCron(EventSessionUserRequestMetadataRenewCron event) {
+        LOGGER.debug(SECURITY_JWT_SESSION_RENEW_CRON_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
+        this.baseUsersSessionsService.saveUserRequestMetadata(event);
+    }
+
+    @Override
+    public void onSessionUserRequestMetadataRenewManually(EventSessionUserRequestMetadataRenewManually event) {
+        LOGGER.debug(SECURITY_JWT_SESSION_RENEW_MANUALLY_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
         this.baseUsersSessionsService.saveUserRequestMetadata(event);
     }
 }

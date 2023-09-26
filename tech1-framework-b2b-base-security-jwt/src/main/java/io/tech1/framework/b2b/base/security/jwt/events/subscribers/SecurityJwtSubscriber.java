@@ -28,8 +28,11 @@ public interface SecurityJwtSubscriber {
     void onSessionExpired(EventSessionExpired event);
     @Async
     @EventListener
-    void onSessionAddUserRequestMetadata(EventSessionUserRequestMetadataAdd event);
+    void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event);
     @Async
     @EventListener
-    void onSessionRenewUserRequestMetadata(EventSessionUserRequestMetadataRenew event);
+    void onSessionUserRequestMetadataRenewCron(EventSessionUserRequestMetadataRenewCron event);
+    @Async
+    @EventListener
+    void onSessionUserRequestMetadataRenewManually(EventSessionUserRequestMetadataRenewManually event);
 }

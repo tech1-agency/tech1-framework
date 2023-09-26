@@ -86,8 +86,9 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         this.setMetadataRenewCron(true);
     }
 
-    default void enableMetadataRenewManually(UserSessionId sessionId) {
+    default UserSession enableMetadataRenewManually(UserSessionId sessionId) {
         this.setMetadataRenewManually(sessionId.value(), true);
+        return this.isPresent(sessionId).value();
     }
 
     default void delete(UserSessionId sessionId) {

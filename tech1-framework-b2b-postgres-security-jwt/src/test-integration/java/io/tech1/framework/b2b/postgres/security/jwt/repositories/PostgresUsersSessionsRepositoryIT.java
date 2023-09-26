@@ -136,10 +136,12 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         var sessionId2 = UserSessionId.of(saved1.get(5).getId());
 
         // Act
-        this.usersSessionsRepository.enableMetadataRenewManually(sessionId1);
-        this.usersSessionsRepository.enableMetadataRenewManually(sessionId2);
+        var session1 = this.usersSessionsRepository.enableMetadataRenewManually(sessionId1);
+        var session2 = this.usersSessionsRepository.enableMetadataRenewManually(sessionId2);
 
         // Assert-1
+        assertThat(session1).isNotNull();
+        assertThat(session2).isNotNull();
         var sessions = this.usersSessionsRepository.findAll();
         sessions.forEach(session -> {
             var sessionId = session.getId();

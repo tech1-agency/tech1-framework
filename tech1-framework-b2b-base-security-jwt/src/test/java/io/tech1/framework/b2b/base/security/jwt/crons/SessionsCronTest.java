@@ -11,6 +11,7 @@ import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -98,6 +99,18 @@ class SessionsCronTest {
                 this.incidentPublisher,
                 this.applicationFrameworkProperties
         );
+    }
+
+    @Test
+    void processExceptionTest() {
+        // Arrange
+        var ex = new Exception();
+
+        // Act
+        this.componentUnderTest.processException(ex);
+
+        // Assert
+        verify(this.incidentPublisher).publishThrowable(ex);
     }
 
     @ParameterizedTest

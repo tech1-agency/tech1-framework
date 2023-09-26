@@ -2,29 +2,26 @@ package io.tech1.framework.b2b.base.security.jwt.domain.events;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
-import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.tuples.TupleToggle;
 import org.jetbrains.annotations.NotNull;
 
-public record EventSessionUserRequestMetadataAdd(
+public record EventSessionUserRequestMetadataRenewCron(
         @NotNull Username username,
-        Email email,
         @NotNull UserSession session,
         @NotNull IPAddress clientIpAddr,
-        UserAgentHeader userAgentHeader,
-        boolean isAuthenticationLoginEndpoint,
-        boolean isAuthenticationRefreshTokenEndpoint
+        UserAgentHeader userAgentHeader
 ) {
+
     public FunctionSessionUserRequestMetadataSave getSaveFunction() {
         return new FunctionSessionUserRequestMetadataSave(
                 this.username,
                 this.session,
                 this.clientIpAddr,
                 this.userAgentHeader,
-                TupleToggle.disabled(),
+                TupleToggle.enabled(false),
                 TupleToggle.disabled()
         );
     }

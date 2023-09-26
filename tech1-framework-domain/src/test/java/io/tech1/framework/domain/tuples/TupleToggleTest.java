@@ -17,7 +17,8 @@ class TupleToggleTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> serializeTest() {
         return Stream.of(
                 Arguments.of(TupleToggle.enabled("enabled"), "tuple-toggle-enabled.json"),
-                Arguments.of(TupleToggle.disabled("DIS"), "tuple-toggle-disabled.json")
+                Arguments.of(TupleToggle.disabled("DIS"), "tuple-toggle-disabled.json"),
+                Arguments.of(TupleToggle.disabled(), "tuple-toggle-disabled-null.json")
         );
     }
 

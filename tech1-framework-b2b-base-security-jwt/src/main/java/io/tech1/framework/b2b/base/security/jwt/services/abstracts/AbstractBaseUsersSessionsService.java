@@ -2,7 +2,9 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewCron;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewManually;
+import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -14,7 +16,6 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsReposi
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
@@ -32,6 +33,7 @@ import java.util.Set;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -69,7 +71,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
             session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
         session = this.usersSessionsRepository.saveAs(session);
-        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
+        this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
                 new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
@@ -87,7 +89,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var username = user.username();
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
-        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
+        this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
                 new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
@@ -102,36 +104,34 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
 
     @Override
     public UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
-        return this.saveUserRequestMetadata(
-                event.session(),
-                event.clientIpAddr(),
-                event.userAgentHeader()
-        );
+        return this.saveUserRequestMetadata(event.getSaveFunction());
     }
 
     @Override
-    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenew event) {
-        this.saveUserRequestMetadata(
-                event.session(),
-                event.clientIpAddr(),
-                event.userAgentHeader()
-        );
+    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenewCron event) {
+        this.saveUserRequestMetadata(event.getSaveFunction());
     }
 
     @Override
-    public UserSession saveUserRequestMetadata(UserSession session, IPAddress clientIpAddr, UserAgentHeader userAgentHeader) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(clientIpAddr);
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(userAgentHeader);
+    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenewManually event) {
+        this.saveUserRequestMetadata(event.getSaveFunction());
+    }
+
+    @Override
+    public UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(saveFunction.clientIpAddr());
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(saveFunction.userAgentHeader());
+        var session = saveFunction.session();
         var sessionProcessedMetadata = ofPersisted(
                 session.id(),
                 session.createdAt(),
-                session.updatedAt(),
+                getCurrentTimestamp(),
                 session.username(),
                 session.accessToken(),
                 session.refreshToken(),
                 UserRequestMetadata.processed(geoLocation, userAgentDetails),
-                session.metadataRenewCron(),
-                session.metadataRenewManually()
+                saveFunction.metadataRenewCron().enabled() ? saveFunction.metadataRenewCron().value() : session.metadataRenewCron(),
+                saveFunction.metadataRenewManually().enabled() ? saveFunction.metadataRenewManually().value() : session.metadataRenewManually()
         );
         return this.usersSessionsRepository.saveAs(sessionProcessedMetadata);
     }
@@ -175,8 +175,16 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void enableMetadataRenewManually(UserSessionId sessionId) {
-        this.usersSessionsRepository.enableMetadataRenewManually(sessionId);
+    public void enableMetadataRenewManually(JwtUser user, UserSessionId sessionId, HttpServletRequest httpServletRequest) {
+        var session = this.usersSessionsRepository.enableMetadataRenewManually(sessionId);
+        this.securityJwtPublisher.publishSessionUserRequestMetadataRenewManually(
+                new EventSessionUserRequestMetadataRenewManually(
+                        user.username(),
+                        session,
+                        getClientIpAddr(httpServletRequest),
+                        new UserAgentHeader(httpServletRequest)
+                )
+        );
     }
 
     @Override

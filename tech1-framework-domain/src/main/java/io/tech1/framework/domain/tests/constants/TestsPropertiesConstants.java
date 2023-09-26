@@ -118,7 +118,8 @@ public class TestsPropertiesConstants {
             ),
             LoggingConfigs.of(true),
             SessionConfigs.of(
-                    Cron.enabled("*/30 * * * * *", "Europe/Kiev")
+                    Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
+                    Cron.enabled("*/15 * * * * *", "Europe/Kiev")
             ),
             UsersEmailsConfigs.of(
                     "[Tech1]",

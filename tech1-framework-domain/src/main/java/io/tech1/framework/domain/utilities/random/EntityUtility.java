@@ -58,8 +58,8 @@ public class EntityUtility {
         addConstructorRule(UserAgentDetails.class, clazz -> UserAgentDetails.random());
         addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
 
-        addConstructorRule(HardwareMonitoringThreshold.class, clazz -> randomHardwareMonitoringThreshold());
-        addConstructorRule(HardwareMonitoringThresholds.class, clazz -> randomHardwareMonitoringThresholds());
+        addConstructorRule(HardwareMonitoringThreshold.class, clazz -> HardwareMonitoringThreshold.random());
+        addConstructorRule(HardwareMonitoringThresholds.class, clazz -> HardwareMonitoringThresholds.random());
 
         addClassRule(parameterClass -> {
                     var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !containsPrimitiveWrapper(parameterClass);
@@ -113,8 +113,8 @@ public class EntityUtility {
         addClassRule(UserAgentDetails.class::equals, parameterClass -> UserAgentDetails.random());
         addClassRule(UserRequestMetadata.class::equals, parameterClass -> UserRequestMetadata.random());
 
-        addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> randomHardwareMonitoringThreshold());
-        addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> randomHardwareMonitoringThresholds());
+        addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> HardwareMonitoringThreshold.random());
+        addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> HardwareMonitoringThresholds.random());
     }
 
     public static void addConstructorRule(Class<?> constructorClass, Function<Class<?>, Object> constructionFnc) {

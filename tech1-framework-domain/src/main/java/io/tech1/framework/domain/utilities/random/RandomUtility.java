@@ -2,16 +2,9 @@ package io.tech1.framework.domain.utilities.random;
 
 import feign.FeignException;
 import feign.Request;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
-import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
@@ -209,11 +202,6 @@ public class RandomUtility {
                 .toArray(String[]::new);
     }
 
-    @Deprecated(since = "v1.16")
-    public static Email randomEmail() {
-        return Email.random();
-    }
-
     public static <T> T randomElement(List<T> list) {
         var randomIndex = RND.nextInt(list.size());
         return list.get(randomIndex);
@@ -334,16 +322,6 @@ public class RandomUtility {
         return TimeZone.getTimeZone(randomZoneId());
     }
 
-    @Deprecated(since = "v1.16")
-    public static Username randomUsername() {
-        return Username.random();
-    }
-
-    @Deprecated(since = "v1.16")
-    public static Password randomPassword() {
-        return Password.random();
-    }
-
     @SuppressWarnings("deprecation")
     public static FeignException randomFeignException() {
         return new FeignException.InternalServerError(
@@ -357,31 +335,6 @@ public class RandomUtility {
                 ),
                 new byte[] {},
                 new HashMap<>()
-        );
-    }
-
-    public static HardwareMonitoringThreshold randomHardwareMonitoringThreshold() {
-        return new HardwareMonitoringThreshold(randomBigDecimalGreaterThanZeroByBounds(50L, 100L));
-    }
-
-    public static HardwareMonitoringThresholds randomHardwareMonitoringThresholds() {
-        var thresholds = Stream.of(HardwareName.values())
-                .collect(
-                        Collectors.toMap(
-                                entry -> entry,
-                                entry -> randomHardwareMonitoringThreshold().value()
-                        )
-                );
-        return new HardwareMonitoringThresholds(thresholds);
-    }
-
-    public static HardwareMonitoringDatapointTableRow randomHardwareMonitoringDatapointTableRow() {
-        return new HardwareMonitoringDatapointTableRow(
-                randomEnum(HardwareName.class),
-                randomLongGreaterThanZero(),
-                randomBigDecimalGreaterThanZeroByBounds(10L, 20L),
-                randomString(),
-                randomHardwareMonitoringThresholds()
         );
     }
 }

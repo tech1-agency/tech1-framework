@@ -24,7 +24,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -68,13 +67,13 @@ class HardwareMonitoringStoreImplTest {
         assertThat(widget1.datapoint()).isEqualTo(HardwareMonitoringDatapoint.zeroUsage().tableView(thresholdsConfigs));
 
         // [1]
-        var event1 = entity(EventLastHardwareMonitoringDatapoint.class);
+        var event1 = EventLastHardwareMonitoringDatapoint.random();
         this.componentUnderTest.storeEvent(event1);
         var containsOneElement2 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement2).isTrue();
 
         // [2]
-        var event2 = entity(EventLastHardwareMonitoringDatapoint.class);
+        var event2 = EventLastHardwareMonitoringDatapoint.random();
         this.componentUnderTest.storeEvent(event2);
         var containsOneElement3 = this.componentUnderTest.containsOneElement();
         assertThat(containsOneElement3).isFalse();

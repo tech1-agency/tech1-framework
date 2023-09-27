@@ -3,7 +3,6 @@ package io.tech1.framework.domain.utilities.random;
 import feign.Request;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
-import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
 import io.tech1.framework.domain.tests.enums.EnumUnderTests;
@@ -707,26 +706,6 @@ class RandomUtilityTest {
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUsernameTest() {
-        // Act
-        var actual = randomUsername();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.identifier()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomPasswordTest() {
-        // Act
-        var actual = randomPassword();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.value()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomFeignExceptionTest() {
         // Act
         var actual = randomFeignException();
@@ -735,40 +714,5 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.request().httpMethod()).isEqualTo(Request.HttpMethod.GET);
         assertThat(actual.request().url()).isEqualTo("/endpoint");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomHardwareMonitoringThresholdTest() {
-        // Act
-        var actual = randomHardwareMonitoringThreshold();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
-        assertThat(actual.value()).isLessThanOrEqualTo(new BigDecimal("100"));
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomHardwareMonitoringThresholdsTest() {
-        // Act
-        var actual = randomHardwareMonitoringThresholds();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getThresholds()).hasSize(5);
-        actual.getThresholds().values().forEach(threshold -> {
-            assertThat(threshold.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
-            assertThat(threshold.value()).isLessThanOrEqualTo(new BigDecimal("100"));
-        });
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomHardwareMonitoringDatapointTableRowTest() {
-        // Act
-        var actual = randomHardwareMonitoringDatapointTableRow();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.isThresholdReached()).isFalse();
     }
 }

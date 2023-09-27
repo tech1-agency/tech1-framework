@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomHardwareMonitoringDatapointTableRow;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HardwareMonitoringDatapointTableViewTest {
@@ -15,7 +14,7 @@ class HardwareMonitoringDatapointTableViewTest {
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
                 Arguments.of(List.of(), false, false),
-                Arguments.of(List.of(randomHardwareMonitoringDatapointTableRow(), randomHardwareMonitoringDatapointTableRow()), true, false)
+                Arguments.of(List.of(HardwareMonitoringDatapointTableRow.random(), HardwareMonitoringDatapointTableRow.random()), true, false)
         );
     }
 

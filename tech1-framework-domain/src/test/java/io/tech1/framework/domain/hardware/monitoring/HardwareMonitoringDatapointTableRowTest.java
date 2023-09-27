@@ -18,8 +18,8 @@ class HardwareMonitoringDatapointTableRowTest {
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
                 Arguments.of(Map.of(), false),
-                Arguments.of(Map.of(HEAP, randomHardwareMonitoringThreshold().value()), false),
-                Arguments.of(Map.of(CPU, randomHardwareMonitoringThreshold().value()), false),
+                Arguments.of(Map.of(HEAP, HardwareMonitoringThreshold.random().value()), false),
+                Arguments.of(Map.of(CPU, HardwareMonitoringThreshold.random().value()), false),
                 Arguments.of(Map.of(CPU, randomBigDecimalGreaterThanZeroByBounds(5L, 10L)), true)
         );
     }

@@ -2,10 +2,13 @@ package io.tech1.framework.domain.hardware.memories;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.tech1.framework.domain.constants.BytesConstants;
 import io.tech1.framework.domain.hardware.bytes.ByteSize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 
 // Lombok
 @Getter
@@ -37,6 +40,15 @@ public class HeapMemory {
                 zero,
                 zero,
                 zero
+        );
+    }
+
+    public static HeapMemory random() {
+        return new HeapMemory(
+                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE,
+                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE,
+                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE,
+                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE
         );
     }
 }

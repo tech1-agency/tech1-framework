@@ -31,4 +31,11 @@ public class HardwareMonitoringMaxValues {
         this.virtual = global.getVirtualTotal();
         this.heap = heap.getMax();
     }
+
+    public static HardwareMonitoringMaxValues random() {
+        return new HardwareMonitoringMaxValues(
+                GlobalMemory.random(),
+                HeapMemory.random()
+        );
+    }
 }

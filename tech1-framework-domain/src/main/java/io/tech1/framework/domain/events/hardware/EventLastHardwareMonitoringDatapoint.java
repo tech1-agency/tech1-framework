@@ -7,4 +7,10 @@ public record EventLastHardwareMonitoringDatapoint(
         Version version,
         HardwareMonitoringDatapoint last
 ) {
+    public static EventLastHardwareMonitoringDatapoint random() {
+        return new EventLastHardwareMonitoringDatapoint(
+                Version.random(),
+                HardwareMonitoringDatapoint.random()
+        );
+    }
 }

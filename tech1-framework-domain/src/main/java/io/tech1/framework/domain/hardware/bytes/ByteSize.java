@@ -11,18 +11,16 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static io.tech1.framework.domain.constants.BytesConstants.*;
 import static io.tech1.framework.domain.hardware.bytes.ByteUnit.*;
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 
 // Lombok
 @Getter
 @EqualsAndHashCode(exclude = { "mapping1", "mapping2" })
 @ToString(exclude = { "mapping1", "mapping2" })
 public final class ByteSize {
-    private static final long BYTES_IN_KILOBYTE = 1024L;
-    private static final long BYTES_IN_MEGABYTE = 1048576L;
-    private static final long BYTES_IN_GIGABYTE = 1073741824L;
-
     private final Map<ByteUnit, Supplier<BigDecimal>> mapping1 = Map.of(
             KILOBYTE, () -> this.getKilobytes(1),
             MEGABYTE, () -> this.getMegabytes(1),
@@ -53,6 +51,10 @@ public final class ByteSize {
 
     public static ByteSize gigabyte() {
         return new ByteSize(BYTES_IN_GIGABYTE);
+    }
+
+    public static ByteSize random() {
+        return new ByteSize(randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE);
     }
 
     public BigDecimal getBy(ByteUnit unit) {

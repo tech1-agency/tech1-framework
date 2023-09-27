@@ -93,6 +93,14 @@ public class HardwareMonitoringDatapoint {
         );
     }
 
+    public static HardwareMonitoringDatapoint random() {
+        return new HardwareMonitoringDatapoint(
+                GlobalMemory.random(),
+                CpuMemory.random(),
+                HeapMemory.random()
+        );
+    }
+
     public HardwareMonitoringDatapointTableView tableView(
             HardwareMonitoringThresholds thresholds
     ) {

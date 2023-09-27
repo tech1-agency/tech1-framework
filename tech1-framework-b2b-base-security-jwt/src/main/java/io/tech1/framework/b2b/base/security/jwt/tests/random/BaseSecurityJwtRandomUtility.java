@@ -14,6 +14,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import lombok.experimental.UtilityClass;
@@ -96,7 +97,7 @@ public class BaseSecurityJwtRandomUtility {
                 Username.random(),
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
-                randomUserRequestMetadata(),
+                UserRequestMetadata.random(),
                 randomBoolean(),
                 randomBoolean()
         );

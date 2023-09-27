@@ -18,6 +18,7 @@ import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -56,7 +57,8 @@ import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -352,7 +354,7 @@ class AbstractBaseUsersSessionsServiceTest {
                 username,
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
-                randomUserRequestMetadata(),
+                UserRequestMetadata.random(),
                 false,
                 false
         );
@@ -460,7 +462,7 @@ class AbstractBaseUsersSessionsServiceTest {
                 Username.random(),
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
-                randomUserRequestMetadata(),
+                UserRequestMetadata.random(),
                 metadataRenewCron,
                 metadataRenewManually
         );

@@ -56,7 +56,7 @@ public class EntityUtility {
         addConstructorRule(IPAddress.class, clazz -> IPAddress.random());
         addConstructorRule(GeoLocation.class, clazz -> GeoLocation.random());
         addConstructorRule(UserAgentDetails.class, clazz -> UserAgentDetails.random());
-        addConstructorRule(UserRequestMetadata.class, clazz -> randomUserRequestMetadata());
+        addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
 
         addConstructorRule(HardwareMonitoringThreshold.class, clazz -> randomHardwareMonitoringThreshold());
         addConstructorRule(HardwareMonitoringThresholds.class, clazz -> randomHardwareMonitoringThresholds());
@@ -111,7 +111,7 @@ public class EntityUtility {
         addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
         addClassRule(GeoLocation.class::equals, parameterClass -> GeoLocation.random());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> UserAgentDetails.random());
-        addClassRule(UserRequestMetadata.class::equals, parameterClass -> randomUserRequestMetadata());
+        addClassRule(UserRequestMetadata.class::equals, parameterClass -> UserRequestMetadata.random());
 
         addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> randomHardwareMonitoringThreshold());
         addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> randomHardwareMonitoringThresholds());

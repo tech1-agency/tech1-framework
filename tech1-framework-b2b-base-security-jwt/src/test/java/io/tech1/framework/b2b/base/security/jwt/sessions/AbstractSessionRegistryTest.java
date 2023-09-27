@@ -50,7 +50,6 @@ import static io.tech1.framework.domain.tuples.TuplePresence.absent;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -311,7 +310,7 @@ class AbstractSessionRegistryTest {
         var dbUserSession3 = entity(UserSession.class);
         var sessionsExpiredTable = new SessionsExpiredTable(
                 List.of(
-                        new Tuple3<>(TECH1, entity(JwtRefreshToken.class), randomUserRequestMetadata()),
+                        new Tuple3<>(TECH1, entity(JwtRefreshToken.class), UserRequestMetadata.random()),
                         new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())
                 ),
                 Set.of(dbUserSession1.id(), dbUserSession2.id())

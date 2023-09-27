@@ -8,13 +8,10 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
-import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
@@ -361,24 +358,6 @@ public class RandomUtility {
                 new byte[] {},
                 new HashMap<>()
         );
-    }
-
-    public static UserRequestMetadata validUserRequestMetadata() {
-        return UserRequestMetadata.processed(
-                GeoLocation.valid(),
-                UserAgentDetails.valid()
-        );
-    }
-
-    public static UserRequestMetadata invalidUserRequestMetadata() {
-        return UserRequestMetadata.processed(
-                GeoLocation.invalid(),
-                UserAgentDetails.invalid()
-        );
-    }
-
-    public static UserRequestMetadata randomUserRequestMetadata() {
-        return randomBoolean() ? validUserRequestMetadata() : invalidUserRequestMetadata();
     }
 
     public static HardwareMonitoringThreshold randomHardwareMonitoringThreshold() {

@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.services.EmailService;
@@ -28,7 +29,6 @@ import java.util.Map;
 
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_CONFIGS;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -98,7 +98,7 @@ class UsersEmailsServiceImplTest {
         var function = new FunctionAuthenticationLoginEmail(
                 Username.random(),
                 null,
-                randomUserRequestMetadata()
+                UserRequestMetadata.random()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
 
@@ -116,7 +116,7 @@ class UsersEmailsServiceImplTest {
         var function = new FunctionAuthenticationLoginEmail(
                 Username.random(),
                 null,
-                randomUserRequestMetadata()
+                UserRequestMetadata.random()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
@@ -134,7 +134,7 @@ class UsersEmailsServiceImplTest {
         var function = new FunctionAuthenticationLoginEmail(
                 Username.random(),
                 Email.random(),
-                randomUserRequestMetadata()
+                UserRequestMetadata.random()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
@@ -151,7 +151,7 @@ class UsersEmailsServiceImplTest {
         // Arrange
         var username = Username.random();
         var email = Email.random();
-        var userRequestMetadata = randomUserRequestMetadata();
+        var userRequestMetadata = UserRequestMetadata.random();
         var function = new FunctionAuthenticationLoginEmail(
                 username,
                 email,
@@ -199,7 +199,7 @@ class UsersEmailsServiceImplTest {
         // Arrange
         var username = Username.random();
         var email = Email.random();
-        var userRequestMetadata = randomUserRequestMetadata();
+        var userRequestMetadata = UserRequestMetadata.random();
         var function = new FunctionSessionRefreshedEmail(
                 username,
                 email,

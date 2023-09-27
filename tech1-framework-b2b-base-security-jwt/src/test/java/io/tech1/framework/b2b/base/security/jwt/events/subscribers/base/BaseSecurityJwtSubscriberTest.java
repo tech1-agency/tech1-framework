@@ -247,28 +247,4 @@ class BaseSecurityJwtSubscriberTest {
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
     }
-
-    @Test
-    void onSessionUserRequestMetadataRenewCronTest() {
-        // Arrange
-        var event = entity(EventSessionUserRequestMetadataRenewCron.class);
-
-        // Act
-        this.componentUnderTest.onSessionUserRequestMetadataRenewCron(event);
-
-        // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-    }
-
-    @Test
-    void onSessionUserRequestMetadataRenewManuallyTest() {
-        // Arrange
-        var event = entity(EventSessionUserRequestMetadataRenewManually.class);
-
-        // Act
-        this.componentUnderTest.onSessionUserRequestMetadataRenewManually(event);
-
-        // Assert
-        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-    }
 }

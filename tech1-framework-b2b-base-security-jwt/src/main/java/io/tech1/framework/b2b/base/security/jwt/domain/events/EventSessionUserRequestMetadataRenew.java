@@ -12,9 +12,9 @@ public record EventSessionUserRequestMetadataRenew(
         @NotNull Username username,
         @NotNull UserSession session,
         @NotNull IPAddress clientIpAddr,
-        UserAgentHeader userAgentHeader,
-        TupleToggle<Boolean> metadataRenewCron,
-        TupleToggle<Boolean> metadataRenewManually
+        @NotNull UserAgentHeader userAgentHeader,
+        @NotNull TupleToggle<Boolean> metadataRenewCron,
+        @NotNull TupleToggle<Boolean> metadataRenewManually
 ) {
     public FunctionSessionUserRequestMetadataSave getSaveFunction() {
         return new FunctionSessionUserRequestMetadataSave(

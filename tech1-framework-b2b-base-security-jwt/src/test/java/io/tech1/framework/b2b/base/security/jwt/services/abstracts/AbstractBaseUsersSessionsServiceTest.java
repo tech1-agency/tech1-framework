@@ -3,8 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewCron;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewManually;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -21,6 +19,7 @@ import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
+import io.tech1.framework.domain.utilities.random.RandomUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
@@ -78,6 +77,15 @@ class AbstractBaseUsersSessionsServiceTest {
                 Arguments.of(TupleToggle.enabled(false), TupleToggle.enabled(true), false, true),
                 Arguments.of(TupleToggle.enabled(true), TupleToggle.enabled(false), true, false),
                 Arguments.of(TupleToggle.enabled(true), TupleToggle.enabled(true), true, true)
+        );
+    }
+
+    private static Stream<Arguments> renewUserRequestMetadataArgs() {
+        return Stream.of(
+                Arguments.of(false, false, TupleToggle.disabled(), TupleToggle.disabled()),
+                Arguments.of(true, false, TupleToggle.enabled(true), TupleToggle.disabled()),
+                Arguments.of(false, true, TupleToggle.disabled(), TupleToggle.enabled(true)),
+                Arguments.of(true, true, TupleToggle.enabled(true), TupleToggle.enabled(true))
         );
     }
 
@@ -302,27 +310,15 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
-    void saveUserRequestMetadataEventSessionUserRequestMetadataRenewCronTest() {
-        var event = entity(EventSessionUserRequestMetadataRenewCron.class);
-        var geoLocation = randomGeoLocation();
-        when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
-        when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
-
-        // Act
-        this.componentUnderTest.saveUserRequestMetadata(event);
-
-        // Assert
-        verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
-        var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
-        verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
-        var requestMetadata = userSessionAC.getValue().metadata();
-        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
-    }
-
-    @Test
-    void saveUserRequestMetadataEventSessionUserRequestMetadataRenewManuallyTest() {
-        var event = entity(EventSessionUserRequestMetadataRenewManually.class);
+    void saveUserRequestMetadataEventSessionUserRequestMetadataRenewTest() {
+        var event = new EventSessionUserRequestMetadataRenew(
+                Username.random(),
+                entity(UserSession.class),
+                RandomUtility.randomIPAddress(),
+                entity(UserAgentHeader.class),
+                TupleToggle.disabled(),
+                TupleToggle.disabled()
+        );
         var geoLocation = randomGeoLocation();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
@@ -348,11 +344,12 @@ class AbstractBaseUsersSessionsServiceTest {
             boolean expectedMetadataRenewManually
     ) {
         // Arrange
+        var username = Username.random();
         var session = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
-                randomUsername(),
+                username,
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
                 randomUserRequestMetadata(),
@@ -361,7 +358,7 @@ class AbstractBaseUsersSessionsServiceTest {
         );
         var geoLocation = randomGeoLocation();
         var saveFunction = new FunctionSessionUserRequestMetadataSave(
-                randomUsername(),
+                username,
                 session,
                 entity(IPAddress.class),
                 entity(UserAgentHeader.class),
@@ -391,17 +388,17 @@ class AbstractBaseUsersSessionsServiceTest {
         // Arrange
         var usernames = new HashSet<>(Set.of(TECH1));
         var sessionInvalidUserSession = session(
-                randomUsername(),
+                Username.random(),
                 entity(JwtAccessToken.class),
                 new JwtRefreshToken("<invalid>")
         );
         var sessionExpiredUserSession = session(
-                randomUsername(),
+                Username.random(),
                 entity(JwtAccessToken.class),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8")
         );
         var sessionAliveUserSession = session(
-                randomUsername(),
+                Username.random(),
                 entity(JwtAccessToken.class),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY")
         );
@@ -446,8 +443,14 @@ class AbstractBaseUsersSessionsServiceTest {
         verify(this.usersSessionsRepository).enableMetadataRenewManually(sessionId);
     }
 
-    @Test
-    void renewUserRequestMetadataTest() {
+    @ParameterizedTest
+    @MethodSource("renewUserRequestMetadataArgs")
+    void renewUserRequestMetadataTest(
+            boolean metadataRenewCron,
+            boolean metadataRenewManually,
+            TupleToggle<Boolean> expectedMetadataRenewCron,
+            TupleToggle<Boolean> expectedMetadataRenewManually
+    ) {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         var session = UserSession.ofPersisted(
@@ -458,8 +461,8 @@ class AbstractBaseUsersSessionsServiceTest {
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
                 randomUserRequestMetadata(),
-                true,
-                randomBoolean()
+                metadataRenewCron,
+                metadataRenewManually
         );
 
         // Act
@@ -467,13 +470,16 @@ class AbstractBaseUsersSessionsServiceTest {
 
         // Assert
         var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenew.class);
-        verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenew(eventAC.capture());
-        var event = eventAC.getValue();
-        assertThat(event.username()).isEqualTo(session.username());
-        assertThat(event.session()).isEqualTo(session);
-        assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
-        assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
-        // TODO [yy] add parametrized tests -> Toggles
+        if (session.isRenewRequired()) {
+            verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenew(eventAC.capture());
+            var event = eventAC.getValue();
+            assertThat(event.username()).isEqualTo(session.username());
+            assertThat(event.session()).isEqualTo(session);
+            assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
+            assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
+            assertThat(event.metadataRenewCron()).isEqualTo(expectedMetadataRenewCron);
+            assertThat(event.metadataRenewManually()).isEqualTo(expectedMetadataRenewManually);
+        }
     }
 
     @Test

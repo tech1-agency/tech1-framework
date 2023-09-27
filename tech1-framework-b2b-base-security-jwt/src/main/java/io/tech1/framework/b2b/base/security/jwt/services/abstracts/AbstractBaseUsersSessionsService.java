@@ -3,8 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewCron;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewManually;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -115,16 +113,6 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenewCron event) {
-        this.saveUserRequestMetadata(event.getSaveFunction());
-    }
-
-    @Override
-    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenewManually event) {
-        this.saveUserRequestMetadata(event.getSaveFunction());
-    }
-
-    @Override
     public UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
         var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(saveFunction.clientIpAddr());
         var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(saveFunction.userAgentHeader());
@@ -200,19 +188,6 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                     )
             );
         }
-    }
-
-    @Override
-    public void renewUserRequestMetadataManually(UserSessionId sessionId, HttpServletRequest httpServletRequest) {
-        var session = this.usersSessionsRepository.enableMetadataRenewManually(sessionId);
-        this.securityJwtPublisher.publishSessionUserRequestMetadataRenewManually(
-                new EventSessionUserRequestMetadataRenewManually(
-                        session.username(),
-                        session,
-                        getClientIpAddr(httpServletRequest),
-                        new UserAgentHeader(httpServletRequest)
-                )
-        );
     }
 
     @Override

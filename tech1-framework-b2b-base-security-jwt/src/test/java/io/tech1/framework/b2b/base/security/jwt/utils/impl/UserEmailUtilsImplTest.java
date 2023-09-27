@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.utilities.time.LocalDateTimeUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -24,7 +25,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.time.ZoneOffset;
 
 import static io.tech1.framework.domain.constants.DatetimeConstants.DTF1;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.validUserRequestMetadata;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -120,7 +122,7 @@ class UserEmailUtilsImplTest {
     @Test
     void getAuthenticationLoginOrSessionRefreshedVariablesTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var userRequestMetadata = validUserRequestMetadata();
         var accountAccessMethod = randomEnum(AccountAccessMethod.class);
 

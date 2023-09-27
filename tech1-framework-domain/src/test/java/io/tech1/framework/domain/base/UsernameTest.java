@@ -3,8 +3,10 @@ package io.tech1.framework.domain.base;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsernameTest extends AbstractSerializationDeserializationRunner {
@@ -43,5 +45,15 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
         assertThat(actual).isEqualTo(USERNAME);
         assertThat(actual.identifier()).isEqualTo(USERNAME.identifier());
         assertThat(actual.toString()).hasToString(USERNAME.identifier());
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomUsernameTest() {
+        // Act
+        var actual = Username.random();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.identifier()).isNotNull();
     }
 }

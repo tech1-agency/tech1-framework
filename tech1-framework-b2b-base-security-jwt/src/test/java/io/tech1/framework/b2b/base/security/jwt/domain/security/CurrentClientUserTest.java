@@ -86,7 +86,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     void getAttributeByKeyTest(String attributeKey, boolean reflectionHack, Object expected) throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomUsername(),
+                Username.random(),
                 Email.random(),
                 randomString(),
                 randomZoneId(),
@@ -113,7 +113,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     void hasAbstractAuthorityTest(AbstractAuthority abstractAuthority, boolean expected) {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomUsername(),
+                Username.random(),
                 Email.random(),
                 randomString(),
                 randomZoneId(),
@@ -137,7 +137,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     void hasAuthorityTest(String authority, boolean expected) {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                randomUsername(),
+                Username.random(),
                 Email.random(),
                 randomString(),
                 randomZoneId(),

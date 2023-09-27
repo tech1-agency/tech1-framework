@@ -159,7 +159,7 @@ class BaseCurrentSessionAssistantTest {
         // Arrange
         var user = new JwtUser(
                 entity(UserId.class),
-                randomUsername(),
+                Username.random(),
                 Password.random(),
                 randomZoneId(),
                 new ArrayList<>(),

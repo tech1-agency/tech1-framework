@@ -121,7 +121,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(jwtUser.isCredentialsNonExpired()).isTrue();
         assertThat(jwtUser.isEnabled()).isTrue();
 
-        var username = randomUsername();
+        var username = Username.random();
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)

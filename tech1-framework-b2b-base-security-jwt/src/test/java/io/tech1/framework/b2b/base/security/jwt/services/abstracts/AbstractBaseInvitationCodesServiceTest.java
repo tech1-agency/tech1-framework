@@ -78,7 +78,7 @@ class AbstractBaseInvitationCodesServiceTest {
     @Test
     void findByOwnerTest() {
         // Arrange
-        var owner = randomUsername();
+        var owner = Username.random();
 
         var invitationCode1 = getInvitationCode(owner, Username.of("user2"));
         var invitationCode2 = getInvitationCode(owner, Username.of("user1"));
@@ -107,7 +107,7 @@ class AbstractBaseInvitationCodesServiceTest {
     @Test
     void saveTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
 
         // Act

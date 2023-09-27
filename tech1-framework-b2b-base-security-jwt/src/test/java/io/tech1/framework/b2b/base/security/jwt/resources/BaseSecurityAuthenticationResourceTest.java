@@ -14,6 +14,7 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
@@ -38,7 +39,6 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
@@ -53,8 +53,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         return Stream.of(
                 Arguments.of(new CookieRefreshTokenNotFoundException()),
                 Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of( new CookieRefreshTokenExpiredException(randomUsername())),
-                Arguments.of(new CookieRefreshTokenDbNotFoundException(randomUsername()))
+                Arguments.of( new CookieRefreshTokenExpiredException(Username.random())),
+                Arguments.of(new CookieRefreshTokenDbNotFoundException(Username.random()))
         );
     }
 
@@ -187,7 +187,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     void logoutTest() throws Exception {
         // Arrange
         var httpSession = mock(HttpSession.class);
-        var username = randomUsername();
+        var username = Username.random();
         var cookie = entity(CookieAccessToken.class);
         var accessToken = cookie.getJwtAccessToken();
         var claims = mock(Claims.class);
@@ -217,7 +217,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     @Test
     void logoutNullSessionTest() throws Exception {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var cookie = entity(CookieAccessToken.class);
         var accessToken = cookie.getJwtAccessToken();
         var claims = mock(Claims.class);

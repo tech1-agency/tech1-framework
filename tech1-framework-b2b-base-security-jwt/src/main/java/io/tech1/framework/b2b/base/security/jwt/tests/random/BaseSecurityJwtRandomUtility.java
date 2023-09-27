@@ -43,7 +43,7 @@ public class BaseSecurityJwtRandomUtility {
     public static JwtUser randomSuperadmin() {
         return new JwtUser(
                 entity(UserId.class),
-                randomUsername(),
+                Username.random(),
                 Password.random(),
                 randomZoneId(),
                 authorities(SUPER_ADMIN),
@@ -85,7 +85,7 @@ public class BaseSecurityJwtRandomUtility {
     }
 
     public static InvitationCode randomInvitationCode() {
-        return new InvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities(SUPER_ADMIN), randomString(), randomUsername());
+        return new InvitationCode(entity(InvitationCodeId.class), Username.random(), authorities(SUPER_ADMIN), randomString(), Username.random());
     }
 
     public static UserSession randomPersistedSession() {
@@ -93,7 +93,7 @@ public class BaseSecurityJwtRandomUtility {
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
-                randomUsername(),
+                Username.random(),
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
                 randomUserRequestMetadata(),

@@ -5,13 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Username;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 
 public abstract class AbstractResourcesRunner {
 
@@ -32,7 +34,7 @@ public abstract class AbstractResourcesRunner {
 
     protected static CurrentClientUser randomCurrentClientUser() {
         return new CurrentClientUser(
-                randomUsername(),
+                Username.random(),
                 Email.random(),
                 randomString(),
                 randomZoneId(),

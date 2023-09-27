@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -46,7 +46,7 @@ class SecurityHandshakeHandlerTest {
         return Stream.of(
                 Arguments.of(new CookieAccessTokenInvalidException()),
                 Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of(new CookieAccessTokenExpiredException(randomUsername()))
+                Arguments.of(new CookieAccessTokenExpiredException(Username.random()))
         );
     }
 

@@ -138,7 +138,7 @@ class AbstractSessionRegistryTest {
         var session2 = new Session(Username.of("username2"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
         var session3 = new Session(Username.of("username3"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
         var session4 = new Session(Username.of("username4"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var rndSession = new Session(randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        var rndSession = new Session(Username.random(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
         var dbUserSession1 = entity(UserSession.class);
         var dbUserSession2 = entity(UserSession.class);
         var dbUserSession3 = entity(UserSession.class);
@@ -344,7 +344,7 @@ class AbstractSessionRegistryTest {
         var cookie = entity(CookieAccessToken.class);
 
         Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
-                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), randomUsername(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
+                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
 
         var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), cookie.value()));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));

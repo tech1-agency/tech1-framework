@@ -62,7 +62,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner1 {
     @Test
     void findAllTest() throws Exception {
         // Arrange
-        var owner = randomUsername();
+        var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(ResponseInvitationCode.class);
@@ -83,7 +83,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner1 {
     @Test
     void saveTest() throws Exception {
         // Arrange
-        var owner = randomUsername();
+        var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var requestNewInvitationCodeParams = entity(RequestNewInvitationCodeParams.class);
 

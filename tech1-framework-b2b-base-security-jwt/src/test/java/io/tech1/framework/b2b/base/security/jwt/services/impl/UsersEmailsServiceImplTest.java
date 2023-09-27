@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSession
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.services.EmailService;
@@ -26,7 +27,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.Map;
 
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_CONFIGS;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -94,7 +96,7 @@ class UsersEmailsServiceImplTest {
     void noExecutionNullEmailAndEnabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
-                randomUsername(),
+                Username.random(),
                 null,
                 randomUserRequestMetadata()
         );
@@ -112,7 +114,7 @@ class UsersEmailsServiceImplTest {
     void noExecutionNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
-                randomUsername(),
+                Username.random(),
                 null,
                 randomUserRequestMetadata()
         );
@@ -130,7 +132,7 @@ class UsersEmailsServiceImplTest {
     void noExecutionNotNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
-                randomUsername(),
+                Username.random(),
                 Email.random(),
                 randomUserRequestMetadata()
         );
@@ -147,7 +149,7 @@ class UsersEmailsServiceImplTest {
     @Test
     void executeAuthenticationLoginTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var email = Email.random();
         var userRequestMetadata = randomUserRequestMetadata();
         var function = new FunctionAuthenticationLoginEmail(
@@ -195,7 +197,7 @@ class UsersEmailsServiceImplTest {
     @Test
     void executeSessionRefreshedTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var email = Email.random();
         var userRequestMetadata = randomUserRequestMetadata();
         var function = new FunctionSessionRefreshedEmail(

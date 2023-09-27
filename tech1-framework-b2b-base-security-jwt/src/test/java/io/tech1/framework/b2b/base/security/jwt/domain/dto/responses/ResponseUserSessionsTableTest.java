@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -35,7 +36,7 @@ class ResponseUserSessionsTableTest {
     @Test
     void constructorTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var responseUserSession21 = ResponseUserSession2.of(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),

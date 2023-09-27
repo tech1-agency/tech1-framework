@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.domain.enums.TestAuthority
 import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.Test;
@@ -62,7 +63,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 Username.of("tech1"),
-                Email.of("tech1@tech1.io"),
+                Email.of("tech1@" + DomainConstants.TECH1),
                 "Tech1",
                 TestsZoneIdsConstants.EET_ZONE_ID,
                 List.of(

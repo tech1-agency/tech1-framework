@@ -213,10 +213,6 @@ public class RandomUtility {
                 .toArray(String[]::new);
     }
 
-    public static String randomEmailAsValue() {
-        return randomString() + "@tech1.io";
-    }
-
     @Deprecated(since = "v1.16")
     public static Email randomEmail() {
         return Email.random();

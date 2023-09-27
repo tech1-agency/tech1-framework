@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.tests.constants;
 
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.base.*;
 import io.tech1.framework.domain.properties.configs.*;
@@ -17,7 +19,6 @@ import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
@@ -45,7 +46,7 @@ public class TestsPropertiesConstants {
             "Tech1",
             "tech1@gmail.com",
             "Password123!",
-            new String[] { randomEmailAsValue(), randomEmailAsValue() }
+            new String[] { Email.random().value(), Email.random().value() }
     );
     public static final IncidentConfigs INCIDENT_CONFIGS = new IncidentConfigs(
             true,
@@ -81,7 +82,7 @@ public class TestsPropertiesConstants {
                             new Authority(INVITATION_CODE_WRITE)
                     )
             ),
-            new CookiesConfigs("tech1.io", new TimeAmount(5L, SECONDS)),
+            new CookiesConfigs(DomainConstants.TECH1, new TimeAmount(5L, SECONDS)),
             new EssenceConfigs(
                     new DefaultUsers(
                             true,

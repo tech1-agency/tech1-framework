@@ -2,9 +2,10 @@ package io.tech1.framework.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.tech1.framework.domain.constants.DomainConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record Email(@NotNull String value) {
 
@@ -14,7 +15,7 @@ public record Email(@NotNull String value) {
     }
 
     public static Email random() {
-        return of(randomEmailAsValue());
+        return of(randomString() + "@" + DomainConstants.TECH1);
     }
 
     @JsonValue

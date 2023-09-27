@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.properties.configs;
 
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +51,7 @@ class EmailConfigsTest {
     @Test
     void enabledTest() {
         // Arrange
-        var from = randomEmailAsValue();
+        var from = Email.random().value();
 
         // Act
         var emailConfigs = EmailConfigs.enabled(from);

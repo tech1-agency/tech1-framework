@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationReposi
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -72,11 +73,11 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
                 .hasMessageStartingWith("Username: Not Found, id = sa777");
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@tech1.io"))).isNotNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@tech1.io"))).isNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa1@tech1.io"))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa2@tech1.io"))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa4@tech1.io"))).isNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + DomainConstants.TECH1))).isNotNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + DomainConstants.TECH1))).isNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + DomainConstants.TECH1))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + DomainConstants.TECH1))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + DomainConstants.TECH1))).isNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa1"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa4"))).isNull();

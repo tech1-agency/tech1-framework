@@ -440,38 +440,6 @@ class RandomUtilityTest {
     }
 
     @Test
-    void randomEmailAsValueTest() {
-        // Arrange
-        var domain = "@tech1.io";
-        var randomLength = 32;
-        var domainLength = 9;
-        var expected = randomLength + domainLength;
-
-        // Act
-        var actual = randomEmailAsValue();
-
-        // Assert
-        assertThat(actual).hasSize(expected);
-        assertThat(actual.substring(randomLength)).isEqualTo(domain);
-    }
-
-    @Test
-    void randomEmailTest() {
-        // Arrange
-        var domain = "@tech1.io";
-        var randomLength = 32;
-        var domainLength = 9;
-        var expected = randomLength + domainLength;
-
-        // Act
-        var actual = randomEmail();
-
-        // Assert
-        assertThat(actual.value()).hasSize(expected);
-        assertThat(actual.value().substring(randomLength)).isEqualTo(domain);
-    }
-
-    @Test
     void randomElementListTest() {
         // Arrange
         var list = List.of(

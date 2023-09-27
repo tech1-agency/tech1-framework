@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSess
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.DomainConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -67,7 +68,7 @@ public class PostgresSecurityJwtDbRandomUtility {
                 randomZoneId(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );
-        user.setEmail(Email.of(username + "@tech1.io"));
+        user.setEmail(Email.of(username + "@" + DomainConstants.TECH1));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
         user.setAttributes(
                 Map.of(

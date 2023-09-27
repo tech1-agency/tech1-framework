@@ -169,7 +169,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersSessionsService).renewUserRequestMetadataManually(eq(sessionId), any(HttpServletRequest.class));
+        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(eq(sessionId));
     }
 
     @Test

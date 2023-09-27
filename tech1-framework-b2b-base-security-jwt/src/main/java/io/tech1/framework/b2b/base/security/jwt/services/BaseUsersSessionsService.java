@@ -25,7 +25,10 @@ public interface BaseUsersSessionsService {
     UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction);
     SessionsExpiredTable getExpiredRefreshTokensSessions(Set<Username> usernames);
     void enableUserRequestMetadataRenewCron();
+    void enableUserRequestMetadataRenewManually(UserSessionId sessionId);
+    @Deprecated
     void renewUserRequestMetadataCron(UserSession session, HttpServletRequest httpServletRequest);
+    @Deprecated
     void renewUserRequestMetadataManually(UserSessionId sessionId, HttpServletRequest httpServletRequest);
     void deleteById(UserSessionId sessionId);
     void deleteAllExceptCurrent(Username username, CookieAccessToken cookie);

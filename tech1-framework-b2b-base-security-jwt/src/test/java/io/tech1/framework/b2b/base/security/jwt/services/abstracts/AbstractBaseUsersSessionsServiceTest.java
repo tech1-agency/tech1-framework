@@ -434,6 +434,18 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
+    void enableUserRequestMetadataRenewManuallyTest() {
+        // Arrange
+        var sessionId = entity(UserSessionId.class);
+
+        // Act
+        this.componentUnderTest.enableUserRequestMetadataRenewManually(sessionId);
+
+        // Assert
+        verify(this.usersSessionsRepository).enableMetadataRenewManually(sessionId);
+    }
+
+    @Test
     void renewUserRequestMetadataCronDisabledTest() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);

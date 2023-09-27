@@ -70,8 +70,8 @@ public class BaseSuperAdminResource {
     }
 
     @PostMapping("/sessions/{sessionId}/renew/manually")
-    public void renewManually(@PathVariable UserSessionId sessionId, HttpServletRequest httpServletRequest) {
-        this.baseUsersSessionsService.renewUserRequestMetadataManually(sessionId, httpServletRequest);
+    public void renewManually(@PathVariable UserSessionId sessionId) {
+        this.baseUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/sessions/{sessionId}")

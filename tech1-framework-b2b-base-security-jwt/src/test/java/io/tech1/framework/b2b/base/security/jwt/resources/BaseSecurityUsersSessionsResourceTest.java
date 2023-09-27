@@ -100,7 +100,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersSessionsRequestsValidator).validateAccess(user.username(), sessionId);
-        verify(this.baseUsersSessionsService).renewUserRequestMetadataManually(eq(sessionId), any(HttpServletRequest.class));
+        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @Test

@@ -39,7 +39,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

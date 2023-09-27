@@ -24,7 +24,6 @@ import java.util.HashSet;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.getInvitationCode;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

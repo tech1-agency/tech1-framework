@@ -20,7 +20,6 @@ import org.springframework.http.MediaType;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

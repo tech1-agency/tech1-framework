@@ -31,10 +31,6 @@ public interface BaseUsersSessionsService {
     void enableUserRequestMetadataRenewCron();
     void enableUserRequestMetadataRenewManually(UserSessionId sessionId);
     void renewUserRequestMetadata(UserSession session, HttpServletRequest httpServletRequest);
-    @Deprecated
-    void renewUserRequestMetadataCron(UserSession session, HttpServletRequest httpServletRequest);
-    @Deprecated
-    void renewUserRequestMetadataManually(UserSessionId sessionId, HttpServletRequest httpServletRequest);
     void deleteById(UserSessionId sessionId);
     void deleteAllExceptCurrent(Username username, CookieAccessToken cookie);
     void deleteAllExceptCurrentAsSuperuser(CookieAccessToken cookie);

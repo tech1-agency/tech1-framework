@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewCron;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenewManually;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
@@ -446,37 +447,14 @@ class AbstractBaseUsersSessionsServiceTest {
     }
 
     @Test
-    void renewUserRequestMetadataCronDisabledTest() {
+    void renewUserRequestMetadataTest() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         var session = UserSession.ofPersisted(
                 entity(UserSessionId.class),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
-                randomUsername(),
-                entity(JwtAccessToken.class),
-                entity(JwtRefreshToken.class),
-                randomUserRequestMetadata(),
-                false,
-                randomBoolean()
-        );
-
-        // Act
-        this.componentUnderTest.renewUserRequestMetadataCron(session, httpServletRequest);
-
-        // Assert
-        verifyNoMoreInteractions(this.securityJwtPublisher);
-    }
-
-    @Test
-    void renewUserRequestMetadataCronEnabledTest() {
-        // Arrange
-        var httpServletRequest = mock(HttpServletRequest.class);
-        var session = UserSession.ofPersisted(
-                entity(UserSessionId.class),
-                getCurrentTimestamp(),
-                getCurrentTimestamp(),
-                randomUsername(),
+                Username.random(),
                 entity(JwtAccessToken.class),
                 entity(JwtRefreshToken.class),
                 randomUserRequestMetadata(),
@@ -485,39 +463,17 @@ class AbstractBaseUsersSessionsServiceTest {
         );
 
         // Act
-        this.componentUnderTest.renewUserRequestMetadataCron(session, httpServletRequest);
+        this.componentUnderTest.renewUserRequestMetadata(session, httpServletRequest);
 
         // Assert
-        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenewCron.class);
-        verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenewCron(eventAC.capture());
+        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenew.class);
+        verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenew(eventAC.capture());
         var event = eventAC.getValue();
         assertThat(event.username()).isEqualTo(session.username());
         assertThat(event.session()).isEqualTo(session);
         assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
         assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
-    }
-
-    @Test
-    void renewUserRequestMetadataManuallyTest() {
-        // Arrange
-        var httpServletRequest = mock(HttpServletRequest.class);
-        when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
-        var session = entity(UserSession.class);
-        var sessionId = entity(UserSessionId.class);
-        when(this.usersSessionsRepository.enableMetadataRenewManually(sessionId)).thenReturn(session);
-
-        // Act
-        this.componentUnderTest.renewUserRequestMetadataManually(sessionId, httpServletRequest);
-
-        // Assert
-        verify(this.usersSessionsRepository).enableMetadataRenewManually(sessionId);
-        var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataRenewManually.class);
-        verify(this.securityJwtPublisher).publishSessionUserRequestMetadataRenewManually(eventAC.capture());
-        var event = eventAC.getValue();
-        assertThat(event.username()).isEqualTo(session.username());
-        assertThat(event.session()).isEqualTo(session);
-        assertThat(event.clientIpAddr()).isEqualTo(getClientIpAddr(httpServletRequest));
-        assertThat(event.userAgentHeader()).isEqualTo(new UserAgentHeader(httpServletRequest));
+        // TODO [yy] add parametrized tests -> Toggles
     }
 
     @Test

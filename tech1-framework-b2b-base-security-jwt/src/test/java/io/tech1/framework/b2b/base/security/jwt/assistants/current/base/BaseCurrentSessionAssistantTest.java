@@ -159,7 +159,7 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentClientUserTest() {
         // Arrange
         var user = new JwtUser(
-                entity(UserId.class),
+                UserId.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -191,8 +191,8 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserNoAttributesNoHardwareTest() {
         // Arrange
-        var jwtUser = entity(JwtUser.class);
-        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+        var user = entity(JwtUser.class);
+        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
@@ -203,9 +203,9 @@ class BaseCurrentSessionAssistantTest {
         // Assert
         verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
-        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.email());
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.name());
+        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(user.getUsername()));
+        assertThat(currentClientUser.getEmail()).isEqualTo(user.email());
+        assertThat(currentClientUser.getName()).isEqualTo(user.name());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).isEmpty();
     }
@@ -215,7 +215,7 @@ class BaseCurrentSessionAssistantTest {
         // Arrange
         var session = entity(UserSession.class);
         var request = mock(HttpServletRequest.class);
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
         var accessToken = JwtAccessToken.of(cookie.value());
         when(this.cookieProvider.readJwtAccessToken(request)).thenReturn(cookie);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
@@ -232,8 +232,8 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
-        var username = entity(Username.class);
-        var cookie = entity(CookieAccessToken.class);
+        var username = Username.random();
+        var cookie = CookieAccessToken.random();
         var sessionsTable = entity(ResponseUserSessionsTable.class);
         when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
         when(this.sessionRegistry.getSessionsTable(username, cookie)).thenReturn(sessionsTable);

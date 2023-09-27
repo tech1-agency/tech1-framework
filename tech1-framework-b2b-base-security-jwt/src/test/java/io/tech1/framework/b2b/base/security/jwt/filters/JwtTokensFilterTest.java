@@ -125,8 +125,8 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var cookieAccessToken = entity(CookieAccessToken.class);
-        var cookieRefreshToken = entity(CookieRefreshToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
+        var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(new CookieAccessTokenExpiredException(TECH1));
@@ -152,7 +152,7 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var cookieAccessToken = entity(CookieAccessToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenThrow(new CookieRefreshTokenNotFoundException());
 
@@ -178,8 +178,8 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        var cookieAccessToken = entity(CookieAccessToken.class);
-        var cookieRefreshToken = entity(CookieRefreshToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
+        var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
@@ -207,8 +207,8 @@ class JwtTokensFilterTest {
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         var user = entity(JwtUser.class);
-        var cookieAccessToken = entity(CookieAccessToken.class);
-        var cookieRefreshToken = entity(CookieRefreshToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
+        var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(user);

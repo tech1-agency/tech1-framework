@@ -19,7 +19,7 @@ class JwtTokenValidatedClaimsTest {
     @Test
     void invalidAccessTokenTest() {
         // Arrange
-        var token = entity(JwtAccessToken.class);
+        var token = JwtAccessToken.random();
 
         // Act
         var validatedClaims = JwtTokenValidatedClaims.invalid(token);
@@ -40,7 +40,7 @@ class JwtTokenValidatedClaimsTest {
     @Test
     void invalidRefreshTokenTest() {
         // Arrange
-        var token = entity(JwtRefreshToken.class);
+        var token = JwtRefreshToken.random();
 
         // Act
         var validatedClaims = JwtTokenValidatedClaims.invalid(token);
@@ -61,7 +61,7 @@ class JwtTokenValidatedClaimsTest {
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validAccessTokenTest() {
         // Arrange
-        var token = entity(JwtAccessToken.class);
+        var token = JwtAccessToken.random();
 
         // Act
         var validatedClaims = JwtTokenValidatedClaims.valid(token, validClaims());
@@ -83,7 +83,7 @@ class JwtTokenValidatedClaimsTest {
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validRefreshTokenTest() {
         // Arrange
-        var token = entity(JwtRefreshToken.class);
+        var token = JwtRefreshToken.random();
 
         // Act
         var validatedClaims = JwtTokenValidatedClaims.valid(token, validClaims());

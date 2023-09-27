@@ -124,7 +124,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 list345(ResponseUserSession2.class),
                 list345(ResponseUserSession2.class)
         );
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.baseSuperAdminService.getSessions(cookie)).thenReturn(sessionsTable);
 
@@ -162,20 +162,20 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     @Test
     void renewManuallyTest() throws Exception {
         // Arrange
-        var sessionId = entity(UserSessionId.class);
+        var sessionId = UserSessionId.random();
 
         // Act
         this.mvc.perform(post("/superadmin/sessions/" + sessionId + "/renew/manually"))
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(eq(sessionId));
+        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        var sessionId = entity(UserSessionId.class);
+        var sessionId = UserSessionId.random();
 
         // Act
         this.mvc.perform(delete("/superadmin/sessions/" + sessionId))
@@ -188,7 +188,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     @Test
     void deleteAllExceptCurrentTest() throws Exception {
         // Arrange
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act

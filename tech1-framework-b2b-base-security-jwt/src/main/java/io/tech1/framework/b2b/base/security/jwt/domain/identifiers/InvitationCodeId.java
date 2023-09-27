@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+
 public record InvitationCodeId(@NotNull String value) {
 
     @JsonCreator
     public static InvitationCodeId of(String value) {
         return new InvitationCodeId(value);
+    }
+
+    public static InvitationCodeId random() {
+        return new InvitationCodeId(randomString());
     }
 
     @JsonValue

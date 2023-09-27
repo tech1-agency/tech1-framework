@@ -39,7 +39,7 @@ class ResponseUserSessionsTableTest {
         // Arrange
         var username = Username.random();
         var responseUserSession21 = ResponseUserSession2.of(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
                 new CookieAccessToken(randomString()),
@@ -50,7 +50,7 @@ class ResponseUserSessionsTableTest {
                 )
         );
         var responseUserSession22 = ResponseUserSession2.of(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
                 new CookieAccessToken("token2"),
@@ -61,7 +61,7 @@ class ResponseUserSessionsTableTest {
                 )
         );
         var responseUserSession23 = ResponseUserSession2.of(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
                 new CookieAccessToken(randomString()),

@@ -125,8 +125,8 @@ class TokensServiceImplTest {
     @Test
     void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException {
         // Arrange
-        var cookieAccessToken = entity(CookieAccessToken.class);
-        var cookieRefreshToken = entity(CookieRefreshToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
+        var cookieRefreshToken = CookieRefreshToken.random();
         var accessToken = cookieAccessToken.getJwtAccessToken();
         var refreshToken = cookieRefreshToken.getJwtRefreshToken();
         var accessTokenValidatedClaims = JwtTokenValidatedClaims.valid(accessToken, validClaims());
@@ -158,8 +158,8 @@ class TokensServiceImplTest {
         var validatedClaims = JwtTokenValidatedClaims.valid(oldRefreshToken, validClaims());
         var user = entity(JwtUser.class);
         var session = randomPersistedSession();
-        var newAccessToken = entity(JwtAccessToken.class);
-        var newRefreshToken = entity(JwtRefreshToken.class);
+        var newAccessToken = JwtAccessToken.random();
+        var newRefreshToken = JwtRefreshToken.random();
 
         when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken)).thenReturn(validatedClaims);

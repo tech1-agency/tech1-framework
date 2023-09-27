@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record UserSessionId(@NotNull String value) {
 
@@ -15,6 +16,10 @@ public record UserSessionId(@NotNull String value) {
 
     public static UserSessionId undefined() {
         return new UserSessionId(UNDEFINED);
+    }
+
+    public static UserSessionId random() {
+        return new UserSessionId(randomString());
     }
 
     @JsonValue

@@ -72,7 +72,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     void getSessionsTableTest() throws Exception {
         // Arrange
         var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie)).thenReturn(userSessionsTables);
 
@@ -165,7 +165,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
         var username = entity(Username.class);
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 

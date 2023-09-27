@@ -108,8 +108,8 @@ class SecurityHandshakeHandlerTest {
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        var cookieAccessToken = entity(CookieAccessToken.class);
-        var cookieRefreshToken = entity(CookieRefreshToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
+        var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
@@ -135,8 +135,8 @@ class SecurityHandshakeHandlerTest {
         Map<String, Object> attributes = new HashMap<>();
         var user = entity(JwtUser.class);
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        var cookieAccessToken = entity(CookieAccessToken.class);
-        var cookieRefreshToken = entity(CookieRefreshToken.class);
+        var cookieAccessToken = CookieAccessToken.random();
+        var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(user);

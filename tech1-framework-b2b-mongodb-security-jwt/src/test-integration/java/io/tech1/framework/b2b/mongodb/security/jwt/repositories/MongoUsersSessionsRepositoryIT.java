@@ -56,7 +56,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         // Arrange
         var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
-        var notExistentSessionId = entity(UserSessionId.class);
+        var notExistentSessionId = UserSessionId.random();
 
         var savedSession = saved.get(0);
         var existentSessionId = savedSession.userSessionId();

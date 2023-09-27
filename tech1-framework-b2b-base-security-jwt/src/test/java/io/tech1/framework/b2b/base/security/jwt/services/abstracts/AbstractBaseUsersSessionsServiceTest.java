@@ -176,8 +176,8 @@ class AbstractBaseUsersSessionsServiceTest {
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
         var user = entity(JwtUser.class);
         var username = user.username();
-        var accessToken = entity(JwtAccessToken.class);
-        var refreshToken = entity(JwtRefreshToken.class);
+        var accessToken = JwtAccessToken.random();
+        var refreshToken = JwtRefreshToken.random();
         var userSession = session(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
@@ -222,8 +222,8 @@ class AbstractBaseUsersSessionsServiceTest {
         when(httpServletRequest.getHeader("X-Forwarded-For")).thenReturn(ipAddr);
         var user = entity(JwtUser.class);
         var username = user.username();
-        var accessToken = entity(JwtAccessToken.class);
-        var refreshToken = entity(JwtRefreshToken.class);
+        var accessToken = JwtAccessToken.random();
+        var refreshToken = JwtRefreshToken.random();
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
         var userSession = session(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
@@ -266,8 +266,8 @@ class AbstractBaseUsersSessionsServiceTest {
         when(httpServletRequest.getHeader("User-Agent")).thenReturn(randomString());
         var user = entity(JwtUser.class);
         var username = user.username();
-        var newAccessToken = entity(JwtAccessToken.class);
-        var newRefreshToken = entity(JwtRefreshToken.class);
+        var newAccessToken = JwtAccessToken.random();
+        var newRefreshToken = JwtRefreshToken.random();
         var oldSession = randomPersistedSession();
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(randomPersistedSession());
 
@@ -352,8 +352,8 @@ class AbstractBaseUsersSessionsServiceTest {
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 username,
-                entity(JwtAccessToken.class),
-                entity(JwtRefreshToken.class),
+                JwtAccessToken.random(),
+                JwtRefreshToken.random(),
                 UserRequestMetadata.random(),
                 false,
                 false
@@ -391,17 +391,17 @@ class AbstractBaseUsersSessionsServiceTest {
         var usernames = new HashSet<>(Set.of(TECH1));
         var sessionInvalidUserSession = session(
                 Username.random(),
-                entity(JwtAccessToken.class),
+                JwtAccessToken.random(),
                 new JwtRefreshToken("<invalid>")
         );
         var sessionExpiredUserSession = session(
                 Username.random(),
-                entity(JwtAccessToken.class),
+                JwtAccessToken.random(),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8")
         );
         var sessionAliveUserSession = session(
                 Username.random(),
-                entity(JwtAccessToken.class),
+                JwtAccessToken.random(),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY")
         );
         var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
@@ -460,8 +460,8 @@ class AbstractBaseUsersSessionsServiceTest {
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 Username.random(),
-                entity(JwtAccessToken.class),
-                entity(JwtRefreshToken.class),
+                JwtAccessToken.random(),
+                JwtRefreshToken.random(),
                 UserRequestMetadata.random(),
                 metadataRenewCron,
                 metadataRenewManually
@@ -500,7 +500,7 @@ class AbstractBaseUsersSessionsServiceTest {
     void deleteAllExceptCurrentTest() {
         // Arrange
         var username = entity(Username.class);
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
 
         // Act
         this.componentUnderTest.deleteAllExceptCurrent(username, cookie);
@@ -512,7 +512,7 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void deleteAllExceptCurrentAsSuperuserTest() {
         // Arrange
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
 
         // Act
         this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(cookie);

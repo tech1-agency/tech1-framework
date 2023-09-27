@@ -104,8 +104,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
                 randomZoneId().getId(),
                 invitationCode
         );
-        var currentDbUser = entity(JwtUser.class);
-        when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(currentDbUser);
+        var user = entity(JwtUser.class);
+        when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(user);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));

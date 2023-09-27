@@ -32,7 +32,6 @@ import java.util.stream.Stream;
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -43,7 +42,7 @@ public class BaseSecurityJwtRandomUtility {
 
     public static JwtUser randomSuperadmin() {
         return new JwtUser(
-                entity(UserId.class),
+                UserId.random(),
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
@@ -86,17 +85,17 @@ public class BaseSecurityJwtRandomUtility {
     }
 
     public static InvitationCode randomInvitationCode() {
-        return new InvitationCode(entity(InvitationCodeId.class), Username.random(), authorities(SUPER_ADMIN), randomString(), Username.random());
+        return new InvitationCode(InvitationCodeId.random(), Username.random(), authorities(SUPER_ADMIN), randomString(), Username.random());
     }
 
     public static UserSession randomPersistedSession() {
         return UserSession.ofPersisted(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 Username.random(),
-                entity(JwtAccessToken.class),
-                entity(JwtRefreshToken.class),
+                JwtAccessToken.random(),
+                JwtRefreshToken.random(),
                 UserRequestMetadata.random(),
                 randomBoolean(),
                 randomBoolean()

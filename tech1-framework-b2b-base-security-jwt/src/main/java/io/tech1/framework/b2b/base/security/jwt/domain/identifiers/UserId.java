@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+
 public record UserId(@NotNull String value) {
 
     @JsonCreator
     public static UserId of(String value) {
         return new UserId(value);
+    }
+
+    public static UserId random() {
+        return new UserId(randomString());
     }
 
     @JsonValue

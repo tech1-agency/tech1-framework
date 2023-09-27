@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthent
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.services.EmailService;
@@ -130,7 +131,7 @@ class UsersEmailsServiceImplTest {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 randomUserRequestMetadata()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
@@ -147,7 +148,7 @@ class UsersEmailsServiceImplTest {
     void executeAuthenticationLoginTest() {
         // Arrange
         var username = randomUsername();
-        var email = randomEmail();
+        var email = Email.random();
         var userRequestMetadata = randomUserRequestMetadata();
         var function = new FunctionAuthenticationLoginEmail(
                 username,
@@ -195,7 +196,7 @@ class UsersEmailsServiceImplTest {
     void executeSessionRefreshedTest() {
         // Arrange
         var username = randomUsername();
-        var email = randomEmail();
+        var email = Email.random();
         var userRequestMetadata = randomUserRequestMetadata();
         var function = new FunctionSessionRefreshedEmail(
                 username,

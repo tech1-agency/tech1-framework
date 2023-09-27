@@ -11,6 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
@@ -161,7 +162,7 @@ class BaseCurrentSessionAssistantTest {
                 randomPassword(),
                 randomZoneId(),
                 new ArrayList<>(),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 new HashMap<>()
         );

@@ -87,7 +87,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 randomZoneId(),
                 List.of(),
@@ -114,7 +114,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 randomZoneId(),
                 List.of(
@@ -138,7 +138,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 randomZoneId(),
                 List.of(

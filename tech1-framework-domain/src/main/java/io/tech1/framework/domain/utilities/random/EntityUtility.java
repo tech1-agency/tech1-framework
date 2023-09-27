@@ -51,7 +51,7 @@ public class EntityUtility {
         addConstructorRule(TimeZone.class, clazz -> randomTimeZone());
         addConstructorRule(Username.class, clazz -> randomUsername());
         addConstructorRule(Password.class, clazz -> randomPassword());
-        addConstructorRule(Email.class, clazz -> randomEmail());
+        addConstructorRule(Email.class, clazz -> Email.random());
 
         addConstructorRule(IPAddress.class, clazz -> randomIPAddress());
         addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());

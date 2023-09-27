@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
+import io.tech1.framework.domain.base.Email;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -32,7 +33,7 @@ public abstract class AbstractResourcesRunner {
     protected static CurrentClientUser randomCurrentClientUser() {
         return new CurrentClientUser(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 randomZoneId(),
                 new ArrayList<>(),

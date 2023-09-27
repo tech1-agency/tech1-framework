@@ -92,7 +92,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var username = entity(Username.class);
-        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", Email.random(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -122,7 +122,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
         var username = entity(Username.class);
-        var email = randomEmail();
+        var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
@@ -138,7 +138,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
         var user= entity(JwtUser.class);
-        var email = randomEmail();
+        var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
@@ -154,7 +154,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var username = entity(Username.class);
-        var email = randomEmail();
+        var email = Email.random();
         var user = entity(JwtUser.class);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());

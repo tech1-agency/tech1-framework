@@ -8,6 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
@@ -24,7 +25,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPAddress;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -174,7 +176,7 @@ class BaseSecurityJwtSubscriberTest {
         // Arrange
         var event = new EventSessionUserRequestMetadataAdd(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 entity(UserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
@@ -195,7 +197,7 @@ class BaseSecurityJwtSubscriberTest {
         // Arrange
         var event = new EventSessionUserRequestMetadataAdd(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 entity(UserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),
@@ -218,7 +220,7 @@ class BaseSecurityJwtSubscriberTest {
         // Arrange
         var event = new EventSessionUserRequestMetadataAdd(
                 randomUsername(),
-                randomEmail(),
+                Email.random(),
                 entity(UserSession.class),
                 randomIPAddress(),
                 mock(UserAgentHeader.class),

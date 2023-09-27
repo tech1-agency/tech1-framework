@@ -11,6 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
@@ -45,7 +46,7 @@ public class BaseSecurityJwtRandomUtility {
                 randomPassword(),
                 randomZoneId(),
                 authorities(SUPER_ADMIN),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 new HashMap<>()
         );

@@ -44,4 +44,20 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
         assertThat(actual.value()).isEqualTo(EMAIL.value());
         assertThat(actual.toString()).hasToString(EMAIL.value());
     }
+
+    @Test
+    void randomEmailTest() {
+        // Arrange
+        var domain = "@tech1.io";
+        var randomLength = 32;
+        var domainLength = 9;
+        var expected = randomLength + domainLength;
+
+        // Act
+        var actual = Email.random();
+
+        // Assert
+        assertThat(actual.value()).hasSize(expected);
+        assertThat(actual.value().substring(randomLength)).isEqualTo(domain);
+    }
 }

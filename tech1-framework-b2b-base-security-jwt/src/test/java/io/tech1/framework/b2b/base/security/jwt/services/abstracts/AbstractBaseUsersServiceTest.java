@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
+import io.tech1.framework.domain.base.Email;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.time.ZoneId;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -77,7 +79,7 @@ class AbstractBaseUsersServiceTest {
         // Arrange
         var requestUserUpdate1 = new RequestUserUpdate1(
                 randomZoneId().getId(),
-                randomEmail(),
+                Email.random(),
                 randomString()
         );
         var jwtUser = entity(JwtUser.class);

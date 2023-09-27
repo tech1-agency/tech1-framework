@@ -20,6 +20,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
+import io.tech1.framework.domain.tuples.TupleToggle;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.AccessLevel;
@@ -187,7 +188,18 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
 
     @Override
     public void renewUserRequestMetadata(UserSession session, HttpServletRequest httpServletRequest) {
-        // add renew event
+        if (session.isRenewRequired()) {
+            this.securityJwtPublisher.publishSessionUserRequestMetadataRenew(
+                    new EventSessionUserRequestMetadataRenew(
+                            session.username(),
+                            session,
+                            getClientIpAddr(httpServletRequest),
+                            new UserAgentHeader(httpServletRequest),
+                            session.metadataRenewCron() ? TupleToggle.enabled(true) : TupleToggle.disabled(),
+                            session.metadataRenewManually() ? TupleToggle.enabled(true) : TupleToggle.disabled()
+                    )
+            );
+        }
     }
 
     @Override

@@ -66,4 +66,8 @@ public record UserSession(
                 false
         );
     }
+
+    public boolean isRenewRequired() {
+        return this.metadataRenewCron || this.metadataRenewManually;
+    }
 }

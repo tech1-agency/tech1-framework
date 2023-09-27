@@ -44,7 +44,7 @@ public class BaseSecurityUsersSessionsResource {
     public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
-        this.baseUsersSessionsService.renewUserRequestMetadataCron(session, httpServletRequest);
+        this.baseUsersSessionsService.renewUserRequestMetadata(session, httpServletRequest);
         return user;
     }
 

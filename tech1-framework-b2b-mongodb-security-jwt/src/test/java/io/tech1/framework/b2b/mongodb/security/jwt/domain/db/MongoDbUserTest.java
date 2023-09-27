@@ -1,11 +1,13 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
+import io.tech1.framework.domain.base.Password;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +18,7 @@ class MongoDbUserTest {
         // Arrange
         var user = new MongoDbUser(
                 randomUsername(),
-                randomPassword(),
+                Password.random(),
                 randomZoneId().getId(),
                 List.of(
                         new SimpleGrantedAuthority("admin123")
@@ -35,7 +37,7 @@ class MongoDbUserTest {
         // Arrange
         var user = new MongoDbUser(
                 randomUsername(),
-                randomPassword(),
+                Password.random(),
                 randomZoneId().getId(),
                 List.of(
                         new SimpleGrantedAuthority("admin123")

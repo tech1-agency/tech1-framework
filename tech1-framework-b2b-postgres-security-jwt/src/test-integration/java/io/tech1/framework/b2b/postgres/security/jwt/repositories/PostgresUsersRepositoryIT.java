@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,8 @@ import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecur
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -167,7 +169,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
         // Act-Assert-1
-        var userId2 = this.usersRepository.saveAs(registration1(), randomPassword(), randomInvitationCode());
+        var userId2 = this.usersRepository.saveAs(registration1(), Password.random(), randomInvitationCode());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
     }

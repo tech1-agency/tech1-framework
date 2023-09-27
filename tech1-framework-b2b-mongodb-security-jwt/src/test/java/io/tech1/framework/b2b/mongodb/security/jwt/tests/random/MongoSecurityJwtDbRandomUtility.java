@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCo
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -62,7 +63,7 @@ public class MongoSecurityJwtDbRandomUtility {
     public static MongoDbUser randomUserBy(String username, List<String> authorities) {
         var user = new MongoDbUser(
                 Username.of(username),
-                randomPassword(),
+                Password.random(),
                 randomZoneId().getId(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );

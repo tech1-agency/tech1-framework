@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitati
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -62,7 +63,7 @@ public class PostgresSecurityJwtDbRandomUtility {
     public static PostgresDbUser randomUserBy(String username, List<String> authorities) {
         var user = new PostgresDbUser(
                 Username.of(username),
-                randomPassword(),
+                Password.random(),
                 randomZoneId(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
         );

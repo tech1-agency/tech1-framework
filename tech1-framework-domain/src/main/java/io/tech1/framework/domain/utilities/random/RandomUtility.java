@@ -227,7 +227,7 @@ public class RandomUtility {
 
     @Deprecated(since = "v1.16")
     public static Email randomEmail() {
-        return Email.of(randomEmailAsValue());
+        return Email.random();
     }
 
     public static <T> T randomElement(List<T> list) {
@@ -352,12 +352,12 @@ public class RandomUtility {
 
     @Deprecated(since = "v1.16")
     public static Username randomUsername() {
-        return Username.of(randomString());
+        return Username.random();
     }
 
     @Deprecated(since = "v1.16")
     public static Password randomPassword() {
-        return Password.of(randomString());
+        return Password.random();
     }
 
     @SuppressWarnings("deprecation")

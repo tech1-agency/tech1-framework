@@ -85,8 +85,8 @@ class AbstractBaseRegistrationServiceTest {
         // Arrange
         var requestUserRegistration1 = new RequestUserRegistration1(
                 randomUsername(),
-                randomPassword(),
-                randomPassword(),
+                Password.random(),
+                Password.random(),
                 randomZoneId().getId(),
                 randomString()
         );

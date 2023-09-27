@@ -12,6 +12,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
@@ -43,7 +44,7 @@ public class BaseSecurityJwtRandomUtility {
         return new JwtUser(
                 entity(UserId.class),
                 randomUsername(),
-                randomPassword(),
+                Password.random(),
                 randomZoneId(),
                 authorities(SUPER_ADMIN),
                 Email.random(),
@@ -102,7 +103,7 @@ public class BaseSecurityJwtRandomUtility {
     }
 
     public static RequestUserRegistration1 registration1() {
-        return new RequestUserRegistration1(Username.of("registration11"), randomPassword(), randomPassword(), randomZoneId().getId(), randomString());
+        return new RequestUserRegistration1(Username.of("registration11"), Password.random(), Password.random(), randomZoneId().getId(), randomString());
     }
 
     public static ResetServerStatus randomResetServerStatus() {

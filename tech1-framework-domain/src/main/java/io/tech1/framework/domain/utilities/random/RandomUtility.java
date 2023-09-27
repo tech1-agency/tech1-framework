@@ -363,35 +363,17 @@ public class RandomUtility {
         );
     }
 
-    public static UserAgentDetails validUserAgentDetails() {
-        return UserAgentDetails.processed(
-                "Chrome",
-                "macOS",
-                "Desktop"
-        );
-    }
-
-    public static UserAgentDetails invalidUserAgentDetails() {
-        return UserAgentDetails.unknown(
-                "User agent details are unknown"
-        );
-    }
-
-    public static UserAgentDetails randomUserAgentDetails() {
-        return randomBoolean() ? validUserAgentDetails() : invalidUserAgentDetails();
-    }
-
     public static UserRequestMetadata validUserRequestMetadata() {
         return UserRequestMetadata.processed(
                 GeoLocation.valid(),
-                validUserAgentDetails()
+                UserAgentDetails.valid()
         );
     }
 
     public static UserRequestMetadata invalidUserRequestMetadata() {
         return UserRequestMetadata.processed(
                 GeoLocation.invalid(),
-                invalidUserAgentDetails()
+                UserAgentDetails.invalid()
         );
     }
 

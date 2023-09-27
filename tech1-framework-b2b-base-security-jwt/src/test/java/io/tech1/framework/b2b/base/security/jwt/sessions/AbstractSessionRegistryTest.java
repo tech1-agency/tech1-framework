@@ -18,6 +18,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsReposi
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
@@ -48,7 +49,8 @@ import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.
 import static io.tech1.framework.domain.tuples.TuplePresence.absent;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUserRequestMetadata;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -347,10 +349,10 @@ class AbstractSessionRegistryTest {
         Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
                 tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
 
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), validUserAgentDetails()), cookie.value()));
-        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), validUserAgentDetails()), randomString()));
-        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), invalidUserAgentDetails()), randomString()));
-        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), invalidUserAgentDetails()), randomString()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.valid()), cookie.value()));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.valid()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.invalid()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.invalid()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
         List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();

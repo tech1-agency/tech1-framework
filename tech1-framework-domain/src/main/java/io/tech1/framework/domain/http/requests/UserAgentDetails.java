@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static java.util.Objects.nonNull;
 
 // Lombok
@@ -62,6 +63,24 @@ public class UserAgentDetails {
                 deviceType,
                 StringConstants.EMPTY
         );
+    }
+
+    public static UserAgentDetails valid() {
+        return UserAgentDetails.processed(
+                "Chrome",
+                "macOS",
+                "Desktop"
+        );
+    }
+
+    public static UserAgentDetails invalid() {
+        return UserAgentDetails.unknown(
+                "User agent details are unknown"
+        );
+    }
+
+    public static UserAgentDetails random() {
+        return randomBoolean() ? valid() : invalid();
     }
 
     public String getWhat() {

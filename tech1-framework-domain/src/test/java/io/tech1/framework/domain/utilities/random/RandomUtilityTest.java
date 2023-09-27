@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
@@ -736,48 +735,6 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.request().httpMethod()).isEqualTo(Request.HttpMethod.GET);
         assertThat(actual.request().url()).isEqualTo("/endpoint");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void validUserAgentDetailsTest() {
-        // Act
-        var actual = validUserAgentDetails();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getBrowser()).isEqualTo("Chrome");
-        assertThat(actual.getPlatform()).isEqualTo("macOS");
-        assertThat(actual.getDeviceType()).isEqualTo("Desktop");
-        assertThat(actual.getExceptionDetails()).isEmpty();
-        assertThat(actual.getWhat()).isEqualTo("Chrome, macOS on Desktop");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void invalidUserAgentDetailsTest() {
-        // Act
-        var actual = invalidUserAgentDetails();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getBrowser()).isEqualTo(UNKNOWN);
-        assertThat(actual.getPlatform()).isEqualTo(UNKNOWN);
-        assertThat(actual.getDeviceType()).isEqualTo(UNKNOWN);
-        assertThat(actual.getExceptionDetails()).isEqualTo("User agent details are unknown");
-        assertThat(actual.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUserAgentDetailsTest() {
-        // Act
-        var userAgentDetails = randomUserAgentDetails();
-
-        // Assert
-        assertThat(userAgentDetails).isNotNull();
-        assertThat(userAgentDetails.getBrowser()).isNotNull();
-        assertThat(userAgentDetails.getPlatform()).isNotNull();
-        assertThat(userAgentDetails.getDeviceType()).isNotNull();
-        assertThat(userAgentDetails.getExceptionDetails()).isNotNull();
-        assertThat(userAgentDetails.getWhat()).isNotNull();
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)

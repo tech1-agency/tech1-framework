@@ -377,31 +377,6 @@ class RandomUtilityTest {
     }
 
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
-    void randomIPAddressTest() {
-        // Act
-        var actual = randomIPAddress();
-
-        // Assert
-        var ipv4 = List.of(actual.value().split("\\."));
-        assertThat(ipv4).hasSize(4);
-        ipv4.forEach(element -> {
-            var slot = Integer.valueOf(element);
-            assertThat(slot).isNotNull();
-            assertThat(slot).isNotNegative();
-            assertThat(slot).isLessThan(256);
-        });
-    }
-
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
-    void localhostTest() {
-        // Act
-        var actual = localhost();
-
-        // Assert
-        assertThat(actual.value()).isEqualTo("127.0.0.1");
-    }
-
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomServerURLTest() {
         // Arrange
         var pattern = Pattern.compile("^"

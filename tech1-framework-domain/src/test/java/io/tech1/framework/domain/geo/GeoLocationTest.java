@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.geo.GeoLocation.*;
+import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.localhost;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GeoLocationTest extends AbstractFolderSerializationRunner {

@@ -10,6 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsServic
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
@@ -26,7 +27,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPAddress;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -178,7 +178,7 @@ class BaseSecurityJwtSubscriberTest {
                 Username.random(),
                 Email.random(),
                 entity(UserSession.class),
-                randomIPAddress(),
+                IPAddress.random(),
                 mock(UserAgentHeader.class),
                 false,
                 false
@@ -199,7 +199,7 @@ class BaseSecurityJwtSubscriberTest {
                 Username.random(),
                 Email.random(),
                 entity(UserSession.class),
-                randomIPAddress(),
+                IPAddress.random(),
                 mock(UserAgentHeader.class),
                 true,
                 false
@@ -222,7 +222,7 @@ class BaseSecurityJwtSubscriberTest {
                 Username.random(),
                 Email.random(),
                 entity(UserSession.class),
-                randomIPAddress(),
+                IPAddress.random(),
                 mock(UserAgentHeader.class),
                 false,
                 true

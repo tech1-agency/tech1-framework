@@ -1,6 +1,7 @@
 package io.tech1.framework.utilities.geo.functions.ipapi.utility.impl;
 
 import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.ipapi.domain.IPAPIResponse;
 import io.tech1.framework.utilities.geo.functions.ipapi.feign.IPAPIFeign;
@@ -19,7 +20,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UKRAINE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomFeignException;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPAddress;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
@@ -75,7 +75,7 @@ class IPAPIGeoLocationUtilityImplTest {
     @Test
     void getGeoLocationThrowFeignExceptionTest() {
         // Arrange
-        var ipAddress = randomIPAddress();
+        var ipAddress = IPAddress.random();
         var feignException = randomFeignException();
         when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenThrow(feignException);
 
@@ -91,7 +91,7 @@ class IPAPIGeoLocationUtilityImplTest {
     @Test
     void getGeoLocationAPIFailureTest() {
         // Arrange
-        var ipAddress = randomIPAddress();
+        var ipAddress = IPAddress.random();
         var ipapiResponse = new IPAPIResponse("fail", null, null, null, "reserved range");
         when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
 
@@ -107,7 +107,7 @@ class IPAPIGeoLocationUtilityImplTest {
     @Test
     void getGeoLocationTest() throws GeoLocationNotFoundException {
         // Arrange
-        var ipAddress = randomIPAddress();
+        var ipAddress = IPAddress.random();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
         when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
         when(this.countryFlagUtility.getFlagEmojiByCountryCode("UA")).thenReturn(FLAG_UKRAINE);

@@ -53,7 +53,7 @@ public class EntityUtility {
         addConstructorRule(Password.class, clazz -> Password.random());
         addConstructorRule(Email.class, clazz -> Email.random());
 
-        addConstructorRule(IPAddress.class, clazz -> randomIPAddress());
+        addConstructorRule(IPAddress.class, clazz -> IPAddress.random());
         addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());
         addConstructorRule(UserAgentDetails.class, clazz -> randomUserAgentDetails());
         addConstructorRule(UserRequestMetadata.class, clazz -> randomUserRequestMetadata());
@@ -108,7 +108,7 @@ public class EntityUtility {
         addClassRule(Password.class::equals, parameterClass -> Password.random());
         addClassRule(Email.class::equals, parameterClass -> Email.random());
 
-        addClassRule(IPAddress.class::equals, parameterClass -> randomIPAddress());
+        addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
         addClassRule(GeoLocation.class::equals, parameterClass -> randomGeoLocation());
         addClassRule(UserAgentDetails.class::equals, parameterClass -> randomUserAgentDetails());
         addClassRule(UserRequestMetadata.class::equals, parameterClass -> randomUserRequestMetadata());

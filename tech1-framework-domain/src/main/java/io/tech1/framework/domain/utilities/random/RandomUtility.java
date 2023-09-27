@@ -13,7 +13,6 @@ import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
@@ -33,6 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.systemDefault;
@@ -186,14 +186,6 @@ public class RandomUtility {
 
     public static String randomIPv4() {
         return RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
-    }
-
-    public static IPAddress randomIPAddress() {
-        return new IPAddress(randomIPv4());
-    }
-
-    public static IPAddress localhost() {
-        return new IPAddress("127.0.0.1");
     }
 
     public static String randomServerURL() {

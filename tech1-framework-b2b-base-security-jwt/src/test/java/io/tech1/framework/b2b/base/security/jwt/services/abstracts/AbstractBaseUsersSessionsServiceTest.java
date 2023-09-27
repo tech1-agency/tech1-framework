@@ -19,7 +19,6 @@ import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
@@ -314,7 +313,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var event = new EventSessionUserRequestMetadataRenew(
                 Username.random(),
                 entity(UserSession.class),
-                RandomUtility.randomIPAddress(),
+                IPAddress.random(),
                 entity(UserAgentHeader.class),
                 TupleToggle.disabled(),
                 TupleToggle.disabled()

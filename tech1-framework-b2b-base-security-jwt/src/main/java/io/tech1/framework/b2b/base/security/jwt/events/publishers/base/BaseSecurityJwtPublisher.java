@@ -68,6 +68,12 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
     }
 
     @Override
+    public void publishSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
+        LOGGER.debug(SECURITY_JWT_SESSION_RENEW_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
+        this.applicationEventPublisher.publishEvent(event);
+    }
+
+    @Override
     public void publishSessionUserRequestMetadataRenewCron(EventSessionUserRequestMetadataRenewCron event) {
         LOGGER.debug(SECURITY_JWT_SESSION_RENEW_CRON_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
         this.applicationEventPublisher.publishEvent(event);

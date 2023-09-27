@@ -46,7 +46,10 @@ public class FrameworkLogsConstants {
     public static final String SECURITY_JWT_SESSION_REFRESHED = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " `{}`- /refreshToken. Username: `{}`";
     public static final String SECURITY_JWT_SESSION_EXPIRED = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " `{}`- session expired. Username: `{}`";
     public static final String SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " `{}`- Session add user request metadata. Username: `{}`";
+    public static final String SECURITY_JWT_SESSION_RENEW_USER_REQUEST_METADATA = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " `{}`- Session renew user request metadata. Username: `{}`. Session: `{}`";
+    @Deprecated
     public static final String SECURITY_JWT_SESSION_RENEW_CRON_USER_REQUEST_METADATA = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " `{}`- Session renew user request metadata cron. Username: `{}`. Session: `{}`";
+    @Deprecated
     public static final String SECURITY_JWT_SESSION_RENEW_MANUALLY_USER_REQUEST_METADATA = FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " `{}`- Session renew user request metadata manually. Username: `{}`. Session: `{}`";
 
     // =================================================================================================================

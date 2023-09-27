@@ -9,7 +9,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUse
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +33,9 @@ public class BaseSecurityUsersSessionsResource {
     private final CookieProvider cookieProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
-    // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @GetMapping
-    public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
         var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
@@ -46,10 +43,8 @@ public class BaseSecurityUsersSessionsResource {
     @GetMapping("/current")
     public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
         var user = this.currentSessionAssistant.getCurrentClientUser();
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled()) {
-            var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
-            this.baseUsersSessionsService.renewUserRequestMetadataCron(session, httpServletRequest);
-        }
+        var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
+        this.baseUsersSessionsService.renewUserRequestMetadataCron(session, httpServletRequest);
         return user;
     }
 

@@ -237,6 +237,18 @@ class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
+    void onSessionUserRequestMetadataRenewTest() {
+        // Arrange
+        var event = entity(EventSessionUserRequestMetadataRenew.class);
+
+        // Act
+        this.componentUnderTest.onSessionUserRequestMetadataRenew(event);
+
+        // Assert
+        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
+    }
+
+    @Test
     void onSessionUserRequestMetadataRenewCronTest() {
         // Arrange
         var event = entity(EventSessionUserRequestMetadataRenewCron.class);

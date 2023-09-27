@@ -31,6 +31,9 @@ public interface SecurityJwtSubscriber {
     void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event);
     @Async
     @EventListener
+    void onSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event);
+    @Async
+    @EventListener
     void onSessionUserRequestMetadataRenewCron(EventSessionUserRequestMetadataRenewCron event);
     @Async
     @EventListener

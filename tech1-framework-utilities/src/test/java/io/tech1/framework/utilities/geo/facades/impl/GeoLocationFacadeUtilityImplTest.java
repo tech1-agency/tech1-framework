@@ -1,6 +1,7 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
 import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
+import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import io.tech1.framework.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
@@ -17,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomGeoLocation;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -73,7 +73,7 @@ class GeoLocationFacadeUtilityImplTest {
     void getGeoLocationThrowExceptionTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = IPAddress.random();
-        var geoLocation = randomGeoLocation();
+        var geoLocation = GeoLocation.random();
         when(this.ipapiGeoLocationUtility.getGeoLocation(ipAddress)).thenThrow(new GeoLocationNotFoundException(randomString()));
         when(this.mindMaxGeoLocationUtility.getGeoLocation(ipAddress)).thenReturn(geoLocation);
 
@@ -90,7 +90,7 @@ class GeoLocationFacadeUtilityImplTest {
     void getGeoLocationTest() throws GeoLocationNotFoundException {
         // Arrange
         var ipAddress = IPAddress.random();
-        var geoLocation = randomGeoLocation();
+        var geoLocation = GeoLocation.random();
         when(this.ipapiGeoLocationUtility.getGeoLocation(ipAddress)).thenReturn(geoLocation);
 
         // Act

@@ -15,6 +15,7 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.enums.Status;
+import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.tuples.TuplePresence;
@@ -292,7 +293,7 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(EventSessionUserRequestMetadataAdd.class);
-        var geoLocation = randomGeoLocation();
+        var geoLocation = GeoLocation.random();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
 
@@ -318,7 +319,7 @@ class AbstractBaseUsersSessionsServiceTest {
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
-        var geoLocation = randomGeoLocation();
+        var geoLocation = GeoLocation.random();
         when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
 
@@ -355,7 +356,7 @@ class AbstractBaseUsersSessionsServiceTest {
                 false,
                 false
         );
-        var geoLocation = randomGeoLocation();
+        var geoLocation = GeoLocation.random();
         var saveFunction = new FunctionSessionUserRequestMetadataSave(
                 username,
                 session,

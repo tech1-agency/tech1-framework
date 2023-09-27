@@ -739,49 +739,6 @@ class RandomUtilityTest {
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void validGeoLocationTest() {
-        // Act
-        var actual = validGeoLocation();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isEqualTo("Ukraine");
-        assertThat(actual.getCountryCode()).isEqualTo("UA");
-        assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
-        assertThat(actual.getCity()).isEqualTo("Lviv");
-        assertThat(actual.getExceptionDetails()).isEmpty();
-        assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void invalidGeoLocationTest() {
-        // Act
-        var actual = invalidGeoLocation();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isEqualTo(UNKNOWN);
-        assertThat(actual.getCity()).isEqualTo(UNKNOWN);
-        assertThat(actual.getExceptionDetails()).isEqualTo("Location is unknown");
-        assertThat(actual.getWhere()).isEqualTo("Unknown, Unknown");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomGeoLocationTest() {
-        // Act
-        var actual = randomGeoLocation();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isNotNull();
-        assertThat(actual.getExceptionDetails()).isNotNull();
-        assertThat(actual.getWhere()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void validUserAgentDetailsTest() {
         // Act
         var actual = validUserAgentDetails();

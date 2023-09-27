@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.systemDefault;
@@ -364,27 +363,6 @@ public class RandomUtility {
         );
     }
 
-    public static GeoLocation validGeoLocation() {
-        return GeoLocation.processed(
-                localhost(),
-                "Ukraine",
-                "UA",
-                "🇺🇦",
-                "Lviv"
-        );
-    }
-
-    public static GeoLocation invalidGeoLocation() {
-        return GeoLocation.unknown(
-                localhost(),
-                "Location is unknown"
-        );
-    }
-
-    public static GeoLocation randomGeoLocation() {
-        return randomBoolean() ? validGeoLocation() : invalidGeoLocation();
-    }
-
     public static UserAgentDetails validUserAgentDetails() {
         return UserAgentDetails.processed(
                 "Chrome",
@@ -405,14 +383,14 @@ public class RandomUtility {
 
     public static UserRequestMetadata validUserRequestMetadata() {
         return UserRequestMetadata.processed(
-                validGeoLocation(),
+                GeoLocation.valid(),
                 validUserAgentDetails()
         );
     }
 
     public static UserRequestMetadata invalidUserRequestMetadata() {
         return UserRequestMetadata.processed(
-                invalidGeoLocation(),
+                GeoLocation.invalid(),
                 invalidUserAgentDetails()
         );
     }

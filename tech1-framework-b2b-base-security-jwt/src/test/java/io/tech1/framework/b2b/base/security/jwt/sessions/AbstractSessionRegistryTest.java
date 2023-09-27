@@ -17,6 +17,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
@@ -346,10 +347,10 @@ class AbstractSessionRegistryTest {
         Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
                 tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
 
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), cookie.value()));
-        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
-        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), invalidUserAgentDetails()), randomString()));
-        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), validUserAgentDetails()), cookie.value()));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), validUserAgentDetails()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), invalidUserAgentDetails()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), invalidUserAgentDetails()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
         List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();

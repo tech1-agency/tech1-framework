@@ -1,5 +1,8 @@
 # Release Notes
 
+### v1.17
+- TBD
+
 ### v1.16
 - Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages
 - Add "create_at", "updated_at", "metadata_renew_cron", "metadata_renew_manually" → tech1_users_sessions (PostgreSQL) + liquibase

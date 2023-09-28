@@ -84,7 +84,7 @@ class CookieProviderImplTest {
     @Test
     void createJwtRefreshCookie() {
         // Arrange
-        var refreshAccessToken = entity(JwtRefreshToken.class);
+        var refreshAccessToken = JwtRefreshToken.random();
         var httpServletResponse = mock(HttpServletResponse.class);
 
         var cookiesConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs();

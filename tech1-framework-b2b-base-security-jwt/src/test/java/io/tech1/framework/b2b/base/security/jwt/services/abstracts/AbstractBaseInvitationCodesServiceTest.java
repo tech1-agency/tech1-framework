@@ -24,7 +24,6 @@ import java.util.HashSet;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.getInvitationCode;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -78,7 +77,7 @@ class AbstractBaseInvitationCodesServiceTest {
     @Test
     void findByOwnerTest() {
         // Arrange
-        var owner = randomUsername();
+        var owner = Username.random();
 
         var invitationCode1 = getInvitationCode(owner, Username.of("user2"));
         var invitationCode2 = getInvitationCode(owner, Username.of("user1"));
@@ -107,7 +106,7 @@ class AbstractBaseInvitationCodesServiceTest {
     @Test
     void saveTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
 
         // Act

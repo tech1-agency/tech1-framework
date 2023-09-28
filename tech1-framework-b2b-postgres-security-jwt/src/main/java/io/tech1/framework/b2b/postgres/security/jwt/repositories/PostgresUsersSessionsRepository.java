@@ -83,6 +83,17 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    default void enableMetadataRenewCron() {
+        this.setMetadataRenewCron(true);
+    }
+
+    @Transactional
+    default UserSession enableMetadataRenewManually(UserSessionId sessionId) {
+        this.setMetadataRenewManually(sessionId.value(), true);
+        return this.isPresent(sessionId).value();
+    }
+
     default void delete(UserSessionId sessionId) {
         this.deleteById(sessionId.value());
     }
@@ -122,6 +133,16 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Queries
     // ================================================================================================================
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE PostgresDbUserSession s SET s.metadataRenewCron = :flag")
+    void setMetadataRenewCron(@Param("flag") boolean flag);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE PostgresDbUserSession s SET s.metadataRenewManually = :flag WHERE s.id = :sessionId")
+    void setMetadataRenewManually(@Param("sessionId") String sessionId, @Param("flag") boolean flag);
+
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM PostgresDbUserSession s WHERE s.username IN :usernames")

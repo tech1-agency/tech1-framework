@@ -35,21 +35,31 @@ public class BaseSecurityUsersSessionsResource {
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
     @GetMapping
-    public ResponseUserSessionsTable getCurrentUserDbSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
         var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser() {
-        return this.currentSessionAssistant.getCurrentClientUser();
+    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+        var user = this.currentSessionAssistant.getCurrentClientUser();
+        var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
+        this.baseUsersSessionsService.renewUserRequestMetadata(session, httpServletRequest);
+        return user;
+    }
+
+    @PostMapping("/{sessionId}/renew/manually")
+    public void renewManually(@PathVariable UserSessionId sessionId) {
+        var user = this.currentSessionAssistant.getCurrentJwtUser();
+        this.baseUsersSessionsRequestsValidator.validateAccess(user.username(), sessionId);
+        this.baseUsersSessionsService.enableUserRequestMetadataRenewManually(sessionId);
     }
 
     @DeleteMapping("/{sessionId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable UserSessionId sessionId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseUsersSessionsRequestsValidator.validateDeleteById(username, sessionId);
+        this.baseUsersSessionsRequestsValidator.validateAccess(username, sessionId);
         this.baseUsersSessionsService.deleteById(sessionId);
     }
 

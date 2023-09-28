@@ -71,8 +71,9 @@ class ApplicationIncidents1Test {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("incidentClientDefinition");
-        assertThat(methods).hasSize(11);
+        assertThat(methods)
+                .contains("incidentClientDefinition")
+                .hasSize(11);
     }
 
     @Test

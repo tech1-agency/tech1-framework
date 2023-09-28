@@ -1,16 +1,24 @@
 package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
+import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
 import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
+import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +33,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -47,8 +57,18 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
+        UsersSessionsRepository usersSessionsRepository() {
+            return mock(UsersSessionsRepository.class);
+        }
+
+        @Bean
         HardwareMonitoringStore hardwareMonitoringStore() {
             return mock(HardwareMonitoringStore.class);
+        }
+
+        @Bean
+        CookieProvider cookieProvider() {
+            return mock(CookieProvider.class);
         }
 
         @Bean
@@ -65,7 +85,9 @@ class BaseCurrentSessionAssistantTest {
         CurrentSessionAssistant currentSessionAssistant() {
             return new BaseCurrentSessionAssistant(
                     this.sessionRegistry(),
+                    this.usersSessionsRepository(),
                     this.hardwareMonitoringStore(),
+                    this.cookieProvider(),
                     this.securityPrincipalUtility(),
                     this.applicationFrameworkProperties()
             );
@@ -73,7 +95,9 @@ class BaseCurrentSessionAssistantTest {
     }
 
     private final SessionRegistry sessionRegistry;
+    private final UsersSessionsRepository usersSessionsRepository;
     private final HardwareMonitoringStore hardwareMonitoringStore;
+    private final CookieProvider cookieProvider;
     private final SecurityPrincipalUtils securityPrincipalUtils;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -83,7 +107,9 @@ class BaseCurrentSessionAssistantTest {
     void beforeEach() {
         reset(
                 this.sessionRegistry,
+                this.usersSessionsRepository,
                 this.hardwareMonitoringStore,
+                this.cookieProvider,
                 this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
@@ -93,7 +119,9 @@ class BaseCurrentSessionAssistantTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
+                this.usersSessionsRepository,
                 this.hardwareMonitoringStore,
+                this.cookieProvider,
                 this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
@@ -131,12 +159,12 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentClientUserTest() {
         // Arrange
         var user = new JwtUser(
-                entity(UserId.class),
-                randomUsername(),
-                randomPassword(),
+                UserId.random(),
+                Username.random(),
+                Password.random(),
                 randomZoneId(),
                 new ArrayList<>(),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 new HashMap<>()
         );
@@ -163,8 +191,8 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserNoAttributesNoHardwareTest() {
         // Arrange
-        var jwtUser = entity(JwtUser.class);
-        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(jwtUser);
+        var user = entity(JwtUser.class);
+        when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
         when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
@@ -175,18 +203,37 @@ class BaseCurrentSessionAssistantTest {
         // Assert
         verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
-        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(jwtUser.getUsername()));
-        assertThat(currentClientUser.getEmail()).isEqualTo(jwtUser.email());
-        assertThat(currentClientUser.getName()).isEqualTo(jwtUser.name());
+        assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(user.getUsername()));
+        assertThat(currentClientUser.getEmail()).isEqualTo(user.email());
+        assertThat(currentClientUser.getName()).isEqualTo(user.name());
         assertThat(currentClientUser.getAttributes()).isNotNull();
         assertThat(currentClientUser.getAttributes()).isEmpty();
     }
 
     @Test
+    void getCurrentUserSessionTest() throws CookieAccessTokenNotFoundException {
+        // Arrange
+        var session = entity(UserSession.class);
+        var request = mock(HttpServletRequest.class);
+        var cookie = CookieAccessToken.random();
+        var accessToken = JwtAccessToken.of(cookie.value());
+        when(this.cookieProvider.readJwtAccessToken(request)).thenReturn(cookie);
+        when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
+
+        // Act
+        var actual = this.componentUnderTest.getCurrentUserSession(request);
+
+        // Assert
+        verify(this.cookieProvider).readJwtAccessToken(request);
+        verify(this.usersSessionsRepository).isPresent(accessToken);
+        assertThat(actual).isEqualTo(session);
+    }
+
+    @Test
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
-        var username = entity(Username.class);
-        var cookie = entity(CookieAccessToken.class);
+        var username = Username.random();
+        var cookie = CookieAccessToken.random();
         var sessionsTable = entity(ResponseUserSessionsTable.class);
         when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
         when(this.sessionRegistry.getSessionsTable(username, cookie)).thenReturn(sessionsTable);

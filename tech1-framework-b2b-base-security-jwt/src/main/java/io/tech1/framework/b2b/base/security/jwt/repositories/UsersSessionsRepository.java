@@ -20,6 +20,8 @@ public interface UsersSessionsRepository {
     List<ResponseUserSession2> getUsersSessionsTable(Username username, CookieAccessToken cookie);
     ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie);
     List<UserSession> findByUsernameInAsAny(Set<Username> usernames);
+    void enableMetadataRenewCron();
+    UserSession enableMetadataRenewManually(UserSessionId sessionId);
     void delete(UserSessionId sessionId);
     long delete(Set<UserSessionId> sessionsIds);
     void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie);

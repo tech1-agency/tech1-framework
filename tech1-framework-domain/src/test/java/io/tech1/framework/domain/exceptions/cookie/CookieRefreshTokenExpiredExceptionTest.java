@@ -1,8 +1,8 @@
 package io.tech1.framework.domain.exceptions.cookie;
 
+import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CookieRefreshTokenExpiredExceptionTest {
@@ -10,7 +10,7 @@ class CookieRefreshTokenExpiredExceptionTest {
     @Test
     void testException() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
 
         // Act
         var actual = new CookieRefreshTokenExpiredException(username);

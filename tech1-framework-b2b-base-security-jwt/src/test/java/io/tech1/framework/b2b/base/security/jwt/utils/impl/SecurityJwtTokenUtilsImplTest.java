@@ -48,15 +48,15 @@ class SecurityJwtTokenUtilsImplTest {
 
     private static Stream<Arguments> createJwtTokenTest() {
         return Stream.of(
-                Arguments.of(TimeAmount.of(1L, HOURS)),
-                Arguments.of(TimeAmount.of(10L, HOURS)),
-                Arguments.of(TimeAmount.of(100L, HOURS)),
-                Arguments.of(TimeAmount.of(1L, MINUTES)),
-                Arguments.of(TimeAmount.of(10L, MINUTES)),
-                Arguments.of(TimeAmount.of(100L, MINUTES)),
-                Arguments.of(TimeAmount.of(1L, SECONDS)),
-                Arguments.of(TimeAmount.of(10L, SECONDS)),
-                Arguments.of(TimeAmount.of(100L, SECONDS))
+                Arguments.of(new TimeAmount(1L, HOURS)),
+                Arguments.of(new TimeAmount(10L, HOURS)),
+                Arguments.of(new TimeAmount(100L, HOURS)),
+                Arguments.of(new TimeAmount(1L, MINUTES)),
+                Arguments.of(new TimeAmount(10L, MINUTES)),
+                Arguments.of(new TimeAmount(100L, MINUTES)),
+                Arguments.of(new TimeAmount(1L, SECONDS)),
+                Arguments.of(new TimeAmount(10L, SECONDS)),
+                Arguments.of(new TimeAmount(100L, SECONDS))
         );
     }
 

@@ -171,8 +171,8 @@ class AbstractBaseSuperAdminServiceTest {
     @Test
     void getServerSessionsTest() {
         // Arrange
-        var cookie = entity(CookieAccessToken.class);
-        var activeSessions = Set.of(entity(JwtAccessToken.class), entity(JwtAccessToken.class));
+        var cookie = CookieAccessToken.random();
+        var activeSessions = Set.of(JwtAccessToken.random(), JwtAccessToken.random());
         var serverSessionsTable = entity(ResponseSuperadminSessionsTable.class);
 
         when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);

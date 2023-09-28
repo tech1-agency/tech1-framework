@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.time.TimeAgo;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
 
 public record ResponseUserSession2(
@@ -12,6 +13,7 @@ public record ResponseUserSession2(
         Username who,
         boolean current,
         String activity,
+        TimeAgo when,
         TupleExceptionDetails exception,
         String ipAddr,
         String countryFlag,
@@ -22,18 +24,14 @@ public record ResponseUserSession2(
 
     public static ResponseUserSession2 of(
             UserSessionId id,
+            long updatedAt,
             Username username,
             CookieAccessToken cookie,
             JwtAccessToken accessToken,
             UserRequestMetadata metadata
     ) {
         var current = cookie.value().equals(accessToken.value());
-        var activity = "";
-        if (current) {
-            activity = "Current session";
-        } else {
-            activity = "—";
-        }
+        var activity = current ? "Current session" : "—";
 
         var whereTuple3 = metadata.getWhereTuple3();
         var whatTuple2 = metadata.getWhatTuple2();
@@ -43,6 +41,7 @@ public record ResponseUserSession2(
                 username,
                 current,
                 activity,
+                new TimeAgo(updatedAt),
                 metadata.getException(),
                 whereTuple3.a(),
                 whereTuple3.b(),

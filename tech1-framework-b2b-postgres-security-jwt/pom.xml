@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>1.15</version>
+        <version>1.16-SNAPSHOT</version>
     </parent>
 
     <artifactId>tech1-framework-b2b-postgres-security-jwt</artifactId>

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.assistants.userdetails;
 
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +57,7 @@ class AbstractJwtUserDetailsServiceTest {
     @Test
     void getCurrentUsernameTest() {
         // Arrange
-        var username = RandomUtility.randomUsername();
+        var username = Username.random();
 
         // Act
         this.jwtUserDetailsService.loadUserByUsername(username.identifier());

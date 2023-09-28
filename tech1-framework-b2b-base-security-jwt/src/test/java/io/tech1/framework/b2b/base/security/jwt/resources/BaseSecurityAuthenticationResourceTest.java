@@ -11,9 +11,10 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
 import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
@@ -38,7 +39,6 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
@@ -47,14 +47,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
+class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(
                 Arguments.of(new CookieRefreshTokenNotFoundException()),
                 Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of( new CookieRefreshTokenExpiredException(randomUsername())),
-                Arguments.of(new CookieRefreshTokenDbNotFoundException(randomUsername()))
+                Arguments.of( new CookieRefreshTokenExpiredException(Username.random())),
+                Arguments.of(new CookieRefreshTokenDbNotFoundException(Username.random()))
         );
     }
 
@@ -115,12 +115,12 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         var requestUserLogin = entity(RequestUserLogin.class);
         var username = requestUserLogin.username();
         var password = requestUserLogin.password();
-        var jwtUser = entity(JwtUser.class);
-        when(this.jwtUserDetailsService.loadUserByUsername(username.identifier())).thenReturn(jwtUser);
-        var accessToken = entity(JwtAccessToken.class);
-        var refreshToken = entity(JwtRefreshToken.class);
-        when(this.securityJwtTokenUtils.createJwtAccessToken(jwtUser.getJwtTokenCreationParams())).thenReturn(accessToken);
-        when(this.securityJwtTokenUtils.createJwtRefreshToken(jwtUser.getJwtTokenCreationParams())).thenReturn(refreshToken);
+        var user = entity(JwtUser.class);
+        when(this.jwtUserDetailsService.loadUserByUsername(username.identifier())).thenReturn(user);
+        var accessToken = JwtAccessToken.random();
+        var refreshToken = JwtRefreshToken.random();
+        when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
+        when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
         var currentClientUser = randomCurrentClientUser();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
 
@@ -142,9 +142,9 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
         verify(this.baseAuthenticationRequestsValidator).validateLoginRequest(requestUserLogin);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.identifier(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.identifier());
-        verify(this.securityJwtTokenUtils).createJwtAccessToken(jwtUser.getJwtTokenCreationParams());
-        verify(this.securityJwtTokenUtils).createJwtRefreshToken(jwtUser.getJwtTokenCreationParams());
-        verify(this.baseUsersSessionsService).save(eq(jwtUser), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
+        verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
+        verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
+        verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.cookieProvider).createJwtAccessCookie(eq(accessToken), any(HttpServletResponse.class));
         verify(this.cookieProvider).createJwtRefreshCookie(eq(refreshToken), any(HttpServletResponse.class));
         // WARNING: no verifications on static SecurityContextHolder
@@ -187,8 +187,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     void logoutTest() throws Exception {
         // Arrange
         var httpSession = mock(HttpSession.class);
-        var username = randomUsername();
-        var cookie = entity(CookieAccessToken.class);
+        var username = Username.random();
+        var cookie = CookieAccessToken.random();
         var accessToken = cookie.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
@@ -217,8 +217,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner {
     @Test
     void logoutNullSessionTest() throws Exception {
         // Arrange
-        var username = randomUsername();
-        var cookie = entity(CookieAccessToken.class);
+        var username = Username.random();
+        var cookie = CookieAccessToken.random();
         var accessToken = cookie.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());

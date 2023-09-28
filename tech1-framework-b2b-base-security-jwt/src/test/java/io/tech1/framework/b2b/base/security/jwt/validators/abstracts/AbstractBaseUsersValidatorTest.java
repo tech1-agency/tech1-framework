@@ -31,7 +31,8 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -92,7 +93,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1InvalidZoneIdTest() {
         // Arrange
         var username = entity(Username.class);
-        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", randomEmail(), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", Email.random(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -122,7 +123,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidNoUserTest() {
         // Arrange
         var username = entity(Username.class);
-        var email = randomEmail();
+        var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
@@ -138,7 +139,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidUserFoundTest() {
         // Arrange
         var user= entity(JwtUser.class);
-        var email = randomEmail();
+        var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
 
@@ -154,7 +155,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var username = entity(Username.class);
-        var email = randomEmail();
+        var email = Email.random();
         var user = entity(JwtUser.class);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());

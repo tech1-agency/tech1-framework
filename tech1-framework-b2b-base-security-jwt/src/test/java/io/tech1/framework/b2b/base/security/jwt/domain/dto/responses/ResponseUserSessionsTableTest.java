@@ -3,8 +3,10 @@ package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,8 @@ import java.util.List;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UK;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_USA;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResponseUserSessionsTableTest {
@@ -34,35 +37,38 @@ class ResponseUserSessionsTableTest {
     @Test
     void constructorTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var responseUserSession21 = ResponseUserSession2.of(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
+                getCurrentTimestamp(),
                 username,
                 new CookieAccessToken(randomString()),
                 new JwtAccessToken("token1"),
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
-                        randomUserAgentDetails()
+                        UserAgentDetails.random()
                 )
         );
         var responseUserSession22 = ResponseUserSession2.of(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
+                getCurrentTimestamp(),
                 username,
                 new CookieAccessToken("token2"),
                 new JwtAccessToken("token2"),
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", FLAG_USA, "New York"),
-                        validUserAgentDetails()
+                        UserAgentDetails.valid()
                 )
         );
         var responseUserSession23 = ResponseUserSession2.of(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
+                getCurrentTimestamp(),
                 username,
                 new CookieAccessToken(randomString()),
                 new JwtAccessToken("token3"),
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", FLAG_UK, "Liverpool"),
-                        invalidUserAgentDetails()
+                        UserAgentDetails.invalid()
                 )
         );
 

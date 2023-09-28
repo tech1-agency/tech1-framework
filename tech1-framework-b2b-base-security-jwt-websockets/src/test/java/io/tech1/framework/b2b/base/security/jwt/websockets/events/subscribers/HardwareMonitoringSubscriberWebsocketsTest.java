@@ -17,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
@@ -83,7 +82,7 @@ class HardwareMonitoringSubscriberWebsocketsTest {
     @Test
     void onLastHardwareMonitoringDatapointExceptionTest() {
         // Arrange
-        var event = entity(EventLastHardwareMonitoringDatapoint.class);
+        var event = EventLastHardwareMonitoringDatapoint.random();
         var npe = new NullPointerException("datapoint-exception");
         when(this.hardwareBackPressureTimerTask.isAnyProblemOrFirstDatapoint()).thenThrow(npe);
 
@@ -99,7 +98,7 @@ class HardwareMonitoringSubscriberWebsocketsTest {
     @Test
     void onLastHardwareMonitoringDatapointNoProblemNeitherFirstDatapointTest() {
         // Arrange
-        var event = entity(EventLastHardwareMonitoringDatapoint.class);
+        var event = EventLastHardwareMonitoringDatapoint.random();
         when(this.hardwareBackPressureTimerTask.isAnyProblemOrFirstDatapoint()).thenReturn(false);
 
         // Act
@@ -113,7 +112,7 @@ class HardwareMonitoringSubscriberWebsocketsTest {
     @Test
     void onLastHardwareMonitoringDatapointAnyProblemsTest() {
         // Arrange
-        var event = entity(EventLastHardwareMonitoringDatapoint.class);
+        var event = EventLastHardwareMonitoringDatapoint.random();
         when(this.hardwareBackPressureTimerTask.isAnyProblemOrFirstDatapoint()).thenReturn(true);
 
         // Act

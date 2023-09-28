@@ -1,15 +1,18 @@
 package io.tech1.framework.domain.geo;
 
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.geo.GeoLocation.*;
+import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.localhost;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GeoLocationTest extends AbstractFolderSerializationRunner {
@@ -62,5 +65,48 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
 
         // Assert
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void validTest() {
+        // Act
+        var actual = GeoLocation.valid();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getIpAddr()).isNotNull();
+        assertThat(actual.getCountry()).isEqualTo("Ukraine");
+        assertThat(actual.getCountryCode()).isEqualTo("UA");
+        assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
+        assertThat(actual.getCity()).isEqualTo("Lviv");
+        assertThat(actual.getExceptionDetails()).isEmpty();
+        assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void invalidTest() {
+        // Act
+        var actual = GeoLocation.invalid();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getIpAddr()).isNotNull();
+        assertThat(actual.getCountry()).isEqualTo(UNKNOWN);
+        assertThat(actual.getCity()).isEqualTo(UNKNOWN);
+        assertThat(actual.getExceptionDetails()).isEqualTo("Location is unknown");
+        assertThat(actual.getWhere()).isEqualTo("Unknown, Unknown");
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomTest() {
+        // Act
+        var actual = GeoLocation.random();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getIpAddr()).isNotNull();
+        assertThat(actual.getCountry()).isNotNull();
+        assertThat(actual.getExceptionDetails()).isNotNull();
+        assertThat(actual.getWhere()).isNotNull();
     }
 }

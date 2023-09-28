@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.http;
 
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.constants.DomainConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -32,7 +33,7 @@ class HttpRequestFieldsUtilityTest {
                 Arguments.of("info", false),
                 Arguments.of("info@", false),
                 Arguments.of("info@tech1", false),
-                Arguments.of("info@tech1.io", true),
+                Arguments.of("info@" + DomainConstants.TECH1, true),
                 Arguments.of("petro.petrenko@gmail.com", true),
                 Arguments.of("john78@proton.com", true)
         );

@@ -1,5 +1,7 @@
 package io.tech1.framework.emails.services.impl;
 
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.properties.configs.EmailConfigs;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.emails.domain.EmailHTML;
@@ -36,7 +38,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static javax.mail.Message.RecipientType.TO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -122,7 +123,7 @@ class EmailServiceImplTest {
     @Test
     void mainSendPlainDisabledTest() {
         // Arrange
-        var to = randomEmailAsValue();
+        var to = Email.random().value();
         var subject = randomString();
         var message = randomString();
         var emailConfigs = EmailConfigs.disabled();
@@ -138,13 +139,11 @@ class EmailServiceImplTest {
     @Test
     void mainSendPlainEnabledTest() {
         // Arrange
-        var to = randomEmailAsValue();
-        var from = randomEmailAsValue();
+        var to = Email.random().value();
+        var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -164,14 +163,12 @@ class EmailServiceImplTest {
     @Test
     void systemSendPlainEnabledTest() {
         // Arrange
-        var to1 = randomEmailAsValue();
-        var to2 = randomEmailAsValue();
-        var from = randomEmailAsValue();
+        var to1 = Email.random().value();
+        var to2 = Email.random().value();
+        var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         emailConfigs.setTo(new String[] { to1, to2 } );
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
@@ -192,13 +189,11 @@ class EmailServiceImplTest {
     @Test
     void listSendPlainEnabledTest() {
         // Arrange
-        var to = randomEmailAsValue();
-        var from = randomEmailAsValue();
+        var to = Email.random().value();
+        var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -218,13 +213,11 @@ class EmailServiceImplTest {
     @Test
     void setSendPlainEnabledTest() {
         // Arrange
-        var to = randomEmailAsValue();
-        var from = randomEmailAsValue();
+        var to = Email.random().value();
+        var from = Email.random().value();
         var subject = randomString();
         var message = randomString();
-        var emailConfigs = new EmailConfigs();
-        emailConfigs.setEnabled(true);
-        emailConfigs.setFrom(from);
+        var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
@@ -259,7 +252,7 @@ class EmailServiceImplTest {
     void sendPlainAttachmentEnabledExceptionTest() throws MessagingException {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
-        var from = randomEmailAsValue();
+        var from = Email.random().value();
         var emailConfigs = EmailConfigs.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
         doThrow(new MessagingException()).when(mimeMessage).setFrom(from);
@@ -279,15 +272,15 @@ class EmailServiceImplTest {
         // Arrange
         var emailPlainAttachment = new EmailPlainAttachment(
                 Set.of(
-                        "test1@tech1.io",
-                        "test2@tech1.io"
+                        "test1@" + DomainConstants.TECH1,
+                        "test2@" + DomainConstants.TECH1
                 ),
                 "subject1",
                 "message1",
                 "attachment-file-name1",
                 "attachment-message1"
         );
-        var from = randomEmailAsValue();
+        var from = Email.random().value();
         var emailConfigs = EmailConfigs.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
@@ -301,8 +294,8 @@ class EmailServiceImplTest {
         verify(this.javaMailSender).createMimeMessage();
         verify(mimeMessage).setFrom(from);
         verify(mimeMessage).setSubject("subject1");
-        verify(mimeMessage).addRecipients(TO, "test1@tech1.io");
-        verify(mimeMessage).addRecipients(TO, "test2@tech1.io");
+        verify(mimeMessage).addRecipients(TO, "test1@" + DomainConstants.TECH1);
+        verify(mimeMessage).addRecipients(TO, "test2@" + DomainConstants.TECH1);
         var mimeMultipartAC = ArgumentCaptor.forClass(MimeMultipart.class);
         verify(mimeMessage).setContent(mimeMultipartAC.capture());
         var multipart = mimeMultipartAC.getValue();
@@ -333,7 +326,7 @@ class EmailServiceImplTest {
     @Test
     void sendHTMLEnabledExceptionTest() throws MessagingException {
         // Arrange
-        var from = randomEmailAsValue();
+        var from = Email.random().value();
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = EmailConfigs.enabled(from);
         when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
@@ -350,14 +343,14 @@ class EmailServiceImplTest {
     @Test
     void sendHTMLEnabledTest() throws MessagingException {
         // Arrange
-        var from = randomEmailAsValue();
+        var from = Email.random().value();
         Map<String, Object> templateVariables = Map.of(
                 "param1", "key2",
                 "param2", 2L
         );
         var emailHTML = new EmailHTML(
                 Set.of(
-                        "tests@tech1.io"
+                        "tests@" + DomainConstants.TECH1
                 ),
                 "subject1",
                 "template1",
@@ -374,7 +367,7 @@ class EmailServiceImplTest {
 
         // Assert
         verify(mimeMessageHelper).setFrom(from);
-        verify(mimeMessageHelper).setTo(new String[] { "tests@tech1.io" });
+        verify(mimeMessageHelper).setTo(new String[] { "tests@" + DomainConstants.TECH1 });
         verify(mimeMessageHelper).setSubject("subject1");
         var html = """
                 <!DOCTYPE html>

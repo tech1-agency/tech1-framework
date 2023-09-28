@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
+import io.tech1.framework.domain.base.Email;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.time.ZoneId;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -77,21 +79,21 @@ class AbstractBaseUsersServiceTest {
         // Arrange
         var requestUserUpdate1 = new RequestUserUpdate1(
                 randomZoneId().getId(),
-                randomEmail(),
+                Email.random(),
                 randomString()
         );
-        var jwtUser = entity(JwtUser.class);
-        var jwtUserAC = ArgumentCaptor.forClass(JwtUser.class);
+        var user = entity(JwtUser.class);
+        var userAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
-        this.componentUnderTest.updateUser1(jwtUser, requestUserUpdate1);
+        this.componentUnderTest.updateUser1(user, requestUserUpdate1);
 
         // Assert
-        verify(this.usersRepository).saveAs(jwtUserAC.capture());
-        assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
-        assertThat(jwtUserAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
-        assertThat(jwtUserAC.getValue().name()).isEqualTo(requestUserUpdate1.name());
-        assertThat(jwtUserAC.getValue().email()).isEqualTo(requestUserUpdate1.email());
+        verify(this.usersRepository).saveAs(userAC.capture());
+        assertThat(userAC.getValue().username()).isEqualTo(user.username());
+        assertThat(userAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
+        assertThat(userAC.getValue().name()).isEqualTo(requestUserUpdate1.name());
+        assertThat(userAC.getValue().email()).isEqualTo(requestUserUpdate1.email());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
@@ -102,17 +104,17 @@ class AbstractBaseUsersServiceTest {
                 randomZoneId().getId(),
                 randomString()
         );
-        var jwtUser = entity(JwtUser.class);
-        var jwtUserAC = ArgumentCaptor.forClass(JwtUser.class);
+        var user = entity(JwtUser.class);
+        var userAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
-        this.componentUnderTest.updateUser2(jwtUser, requestUserUpdate2);
+        this.componentUnderTest.updateUser2(user, requestUserUpdate2);
 
         // Assert
-        verify(this.usersRepository).saveAs(jwtUserAC.capture());
-        assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
-        assertThat(jwtUserAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
-        assertThat(jwtUserAC.getValue().name()).isEqualTo(requestUserUpdate2.name());
+        verify(this.usersRepository).saveAs(userAC.capture());
+        assertThat(userAC.getValue().username()).isEqualTo(user.username());
+        assertThat(userAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
+        assertThat(userAC.getValue().name()).isEqualTo(requestUserUpdate2.name());
         // WARNING: no verifications on static SecurityContextHolder
     }
 
@@ -120,18 +122,18 @@ class AbstractBaseUsersServiceTest {
     void changePassword1Test() {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
-        var jwtUser = entity(JwtUser.class);
+        var user = entity(JwtUser.class);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value())).thenReturn(hashPassword);
         var jwtUserAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
-        this.componentUnderTest.changePassword1(jwtUser, requestUserChangePassword1);
+        this.componentUnderTest.changePassword1(user, requestUserChangePassword1);
 
         // Assert
         verify(this.bCryptPasswordEncoder).encode(requestUserChangePassword1.newPassword().value());
         verify(this.usersRepository).saveAs(jwtUserAC.capture());
-        assertThat(jwtUserAC.getValue().username()).isEqualTo(jwtUser.username());
+        assertThat(jwtUserAC.getValue().username()).isEqualTo(user.username());
         assertThat(jwtUserAC.getValue().password().value()).isEqualTo(hashPassword);
         // WARNING: no verifications on static SecurityContextHolder
     }

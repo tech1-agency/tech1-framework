@@ -43,10 +43,10 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
         public ApplicationFrameworkProperties applicationFrameworkProperties() {
             var properties = new ApplicationFrameworkProperties();
             properties.setMvcConfigs(
-                    MvcConfigs.of(
+                    new MvcConfigs(
                             true,
                             "/framework/security",
-                            CorsConfigs.of(
+                            new CorsConfigs(
                                     "/api/**",
                                     new String[] { "http://localhost:1234" },
                                     new String[] { "GET", "POST" },

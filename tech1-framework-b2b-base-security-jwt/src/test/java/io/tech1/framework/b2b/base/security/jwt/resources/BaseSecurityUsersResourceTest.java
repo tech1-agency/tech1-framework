@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
-import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
+class BaseSecurityUsersResourceTest extends AbstractResourcesRunner1 {
 
     // Services
     private final BaseUsersService baseUsersService;
@@ -56,8 +56,8 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
     void update1Test() throws Exception {
         // Arrange
         var requestUserUpdate1 = entity(RequestUserUpdate1.class);
-        var jwtUser = entity(JwtUser.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(jwtUser);
+        var user = entity(JwtUser.class);
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
@@ -69,16 +69,16 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersValidator).validateUserUpdateRequest1(jwtUser.username(), requestUserUpdate1);
-        verify(this.baseUsersService).updateUser1(jwtUser, requestUserUpdate1);
+        verify(this.baseUsersValidator).validateUserUpdateRequest1(user.username(), requestUserUpdate1);
+        verify(this.baseUsersService).updateUser1(user, requestUserUpdate1);
     }
 
     @Test
     void update2Test() throws Exception {
         // Arrange
         var requestUserUpdate2 = entity(RequestUserUpdate2.class);
-        var jwtUser = entity(JwtUser.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(jwtUser);
+        var user = entity(JwtUser.class);
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
@@ -91,15 +91,15 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersValidator).validateUserUpdateRequest2(requestUserUpdate2);
-        verify(this.baseUsersService).updateUser2(jwtUser, requestUserUpdate2);
+        verify(this.baseUsersService).updateUser2(user, requestUserUpdate2);
     }
 
     @Test
     void changePassword1Test() throws Exception {
         // Arrange
         var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
-        var jwtUser = entity(JwtUser.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(jwtUser);
+        var user = entity(JwtUser.class);
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
@@ -112,6 +112,6 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner {
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersValidator).validateUserChangePasswordRequest1(requestUserChangePassword1);
-        verify(this.baseUsersService).changePassword1(jwtUser, requestUserChangePassword1);
+        verify(this.baseUsersService).changePassword1(user, requestUserChangePassword1);
     }
 }

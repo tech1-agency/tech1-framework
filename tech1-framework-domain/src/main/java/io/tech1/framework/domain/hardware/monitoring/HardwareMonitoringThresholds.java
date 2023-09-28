@@ -7,6 +7,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
@@ -28,5 +29,16 @@ public class HardwareMonitoringThresholds {
                         entry -> new HardwareMonitoringThreshold(entry.getValue())
                 )
         );
+    }
+
+    public static HardwareMonitoringThresholds random() {
+        var thresholds = Stream.of(HardwareName.values())
+                .collect(
+                        Collectors.toMap(
+                                entry -> entry,
+                                entry -> HardwareMonitoringThreshold.random().value()
+                        )
+                );
+        return new HardwareMonitoringThresholds(thresholds);
     }
 }

@@ -2,15 +2,18 @@ package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
     @NonMandatoryProperty
     private String host;
     @NonMandatoryProperty
@@ -24,41 +27,11 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     @NonMandatoryProperty
     private String[] to;
 
-    // NOTE: test-purposes
-    public static EmailConfigs of(
-            boolean enabled,
-            String host,
-            int port,
-            String from,
-            String username,
-            String password,
-            String[] to
-    ) {
-        var instance = new EmailConfigs();
-        instance.enabled = enabled;
-        instance.host = host;
-        instance.port = port;
-        instance.from = from;
-        instance.username = username;
-        instance.password = password;
-        instance.to = to;
-        return instance;
-    }
-
-    // NOTE: test-purposes
     public static EmailConfigs disabled() {
-        var instance = new EmailConfigs();
-        instance.enabled = false;
-        return instance;
+        return new EmailConfigs(false, null, 0, null, null, null, null);
     }
 
-    // NOTE: test-purposes
-    public static EmailConfigs enabled(
-            String from
-    ) {
-        var instance = new EmailConfigs();
-        instance.enabled = true;
-        instance.from = from;
-        return instance;
+    public static EmailConfigs enabled(String from) {
+        return new EmailConfigs(true, null, 0, from, null, null, null);
     }
 }

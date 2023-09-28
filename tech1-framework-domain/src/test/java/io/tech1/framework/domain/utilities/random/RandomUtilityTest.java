@@ -3,7 +3,6 @@ package io.tech1.framework.domain.utilities.random;
 import feign.Request;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
-import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
 import io.tech1.framework.domain.tests.enums.EnumUnderTests;
@@ -24,7 +23,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
@@ -377,31 +375,6 @@ class RandomUtilityTest {
     }
 
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
-    void randomIPAddressTest() {
-        // Act
-        var actual = randomIPAddress();
-
-        // Assert
-        var ipv4 = List.of(actual.value().split("\\."));
-        assertThat(ipv4).hasSize(4);
-        ipv4.forEach(element -> {
-            var slot = Integer.valueOf(element);
-            assertThat(slot).isNotNull();
-            assertThat(slot).isNotNegative();
-            assertThat(slot).isLessThan(256);
-        });
-    }
-
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
-    void localhostTest() {
-        // Act
-        var actual = localhost();
-
-        // Assert
-        assertThat(actual.value()).isEqualTo("127.0.0.1");
-    }
-
-    @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomServerURLTest() {
         // Arrange
         var pattern = Pattern.compile("^"
@@ -462,38 +435,6 @@ class RandomUtilityTest {
         // Assert
         assertThat(actual).hasSize(size);
         asList(actual).forEach(element -> assertThat(element).hasSize(elementLength));
-    }
-
-    @Test
-    void randomEmailAsValueTest() {
-        // Arrange
-        var domain = "@tech1.io";
-        var randomLength = 32;
-        var domainLength = 9;
-        var expected = randomLength + domainLength;
-
-        // Act
-        var actual = randomEmailAsValue();
-
-        // Assert
-        assertThat(actual).hasSize(expected);
-        assertThat(actual.substring(randomLength)).isEqualTo(domain);
-    }
-
-    @Test
-    void randomEmailTest() {
-        // Arrange
-        var domain = "@tech1.io";
-        var randomLength = 32;
-        var domainLength = 9;
-        var expected = randomLength + domainLength;
-
-        // Act
-        var actual = randomEmail();
-
-        // Assert
-        assertThat(actual.value()).hasSize(expected);
-        assertThat(actual.value().substring(randomLength)).isEqualTo(domain);
     }
 
     @Test
@@ -765,26 +706,6 @@ class RandomUtilityTest {
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUsernameTest() {
-        // Act
-        var actual = randomUsername();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.identifier()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomPasswordTest() {
-        // Act
-        var actual = randomPassword();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.value()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomFeignExceptionTest() {
         // Act
         var actual = randomFeignException();
@@ -793,202 +714,5 @@ class RandomUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.request().httpMethod()).isEqualTo(Request.HttpMethod.GET);
         assertThat(actual.request().url()).isEqualTo("/endpoint");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void validGeoLocationTest() {
-        // Act
-        var actual = validGeoLocation();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isEqualTo("Ukraine");
-        assertThat(actual.getCountryCode()).isEqualTo("UA");
-        assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
-        assertThat(actual.getCity()).isEqualTo("Lviv");
-        assertThat(actual.getExceptionDetails()).isEmpty();
-        assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void invalidGeoLocationTest() {
-        // Act
-        var actual = invalidGeoLocation();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isEqualTo(UNKNOWN);
-        assertThat(actual.getCity()).isEqualTo(UNKNOWN);
-        assertThat(actual.getExceptionDetails()).isEqualTo("Location is unknown");
-        assertThat(actual.getWhere()).isEqualTo("Unknown, Unknown");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomGeoLocationTest() {
-        // Act
-        var actual = randomGeoLocation();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isNotNull();
-        assertThat(actual.getExceptionDetails()).isNotNull();
-        assertThat(actual.getWhere()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void validUserAgentDetailsTest() {
-        // Act
-        var actual = validUserAgentDetails();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getBrowser()).isEqualTo("Chrome");
-        assertThat(actual.getPlatform()).isEqualTo("macOS");
-        assertThat(actual.getDeviceType()).isEqualTo("Desktop");
-        assertThat(actual.getExceptionDetails()).isEmpty();
-        assertThat(actual.getWhat()).isEqualTo("Chrome, macOS on Desktop");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void invalidUserAgentDetailsTest() {
-        // Act
-        var actual = invalidUserAgentDetails();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getBrowser()).isEqualTo(UNKNOWN);
-        assertThat(actual.getPlatform()).isEqualTo(UNKNOWN);
-        assertThat(actual.getDeviceType()).isEqualTo(UNKNOWN);
-        assertThat(actual.getExceptionDetails()).isEqualTo("User agent details are unknown");
-        assertThat(actual.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUserAgentDetailsTest() {
-        // Act
-        var userAgentDetails = randomUserAgentDetails();
-
-        // Assert
-        assertThat(userAgentDetails).isNotNull();
-        assertThat(userAgentDetails.getBrowser()).isNotNull();
-        assertThat(userAgentDetails.getPlatform()).isNotNull();
-        assertThat(userAgentDetails.getDeviceType()).isNotNull();
-        assertThat(userAgentDetails.getExceptionDetails()).isNotNull();
-        assertThat(userAgentDetails.getWhat()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void validUserRequestMetadataTest() {
-        // Act
-        var actual = validUserRequestMetadata();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getStatus()).isEqualTo(Status.COMPLETED);
-        assertThat(actual.getGeoLocation().getIpAddr()).isNotNull();
-        assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Ukraine");
-        assertThat(actual.getGeoLocation().getCity()).isEqualTo("Lviv");
-        assertThat(actual.getGeoLocation().getExceptionDetails()).isEmpty();
-        assertThat(actual.getGeoLocation().getWhere()).isEqualTo("Ukraine, Lviv");
-        assertThat(actual.getUserAgentDetails().getBrowser()).isEqualTo("Chrome");
-        assertThat(actual.getUserAgentDetails().getPlatform()).isEqualTo("macOS");
-        assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Desktop");
-        assertThat(actual.getUserAgentDetails().getExceptionDetails()).isEmpty();
-        assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(actual.getWhatTuple2().a()).isEqualTo("Chrome");
-        assertThat(actual.getWhatTuple2().b()).isEqualTo("Chrome, macOS on Desktop");
-        assertThat(actual.getWhereTuple3().a()).isNotNull();
-        assertThat(actual.getWhereTuple3().a().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().b()).isEqualTo("🇺🇦");
-        assertThat(actual.getWhereTuple3().c()).isEqualTo("Ukraine, Lviv");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void invalidUserRequestMetadataTest() {
-        // Act
-        var actual = invalidUserRequestMetadata();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getStatus()).isEqualTo(Status.COMPLETED);
-        assertThat(actual.getGeoLocation().getIpAddr()).isNotNull();
-        assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Unknown");
-        assertThat(actual.getGeoLocation().getCity()).isEqualTo("Unknown");
-        assertThat(actual.getGeoLocation().getExceptionDetails()).isEqualTo("Location is unknown");
-        assertThat(actual.getGeoLocation().getWhere()).isEqualTo("Unknown, Unknown");
-        assertThat(actual.getUserAgentDetails().getBrowser()).isEqualTo("Unknown");
-        assertThat(actual.getUserAgentDetails().getPlatform()).isEqualTo("Unknown");
-        assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Unknown");
-        assertThat(actual.getUserAgentDetails().getExceptionDetails()).isEqualTo("User agent details are unknown");
-        assertThat(actual.getUserAgentDetails().getWhat()).isEqualTo("Unknown, Unknown on Unknown");
-        assertThat(actual.getWhatTuple2().a()).isEqualTo("Unknown");
-        assertThat(actual.getWhatTuple2().b()).isEqualTo("Unknown, Unknown on Unknown");
-        assertThat(actual.getWhereTuple3().a()).isNotNull();
-        assertThat(actual.getWhereTuple3().a().split("\\.")).hasSize(4);
-        assertThat(actual.getWhereTuple3().b()).isEqualTo("🏴‍");
-        assertThat(actual.getWhereTuple3().c()).isEqualTo("Unknown, Unknown");
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUserRequestMetadataTest() {
-        // Act
-        var actual = randomUserRequestMetadata();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getStatus()).isNotNull();
-        assertThat(actual.getGeoLocation().getIpAddr()).isNotNull();
-        assertThat(actual.getGeoLocation().getCountry()).isNotNull();
-        assertThat(actual.getGeoLocation().getCity()).isNotNull();
-        assertThat(actual.getGeoLocation().getExceptionDetails()).isNotNull();
-        assertThat(actual.getGeoLocation().getWhere()).isNotNull();
-        assertThat(actual.getUserAgentDetails().getBrowser()).isNotNull();
-        assertThat(actual.getUserAgentDetails().getPlatform()).isNotNull();
-        assertThat(actual.getUserAgentDetails().getDeviceType()).isNotNull();
-        assertThat(actual.getUserAgentDetails().getExceptionDetails()).isNotNull();
-        assertThat(actual.getUserAgentDetails().getWhat()).isNotNull();
-        assertThat(actual.getWhatTuple2().a()).isNotNull();
-        assertThat(actual.getWhatTuple2().b()).isNotNull();
-        assertThat(actual.getWhereTuple3().a()).isNotNull();
-        assertThat(actual.getWhereTuple3().b()).isNotNull();
-        assertThat(actual.getWhereTuple3().c()).isNotNull();
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomHardwareMonitoringThresholdTest() {
-        // Act
-        var actual = randomHardwareMonitoringThreshold();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
-        assertThat(actual.value()).isLessThanOrEqualTo(new BigDecimal("100"));
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomHardwareMonitoringThresholdsTest() {
-        // Act
-        var actual = randomHardwareMonitoringThresholds();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.getThresholds()).hasSize(5);
-        actual.getThresholds().values().forEach(threshold -> {
-            assertThat(threshold.value()).isGreaterThanOrEqualTo(new BigDecimal("50"));
-            assertThat(threshold.value()).isLessThanOrEqualTo(new BigDecimal("100"));
-        });
-    }
-
-    @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomHardwareMonitoringDatapointTableRowTest() {
-        // Act
-        var actual = randomHardwareMonitoringDatapointTableRow();
-
-        // Assert
-        assertThat(actual).isNotNull();
-        assertThat(actual.isThresholdReached()).isFalse();
     }
 }

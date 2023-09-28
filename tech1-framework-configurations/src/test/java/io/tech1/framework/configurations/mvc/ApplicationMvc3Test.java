@@ -32,10 +32,10 @@ class ApplicationMvc3Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            var mvcConfigs = MvcConfigs.of(
+            var mvcConfigs = new MvcConfigs(
                     true,
                     "/framework/security",
-                    CorsConfigs.of(
+                    new CorsConfigs(
                             "/api/**",
                             new String[] { "http://localhost:8080", "http://localhost:8081" },
                             new String[] { "GET", "POST" },

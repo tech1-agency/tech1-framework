@@ -3,37 +3,31 @@ package io.tech1.framework.domain.properties.base;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Mongodb extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String host;
+    private final String host;
     @MandatoryProperty
-    private int port;
+    private final int port;
     @MandatoryProperty
-    private String database;
+    private final String database;
     @NonMandatoryProperty
     private String username;
     @NonMandatoryProperty
     private String password;
 
-    // NOTE: test-purposes
-    public static Mongodb of(
-            String host,
-            int port,
-            String database
-    ) {
-        var instance = new Mongodb();
-        instance.host = host;
-        instance.port = port;
-        instance.database = database;
-        return instance;
+    public static Mongodb noSecurity(String host, int port, String database) {
+        return new Mongodb(host, port, database, null, null);
     }
 
     public final String connectionString() {

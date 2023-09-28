@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.domain.events;
 
+import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomHardwareMonitoringDatapointTableRow;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WebsocketEventTest extends AbstractFolderSerializationRunner {
@@ -54,8 +54,8 @@ class WebsocketEventTest extends AbstractFolderSerializationRunner {
         var websocketEvent = WebsocketEvent.hardwareMonitoring(
                 new HardwareMonitoringDatapointTableView(
                         List.of(
-                                randomHardwareMonitoringDatapointTableRow(),
-                                randomHardwareMonitoringDatapointTableRow()
+                                HardwareMonitoringDatapointTableRow.random(),
+                                HardwareMonitoringDatapointTableRow.random()
                         )
                 )
         );

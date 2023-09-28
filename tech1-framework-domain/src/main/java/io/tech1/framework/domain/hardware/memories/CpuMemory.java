@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBigDecimalByBounds;
 
 // Lombok
 @Getter
@@ -28,6 +29,12 @@ public class CpuMemory {
     public static CpuMemory zeroUsage() {
         return new CpuMemory(
                 BigDecimal.ZERO
+        );
+    }
+
+    public static CpuMemory random() {
+        return new CpuMemory(
+                randomBigDecimalByBounds(1, 50)
         );
     }
 }

@@ -352,12 +352,17 @@ class SecurityJwtIncidentPublisherImplTest {
                         entry -> entry,
                         entry -> type.equals(entry) && enabled
                 ));
-        var securityJwtConfigs = new SecurityJwtConfigs();
-        securityJwtConfigs.setIncidentsConfigs(
-                IncidentsConfigs.of(
+        return new SecurityJwtConfigs(
+                null,
+                null,
+                null,
+                new IncidentsConfigs(
                         typesConfigs
-                )
+                ),
+                null,
+                null,
+                null,
+                null
         );
-        return securityJwtConfigs;
     }
 }

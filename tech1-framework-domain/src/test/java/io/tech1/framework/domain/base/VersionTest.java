@@ -3,12 +3,14 @@ package io.tech1.framework.domain.base;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,5 +53,15 @@ class VersionTest extends AbstractFolderSerializationRunner {
         assertThat(actual).isEqualTo(version);
         assertThat(actual.value()).isEqualTo(version.value());
         assertThat(actual.toString()).hasToString(version.value());
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomUsernameTest() {
+        // Act
+        var actual = Version.random();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.value()).isNotNull();
     }
 }

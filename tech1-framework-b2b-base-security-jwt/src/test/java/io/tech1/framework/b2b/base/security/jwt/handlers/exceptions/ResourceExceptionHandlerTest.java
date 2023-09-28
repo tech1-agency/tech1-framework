@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationHandlersContext;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,6 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.exceptions.ExceptionEntityType.ERROR;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -46,12 +46,12 @@ class ResourceExceptionHandlerTest {
                 Arguments.of(new CookieNotFoundException(randomString())),
                 Arguments.of(new CookieAccessTokenNotFoundException()),
                 Arguments.of(new CookieAccessTokenInvalidException()),
-                Arguments.of(new CookieAccessTokenExpiredException(randomUsername())),
-                Arguments.of(new CookieAccessTokenDbNotFoundException(randomUsername())),
+                Arguments.of(new CookieAccessTokenExpiredException(Username.random())),
+                Arguments.of(new CookieAccessTokenDbNotFoundException(Username.random())),
                 Arguments.of(new CookieRefreshTokenNotFoundException()),
                 Arguments.of( new CookieRefreshTokenInvalidException()),
-                Arguments.of(new CookieRefreshTokenExpiredException(randomUsername())),
-                Arguments.of(new CookieRefreshTokenDbNotFoundException(randomUsername())),
+                Arguments.of(new CookieRefreshTokenExpiredException(Username.random())),
+                Arguments.of(new CookieRefreshTokenDbNotFoundException(Username.random())),
                 Arguments.of(new CookieUnauthorizedException(randomString()))
         );
     }

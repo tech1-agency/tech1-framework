@@ -1,34 +1,22 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 public class InvitationCodes implements AbstractToggleProperty {
     @MandatoryProperty
-    private boolean enabled;
+    private final boolean enabled;
 
-    // NOTE: test-purposes
-    public static InvitationCodes of(
-            boolean enabled
-    ) {
-        var instance = new InvitationCodes();
-        instance.enabled = enabled;
-        return instance;
-    }
-
-    // NOTE: test-purposes
     public static InvitationCodes enabled() {
-        return of(
-                true
-        );
+        return new InvitationCodes(true);
     }
 
-    // NOTE: test-purposes
     public static InvitationCodes disabled() {
-        return of(
-                false
-        );
+        return new InvitationCodes(false);
     }
 }

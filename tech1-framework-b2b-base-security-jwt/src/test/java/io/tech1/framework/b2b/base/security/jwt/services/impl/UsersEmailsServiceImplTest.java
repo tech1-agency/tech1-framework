@@ -5,6 +5,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthent
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.services.EmailService;
@@ -25,7 +28,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.Map;
 
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_CONFIGS;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -93,9 +96,9 @@ class UsersEmailsServiceImplTest {
     void noExecutionNullEmailAndEnabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
-                randomUsername(),
+                Username.random(),
                 null,
-                randomUserRequestMetadata()
+                UserRequestMetadata.random()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
 
@@ -111,9 +114,9 @@ class UsersEmailsServiceImplTest {
     void noExecutionNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
-                randomUsername(),
+                Username.random(),
                 null,
-                randomUserRequestMetadata()
+                UserRequestMetadata.random()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
@@ -129,9 +132,9 @@ class UsersEmailsServiceImplTest {
     void noExecutionNotNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
-                randomUsername(),
-                randomEmail(),
-                randomUserRequestMetadata()
+                Username.random(),
+                Email.random(),
+                UserRequestMetadata.random()
         );
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
@@ -146,9 +149,9 @@ class UsersEmailsServiceImplTest {
     @Test
     void executeAuthenticationLoginTest() {
         // Arrange
-        var username = randomUsername();
-        var email = randomEmail();
-        var userRequestMetadata = randomUserRequestMetadata();
+        var username = Username.random();
+        var email = Email.random();
+        var userRequestMetadata = UserRequestMetadata.random();
         var function = new FunctionAuthenticationLoginEmail(
                 username,
                 email,
@@ -194,9 +197,9 @@ class UsersEmailsServiceImplTest {
     @Test
     void executeSessionRefreshedTest() {
         // Arrange
-        var username = randomUsername();
-        var email = randomEmail();
-        var userRequestMetadata = randomUserRequestMetadata();
+        var username = Username.random();
+        var email = Email.random();
+        var userRequestMetadata = UserRequestMetadata.random();
         var function = new FunctionSessionRefreshedEmail(
                 username,
                 email,

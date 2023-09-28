@@ -7,7 +7,6 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
@@ -64,7 +63,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     }
 
     @Override
-    public void onSessionAddUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
+    public void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
         LOGGER.debug(SECURITY_JWT_SESSION_ADD_USER_REQUEST_METADATA, this.getType(), event.username());
         var session = this.baseUsersSessionsService.saveUserRequestMetadata(event);
         var metadata = session.metadata();
@@ -98,5 +97,11 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
                     )
             );
         }
+    }
+
+    @Override
+    public void onSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
+        LOGGER.debug(SECURITY_JWT_SESSION_RENEW_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
+        this.baseUsersSessionsService.saveUserRequestMetadata(event);
     }
 }

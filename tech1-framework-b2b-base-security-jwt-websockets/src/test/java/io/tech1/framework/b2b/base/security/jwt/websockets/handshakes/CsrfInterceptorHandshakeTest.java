@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -104,7 +105,7 @@ class CsrfInterceptorHandshakeTest {
         // Arrange
         var request = Mockito.mock(ServletServerHttpRequest.class);
         var httpRequest = Mockito.mock(HttpServletRequest.class);
-        var cookie = createCookie("csrf-cookie", "value123", "tech1.io", false, 120);
+        var cookie = createCookie("csrf-cookie", "value123", DomainConstants.TECH1, false, 120);
         var response = Mockito.mock(ServerHttpResponse.class);
         var wsHandler = Mockito.mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();

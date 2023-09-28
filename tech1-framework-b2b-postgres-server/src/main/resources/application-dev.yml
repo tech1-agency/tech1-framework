@@ -57,6 +57,10 @@ tech1:
         enabled: true
         expression: "*/30 * * * * *"
         zoneId: "Europe/Kiev"
+      enableSessionsMetadataRenewCron:
+        enabled: true
+        expression: "*/30 * * * * *"
+        zoneId: "Europe/Kiev"
     essenceConfigs:
       defaultUsers:
         enabled: true

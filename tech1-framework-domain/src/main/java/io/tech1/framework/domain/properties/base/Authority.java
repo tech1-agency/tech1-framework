@@ -1,22 +1,19 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
-public class Authority {
+@EqualsAndHashCode(callSuper = true)
+public class Authority extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String value;
-
-    // NOTE: test-purposes
-    public static Authority of(
-            String value
-    ) {
-        var instance = new Authority();
-        instance.value = value;
-        return instance;
-    }
+    private final String value;
 
     @Override
     public String toString() {

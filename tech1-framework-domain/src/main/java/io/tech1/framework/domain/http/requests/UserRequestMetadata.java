@@ -14,6 +14,7 @@ import lombok.ToString;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.ok;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 
 // JSON
@@ -54,6 +55,24 @@ public class UserRequestMetadata {
                 geoLocation,
                 userAgentDetails
         );
+    }
+
+    public static UserRequestMetadata valid() {
+        return UserRequestMetadata.processed(
+                GeoLocation.valid(),
+                UserAgentDetails.valid()
+        );
+    }
+
+    public static UserRequestMetadata invalid() {
+        return UserRequestMetadata.processed(
+                GeoLocation.invalid(),
+                UserAgentDetails.invalid()
+        );
+    }
+
+    public static UserRequestMetadata random() {
+        return randomBoolean() ? valid() : invalid();
     }
 
     public Tuple3<String, String, String> getWhereTuple3() {

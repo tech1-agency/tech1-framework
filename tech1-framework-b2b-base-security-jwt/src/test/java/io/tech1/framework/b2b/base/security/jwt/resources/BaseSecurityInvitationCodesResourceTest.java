@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
-import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -20,7 +20,6 @@ import org.springframework.http.MediaType;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
+class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -62,7 +61,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
     @Test
     void findAllTest() throws Exception {
         // Arrange
-        var owner = randomUsername();
+        var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(ResponseInvitationCode.class);
@@ -83,7 +82,7 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner {
     @Test
     void saveTest() throws Exception {
         // Arrange
-        var owner = randomUsername();
+        var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var requestNewInvitationCodeParams = entity(RequestNewInvitationCodeParams.class);
 

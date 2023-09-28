@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.tests.constants;
 
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.base.*;
 import io.tech1.framework.domain.properties.configs.*;
@@ -17,19 +19,18 @@ import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEmailAsValue;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 @UtilityClass
 public class TestsPropertiesConstants {
-    public static final ServerConfigs SERVER_CONFIGS = ServerConfigs.of("tech1-spring-boot-server", "http://127.0.0.1:3000");
-    public static final AsyncConfigs ASYNC_CONFIGS = AsyncConfigs.of("tech1-async");
-    public static final EventsConfigs EVENTS_CONFIGS = EventsConfigs.of("tech1-events");
-    public static final MvcConfigs MVC_CONFIGS = MvcConfigs.of(
+    public static final ServerConfigs SERVER_CONFIGS = new ServerConfigs("tech1-spring-boot-server", "http://127.0.0.1:3000");
+    public static final AsyncConfigs ASYNC_CONFIGS = new AsyncConfigs("tech1-async");
+    public static final EventsConfigs EVENTS_CONFIGS = new EventsConfigs("tech1-events");
+    public static final MvcConfigs MVC_CONFIGS = new MvcConfigs(
             true,
             "/framework/security",
-            CorsConfigs.of(
+            new CorsConfigs(
                     "/api/**",
                     new String[] { "http://localhost:8080", "http://localhost:8081" },
                     new String[] { "GET", "POST" },
@@ -38,24 +39,24 @@ public class TestsPropertiesConstants {
                     null
             )
     );
-    public static final EmailConfigs EMAIL_CONFIGS = EmailConfigs.of(
+    public static final EmailConfigs EMAIL_CONFIGS = new EmailConfigs(
             false,
             "smtp.gmail.com",
             587,
             "Tech1",
             "tech1@gmail.com",
             "Password123!",
-            new String[] { randomEmailAsValue(), randomEmailAsValue() }
+            new String[] { Email.random().value(), Email.random().value() }
     );
-    public static final IncidentConfigs INCIDENT_CONFIGS = IncidentConfigs.of(
+    public static final IncidentConfigs INCIDENT_CONFIGS = new IncidentConfigs(
             true,
-            RemoteServer.of(
+            new RemoteServer(
                     "http://localhost:8973",
                     "incident-username",
                     "incident-password"
             )
     );
-    public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = HardwareMonitoringConfigs.of(
+    public static final HardwareMonitoringConfigs HARDWARE_MONITORING_CONFIGS = new HardwareMonitoringConfigs(
             true,
             new EnumMap<>(
                     Map.of(
@@ -67,36 +68,37 @@ public class TestsPropertiesConstants {
                     )
             )
     );
-    public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = HardwareServerConfigs.of(
+    public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = new HardwareServerConfigs(
             "http://localhost:8484"
     );
-    public static final SecurityJwtConfigs SECURITY_JWT_CONFIGS = SecurityJwtConfigs.of(
-            AuthoritiesConfigs.of(
+    public static final SecurityJwtConfigs SECURITY_JWT_CONFIGS = new SecurityJwtConfigs(
+            new AuthoritiesConfigs(
                     "io.tech1",
                     Set.of(
-                            Authority.of(SUPER_ADMIN),
-                            Authority.of("admin"),
-                            Authority.of("user"),
-                            Authority.of(INVITATION_CODE_READ),
-                            Authority.of(INVITATION_CODE_WRITE)
+                            new Authority(SUPER_ADMIN),
+                            new Authority("admin"),
+                            new Authority("user"),
+                            new Authority(INVITATION_CODE_READ),
+                            new Authority(INVITATION_CODE_WRITE)
                     )
             ),
-            CookiesConfigs.of("tech1.io", TimeAmount.of(5L, SECONDS)),
-            EssenceConfigs.of(
-                    DefaultUsers.of(
+            new CookiesConfigs(DomainConstants.TECH1, new TimeAmount(5L, SECONDS)),
+            new EssenceConfigs(
+                    new DefaultUsers(
                             true,
                             List.of(
-                                    DefaultUser.of(
+                                   new DefaultUser(
                                             "admin12",
                                             "password12",
                                             ZoneId.systemDefault(),
+                                            null,
                                             List.of("admin")
                                     )
                             )
                     ),
                     InvitationCodes.enabled()
             ),
-            IncidentsConfigs.of(
+            new IncidentsConfigs(
                     new EnumMap<>(
                             Map.of(
                                     AUTHENTICATION_LOGIN, true,
@@ -111,32 +113,33 @@ public class TestsPropertiesConstants {
                             )
                     )
             ),
-            JwtTokensConfigs.of(
+            new JwtTokensConfigs(
                     "TECH1",
-                    JwtToken.of("ajwt", TimeAmount.of(30L, SECONDS)),
-                    JwtToken.of("rjwt", TimeAmount.of(12L, HOURS))
+                    new JwtToken("ajwt", new TimeAmount(30L, SECONDS)),
+                    new JwtToken("rjwt", new TimeAmount(12L, HOURS))
             ),
-            LoggingConfigs.of(true),
-            SessionConfigs.of(
-                    Cron.enabled("*/30 * * * * *", "Europe/Kiev")
+            new LoggingConfigs(true),
+            new SessionConfigs(
+                    Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
+                    Cron.enabled("*/15 * * * * *", "Europe/Kiev")
             ),
-            UsersEmailsConfigs.of(
+            new UsersEmailsConfigs(
                     "[Tech1]",
                     Checkbox.enabled(),
                     Checkbox.enabled()
             )
     );
 
-    public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = SecurityJwtWebsocketsConfigs.of(
-            CsrfConfigs.of("csrf-cookie", "csrf-header", "csrf-parameter"),
-            StompEndpointRegistryConfigs.of("/endpoint"),
-            MessageBrokerRegistryConfigs.of("/app", "/queue", "/user"),
-            WebsocketsFeaturesConfigs.of(
-                    WebsocketsFeatureHardwareConfigs.of(true, "/account")
+    public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = new SecurityJwtWebsocketsConfigs(
+            new CsrfConfigs("csrf-cookie", "csrf-header", "csrf-parameter"),
+            new StompEndpointRegistryConfigs("/endpoint"),
+            new MessageBrokerRegistryConfigs("/app", "/queue", "/user"),
+            new WebsocketsFeaturesConfigs(
+                    new WebsocketsFeatureHardwareConfigs(true, "/account")
             )
     );
 
-    public static final MongodbSecurityJwtConfigs MONGODB_SECURITY_JWT_CONFIGS = MongodbSecurityJwtConfigs.of(
-            Mongodb.of("127.0.0.1", 27017, "tech1_framework_server")
+    public static final MongodbSecurityJwtConfigs MONGODB_SECURITY_JWT_CONFIGS = new MongodbSecurityJwtConfigs(
+            Mongodb.noSecurity("127.0.0.1", 27017, "tech1_framework_server")
     );
 }

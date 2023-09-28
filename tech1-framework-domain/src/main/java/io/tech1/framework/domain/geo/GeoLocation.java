@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.ToString;
 
 import static io.tech1.framework.domain.constants.StringConstants.*;
+import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.nonNull;
 
@@ -96,6 +98,27 @@ public class GeoLocation {
                 city,
                 EMPTY
         );
+    }
+
+    public static GeoLocation valid() {
+        return GeoLocation.processed(
+                localhost(),
+                "Ukraine",
+                "UA",
+                "🇺🇦",
+                "Lviv"
+        );
+    }
+
+    public static GeoLocation invalid() {
+        return GeoLocation.unknown(
+                localhost(),
+                "Location is unknown"
+        );
+    }
+
+    public static GeoLocation random() {
+        return randomBoolean() ? valid() : invalid();
     }
 
     public String getWhere() {

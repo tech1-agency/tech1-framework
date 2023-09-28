@@ -4,7 +4,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,7 @@ import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecur
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -71,11 +73,11 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
                 .hasMessageStartingWith("Username: Not Found, id = sa777");
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@tech1.io"))).isNotNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@tech1.io"))).isNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa1@tech1.io"))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa2@tech1.io"))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa4@tech1.io"))).isNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + DomainConstants.TECH1))).isNotNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + DomainConstants.TECH1))).isNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + DomainConstants.TECH1))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + DomainConstants.TECH1))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + DomainConstants.TECH1))).isNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa1"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa4"))).isNull();
@@ -120,7 +122,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(jwtUser.isCredentialsNonExpired()).isTrue();
         assertThat(jwtUser.isEnabled()).isTrue();
 
-        var username = randomUsername();
+        var username = Username.random();
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
@@ -167,7 +169,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
         // Act-Assert-1
-        var userId2 = this.usersRepository.saveAs(registration1(), randomPassword(), randomInvitationCode());
+        var userId2 = this.usersRepository.saveAs(registration1(), Password.random(), randomInvitationCode());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
     }

@@ -1,5 +1,14 @@
 # Release Notes
 
+### v1.16
+- Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages
+- Add "create_at", "updated_at", "metadata_renew_cron", "metadata_renew_manually" → tech1_users_sessions (PostgreSQL) + liquibase
+- Add "create_at", "updated_at", "metadata_renew_cron", "metadata_renew_manually" → tech1_users_sessions (MongoDB) + MIGRATION
+- Add "enableSessionsMetadataRenewCron" configuration
+- Add properties 2.0: @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
+- Add /sessions/{sessionId}/renew/manually endpoint + Postman
+- Add /superadmin/sessions/{sessionId}/renew/manually endpoint + Postman
+
 ### v1.15
 - Move <distributionManagement> ossrh → "release" profile
 

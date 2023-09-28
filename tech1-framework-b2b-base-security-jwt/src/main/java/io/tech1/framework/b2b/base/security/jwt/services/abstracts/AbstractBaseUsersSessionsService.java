@@ -1,7 +1,9 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionAddUserRequestMetadata;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataAdd;
+import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
+import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -16,6 +18,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
+import io.tech1.framework.domain.tuples.TupleToggle;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.AccessLevel;
@@ -30,6 +33,7 @@ import java.util.Set;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -52,13 +56,23 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var metadata = UserRequestMetadata.processing(clientIpAddr);
         var session = userSessionTP.value();
         if (userSessionTP.present()) {
-            session = ofPersisted(session.id(), session.username(), session.accessToken(), session.refreshToken(), metadata);
+            session = ofPersisted(
+                    session.id(),
+                    session.createdAt(),
+                    session.updatedAt(),
+                    session.username(),
+                    session.accessToken(),
+                    session.refreshToken(),
+                    metadata,
+                    session.metadataRenewCron(),
+                    session.metadataRenewManually()
+            );
         } else {
             session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
         session = this.usersSessionsRepository.saveAs(session);
-        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                new EventSessionAddUserRequestMetadata(
+        this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
+                new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
                         session,
@@ -75,8 +89,8 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var username = user.username();
         var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
-        this.securityJwtPublisher.publishSessionAddUserRequestMetadata(
-                new EventSessionAddUserRequestMetadata(
+        this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
+                new EventSessionUserRequestMetadataAdd(
                         username,
                         user.email(),
                         newSession,
@@ -89,17 +103,32 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public UserSession saveUserRequestMetadata(EventSessionAddUserRequestMetadata event) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr());
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader());
-        var session = ofPersisted(
-                event.session().id(),
-                event.session().username(),
-                event.session().accessToken(),
-                event.session().refreshToken(),
-                UserRequestMetadata.processed(geoLocation, userAgentDetails)
+    public UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event) {
+        return this.saveUserRequestMetadata(event.getSaveFunction());
+    }
+
+    @Override
+    public void saveUserRequestMetadata(EventSessionUserRequestMetadataRenew event) {
+        this.saveUserRequestMetadata(event.getSaveFunction());
+    }
+
+    @Override
+    public UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
+        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(saveFunction.clientIpAddr());
+        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(saveFunction.userAgentHeader());
+        var session = saveFunction.session();
+        var sessionProcessedMetadata = ofPersisted(
+                session.id(),
+                session.createdAt(),
+                getCurrentTimestamp(),
+                session.username(),
+                session.accessToken(),
+                session.refreshToken(),
+                UserRequestMetadata.processed(geoLocation, userAgentDetails),
+                saveFunction.metadataRenewCron().enabled() ? saveFunction.metadataRenewCron().value() : session.metadataRenewCron(),
+                saveFunction.metadataRenewManually().enabled() ? saveFunction.metadataRenewManually().value() : session.metadataRenewManually()
         );
-        return this.usersSessionsRepository.saveAs(session);
+        return this.usersSessionsRepository.saveAs(sessionProcessedMetadata);
     }
 
     @Override
@@ -133,6 +162,32 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 expiredSessions,
                 expiredOrInvalidSessionIds
         );
+    }
+
+    @Override
+    public void enableUserRequestMetadataRenewCron() {
+        this.usersSessionsRepository.enableMetadataRenewCron();
+    }
+
+    @Override
+    public void enableUserRequestMetadataRenewManually(UserSessionId sessionId) {
+        this.usersSessionsRepository.enableMetadataRenewManually(sessionId);
+    }
+
+    @Override
+    public void renewUserRequestMetadata(UserSession session, HttpServletRequest httpServletRequest) {
+        if (session.isRenewRequired()) {
+            this.securityJwtPublisher.publishSessionUserRequestMetadataRenew(
+                    new EventSessionUserRequestMetadataRenew(
+                            session.username(),
+                            session,
+                            getClientIpAddr(httpServletRequest),
+                            new UserAgentHeader(httpServletRequest),
+                            session.metadataRenewCron() ? TupleToggle.enabled(true) : TupleToggle.disabled(),
+                            session.metadataRenewManually() ? TupleToggle.enabled(true) : TupleToggle.disabled()
+                    )
+            );
+        }
     }
 
     @Override

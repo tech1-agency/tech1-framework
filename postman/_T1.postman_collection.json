@@ -224,6 +224,62 @@
 					"response": []
 				},
 				{
+					"name": "Current Session (Renew)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZsbyIsImlkIjoiZGU1NTY1NGEtMTA0NS00ZDAwLTgwZmItZjRmOTAwODIwNmE0Iiwicm9sZSI6WyJBRE1JTiJdLCJpYXQiOjE2NDE4MjQ4ODQsImV4cCI6MTY0MTg2ODA4NH0.PqBWc3aFUnSq-o_hgN-3ZS2rDYb2QC3QeOvsESBMdhc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Proxy-Client-IP",
+								"value": "7.7.7.7",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/current",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Renew Manually",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/sessions/5d076e93-48f2-4d83-b09e-3bb9ecf4a8ce/renew/manually",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"sessions",
+								"5d076e93-48f2-4d83-b09e-3bb9ecf4a8ce",
+								"renew",
+								"manually"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete By Id",
 					"request": {
 						"method": "DELETE",
@@ -481,6 +537,28 @@
 								"{{frameworkBasePathPrefix}}",
 								"superadmin",
 								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessions - Renew Manually",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/superadmin/sessions/123/renew/manually",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"superadmin",
+								"sessions",
+								"123",
+								"renew",
+								"manually"
 							]
 						}
 					},

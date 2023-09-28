@@ -36,9 +36,9 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsTest() {
         // Arrange
         var notUsedPropertiesConfigs = NotUsedPropertiesConfigs.of(
-                ScheduledJob.of(true, SchedulerConfiguration.of(10, 10, TimeUnit.SECONDS)),
-                SpringServer.of(8080),
-                SpringLogging.of("logback-test.xml")
+                new ScheduledJob(true, new SchedulerConfiguration(10, 10, TimeUnit.SECONDS)),
+                new SpringServer(8080),
+                new SpringLogging("logback-test.xml")
         );
 
         // Act
@@ -82,7 +82,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsDisabledTest() {
         // Arrange
-        var mvcConfigs = MvcConfigs.of(
+        var mvcConfigs = new MvcConfigs(
                 false,
                 null,
                 null
@@ -109,15 +109,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsDisabledTest() {
         // Arrange
-        var emailConfigs = EmailConfigs.of(
-                false,
-                null,
-                0,
-                null,
-                null,
-                null,
-                null
-        );
+        var emailConfigs = EmailConfigs.disabled();
 
         // Act
         assertProperties(emailConfigs, "emailConfigs");
@@ -165,7 +157,7 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void hardwareMonitoringConfigsExceptionTest() {
         // Arrange
-        var hardwareMonitoringConfigs = HardwareMonitoringConfigs.of(
+        var hardwareMonitoringConfigs = new HardwareMonitoringConfigs(
                 true,
                 new HashMap<>() {{
                     put(HardwareName.CPU, new BigDecimal("80"));
@@ -234,7 +226,7 @@ class PropertiesAsserterAndPrinterTest {
     void securityJwtConfigsIncidentsCorrectTest() {
         var loginFailureUsernamePassword = randomBoolean();
         var loginFailureUsernameMaskedPassword = !loginFailureUsernamePassword;
-        var incidentConfigs = IncidentsConfigs.of(
+        var incidentConfigs = new IncidentsConfigs(
                 new HashMap<>() {{
                     put(AUTHENTICATION_LOGIN, randomBoolean());
                     put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, loginFailureUsernamePassword);
@@ -247,15 +239,16 @@ class PropertiesAsserterAndPrinterTest {
                     put(REGISTER1_FAILURE, randomBoolean());
                 }}
         );
-        var securityJwtConfigs = new SecurityJwtConfigs();
-        securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
-        securityJwtConfigs.setCookiesConfigs(SECURITY_JWT_CONFIGS.getCookiesConfigs());
-        securityJwtConfigs.setEssenceConfigs(SECURITY_JWT_CONFIGS.getEssenceConfigs());
-        securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
-        securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
-        securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
-        securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
-        securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
+        var securityJwtConfigs = new SecurityJwtConfigs(
+                SECURITY_JWT_CONFIGS.getAuthoritiesConfigs(),
+                SECURITY_JWT_CONFIGS.getCookiesConfigs(),
+                SECURITY_JWT_CONFIGS.getEssenceConfigs(),
+                incidentConfigs,
+                SECURITY_JWT_CONFIGS.getJwtTokensConfigs(),
+                SECURITY_JWT_CONFIGS.getLoggingConfigs(),
+                SECURITY_JWT_CONFIGS.getSessionConfigs(),
+                SECURITY_JWT_CONFIGS.getUsersEmailsConfigs()
+        );
 
         // Act
         assertProperties(securityJwtConfigs, "securityJwtConfigs");
@@ -267,7 +260,7 @@ class PropertiesAsserterAndPrinterTest {
 
     @Test
     void securityJwtConfigsIncidentsNoSessionRefreshedFailureTest() {
-        var incidentConfigs = IncidentsConfigs.of(
+        var incidentConfigs = new IncidentsConfigs(
                 new HashMap<>() {{
                     put(AUTHENTICATION_LOGIN, randomBoolean());
                     put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
@@ -279,15 +272,16 @@ class PropertiesAsserterAndPrinterTest {
                     put(REGISTER1_FAILURE, randomBoolean());
                 }}
         );
-        var securityJwtConfigs = new SecurityJwtConfigs();
-        securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
-        securityJwtConfigs.setCookiesConfigs(SECURITY_JWT_CONFIGS.getCookiesConfigs());
-        securityJwtConfigs.setEssenceConfigs(SECURITY_JWT_CONFIGS.getEssenceConfigs());
-        securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
-        securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
-        securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
-        securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
-        securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
+        var securityJwtConfigs = new SecurityJwtConfigs(
+                SECURITY_JWT_CONFIGS.getAuthoritiesConfigs(),
+                SECURITY_JWT_CONFIGS.getCookiesConfigs(),
+                SECURITY_JWT_CONFIGS.getEssenceConfigs(),
+                incidentConfigs,
+                SECURITY_JWT_CONFIGS.getJwtTokensConfigs(),
+                SECURITY_JWT_CONFIGS.getLoggingConfigs(),
+                SECURITY_JWT_CONFIGS.getSessionConfigs(),
+                SECURITY_JWT_CONFIGS.getUsersEmailsConfigs()
+        );
 
         // Act
         var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
@@ -300,7 +294,7 @@ class PropertiesAsserterAndPrinterTest {
 
     @Test
     void securityJwtConfigsIncidentsOnlyOneLoginFailureTest() {
-        var incidentConfigs = IncidentsConfigs.of(
+        var incidentConfigs = new IncidentsConfigs(
                 new HashMap<>() {{
                     put(AUTHENTICATION_LOGIN, randomBoolean());
                     put(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
@@ -313,15 +307,16 @@ class PropertiesAsserterAndPrinterTest {
                     put(REGISTER1_FAILURE, randomBoolean());
                 }}
         );
-        var securityJwtConfigs = new SecurityJwtConfigs();
-        securityJwtConfigs.setAuthoritiesConfigs(SECURITY_JWT_CONFIGS.getAuthoritiesConfigs());
-        securityJwtConfigs.setCookiesConfigs(SECURITY_JWT_CONFIGS.getCookiesConfigs());
-        securityJwtConfigs.setEssenceConfigs(SECURITY_JWT_CONFIGS.getEssenceConfigs());
-        securityJwtConfigs.setIncidentsConfigs(incidentConfigs);
-        securityJwtConfigs.setJwtTokensConfigs(SECURITY_JWT_CONFIGS.getJwtTokensConfigs());
-        securityJwtConfigs.setLoggingConfigs(SECURITY_JWT_CONFIGS.getLoggingConfigs());
-        securityJwtConfigs.setSessionConfigs(SECURITY_JWT_CONFIGS.getSessionConfigs());
-        securityJwtConfigs.setUsersEmailsConfigs(SECURITY_JWT_CONFIGS.getUsersEmailsConfigs());
+        var securityJwtConfigs = new SecurityJwtConfigs(
+                SECURITY_JWT_CONFIGS.getAuthoritiesConfigs(),
+                SECURITY_JWT_CONFIGS.getCookiesConfigs(),
+                SECURITY_JWT_CONFIGS.getEssenceConfigs(),
+                incidentConfigs,
+                SECURITY_JWT_CONFIGS.getJwtTokensConfigs(),
+                SECURITY_JWT_CONFIGS.getLoggingConfigs(),
+                SECURITY_JWT_CONFIGS.getSessionConfigs(),
+                SECURITY_JWT_CONFIGS.getUsersEmailsConfigs()
+        );
 
         // Act
         var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));

@@ -144,12 +144,24 @@ class BaseSecurityJwtPublisherTest {
     }
 
     @Test
-    void publishSessionAddUserRequestMetadataTest() {
+    void publishSessionUserRequestMetadataAddTest() {
         // Arrange
-        var event = entity(EventSessionAddUserRequestMetadata.class);
+        var event = entity(EventSessionUserRequestMetadataAdd.class);
 
         // Act
-        this.componentUnderTest.publishSessionAddUserRequestMetadata(event);
+        this.componentUnderTest.publishSessionUserRequestMetadataAdd(event);
+
+        // Assert
+        verify(this.applicationEventPublisher).publishEvent(event);
+    }
+
+    @Test
+    void publishSessionUserRequestMetadataRenewTest() {
+        // Arrange
+        var event = entity(EventSessionUserRequestMetadataRenew.class);
+
+        // Act
+        this.componentUnderTest.publishSessionUserRequestMetadataRenew(event);
 
         // Assert
         verify(this.applicationEventPublisher).publishEvent(event);

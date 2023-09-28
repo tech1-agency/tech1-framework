@@ -12,6 +12,8 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.ArrayList;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -92,17 +95,17 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
                 username,
-                randomPassword(),
-                randomPassword(),
+                Password.random(),
+                Password.random(),
                 randomZoneId().getId(),
                 invitationCode
         );
-        var currentDbUser = entity(JwtUser.class);
-        when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(currentDbUser);
+        var user = entity(JwtUser.class);
+        when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(user);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(requestUserRegistration1));
@@ -132,12 +135,12 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
                 username,
-                randomPassword(),
-                randomPassword(),
+                Password.random(),
+                Password.random(),
                 randomZoneId().getId(),
                 invitationCode
         );
@@ -176,12 +179,12 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1NoInvitationCodeTest() {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
                 username,
-                randomPassword(),
-                randomPassword(),
+                Password.random(),
+                Password.random(),
                 randomZoneId().getId(),
                 invitationCode
         );
@@ -217,18 +220,18 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
         // Arrange
-        var username = randomUsername();
+        var username = Username.random();
         var invitationCode = randomString();
         var requestUserRegistration1 = new RequestUserRegistration1(
                 username,
-                randomPassword(),
-                randomPassword(),
+                Password.random(),
+                Password.random(),
                 randomZoneId().getId(),
                 invitationCode
         );
         var dbInvitationCode = new InvitationCode(
                 entity(InvitationCodeId.class),
-                randomUsername(),
+                Username.random(),
                 new ArrayList<>(),
                 randomString(),
                 null

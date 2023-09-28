@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok
@@ -47,5 +48,15 @@ public class HardwareMonitoringDatapointTableRow {
         } else {
             this.thresholdReached = false;
         }
+    }
+
+    public static HardwareMonitoringDatapointTableRow random() {
+        return new HardwareMonitoringDatapointTableRow(
+                randomEnum(HardwareName.class),
+                randomLongGreaterThanZero(),
+                randomBigDecimalGreaterThanZeroByBounds(10L, 20L),
+                randomString(),
+                HardwareMonitoringThresholds.random()
+        );
     }
 }

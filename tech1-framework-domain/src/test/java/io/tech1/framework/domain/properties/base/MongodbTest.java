@@ -24,10 +24,7 @@ class MongodbTest {
     @MethodSource("noAuthenticationTest")
     void noAuthenticationTest(String host, int port, String database, String username, String password) {
         // Arrange
-        var mongodb = new Mongodb();
-        mongodb.setHost(host);
-        mongodb.setPort(port);
-        mongodb.setDatabase(database);
+        var mongodb = Mongodb.noSecurity(host, port, database);
         mongodb.setUsername(username);
         mongodb.setPassword(password);
 
@@ -41,12 +38,7 @@ class MongodbTest {
     @Test
     void authenticationPresentTest() {
         // Arrange
-        var mongodb = new Mongodb();
-        mongodb.setHost("127.0.0.1");
-        mongodb.setPort(27017);
-        mongodb.setDatabase("tech1_framework_server");
-        mongodb.setUsername("admin");
-        mongodb.setPassword("Password123!");
+        var mongodb = new Mongodb("127.0.0.1", 27017, "tech1_framework_server", "admin", "Password123!");
 
         // Act
         var actual = mongodb.connectionString();

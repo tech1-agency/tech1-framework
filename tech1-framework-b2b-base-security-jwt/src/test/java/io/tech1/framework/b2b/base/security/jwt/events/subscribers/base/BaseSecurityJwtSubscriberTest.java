@@ -8,6 +8,9 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
@@ -24,7 +27,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -170,13 +172,13 @@ class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    void onSessionAddUserRequestMetadataNotAuthenticationEndpointTest() {
+    void onSessionUserRequestMetadataAddNotAuthenticationEndpointTest() {
         // Arrange
-        var event = new EventSessionAddUserRequestMetadata(
-                randomUsername(),
-                randomEmail(),
+        var event = new EventSessionUserRequestMetadataAdd(
+                Username.random(),
+                Email.random(),
                 entity(UserSession.class),
-                randomIPAddress(),
+                IPAddress.random(),
                 mock(UserAgentHeader.class),
                 false,
                 false
@@ -184,20 +186,20 @@ class BaseSecurityJwtSubscriberTest {
         when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 
         // Act
-        this.componentUnderTest.onSessionAddUserRequestMetadata(event);
+        this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
     }
 
     @Test
-    void onSessionAddUserRequestMetadataIsAuthenticationLoginEndpointTest() {
+    void onSessionUserRequestMetadataAddIsAuthenticationLoginEndpointTest() {
         // Arrange
-        var event = new EventSessionAddUserRequestMetadata(
-                randomUsername(),
-                randomEmail(),
+        var event = new EventSessionUserRequestMetadataAdd(
+                Username.random(),
+                Email.random(),
                 entity(UserSession.class),
-                randomIPAddress(),
+                IPAddress.random(),
                 mock(UserAgentHeader.class),
                 true,
                 false
@@ -205,7 +207,7 @@ class BaseSecurityJwtSubscriberTest {
         when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 
         // Act
-        this.componentUnderTest.onSessionAddUserRequestMetadata(event);
+        this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
@@ -214,13 +216,13 @@ class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
-    void onSessionAddUserRequestMetadataIsAuthenticationRefreshTokenEndpointTest() {
+    void onSessionUserRequestMetadataAddIsAuthenticationRefreshTokenEndpointTest() {
         // Arrange
-        var event = new EventSessionAddUserRequestMetadata(
-                randomUsername(),
-                randomEmail(),
+        var event = new EventSessionUserRequestMetadataAdd(
+                Username.random(),
+                Email.random(),
                 entity(UserSession.class),
-                randomIPAddress(),
+                IPAddress.random(),
                 mock(UserAgentHeader.class),
                 false,
                 true
@@ -228,11 +230,23 @@ class BaseSecurityJwtSubscriberTest {
         when(this.baseUsersSessionsService.saveUserRequestMetadata(event)).thenReturn(event.session());
 
         // Act
-        this.componentUnderTest.onSessionAddUserRequestMetadata(event);
+        this.componentUnderTest.onSessionUserRequestMetadataAdd(event);
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
         verify(this.usersEmailsService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), event.session().metadata()));
         verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), event.session().metadata()));
+    }
+
+    @Test
+    void onSessionUserRequestMetadataRenewTest() {
+        // Arrange
+        var event = entity(EventSessionUserRequestMetadataRenew.class);
+
+        // Act
+        this.componentUnderTest.onSessionUserRequestMetadataRenew(event);
+
+        // Assert
+        verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
     }
 }

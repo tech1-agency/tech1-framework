@@ -2,20 +2,9 @@ package io.tech1.framework.domain.utilities.random;
 
 import feign.FeignException;
 import feign.Request;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
-import io.tech1.framework.domain.geo.GeoLocation;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
-import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
@@ -188,14 +177,6 @@ public class RandomUtility {
         return RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256) + "." + RND.nextInt(256);
     }
 
-    public static IPAddress randomIPAddress() {
-        return new IPAddress(randomIPv4());
-    }
-
-    public static IPAddress localhost() {
-        return new IPAddress("127.0.0.1");
-    }
-
     public static String randomServerURL() {
         var ip = randomIPv4();
         var protocol = RND.nextBoolean() ? "http" : "https";
@@ -219,14 +200,6 @@ public class RandomUtility {
         return IntStream.range(0, size)
                 .mapToObj(position -> randomString())
                 .toArray(String[]::new);
-    }
-
-    public static String randomEmailAsValue() {
-        return randomString() + "@tech1.io";
-    }
-
-    public static Email randomEmail() {
-        return Email.of(randomEmailAsValue());
     }
 
     public static <T> T randomElement(List<T> list) {
@@ -349,14 +322,6 @@ public class RandomUtility {
         return TimeZone.getTimeZone(randomZoneId());
     }
 
-    public static Username randomUsername() {
-        return Username.of(randomString());
-    }
-
-    public static Password randomPassword() {
-        return Password.of(randomString());
-    }
-
     @SuppressWarnings("deprecation")
     public static FeignException randomFeignException() {
         return new FeignException.InternalServerError(
@@ -370,88 +335,6 @@ public class RandomUtility {
                 ),
                 new byte[] {},
                 new HashMap<>()
-        );
-    }
-
-    public static GeoLocation validGeoLocation() {
-        return GeoLocation.processed(
-                localhost(),
-                "Ukraine",
-                "UA",
-                "🇺🇦",
-                "Lviv"
-        );
-    }
-
-    public static GeoLocation invalidGeoLocation() {
-        return GeoLocation.unknown(
-                localhost(),
-                "Location is unknown"
-        );
-    }
-
-    public static GeoLocation randomGeoLocation() {
-        return randomBoolean() ? validGeoLocation() : invalidGeoLocation();
-    }
-
-    public static UserAgentDetails validUserAgentDetails() {
-        return UserAgentDetails.processed(
-                "Chrome",
-                "macOS",
-                "Desktop"
-        );
-    }
-
-    public static UserAgentDetails invalidUserAgentDetails() {
-        return UserAgentDetails.unknown(
-                "User agent details are unknown"
-        );
-    }
-
-    public static UserAgentDetails randomUserAgentDetails() {
-        return randomBoolean() ? validUserAgentDetails() : invalidUserAgentDetails();
-    }
-
-    public static UserRequestMetadata validUserRequestMetadata() {
-        return UserRequestMetadata.processed(
-                validGeoLocation(),
-                validUserAgentDetails()
-        );
-    }
-
-    public static UserRequestMetadata invalidUserRequestMetadata() {
-        return UserRequestMetadata.processed(
-                invalidGeoLocation(),
-                invalidUserAgentDetails()
-        );
-    }
-
-    public static UserRequestMetadata randomUserRequestMetadata() {
-        return randomBoolean() ? validUserRequestMetadata() : invalidUserRequestMetadata();
-    }
-
-    public static HardwareMonitoringThreshold randomHardwareMonitoringThreshold() {
-        return new HardwareMonitoringThreshold(randomBigDecimalGreaterThanZeroByBounds(50L, 100L));
-    }
-
-    public static HardwareMonitoringThresholds randomHardwareMonitoringThresholds() {
-        var thresholds = Stream.of(HardwareName.values())
-                .collect(
-                        Collectors.toMap(
-                                entry -> entry,
-                                entry -> randomHardwareMonitoringThreshold().value()
-                        )
-                );
-        return new HardwareMonitoringThresholds(thresholds);
-    }
-
-    public static HardwareMonitoringDatapointTableRow randomHardwareMonitoringDatapointTableRow() {
-        return new HardwareMonitoringDatapointTableRow(
-                randomEnum(HardwareName.class),
-                randomLongGreaterThanZero(),
-                randomBigDecimalGreaterThanZeroByBounds(10L, 20L),
-                randomString(),
-                randomHardwareMonitoringThresholds()
         );
     }
 }

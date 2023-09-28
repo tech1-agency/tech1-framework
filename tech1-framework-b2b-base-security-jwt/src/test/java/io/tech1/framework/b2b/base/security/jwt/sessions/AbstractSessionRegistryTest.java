@@ -17,6 +17,8 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.geo.GeoLocation;
+import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.tuples.Tuple3;
@@ -47,8 +49,9 @@ import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.
 import static io.tech1.framework.domain.tuples.TuplePresence.absent;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -123,7 +126,7 @@ class AbstractSessionRegistryTest {
     }
 
     private Session authenticateTech1(JwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
-        var session = new Session(TECH1, accessToken, entity(JwtRefreshToken.class));
+        var session = new Session(TECH1, accessToken, JwtRefreshToken.random());
         var sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session);
         setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", sessions, 1);
@@ -133,11 +136,11 @@ class AbstractSessionRegistryTest {
     @Test
     void integrationTest() {
         // Arrange
-        var session1 = new Session(Username.of("username1"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var session2 = new Session(Username.of("username2"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var session3 = new Session(Username.of("username3"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var session4 = new Session(Username.of("username4"), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var rndSession = new Session(randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        var session1 = new Session(Username.of("username1"), JwtAccessToken.random(), JwtRefreshToken.random());
+        var session2 = new Session(Username.of("username2"), JwtAccessToken.random(), JwtRefreshToken.random());
+        var session3 = new Session(Username.of("username3"), JwtAccessToken.random(), JwtRefreshToken.random());
+        var session4 = new Session(Username.of("username4"), JwtAccessToken.random(), JwtRefreshToken.random());
+        var rndSession = new Session(Username.random(), JwtAccessToken.random(), JwtRefreshToken.random());
         var dbUserSession1 = entity(UserSession.class);
         var dbUserSession2 = entity(UserSession.class);
         var dbUserSession3 = entity(UserSession.class);
@@ -210,11 +213,11 @@ class AbstractSessionRegistryTest {
     @Test
     void registerTest() {
         // Act
-        this.componentUnderTest.register(new Session(TECH1, entity(JwtAccessToken.class), entity(JwtRefreshToken.class)));
-        this.componentUnderTest.register(new Session(TECH1, entity(JwtAccessToken.class), entity(JwtRefreshToken.class)));
+        this.componentUnderTest.register(new Session(TECH1, JwtAccessToken.random(), JwtRefreshToken.random()));
+        this.componentUnderTest.register(new Session(TECH1, JwtAccessToken.random(), JwtRefreshToken.random()));
 
-        var duplicatedAccessToken = entity(JwtAccessToken.class);
-        var duplicatedRefreshToken = entity(JwtRefreshToken.class);
+        var duplicatedAccessToken = JwtAccessToken.random();
+        var duplicatedRefreshToken = JwtRefreshToken.random();
         this.componentUnderTest.register(new Session(TECH1, duplicatedAccessToken, duplicatedRefreshToken));
         this.componentUnderTest.register(new Session(TECH1, duplicatedAccessToken, duplicatedRefreshToken));
         this.componentUnderTest.register(new Session(TECH1, duplicatedAccessToken, duplicatedRefreshToken));
@@ -228,15 +231,15 @@ class AbstractSessionRegistryTest {
     @Test
     void renewTest() {
         // Act
-        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        this.componentUnderTest.renew(TECH1, JwtRefreshToken.random(), JwtAccessToken.random(), JwtRefreshToken.random());
+        this.componentUnderTest.renew(TECH1, JwtRefreshToken.random(), JwtAccessToken.random(), JwtRefreshToken.random());
 
-        var duplicatedAccessToken = entity(JwtAccessToken.class);
-        var duplicatedRefreshToken = entity(JwtRefreshToken.class);
-        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
-        this.componentUnderTest.renew(TECH1, entity(JwtRefreshToken.class), duplicatedAccessToken, duplicatedRefreshToken);
+        var duplicatedAccessToken = JwtAccessToken.random();
+        var duplicatedRefreshToken = JwtRefreshToken.random();
+        this.componentUnderTest.renew(TECH1, JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(TECH1, JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(TECH1, JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
+        this.componentUnderTest.renew(TECH1, JwtRefreshToken.random(), duplicatedAccessToken, duplicatedRefreshToken);
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
@@ -247,7 +250,7 @@ class AbstractSessionRegistryTest {
     @Test
     void logoutDbUserSessionPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
-        var accessToken = entity(JwtAccessToken.class);
+        var accessToken = JwtAccessToken.random();
         this.authenticateTech1(accessToken);
         var dbUserSession = entity(UserSession.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(dbUserSession));
@@ -271,7 +274,7 @@ class AbstractSessionRegistryTest {
     @Test
     void logoutDbUserSessionNotPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
-        var accessToken = entity(JwtAccessToken.class);
+        var accessToken = JwtAccessToken.random();
         var session = this.authenticateTech1(accessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(absent());
 
@@ -294,9 +297,9 @@ class AbstractSessionRegistryTest {
         var username1 = Username.of("username1");
         var username2 = Username.of("username2");
         var username3 = Username.of("username3");
-        var session1 = new Session(username1, entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var session2 = new Session(username2, entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
-        var session3 = new Session(username3, entity(JwtAccessToken.class), entity(JwtRefreshToken.class));
+        var session1 = new Session(username1, JwtAccessToken.random(), JwtRefreshToken.random());
+        var session2 = new Session(username2, JwtAccessToken.random(), JwtRefreshToken.random());
+        var session3 = new Session(username3, JwtAccessToken.random(), JwtRefreshToken.random());
         Set<Session> sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session1);
         sessions.add(session2);
@@ -307,7 +310,7 @@ class AbstractSessionRegistryTest {
         var dbUserSession3 = entity(UserSession.class);
         var sessionsExpiredTable = new SessionsExpiredTable(
                 List.of(
-                        new Tuple3<>(TECH1, entity(JwtRefreshToken.class), randomUserRequestMetadata()),
+                        new Tuple3<>(TECH1, JwtRefreshToken.random(), UserRequestMetadata.random()),
                         new Tuple3<>(username3, session3.refreshToken(), dbUserSession3.metadata())
                 ),
                 Set.of(dbUserSession1.id(), dbUserSession2.id())
@@ -340,15 +343,15 @@ class AbstractSessionRegistryTest {
     void getSessionsTableTest() {
         // Arrange
         var username = entity(Username.class);
-        var cookie = entity(CookieAccessToken.class);
+        var cookie = CookieAccessToken.random();
 
         Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
-                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), randomUsername(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
+                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
 
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), validUserAgentDetails()), cookie.value()));
-        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), validUserAgentDetails()), randomString()));
-        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(validGeoLocation(), invalidUserAgentDetails()), randomString()));
-        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(invalidGeoLocation(), invalidUserAgentDetails()), randomString()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.valid()), cookie.value()));
+        var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.valid()), randomString()));
+        var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.invalid()), randomString()));
+        var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.invalid()), randomString()));
 
         // userSessions, expectedSessionSize, expectedAnyProblems
         List<Tuple3<List<ResponseUserSession2>, Integer, Boolean>> cases = new ArrayList<>();

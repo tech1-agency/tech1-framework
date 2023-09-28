@@ -6,10 +6,12 @@ import io.tech1.framework.domain.properties.base.Checkbox;
 import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
 import io.tech1.framework.domain.utilities.enums.EnumUtility;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 
@@ -29,58 +31,81 @@ import static java.util.Objects.nonNull;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private AuthoritiesConfigs authoritiesConfigs;
+    private final AuthoritiesConfigs authoritiesConfigs;
     @MandatoryProperty
-    private CookiesConfigs cookiesConfigs;
+    private final CookiesConfigs cookiesConfigs;
     @MandatoryProperty
-    private EssenceConfigs essenceConfigs;
+    private final EssenceConfigs essenceConfigs;
     @MandatoryProperty
-    private IncidentsConfigs incidentsConfigs;
+    private final IncidentsConfigs incidentsConfigs;
     @MandatoryProperty
-    private JwtTokensConfigs jwtTokensConfigs;
+    private final JwtTokensConfigs jwtTokensConfigs;
     @MandatoryProperty
-    private LoggingConfigs loggingConfigs;
+    private final LoggingConfigs loggingConfigs;
     @MandatoryProperty
-    private SessionConfigs sessionConfigs;
+    private final SessionConfigs sessionConfigs;
     @MandatoryProperty
-    private UsersEmailsConfigs usersEmailsConfigs;
+    private final UsersEmailsConfigs usersEmailsConfigs;
 
-    // NOTE: test-purposes
-    public static SecurityJwtConfigs of(
-            AuthoritiesConfigs authoritiesConfigs,
-            CookiesConfigs cookiesConfigs,
-            EssenceConfigs essenceConfigs,
-            IncidentsConfigs incidentsConfigs,
-            JwtTokensConfigs jwtTokensConfigs,
-            LoggingConfigs loggingConfigs,
-            SessionConfigs sessionConfigs,
-            UsersEmailsConfigs usersEmailsConfigs
-    ) {
-        var instance = new SecurityJwtConfigs();
-        instance.authoritiesConfigs = authoritiesConfigs;
-        instance.cookiesConfigs = cookiesConfigs;
-        instance.essenceConfigs = essenceConfigs;
-        instance.incidentsConfigs = incidentsConfigs;
-        instance.jwtTokensConfigs = jwtTokensConfigs;
-        instance.loggingConfigs = loggingConfigs;
-        instance.sessionConfigs = sessionConfigs;
-        instance.usersEmailsConfigs = usersEmailsConfigs;
-        return instance;
+    public static SecurityJwtConfigs of(LoggingConfigs loggingConfigs) {
+        return new SecurityJwtConfigs(
+                null,
+                null,
+                null,
+                null,
+                null,
+                loggingConfigs,
+                null,
+                null
+        );
     }
 
-    // NOTE: test-purposes
-    public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
-        var instance = new SecurityJwtConfigs();
-        instance.usersEmailsConfigs = UsersEmailsConfigs.of(
-                "[Tech1]",
-                Checkbox.disabled(),
-                Checkbox.disabled()
+    public static SecurityJwtConfigs of(SessionConfigs sessionConfigs) {
+        return new SecurityJwtConfigs(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                sessionConfigs,
+                null
         );
-        return instance;
+    }
+
+    public static SecurityJwtConfigs of(MvcConfigs mvcConfigs, SessionConfigs sessionConfigs) {
+        return new SecurityJwtConfigs(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                sessionConfigs,
+                null
+        );
+    }
+
+    public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
+        return new SecurityJwtConfigs(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                new UsersEmailsConfigs(
+                        "[Tech1]",
+                        Checkbox.disabled(),
+                        Checkbox.disabled()
+                )
+        );
     }
 
     @Override

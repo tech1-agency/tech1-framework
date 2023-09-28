@@ -5,7 +5,11 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 import java.time.ZoneId;
 import java.util.List;
@@ -13,33 +17,20 @@ import java.util.List;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
-public class DefaultUser {
+@EqualsAndHashCode(callSuper = true)
+public class DefaultUser extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String username;
+    private final String username;
     @MandatoryProperty
-    private String password;
+    private final String password;
     @MandatoryProperty
-    private ZoneId zoneId;
+    private final ZoneId zoneId;
     @NonMandatoryProperty
     private String email;
     @MandatoryProperty
-    private List<String> authorities;
-
-    // NOTE: test-purposes
-    public static DefaultUser of(
-            String username,
-            String password,
-            ZoneId zoneId,
-            List<String> authorities
-    ) {
-        var instance = new DefaultUser();
-        instance.username = username;
-        instance.password = password;
-        instance.zoneId = zoneId;
-        instance.authorities = authorities;
-        return instance;
-    }
+    private final List<String> authorities;
 
     public Username getUsername() {
         return Username.of(this.username);

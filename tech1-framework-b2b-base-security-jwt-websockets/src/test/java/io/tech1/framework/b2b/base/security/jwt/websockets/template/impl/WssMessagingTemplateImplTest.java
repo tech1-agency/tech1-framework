@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.template.impl;
 import io.tech1.framework.b2b.base.security.jwt.websockets.domain.events.WebsocketEvent;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingTemplate;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.impl.WssMessagingTemplateImpl;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -24,7 +25,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomUsername;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
@@ -85,7 +85,7 @@ class WssMessagingTemplateImplTest {
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        var username = randomUsername();
+        var username = Username.random();
         var destination = randomString();
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -104,7 +104,7 @@ class WssMessagingTemplateImplTest {
     @Test
     void convertAndSendToUserTest() {
         // Assert
-        var username = randomUsername();
+        var username = Username.random();
         var destination = randomString();
         var websocketEvent = mock(WebsocketEvent.class);
         var simpleDestination = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs().getSimpleDestination();

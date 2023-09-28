@@ -11,10 +11,12 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
-import io.tech1.framework.domain.utilities.time.TimestampUtility;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -30,9 +32,9 @@ import java.util.stream.Stream;
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
 
 @UtilityClass
@@ -40,12 +42,12 @@ public class BaseSecurityJwtRandomUtility {
 
     public static JwtUser randomSuperadmin() {
         return new JwtUser(
-                entity(UserId.class),
-                randomUsername(),
-                randomPassword(),
+                UserId.random(),
+                Username.random(),
+                Password.random(),
                 randomZoneId(),
                 authorities(SUPER_ADMIN),
-                randomEmail(),
+                Email.random(),
                 randomString(),
                 new HashMap<>()
         );
@@ -62,7 +64,7 @@ public class BaseSecurityJwtRandomUtility {
     public static Claims validClaims() {
         var claims = new DefaultClaims();
         claims.setSubject(TECH1.identifier());
-        var timeAmount = TimeAmount.of(1, ChronoUnit.HOURS);
+        var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.setIssuedAt(getIssuedAt());
         claims.setExpiration(expiration);
@@ -73,7 +75,7 @@ public class BaseSecurityJwtRandomUtility {
     public static Claims expiredClaims() {
         var claims = new DefaultClaims();
         claims.setSubject(TECH1.identifier());
-        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
+        var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);
         claims.setIssuedAt(issuedAt);
@@ -83,15 +85,25 @@ public class BaseSecurityJwtRandomUtility {
     }
 
     public static InvitationCode randomInvitationCode() {
-        return new InvitationCode(entity(InvitationCodeId.class), randomUsername(), authorities(SUPER_ADMIN), randomString(), randomUsername());
+        return new InvitationCode(InvitationCodeId.random(), Username.random(), authorities(SUPER_ADMIN), randomString(), Username.random());
     }
 
     public static UserSession randomPersistedSession() {
-        return UserSession.ofPersisted(entity(UserSessionId.class), randomUsername(), entity(JwtAccessToken.class), entity(JwtRefreshToken.class), randomUserRequestMetadata());
+        return UserSession.ofPersisted(
+                UserSessionId.random(),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                Username.random(),
+                JwtAccessToken.random(),
+                JwtRefreshToken.random(),
+                UserRequestMetadata.random(),
+                randomBoolean(),
+                randomBoolean()
+        );
     }
 
     public static RequestUserRegistration1 registration1() {
-        return new RequestUserRegistration1(Username.of("registration11"), randomPassword(), randomPassword(), randomZoneId().getId(), randomString());
+        return new RequestUserRegistration1(Username.of("registration11"), Password.random(), Password.random(), randomZoneId().getId(), randomString());
     }
 
     public static ResetServerStatus randomResetServerStatus() {

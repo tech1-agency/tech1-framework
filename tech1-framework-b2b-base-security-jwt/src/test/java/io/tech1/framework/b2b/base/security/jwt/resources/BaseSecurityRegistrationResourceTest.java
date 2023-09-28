@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
-import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner;
+import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner {
+class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner1 {
 
     // Services
     private final BaseRegistrationService baseRegistrationService;

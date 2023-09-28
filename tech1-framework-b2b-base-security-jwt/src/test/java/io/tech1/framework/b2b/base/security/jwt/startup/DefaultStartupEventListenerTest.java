@@ -102,21 +102,21 @@ class DefaultStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isDefaultUsersEnabled, boolean isInvitationCodesEnabled) {
         // Arrange
-        SecurityJwtConfigs securityJwtConfigs = SecurityJwtConfigs.of(
-                AuthoritiesConfigs.of(
+        SecurityJwtConfigs securityJwtConfigs = new SecurityJwtConfigs(
+                new AuthoritiesConfigs(
                         "io.tech1",
                         Set.of(
-                                Authority.of("admin"),
-                                Authority.of("user")
+                                new Authority("admin"),
+                                new Authority("user")
                         )
                 ),
                 null,
-                EssenceConfigs.of(
-                        DefaultUsers.of(
+                new EssenceConfigs(
+                        new DefaultUsers(
                                 isDefaultUsersEnabled,
                                 new ArrayList<>()
                         ),
-                        InvitationCodes.of(
+                        new InvitationCodes(
                                 isInvitationCodesEnabled
                         )
                 ),

@@ -49,17 +49,17 @@ public class EntityUtility {
 
         addConstructorRule(ZoneId.class, clazz -> randomZoneId());
         addConstructorRule(TimeZone.class, clazz -> randomTimeZone());
-        addConstructorRule(Username.class, clazz -> randomUsername());
-        addConstructorRule(Password.class, clazz -> randomPassword());
-        addConstructorRule(Email.class, clazz -> randomEmail());
+        addConstructorRule(Username.class, clazz -> Username.random());
+        addConstructorRule(Password.class, clazz -> Password.random());
+        addConstructorRule(Email.class, clazz -> Email.random());
 
-        addConstructorRule(IPAddress.class, clazz -> randomIPAddress());
-        addConstructorRule(GeoLocation.class, clazz -> randomGeoLocation());
-        addConstructorRule(UserAgentDetails.class, clazz -> randomUserAgentDetails());
-        addConstructorRule(UserRequestMetadata.class, clazz -> randomUserRequestMetadata());
+        addConstructorRule(IPAddress.class, clazz -> IPAddress.random());
+        addConstructorRule(GeoLocation.class, clazz -> GeoLocation.random());
+        addConstructorRule(UserAgentDetails.class, clazz -> UserAgentDetails.random());
+        addConstructorRule(UserRequestMetadata.class, clazz -> UserRequestMetadata.random());
 
-        addConstructorRule(HardwareMonitoringThreshold.class, clazz -> randomHardwareMonitoringThreshold());
-        addConstructorRule(HardwareMonitoringThresholds.class, clazz -> randomHardwareMonitoringThresholds());
+        addConstructorRule(HardwareMonitoringThreshold.class, clazz -> HardwareMonitoringThreshold.random());
+        addConstructorRule(HardwareMonitoringThresholds.class, clazz -> HardwareMonitoringThresholds.random());
 
         addClassRule(parameterClass -> {
                     var isNotPrimitiveOrWrapper = !parameterClass.isPrimitive() && !containsPrimitiveWrapper(parameterClass);
@@ -104,15 +104,17 @@ public class EntityUtility {
 
         addClassRule(ZoneId.class::equals, parameterClass -> randomZoneId());
         addClassRule(TimeZone.class::equals, parameterClass -> randomTimeZone());
-        addClassRule(Username.class::equals, parameterClass -> randomUsername());
+        addClassRule(Username.class::equals, parameterClass -> Username.random());
+        addClassRule(Password.class::equals, parameterClass -> Password.random());
+        addClassRule(Email.class::equals, parameterClass -> Email.random());
 
-        addClassRule(IPAddress.class::equals, parameterClass -> randomIPAddress());
-        addClassRule(GeoLocation.class::equals, parameterClass -> randomGeoLocation());
-        addClassRule(UserAgentDetails.class::equals, parameterClass -> randomUserAgentDetails());
-        addClassRule(UserRequestMetadata.class::equals, parameterClass -> randomUserRequestMetadata());
+        addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
+        addClassRule(GeoLocation.class::equals, parameterClass -> GeoLocation.random());
+        addClassRule(UserAgentDetails.class::equals, parameterClass -> UserAgentDetails.random());
+        addClassRule(UserRequestMetadata.class::equals, parameterClass -> UserRequestMetadata.random());
 
-        addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> randomHardwareMonitoringThreshold());
-        addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> randomHardwareMonitoringThresholds());
+        addClassRule(HardwareMonitoringThreshold.class::equals, parameterClass -> HardwareMonitoringThreshold.random());
+        addClassRule(HardwareMonitoringThresholds.class::equals, parameterClass -> HardwareMonitoringThresholds.random());
     }
 
     public static void addConstructorRule(Class<?> constructorClass, Function<Class<?>, Object> constructionFnc) {

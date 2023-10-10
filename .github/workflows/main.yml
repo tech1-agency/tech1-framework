@@ -1,4 +1,4 @@
-name: build
+name: main
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
   POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
 
 jobs:
-  build:
+  main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -74,7 +74,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_GMAIL_USERNAME }}
           password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
-          subject: '${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.job }} # ${{ github.run_number }}'
+          subject: '${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}'
           to: ${{ secrets.EMAILS_ADMINS }}
           from: Tech1 Ops
           html_body: |

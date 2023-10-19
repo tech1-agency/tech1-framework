@@ -11,6 +11,10 @@ env:
   MONGODB_REPO: tech1-io/tech1-framework-b2b-mongodb-server
   POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -26,8 +30,7 @@ jobs:
           cache: 'maven'
 
       - name: Install GPG secret key
-        run: |
-          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
+        run: cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
 
       - name: Maven [dev]
         if: github.ref == 'refs/heads/dev'
@@ -46,7 +49,7 @@ jobs:
             -Dmaven.test.skip -DskipTests -s release/m2-settings.xml deploy -Prelease
 
       - name: Sonar
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/disabled'
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

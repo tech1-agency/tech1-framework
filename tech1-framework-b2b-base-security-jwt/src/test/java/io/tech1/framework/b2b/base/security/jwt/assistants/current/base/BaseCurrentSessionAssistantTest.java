@@ -34,8 +34,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
@@ -163,7 +163,7 @@ class BaseCurrentSessionAssistantTest {
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
-                new ArrayList<>(),
+                new HashSet<>(),
                 Email.random(),
                 randomString(),
                 new HashMap<>()

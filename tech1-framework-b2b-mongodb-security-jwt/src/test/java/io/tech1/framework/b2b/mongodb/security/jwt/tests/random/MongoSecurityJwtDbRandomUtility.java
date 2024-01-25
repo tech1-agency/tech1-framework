@@ -9,13 +9,11 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.DomainConstants;
 import lombok.experimental.UtilityClass;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.springframework.util.StringUtils.capitalize;
@@ -27,7 +25,7 @@ public class MongoSecurityJwtDbRandomUtility {
     // InvitationCodes
     // =================================================================================================================
     public static MongoDbInvitationCode invitationCode(String owner) {
-        return new MongoDbInvitationCode(Username.of(owner), authorities("admin"));
+        return new MongoDbInvitationCode(Username.of(owner), getSimpleGrantedAuthorities("admin"));
     }
 
     public static MongoDbInvitationCode invitationCode(String owner, String value) {
@@ -58,15 +56,15 @@ public class MongoSecurityJwtDbRandomUtility {
     }
 
     public static MongoDbUser randomUserBy(String username, String authority) {
-        return randomUserBy(username, List.of(authority));
+        return randomUserBy(username, Set.of(authority));
     }
 
-    public static MongoDbUser randomUserBy(String username, List<String> authorities) {
+    public static MongoDbUser randomUserBy(String username, Set<String> authorities) {
         var user = new MongoDbUser(
                 Username.of(username),
                 Password.random(),
                 randomZoneId().getId(),
-                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                getSimpleGrantedAuthorities(authorities)
         );
         user.setEmail(Email.of(username + "@" + DomainConstants.TECH1));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));

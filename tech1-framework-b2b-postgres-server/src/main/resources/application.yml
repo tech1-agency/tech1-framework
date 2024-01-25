@@ -27,7 +27,7 @@ spring:
   liquibase:
     change-log: classpath:postgres/changelog.yml
 
-# Tech1 Platform
+# Tech1 Framework
 tech1:
   serverConfigs:
     name: tech1-framework-b2b-postgres-server

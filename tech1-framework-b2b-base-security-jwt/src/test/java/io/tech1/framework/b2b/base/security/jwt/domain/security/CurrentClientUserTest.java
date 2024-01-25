@@ -7,16 +7,17 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
@@ -58,7 +59,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         return "security";
     }
 
-    @Test
+    @RepeatedTest(FIVE_TIMES)
     void serializeTest() {
         // Arrange
         var currentClientUser = new CurrentClientUser(
@@ -66,7 +67,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Email.of("tech1@" + DomainConstants.TECH1),
                 "Tech1",
                 TestsZoneIdsConstants.EET_ZONE_ID,
-                List.of(
+                Set.of(
                         new SimpleGrantedAuthority("user"),
                         new SimpleGrantedAuthority("admin")
                 ),
@@ -92,7 +93,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Email.random(),
                 randomString(),
                 randomZoneId(),
-                List.of(),
+                Set.of(),
                 Map.of(
                         "key1", new Object(),
                         "key2", "value2",
@@ -119,7 +120,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Email.random(),
                 randomString(),
                 randomZoneId(),
-                List.of(
+                Set.of(
                         new SimpleGrantedAuthority("user1"),
                         new SimpleGrantedAuthority("user2"),
                         new SimpleGrantedAuthority("admin")
@@ -143,7 +144,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Email.random(),
                 randomString(),
                 randomZoneId(),
-                List.of(
+                Set.of(
                         new SimpleGrantedAuthority("user1"),
                         new SimpleGrantedAuthority("user2"),
                         new SimpleGrantedAuthority("superadmin")

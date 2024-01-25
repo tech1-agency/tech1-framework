@@ -11,7 +11,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJ
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJwtRefreshTokenConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUserRequestMetadataConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
-import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgreDbAbstractPersistable1;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgresDbAbstractPersistable1;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.*;
@@ -32,7 +32,7 @@ import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTabl
 // JPA
 @Entity
 @Table(name = USERS_SESSIONS)
-public class PostgresDbUserSession extends PostgreDbAbstractPersistable1 {
+public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false)
@@ -50,10 +50,10 @@ public class PostgresDbUserSession extends PostgreDbAbstractPersistable1 {
     @Column(length = 65535, nullable = false)
     private UserRequestMetadata metadata;
 
-    @Column(name = "metadata_renew_cron",nullable = false)
+    @Column(name = "metadata_renew_cron", nullable = false)
     private boolean metadataRenewCron;
 
-    @Column(name = "metadata_renew_manually",nullable = false)
+    @Column(name = "metadata_renew_manually", nullable = false)
     private boolean metadataRenewManually;
 
     public PostgresDbUserSession(UserSession session) {

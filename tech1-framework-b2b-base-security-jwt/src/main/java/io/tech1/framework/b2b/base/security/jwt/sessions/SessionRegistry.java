@@ -22,7 +22,7 @@ public interface SessionRegistry {
     @Async
     void logout(Username username, JwtAccessToken accessToken);
 
-    // WARNING: think about migrating to separate service/registry
+    // think about migrating to separate service/registry
     void cleanByExpiredRefreshTokens(Set<Username> usernames);
     ResponseUserSessionsTable getSessionsTable(Username username, CookieAccessToken cookie);
 }

@@ -51,4 +51,13 @@ public class HeapMemory {
                 randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE
         );
     }
+
+    public static HeapMemory testsHardcoded() {
+        return new HeapMemory(
+                1073741824L,
+                573741824L,
+                1073741824L,
+                1073741824L
+        );
+    }
 }

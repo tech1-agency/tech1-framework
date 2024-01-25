@@ -19,7 +19,11 @@ public record Version(@NotNull String value) {
     }
 
     public static Version unknown() {
-        return new Version(UNKNOWN);
+        return of(UNKNOWN);
+    }
+
+    public static Version testsHardcoded() {
+        return of("v1.61803398875");
     }
 
     @JsonValue

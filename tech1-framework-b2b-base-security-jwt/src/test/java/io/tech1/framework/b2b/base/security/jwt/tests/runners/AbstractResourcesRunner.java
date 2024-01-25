@@ -9,8 +9,8 @@ import io.tech1.framework.domain.base.Username;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
@@ -38,7 +38,7 @@ public abstract class AbstractResourcesRunner {
                 Email.random(),
                 randomString(),
                 randomZoneId(),
-                new ArrayList<>(),
+                new HashSet<>(),
                 new HashMap<>()
         );
     }

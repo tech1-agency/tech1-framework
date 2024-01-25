@@ -10,13 +10,13 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
@@ -62,7 +62,7 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
         var invitationCode = new MongoDbInvitationCode(
                 owner,
-                requestNewInvitationCodeParams.authorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                getSimpleGrantedAuthorities(requestNewInvitationCodeParams.authorities())
         );
         var entity = this.save(invitationCode);
         return entity.invitationCodeId();

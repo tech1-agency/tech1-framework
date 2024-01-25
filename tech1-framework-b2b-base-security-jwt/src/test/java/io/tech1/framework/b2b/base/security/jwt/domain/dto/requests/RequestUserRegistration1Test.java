@@ -2,17 +2,17 @@ package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserRegistration1Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserRegistration1 REQUEST = new RequestUserRegistration1(
-            TECH1,
+            Username.testsHardcoded(),
             Password.of("password123"),
             Password.of("password123"),
             TestsZoneIdsConstants.EET_ZONE_ID.getId(),

@@ -2,9 +2,9 @@ package io.tech1.framework.hardware.monitoring.resources;
 
 import io.tech1.framework.domain.base.Version;
 import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.domain.hardware.memories.CpuMemory;
 import io.tech1.framework.domain.hardware.memories.SystemMemories;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringMetadata;
-import io.tech1.framework.domain.tests.constants.TestsHardwareConstants;
 import io.tech1.framework.hardware.monitoring.publishers.HardwareMonitoringPublisher;
 import io.tech1.framework.hardware.tests.runners.ApplicationResourceRunner;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,6 @@ import org.springframework.http.MediaType;
 
 import java.math.BigDecimal;
 
-import static io.tech1.framework.domain.tests.constants.TestsHardwareConstants.CPU_MEMORY;
-import static io.tech1.framework.domain.tests.constants.TestsHardwareConstants.GLOBAL_MEMORY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -51,7 +49,7 @@ class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
         // Arrange
         var hardwareMonitoringMetadata = new HardwareMonitoringMetadata(
                 Version.unknown(),
-                new SystemMemories(GLOBAL_MEMORY, TestsHardwareConstants.CPU_MEMORY)
+                SystemMemories.testsHardcoded()
         );
 
         // Act
@@ -73,6 +71,6 @@ class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
         assertThat(event.last().getGlobal().b().percentage()).isEqualTo(new BigDecimal("60.5"));
         assertThat(event.last().getGlobal().c().value()).isEqualTo(new BigDecimal("1.00"));
         assertThat(event.last().getGlobal().c().percentage()).isEqualTo(new BigDecimal("64.2"));
-        assertThat(event.last().getCpu()).isEqualTo(CPU_MEMORY.getValue());
+        assertThat(event.last().getCpu()).isEqualTo(CpuMemory.testsHardcoded().getValue());
     }
 }

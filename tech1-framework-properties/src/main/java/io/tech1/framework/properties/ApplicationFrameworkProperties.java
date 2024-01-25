@@ -21,7 +21,6 @@ public class ApplicationFrameworkProperties implements PriorityOrdered {
     private EmailConfigs emailConfigs;
     private IncidentConfigs incidentConfigs;
     private HardwareMonitoringConfigs hardwareMonitoringConfigs;
-    // TODO [YL] delete legacy configs
     private HardwareServerConfigs hardwareServerConfigs;
     // b2b-base
     private SecurityJwtConfigs securityJwtConfigs;

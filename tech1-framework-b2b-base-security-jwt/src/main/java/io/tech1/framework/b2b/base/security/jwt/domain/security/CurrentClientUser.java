@@ -8,8 +8,8 @@ import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -21,7 +21,7 @@ public class CurrentClientUser {
     private final Email email;
     private final String name;
     private final ZoneId zoneId;
-    private final List<String> authorities;
+    private final Set<String> authorities;
     private Map<String, Object> attributes;
 
     public CurrentClientUser(
@@ -29,14 +29,14 @@ public class CurrentClientUser {
             Email email,
             String name,
             ZoneId zoneId,
-            List<SimpleGrantedAuthority> authorities,
+            Set<SimpleGrantedAuthority> authorities,
             Map<String, Object> attributes
     ) {
         this.username = username;
         this.email = email;
         this.name = name;
         this.zoneId = zoneId;
-        this.authorities = authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList());
+        this.authorities = authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toSet());
         this.attributes = attributes;
     }
 

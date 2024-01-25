@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
@@ -31,12 +32,12 @@ public class MongoDbInvitationCode {
     private String id;
 
     private Username owner;
-    private List<SimpleGrantedAuthority> authorities;
+    private Set<SimpleGrantedAuthority> authorities;
     private String value;
 
     private Username invited;
 
-    public MongoDbInvitationCode(Username owner, List<SimpleGrantedAuthority> authorities) {
+    public MongoDbInvitationCode(Username owner, Set<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
         this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);

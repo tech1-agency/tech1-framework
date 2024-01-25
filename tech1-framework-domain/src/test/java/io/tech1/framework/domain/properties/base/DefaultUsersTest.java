@@ -25,8 +25,8 @@ class DefaultUsersTest {
                 ),
                 Arguments.of(
                         List.of(
-                                new DefaultUser("user1", "pass1", systemDefault(), null, List.of("user")),
-                                new DefaultUser("user2", "pass2", systemDefault(), null, List.of("admin", "user"))
+                                new DefaultUser("user1", "pass1", systemDefault(), null, Set.of("user")),
+                                new DefaultUser("user2", "pass2", systemDefault(), null, Set.of("admin", "user"))
                         ),
                         Set.of("user", "admin")
                 )

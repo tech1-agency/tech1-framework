@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record JwtRefreshToken(@NotNull String value) {
@@ -15,6 +16,14 @@ public record JwtRefreshToken(@NotNull String value) {
 
     public static JwtRefreshToken random() {
         return new JwtRefreshToken(randomString());
+    }
+
+    public static JwtRefreshToken unknown() {
+        return of(UNKNOWN);
+    }
+
+    public static JwtRefreshToken testsHardcoded() {
+        return of("B7C50972C873270CD7B2");
     }
 
     @JsonValue

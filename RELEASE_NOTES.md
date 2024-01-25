@@ -1,7 +1,14 @@
 # Release Notes
 
-### v1.17
-- TBD
+### v2.0
+- Migration M2 repo → GitHub Packages. M2 repo is no longer supported. Last version: 1.16 and 1.17-SNAPSHOT
+- Add methods to domain-based classes: testHardcoded(), unknown()
+- Add/Update constants: TestsJunitConstants
+- Add utilities: SpringAuthoritiesUtility, TimestampUtility (methods: getStartOfMonthTimestamp)
+- Add postgres converters: Version
+- Add postgres persistable abstractions
+- Add tuples: TupleMonetaryUnit
+- Change PostgresDbUser: List<SimpleGrantedAuthority> → Set<SimpleGrantedAuthority>
 
 ### v1.16
 - Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages

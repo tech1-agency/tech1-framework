@@ -90,5 +90,18 @@ public record JwtUser(
                 )
         );
     }
+
+    public static JwtUser testsHardcoded() {
+        return new JwtUser(
+                UserId.testsHardcoded(),
+                Username.testsHardcoded(),
+                Password.testsHardcoded(),
+                TestsZoneIdsConstants.EET_ZONE_ID,
+                List.of(),
+                Email.testsHardcoded(),
+                "",
+                Map.of()
+        );
+    }
 }
 

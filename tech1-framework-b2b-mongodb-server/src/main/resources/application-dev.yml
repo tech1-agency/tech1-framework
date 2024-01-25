@@ -2,7 +2,7 @@
 logging:
   config: classpath:logback-console.xml
 
-# Tech1 Platform
+# Tech1 Framework
 tech1:
   serverConfigs:
     webclientURL: http://localhost:3000

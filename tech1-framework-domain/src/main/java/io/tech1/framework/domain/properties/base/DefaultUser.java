@@ -29,7 +29,6 @@ public class DefaultUser extends AbstractPropertiesConfigs {
     private final ZoneId zoneId;
     @NonMandatoryProperty
     private String email;
-    // TODO: YYL double check
     @MandatoryProperty
     private final Set<String> authorities;
 

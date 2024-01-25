@@ -38,6 +38,21 @@ jobs:
             -Ddeployment_github_username=${{ github.actor }} -Ddeployment_github_token=${{ secrets.GITHUB_TOKEN }} \
             -s release-github/m2-settings.xml deploy -Prelease-github
 
+      - name: Docker login
+        run: docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker [mongodb]
+        run: |
+          cd tech1-framework-b2b-mongodb-server
+          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}} .
+          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}}
+
+      - name: Docker [postgres]
+        run: |
+          cd tech1-framework-b2b-postgres-server
+          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}} .
+          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}}
+
       - name: Tech1 mails@v2 outputs
         if: always()
         id: tech1_mails_v2

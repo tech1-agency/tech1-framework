@@ -37,6 +37,13 @@ class TimestampUtilityTest {
         );
     }
 
+    private static Stream<Arguments> getStartOfMonthTimestampArgs() {
+        return Stream.of(
+                Arguments.of(1705474657000L, 1704060000000L),
+                Arguments.of(1704059999000L, 1701381600000L)
+        );
+    }
+
     private static Stream<Arguments> isBetweenTest() {
         return Stream.of(
                 Arguments.of(_5_MINUTES_AGO, _1_HOUR_FUTURE, true),
@@ -109,6 +116,16 @@ class TimestampUtilityTest {
     void toUnixTimeTest(long timestamp, long expected) {
         // Act
         var actual = toUnixTime(timestamp);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @MethodSource("getStartOfMonthTimestampArgs")
+    @ParameterizedTest
+    void getStartOfMonthTimestampTest(long timestamp, long expected) {
+        // Act
+        var actual = getStartOfMonthTimestamp(timestamp, EET_ZONE_ID);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

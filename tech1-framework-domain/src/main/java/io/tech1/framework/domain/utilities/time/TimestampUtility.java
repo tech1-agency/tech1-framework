@@ -4,8 +4,10 @@ import io.tech1.framework.domain.time.TimeAmount;
 import io.tech1.framework.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
@@ -18,6 +20,13 @@ public class TimestampUtility {
 
     public static long toUnixTime(long timestamp) {
         return timestamp / 1000;
+    }
+
+    public static long getStartOfMonthTimestamp(long timestamp, ZoneId zoneId) {
+        return getTimestamp(
+                LocalDateUtility.convertDate(Date.from(Instant.ofEpochMilli(timestamp))).withDayOfMonth(1).atStartOfDay(),
+                zoneId
+        );
     }
 
     public static long getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC() {

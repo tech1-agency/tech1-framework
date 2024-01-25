@@ -7,8 +7,50 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  MONGODB_REPO: tech1-io/tech1-framework-b2b-mongodb-server
+  POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  trigger:
+  main:
+    runs-on: ubuntu-latest
+    outputs:
+      job_status: ${{ steps.tech1_mails_v2.outputs.job_status }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Java17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: GitHub Packages [compile]
+        run: |
+          mvn clean compile
+
+      - name: GitHub Packages
+        if: github.ref == 'refs/heads/disabled'
+        run: |
+          mvn clean install \
+            -Ddeployment_github_username=${{ github.actor }} -Ddeployment_github_token=${{ secrets.GITHUB_TOKEN }} \
+            -s github/m2-settings.xml deploy -Pgithub
+
+      - name: Tech1 mails@v2 outputs
+        if: always()
+        id: tech1_mails_v2
+        run: echo "job_status=${{ job.status }}" >> $GITHUB_OUTPUT
+
+  mails:
+    if: always()
+    needs: [main]
     runs-on: ubuntu-latest
     steps:
       - name: Mails
@@ -19,7 +61,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_GMAIL_USERNAME }}
           password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
-          subject: '${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}'
+          subject: '${{ needs.main.outputs.job_status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}'
           to: ${{ secrets.EMAILS_ADMINS }}
           from: Tech1 Ops
           html_body: |

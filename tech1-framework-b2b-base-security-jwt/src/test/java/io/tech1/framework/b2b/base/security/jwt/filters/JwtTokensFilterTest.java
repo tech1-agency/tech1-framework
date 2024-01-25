@@ -7,6 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.cookie.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -29,8 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
@@ -43,7 +42,7 @@ class JwtTokensFilterTest {
         return Stream.of(
                 Arguments.of(new CookieAccessTokenInvalidException()),
                 Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of(new CookieAccessTokenDbNotFoundException(UNKNOWN))
+                Arguments.of(new CookieAccessTokenDbNotFoundException(Username.testsHardcoded()))
         );
     }
 
@@ -129,7 +128,7 @@ class JwtTokensFilterTest {
         var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(new CookieAccessTokenExpiredException(TECH1));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(new CookieAccessTokenExpiredException(Username.testsHardcoded()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);

@@ -2,6 +2,7 @@
 
 ### v2.0
 - Migration M2 repo → GitHub Packages. M2 repo is no longer supported. Last version: 1.16 and 1.17-SNAPSHOT
+- Add methods to domain-based classes: testHardcoded(), unknown()
 - Add/Update constants: TestsJunitConstants
 - Add utilities: SpringAuthoritiesUtility
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record Username(@NotNull String identifier) {
@@ -15,6 +16,14 @@ public record Username(@NotNull String identifier) {
 
     public static Username random() {
         return of(randomString());
+    }
+
+    public static Username unknown() {
+        return of(UNKNOWN);
+    }
+
+    public static Username testsHardcoded() {
+        return of("tech1");
     }
 
     @JsonValue

@@ -17,6 +17,10 @@ public record Password(@NotNull String value) {
         return of(randomString());
     }
 
+    public static Password testsHardcoded() {
+        return of("PasswordTH/Tech1");
+    }
+
     @JsonValue
     @Override
     public String toString() {

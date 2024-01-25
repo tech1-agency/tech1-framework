@@ -33,7 +33,6 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.authorities;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_TIME_ZONE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
@@ -178,14 +177,14 @@ class SecurityJwtTokenUtilsImplTest {
     @MethodSource("createJwtTokenTest")
     void createJwtTokenTest(TimeAmount timeAmount) {
         // Arrange
-        var creationParams = new JwtTokenCreationParams(TECH1, authorities("user"), randomZoneId());
+        var creationParams = new JwtTokenCreationParams(Username.testsHardcoded(), authorities("user"), randomZoneId());
 
         // Act
         var jwtToken = this.componentUnderTest.createJwtToken(creationParams, timeAmount);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.username()).isEqualTo(Username.testsHardcoded());
         var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),

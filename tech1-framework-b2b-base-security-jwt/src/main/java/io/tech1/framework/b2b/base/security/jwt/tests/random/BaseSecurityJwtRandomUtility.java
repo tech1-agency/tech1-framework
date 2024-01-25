@@ -31,7 +31,6 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -63,7 +62,7 @@ public class BaseSecurityJwtRandomUtility {
 
     public static Claims validClaims() {
         var claims = new DefaultClaims();
-        claims.setSubject(TECH1.identifier());
+        claims.setSubject(Username.testsHardcoded().identifier());
         var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.setIssuedAt(getIssuedAt());
@@ -74,7 +73,7 @@ public class BaseSecurityJwtRandomUtility {
 
     public static Claims expiredClaims() {
         var claims = new DefaultClaims();
-        claims.setSubject(TECH1.identifier());
+        claims.setSubject(Username.testsHardcoded().identifier());
         var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);

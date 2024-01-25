@@ -27,7 +27,6 @@ import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.Post
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserSessionConverter.toMetadataRenewCron;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUserSessionsData2;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,7 +75,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt2")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt777")).present()).isFalse();
         assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new CookieAccessToken("awt2"))).isEmpty();
-        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(TECH1, new CookieAccessToken("awt2"));
+        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.testsHardcoded(), new CookieAccessToken("awt2"));
         assertThat(usersSessions).hasSize(4);
         assertThat(usersSessions.get(0).current()).isTrue();
         assertThat(usersSessions.get(0).activity()).isEqualTo("Current session");
@@ -98,8 +97,8 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         assertThat(sessionsTable.inactiveSessions().get(1).who().identifier()).isEqualTo("tech1");
         assertThat(sessionsTable.inactiveSessions().get(2).who().identifier()).isEqualTo("tech1");
         assertThat(sessionsTable.inactiveSessions().get(3).who().identifier()).isEqualTo("user1");
-        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(TECH1, Username.of("sa")))).hasSize(5);
-        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(TECH1, Username.of("user1")))).hasSize(6);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.testsHardcoded(), Username.of("sa")))).hasSize(5);
+        assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.testsHardcoded(), Username.of("user1")))).hasSize(6);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user1"), Username.of("sa")))).hasSize(3);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user777"), Username.of("sa777")))).isEmpty();
     }
@@ -173,7 +172,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         assertThat(this.usersSessionsRepository.count()).isEqualTo(4);
 
         // Act-Assert-1
-        this.usersSessionsRepository.deleteByUsernames(Set.of(TECH1, Username.of("sa")));
+        this.usersSessionsRepository.deleteByUsernames(Set.of(Username.testsHardcoded(), Username.of("sa")));
         assertThat(this.usersSessionsRepository.count()).isEqualTo(1);
         assertThat(this.usersSessionsRepository.findAll().get(0).getUsername().identifier()).isEqualTo("user1");
     }
@@ -185,12 +184,12 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
 
         // Act
         var count1 = this.usersSessionsRepository.count();
-        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(TECH1, new CookieAccessToken("token2"));
+        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.testsHardcoded(), new CookieAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
         assertThat(count1).isEqualTo(4);
         assertThat(count2).isEqualTo(2);
-        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(TECH1.identifier(), "admin"));
+        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(Username.testsHardcoded().identifier(), "admin"));
         assertThat(toAccessTokensAsStrings2(sessions)).isEqualTo(List.of("token2", "token4"));
     }
 
@@ -208,7 +207,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
         assertThat(count1).isEqualTo(4);
         assertThat(count2).isEqualTo(1);
         var session = sessions.get(0);
-        assertThat(session.getUsername()).isEqualTo(TECH1);
+        assertThat(session.getUsername()).isEqualTo(Username.testsHardcoded());
         assertThat(session.getAccessToken().value()).isEqualTo("token2");
     }
 

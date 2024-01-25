@@ -30,7 +30,7 @@ public class ReflectionProperty {
         this.propertyName = propertyName;
         this.propertyValue = propertyValue;
 
-        // WARNING: supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
+        // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
         var isArray = nonNull(this.propertyValue) && this.propertyValue.getClass().isArray();
         boolean isArrayOfStrings;
         if (isArray) {

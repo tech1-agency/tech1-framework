@@ -44,7 +44,7 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(this.objectMapper.writeValueAsString(ExceptionEntity.of(exception)));
 
-        // WARNING: in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
+        // in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
         if (exception instanceof BadCredentialsException && this.httpRequestUtils.isCachedEndpoint(request)) {
             var cachedPayload = this.httpRequestUtils.getCachedPayload(request);
             var requestUserLogin = this.objectMapper.readValue(cachedPayload, RequestUserLogin.class);

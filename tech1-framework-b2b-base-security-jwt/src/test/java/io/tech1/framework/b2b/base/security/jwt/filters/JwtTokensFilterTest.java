@@ -219,7 +219,7 @@ class JwtTokensFilterTest {
         verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(

@@ -104,7 +104,7 @@ class AbstractSessionRegistryTest {
 
     @BeforeEach
     void beforeEach() throws Exception {
-        // WARNING: clean session to execute a.k.a. integration test -> method "integrationFlow"
+        // Clean sessions to execute a.k.a. integration test -> method "integrationFlow"
         setPrivateFieldOfSuperClass(this.componentUnderTest, "sessions", ConcurrentHashMap.newKeySet(), 1);
         reset(
                 this.securityJwtIncidentPublisher,

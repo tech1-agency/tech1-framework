@@ -61,4 +61,15 @@ public class GlobalMemory {
                 randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE
         );
     }
+
+    public static GlobalMemory testsHardcoded() {
+        return new GlobalMemory(
+                1073741824L,
+                1973741824L,
+                1073741824L,
+                1773741824L,
+                1073741824L,
+                1673741824L
+        );
+    }
 }

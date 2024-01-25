@@ -22,6 +22,4 @@ public record Username(@NotNull String identifier) {
     public String toString() {
         return this.identifier;
     }
-
-    NotCompile
 }

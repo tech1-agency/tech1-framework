@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 import java.time.ZoneId;
-import java.util.List;
+import java.util.Set;
 
 import static java.util.Objects.nonNull;
 
@@ -29,8 +29,9 @@ public class DefaultUser extends AbstractPropertiesConfigs {
     private final ZoneId zoneId;
     @NonMandatoryProperty
     private String email;
+    // TODO: YYL double check
     @MandatoryProperty
-    private final List<String> authorities;
+    private final Set<String> authorities;
 
     public Username getUsername() {
         return Username.of(this.username);

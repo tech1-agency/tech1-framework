@@ -29,7 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
@@ -232,7 +232,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var dbInvitationCode = new InvitationCode(
                 entity(InvitationCodeId.class),
                 Username.random(),
-                new ArrayList<>(),
+                new HashSet<>(),
                 randomString(),
                 null
         );

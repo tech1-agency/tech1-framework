@@ -14,8 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import java.time.ZoneId;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
 import static java.util.Objects.nonNull;
@@ -44,9 +44,9 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(name = "zone_id", nullable = false)
     private ZoneId zoneId;
 
-    @Convert(converter = PostgresSimpleGrantedAuthoritiesConverter.class)
+    @Convert(converter = PostgresSetOfSimpleGrantedAuthoritiesConverter.class)
     @Column(length = 1024, nullable = false)
-    private List<SimpleGrantedAuthority> authorities;
+    private Set<SimpleGrantedAuthority> authorities;
 
     @Convert(converter = PostgresEmailConverter.class)
     @Column
@@ -59,7 +59,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(length = 65535)
     private Map<String, Object> attributes;
 
-    public PostgresDbUser(Username username, Password password, ZoneId zoneId, List<SimpleGrantedAuthority> authorities) {
+    public PostgresDbUser(Username username, Password password, ZoneId zoneId, Set<SimpleGrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.zoneId = zoneId;

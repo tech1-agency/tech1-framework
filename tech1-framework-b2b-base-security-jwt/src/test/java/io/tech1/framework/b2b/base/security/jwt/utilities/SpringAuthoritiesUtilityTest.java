@@ -4,6 +4,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
+import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpringAuthoritiesUtilityTest {
 
     @RepeatedTest(TWICE)
-    void getSimpleGrantedAuthoritiesTest() {
+    void getSimpleGrantedAuthoritiesAsListTest() {
         // Act
         var actual = getSimpleGrantedAuthorities(
                 List.of(
@@ -28,4 +29,19 @@ class SpringAuthoritiesUtilityTest {
         actual.forEach(authority -> assertThat(authority).isInstanceOf(SimpleGrantedAuthority.class));
     }
 
+    @RepeatedTest(TWICE)
+    void getSimpleGrantedAuthoritiesAsSetTest() {
+        // Act
+        var actual = getSimpleGrantedAuthorities(
+                Set.of(
+                        SUPER_ADMIN,
+                        INVITATION_CODE_WRITE,
+                        INVITATION_CODE_READ
+                )
+        );
+
+        // Assert
+        assertThat(actual).hasSize(3);
+        actual.forEach(authority -> assertThat(authority).isInstanceOf(SimpleGrantedAuthority.class));
+    }
 }

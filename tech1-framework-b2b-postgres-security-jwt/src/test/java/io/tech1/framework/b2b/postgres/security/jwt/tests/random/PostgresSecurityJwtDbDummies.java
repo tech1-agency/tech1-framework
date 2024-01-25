@@ -7,6 +7,7 @@ import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
+import java.util.Set;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbRandomUtility.*;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
@@ -64,9 +65,9 @@ public class PostgresSecurityJwtDbDummies {
                 superadmin("sa1"),
                 superadmin("sa2"),
                 admin("admin"),
-                randomUserBy("user1", List.of("user", INVITATION_CODE_WRITE)),
-                randomUserBy("user2", List.of("user", INVITATION_CODE_READ)),
-                randomUserBy("sa3", List.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))
+                randomUserBy("user1", Set.of("user", INVITATION_CODE_WRITE)),
+                randomUserBy("user2", Set.of("user", INVITATION_CODE_READ)),
+                randomUserBy("sa3", Set.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))
         );
     }
 

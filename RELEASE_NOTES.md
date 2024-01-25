@@ -8,6 +8,7 @@
 - Add postgres converters: Version
 - Add postgres persistable abstractions
 - Add tuples: TupleMonetaryUnit
+- Change PostgresDbUser: List<SimpleGrantedAuthority> → Set<SimpleGrantedAuthority>
 
 ### v1.16
 - Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages

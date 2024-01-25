@@ -14,6 +14,7 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
@@ -23,7 +24,7 @@ public record JwtUser(
         Username username,
         Password password,
         ZoneId zoneId,
-        List<SimpleGrantedAuthority> authorities,
+        Set<SimpleGrantedAuthority> authorities,
         Email email,
         String name,
         Map<String, Object> attributes
@@ -79,7 +80,7 @@ public record JwtUser(
                 Username.random(),
                 Password.random(),
                 randomZoneId(),
-                List.of(
+                Set.of(
                         new SimpleGrantedAuthority(randomElement(List.of(SUPER_ADMIN, INVITATION_CODE_READ, INVITATION_CODE_WRITE)))
                 ),
                 Email.random(),
@@ -97,7 +98,7 @@ public record JwtUser(
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
                 TestsZoneIdsConstants.EET_ZONE_ID,
-                List.of(),
+                Set.of(),
                 Email.testsHardcoded(),
                 "",
                 Map.of()

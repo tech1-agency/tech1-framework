@@ -6,10 +6,8 @@ import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.stream.Collectors;
-
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
@@ -46,15 +44,12 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 essenceConfigs.getInvitationCodes().isEnabled(),
                 invalidAttribute("essenceConfigs.invitationCodes.enabled == true")
         );
-        var authorities = securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities();
-        var simpleGrantedAuthorities = authorities.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
             if (this.invitationCodesRepository.countByOwner(username) == 0L) {
                 LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No invitation codes in database. Username: `{}`", username);
-                this.saveInvitationCodes(defaultUser, simpleGrantedAuthorities);
+                this.saveInvitationCodes(defaultUser, authorities);
             } else {
                 LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Invitation codes are already saved in database. Username: `{}`", username);
             }

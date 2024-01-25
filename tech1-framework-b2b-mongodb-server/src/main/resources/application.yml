@@ -16,7 +16,7 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
-# Tech1 Platform
+# Tech1 Framework
 tech1:
   serverConfigs:
     name: tech1-framework-b2b-mongodb-server

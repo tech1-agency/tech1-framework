@@ -53,7 +53,6 @@ import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurity
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomPersistedSession;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
@@ -388,7 +387,7 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void getExpiredSessionsTest() {
         // Arrange
-        var usernames = new HashSet<>(Set.of(TECH1));
+        var usernames = new HashSet<>(Set.of(Username.testsHardcoded()));
         var sessionInvalidUserSession = session(
                 Username.random(),
                 JwtAccessToken.random(),

@@ -2,11 +2,13 @@ package io.tech1.framework.hardware.monitoring.store.impl;
 
 import io.tech1.framework.domain.base.Version;
 import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.domain.hardware.memories.CpuMemory;
+import io.tech1.framework.domain.hardware.memories.GlobalMemory;
+import io.tech1.framework.domain.hardware.memories.HeapMemory;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.tests.constants.TestsHardwareConstants;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -82,9 +84,9 @@ class HardwareMonitoringStoreImplTest {
         var event3 = new EventLastHardwareMonitoringDatapoint(
                 Version.of("tech1-framework vTEST"),
                 new HardwareMonitoringDatapoint(
-                        TestsHardwareConstants.GLOBAL_MEMORY,
-                        TestsHardwareConstants.CPU_MEMORY,
-                        TestsHardwareConstants.HEAP_MEMORY
+                        GlobalMemory.testsHardcoded(),
+                        CpuMemory.testsHardcoded(),
+                        HeapMemory.testsHardcoded()
                 )
         );
         this.componentUnderTest.storeEvent(event3);

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_CONFIGS;
@@ -85,7 +86,7 @@ class AbstractEssenceConstructorTest {
                 }
 
                 @Override
-                public void saveInvitationCodes(DefaultUser defaultUser, List<SimpleGrantedAuthority> authorities) {
+                public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
                     abstractMockService().executeInheritedMethod();
                 }
             };

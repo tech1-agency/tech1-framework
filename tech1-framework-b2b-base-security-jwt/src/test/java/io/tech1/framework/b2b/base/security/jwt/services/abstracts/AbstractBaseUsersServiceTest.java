@@ -94,7 +94,7 @@ class AbstractBaseUsersServiceTest {
         assertThat(userAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate1.zoneId()));
         assertThat(userAC.getValue().name()).isEqualTo(requestUserUpdate1.name());
         assertThat(userAC.getValue().email()).isEqualTo(requestUserUpdate1.email());
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
     }
 
     @Test
@@ -115,7 +115,7 @@ class AbstractBaseUsersServiceTest {
         assertThat(userAC.getValue().username()).isEqualTo(user.username());
         assertThat(userAC.getValue().zoneId()).isEqualTo(ZoneId.of(requestUserUpdate2.zoneId()));
         assertThat(userAC.getValue().name()).isEqualTo(requestUserUpdate2.name());
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
     }
 
     @Test
@@ -135,6 +135,6 @@ class AbstractBaseUsersServiceTest {
         verify(this.usersRepository).saveAs(jwtUserAC.capture());
         assertThat(jwtUserAC.getValue().username()).isEqualTo(user.username());
         assertThat(jwtUserAC.getValue().password().value()).isEqualTo(hashPassword);
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
     }
 }

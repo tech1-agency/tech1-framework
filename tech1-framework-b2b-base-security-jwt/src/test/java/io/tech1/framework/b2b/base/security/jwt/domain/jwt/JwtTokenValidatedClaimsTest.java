@@ -8,8 +8,6 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validClaims;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -73,7 +71,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isAccess()).isTrue();
         assertThat(validatedClaims.isRefresh()).isFalse();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
-        assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.username()).isEqualTo(Username.testsHardcoded());
         assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
         // 3600000L == 1 hour
         assertThat(validatedClaims.getExpirationTimestamp() - validatedClaims.issuedAt().getTime()).isEqualTo(3600000L);
@@ -95,7 +93,7 @@ class JwtTokenValidatedClaimsTest {
         assertThat(validatedClaims.isAccess()).isFalse();
         assertThat(validatedClaims.isRefresh()).isTrue();
         assertThat(validatedClaims.jwtToken()).isEqualTo(token.value());
-        assertThat(validatedClaims.username()).isEqualTo(TECH1);
+        assertThat(validatedClaims.username()).isEqualTo(Username.testsHardcoded());
         assertThat(validatedClaims.issuedAt().getTime()).isLessThanOrEqualTo(getCurrentTimestamp());
         // 3600000L == 1 hour
         assertThat(validatedClaims.getExpirationTimestamp() - validatedClaims.issuedAt().getTime()).isEqualTo(3600000L);

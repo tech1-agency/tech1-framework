@@ -23,8 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
+import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -104,7 +103,7 @@ class PostgresBaseEssenceConstructorTest {
     void saveInvitationCodesTest() {
         // Arrange
         var defaultUser = entity(DefaultUser.class);
-        var authorities = list345(SimpleGrantedAuthority.class);
+        var authorities = set345(SimpleGrantedAuthority.class);
 
         // Act
         this.componentUnderTest.saveInvitationCodes(defaultUser, authorities);

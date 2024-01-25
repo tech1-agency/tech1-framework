@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.essence;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
+import io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
@@ -13,7 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -49,7 +50,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                             username,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
-                            defaultUser.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                            SpringAuthoritiesUtility.getSimpleGrantedAuthorities(defaultUser.getAuthorities())
                     );
                     user.setEmail(defaultUser.getEmail());
                     return user;
@@ -60,7 +61,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
     }
 
     @Override
-    public void saveInvitationCodes(DefaultUser defaultUser, List<SimpleGrantedAuthority> authorities) {
+    public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
         var dbInvitationCodes = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new PostgresDbInvitationCode(

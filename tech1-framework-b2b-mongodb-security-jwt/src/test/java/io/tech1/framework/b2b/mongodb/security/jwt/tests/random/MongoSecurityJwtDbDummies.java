@@ -7,10 +7,10 @@ import io.tech1.framework.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
+import java.util.Set;
 
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbRandomUtility.*;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.tests.constants.TestsUsernamesConstants.TECH1;
 
 @UtilityClass
 public class MongoSecurityJwtDbDummies {
@@ -65,9 +65,9 @@ public class MongoSecurityJwtDbDummies {
                 superadmin("sa1"),
                 superadmin("sa2"),
                 admin("admin"),
-                randomUserBy("user1", List.of("user", INVITATION_CODE_WRITE)),
-                randomUserBy("user2", List.of("user", INVITATION_CODE_READ)),
-                randomUserBy("sa3", List.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))
+                randomUserBy("user1", Set.of("user", INVITATION_CODE_WRITE)),
+                randomUserBy("user2", Set.of("user", INVITATION_CODE_READ)),
+                randomUserBy("sa3", Set.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))
         );
     }
 
@@ -75,10 +75,10 @@ public class MongoSecurityJwtDbDummies {
     // UserSessions
     // =================================================================================================================
     public static List<MongoDbUserSession> dummyUserSessionsData1() {
-        var session1 = session(TECH1.identifier(), "awt1", "rwt1");
-        var session2 = session(TECH1.identifier(), "awt2", "rwt2");
-        var session3 = session(TECH1.identifier(), "awt3", "rwt3");
-        var session4 = session(TECH1.identifier(), "awt4", "rwt4");
+        var session1 = session(Username.testsHardcoded().identifier(), "awt1", "rwt1");
+        var session2 = session(Username.testsHardcoded().identifier(), "awt2", "rwt2");
+        var session3 = session(Username.testsHardcoded().identifier(), "awt3", "rwt3");
+        var session4 = session(Username.testsHardcoded().identifier(), "awt4", "rwt4");
         var session5 = session("user1", "atoken11", "rtoken11");
         var session6 = session("user1", "atoken12", "rtoken12");
         var session7 = session("sa", "atoken", "rtoken");
@@ -94,9 +94,9 @@ public class MongoSecurityJwtDbDummies {
     }
 
     public static List<MongoDbUserSession> dummyUserSessionsData2() {
-        var session1 = session(TECH1, "token1");
-        var session2 = session(TECH1, "token2");
-        var session3 = session(TECH1, "token3");
+        var session1 = session(Username.testsHardcoded(), "token1");
+        var session2 = session(Username.testsHardcoded(), "token2");
+        var session3 = session(Username.testsHardcoded(), "token3");
         var session4 = session(Username.of("admin"), "token4");
         return List.of(session1, session2, session3, session4);
     }

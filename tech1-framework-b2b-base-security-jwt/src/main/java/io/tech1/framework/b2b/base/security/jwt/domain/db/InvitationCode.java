@@ -4,12 +4,12 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.domain.base.Username;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
+import java.util.Set;
 
 public record InvitationCode(
         InvitationCodeId id,
         Username owner,
-        List<SimpleGrantedAuthority> authorities,
+        Set<SimpleGrantedAuthority> authorities,
         String value,
         Username invited
 ) {

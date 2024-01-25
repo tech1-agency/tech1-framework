@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class StompEndpointRegistryConfigs extends AbstractPropertiesConfigs {
-    // WARNING: spring support list of endpoints as varargs
+    // Spring support list of endpoints as varargs
     @MandatoryProperty
     private final String endpoint;
 }

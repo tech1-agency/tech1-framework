@@ -5,7 +5,7 @@ import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
+import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
@@ -20,7 +20,7 @@ class MongoDbUserTest {
                 Username.random(),
                 Password.random(),
                 randomZoneId().getId(),
-                List.of(
+                Set.of(
                         new SimpleGrantedAuthority("admin123")
                 )
         );
@@ -39,7 +39,7 @@ class MongoDbUserTest {
                 Username.random(),
                 Password.random(),
                 randomZoneId().getId(),
-                List.of(
+                Set.of(
                         new SimpleGrantedAuthority("admin123")
                 )
         );

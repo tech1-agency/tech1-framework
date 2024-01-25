@@ -37,4 +37,10 @@ public class CpuMemory {
                 randomBigDecimalByBounds(1, 50)
         );
     }
+
+    public static CpuMemory testsHardcoded() {
+        return new CpuMemory(
+                new BigDecimal("1.234")
+        );
+    }
 }

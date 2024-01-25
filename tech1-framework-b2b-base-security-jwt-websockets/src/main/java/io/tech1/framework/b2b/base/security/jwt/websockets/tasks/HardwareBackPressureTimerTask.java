@@ -30,7 +30,7 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    // WARNING: 60L seconds -> consider add to user settings but on 25.11.2022 no reason to add
+    // 60L seconds -> consider add to user settings but on 25.11.2022 no reason to add
     @Autowired
     protected HardwareBackPressureTimerTask(
             SessionRegistry sessionRegistry,

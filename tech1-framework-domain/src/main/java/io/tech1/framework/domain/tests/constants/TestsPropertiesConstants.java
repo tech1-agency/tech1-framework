@@ -92,7 +92,7 @@ public class TestsPropertiesConstants {
                                             "password12",
                                             ZoneId.systemDefault(),
                                             null,
-                                            List.of("admin")
+                                            Set.of("admin")
                                     )
                             )
                     ),

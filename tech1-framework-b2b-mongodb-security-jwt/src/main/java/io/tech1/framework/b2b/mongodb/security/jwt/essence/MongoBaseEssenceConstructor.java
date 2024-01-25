@@ -13,8 +13,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 import java.util.stream.IntStream;
+
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
@@ -49,7 +51,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                             username,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId().getId(),
-                            defaultUser.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                            getSimpleGrantedAuthorities(defaultUser.getAuthorities())
                     );
                     user.setEmail(defaultUser.getEmail());
                     return user;
@@ -60,7 +62,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
     }
 
     @Override
-    public void saveInvitationCodes(DefaultUser defaultUser, List<SimpleGrantedAuthority> authorities) {
+    public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
         var dbInvitationCodes = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new MongoDbInvitationCode(

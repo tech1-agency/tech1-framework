@@ -38,7 +38,7 @@ public class DefaultUsers implements AbstractToggleProperty {
         if (nonNull(this.users)) {
             return this.users.stream().map(DefaultUser::getAuthorities)
                     .filter(Objects::nonNull)
-                    .flatMap(List::stream)
+                    .flatMap(Set::stream)
                     .collect(Collectors.toSet());
         } else {
             return Collections.emptySet();

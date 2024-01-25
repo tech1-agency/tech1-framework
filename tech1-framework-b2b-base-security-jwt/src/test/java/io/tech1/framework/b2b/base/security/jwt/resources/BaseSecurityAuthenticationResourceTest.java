@@ -147,7 +147,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
         verify(this.cookieProvider).createJwtAccessCookie(eq(accessToken), any(HttpServletResponse.class));
         verify(this.cookieProvider).createJwtRefreshCookie(eq(refreshToken), any(HttpServletResponse.class));
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
     }
@@ -211,7 +211,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         verify(this.sessionRegistry).logout(username, accessToken);
         verify(this.cookieProvider).clearCookies(any(HttpServletResponse.class));
         verify(httpSession).invalidate();
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
     }
 
     @Test
@@ -235,7 +235,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         verify(this.securityJwtTokenUtils).validate(accessToken);
         verify(this.sessionRegistry).logout(username, accessToken);
         verify(this.cookieProvider).clearCookies(any(HttpServletResponse.class));
-        // WARNING: no verifications on static SecurityContextHolder
+        // no verifications on static SecurityContextHolder
     }
 
     @ParameterizedTest

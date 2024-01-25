@@ -14,8 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Objects.nonNull;
 
@@ -34,12 +34,12 @@ public class MongoDbUser {
     private Username username;
     private Password password;
     private ZoneId zoneId;
-    private List<SimpleGrantedAuthority> authorities;
+    private Set<SimpleGrantedAuthority> authorities;
     private Email email;
     private String name;
     private Map<String, Object> attributes;
 
-    public MongoDbUser(Username username, Password password, String zoneId, List<SimpleGrantedAuthority> authorities) {
+    public MongoDbUser(Username username, Password password, String zoneId, Set<SimpleGrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.zoneId = ZoneId.of(zoneId);

@@ -1,0 +1,90 @@
+name: m2
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  MONGODB_REPO: tech1-io/tech1-framework-b2b-mongodb-server
+  POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Java17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Install GPG secret key
+        run: cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
+
+      - name: Maven [dev]
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          mvn clean install \
+            -Dossrh_username=${{ secrets.OSSRH_USERNAME }} -Dossrh_password=${{ secrets.OSSRH_PASSWORD }} \
+            -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -s release/m2-settings.xml deploy -Prelease
+
+      - name: Maven [main]
+        if: github.ref == 'refs/heads/main'
+        run: |
+          mvn clean install \
+            -Dossrh_username=${{ secrets.OSSRH_USERNAME }} -Dossrh_password=${{ secrets.OSSRH_PASSWORD }} \
+            -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -Dmaven.test.skip -DskipTests -s release/m2-settings.xml deploy -Prelease
+
+      - name: Sonar
+        if: github.ref == 'refs/heads/disabled'
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Docker login
+        run: docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker [mongodb]
+        run: |
+          cd tech1-framework-b2b-mongodb-server
+          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}} .
+          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}}
+
+      - name: Docker [postgres]
+        run: |
+          cd tech1-framework-b2b-postgres-server
+          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}} .
+          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}}
+
+  mails:
+    needs: [main]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mails
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_GMAIL_USERNAME }}
+          password: ${{ secrets.SMTP_GMAIL_PASSWORD }}
+          subject: '${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}'
+          to: ${{ secrets.EMAILS_ADMINS }}
+          from: Tech1 Ops
+          html_body: |
+            <b>CommitterId</b>: ${{ github.actor }}<br>
+            <b>Actions</b>: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}<br>
+            <b>Changes</b>: https://github.com/${{ github.repository }}/commit/${{ github.sha }}<br>
+            <b>Committer</b>: ${{ github.event.commits[0].committer.name }}<br>
+            <b>Message</b>: ${{ github.event.commits[0].message }}

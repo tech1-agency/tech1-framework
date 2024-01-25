@@ -4,15 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresSimpleGrantedAuthoritiesConverter;
+import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
+import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgresDbAbstractPersistable0;
 import io.tech1.framework.domain.base.Username;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
@@ -24,25 +25,20 @@ import static java.util.Objects.nonNull;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 // JPA
 @Entity
 @Table(name = INVITATION_CODES)
-public class PostgresDbInvitationCode {
-    @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
-    @Column(length = 36, nullable = false, updatable = false)
-    private String id;
+public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)
     private Username owner;
 
-    @Convert(converter = PostgresSimpleGrantedAuthoritiesConverter.class)
+    @Convert(converter = PostgresSetOfSimpleGrantedAuthoritiesConverter.class)
     @Column(length = 1024, nullable = false)
-    private List<SimpleGrantedAuthority> authorities;
+    private Set<SimpleGrantedAuthority> authorities;
 
     @Column(nullable = false)
     private String value;
@@ -51,7 +47,7 @@ public class PostgresDbInvitationCode {
     @Column
     private Username invited;
 
-    public PostgresDbInvitationCode(Username owner, List<SimpleGrantedAuthority> authorities) {
+    public PostgresDbInvitationCode(Username owner, Set<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
         this.value = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);

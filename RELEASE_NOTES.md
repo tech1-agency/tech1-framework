@@ -6,6 +6,7 @@
 - Add/Update constants: TestsJunitConstants
 - Add utilities: SpringAuthoritiesUtility
 - Add postgres converters: Version
+- Add postgres persistable abstractions
 
 ### v1.16
 - Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages

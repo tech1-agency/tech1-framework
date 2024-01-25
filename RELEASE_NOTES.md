@@ -1,7 +1,9 @@
 # Release Notes
 
-### v1.17
-- TBD
+### v2.0
+- Migration M2 repo → GitHub Packages. M2 repo is no longer supported. Last version: 1.16 and 1.17-SNAPSHOT
+- Add/Update constants: TestsJunitConstants
+- Add utilities: SpringAuthoritiesUtility
 
 ### v1.16
 - Docker "servers" (tech1-framework-b2b-mongodb-server, tech1-framework-b2b-postgres-server) → GitHub Packages

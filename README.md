@@ -2,8 +2,13 @@
 Tech1 Framework - B2B Java17 Spring-based bootstrapping-framework 
 
 ### M2 repos
-Snapshots: https://s01.oss.sonatype.org/content/repositories/snapshots/io/tech1/framework/  
-Releases: https://s01.oss.sonatype.org/content/repositories/releases/io/tech1/framework/  
+**No Longer Supported**
+
+_Snapshots_: https://s01.oss.sonatype.org/content/repositories/snapshots/io/tech1/framework/  
+Last deployed version: **1.17-SNAPSHOT**  
+
+_Releases_: https://s01.oss.sonatype.org/content/repositories/releases/io/tech1/framework/  
+Last deployed version: **1.16** 
 
 ### Tests
 `mvn test` executes only unit tests  

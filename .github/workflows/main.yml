@@ -32,16 +32,11 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: GitHub Packages [compile]
-        run: |
-          mvn clean compile
-
       - name: GitHub Packages
-        if: github.ref == 'refs/heads/disabled'
         run: |
           mvn clean install \
             -Ddeployment_github_username=${{ github.actor }} -Ddeployment_github_token=${{ secrets.GITHUB_TOKEN }} \
-            -s github/m2-settings.xml deploy -Pgithub
+            -s github/m2-settings.xml deploy -Prelease-github
 
       - name: Tech1 mails@v2 outputs
         if: always()

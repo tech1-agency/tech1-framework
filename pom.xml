@@ -348,6 +348,17 @@
 
     <profiles>
         <profile>
+            <id>release-github</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/tech1-io/tech1-framework/packages</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <!-- No Longer Supported from 25.01.2024 -->
             <id>release</id>
             <distributionManagement>
                 <snapshotRepository>

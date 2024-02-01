@@ -60,7 +60,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"{{defaultUsername}}\",\n    \"password\": \"Admin23!\"\n}",
+							"raw": "{\n    \"username\": \"{{defaultUsername}}\",\n    \"password\": \"{{defaultPassword}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -67,11 +67,29 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
+    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(request);
+        } else {
+            return this.tokensHeadersProvider.readRequestAccessTokenOnWebsocketHandshake(request);
+        }
+    }
+
+    @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
             return this.tokensCookiesProvider.readRequestRefreshToken(request);
         } else {
             return this.tokensHeadersProvider.readRequestRefreshToken(request);
+        }
+    }
+
+    @Override
+    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
+        } else {
+            return this.tokensHeadersProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
         }
     }
 

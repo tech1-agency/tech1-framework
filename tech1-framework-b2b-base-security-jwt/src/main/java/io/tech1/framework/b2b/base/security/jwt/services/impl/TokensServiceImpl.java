@@ -33,7 +33,7 @@ public class TokensServiceImpl implements TokensService {
     // Services
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;
-    // Cookie
+    // Tokens
     private final TokensProvider tokensProvider;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;

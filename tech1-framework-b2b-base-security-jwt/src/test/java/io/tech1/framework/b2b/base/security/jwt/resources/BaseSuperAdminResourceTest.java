@@ -37,7 +37,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     // Services
     private final BaseSuperAdminService baseSuperAdminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
-    // Cookie
+    // Tokens
     private final TokensProvider tokensProvider;
 
     // Resource

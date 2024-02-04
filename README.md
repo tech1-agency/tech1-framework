@@ -16,6 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.1]
-— Geo Location API: add configs "utilitiesConfigs.geoLocationsConfigs.geoLiteCityDatabaseEnabled"
-— Tokens API: JWT storage methods (COOKIES | HEADERS), configs "securityJwtConfigs.jwtTokensConfigs.storageMethod"
+### Release Notes [Development v2.2]
+— Tokens Provider API: add dedicated methods readRequestAccessTokenOnWebsocketHandshake, readRequestRefreshTokenOnWebsocketHandshake

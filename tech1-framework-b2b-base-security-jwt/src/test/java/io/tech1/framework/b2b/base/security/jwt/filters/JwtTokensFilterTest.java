@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.filters;
 
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -59,8 +59,8 @@ class JwtTokensFilterTest {
         }
 
         @Bean
-        CookieProvider cookieProvider() {
-            return mock(CookieProvider.class);
+        TokensProvider cookieProvider() {
+            return mock(TokensProvider.class);
         }
 
         @Bean
@@ -75,7 +75,7 @@ class JwtTokensFilterTest {
 
     private final SessionRegistry sessionRegistry;
     private final TokensService tokensService;
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
 
     private final JwtTokensFilter componentUnderTest;
 
@@ -84,7 +84,7 @@ class JwtTokensFilterTest {
         reset(
                 this.sessionRegistry,
                 this.tokensService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 
@@ -93,7 +93,7 @@ class JwtTokensFilterTest {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.tokensService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 
@@ -103,13 +103,13 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenThrow(new AccessTokenNotFoundException());
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenThrow(new AccessTokenNotFoundException());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
                 request,
@@ -126,16 +126,16 @@ class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var cookieAccessToken = CookieAccessToken.random();
         var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(new AccessTokenExpiredException(Username.testsHardcoded()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         verify(filterChain).doFilter(request, response);
         verifyNoMoreInteractions(
@@ -152,16 +152,16 @@ class JwtTokensFilterTest {
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
         var cookieAccessToken = CookieAccessToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenThrow(new RefreshTokenNotFoundException());
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenThrow(new RefreshTokenNotFoundException());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).clearCookies(response);
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).clearTokens(response);
         verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
         verifyNoMoreInteractions(
                 request,
@@ -179,18 +179,18 @@ class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var cookieAccessToken = CookieAccessToken.random();
         var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
-        verify(this.cookieProvider).clearCookies(response);
+        verify(this.tokensProvider).clearTokens(response);
         verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
         verifyNoMoreInteractions(
                 request,
@@ -208,16 +208,16 @@ class JwtTokensFilterTest {
         var user = entity(JwtUser.class);
         var cookieAccessToken = CookieAccessToken.random();
         var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(user);
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));

@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
@@ -30,13 +30,13 @@ public class BaseSecurityUsersSessionsResource {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
     @GetMapping
     public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readJwtAccessToken(httpServletRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
@@ -67,7 +67,7 @@ public class BaseSecurityUsersSessionsResource {
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readJwtAccessToken(httpServletRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);
     }
 }

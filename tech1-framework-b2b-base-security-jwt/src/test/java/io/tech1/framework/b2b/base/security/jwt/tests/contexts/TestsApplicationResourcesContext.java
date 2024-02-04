@@ -2,12 +2,12 @@ package io.tech1.framework.b2b.base.security.jwt.tests.contexts;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.ResourceExceptionHandler;
 import io.tech1.framework.b2b.base.security.jwt.services.*;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.*;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
@@ -113,11 +113,11 @@ public class TestsApplicationResourcesContext {
     }
 
     // =================================================================================================================
-    // Cookies
+    // Tokens
     // =================================================================================================================
     @Bean
-    public CookieProvider cookieProvider() {
-        return mock(CookieProvider.class);
+    public TokensProvider tokensProvider() {
+        return mock(TokensProvider.class);
     }
 
     // =================================================================================================================

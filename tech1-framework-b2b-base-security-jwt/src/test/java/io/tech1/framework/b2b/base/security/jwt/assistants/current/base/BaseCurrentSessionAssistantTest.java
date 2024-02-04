@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
@@ -67,8 +67,8 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        CookieProvider cookieProvider() {
-            return mock(CookieProvider.class);
+        TokensProvider cookieProvider() {
+            return mock(TokensProvider.class);
         }
 
         @Bean
@@ -97,7 +97,7 @@ class BaseCurrentSessionAssistantTest {
     private final SessionRegistry sessionRegistry;
     private final UsersSessionsRepository usersSessionsRepository;
     private final HardwareMonitoringStore hardwareMonitoringStore;
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     private final SecurityPrincipalUtils securityPrincipalUtils;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -109,7 +109,7 @@ class BaseCurrentSessionAssistantTest {
                 this.sessionRegistry,
                 this.usersSessionsRepository,
                 this.hardwareMonitoringStore,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
@@ -121,7 +121,7 @@ class BaseCurrentSessionAssistantTest {
                 this.sessionRegistry,
                 this.usersSessionsRepository,
                 this.hardwareMonitoringStore,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.securityPrincipalUtils,
                 this.applicationFrameworkProperties
         );
@@ -217,14 +217,14 @@ class BaseCurrentSessionAssistantTest {
         var request = mock(HttpServletRequest.class);
         var cookie = CookieAccessToken.random();
         var accessToken = JwtAccessToken.of(cookie.value());
-        when(this.cookieProvider.readJwtAccessToken(request)).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(request)).thenReturn(cookie);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
 
         // Act
         var actual = this.componentUnderTest.getCurrentUserSession(request);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(request);
+        verify(this.tokensProvider).readJwtAccessToken(request);
         verify(this.usersSessionsRepository).isPresent(accessToken);
         assertThat(actual).isEqualTo(session);
     }

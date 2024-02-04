@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
@@ -62,8 +62,8 @@ class TokensServiceImplTest {
         }
 
         @Bean
-        CookieProvider cookieProvider() {
-            return mock(CookieProvider.class);
+        TokensProvider cookieProvider() {
+            return mock(TokensProvider.class);
         }
 
         @Bean
@@ -92,7 +92,7 @@ class TokensServiceImplTest {
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -105,7 +105,7 @@ class TokensServiceImplTest {
                 this.sessionRegistry,
                 this.tokensContextThrowerService,
                 this.baseUsersSessionsService,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.securityJwtTokenUtils
         );
     }
@@ -117,7 +117,7 @@ class TokensServiceImplTest {
                 this.sessionRegistry,
                 this.tokensContextThrowerService,
                 this.baseUsersSessionsService,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.securityJwtTokenUtils
         );
     }
@@ -161,7 +161,7 @@ class TokensServiceImplTest {
         var newAccessToken = JwtAccessToken.random();
         var newRefreshToken = JwtRefreshToken.random();
 
-        when(this.cookieProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
+        when(this.tokensProvider.readJwtRefreshToken(request)).thenReturn(oldCookieRefreshToken);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken)).thenReturn(validatedClaims);
         when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims)).thenReturn(new Tuple2<>(user, session));
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(newAccessToken);
@@ -171,15 +171,15 @@ class TokensServiceImplTest {
         var responseUserSession1 = this.componentUnderTest.refreshSessionOrThrow(request, response);
 
         // Assert
-        verify(this.cookieProvider).readJwtRefreshToken(request);
+        verify(this.tokensProvider).readJwtRefreshToken(request);
         verify(this.tokensContextThrowerService).verifyValidityOrThrow(oldRefreshToken);
         verify(this.tokensContextThrowerService).verifyRefreshTokenExpirationOrThrow(validatedClaims);
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims);
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.baseUsersSessionsService).refresh(user, session, newAccessToken, newRefreshToken, request);
-        verify(this.cookieProvider).createJwtAccessCookie(newAccessToken, response);
-        verify(this.cookieProvider).createJwtRefreshCookie(newRefreshToken, response);
+        verify(this.tokensProvider).createJwtAccessToken(newAccessToken, response);
+        verify(this.tokensProvider).createJwtRefreshToken(newRefreshToken, response);
         verify(this.sessionRegistry).renew(user.username(), oldRefreshToken, newAccessToken, newRefreshToken);
         assertThat(responseUserSession1).isEqualTo(new ResponseRefreshTokens(newAccessToken, newRefreshToken));
     }

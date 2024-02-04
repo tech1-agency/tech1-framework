@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
@@ -40,7 +40,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
@@ -53,7 +53,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         reset(
                 this.currentSessionAssistant,
                 this.baseUsersSessionsService,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.baseUsersSessionsRequestsValidator
         );
     }
@@ -63,7 +63,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
                 this.baseUsersSessionsService,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.baseUsersSessionsRequestsValidator
         );
     }
@@ -73,7 +73,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         // Arrange
         var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
         var cookie = CookieAccessToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie)).thenReturn(userSessionsTables);
 
         // Act
@@ -84,7 +84,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.anyProblem", instanceOf(Boolean.class)));
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.currentSessionAssistant).getCurrentUserDbSessionsTable(cookie);
     }
 
@@ -167,7 +167,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         var username = entity(Username.class);
         var cookie = CookieAccessToken.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
         this.mvc.perform(delete("/sessions"))
@@ -175,7 +175,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.baseUsersSessionsService).deleteAllExceptCurrent(username, cookie);
     }
 }

@@ -35,7 +35,7 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.base.security.jwt.cookies",
+        // TODO [YYL] double-check
         "io.tech1.framework.b2b.base.security.jwt.crons",
         "io.tech1.framework.b2b.base.security.jwt.events",
         "io.tech1.framework.b2b.base.security.jwt.filters",
@@ -43,6 +43,7 @@ import static org.springframework.http.HttpMethod.*;
         "io.tech1.framework.b2b.base.security.jwt.incidents.converters",
         "io.tech1.framework.b2b.base.security.jwt.resources",
         "io.tech1.framework.b2b.base.security.jwt.services",
+        "io.tech1.framework.b2b.base.security.jwt.tokens",
         "io.tech1.framework.b2b.base.security.jwt.utils",
         "io.tech1.framework.b2b.base.security.jwt.validators"
         // -------------------------------------------------------------------------------------------------------------

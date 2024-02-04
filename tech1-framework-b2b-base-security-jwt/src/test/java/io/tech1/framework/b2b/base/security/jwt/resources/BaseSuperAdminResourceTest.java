@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
@@ -38,7 +38,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     private final BaseSuperAdminService baseSuperAdminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
 
     // Resource
     private final BaseSuperAdminResource componentUnderTest;
@@ -50,7 +50,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 this.currentSessionAssistant,
                 this.baseSuperAdminService,
                 this.baseUsersSessionsService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 
@@ -60,7 +60,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 this.currentSessionAssistant,
                 this.baseSuperAdminService,
                 this.baseUsersSessionsService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 
@@ -125,7 +125,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 list345(ResponseUserSession2.class)
         );
         var cookie = CookieAccessToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.baseSuperAdminService.getSessions(cookie)).thenReturn(sessionsTable);
 
         // Act
@@ -155,7 +155,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.inactiveSessions.[0].what", notNullValue()));
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.baseSuperAdminService).getSessions(cookie);
     }
 
@@ -189,14 +189,14 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     void deleteAllExceptCurrentTest() throws Exception {
         // Arrange
         var cookie = CookieAccessToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
 
         // Act
         this.mvc.perform(delete("/superadmin/sessions/"))
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

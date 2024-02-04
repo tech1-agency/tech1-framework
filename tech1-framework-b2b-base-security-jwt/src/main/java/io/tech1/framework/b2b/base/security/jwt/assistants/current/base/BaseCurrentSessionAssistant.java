@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
@@ -10,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
@@ -39,8 +39,8 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     protected final UsersSessionsRepository usersSessionsRepository;
     // Stores
     protected final HardwareMonitoringStore hardwareMonitoringStore;
-    // Cookies
-    protected final CookieProvider cookieProvider;
+    // Tokens
+    protected final TokensProvider tokensProvider;
     // Utilities
     protected final SecurityPrincipalUtils securityPrincipalUtils;
     // Properties
@@ -77,7 +77,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
 
     @Override
     public UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readJwtAccessToken(httpServletRequest);
         return this.usersSessionsRepository.isPresent(JwtAccessToken.of(cookie.value())).value();
     }
 

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -63,8 +63,8 @@ class SecurityHandshakeHandlerTest {
         }
 
         @Bean
-        CookieProvider cookieProvider() {
-            return mock(CookieProvider.class);
+        TokensProvider cookieProvider() {
+            return mock(TokensProvider.class);
         }
 
         @Bean
@@ -79,7 +79,7 @@ class SecurityHandshakeHandlerTest {
     // Services
     private final TokensService tokensService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
 
     private final SecurityHandshakeHandler componentUnderTest;
 
@@ -87,7 +87,7 @@ class SecurityHandshakeHandlerTest {
     void beforeEach() {
         reset(
                 this.tokensService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 
@@ -95,7 +95,7 @@ class SecurityHandshakeHandlerTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.tokensService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 
@@ -110,16 +110,16 @@ class SecurityHandshakeHandlerTest {
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
         var cookieAccessToken = CookieAccessToken.random();
         var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes));
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("WebSocket user not determined");
@@ -137,16 +137,16 @@ class SecurityHandshakeHandlerTest {
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
         var cookieAccessToken = CookieAccessToken.random();
         var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(user);
 
         // Act
         var actual = this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes);
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.cookieProvider).readJwtRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
         assertThat(actual).isNotNull();
         assertThat(actual.getName()).isEqualTo(user.getUsername());

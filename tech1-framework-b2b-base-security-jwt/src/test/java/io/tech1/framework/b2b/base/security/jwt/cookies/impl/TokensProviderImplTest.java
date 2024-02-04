@@ -1,8 +1,9 @@
 package io.tech1.framework.b2b.base.security.jwt.cookies.impl;
 
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.tokens.impl.TokensProviderImpl;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -33,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class CookieProviderImplTest {
+class TokensProviderImplTest {
 
     @Configuration
     @Import({
@@ -44,8 +45,8 @@ class CookieProviderImplTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        CookieProvider cookieProvider() {
-            return new CookieProviderImpl(
+        TokensProvider cookieProvider() {
+            return new TokensProviderImpl(
                     this.applicationFrameworkProperties
             );
         }
@@ -53,10 +54,10 @@ class CookieProviderImplTest {
 
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    private final CookieProvider componentUnderTest;
+    private final TokensProvider componentUnderTest;
 
     @Test
-    void createJwtAccessCookie() {
+    void createJwtAccessToken() {
         // Arrange
         var jwtAccessToken = new JwtAccessToken(randomString());
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -66,7 +67,7 @@ class CookieProviderImplTest {
         var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookiesConfigs.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
 
         // Act
-        this.componentUnderTest.createJwtAccessCookie(jwtAccessToken, httpServletResponse);
+        this.componentUnderTest.createJwtAccessToken(jwtAccessToken, httpServletResponse);
 
         // Assert
         var cookieAC = ArgumentCaptor.forClass(Cookie.class);
@@ -90,7 +91,7 @@ class CookieProviderImplTest {
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
-        this.componentUnderTest.createJwtRefreshCookie(refreshAccessToken, httpServletResponse);
+        this.componentUnderTest.createJwtRefreshToken(refreshAccessToken, httpServletResponse);
 
         // Assert
         var cookieAC = ArgumentCaptor.forClass(Cookie.class);
@@ -181,7 +182,7 @@ class CookieProviderImplTest {
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
-        this.componentUnderTest.clearCookies(httpServletResponse);
+        this.componentUnderTest.clearTokens(httpServletResponse);
 
         // Assert
         var cookiesAC = ArgumentCaptor.forClass(Cookie.class);

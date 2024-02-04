@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 import io.jsonwebtoken.Claims;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
@@ -68,8 +68,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     private final JwtUserDetailsService jwtUserDetailsService;
-    // Cookies
-    private final CookieProvider cookieProvider;
+    // Tokens
+    private final TokensProvider tokensProvider;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
     // Utilities
@@ -88,7 +88,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 this.tokensService,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.baseAuthenticationRequestsValidator,
                 this.securityJwtTokenUtils
         );
@@ -103,7 +103,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 this.tokensService,
                 this.currentSessionAssistant,
                 this.jwtUserDetailsService,
-                this.cookieProvider,
+                this.tokensProvider,
                 this.baseAuthenticationRequestsValidator,
                 this.securityJwtTokenUtils
         );
@@ -145,8 +145,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
-        verify(this.cookieProvider).createJwtAccessCookie(eq(accessToken), any(HttpServletResponse.class));
-        verify(this.cookieProvider).createJwtRefreshCookie(eq(refreshToken), any(HttpServletResponse.class));
+        verify(this.tokensProvider).createJwtAccessToken(eq(accessToken), any(HttpServletResponse.class));
+        verify(this.tokensProvider).createJwtRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
@@ -156,14 +156,14 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     void logoutNoJwtRefreshTokenTest() throws Exception {
         // Arrange
         var cookieRefreshToken = new CookieAccessToken(null);
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
 
         // Act
         this.mvc.perform(post("/authentication/logout"))
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
     }
 
     @Test
@@ -171,7 +171,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         // Arrange
         var cookie = new CookieAccessToken(randomString());
         var accessToken = cookie.getJwtAccessToken();
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.invalid(accessToken));
 
         // Act
@@ -179,7 +179,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtils).validate(accessToken);
     }
 
@@ -192,7 +192,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         var accessToken = cookie.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityJwtTokenUtils.validate(cookie.getJwtAccessToken())).thenReturn(validatedClaims);
 
@@ -206,10 +206,10 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtils).validate(accessToken);
         verify(this.sessionRegistry).logout(username, accessToken);
-        verify(this.cookieProvider).clearCookies(any(HttpServletResponse.class));
+        verify(this.tokensProvider).clearTokens(any(HttpServletResponse.class));
         verify(httpSession).invalidate();
         // no verifications on static SecurityContextHolder
     }
@@ -222,7 +222,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         var accessToken = cookie.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
         var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
 
@@ -231,10 +231,10 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.cookieProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtils).validate(accessToken);
         verify(this.sessionRegistry).logout(username, accessToken);
-        verify(this.cookieProvider).clearCookies(any(HttpServletResponse.class));
+        verify(this.tokensProvider).clearTokens(any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
     }
 
@@ -253,10 +253,10 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.tokensService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));
-        verify(this.cookieProvider).clearCookies(any());
+        verify(this.tokensProvider).clearTokens(any());
         reset(
                 this.tokensService,
-                this.cookieProvider
+                this.tokensProvider
         );
     }
 

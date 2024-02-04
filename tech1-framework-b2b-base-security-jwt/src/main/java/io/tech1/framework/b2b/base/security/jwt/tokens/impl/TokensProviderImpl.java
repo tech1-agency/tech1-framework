@@ -1,6 +1,6 @@
-package io.tech1.framework.b2b.base.security.jwt.cookies.impl;
+package io.tech1.framework.b2b.base.security.jwt.tokens.impl;
 
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -23,13 +23,13 @@ import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExact
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class CookieProviderImpl implements CookieProvider {
+public class TokensProviderImpl implements TokensProvider {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public void createJwtAccessCookie(JwtAccessToken jwtAccessToken, HttpServletResponse httpServletResponse) {
+    public void createJwtAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
         var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
         var accessTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
         var jwtAccessTokenCookieCreationLatency = securityJwtConfigs.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
@@ -43,11 +43,11 @@ public class CookieProviderImpl implements CookieProvider {
                 toIntExactOrZeroOnOverflow(maxAge)
         );
 
-        httpServletResponse.addCookie(cookie);
+        response.addCookie(cookie);
     }
 
     @Override
-    public void createJwtRefreshCookie(JwtRefreshToken jwtRefreshToken, HttpServletResponse httpServletResponse) {
+    public void createJwtRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
         var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
         var refreshTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
 
@@ -59,7 +59,7 @@ public class CookieProviderImpl implements CookieProvider {
                 toIntExactOrZeroOnOverflow(refreshTokenConfiguration.getExpiration().getTimeAmount().toSeconds())
         );
 
-        httpServletResponse.addCookie(cookie);
+        response.addCookie(cookie);
     }
 
     @Override
@@ -85,13 +85,13 @@ public class CookieProviderImpl implements CookieProvider {
     }
 
     @Override
-    public void clearCookies(HttpServletResponse httpServletResponse) {
+    public void clearTokens(HttpServletResponse response) {
         var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
         var cookiesConfigs = securityJwtConfigs.getCookiesConfigs();
         var accessToken = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
         var refreshToken = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
 
-        httpServletResponse.addCookie(createNullCookie(accessToken.getCookieKey(), cookiesConfigs.getDomain()));
-        httpServletResponse.addCookie(createNullCookie(refreshToken.getCookieKey(), cookiesConfigs.getDomain()));
+        response.addCookie(createNullCookie(accessToken.getCookieKey(), cookiesConfigs.getDomain()));
+        response.addCookie(createNullCookie(refreshToken.getCookieKey(), cookiesConfigs.getDomain()));
     }
 }

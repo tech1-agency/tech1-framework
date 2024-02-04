@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
@@ -34,7 +34,7 @@ public class TokensServiceImpl implements TokensService {
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
@@ -61,7 +61,7 @@ public class TokensServiceImpl implements TokensService {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
-        var oldRefreshToken = this.cookieProvider.readJwtRefreshToken(request).getJwtRefreshToken();
+        var oldRefreshToken = this.tokensProvider.readJwtRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);
         this.tokensContextThrowerService.verifyRefreshTokenExpirationOrThrow(refreshTokenValidatedClaims);
@@ -74,8 +74,8 @@ public class TokensServiceImpl implements TokensService {
 
         this.baseUsersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
 
-        this.cookieProvider.createJwtAccessCookie(accessToken, response);
-        this.cookieProvider.createJwtRefreshCookie(newRefreshToken, response);
+        this.tokensProvider.createJwtAccessToken(accessToken, response);
+        this.tokensProvider.createJwtRefreshToken(newRefreshToken, response);
 
         var username = user.username();
         LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);

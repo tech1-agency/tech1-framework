@@ -8,6 +8,7 @@ import io.tech1.framework.domain.properties.configs.*;
 import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
 import io.tech1.framework.domain.properties.configs.security.jwt.websockets.*;
+import io.tech1.framework.domain.properties.configs.utilities.GeoLocationsConfigs;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -25,6 +26,11 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 @UtilityClass
 public class TestsPropertiesConstants {
     public static final ServerConfigs SERVER_CONFIGS = new ServerConfigs("tech1-spring-boot-server", "http://127.0.0.1:3000");
+    public static final UtilitiesConfigs UTILITIES_CONFIGS = new UtilitiesConfigs(
+            new GeoLocationsConfigs(
+                    false
+            )
+    );
     public static final AsyncConfigs ASYNC_CONFIGS = new AsyncConfigs("tech1-async");
     public static final EventsConfigs EVENTS_CONFIGS = new EventsConfigs("tech1-events");
     public static final MvcConfigs MVC_CONFIGS = new MvcConfigs(

@@ -21,7 +21,7 @@ public class GeoLocationFacadeUtilityImpl implements GeoLocationFacadeUtility {
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
         try {
             return this.ipapiGeoLocationUtility.getGeoLocation(ipAddress);
-        } catch (GeoLocationNotFoundException e) {
+        } catch (GeoLocationNotFoundException ex) {
             return this.mindMaxGeoLocationUtility.getGeoLocation(ipAddress);
         }
     }

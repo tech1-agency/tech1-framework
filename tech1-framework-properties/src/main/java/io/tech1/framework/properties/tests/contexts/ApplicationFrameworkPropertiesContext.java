@@ -13,6 +13,7 @@ public class ApplicationFrameworkPropertiesContext {
     public ApplicationFrameworkProperties applicationFrameworkProperties() {
         var properties = new ApplicationFrameworkProperties();
         properties.setServerConfigs(SERVER_CONFIGS);
+        properties.setUtilitiesConfigs(UTILITIES_CONFIGS);
         properties.setAsyncConfigs(ASYNC_CONFIGS);
         properties.setEventsConfigs(EVENTS_CONFIGS);
         properties.setMvcConfigs(MVC_CONFIGS);

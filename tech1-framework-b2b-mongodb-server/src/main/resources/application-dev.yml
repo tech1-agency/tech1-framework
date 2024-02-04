@@ -6,6 +6,9 @@ logging:
 tech1:
   serverConfigs:
     webclientURL: http://localhost:3000
+  utilitiesConfigs:
+    geoLocationsConfigs:
+      geoLiteCityDatabaseEnabled: false
   incidentConfigs:
     enabled: true
     remoteServer:

@@ -34,6 +34,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
 
     @Autowired
     public GeoCountryFlagUtilityImpl(ResourceLoader resourceLoader) {
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         try {
             var resource = resourceLoader.getResource("classpath:" + COUNTRIES_FLAGS_JSON);
             var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
@@ -57,13 +58,11 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
         } catch (IOException | RuntimeException ex) {
             var message = String.format("%s %s json loading status: %s", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, FAILURE);
             LOGGER.error(message);
-            LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
             LOGGER.error("Please verify `{}` is present in classpath", COUNTRIES_FLAGS_JSON);
-            LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
             throw new IllegalArgumentException(message + ". " + ex.getMessage());
         }
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
-
 
     @Override
     public String getFlagEmojiByCountry(String country) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
@@ -27,6 +28,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
 
     @Override
     public void onStartup() {
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(STARTUP_MESSAGE, Status.STARTED);
 
         this.environmentUtility.verifyProfilesConfiguration();
@@ -44,5 +46,6 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
             LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
         }
         LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 }

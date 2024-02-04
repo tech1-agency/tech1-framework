@@ -60,6 +60,16 @@ class PropertiesAsserterAndPrinterTest {
     }
 
     @Test
+    void utilitiesConfigsTest() {
+        // Act
+        assertProperties(UTILITIES_CONFIGS, "utilitiesConfigs");
+        printProperties(UTILITIES_CONFIGS);
+
+        // Assert
+        // no asserts
+    }
+
+    @Test
     void asyncConfigsTest() {
         // Act
         assertProperties(ASYNC_CONFIGS, "asyncConfigs");

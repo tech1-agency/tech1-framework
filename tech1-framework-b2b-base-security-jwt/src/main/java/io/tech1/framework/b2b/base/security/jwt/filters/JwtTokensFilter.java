@@ -5,6 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +52,8 @@ public class JwtTokensFilter extends OncePerRequestFilter {
             LOGGER.warn("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
             // NOTE: place to refresh token. problem how to distinguish authenticated vs. anonymous/permitAll endpoints
             filterChain.doFilter(request, response);
-        } catch (CookieRefreshTokenNotFoundException | CookieAccessTokenInvalidException | CookieRefreshTokenInvalidException | CookieAccessTokenDbNotFoundException ex) {
+        } catch (CookieRefreshTokenNotFoundException | CookieAccessTokenInvalidException |
+                 CookieRefreshTokenInvalidException | CookieAccessTokenDbNotFoundException ex) {
             LOGGER.warn("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());
             this.cookieProvider.clearCookies(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());

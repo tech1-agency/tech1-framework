@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +41,8 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
             var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
             return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException | CookieAccessTokenInvalidException |
+        } catch (CookieAccessTokenNotFoundException | CookieRefreshTokenNotFoundException |
+                 CookieAccessTokenInvalidException |
                  CookieRefreshTokenInvalidException | CookieAccessTokenExpiredException | CookieAccessTokenDbNotFoundException ex) {
             throw new IllegalArgumentException("WebSocket user not determined. Exception: " + ex.getMessage());
         }

@@ -10,6 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsReposi
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

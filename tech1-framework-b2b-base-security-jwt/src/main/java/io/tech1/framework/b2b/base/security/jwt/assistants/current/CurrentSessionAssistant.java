@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 

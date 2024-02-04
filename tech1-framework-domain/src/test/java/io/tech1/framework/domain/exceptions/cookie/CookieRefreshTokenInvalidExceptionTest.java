@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.exceptions.cookie;
 
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenInvalidException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

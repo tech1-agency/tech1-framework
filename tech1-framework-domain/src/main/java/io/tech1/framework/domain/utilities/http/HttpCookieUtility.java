@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.utilities.http;
 
 import io.tech1.framework.domain.constants.StringConstants;
-import io.tech1.framework.domain.exceptions.cookie.CookieNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieNotFoundException;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.Cookie;

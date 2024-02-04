@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

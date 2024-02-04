@@ -14,6 +14,7 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +112,8 @@ public class BaseSecurityAuthenticationResource {
     public ResponseRefreshTokens refreshToken(HttpServletRequest request, HttpServletResponse response) throws CookieUnauthorizedException {
         try {
             return this.tokensService.refreshSessionOrThrow(request, response);
-        } catch (CookieRefreshTokenNotFoundException | CookieRefreshTokenInvalidException | CookieRefreshTokenExpiredException | CookieRefreshTokenDbNotFoundException ex) {
+        } catch (CookieRefreshTokenNotFoundException | CookieRefreshTokenInvalidException |
+                 CookieRefreshTokenExpiredException | CookieRefreshTokenDbNotFoundException ex) {
             this.cookieProvider.clearCookies(response);
             throw new CookieUnauthorizedException(ex.getMessage());
         }

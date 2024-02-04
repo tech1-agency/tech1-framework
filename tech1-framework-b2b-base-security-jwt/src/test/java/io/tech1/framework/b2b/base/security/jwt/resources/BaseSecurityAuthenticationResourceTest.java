@@ -15,10 +15,10 @@ import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesR
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenDbNotFoundException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenExpiredException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenInvalidException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenDbNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenExpiredException;
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenInvalidException;
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

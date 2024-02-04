@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationH
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +50,7 @@ class ResourceExceptionHandlerTest {
                 Arguments.of(new CookieAccessTokenExpiredException(Username.random())),
                 Arguments.of(new CookieAccessTokenDbNotFoundException(Username.random())),
                 Arguments.of(new CookieRefreshTokenNotFoundException()),
-                Arguments.of( new CookieRefreshTokenInvalidException()),
+                Arguments.of(new CookieRefreshTokenInvalidException()),
                 Arguments.of(new CookieRefreshTokenExpiredException(Username.random())),
                 Arguments.of(new CookieRefreshTokenDbNotFoundException(Username.random())),
                 Arguments.of(new CookieUnauthorizedException(randomString()))

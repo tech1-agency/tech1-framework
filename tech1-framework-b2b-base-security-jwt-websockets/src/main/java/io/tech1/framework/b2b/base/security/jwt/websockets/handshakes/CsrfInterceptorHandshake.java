@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
-import io.tech1.framework.domain.exceptions.cookie.CookieNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -4,6 +4,7 @@ import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.domain.exceptions.ExceptionEntityType;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

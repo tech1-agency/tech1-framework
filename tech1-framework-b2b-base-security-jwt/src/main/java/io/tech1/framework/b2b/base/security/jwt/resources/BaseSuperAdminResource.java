@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSup
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

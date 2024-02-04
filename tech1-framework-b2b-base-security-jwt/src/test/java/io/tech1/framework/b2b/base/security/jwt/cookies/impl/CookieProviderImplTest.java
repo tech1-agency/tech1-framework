@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.base.security.jwt.cookies.impl;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.cookie.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;

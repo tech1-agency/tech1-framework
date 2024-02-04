@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.exceptions.cookie;
 
+import io.tech1.framework.domain.exceptions.tokens.CookieUnauthorizedException;
 import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;

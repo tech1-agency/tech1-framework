@@ -1,4 +1,4 @@
-package io.tech1.framework.domain.exceptions.cookie;
+package io.tech1.framework.domain.exceptions.tokens;
 
 public class CookieAccessTokenInvalidException extends Exception {
 

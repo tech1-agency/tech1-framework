@@ -82,7 +82,7 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void createJwtRefreshCookie() {
+    void createJwtRefreshToken() {
         // Arrange
         var refreshAccessToken = JwtRefreshToken.random();
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -174,7 +174,7 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void clearCookies() {
+    void clearTokens() {
         // Arrange
         var httpServletResponse = mock(HttpServletResponse.class);
         var domain = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs().getDomain();

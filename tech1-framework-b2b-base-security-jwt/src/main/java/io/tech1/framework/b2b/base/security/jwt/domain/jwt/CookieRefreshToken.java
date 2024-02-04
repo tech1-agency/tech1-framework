@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
+@Deprecated
 public record CookieRefreshToken(String value) {
     public static CookieRefreshToken random() {
         return new CookieRefreshToken(randomString());

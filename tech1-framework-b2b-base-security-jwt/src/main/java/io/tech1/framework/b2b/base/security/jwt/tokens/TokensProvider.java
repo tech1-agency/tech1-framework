@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface TokensProvider {
     void createJwtAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
     void createJwtRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
-    CookieAccessToken readJwtAccessToken(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException;
-    CookieRefreshToken readJwtRefreshToken(HttpServletRequest httpServletRequest) throws RefreshTokenNotFoundException;
+    CookieAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
+    CookieRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
     void clearTokens(HttpServletResponse response);
 }

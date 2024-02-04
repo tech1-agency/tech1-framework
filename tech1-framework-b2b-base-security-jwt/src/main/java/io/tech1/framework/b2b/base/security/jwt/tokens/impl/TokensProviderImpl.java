@@ -63,10 +63,10 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public CookieAccessToken readJwtAccessToken(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+    public CookieAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
         try {
             var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
-            var cookie = readCookie(httpServletRequest, accessToken.getCookieKey());
+            var cookie = readCookie(request, accessToken.getCookieKey());
             return new CookieAccessToken(cookie);
         } catch (CookieNotFoundException ex) {
             throw new AccessTokenNotFoundException();
@@ -74,10 +74,10 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public CookieRefreshToken readJwtRefreshToken(HttpServletRequest httpServletRequest) throws RefreshTokenNotFoundException {
+    public CookieRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         try {
             var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
-            var cookie = readCookie(httpServletRequest, refreshToken.getCookieKey());
+            var cookie = readCookie(request, refreshToken.getCookieKey());
             return new CookieRefreshToken(cookie);
         } catch (CookieNotFoundException ex) {
             throw new RefreshTokenNotFoundException();

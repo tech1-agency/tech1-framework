@@ -9,7 +9,6 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerSer
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
@@ -124,7 +123,7 @@ class TokensServiceImplTest {
     }
 
     @Test
-    void getJwtUserByAccessTokenOrThrowTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException {
+    void getJwtUserByAccessTokenOrThrowTest() throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
         // Arrange
         var cookieAccessToken = CookieAccessToken.random();
         var cookieRefreshToken = CookieRefreshToken.random();
@@ -150,7 +149,7 @@ class TokensServiceImplTest {
     }
 
     @Test
-    void refreshSessionOrThrowTest() throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
+    void refreshSessionOrThrowTest() throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);

@@ -15,10 +15,10 @@ import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesR
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenDbNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenExpiredException;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenInvalidException;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenExpiredException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenInvalidException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,10 +51,10 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(
-                Arguments.of(new CookieRefreshTokenNotFoundException()),
-                Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of( new CookieRefreshTokenExpiredException(Username.random())),
-                Arguments.of(new CookieRefreshTokenDbNotFoundException(Username.random()))
+                Arguments.of(new RefreshTokenNotFoundException()),
+                Arguments.of(new RefreshTokenInvalidException()),
+                Arguments.of( new RefreshTokenExpiredException(Username.random())),
+                Arguments.of(new RefreshTokenDbNotFoundException(Username.random()))
         );
     }
 

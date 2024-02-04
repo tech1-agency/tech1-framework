@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.domain.exceptions.ExceptionEntityType;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,15 +23,15 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(value = {
             CookieNotFoundException.class,
-            CookieAccessTokenNotFoundException.class,
-            CookieAccessTokenInvalidException.class,
-            CookieAccessTokenExpiredException.class,
-            CookieAccessTokenDbNotFoundException.class,
-            CookieRefreshTokenNotFoundException.class,
-            CookieRefreshTokenInvalidException.class,
-            CookieRefreshTokenExpiredException.class,
-            CookieRefreshTokenDbNotFoundException.class,
-            CookieUnauthorizedException.class
+            AccessTokenNotFoundException.class,
+            AccessTokenInvalidException.class,
+            AccessTokenExpiredException.class,
+            AccessTokenDbNotFoundException.class,
+            RefreshTokenNotFoundException.class,
+            RefreshTokenInvalidException.class,
+            RefreshTokenExpiredException.class,
+            RefreshTokenDbNotFoundException.class,
+            TokenUnauthorizedException.class
     })
     public ResponseEntity<ExceptionEntity> cookiesUnauthorizedExceptions(Exception ex) {
         var response = ExceptionEntity.of(ex);

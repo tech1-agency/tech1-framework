@@ -1,12 +1,12 @@
-package io.tech1.framework.domain.exceptions.cookie;
+package io.tech1.framework.domain.exceptions.tokens;
 
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenDbNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenDbNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CookieAccessTokenDbNotFoundExceptionTest {
+class AccessTokenDbNotFoundExceptionTest {
 
     @Test
     void testException() {
@@ -14,7 +14,7 @@ class CookieAccessTokenDbNotFoundExceptionTest {
         var username = Username.random();
 
         // Act
-        var actual = new CookieAccessTokenDbNotFoundException(username);
+        var actual = new AccessTokenDbNotFoundException(username);
 
         // Assert
         assertThat(actual.getMessage()).isEqualTo("JWT access token is not present in database. Username: " + username);

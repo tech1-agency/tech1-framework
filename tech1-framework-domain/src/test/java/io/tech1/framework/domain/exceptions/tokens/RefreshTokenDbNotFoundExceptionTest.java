@@ -1,12 +1,12 @@
-package io.tech1.framework.domain.exceptions.cookie;
+package io.tech1.framework.domain.exceptions.tokens;
 
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenDbNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CookieRefreshTokenDbNotFoundExceptionTest {
+class RefreshTokenDbNotFoundExceptionTest {
 
     @Test
     void testException() {
@@ -14,7 +14,7 @@ class CookieRefreshTokenDbNotFoundExceptionTest {
         var username = Username.random();
 
         // Act
-        var actual = new CookieRefreshTokenDbNotFoundException(username);
+        var actual = new RefreshTokenDbNotFoundException(username);
 
         // Assert
         assertThat(actual.getMessage()).isEqualTo("JWT refresh token is not present in database. Username: " + username);

@@ -1,16 +1,16 @@
-package io.tech1.framework.domain.exceptions.cookie;
+package io.tech1.framework.domain.exceptions.tokens;
 
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CookieRefreshTokenNotFoundExceptionTest {
+class RefreshTokenNotFoundExceptionTest {
 
     @Test
     void testException() {
         // Act
-        var actual = new CookieRefreshTokenNotFoundException();
+        var actual = new RefreshTokenNotFoundException();
 
         // Assert
         assertThat(actual.getMessage()).isEqualTo("JWT refresh token not found");

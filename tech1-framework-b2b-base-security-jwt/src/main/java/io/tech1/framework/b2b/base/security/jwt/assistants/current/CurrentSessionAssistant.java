@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +14,6 @@ public interface CurrentSessionAssistant {
     Username getCurrentUsername();
     JwtUser getCurrentJwtUser();
     CurrentClientUser getCurrentClientUser();
-    UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException;
+    UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException;
     ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieAccessToken cookie);
 }

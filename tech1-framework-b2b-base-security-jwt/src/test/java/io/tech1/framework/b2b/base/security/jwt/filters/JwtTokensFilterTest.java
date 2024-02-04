@@ -8,7 +8,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -41,9 +40,9 @@ class JwtTokensFilterTest {
 
     private static Stream<Arguments> clearCookieTest() {
         return Stream.of(
-                Arguments.of(new CookieAccessTokenInvalidException()),
-                Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of(new CookieAccessTokenDbNotFoundException(Username.testsHardcoded()))
+                Arguments.of(new AccessTokenInvalidException()),
+                Arguments.of(new RefreshTokenInvalidException()),
+                Arguments.of(new AccessTokenDbNotFoundException(Username.testsHardcoded()))
         );
     }
 
@@ -104,7 +103,7 @@ class JwtTokensFilterTest {
         var request = mock(HttpServletRequest.class);
         var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenThrow(new CookieAccessTokenNotFoundException());
+        when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenThrow(new AccessTokenNotFoundException());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -129,7 +128,7 @@ class JwtTokensFilterTest {
         var cookieRefreshToken = CookieRefreshToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
         when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(new CookieAccessTokenExpiredException(Username.testsHardcoded()));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(new AccessTokenExpiredException(Username.testsHardcoded()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);
@@ -154,7 +153,7 @@ class JwtTokensFilterTest {
         var filterChain = mock(FilterChain.class);
         var cookieAccessToken = CookieAccessToken.random();
         when(this.cookieProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenThrow(new CookieRefreshTokenNotFoundException());
+        when(this.cookieProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenThrow(new RefreshTokenNotFoundException());
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);

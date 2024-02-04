@@ -1,4 +1,4 @@
-package io.tech1.framework.domain.exceptions.tokens;
+package io.tech1.framework.domain.exceptions.cookies;
 
 public class CookieNotFoundException extends Exception {
 

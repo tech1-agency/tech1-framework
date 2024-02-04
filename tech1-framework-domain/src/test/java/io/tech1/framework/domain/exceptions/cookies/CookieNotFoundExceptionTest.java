@@ -1,12 +1,11 @@
-package io.tech1.framework.domain.exceptions.cookie;
+package io.tech1.framework.domain.exceptions.cookies;
 
-import io.tech1.framework.domain.exceptions.tokens.CookieUnauthorizedException;
 import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CookieUnauthorizedExceptionTest {
+class CookieNotFoundExceptionTest {
 
     @Test
     void testException() {
@@ -14,7 +13,7 @@ class CookieUnauthorizedExceptionTest {
         var message = randomString();
 
         // Act
-        var actual = new CookieUnauthorizedException(message);
+        var actual = new CookieNotFoundException(message);
 
         // Assert
         assertThat(actual.getMessage()).isEqualTo(message);

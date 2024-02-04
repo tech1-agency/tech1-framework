@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -45,15 +45,15 @@ class ResourceExceptionHandlerTest {
     private static Stream<Arguments> unauthorizedResponseErrorMessageTest() {
         return Stream.of(
                 Arguments.of(new CookieNotFoundException(randomString())),
-                Arguments.of(new CookieAccessTokenNotFoundException()),
-                Arguments.of(new CookieAccessTokenInvalidException()),
-                Arguments.of(new CookieAccessTokenExpiredException(Username.random())),
-                Arguments.of(new CookieAccessTokenDbNotFoundException(Username.random())),
-                Arguments.of(new CookieRefreshTokenNotFoundException()),
-                Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of(new CookieRefreshTokenExpiredException(Username.random())),
-                Arguments.of(new CookieRefreshTokenDbNotFoundException(Username.random())),
-                Arguments.of(new CookieUnauthorizedException(randomString()))
+                Arguments.of(new AccessTokenNotFoundException()),
+                Arguments.of(new AccessTokenInvalidException()),
+                Arguments.of(new AccessTokenExpiredException(Username.random())),
+                Arguments.of(new AccessTokenDbNotFoundException(Username.random())),
+                Arguments.of(new RefreshTokenNotFoundException()),
+                Arguments.of(new RefreshTokenInvalidException()),
+                Arguments.of(new RefreshTokenExpiredException(Username.random())),
+                Arguments.of(new RefreshTokenDbNotFoundException(Username.random())),
+                Arguments.of(new TokenUnauthorizedException(randomString()))
         );
     }
 

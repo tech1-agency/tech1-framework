@@ -14,7 +14,7 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
 import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
@@ -211,7 +211,7 @@ class BaseCurrentSessionAssistantTest {
     }
 
     @Test
-    void getCurrentUserSessionTest() throws CookieAccessTokenNotFoundException {
+    void getCurrentUserSessionTest() throws AccessTokenNotFoundException {
         // Arrange
         var session = entity(UserSession.class);
         var request = mock(HttpServletRequest.class);

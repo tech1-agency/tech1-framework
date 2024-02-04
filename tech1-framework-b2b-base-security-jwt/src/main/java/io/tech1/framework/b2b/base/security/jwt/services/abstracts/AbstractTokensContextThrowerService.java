@@ -9,7 +9,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import io.tech1.framework.domain.tuples.Tuple2;
 import lombok.AccessLevel;
@@ -27,58 +26,58 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @Override
-    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws CookieAccessTokenInvalidException {
+    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws AccessTokenInvalidException {
         var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
-            throw new CookieAccessTokenInvalidException();
+            throw new AccessTokenInvalidException();
         }
         return validatedClaims;
     }
 
     @Override
-    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws CookieRefreshTokenInvalidException {
+    public JwtTokenValidatedClaims verifyValidityOrThrow(JwtRefreshToken refreshToken) throws RefreshTokenInvalidException {
         var validatedClaims = this.securityJwtTokenUtils.validate(refreshToken);
         if (validatedClaims.isInvalid()) {
             SecurityContextHolder.clearContext();
-            throw new CookieRefreshTokenInvalidException();
+            throw new RefreshTokenInvalidException();
         }
         return validatedClaims;
     }
 
     @Override
-    public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws CookieAccessTokenExpiredException {
+    public void verifyAccessTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws AccessTokenExpiredException {
         if (validatedClaims.isExpired() && validatedClaims.isAccess()) {
             SecurityContextHolder.clearContext();
-            throw new CookieAccessTokenExpiredException(validatedClaims.username());
+            throw new AccessTokenExpiredException(validatedClaims.username());
         }
     }
 
     @Override
-    public void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenExpiredException {
+    public void verifyRefreshTokenExpirationOrThrow(JwtTokenValidatedClaims validatedClaims) throws RefreshTokenExpiredException {
         if (validatedClaims.isExpired() && validatedClaims.isRefresh()) {
             SecurityContextHolder.clearContext();
-            throw new CookieRefreshTokenExpiredException(validatedClaims.username());
+            throw new RefreshTokenExpiredException(validatedClaims.username());
         }
     }
 
     @Override
-    public void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws CookieAccessTokenDbNotFoundException {
+    public void verifyDbPresenceOrThrow(JwtAccessToken accessToken, JwtTokenValidatedClaims validatedClaims) throws AccessTokenDbNotFoundException {
         var username = validatedClaims.username();
         var databasePresence = this.usersSessionsRepository.isPresent(accessToken);
         if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
-            throw new CookieAccessTokenDbNotFoundException(username);
+            throw new AccessTokenDbNotFoundException(username);
         }
     }
 
     @Override
-    public Tuple2<JwtUser, UserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws CookieRefreshTokenDbNotFoundException {
+    public Tuple2<JwtUser, UserSession> verifyDbPresenceOrThrow(JwtRefreshToken refreshToken, JwtTokenValidatedClaims validatedClaims) throws RefreshTokenDbNotFoundException {
         var username = validatedClaims.username();
         var databasePresence = this.usersSessionsRepository.isPresent(refreshToken);
         if (!databasePresence.present()) {
             SecurityContextHolder.clearContext();
-            throw new CookieRefreshTokenDbNotFoundException(username);
+            throw new RefreshTokenDbNotFoundException(username);
         }
         var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
         return new Tuple2<>(user, databasePresence.value());

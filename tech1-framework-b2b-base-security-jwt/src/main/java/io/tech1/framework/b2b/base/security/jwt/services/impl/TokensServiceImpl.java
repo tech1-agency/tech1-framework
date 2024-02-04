@@ -11,7 +11,6 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerSer
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +42,7 @@ public class TokensServiceImpl implements TokensService {
     public JwtUser getJwtUserByAccessTokenOrThrow(
             CookieAccessToken cookieAccessToken,
             CookieRefreshToken cookieRefreshToken
-    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException {
+    ) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
         var accessToken = cookieAccessToken.getJwtAccessToken();
         var refreshToken = cookieRefreshToken.getJwtRefreshToken();
 
@@ -61,7 +60,7 @@ public class TokensServiceImpl implements TokensService {
     public ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
+    ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
         var oldRefreshToken = this.cookieProvider.readJwtRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);

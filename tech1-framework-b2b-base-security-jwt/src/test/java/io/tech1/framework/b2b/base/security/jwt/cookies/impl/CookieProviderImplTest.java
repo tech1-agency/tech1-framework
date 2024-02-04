@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.base.security.jwt.cookies.impl;
 import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -105,7 +105,7 @@ class CookieProviderImplTest {
     }
 
     @Test
-    void readJwtAccessToken() throws CookieAccessTokenNotFoundException {
+    void readJwtAccessToken() throws AccessTokenNotFoundException {
         // Arrange
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
@@ -134,12 +134,12 @@ class CookieProviderImplTest {
         verify(httpServletRequest).getCookies();
         assertThat(httpServletRequest.getCookies()).isEmpty();;
         assertThat(throwable)
-                .isInstanceOf(CookieAccessTokenNotFoundException.class)
+                .isInstanceOf(AccessTokenNotFoundException.class)
                 .hasMessageContaining("JWT access token not found");
     }
 
     @Test
-    void readJwtRefreshToken() throws CookieRefreshTokenNotFoundException {
+    void readJwtRefreshToken() throws RefreshTokenNotFoundException {
         // Arrange
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
@@ -168,7 +168,7 @@ class CookieProviderImplTest {
         verify(httpServletRequest).getCookies();
         assertThat(httpServletRequest.getCookies()).isEmpty();
         assertThat(throwable)
-                .isInstanceOf(CookieRefreshTokenNotFoundException.class)
+                .isInstanceOf(RefreshTokenNotFoundException.class)
                 .hasMessageContaining("JWT refresh token not found");
     }
 

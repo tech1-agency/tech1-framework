@@ -5,9 +5,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.CookieNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.CookieRefreshTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,24 +63,24 @@ public class CookieProviderImpl implements CookieProvider {
     }
 
     @Override
-    public CookieAccessToken readJwtAccessToken(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public CookieAccessToken readJwtAccessToken(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         try {
             var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
             var cookie = readCookie(httpServletRequest, accessToken.getCookieKey());
             return new CookieAccessToken(cookie);
         } catch (CookieNotFoundException ex) {
-            throw new CookieAccessTokenNotFoundException();
+            throw new AccessTokenNotFoundException();
         }
     }
 
     @Override
-    public CookieRefreshToken readJwtRefreshToken(HttpServletRequest httpServletRequest) throws CookieRefreshTokenNotFoundException {
+    public CookieRefreshToken readJwtRefreshToken(HttpServletRequest httpServletRequest) throws RefreshTokenNotFoundException {
         try {
             var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
             var cookie = readCookie(httpServletRequest, refreshToken.getCookieKey());
             return new CookieRefreshToken(cookie);
         } catch (CookieNotFoundException ex) {
-            throw new CookieRefreshTokenNotFoundException();
+            throw new RefreshTokenNotFoundException();
         }
     }
 

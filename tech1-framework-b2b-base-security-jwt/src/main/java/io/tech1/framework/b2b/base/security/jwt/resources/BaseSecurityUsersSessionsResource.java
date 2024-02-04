@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
-import io.tech1.framework.domain.exceptions.tokens.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +35,13 @@ public class BaseSecurityUsersSessionsResource {
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
     @GetMapping
-    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
         this.baseUsersSessionsService.renewUserRequestMetadata(session, httpServletRequest);
@@ -65,7 +65,7 @@ public class BaseSecurityUsersSessionsResource {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
         var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);

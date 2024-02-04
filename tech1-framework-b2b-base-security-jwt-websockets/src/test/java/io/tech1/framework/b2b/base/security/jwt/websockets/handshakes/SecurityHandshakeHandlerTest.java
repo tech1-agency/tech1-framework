@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.cookie.*;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +44,9 @@ class SecurityHandshakeHandlerTest {
 
     private static Stream<Arguments> determineUserExceptionTest() {
         return Stream.of(
-                Arguments.of(new CookieAccessTokenInvalidException()),
-                Arguments.of(new CookieRefreshTokenInvalidException()),
-                Arguments.of(new CookieAccessTokenExpiredException(Username.random()))
+                Arguments.of(new AccessTokenInvalidException()),
+                Arguments.of(new RefreshTokenInvalidException()),
+                Arguments.of(new AccessTokenExpiredException(Username.random()))
         );
     }
 
@@ -102,7 +101,7 @@ class SecurityHandshakeHandlerTest {
 
     @ParameterizedTest
     @MethodSource("determineUserExceptionTest")
-    void determineUserExceptionTest(Exception exception) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenDbNotFoundException {
+    void determineUserExceptionTest(Exception exception) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenNotFoundException, RefreshTokenNotFoundException, AccessTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);
@@ -128,7 +127,7 @@ class SecurityHandshakeHandlerTest {
     }
 
     @Test
-    void determineUserTest() throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenNotFoundException, CookieRefreshTokenNotFoundException, CookieAccessTokenDbNotFoundException {
+    void determineUserTest() throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenNotFoundException, RefreshTokenNotFoundException, AccessTokenDbNotFoundException {
         // Arrange
         var request = mock(HttpServletRequest.class);
         var serverHttpRequest = mock(ServletServerHttpRequest.class);

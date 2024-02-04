@@ -77,6 +77,11 @@ public class TokenCookiesProvider implements TokenProvider {
     }
 
     @Override
+    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException {
+        return this.readRequestAccessToken(request);
+    }
+
+    @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         try {
             var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
@@ -85,6 +90,11 @@ public class TokenCookiesProvider implements TokenProvider {
         } catch (CookieNotFoundException ex) {
             throw new RefreshTokenNotFoundException();
         }
+    }
+
+    @Override
+    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException {
+        return this.readRequestRefreshToken(request);
     }
 
     @Override

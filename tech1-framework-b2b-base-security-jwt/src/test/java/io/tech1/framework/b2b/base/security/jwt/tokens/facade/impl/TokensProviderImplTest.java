@@ -175,6 +175,25 @@ class TokensProviderImplTest {
 
     @ParameterizedTest
     @MethodSource("jwtTokenStoragesArgs")
+    void readRequestAccessTokenOnWebsocketHandshake(JwtTokenStorageMethod method) throws AccessTokenNotFoundException {
+        // Arrange
+        this.mockProperties(method);
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        this.componentUnderTest.readRequestAccessTokenOnWebsocketHandshake(request);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).readRequestAccessTokenOnWebsocketHandshake(request);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).readRequestAccessTokenOnWebsocketHandshake(request);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
     void readRequestRefreshToken(JwtTokenStorageMethod method) throws RefreshTokenNotFoundException {
         // Arrange
         this.mockProperties(method);
@@ -189,6 +208,25 @@ class TokensProviderImplTest {
         }
         if (method.isHeaders()) {
             verify(this.tokensHeadersProvider).readRequestRefreshToken(request);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void readRequestRefreshTokenOnWebsocketHandshake(JwtTokenStorageMethod method) throws RefreshTokenNotFoundException {
+        // Arrange
+        this.mockProperties(method);
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        this.componentUnderTest.readRequestRefreshTokenOnWebsocketHandshake(request);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).readRequestRefreshTokenOnWebsocketHandshake(request);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).readRequestRefreshTokenOnWebsocketHandshake(request);
         }
     }
 

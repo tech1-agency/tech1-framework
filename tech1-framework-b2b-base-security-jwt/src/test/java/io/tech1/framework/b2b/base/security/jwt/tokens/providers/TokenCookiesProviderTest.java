@@ -9,6 +9,9 @@ import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkProperti
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -33,6 +35,20 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class TokenCookiesProviderTest {
+
+    private static Stream<Arguments> readRequestAccessTokenArgs() {
+        return Stream.of(
+                Arguments.of(true, false),
+                Arguments.of(false, true)
+        );
+    }
+
+    private static Stream<Arguments> readRequestRefreshTokenArgs() {
+        return Stream.of(
+                Arguments.of(true, false),
+                Arguments.of(false, true)
+        );
+    }
 
     @Configuration
     @Import({
@@ -103,8 +119,9 @@ class TokenCookiesProviderTest {
         verifyNoMoreInteractions(response);
     }
 
-    @Test
-    void readRequestAccessToken() throws AccessTokenNotFoundException {
+    @ParameterizedTest
+    @MethodSource("readRequestAccessTokenArgs")
+    void readRequestAccessToken(boolean rest, boolean websocket) throws AccessTokenNotFoundException {
         // Arrange
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
@@ -113,7 +130,12 @@ class TokenCookiesProviderTest {
         when(request.getCookies()).thenReturn(new Cookie[] { cookie });
 
         // Act
-        this.componentUnderTest.readRequestAccessToken(request);
+        if (rest) {
+            this.componentUnderTest.readRequestAccessToken(request);
+        }
+        if (websocket) {
+            this.componentUnderTest.readRequestAccessTokenOnWebsocketHandshake(request);
+        }
 
         // Assert
         verify(request).getCookies();
@@ -137,8 +159,9 @@ class TokenCookiesProviderTest {
                 .hasMessageContaining("JWT access token not found");
     }
 
-    @Test
-    void readRequestRefreshToken() throws RefreshTokenNotFoundException {
+    @ParameterizedTest
+    @MethodSource("readRequestRefreshTokenArgs")
+    void readRequestRefreshToken(boolean rest, boolean websocket) throws RefreshTokenNotFoundException {
         // Arrange
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
@@ -147,7 +170,12 @@ class TokenCookiesProviderTest {
         when(request.getCookies()).thenReturn(new Cookie[] { cookie });
 
         // Act
-        this.componentUnderTest.readRequestRefreshToken(request);
+        if (rest) {
+            this.componentUnderTest.readRequestRefreshToken(request);
+        }
+        if (websocket) {
+            this.componentUnderTest.readRequestRefreshTokenOnWebsocketHandshake(request);
+        }
 
         // Assert
         verify(request).getCookies();

@@ -17,4 +17,4 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.2]
-— TBD
+— Tokens Provider API: add dedicated methods readRequestAccessTokenOnWebsocketHandshake, readRequestRefreshTokenOnWebsocketHandshake

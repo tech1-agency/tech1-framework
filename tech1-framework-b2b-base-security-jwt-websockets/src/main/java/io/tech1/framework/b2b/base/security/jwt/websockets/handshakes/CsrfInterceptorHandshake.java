@@ -37,8 +37,9 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
         try {
             var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
             var httpRequest = ((ServletServerHttpRequest) request).getServletRequest();
-            var cookieValue = readCookie(httpRequest, csrfConfigs.getCookieName());
-            var csrfToken = new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), cookieValue);
+            // WARNING: security concerns? based on https://github.com/sockjs/sockjs-node#authorisation
+            var csrfCookie = readCookie(httpRequest, csrfConfigs.getCookieName());
+            var csrfToken = new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), csrfCookie);
             attributes.put(CsrfToken.class.getName(), csrfToken);
             return true;
         } catch (CookieNotFoundException ex1) {

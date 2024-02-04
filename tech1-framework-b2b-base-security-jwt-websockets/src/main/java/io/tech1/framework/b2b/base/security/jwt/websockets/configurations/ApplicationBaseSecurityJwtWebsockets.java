@@ -23,7 +23,6 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
  * <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#websocket">Documentation #2</a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Configuration
 @ComponentScan({

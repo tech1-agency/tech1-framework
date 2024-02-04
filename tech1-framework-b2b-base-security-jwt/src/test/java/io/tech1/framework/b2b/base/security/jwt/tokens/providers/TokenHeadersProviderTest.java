@@ -112,6 +112,38 @@ class TokenHeadersProviderTest {
     }
 
     @Test
+    void readRequestAccessTokenOnWebsocketHandshake() throws AccessTokenNotFoundException {
+        // Arrange
+        var headerKey = this.jwtTokensConfigs().getAccessToken().getHeaderKey();
+        var header = RandomUtility.randomString();
+        var request = mock(HttpServletRequest.class);
+        when(request.getParameter(headerKey)).thenReturn(header);
+
+        // Act
+        this.componentUnderTest.readRequestAccessTokenOnWebsocketHandshake(request);
+
+        // Assert
+        verify(request).getParameter(headerKey);
+        assertThat(request.getParameter(headerKey)).isEqualTo(header);
+    }
+
+    @Test
+    void readRequestAccessTokenOnWebsocketHandshakeThrow() {
+        // Arrange
+        var headerKey = this.jwtTokensConfigs().getAccessToken().getHeaderKey();
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.readRequestAccessTokenOnWebsocketHandshake(request));
+
+        // Assert
+        verify(request).getParameter(headerKey);
+        assertThat(throwable)
+                .isInstanceOf(AccessTokenNotFoundException.class)
+                .hasMessageContaining("JWT access token not found");
+    }
+
+    @Test
     void readRequestRefreshToken() throws RefreshTokenNotFoundException {
         // Arrange
         var headerKey = this.jwtTokensConfigs().getRefreshToken().getHeaderKey();
@@ -138,6 +170,38 @@ class TokenHeadersProviderTest {
 
         // Assert
         verify(request).getHeader(headerKey);
+        assertThat(throwable)
+                .isInstanceOf(RefreshTokenNotFoundException.class)
+                .hasMessageContaining("JWT refresh token not found");
+    }
+
+    @Test
+    void readRequestRefreshTokenOnWebsocketHandshake() throws RefreshTokenNotFoundException {
+        // Arrange
+        var headerKey = this.jwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var header = RandomUtility.randomString();
+        var request = mock(HttpServletRequest.class);
+        when(request.getParameter(headerKey)).thenReturn(header);
+
+        // Act
+        this.componentUnderTest.readRequestRefreshTokenOnWebsocketHandshake(request);
+
+        // Assert
+        verify(request).getParameter(headerKey);
+        assertThat(request.getParameter(headerKey)).isEqualTo(header);
+    }
+
+    @Test
+    void readRequestRefreshTokenOnWebsocketHandshakeThrow() {
+        // Arrange
+        var headerKey = this.jwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.readRequestRefreshTokenOnWebsocketHandshake(request));
+
+        // Assert
+        verify(request).getParameter(headerKey);
         assertThat(throwable)
                 .isInstanceOf(RefreshTokenNotFoundException.class)
                 .hasMessageContaining("JWT refresh token not found");

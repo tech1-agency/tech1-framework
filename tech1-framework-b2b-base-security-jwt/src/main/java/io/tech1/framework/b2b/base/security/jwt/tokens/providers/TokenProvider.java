@@ -14,6 +14,8 @@ public interface TokenProvider {
     void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
     void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
     RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
+    RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException;
     RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
+    RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException;
     void clearTokens(HttpServletResponse response);
 }

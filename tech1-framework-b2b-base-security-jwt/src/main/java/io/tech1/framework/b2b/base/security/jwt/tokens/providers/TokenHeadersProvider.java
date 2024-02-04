@@ -51,9 +51,34 @@ public class TokenHeadersProvider implements TokenProvider {
     }
 
     @Override
+    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException {
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        // WARNING: development workaround to read request query parameters instead of request headers
+        var header = request.getParameter(headerKey);
+        System.out.println("ACCESS: " + headerKey + " ---- " + header);
+        if (nonNull(header)) {
+            return new RequestAccessToken(header);
+        } else {
+            throw new AccessTokenNotFoundException();
+        }
+    }
+
+    @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = request.getHeader(headerKey);
+        if (nonNull(header)) {
+            return new RequestRefreshToken(header);
+        } else {
+            throw new RefreshTokenNotFoundException();
+        }
+    }
+
+    @Override
+    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException {
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var header = request.getParameter(headerKey);
+        System.out.println("REFRESH: " + headerKey + " ---- " + header);
         if (nonNull(header)) {
             return new RequestRefreshToken(header);
         } else {

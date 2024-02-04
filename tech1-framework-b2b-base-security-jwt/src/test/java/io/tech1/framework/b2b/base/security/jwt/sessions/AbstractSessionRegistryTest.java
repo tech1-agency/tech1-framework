@@ -7,9 +7,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticatio
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefreshed;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
@@ -342,12 +342,12 @@ class AbstractSessionRegistryTest {
     void getSessionsTableTest() {
         // Arrange
         var username = entity(Username.class);
-        var cookie = CookieAccessToken.random();
+        var requestAccessToken = RequestAccessToken.random();
 
         Function<Tuple2<UserRequestMetadata, String>, ResponseUserSession2> sessionFnc =
-                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), cookie, new JwtAccessToken(tuple2.b()), tuple2.a());
+                tuple2 -> ResponseUserSession2.of(entity(UserSessionId.class), getCurrentTimestamp(), Username.random(), requestAccessToken, new JwtAccessToken(tuple2.b()), tuple2.a());
 
-        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.valid()), cookie.value()));
+        var validSession = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.valid()), requestAccessToken.value()));
         var invalidSession1 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.valid()), randomString()));
         var invalidSession2 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.valid(), UserAgentDetails.invalid()), randomString()));
         var invalidSession3 = sessionFnc.apply(new Tuple2<>(processed(GeoLocation.invalid(), UserAgentDetails.invalid()), randomString()));
@@ -389,13 +389,13 @@ class AbstractSessionRegistryTest {
             var userSessions = item.a();
             var expectedSessionSize = item.b();
             var expectedAnyProblems = item.c();
-            when(this.usersSessionsRepository.getUsersSessionsTable(username, cookie)).thenReturn(userSessions);
+            when(this.usersSessionsRepository.getUsersSessionsTable(username, requestAccessToken)).thenReturn(userSessions);
 
             // Act
-            var currentUserDbSessionsTable = this.componentUnderTest.getSessionsTable(username, cookie);
+            var currentUserDbSessionsTable = this.componentUnderTest.getSessionsTable(username, requestAccessToken);
 
             // Assert
-            verify(this.usersSessionsRepository).getUsersSessionsTable(username, cookie);
+            verify(this.usersSessionsRepository).getUsersSessionsTable(username, requestAccessToken);
             assertThat(currentUserDbSessionsTable).isNotNull();
             assertThat(currentUserDbSessionsTable.sessions()).hasSize(expectedSessionSize);
             assertThat(currentUserDbSessionsTable.sessions().stream().filter(ResponseUserSession2::current).count()).isEqualTo(1);

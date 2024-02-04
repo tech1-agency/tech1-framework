@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
@@ -124,9 +124,9 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 list345(ResponseUserSession2.class),
                 list345(ResponseUserSession2.class)
         );
-        var cookie = CookieAccessToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
-        when(this.baseSuperAdminService.getSessions(cookie)).thenReturn(sessionsTable);
+        var requestAccessToken = RequestAccessToken.random();
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.baseSuperAdminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
 
         // Act
         this.mvc.perform(get("/superadmin/sessions"))
@@ -156,7 +156,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.baseSuperAdminService).getSessions(cookie);
+        verify(this.baseSuperAdminService).getSessions(requestAccessToken);
     }
 
     @Test
@@ -188,8 +188,8 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     @Test
     void deleteAllExceptCurrentTest() throws Exception {
         // Arrange
-        var cookie = CookieAccessToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        var requestAccessToken = RequestAccessToken.random();
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act
         this.mvc.perform(delete("/superadmin/sessions/"))
@@ -197,6 +197,6 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(cookie);
+        verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(requestAccessToken);
     }
 }

@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
@@ -215,9 +215,9 @@ class BaseCurrentSessionAssistantTest {
         // Arrange
         var session = entity(UserSession.class);
         var request = mock(HttpServletRequest.class);
-        var cookie = CookieAccessToken.random();
-        var accessToken = JwtAccessToken.of(cookie.value());
-        when(this.tokensProvider.readJwtAccessToken(request)).thenReturn(cookie);
+        var requestAccessToken = RequestAccessToken.random();
+        var accessToken = JwtAccessToken.of(requestAccessToken.value());
+        when(this.tokensProvider.readJwtAccessToken(request)).thenReturn(requestAccessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
 
         // Act
@@ -233,18 +233,18 @@ class BaseCurrentSessionAssistantTest {
     void getCurrentUserDbSessionsTableTest() {
         // Arrange
         var username = Username.random();
-        var cookie = CookieAccessToken.random();
+        var requestAccessToken = RequestAccessToken.random();
         var sessionsTable = entity(ResponseUserSessionsTable.class);
         when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
-        when(this.sessionRegistry.getSessionsTable(username, cookie)).thenReturn(sessionsTable);
+        when(this.sessionRegistry.getSessionsTable(username, requestAccessToken)).thenReturn(sessionsTable);
 
         // Act
-        var actual = this.componentUnderTest.getCurrentUserDbSessionsTable(cookie);
+        var actual = this.componentUnderTest.getCurrentUserDbSessionsTable(requestAccessToken);
 
         // Assert
         verify(this.securityPrincipalUtils).getAuthenticatedUsername();
         verify(this.sessionRegistry).cleanByExpiredRefreshTokens(Set.of(username));
-        verify(this.sessionRegistry).getSessionsTable(username, cookie);
+        verify(this.sessionRegistry).getSessionsTable(username, requestAccessToken);
         assertThat(actual).isEqualTo(sessionsTable);
     }
 }

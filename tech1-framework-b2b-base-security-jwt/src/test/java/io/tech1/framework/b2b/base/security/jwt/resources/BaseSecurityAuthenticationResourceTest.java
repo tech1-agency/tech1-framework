@@ -155,8 +155,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     @Test
     void logoutNoJwtRefreshTokenTest() throws Exception {
         // Arrange
-        var cookieRefreshToken = new CookieAccessToken(null);
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
+        var requestAccessToken = new RequestAccessToken(null);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act
         this.mvc.perform(post("/authentication/logout"))
@@ -169,9 +169,9 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     @Test
     void logoutInvalidJwtRefreshTokenTest() throws Exception {
         // Arrange
-        var cookie = new CookieAccessToken(randomString());
-        var accessToken = cookie.getJwtAccessToken();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        var requestAccessToken = new RequestAccessToken(randomString());
+        var accessToken = requestAccessToken.getJwtAccessToken();
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.invalid(accessToken));
 
         // Act
@@ -188,13 +188,13 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         // Arrange
         var httpSession = mock(HttpSession.class);
         var username = Username.random();
-        var cookie = CookieAccessToken.random();
-        var accessToken = cookie.getJwtAccessToken();
+        var requestAccessToken = RequestAccessToken.random();
+        var accessToken = requestAccessToken.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
-        when(this.securityJwtTokenUtils.validate(cookie.getJwtAccessToken())).thenReturn(validatedClaims);
+        when(this.securityJwtTokenUtils.validate(requestAccessToken.getJwtAccessToken())).thenReturn(validatedClaims);
 
         // Act
         this.mvc.perform(post("/authentication/logout")
@@ -218,11 +218,11 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     void logoutNullSessionTest() throws Exception {
         // Arrange
         var username = Username.random();
-        var cookie = CookieAccessToken.random();
-        var accessToken = cookie.getJwtAccessToken();
+        var requestAccessToken = RequestAccessToken.random();
+        var accessToken = requestAccessToken.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
 

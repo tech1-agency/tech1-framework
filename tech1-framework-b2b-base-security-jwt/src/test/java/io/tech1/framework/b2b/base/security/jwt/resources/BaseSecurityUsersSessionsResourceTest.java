@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
@@ -72,9 +72,9 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     void getSessionsTableTest() throws Exception {
         // Arrange
         var userSessionsTables = ResponseUserSessionsTable.of(list345(ResponseUserSession2.class));
-        var cookie = CookieAccessToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
-        when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie)).thenReturn(userSessionsTables);
+        var requestAccessToken = RequestAccessToken.random();
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.currentSessionAssistant.getCurrentUserDbSessionsTable(requestAccessToken)).thenReturn(userSessionsTables);
 
         // Act
         this.mvc.perform(get("/sessions"))
@@ -85,7 +85,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.currentSessionAssistant).getCurrentUserDbSessionsTable(cookie);
+        verify(this.currentSessionAssistant).getCurrentUserDbSessionsTable(requestAccessToken);
     }
 
     @Test
@@ -165,9 +165,9 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
         var username = entity(Username.class);
-        var cookie = CookieAccessToken.random();
+        var requestAccessToken = RequestAccessToken.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookie);
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act
         this.mvc.perform(delete("/sessions"))
@@ -176,6 +176,6 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(username, cookie);
+        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(username, requestAccessToken);
     }
 }

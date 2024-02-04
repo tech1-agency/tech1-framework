@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
@@ -82,9 +82,9 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     }
 
     @Override
-    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(CookieAccessToken cookie) {
+    public ResponseUserSessionsTable getCurrentUserDbSessionsTable(RequestAccessToken requestAccessToken) {
         var username = this.getCurrentUsername();
         this.sessionRegistry.cleanByExpiredRefreshTokens(Set.of(username));
-        return this.sessionRegistry.getSessionsTable(username, cookie);
+        return this.sessionRegistry.getSessionsTable(username, requestAccessToken);
     }
 }

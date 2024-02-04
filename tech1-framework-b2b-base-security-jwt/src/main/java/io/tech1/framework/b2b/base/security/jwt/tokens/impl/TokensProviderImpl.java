@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.tokens.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
@@ -63,22 +63,22 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public CookieAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
+    public RequestAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
         try {
             var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
             var cookie = readCookie(request, accessToken.getCookieKey());
-            return new CookieAccessToken(cookie);
+            return new RequestAccessToken(cookie);
         } catch (CookieNotFoundException ex) {
             throw new AccessTokenNotFoundException();
         }
     }
 
     @Override
-    public CookieRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
+    public RequestRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         try {
             var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
             var cookie = readCookie(request, refreshToken.getCookieKey());
-            return new CookieRefreshToken(cookie);
+            return new RequestRefreshToken(cookie);
         } catch (CookieNotFoundException ex) {
             throw new RefreshTokenNotFoundException();
         }

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.tokens;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface TokensProvider {
     void createJwtAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
     void createJwtRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
-    CookieAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
-    CookieRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
+    RequestAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
+    RequestRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
     void clearTokens(HttpServletResponse response);
 }

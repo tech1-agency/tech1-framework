@@ -2,9 +2,9 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -171,20 +171,20 @@ class AbstractBaseSuperAdminServiceTest {
     @Test
     void getServerSessionsTest() {
         // Arrange
-        var cookie = CookieAccessToken.random();
+        var requestAccessToken = RequestAccessToken.random();
         var activeSessions = Set.of(JwtAccessToken.random(), JwtAccessToken.random());
         var serverSessionsTable = entity(ResponseSuperadminSessionsTable.class);
 
         when(this.sessionRegistry.getActiveSessionsAccessTokens()).thenReturn(activeSessions);
-        when(this.usersSessionsRepository.getSessionsTable(activeSessions, cookie)).thenReturn(serverSessionsTable);
+        when(this.usersSessionsRepository.getSessionsTable(activeSessions, requestAccessToken)).thenReturn(serverSessionsTable);
 
 
         // Act
-        var actual = this.componentUnderTest.getSessions(cookie);
+        var actual = this.componentUnderTest.getSessions(requestAccessToken);
 
         // Assert
         verify(this.sessionRegistry).getActiveSessionsAccessTokens();
-        verify(this.usersSessionsRepository).getSessionsTable(activeSessions, cookie);
+        verify(this.usersSessionsRepository).getSessionsTable(activeSessions, requestAccessToken);
         assertThat(actual).isEqualTo(serverSessionsTable);
     }
 }

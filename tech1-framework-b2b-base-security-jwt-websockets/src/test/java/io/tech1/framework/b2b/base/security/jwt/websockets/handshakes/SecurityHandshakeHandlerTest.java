@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
-import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
+import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
@@ -108,11 +108,11 @@ class SecurityHandshakeHandlerTest {
         var wsHandler = mock(WebSocketHandler.class);
         Map<String, Object> attributes = new HashMap<>();
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        var cookieAccessToken = CookieAccessToken.random();
-        var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenThrow(exception);
+        var requestAccessToken = RequestAccessToken.random();
+        var requestRefreshToken = RequestRefreshToken.random();
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(exception);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes));
@@ -123,7 +123,7 @@ class SecurityHandshakeHandlerTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("WebSocket user not determined");
-        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
     }
 
     @Test
@@ -135,11 +135,11 @@ class SecurityHandshakeHandlerTest {
         Map<String, Object> attributes = new HashMap<>();
         var user = entity(JwtUser.class);
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
-        var cookieAccessToken = CookieAccessToken.random();
-        var cookieRefreshToken = CookieRefreshToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(cookieAccessToken);
-        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(cookieRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken)).thenReturn(user);
+        var requestAccessToken = RequestAccessToken.random();
+        var requestRefreshToken = RequestRefreshToken.random();
+        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readJwtRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
 
         // Act
         var actual = this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes);
@@ -147,7 +147,7 @@ class SecurityHandshakeHandlerTest {
         // Assert
         verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
         verify(this.tokensProvider).readJwtRefreshToken(any(HttpServletRequest.class));
-        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         assertThat(actual).isNotNull();
         assertThat(actual.getName()).isEqualTo(user.getUsername());
     }

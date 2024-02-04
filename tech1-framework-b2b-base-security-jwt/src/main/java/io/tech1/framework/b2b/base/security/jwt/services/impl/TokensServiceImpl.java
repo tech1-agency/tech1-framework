@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.base.security.jwt.services.impl;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
@@ -40,11 +40,11 @@ public class TokensServiceImpl implements TokensService {
 
     @Override
     public JwtUser getJwtUserByAccessTokenOrThrow(
-            CookieAccessToken cookieAccessToken,
-            CookieRefreshToken cookieRefreshToken
+            RequestAccessToken requestAccessToken,
+            RequestRefreshToken requestRefreshToken
     ) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
-        var accessToken = cookieAccessToken.getJwtAccessToken();
-        var refreshToken = cookieRefreshToken.getJwtRefreshToken();
+        var accessToken = requestAccessToken.getJwtAccessToken();
+        var refreshToken = requestRefreshToken.getJwtRefreshToken();
 
         var accessTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(accessToken);
         this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken);

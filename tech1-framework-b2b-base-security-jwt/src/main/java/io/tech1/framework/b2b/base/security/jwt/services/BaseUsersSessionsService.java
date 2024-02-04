@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRe
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -26,6 +26,6 @@ public interface BaseUsersSessionsService {
     void enableUserRequestMetadataRenewManually(UserSessionId sessionId);
     void renewUserRequestMetadata(UserSession session, HttpServletRequest httpServletRequest);
     void deleteById(UserSessionId sessionId);
-    void deleteAllExceptCurrent(Username username, CookieAccessToken cookie);
-    void deleteAllExceptCurrentAsSuperuser(CookieAccessToken cookie);
+    void deleteAllExceptCurrent(Username username, RequestAccessToken requestAccessToken);
+    void deleteAllExceptCurrentAsSuperuser(RequestAccessToken requestAccessToken);
 }

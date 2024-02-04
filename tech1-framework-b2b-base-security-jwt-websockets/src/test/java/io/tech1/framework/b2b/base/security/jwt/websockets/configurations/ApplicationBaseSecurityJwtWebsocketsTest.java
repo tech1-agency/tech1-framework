@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.CsrfInterc
 import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.SecurityHandshakeHandler;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingTemplate;
 import io.tech1.framework.domain.properties.configs.MvcConfigs;
+import io.tech1.framework.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,6 @@ import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_WEBSOCKETS_CONFIGS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -56,7 +56,7 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
                             )
                     )
             );
-            properties.setSecurityJwtWebsocketsConfigs(SECURITY_JWT_WEBSOCKETS_CONFIGS);
+            properties.setSecurityJwtWebsocketsConfigs(SecurityJwtWebsocketsConfigs.testsHardcoded());
             return properties;
         }
 

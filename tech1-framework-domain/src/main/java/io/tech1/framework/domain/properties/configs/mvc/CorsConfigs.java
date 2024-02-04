@@ -24,4 +24,15 @@ public class CorsConfigs extends AbstractPropertiesConfigs {
     private boolean allowCredentials;
     @NonMandatoryProperty
     private String[] exposedHeaders;
+
+    public static CorsConfigs testsHardcoded() {
+        return new CorsConfigs(
+                "/api/**",
+                new String[] { "http://localhost:8080", "http://localhost:8081" },
+                new String[] { "GET", "POST" },
+                new String[] { "Access-Control-Allow-Origin" },
+                true,
+                null
+        );
+    }
 }

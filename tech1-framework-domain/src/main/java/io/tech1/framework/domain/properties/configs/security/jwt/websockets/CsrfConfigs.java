@@ -18,4 +18,8 @@ public class CsrfConfigs extends AbstractPropertiesConfigs {
     private final String headerName;
     @MandatoryProperty
     private final String parameterName;
+
+    public static CsrfConfigs testsHardcoded() {
+        return new CsrfConfigs("csrf-cookie", "csrf-header", "csrf-parameter");
+    }
 }

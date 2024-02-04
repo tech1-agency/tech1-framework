@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRe
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -196,12 +196,12 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     }
 
     @Override
-    public void deleteAllExceptCurrent(Username username, CookieAccessToken cookie) {
-        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(username, cookie);
+    public void deleteAllExceptCurrent(Username username, RequestAccessToken requestAccessToken) {
+        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(username, requestAccessToken);
     }
 
     @Override
-    public void deleteAllExceptCurrentAsSuperuser(CookieAccessToken cookie) {
-        this.usersSessionsRepository.deleteExceptAccessToken(cookie);
+    public void deleteAllExceptCurrentAsSuperuser(RequestAccessToken requestAccessToken) {
+        this.usersSessionsRepository.deleteExceptAccessToken(requestAccessToken);
     }
 }

@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticatio
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefreshed;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
@@ -130,7 +130,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     }
 
     @Override
-    public ResponseUserSessionsTable getSessionsTable(Username username, CookieAccessToken cookie) {
-        return ResponseUserSessionsTable.of(this.usersSessionsRepository.getUsersSessionsTable(username, cookie));
+    public ResponseUserSessionsTable getSessionsTable(Username username, RequestAccessToken requestAccessToken) {
+        return ResponseUserSessionsTable.of(this.usersSessionsRepository.getUsersSessionsTable(username, requestAccessToken));
     }
 }

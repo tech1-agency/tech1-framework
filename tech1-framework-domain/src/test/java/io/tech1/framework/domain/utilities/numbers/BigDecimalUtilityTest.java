@@ -214,6 +214,18 @@ class BigDecimalUtilityTest {
         );
     }
 
+    private static Stream<Arguments> getNumberOfDigitsAfterTheDecimalPointIncludingTrailingZerosOrZeroTest() {
+        return Stream.of(
+                Arguments.of(new BigDecimal("-244.5444"), 4),
+                Arguments.of(new BigDecimal("0"), 0),
+                Arguments.of(new BigDecimal("2646"), 0),
+                Arguments.of(new BigDecimal("2646.0"), 1),
+                Arguments.of(new BigDecimal("2646.01"), 2),
+                Arguments.of(new BigDecimal("2646.010"), 3),
+                Arguments.of(new BigDecimal("2646.01001"), 5)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("areValuesEqualsTest")
     void areValuesEqualsTest(BigDecimal value1, BigDecimal value2, boolean expected) {
@@ -449,6 +461,16 @@ class BigDecimalUtilityTest {
     void getNumberOfDigitsAfterTheDecimalPointOrZeroTest(BigDecimal value, int expected) {
         // Act
         var actual = getNumberOfDigitsAfterTheDecimalPointOrZero(value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getNumberOfDigitsAfterTheDecimalPointIncludingTrailingZerosOrZeroTest")
+    void getNumberOfDigitsAfterTheDecimalPointIncludingTrailingZerosOrZeroTest(BigDecimal number, int expected) {
+        // Act
+        var actual = getNumberOfDigitsAfterTheDecimalPointIncludingTrailingZerosOrZero(number);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

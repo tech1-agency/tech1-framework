@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs.security.jwt;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.base.DefaultUser;
 import io.tech1.framework.domain.properties.base.DefaultUsers;
 import io.tech1.framework.domain.properties.base.InvitationCodes;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
@@ -8,6 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
+
+import java.time.ZoneId;
+import java.util.List;
+import java.util.Set;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -18,4 +23,22 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
     private final DefaultUsers defaultUsers;
     @MandatoryProperty
     private final InvitationCodes invitationCodes;
+
+    public static EssenceConfigs testsHardcoded() {
+        return new EssenceConfigs(
+                new DefaultUsers(
+                        true,
+                        List.of(
+                                new DefaultUser(
+                                        "admin12",
+                                        "password12",
+                                        ZoneId.systemDefault(),
+                                        null,
+                                        Set.of("admin")
+                                )
+                        )
+                ),
+                InvitationCodes.enabled()
+        );
+    }
 }

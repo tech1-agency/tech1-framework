@@ -52,6 +52,19 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final UsersEmailsConfigs usersEmailsConfigs;
 
+    public static SecurityJwtConfigs testsHardcoded() {
+        return new SecurityJwtConfigs(
+                AuthoritiesConfigs.testsHardcoded(),
+                CookiesConfigs.testsHardcoded(),
+                EssenceConfigs.testsHardcoded(),
+                IncidentsConfigs.testsHardcoded(),
+                JwtTokensConfigs.testsHardcoded(),
+                LoggingConfigs.testsHardcoded(),
+                SessionConfigs.testsHardcoded(),
+                UsersEmailsConfigs.testsHardcoded()
+        );
+    }
+
     public static SecurityJwtConfigs of(LoggingConfigs loggingConfigs) {
         return new SecurityJwtConfigs(
                 null,
@@ -66,19 +79,6 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     public static SecurityJwtConfigs of(SessionConfigs sessionConfigs) {
-        return new SecurityJwtConfigs(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                sessionConfigs,
-                null
-        );
-    }
-
-    public static SecurityJwtConfigs of(MvcConfigs mvcConfigs, SessionConfigs sessionConfigs) {
         return new SecurityJwtConfigs(
                 null,
                 null,

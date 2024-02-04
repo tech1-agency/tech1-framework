@@ -5,10 +5,7 @@ import io.tech1.framework.domain.properties.base.ScheduledJob;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
 import io.tech1.framework.domain.properties.base.SpringLogging;
 import io.tech1.framework.domain.properties.base.SpringServer;
-import io.tech1.framework.domain.properties.configs.EmailConfigs;
-import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
-import io.tech1.framework.domain.properties.configs.MvcConfigs;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.*;
 import io.tech1.framework.domain.properties.configs.security.jwt.IncidentsConfigs;
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
 import io.tech1.framework.domain.utilities.collections.CollectorUtility;
@@ -24,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperties;
-import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,8 +48,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        assertProperties(SERVER_CONFIGS, "serverConfigs");
-        printProperties(SERVER_CONFIGS);
+        assertProperties(ServerConfigs.testsHardcoded(), "serverConfigs");
+        printProperties(ServerConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -62,8 +58,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        assertProperties(UTILITIES_CONFIGS, "utilitiesConfigs");
-        printProperties(UTILITIES_CONFIGS);
+        assertProperties(UtilitiesConfigs.testsHardcoded(), "utilitiesConfigs");
+        printProperties(UtilitiesConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -72,8 +68,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void asyncConfigsTest() {
         // Act
-        assertProperties(ASYNC_CONFIGS, "asyncConfigs");
-        printProperties(ASYNC_CONFIGS);
+        assertProperties(AsyncConfigs.testsHardcoded(), "asyncConfigs");
+        printProperties(AsyncConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -82,8 +78,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void eventsConfigsTest() {
         // Act
-        assertProperties(EVENTS_CONFIGS, "eventsConfigs");
-        printProperties(EVENTS_CONFIGS);
+        assertProperties(EventsConfigs.testsHardcoded(), "eventsConfigs");
+        printProperties(EventsConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -109,8 +105,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsTest() {
         // Act
-        assertProperties(MVC_CONFIGS, "mvcConfigs");
-        printProperties(MVC_CONFIGS);
+        assertProperties(MvcConfigs.testsHardcoded(), "mvcConfigs");
+        printProperties(MvcConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -132,8 +128,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void emailConfigsTest() {
         // Act
-        assertProperties(EMAIL_CONFIGS, "emailConfigs");
-        printProperties(EMAIL_CONFIGS);
+        assertProperties(EmailConfigs.testsHardcoded(), "emailConfigs");
+        printProperties(EmailConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -142,8 +138,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentConfigsTest() {
         // Act
-        assertProperties(INCIDENT_CONFIGS, "incidentConfigs");
-        printProperties(INCIDENT_CONFIGS);
+        assertProperties(IncidentConfigs.testsHardcoded(), "incidentConfigs");
+        printProperties(IncidentConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -187,11 +183,11 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void hardwareMonitoringConfigsTest() {
         // Act
-        assertProperties(HARDWARE_MONITORING_CONFIGS, "hardwareMonitoringConfigs");
-        printProperties(HARDWARE_MONITORING_CONFIGS);
+        assertProperties(HardwareMonitoringConfigs.testsHardcoded(), "hardwareMonitoringConfigs");
+        printProperties(HardwareMonitoringConfigs.testsHardcoded());
 
         // Assert
-        var thresholdsConfigs = HARDWARE_MONITORING_CONFIGS.getThresholdsConfigs();
+        var thresholdsConfigs = HardwareMonitoringConfigs.testsHardcoded().getThresholdsConfigs();
         assertThat(thresholdsConfigs).hasSize(5);
         assertThat(thresholdsConfigs.keySet()).isEqualTo(EnumUtility.set(HardwareName.class));
         assertThat(new HashSet<>(thresholdsConfigs.values())).hasSize(5);
@@ -200,8 +196,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void hardwareServerConfigsTest() {
         // Act
-        assertProperties(HARDWARE_SERVER_CONFIGS, "hardwareServerConfigs");
-        printProperties(HARDWARE_SERVER_CONFIGS);
+        assertProperties(HardwareServerConfigs.testsHardcoded(), "hardwareServerConfigs");
+        printProperties(HardwareServerConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -225,8 +221,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsTest() {
         // Act
-        assertProperties(SECURITY_JWT_CONFIGS, "securityJwtConfigs");
-        printProperties(SECURITY_JWT_CONFIGS);
+        assertProperties(SecurityJwtConfigs.testsHardcoded(), "securityJwtConfigs");
+        printProperties(SecurityJwtConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -250,14 +246,14 @@ class PropertiesAsserterAndPrinterTest {
                 }}
         );
         var securityJwtConfigs = new SecurityJwtConfigs(
-                SECURITY_JWT_CONFIGS.getAuthoritiesConfigs(),
-                SECURITY_JWT_CONFIGS.getCookiesConfigs(),
-                SECURITY_JWT_CONFIGS.getEssenceConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getAuthoritiesConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getCookiesConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getEssenceConfigs(),
                 incidentConfigs,
-                SECURITY_JWT_CONFIGS.getJwtTokensConfigs(),
-                SECURITY_JWT_CONFIGS.getLoggingConfigs(),
-                SECURITY_JWT_CONFIGS.getSessionConfigs(),
-                SECURITY_JWT_CONFIGS.getUsersEmailsConfigs()
+                SecurityJwtConfigs.testsHardcoded().getJwtTokensConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getLoggingConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getSessionConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getUsersEmailsConfigs()
         );
 
         // Act
@@ -283,14 +279,14 @@ class PropertiesAsserterAndPrinterTest {
                 }}
         );
         var securityJwtConfigs = new SecurityJwtConfigs(
-                SECURITY_JWT_CONFIGS.getAuthoritiesConfigs(),
-                SECURITY_JWT_CONFIGS.getCookiesConfigs(),
-                SECURITY_JWT_CONFIGS.getEssenceConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getAuthoritiesConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getCookiesConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getEssenceConfigs(),
                 incidentConfigs,
-                SECURITY_JWT_CONFIGS.getJwtTokensConfigs(),
-                SECURITY_JWT_CONFIGS.getLoggingConfigs(),
-                SECURITY_JWT_CONFIGS.getSessionConfigs(),
-                SECURITY_JWT_CONFIGS.getUsersEmailsConfigs()
+                SecurityJwtConfigs.testsHardcoded().getJwtTokensConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getLoggingConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getSessionConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getUsersEmailsConfigs()
         );
 
         // Act
@@ -318,14 +314,14 @@ class PropertiesAsserterAndPrinterTest {
                 }}
         );
         var securityJwtConfigs = new SecurityJwtConfigs(
-                SECURITY_JWT_CONFIGS.getAuthoritiesConfigs(),
-                SECURITY_JWT_CONFIGS.getCookiesConfigs(),
-                SECURITY_JWT_CONFIGS.getEssenceConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getAuthoritiesConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getCookiesConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getEssenceConfigs(),
                 incidentConfigs,
-                SECURITY_JWT_CONFIGS.getJwtTokensConfigs(),
-                SECURITY_JWT_CONFIGS.getLoggingConfigs(),
-                SECURITY_JWT_CONFIGS.getSessionConfigs(),
-                SECURITY_JWT_CONFIGS.getUsersEmailsConfigs()
+                SecurityJwtConfigs.testsHardcoded().getJwtTokensConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getLoggingConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getSessionConfigs(),
+                SecurityJwtConfigs.testsHardcoded().getUsersEmailsConfigs()
         );
 
         // Act
@@ -340,8 +336,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtWebsocketsConfigsTest() {
         // Act
-        assertProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS, "securityJwtWebsocketsConfigs");
-        printProperties(SECURITY_JWT_WEBSOCKETS_CONFIGS);
+        assertProperties(SecurityJwtWebsocketsConfigs.testsHardcoded(), "securityJwtWebsocketsConfigs");
+        printProperties(SecurityJwtWebsocketsConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -350,8 +346,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mongodbSecurityJwtConfigsTest() {
         // Act
-        assertProperties(MONGODB_SECURITY_JWT_CONFIGS, "mongodbSecurityJwtConfigs");
-        printProperties(MONGODB_SECURITY_JWT_CONFIGS);
+        assertProperties(MongodbSecurityJwtConfigs.testsHardcoded(), "mongodbSecurityJwtConfigs");
+        printProperties(MongodbSecurityJwtConfigs.testsHardcoded());
 
         // Assert
         // no asserts

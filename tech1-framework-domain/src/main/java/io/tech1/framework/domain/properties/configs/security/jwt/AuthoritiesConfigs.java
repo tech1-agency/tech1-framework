@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.domain.base.AbstractAuthority.*;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -22,6 +22,19 @@ public class AuthoritiesConfigs extends AbstractPropertiesConfigs {
     private final String packageName;
     @MandatoryProperty
     private final Set<Authority> authorities;
+
+    public static AuthoritiesConfigs testsHardcoded() {
+        return new AuthoritiesConfigs(
+                "io.tech1",
+                Set.of(
+                        new Authority(SUPER_ADMIN),
+                        new Authority("admin"),
+                        new Authority("user"),
+                        new Authority(INVITATION_CODE_READ),
+                        new Authority(INVITATION_CODE_WRITE)
+                )
+        );
+    }
 
     public Set<String> getAllAuthoritiesValues() {
         return this.authorities.stream().map(Authority::getValue).collect(Collectors.toSet());

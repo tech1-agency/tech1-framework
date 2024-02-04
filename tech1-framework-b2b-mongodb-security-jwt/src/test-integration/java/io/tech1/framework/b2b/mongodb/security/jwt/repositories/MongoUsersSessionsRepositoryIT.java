@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
@@ -73,8 +73,8 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt1")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt2")).present()).isTrue();
         assertThat(this.usersSessionsRepository.isPresent(JwtRefreshToken.of("rwt777")).present()).isFalse();
-        assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new CookieAccessToken("awt2"))).isEmpty();
-        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.testsHardcoded(), new CookieAccessToken("awt2"));
+        assertThat(this.usersSessionsRepository.getUsersSessionsTable(Username.of("user777"), new RequestAccessToken("awt2"))).isEmpty();
+        var usersSessions = this.usersSessionsRepository.getUsersSessionsTable(Username.testsHardcoded(), new RequestAccessToken("awt2"));
         assertThat(usersSessions).hasSize(4);
         assertThat(usersSessions.get(0).current()).isTrue();
         assertThat(usersSessions.get(0).activity()).isEqualTo("Current session");
@@ -82,7 +82,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
             assertThat(userSession.current()).isFalse();
             assertThat(userSession.activity()).isEqualTo("—");
         });
-        var sessionsTable = this.usersSessionsRepository.getSessionsTable(accessTokens("awt3", "atoken11", "atoken"), new CookieAccessToken("atoken"));
+        var sessionsTable = this.usersSessionsRepository.getSessionsTable(accessTokens("awt3", "atoken11", "atoken"), new RequestAccessToken("atoken"));
         assertThat(sessionsTable.activeSessions()).hasSize(3);
         assertThat(sessionsTable.activeSessions().get(0).current()).isTrue();
         assertThat(sessionsTable.activeSessions().get(0).who().identifier()).isEqualTo("sa");
@@ -183,7 +183,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
 
         // Act
         var count1 = this.usersSessionsRepository.count();
-        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.testsHardcoded(), new CookieAccessToken("token2"));
+        this.usersSessionsRepository.deleteByUsernameExceptAccessToken(Username.testsHardcoded(), new RequestAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
         assertThat(count1).isEqualTo(4);
@@ -199,7 +199,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
 
         // Act
         var count1 = this.usersSessionsRepository.count();
-        this.usersSessionsRepository.deleteExceptAccessToken(new CookieAccessToken("token2"));
+        this.usersSessionsRepository.deleteExceptAccessToken(new RequestAccessToken("token2"));
         var count2 = this.usersSessionsRepository.count();
         var sessions = this.usersSessionsRepository.findAll();
 

@@ -2,13 +2,13 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +30,18 @@ public class BaseSecurityUsersSessionsResource {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
     @GetMapping
-    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var user = this.currentSessionAssistant.getCurrentClientUser();
         var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
         this.baseUsersSessionsService.renewUserRequestMetadata(session, httpServletRequest);
@@ -65,9 +65,9 @@ public class BaseSecurityUsersSessionsResource {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
+    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);
     }
 }

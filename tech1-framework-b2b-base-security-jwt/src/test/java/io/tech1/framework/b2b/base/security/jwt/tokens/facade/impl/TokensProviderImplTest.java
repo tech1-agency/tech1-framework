@@ -1,0 +1,236 @@
+package io.tech1.framework.b2b.base.security.jwt.tokens.facade.impl;
+
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import io.tech1.framework.domain.properties.base.JwtToken;
+import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
+import io.tech1.framework.domain.properties.base.TimeAmount;
+import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.security.jwt.*;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.stream.Stream;
+
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.SECONDS;
+import static org.mockito.Mockito.*;
+
+@ExtendWith({ SpringExtension.class })
+@ContextConfiguration(loader= AnnotationConfigContextLoader.class)
+class TokensProviderImplTest {
+
+    private static Stream<Arguments> jwtTokenStoragesArgs() {
+        return Stream.of(
+                Arguments.of(JwtTokenStorageMethod.COOKIES),
+                Arguments.of(JwtTokenStorageMethod.HEADERS)
+        );
+    }
+
+    @Configuration
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+    static class ContextConfiguration {
+        @Bean
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
+        }
+
+        @Bean("tokensCookiesProvider")
+        TokenCookiesProvider tokensCookiesProvider() {
+            return mock(TokenCookiesProvider.class);
+        }
+
+        @Bean("tokensHeadersProvider")
+        TokenHeadersProvider tokensHeadersProvider() {
+            return mock(TokenHeadersProvider.class);
+        }
+
+        @Bean
+        TokensProvider tokensProvider() {
+            return new TokensProviderImpl(
+                    this.tokensCookiesProvider(),
+                    this.tokensHeadersProvider(),
+                    this.applicationFrameworkProperties()
+            );
+        }
+    }
+
+    private final TokenCookiesProvider tokensCookiesProvider;
+    private final TokenHeadersProvider tokensHeadersProvider;
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
+    private final TokensProvider componentUnderTest;
+
+    @Autowired
+    public TokensProviderImplTest(
+            @Qualifier("tokensCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
+            @Qualifier("tokensHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
+            ApplicationFrameworkProperties applicationFrameworkProperties,
+            TokensProvider tokensProvider
+    ) {
+        this.tokensCookiesProvider = tokensCookiesProvider;
+        this.tokensHeadersProvider = tokensHeadersProvider;
+        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        this.componentUnderTest = tokensProvider;
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        reset(
+                this.tokensCookiesProvider,
+                this.tokensHeadersProvider,
+                this.applicationFrameworkProperties
+        );
+    }
+
+    @AfterEach
+    void afterEach() {
+        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verifyNoMoreInteractions(
+                this.tokensCookiesProvider,
+                this.tokensHeadersProvider,
+                this.applicationFrameworkProperties
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void createResponseAccessToken(JwtTokenStorageMethod method) {
+        // Arrange
+        this.mockProperties(method);
+        var jwtAccessToken = new JwtAccessToken(randomString());
+        var response = mock(HttpServletResponse.class);
+
+        // Act
+        this.componentUnderTest.createResponseAccessToken(jwtAccessToken, response);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).createResponseAccessToken(jwtAccessToken, response);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).createResponseAccessToken(jwtAccessToken, response);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void createResponseRefreshToken(JwtTokenStorageMethod method) {
+        // Arrange
+        this.mockProperties(method);
+        var refreshAccessToken = JwtRefreshToken.random();
+        var response = mock(HttpServletResponse.class);
+
+        // Act
+        this.componentUnderTest.createResponseRefreshToken(refreshAccessToken, response);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).createResponseRefreshToken(refreshAccessToken, response);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).createResponseRefreshToken(refreshAccessToken, response);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void readRequestAccessToken(JwtTokenStorageMethod method) throws AccessTokenNotFoundException {
+        // Arrange
+        this.mockProperties(method);
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        this.componentUnderTest.readRequestAccessToken(request);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).readRequestAccessToken(request);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).readRequestAccessToken(request);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void readRequestRefreshToken(JwtTokenStorageMethod method) throws RefreshTokenNotFoundException {
+        // Arrange
+        this.mockProperties(method);
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        this.componentUnderTest.readRequestRefreshToken(request);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).readRequestRefreshToken(request);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).readRequestRefreshToken(request);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void clearTokens(JwtTokenStorageMethod method) {
+        // Arrange
+        this.mockProperties(method);
+        var response = mock(HttpServletResponse.class);
+
+        // Act
+        this.componentUnderTest.clearTokens(response);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).clearTokens(response);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).clearTokens(response);
+        }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private void mockProperties(JwtTokenStorageMethod method) {
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(
+                new SecurityJwtConfigs(
+                        AuthoritiesConfigs.testsHardcoded(),
+                        CookiesConfigs.testsHardcoded(),
+                        EssenceConfigs.testsHardcoded(),
+                        IncidentsConfigs.testsHardcoded(),
+                        new JwtTokensConfigs(
+                                "TECH1",
+                                method,
+                                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
+                                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
+                        ),
+                        LoggingConfigs.testsHardcoded(),
+                        SessionConfigs.testsHardcoded(),
+                        UsersEmailsConfigs.testsHardcoded()
+                )
+        );
+    }
+}

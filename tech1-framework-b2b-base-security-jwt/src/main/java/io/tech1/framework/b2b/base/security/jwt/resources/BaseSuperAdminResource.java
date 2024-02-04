@@ -2,13 +2,13 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.domain.exceptions.cookie.CookieAccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class BaseSuperAdminResource {
     private final BaseSuperAdminService baseSuperAdminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
 
     // =================================================================================================================
     // Server
@@ -64,8 +64,8 @@ public class BaseSuperAdminResource {
     // =================================================================================================================
 
     @GetMapping("/sessions")
-    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         return this.baseSuperAdminService.getSessions(cookie);
     }
 
@@ -82,8 +82,8 @@ public class BaseSuperAdminResource {
 
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws CookieAccessTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtAccessToken(httpServletRequest);
+    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

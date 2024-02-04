@@ -1,0 +1,22 @@
+package io.tech1.framework.domain.exceptions.tokens;
+
+import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenDbNotFoundException;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class AccessTokenDbNotFoundExceptionTest {
+
+    @Test
+    void testException() {
+        // Arrange
+        var username = Username.random();
+
+        // Act
+        var actual = new AccessTokenDbNotFoundException(username);
+
+        // Assert
+        assertThat(actual.getMessage()).isEqualTo("JWT access token is not present in database. Username: " + username);
+    }
+}

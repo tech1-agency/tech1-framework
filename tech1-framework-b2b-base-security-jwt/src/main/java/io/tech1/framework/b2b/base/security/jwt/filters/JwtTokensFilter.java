@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.filters;
 
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -31,14 +31,14 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     private final SessionRegistry sessionRegistry;
     // Services
     private final TokensService tokensService;
-    // Cookies
-    private final CookieProvider cookieProvider;
+    // Tokens
+    private final TokensProvider tokensProvider;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            var cookieAccessToken = this.cookieProvider.readJwtAccessToken(request);
-            var cookieRefreshToken = this.cookieProvider.readJwtRefreshToken(request);
+            var cookieAccessToken = this.tokensProvider.readRequestAccessToken(request);
+            var cookieRefreshToken = this.tokensProvider.readRequestRefreshToken(request);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
@@ -47,13 +47,14 @@ public class JwtTokensFilter extends OncePerRequestFilter {
             this.sessionRegistry.register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
 
             filterChain.doFilter(request, response);
-        } catch (CookieAccessTokenNotFoundException | CookieAccessTokenExpiredException ex) {
+        } catch (AccessTokenNotFoundException | AccessTokenExpiredException ex) {
             LOGGER.warn("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
             // NOTE: place to refresh token. problem how to distinguish authenticated vs. anonymous/permitAll endpoints
             filterChain.doFilter(request, response);
-        } catch (CookieRefreshTokenNotFoundException | CookieAccessTokenInvalidException | CookieRefreshTokenInvalidException | CookieAccessTokenDbNotFoundException ex) {
+        } catch (RefreshTokenNotFoundException | AccessTokenInvalidException |
+                 RefreshTokenInvalidException | AccessTokenDbNotFoundException ex) {
             LOGGER.warn("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());
-            this.cookieProvider.clearCookies(response);
+            this.tokensProvider.clearTokens(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
         }
     }

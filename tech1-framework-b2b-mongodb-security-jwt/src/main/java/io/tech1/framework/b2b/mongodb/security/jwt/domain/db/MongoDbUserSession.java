@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
@@ -82,12 +82,12 @@ public class MongoDbUserSession {
 
     @JsonIgnore
     @Transient
-    public ResponseUserSession2 responseUserSession2(CookieAccessToken cookie) {
+    public ResponseUserSession2 responseUserSession2(RequestAccessToken requestAccessToken) {
         return ResponseUserSession2.of(
                 this.userSessionId(),
                 this.updatedAt,
                 this.username,
-                cookie,
+                requestAccessToken,
                 this.accessToken,
                 this.metadata
         );

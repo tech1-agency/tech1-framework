@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -26,11 +26,11 @@ public record ResponseUserSession2(
             UserSessionId id,
             long updatedAt,
             Username username,
-            CookieAccessToken cookie,
+            RequestAccessToken requestAccessToken,
             JwtAccessToken accessToken,
             UserRequestMetadata metadata
     ) {
-        var current = cookie.value().equals(accessToken.value());
+        var current = requestAccessToken.value().equals(accessToken.value());
         var activity = current ? "Current session" : "—";
 
         var whereTuple3 = metadata.getWhereTuple3();

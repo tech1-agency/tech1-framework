@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.services;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import org.springframework.scheduling.annotation.Async;
@@ -27,5 +27,5 @@ public interface BaseSuperAdminService {
     // Users Sessions
     // =================================================================================================================
 
-    ResponseSuperadminSessionsTable getSessions(CookieAccessToken cookie);
+    ResponseSuperadminSessionsTable getSessions(RequestAccessToken requestAccessToken);
 }

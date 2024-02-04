@@ -14,4 +14,10 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Mongodb mongodb;
+
+    public static MongodbSecurityJwtConfigs testsHardcoded() {
+        return new MongodbSecurityJwtConfigs(
+                Mongodb.testsHardcoded()
+        );
+    }
 }

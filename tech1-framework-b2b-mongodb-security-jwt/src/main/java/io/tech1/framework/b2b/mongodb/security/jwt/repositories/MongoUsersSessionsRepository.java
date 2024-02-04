@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
@@ -48,21 +48,21 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
                 .orElseGet(TuplePresence::absent);
     }
 
-    default List<ResponseUserSession2> getUsersSessionsTable(Username username, CookieAccessToken cookie) {
+    default List<ResponseUserSession2> getUsersSessionsTable(Username username, RequestAccessToken requestAccessToken) {
         return this.findByUsername(username).stream()
-                .map(session -> session.responseUserSession2(cookie))
+                .map(session -> session.responseUserSession2(requestAccessToken))
                 .sorted(USERS_SESSIONS)
                 .collect(Collectors.toList());
     }
 
-    default ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, CookieAccessToken cookie) {
+    default ResponseSuperadminSessionsTable getSessionsTable(Set<JwtAccessToken> activeAccessTokens, RequestAccessToken requestAccessToken) {
         var sessions = this.findAll();
 
         List<ResponseUserSession2> activeSessions = new ArrayList<>();
         List<ResponseUserSession2> inactiveSessions = new ArrayList<>();
 
         sessions.forEach(session -> {
-            var session2 = session.responseUserSession2(cookie);
+            var session2 = session.responseUserSession2(requestAccessToken);
             if (activeAccessTokens.contains(session.getAccessToken())) {
                 activeSessions.add(session2);
             } else {
@@ -99,12 +99,12 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
         return this.deleteByIdIn(sessionsIds.stream().map(UserSessionId::value).toList());
     }
 
-    default void deleteByUsernameExceptAccessToken(Username username, CookieAccessToken cookie) {
-        this.deleteByUsernameExceptAccessToken(username, cookie.getJwtAccessToken());
+    default void deleteByUsernameExceptAccessToken(Username username, RequestAccessToken requestAccessToken) {
+        this.deleteByUsernameExceptAccessToken(username, requestAccessToken.getJwtAccessToken());
     }
 
-    default void deleteExceptAccessToken(CookieAccessToken cookie) {
-        this.deleteExceptToken(cookie.getJwtAccessToken());
+    default void deleteExceptAccessToken(RequestAccessToken requestAccessToken) {
+        this.deleteExceptToken(requestAccessToken.getJwtAccessToken());
     }
 
     default UserSession saveAs(UserSession userSession) {

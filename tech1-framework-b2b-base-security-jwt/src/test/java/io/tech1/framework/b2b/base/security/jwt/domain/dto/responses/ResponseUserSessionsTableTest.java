@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.geo.GeoLocation;
@@ -15,7 +15,6 @@ import java.util.List;
 
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UK;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_USA;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +41,7 @@ class ResponseUserSessionsTableTest {
                 UserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
-                new CookieAccessToken(randomString()),
+                new RequestAccessToken(randomString()),
                 new JwtAccessToken("token1"),
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
@@ -53,7 +52,7 @@ class ResponseUserSessionsTableTest {
                 UserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
-                new CookieAccessToken("token2"),
+                new RequestAccessToken("token2"),
                 new JwtAccessToken("token2"),
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", FLAG_USA, "New York"),
@@ -64,7 +63,7 @@ class ResponseUserSessionsTableTest {
                 UserSessionId.random(),
                 getCurrentTimestamp(),
                 username,
-                new CookieAccessToken(randomString()),
+                new RequestAccessToken(randomString()),
                 new JwtAccessToken("token3"),
                 UserRequestMetadata.processed(
                         GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", FLAG_UK, "Liverpool"),

@@ -7,6 +7,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import java.util.EnumMap;
+import java.util.Map;
+
+import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -14,6 +19,10 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class LoggingConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final boolean advancedRequestLoggingEnabled;
+
+    public static LoggingConfigs testsHardcoded() {
+        return LoggingConfigs.enabled();
+    }
 
     public static LoggingConfigs enabled() {
         return new LoggingConfigs(true);

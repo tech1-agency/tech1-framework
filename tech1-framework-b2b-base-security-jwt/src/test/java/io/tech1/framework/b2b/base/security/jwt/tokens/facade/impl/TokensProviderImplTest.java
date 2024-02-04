@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.base.security.jwt.tokens.facade.impl;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
-import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokensCookiesProvider;
-import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokensHeadersProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import org.junit.jupiter.api.AfterEach;
@@ -32,16 +32,16 @@ class TokensProviderImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean("tokensCookiesProvider")
-        TokensProvider tokensCookiesProvider() {
-            return mock(TokensCookiesProvider.class);
+        TokenCookiesProvider tokensCookiesProvider() {
+            return mock(TokenCookiesProvider.class);
         }
 
         @Bean("tokensHeadersProvider")
-        TokensProvider tokensHeadersProvider() {
-            return mock(TokensHeadersProvider.class);
+        TokenHeadersProvider tokensHeadersProvider() {
+            return mock(TokenHeadersProvider.class);
         }
 
-        @Bean("tokensProvider")
+        @Bean
         TokensProvider tokensProvider() {
             return new TokensProviderImpl(
                     this.tokensCookiesProvider(),
@@ -50,16 +50,16 @@ class TokensProviderImplTest {
         }
     }
 
-    private final TokensProvider tokensCookiesProvider;
-    private final TokensProvider tokensHeadersProvider;
+    private final TokenCookiesProvider tokensCookiesProvider;
+    private final TokenHeadersProvider tokensHeadersProvider;
 
     private final TokensProvider componentUnderTest;
 
     @Autowired
     public TokensProviderImplTest(
-            @Qualifier("tokensCookiesProvider") TokensProvider tokensCookiesProvider,
-            @Qualifier("tokensHeadersProvider") TokensProvider tokensHeadersProvider,
-            @Qualifier("tokensProvider") TokensProvider tokensProvider
+            @Qualifier("tokensCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
+            @Qualifier("tokensHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
+            TokensProvider tokensProvider
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
         this.tokensHeadersProvider = tokensHeadersProvider;

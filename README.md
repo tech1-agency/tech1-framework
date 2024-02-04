@@ -18,3 +18,4 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.1]
 — Geo Location API: add configs "utilitiesConfigs.geoLocationsConfigs.geoLiteCityDatabaseEnabled"
+— Tokens API: JWT storage methods (COOKIES | HEADERS), configs "securityJwtConfigs.jwtTokensConfigs.storageMethod"

@@ -2,7 +2,6 @@ package io.tech1.framework.b2b.base.security.jwt.tokens.providers;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -46,8 +45,8 @@ class TokensCookieProviderImplTest {
 
         @Qualifier("tokensCookiesProvider")
         @Bean
-        TokensProvider tokensCookiesProvider() {
-            return new TokensCookiesProvider(
+        TokenCookiesProvider tokensCookiesProvider() {
+            return new TokenCookiesProvider(
                     this.applicationFrameworkProperties
             );
         }
@@ -55,7 +54,7 @@ class TokensCookieProviderImplTest {
 
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    private final TokensCookiesProvider componentUnderTest;
+    private final TokenCookiesProvider componentUnderTest;
 
     @Test
     void createResponseAccessToken() {

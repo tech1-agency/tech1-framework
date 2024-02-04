@@ -24,9 +24,9 @@ import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExact
 
 @Slf4j
 @Service
-@Qualifier("tokensCookiesProvider")
+@Qualifier("tokenCookiesProvider")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokensCookiesProvider implements TokensProvider {
+public class TokenCookiesProvider implements TokenProvider {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

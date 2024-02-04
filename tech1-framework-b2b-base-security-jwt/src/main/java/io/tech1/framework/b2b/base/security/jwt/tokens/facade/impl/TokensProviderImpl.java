@@ -5,6 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +19,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Service
-@Qualifier("tokensProvider")
 public class TokensProviderImpl implements TokensProvider {
 
     // Providers
-    private final TokensProvider tokensCookiesProvider;
-    private final TokensProvider tokensHeadersProvider;
+    private final TokenCookiesProvider tokensCookiesProvider;
+    private final TokenHeadersProvider tokensHeadersProvider;
 
     @Autowired
     public TokensProviderImpl(
-            @Qualifier("tokensCookiesProvider") TokensProvider tokensCookiesProvider,
-            @Qualifier("tokensHeadersProvider") TokensProvider tokensHeadersProvider
+            @Qualifier("tokenCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
+            @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
         this.tokensHeadersProvider = tokensHeadersProvider;

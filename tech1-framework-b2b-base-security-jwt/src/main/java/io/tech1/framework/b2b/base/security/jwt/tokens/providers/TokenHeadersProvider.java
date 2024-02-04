@@ -4,7 +4,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -19,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Service
-@Qualifier("tokensHeadersProvider")
+@Qualifier("tokenHeadersProvider")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokensHeadersProvider implements TokensProvider {
+public class TokenHeadersProvider implements TokenProvider {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

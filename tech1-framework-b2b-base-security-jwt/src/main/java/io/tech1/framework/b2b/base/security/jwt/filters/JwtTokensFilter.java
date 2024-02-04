@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.filters;
 
-import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;

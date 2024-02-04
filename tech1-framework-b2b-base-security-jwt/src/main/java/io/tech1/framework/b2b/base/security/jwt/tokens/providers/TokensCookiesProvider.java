@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
@@ -12,6 +12,7 @@ import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,9 @@ import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExact
 
 @Slf4j
 @Service
+@Qualifier("tokensCookiesProvider")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokensCookieProvider implements TokensProvider {
+public class TokensCookiesProvider implements TokensProvider {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

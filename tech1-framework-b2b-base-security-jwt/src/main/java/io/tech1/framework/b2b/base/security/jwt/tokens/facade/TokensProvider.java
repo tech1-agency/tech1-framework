@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.base.security.jwt.tokens;
+package io.tech1.framework.b2b.base.security.jwt.tokens.facade;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;

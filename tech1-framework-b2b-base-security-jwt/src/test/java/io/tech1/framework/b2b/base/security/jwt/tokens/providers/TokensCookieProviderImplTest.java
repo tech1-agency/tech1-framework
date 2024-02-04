@@ -1,9 +1,8 @@
-package io.tech1.framework.b2b.base.security.jwt.cookies.impl;
+package io.tech1.framework.b2b.base.security.jwt.tokens.providers;
 
-import io.tech1.framework.b2b.base.security.jwt.tokens.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.tokens.impl.TokensProviderImpl;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -13,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TokensProviderImplTest {
+class TokensCookieProviderImplTest {
 
     @Configuration
     @Import({
@@ -44,9 +44,10 @@ class TokensProviderImplTest {
     static class ContextConfiguration {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
+        @Qualifier("tokensCookiesProvider")
         @Bean
-        TokensProvider cookieProvider() {
-            return new TokensProviderImpl(
+        TokensProvider tokensCookiesProvider() {
+            return new TokensCookiesProvider(
                     this.applicationFrameworkProperties
             );
         }
@@ -54,7 +55,7 @@ class TokensProviderImplTest {
 
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    private final TokensProvider componentUnderTest;
+    private final TokensCookiesProvider componentUnderTest;
 
     @Test
     void createResponseAccessToken() {

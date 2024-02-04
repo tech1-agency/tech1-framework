@@ -18,6 +18,17 @@ public class IncidentConfigs extends AbstractPropertiesToggleConfigs {
     @NonMandatoryProperty
     private RemoteServer remoteServer;
 
+    public static IncidentConfigs testsHardcoded() {
+        return new IncidentConfigs(
+                true,
+                new RemoteServer(
+                        "http://localhost:8973",
+                        "incident-username",
+                        "incident-password"
+                )
+        );
+    }
+
     public static IncidentConfigs disabled() {
         return new IncidentConfigs(false, null);
     }

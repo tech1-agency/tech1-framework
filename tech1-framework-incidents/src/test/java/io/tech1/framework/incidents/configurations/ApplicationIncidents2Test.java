@@ -1,7 +1,8 @@
 package io.tech1.framework.incidents.configurations;
 
+import io.tech1.framework.domain.properties.configs.AsyncConfigs;
+import io.tech1.framework.domain.properties.configs.EventsConfigs;
 import io.tech1.framework.domain.properties.configs.IncidentConfigs;
-import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,8 @@ class ApplicationIncidents2Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(TestsPropertiesConstants.ASYNC_CONFIGS);
-            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(TestsPropertiesConstants.EVENTS_CONFIGS);
+            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(AsyncConfigs.testsHardcoded());
+            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(EventsConfigs.testsHardcoded());
             var incidentConfigs = IncidentConfigs.disabled();
             when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
             return applicationFrameworkProperties;

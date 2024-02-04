@@ -26,6 +26,10 @@ public class Mongodb extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private String password;
 
+    public static Mongodb testsHardcoded() {
+        return Mongodb.noSecurity("127.0.0.1", 27017, "tech1_framework_server");
+    }
+
     public static Mongodb noSecurity(String host, int port, String database) {
         return new Mongodb(host, port, database, null, null);
     }

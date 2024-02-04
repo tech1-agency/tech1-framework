@@ -13,4 +13,8 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class EventsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String threadNamePrefix;
+
+    public static EventsConfigs testsHardcoded() {
+        return new EventsConfigs("tech1-events");
+    }
 }

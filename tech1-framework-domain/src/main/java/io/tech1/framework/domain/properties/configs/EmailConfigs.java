@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.properties.configs;
 
+import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,18 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     private String password;
     @NonMandatoryProperty
     private String[] to;
+
+    public static EmailConfigs testsHardcoded() {
+        return new EmailConfigs(
+                false,
+                "smtp.gmail.com",
+                587,
+                "Tech1",
+                "tech1@gmail.com",
+                "Password123!",
+                new String[] { Email.random().value(), Email.random().value() }
+        );
+    }
 
     public static EmailConfigs disabled() {
         return new EmailConfigs(false, null, 0, null, null, null, null);

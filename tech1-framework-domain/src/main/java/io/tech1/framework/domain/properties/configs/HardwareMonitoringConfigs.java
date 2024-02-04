@@ -30,6 +30,21 @@ public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
     @NonMandatoryProperty
     private Map<HardwareName, BigDecimal> thresholdsConfigs;
 
+    public static HardwareMonitoringConfigs testsHardcoded() {
+        return new HardwareMonitoringConfigs(
+                true,
+                new EnumMap<>(
+                        Map.of(
+                                HardwareName.CPU, new BigDecimal("80"),
+                                HardwareName.HEAP, new BigDecimal("85"),
+                                HardwareName.SERVER, new BigDecimal("90"),
+                                HardwareName.SWAP, new BigDecimal("95"),
+                                HardwareName.VIRTUAL, new BigDecimal("98")
+                        )
+                )
+        );
+    }
+
     public static HardwareMonitoringConfigs disabled() {
         return new HardwareMonitoringConfigs(
                 false,

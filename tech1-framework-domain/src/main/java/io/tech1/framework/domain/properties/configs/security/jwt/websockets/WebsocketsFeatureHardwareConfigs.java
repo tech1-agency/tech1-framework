@@ -17,4 +17,8 @@ public class WebsocketsFeatureHardwareConfigs extends AbstractPropertiesToggleCo
     private final boolean enabled;
     @NonMandatoryProperty
     private String userDestination;
+
+    public static WebsocketsFeatureHardwareConfigs testsHardcoded() {
+        return new WebsocketsFeatureHardwareConfigs(true, "/account");
+    }
 }

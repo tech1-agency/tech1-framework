@@ -15,4 +15,8 @@ public class StompEndpointRegistryConfigs extends AbstractPropertiesConfigs {
     // Spring support list of endpoints as varargs
     @MandatoryProperty
     private final String endpoint;
+
+    public static StompEndpointRegistryConfigs testsHardcoded() {
+        return new StompEndpointRegistryConfigs("/endpoint");
+    }
 }

@@ -105,4 +105,8 @@ public class BigDecimalUtility {
     public static int getNumberOfDigitsAfterTheDecimalPointOrZero(BigDecimal number) {
         return Math.max(0, number.stripTrailingZeros().scale());
     }
+
+    public static int getNumberOfDigitsAfterTheDecimalPointIncludingTrailingZerosOrZero(BigDecimal number) {
+        return Math.max(0, number.scale());
+    }
 }

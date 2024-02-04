@@ -57,7 +57,7 @@ class TokensProviderImplTest {
     private final TokensProvider componentUnderTest;
 
     @Test
-    void createJwtAccessToken() {
+    void createResponseAccessToken() {
         // Arrange
         var jwtAccessToken = new JwtAccessToken(randomString());
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -67,7 +67,7 @@ class TokensProviderImplTest {
         var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookiesConfigs.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
 
         // Act
-        this.componentUnderTest.createJwtAccessToken(jwtAccessToken, httpServletResponse);
+        this.componentUnderTest.createResponseAccessToken(jwtAccessToken, httpServletResponse);
 
         // Assert
         var cookieAC = ArgumentCaptor.forClass(Cookie.class);
@@ -82,7 +82,7 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void createJwtRefreshToken() {
+    void createResponseRefreshToken() {
         // Arrange
         var refreshAccessToken = JwtRefreshToken.random();
         var httpServletResponse = mock(HttpServletResponse.class);
@@ -91,7 +91,7 @@ class TokensProviderImplTest {
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
-        this.componentUnderTest.createJwtRefreshToken(refreshAccessToken, httpServletResponse);
+        this.componentUnderTest.createResponseRefreshToken(refreshAccessToken, httpServletResponse);
 
         // Assert
         var cookieAC = ArgumentCaptor.forClass(Cookie.class);
@@ -106,7 +106,7 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void readJwtAccessToken() throws AccessTokenNotFoundException {
+    void readRequestAccessToken() throws AccessTokenNotFoundException {
         // Arrange
         var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
@@ -115,7 +115,7 @@ class TokensProviderImplTest {
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { cookie });
 
         // Act
-        this.componentUnderTest.readJwtAccessToken(httpServletRequest);
+        this.componentUnderTest.readRequestAccessToken(httpServletRequest);
 
         // Assert
         verify(httpServletRequest).getCookies();
@@ -123,13 +123,13 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void readJwtAccessTokenThrow() {
+    void readRequestAccessTokenThrow() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { });
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.readJwtAccessToken(httpServletRequest));
+        var throwable = catchThrowable(() -> this.componentUnderTest.readRequestAccessToken(httpServletRequest));
 
         // Assert
         verify(httpServletRequest).getCookies();
@@ -140,7 +140,7 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void readJwtRefreshToken() throws RefreshTokenNotFoundException {
+    void readRequestRefreshToken() throws RefreshTokenNotFoundException {
         // Arrange
         var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
@@ -149,7 +149,7 @@ class TokensProviderImplTest {
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { cookie });
 
         // Act
-        this.componentUnderTest.readJwtRefreshToken(httpServletRequest);
+        this.componentUnderTest.readRequestRefreshToken(httpServletRequest);
 
         // Assert
         verify(httpServletRequest).getCookies();
@@ -157,13 +157,13 @@ class TokensProviderImplTest {
     }
 
     @Test
-    void readJwtRefreshTokenThrow() {
+    void readRequestRefreshTokenThrow() {
         // Arrange
         var httpServletRequest = mock(HttpServletRequest.class);
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[] { });
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.readJwtRefreshToken(httpServletRequest));
+        var throwable = catchThrowable(() -> this.componentUnderTest.readRequestRefreshToken(httpServletRequest));
 
         // Assert
         verify(httpServletRequest).getCookies();

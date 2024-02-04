@@ -145,8 +145,8 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.baseUsersSessionsService).save(eq(user), eq(accessToken), eq(refreshToken), any(HttpServletRequest.class));
-        verify(this.tokensProvider).createJwtAccessToken(eq(accessToken), any(HttpServletResponse.class));
-        verify(this.tokensProvider).createJwtRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
+        verify(this.tokensProvider).createResponseAccessToken(eq(accessToken), any(HttpServletResponse.class));
+        verify(this.tokensProvider).createResponseRefreshToken(eq(refreshToken), any(HttpServletResponse.class));
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(username, accessToken, refreshToken));
         verify(this.currentSessionAssistant).getCurrentClientUser();
@@ -156,14 +156,14 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     void logoutNoJwtRefreshTokenTest() throws Exception {
         // Arrange
         var requestAccessToken = new RequestAccessToken(null);
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act
         this.mvc.perform(post("/authentication/logout"))
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
     }
 
     @Test
@@ -171,7 +171,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         // Arrange
         var requestAccessToken = new RequestAccessToken(randomString());
         var accessToken = requestAccessToken.getJwtAccessToken();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.invalid(accessToken));
 
         // Act
@@ -179,7 +179,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtils).validate(accessToken);
     }
 
@@ -192,7 +192,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         var accessToken = requestAccessToken.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityJwtTokenUtils.validate(requestAccessToken.getJwtAccessToken())).thenReturn(validatedClaims);
 
@@ -206,7 +206,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtils).validate(accessToken);
         verify(this.sessionRegistry).logout(username, accessToken);
         verify(this.tokensProvider).clearTokens(any(HttpServletResponse.class));
@@ -222,7 +222,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         var accessToken = requestAccessToken.getJwtAccessToken();
         var claims = mock(Claims.class);
         when(claims.getSubject()).thenReturn(username.identifier());
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         var validatedClaims = JwtTokenValidatedClaims.valid(accessToken, claims);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(validatedClaims);
 
@@ -231,7 +231,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
         verify(this.securityJwtTokenUtils).validate(accessToken);
         verify(this.sessionRegistry).logout(username, accessToken);
         verify(this.tokensProvider).clearTokens(any(HttpServletResponse.class));

@@ -37,8 +37,8 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            var cookieAccessToken = this.tokensProvider.readJwtAccessToken(request);
-            var cookieRefreshToken = this.tokensProvider.readJwtRefreshToken(request);
+            var cookieAccessToken = this.tokensProvider.readRequestAccessToken(request);
+            var cookieRefreshToken = this.tokensProvider.readRequestRefreshToken(request);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

@@ -217,14 +217,14 @@ class BaseCurrentSessionAssistantTest {
         var request = mock(HttpServletRequest.class);
         var requestAccessToken = RequestAccessToken.random();
         var accessToken = JwtAccessToken.of(requestAccessToken.value());
-        when(this.tokensProvider.readJwtAccessToken(request)).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(request)).thenReturn(requestAccessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.present(session));
 
         // Act
         var actual = this.componentUnderTest.getCurrentUserSession(request);
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(request);
+        verify(this.tokensProvider).readRequestAccessToken(request);
         verify(this.usersSessionsRepository).isPresent(accessToken);
         assertThat(actual).isEqualTo(session);
     }

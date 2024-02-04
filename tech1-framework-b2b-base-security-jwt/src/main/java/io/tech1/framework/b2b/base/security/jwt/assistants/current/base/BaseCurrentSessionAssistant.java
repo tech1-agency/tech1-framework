@@ -77,7 +77,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
 
     @Override
     public UserSession getCurrentUserSession(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         return this.usersSessionsRepository.isPresent(JwtAccessToken.of(cookie.value())).value();
     }
 

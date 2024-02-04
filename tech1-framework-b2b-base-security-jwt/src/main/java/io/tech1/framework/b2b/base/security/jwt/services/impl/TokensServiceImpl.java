@@ -61,7 +61,7 @@ public class TokensServiceImpl implements TokensService {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
-        var oldRefreshToken = this.tokensProvider.readJwtRefreshToken(request).getJwtRefreshToken();
+        var oldRefreshToken = this.tokensProvider.readRequestRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);
         this.tokensContextThrowerService.verifyRefreshTokenExpirationOrThrow(refreshTokenValidatedClaims);
@@ -74,8 +74,8 @@ public class TokensServiceImpl implements TokensService {
 
         this.baseUsersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
 
-        this.tokensProvider.createJwtAccessToken(accessToken, response);
-        this.tokensProvider.createJwtRefreshToken(newRefreshToken, response);
+        this.tokensProvider.createResponseAccessToken(accessToken, response);
+        this.tokensProvider.createResponseRefreshToken(newRefreshToken, response);
 
         var username = user.username();
         LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);

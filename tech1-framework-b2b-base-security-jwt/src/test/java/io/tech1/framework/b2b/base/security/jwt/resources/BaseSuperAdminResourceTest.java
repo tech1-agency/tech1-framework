@@ -125,7 +125,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 list345(ResponseUserSession2.class)
         );
         var requestAccessToken = RequestAccessToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.baseSuperAdminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
 
         // Act
@@ -155,7 +155,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.inactiveSessions.[0].what", notNullValue()));
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
         verify(this.baseSuperAdminService).getSessions(requestAccessToken);
     }
 
@@ -189,14 +189,14 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     void deleteAllExceptCurrentTest() throws Exception {
         // Arrange
         var requestAccessToken = RequestAccessToken.random();
-        when(this.tokensProvider.readJwtAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
 
         // Act
         this.mvc.perform(delete("/superadmin/sessions/"))
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.tokensProvider).readJwtAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
         verify(this.baseUsersSessionsService).deleteAllExceptCurrentAsSuperuser(requestAccessToken);
     }
 }

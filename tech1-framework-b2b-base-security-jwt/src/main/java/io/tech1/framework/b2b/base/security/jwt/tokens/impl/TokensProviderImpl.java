@@ -29,7 +29,7 @@ public class TokensProviderImpl implements TokensProvider {
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public void createJwtAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
+    public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
         var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
         var accessTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
         var jwtAccessTokenCookieCreationLatency = securityJwtConfigs.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
@@ -47,7 +47,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public void createJwtRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
+    public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
         var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
         var refreshTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
 
@@ -63,7 +63,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public RequestAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
+    public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
         try {
             var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
             var cookie = readCookie(request, accessToken.getCookieKey());
@@ -74,7 +74,7 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public RequestRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
+    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         try {
             var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
             var cookie = readCookie(request, refreshToken.getCookieKey());

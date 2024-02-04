@@ -73,8 +73,8 @@ public class BaseSecurityAuthenticationResource {
 
         this.baseUsersSessionsService.save(user, accessToken, refreshToken, request);
 
-        this.tokensProvider.createJwtAccessToken(accessToken, response);
-        this.tokensProvider.createJwtRefreshToken(refreshToken, response);
+        this.tokensProvider.createResponseAccessToken(accessToken, response);
+        this.tokensProvider.createResponseRefreshToken(refreshToken, response);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -88,7 +88,7 @@ public class BaseSecurityAuthenticationResource {
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest request, HttpServletResponse response) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readJwtAccessToken(request);
+        var cookie = this.tokensProvider.readRequestAccessToken(request);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
             var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);

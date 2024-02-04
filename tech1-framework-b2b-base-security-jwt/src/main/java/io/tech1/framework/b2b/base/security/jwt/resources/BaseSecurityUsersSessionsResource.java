@@ -36,7 +36,7 @@ public class BaseSecurityUsersSessionsResource {
 
     @GetMapping
     public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
@@ -67,7 +67,7 @@ public class BaseSecurityUsersSessionsResource {
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        var cookie = this.tokensProvider.readJwtAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);
     }
 }

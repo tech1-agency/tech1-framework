@@ -161,7 +161,7 @@ class TokensServiceImplTest {
         var newAccessToken = JwtAccessToken.random();
         var newRefreshToken = JwtRefreshToken.random();
 
-        when(this.tokensProvider.readJwtRefreshToken(request)).thenReturn(oldRequestRefreshToken);
+        when(this.tokensProvider.readRequestRefreshToken(request)).thenReturn(oldRequestRefreshToken);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken)).thenReturn(validatedClaims);
         when(this.tokensContextThrowerService.verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims)).thenReturn(new Tuple2<>(user, session));
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(newAccessToken);
@@ -171,15 +171,15 @@ class TokensServiceImplTest {
         var responseUserSession1 = this.componentUnderTest.refreshSessionOrThrow(request, response);
 
         // Assert
-        verify(this.tokensProvider).readJwtRefreshToken(request);
+        verify(this.tokensProvider).readRequestRefreshToken(request);
         verify(this.tokensContextThrowerService).verifyValidityOrThrow(oldRefreshToken);
         verify(this.tokensContextThrowerService).verifyRefreshTokenExpirationOrThrow(validatedClaims);
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(oldRefreshToken, validatedClaims);
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
         verify(this.securityJwtTokenUtils).createJwtRefreshToken(user.getJwtTokenCreationParams());
         verify(this.baseUsersSessionsService).refresh(user, session, newAccessToken, newRefreshToken, request);
-        verify(this.tokensProvider).createJwtAccessToken(newAccessToken, response);
-        verify(this.tokensProvider).createJwtRefreshToken(newRefreshToken, response);
+        verify(this.tokensProvider).createResponseAccessToken(newAccessToken, response);
+        verify(this.tokensProvider).createResponseRefreshToken(newRefreshToken, response);
         verify(this.sessionRegistry).renew(user.username(), oldRefreshToken, newAccessToken, newRefreshToken);
         assertThat(responseUserSession1).isEqualTo(new ResponseRefreshTokens(newAccessToken, newRefreshToken));
     }

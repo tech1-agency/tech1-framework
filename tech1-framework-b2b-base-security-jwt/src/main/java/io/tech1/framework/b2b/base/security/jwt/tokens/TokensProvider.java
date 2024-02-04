@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface TokensProvider {
-    void createJwtAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
-    void createJwtRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
-    RequestAccessToken readJwtAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
-    RequestRefreshToken readJwtRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
+    void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
+    void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
+    RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
+    RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
     void clearTokens(HttpServletResponse response);
 }

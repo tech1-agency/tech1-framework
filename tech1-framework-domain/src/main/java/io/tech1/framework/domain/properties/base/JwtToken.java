@@ -19,4 +19,14 @@ public class JwtToken extends AbstractPropertiesConfigs {
     private String cookieKey;
     @NonMandatoryProperty
     private String headerKey;
+
+    public String getKey(JwtTokenStorageMethod method) {
+        if (method.isCookies()) {
+            return this.cookieKey;
+        }
+        if (method.isHeaders()) {
+            return this.headerKey;
+        }
+        throw new IllegalArgumentException();
+    }
 }

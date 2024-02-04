@@ -78,19 +78,6 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         );
     }
 
-    public static SecurityJwtConfigs of(MvcConfigs mvcConfigs, SessionConfigs sessionConfigs) {
-        return new SecurityJwtConfigs(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                sessionConfigs,
-                null
-        );
-    }
-
     public static SecurityJwtConfigs disabledUsersEmailsConfigs() {
         return new SecurityJwtConfigs(
                 null,

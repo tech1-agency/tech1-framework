@@ -8,13 +8,17 @@ import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
+@Slf4j
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -40,6 +44,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
 
     @Override
     public void assertProperties() {
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         super.assertProperties();
         if (this.storageMethod.isCookies()) {
             assertNonNullOrThrow(this.accessToken.getCookieKey(), "Please specify `jwtTokensConfigs.accessToken.cookieKey` attribute");
@@ -57,5 +62,13 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
                     "Please make sure `jwtTokensConfigs.accessToken.headerKey` and `jwtTokensConfigs.refreshToken.headerKey` are different"
             );
         }
+        LOGGER.info(
+                "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
+                FRAMEWORK_PROPERTIES_PREFIX,
+                this.storageMethod,
+                this.accessToken.getKey(this.storageMethod),
+                this.refreshToken.getKey(this.storageMethod)
+        );
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 }

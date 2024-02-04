@@ -14,4 +14,12 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class UtilitiesConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final GeoLocationsConfigs geoLocationsConfigs;
+
+    public static UtilitiesConfigs testsHardcoded() {
+        return new UtilitiesConfigs(
+                new GeoLocationsConfigs(
+                        false
+                )
+        );
+    }
 }

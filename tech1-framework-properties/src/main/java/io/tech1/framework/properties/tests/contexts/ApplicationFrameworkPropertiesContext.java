@@ -1,5 +1,7 @@
 package io.tech1.framework.properties.tests.contexts;
 
+import io.tech1.framework.domain.properties.configs.ServerConfigs;
+import io.tech1.framework.domain.properties.configs.UtilitiesConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +14,8 @@ public class ApplicationFrameworkPropertiesContext {
     @Bean
     public ApplicationFrameworkProperties applicationFrameworkProperties() {
         var properties = new ApplicationFrameworkProperties();
-        properties.setServerConfigs(SERVER_CONFIGS);
-        properties.setUtilitiesConfigs(UTILITIES_CONFIGS);
+        properties.setServerConfigs(ServerConfigs.testsHardcoded());
+        properties.setUtilitiesConfigs(UtilitiesConfigs.testsHardcoded());
         properties.setAsyncConfigs(ASYNC_CONFIGS);
         properties.setEventsConfigs(EVENTS_CONFIGS);
         properties.setMvcConfigs(MVC_CONFIGS);

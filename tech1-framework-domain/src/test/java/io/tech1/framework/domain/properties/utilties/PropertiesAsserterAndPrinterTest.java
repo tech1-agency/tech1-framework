@@ -5,10 +5,7 @@ import io.tech1.framework.domain.properties.base.ScheduledJob;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
 import io.tech1.framework.domain.properties.base.SpringLogging;
 import io.tech1.framework.domain.properties.base.SpringServer;
-import io.tech1.framework.domain.properties.configs.EmailConfigs;
-import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
-import io.tech1.framework.domain.properties.configs.MvcConfigs;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.domain.properties.configs.*;
 import io.tech1.framework.domain.properties.configs.security.jwt.IncidentsConfigs;
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
 import io.tech1.framework.domain.utilities.collections.CollectorUtility;
@@ -52,8 +49,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        assertProperties(SERVER_CONFIGS, "serverConfigs");
-        printProperties(SERVER_CONFIGS);
+        assertProperties(ServerConfigs.testsHardcoded(), "serverConfigs");
+        printProperties(ServerConfigs.testsHardcoded());
 
         // Assert
         // no asserts
@@ -62,8 +59,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        assertProperties(UTILITIES_CONFIGS, "utilitiesConfigs");
-        printProperties(UTILITIES_CONFIGS);
+        assertProperties(UtilitiesConfigs.testsHardcoded(), "utilitiesConfigs");
+        printProperties(UtilitiesConfigs.testsHardcoded());
 
         // Assert
         // no asserts

@@ -55,7 +55,6 @@ public class TokenHeadersProvider implements TokenProvider {
         var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(headerKey);
-        System.out.println("ACCESS: " + headerKey + " ---- " + header);
         if (nonNull(header)) {
             return new RequestAccessToken(header);
         } else {
@@ -78,7 +77,6 @@ public class TokenHeadersProvider implements TokenProvider {
     public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException {
         var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = request.getParameter(headerKey);
-        System.out.println("REFRESH: " + headerKey + " ---- " + header);
         if (nonNull(header)) {
             return new RequestRefreshToken(header);
         } else {

@@ -35,11 +35,6 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
     ) {
         try {
             var request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
-            System.out.println("====================================================");
-            System.out.println(request.getParameter("t-ajwt"));
-            System.out.println("====================================================");
-            System.out.println(request.getParameter("t-rjwt"));
-            System.out.println("====================================================");
             var cookieAccessToken = this.tokensProvider.readRequestAccessTokenOnWebsocketHandshake(request);
             var cookieRefreshToken = this.tokensProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
             var user = this.tokensService.getJwtUserByAccessTokenOrThrow(cookieAccessToken, cookieRefreshToken);

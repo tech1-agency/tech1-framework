@@ -110,16 +110,16 @@ class SecurityHandshakeHandlerTest {
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
+        when(this.tokensProvider.readRequestAccessTokenOnWebsocketHandshake(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestRefreshTokenOnWebsocketHandshake(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(exception);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes));
 
         // Assert
-        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessTokenOnWebsocketHandshake(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestRefreshTokenOnWebsocketHandshake(any(HttpServletRequest.class));
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("WebSocket user not determined");
@@ -137,16 +137,16 @@ class SecurityHandshakeHandlerTest {
         when(serverHttpRequest.getServletRequest()).thenReturn(request);
         var requestAccessToken = RequestAccessToken.random();
         var requestRefreshToken = RequestRefreshToken.random();
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
+        when(this.tokensProvider.readRequestAccessTokenOnWebsocketHandshake(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestRefreshTokenOnWebsocketHandshake(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
         when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
 
         // Act
         var actual = this.componentUnderTest.determineUser(serverHttpRequest, wsHandler, attributes);
 
         // Assert
-        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestAccessTokenOnWebsocketHandshake(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestRefreshTokenOnWebsocketHandshake(any(HttpServletRequest.class));
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         assertThat(actual).isNotNull();
         assertThat(actual.getName()).isEqualTo(user.getUsername());

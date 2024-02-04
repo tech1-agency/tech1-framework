@@ -122,8 +122,8 @@ public class TestsPropertiesConstants {
             new JwtTokensConfigs(
                     "TECH1",
                     JwtTokenStorageMethod.COOKIES,
-                    new JwtToken(new TimeAmount(30L, SECONDS), "ajwt"),
-                    new JwtToken(new TimeAmount(12L, HOURS), "rjwt")
+                    new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
+                    new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
             ),
             new LoggingConfigs(true),
             new SessionConfigs(

@@ -7,6 +7,8 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesPro
 import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,13 @@ import static org.mockito.Mockito.*;
 class TokensProviderImplTest {
 
     @Configuration
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        @Bean
+        ApplicationFrameworkProperties applicationFrameworkProperties() {
+            return mock(ApplicationFrameworkProperties.class);
+        }
+
         @Bean("tokensCookiesProvider")
         TokenCookiesProvider tokensCookiesProvider() {
             return mock(TokenCookiesProvider.class);
@@ -45,7 +53,8 @@ class TokensProviderImplTest {
         TokensProvider tokensProvider() {
             return new TokensProviderImpl(
                     this.tokensCookiesProvider(),
-                    this.tokensHeadersProvider()
+                    this.tokensHeadersProvider(),
+                    this.applicationFrameworkProperties()
             );
         }
     }

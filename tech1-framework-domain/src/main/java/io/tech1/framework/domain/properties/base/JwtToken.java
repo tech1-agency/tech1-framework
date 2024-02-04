@@ -19,9 +19,4 @@ public class JwtToken extends AbstractPropertiesConfigs {
     private String cookieKey;
     @NonMandatoryProperty
     private String headerKey;
-
-    public JwtToken(TimeAmount expiration, String cookieKey) {
-        this.expiration = expiration;
-        this.cookieKey = cookieKey;
-    }
 }

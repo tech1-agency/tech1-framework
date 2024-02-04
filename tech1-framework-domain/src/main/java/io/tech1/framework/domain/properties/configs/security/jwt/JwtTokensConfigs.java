@@ -9,8 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.domain.asserts.Asserts.*;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -32,10 +31,18 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
         if (this.storageMethod.isCookies()) {
             assertNonNullOrThrow(this.accessToken.getCookieKey(), "Please specify `jwtTokensConfigs.accessToken.cookieKey` attribute");
             assertNonNullOrThrow(this.refreshToken.getCookieKey(), "Please specify `jwtTokensConfigs.refreshToken.cookieKey` attribute");
+            assertFalseOrThrow(
+                    this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
+                    "Please make sure `jwtTokensConfigs.accessToken.cookieKey` and `jwtTokensConfigs.refreshToken.cookieKey` are different"
+            );
         }
         if (this.storageMethod.isHeaders()) {
             assertNonNullOrThrow(this.accessToken.getHeaderKey(), "Please specify `jwtTokensConfigs.accessToken.headerKey` attribute");
             assertNonNullOrThrow(this.refreshToken.getHeaderKey(), "Please specify `jwtTokensConfigs.refreshToken.headerKey` attribute");
+            assertFalseOrThrow(
+                    this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
+                    "Please make sure `jwtTokensConfigs.accessToken.headerKey` and `jwtTokensConfigs.refreshToken.headerKey` are different"
+            );
         }
     }
 }

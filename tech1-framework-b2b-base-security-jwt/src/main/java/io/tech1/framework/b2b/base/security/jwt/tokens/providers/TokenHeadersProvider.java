@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static java.util.Objects.nonNull;
+
 @Slf4j
 @Service
 @Qualifier("tokenHeadersProvider")
@@ -27,28 +29,40 @@ public class TokenHeadersProvider implements TokenProvider {
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        // ignored
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        response.addHeader(headerKey, jwtAccessToken.value());
     }
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        // ignored
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        response.addHeader(headerKey, jwtRefreshToken.value());
     }
 
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
-        // ignored
-        return RequestAccessToken.random();
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var header = request.getHeader(headerKey);
+        if (nonNull(header)) {
+            return new RequestAccessToken(header);
+        } else {
+            throw new AccessTokenNotFoundException();
+        }
     }
 
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
-        // ignored
-        return RequestRefreshToken.random();
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var header = request.getHeader(headerKey);
+        if (nonNull(header)) {
+            return new RequestRefreshToken(header);
+        } else {
+            throw new RefreshTokenNotFoundException();
+        }
     }
 
     @Override
     public void clearTokens(HttpServletResponse response) {
-        // ignored
+        // headers stored on front-end
     }
 }

@@ -9,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesPro
 import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,14 +25,18 @@ public class TokensProviderImpl implements TokensProvider {
     // Providers
     private final TokenCookiesProvider tokensCookiesProvider;
     private final TokenHeadersProvider tokensHeadersProvider;
+    // Properties
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Autowired
     public TokensProviderImpl(
             @Qualifier("tokenCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
-            @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider
+            @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
+            ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
         this.tokensHeadersProvider = tokensHeadersProvider;
+        this.applicationFrameworkProperties = applicationFrameworkProperties;
     }
 
     @Override

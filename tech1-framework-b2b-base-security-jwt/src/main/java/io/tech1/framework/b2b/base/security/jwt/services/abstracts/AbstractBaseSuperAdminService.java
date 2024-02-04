@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
@@ -60,8 +60,8 @@ public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminSer
     // Users Sessions
     // =================================================================================================================
     @Override
-    public ResponseSuperadminSessionsTable getSessions(CookieAccessToken cookie) {
+    public ResponseSuperadminSessionsTable getSessions(RequestAccessToken requestAccessToken) {
         var activeAccessTokens = this.sessionRegistry.getActiveSessionsAccessTokens();
-        return this.usersSessionsRepository.getSessionsTable(activeAccessTokens, cookie);
+        return this.usersSessionsRepository.getSessionsTable(activeAccessTokens, requestAccessToken);
     }
 }

@@ -24,4 +24,13 @@ public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigs {
     private final MessageBrokerRegistryConfigs brokerConfigs;
     @NonMandatoryProperty
     private WebsocketsFeaturesConfigs featuresConfigs;
+
+    public static SecurityJwtWebsocketsConfigs testsHardcoded() {
+        return new SecurityJwtWebsocketsConfigs(
+                CsrfConfigs.testsHardcoded(),
+                StompEndpointRegistryConfigs.testsHardcoded(),
+                MessageBrokerRegistryConfigs.testsHardcoded(),
+                WebsocketsFeaturesConfigs.testsHardcoded()
+        );
+    }
 }

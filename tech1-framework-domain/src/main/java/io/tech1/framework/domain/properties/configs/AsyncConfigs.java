@@ -13,4 +13,8 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class AsyncConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String threadNamePrefix;
+
+    public static AsyncConfigs testsHardcoded() {
+        return new AsyncConfigs("tech1-async");
+    }
 }

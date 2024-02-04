@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>2.0</version>
+        <version>2.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>tech1-framework-configurations</artifactId>
@@ -16,7 +16,7 @@
         <!-- Tech1: Framework -->
         <dependency>
             <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-properties</artifactId>
+            <artifactId>tech1-framework-utilities</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>

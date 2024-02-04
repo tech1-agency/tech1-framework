@@ -14,4 +14,10 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private WebsocketsFeatureHardwareConfigs hardwareConfigs;
+
+    public static WebsocketsFeaturesConfigs testsHardcoded() {
+        return new WebsocketsFeaturesConfigs(
+                WebsocketsFeatureHardwareConfigs.testsHardcoded()
+        );
+    }
 }

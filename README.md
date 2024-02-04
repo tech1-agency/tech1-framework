@@ -17,4 +17,5 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.1]
-— TBD
+— Geo Location API: add configs "utilitiesConfigs.geoLocationsConfigs.geoLiteCityDatabaseEnabled"
+— Tokens API: JWT storage methods (COOKIES | HEADERS), configs "securityJwtConfigs.jwtTokensConfigs.storageMethod"

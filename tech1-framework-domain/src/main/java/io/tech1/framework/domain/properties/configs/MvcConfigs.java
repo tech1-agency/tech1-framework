@@ -19,4 +19,12 @@ public class MvcConfigs extends AbstractPropertiesToggleConfigs {
     private String frameworkBasePathPrefix;
     @NonMandatoryProperty
     private CorsConfigs corsConfigs;
+
+    public static MvcConfigs testsHardcoded() {
+        return new MvcConfigs(
+                true,
+                "/framework/security",
+                CorsConfigs.testsHardcoded()
+        );
+    }
 }

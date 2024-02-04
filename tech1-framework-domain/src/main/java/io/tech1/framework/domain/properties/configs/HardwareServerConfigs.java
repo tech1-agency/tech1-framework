@@ -13,4 +13,10 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class HardwareServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String baseURL;
+
+    public static HardwareServerConfigs testsHardcoded() {
+        return new HardwareServerConfigs(
+                "http://localhost:8484"
+        );
+    }
 }

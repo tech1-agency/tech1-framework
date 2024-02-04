@@ -1,0 +1,68 @@
+package io.tech1.framework.b2b.base.security.jwt.tokens.providers;
+
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
+import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static java.util.Objects.nonNull;
+
+@Slf4j
+@Service
+@Qualifier("tokenHeadersProvider")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class TokenHeadersProvider implements TokenProvider {
+
+    // Properties
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
+    @Override
+    public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        response.addHeader(headerKey, jwtAccessToken.value());
+    }
+
+    @Override
+    public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        response.addHeader(headerKey, jwtRefreshToken.value());
+    }
+
+    @Override
+    public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var header = request.getHeader(headerKey);
+        if (nonNull(header)) {
+            return new RequestAccessToken(header);
+        } else {
+            throw new AccessTokenNotFoundException();
+        }
+    }
+
+    @Override
+    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
+        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var header = request.getHeader(headerKey);
+        if (nonNull(header)) {
+            return new RequestRefreshToken(header);
+        } else {
+            throw new RefreshTokenNotFoundException();
+        }
+    }
+
+    @Override
+    public void clearTokens(HttpServletResponse response) {
+        // headers stored on front-end
+    }
+}

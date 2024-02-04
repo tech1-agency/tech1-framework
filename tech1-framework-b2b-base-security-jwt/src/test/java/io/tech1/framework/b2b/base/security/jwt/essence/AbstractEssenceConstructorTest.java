@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.stubbers.AbstractMockService;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.DefaultUser;
+import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_CONFIGS;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
@@ -142,7 +142,7 @@ class AbstractEssenceConstructorTest {
     @MethodSource("addDefaultUsersPresentTest")
     void addDefaultUsersPresentTest(long count) {
         // Arrange
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
@@ -160,7 +160,7 @@ class AbstractEssenceConstructorTest {
     @MethodSource("addDefaultUsersPresentTest")
     void addDefaultUsersInvitationCodes(long count) {
         // Arrange
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
         var username = Username.of("admin12");
         when(this.invitationCodesRepository.countByOwner(username)).thenReturn(count);
 

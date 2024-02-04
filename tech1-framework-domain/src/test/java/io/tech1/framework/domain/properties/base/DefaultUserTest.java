@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.properties.base;
 
-import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
+import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
@@ -11,7 +11,7 @@ class DefaultUserTest {
     @Test
     void getEmailNullTest() {
         // Arrange
-        var defaultUsers = TestsPropertiesConstants.SECURITY_JWT_CONFIGS.getEssenceConfigs().getDefaultUsers();
+        var defaultUsers = SecurityJwtConfigs.testsHardcoded().getEssenceConfigs().getDefaultUsers();
 
         // Act
         var email = defaultUsers.getUsers().get(0).getEmail();

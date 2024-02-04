@@ -42,7 +42,7 @@ class RoundingUtilityTest {
 
     private static Stream<Arguments> divideOrOneTest() {
         return Stream.of(
-                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3),  3, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, BigDecimal.valueOf(3.333)),
                 Arguments.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE),
                 Arguments.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE),
                 Arguments.of(BigDecimal.valueOf(10), null, 5, BigDecimal.ONE)

@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.sessions;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
@@ -24,5 +24,5 @@ public interface SessionRegistry {
 
     // think about migrating to separate service/registry
     void cleanByExpiredRefreshTokens(Set<Username> usernames);
-    ResponseUserSessionsTable getSessionsTable(Username username, CookieAccessToken cookie);
+    ResponseUserSessionsTable getSessionsTable(Username username, RequestAccessToken requestAccessToken);
 }

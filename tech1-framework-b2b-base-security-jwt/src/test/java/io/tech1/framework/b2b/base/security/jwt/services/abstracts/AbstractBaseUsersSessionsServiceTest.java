@@ -5,10 +5,10 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRe
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
@@ -499,24 +499,24 @@ class AbstractBaseUsersSessionsServiceTest {
     void deleteAllExceptCurrentTest() {
         // Arrange
         var username = entity(Username.class);
-        var cookie = CookieAccessToken.random();
+        var requestAccessToken = RequestAccessToken.random();
 
         // Act
-        this.componentUnderTest.deleteAllExceptCurrent(username, cookie);
+        this.componentUnderTest.deleteAllExceptCurrent(username, requestAccessToken);
 
         // Assert
-        verify(this.usersSessionsRepository).deleteByUsernameExceptAccessToken(username, cookie);
+        verify(this.usersSessionsRepository).deleteByUsernameExceptAccessToken(username, requestAccessToken);
     }
 
     @Test
     void deleteAllExceptCurrentAsSuperuserTest() {
         // Arrange
-        var cookie = CookieAccessToken.random();
+        var requestAccessToken = RequestAccessToken.random();
 
         // Act
-        this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(cookie);
+        this.componentUnderTest.deleteAllExceptCurrentAsSuperuser(requestAccessToken);
 
         // Assert
-        verify(this.usersSessionsRepository).deleteExceptAccessToken(cookie);
+        verify(this.usersSessionsRepository).deleteExceptAccessToken(requestAccessToken);
     }
 }

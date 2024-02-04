@@ -9,6 +9,7 @@ import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.utilities.configurations.ApplicationUtilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,6 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.base.security.jwt.cookies",
         "io.tech1.framework.b2b.base.security.jwt.crons",
         "io.tech1.framework.b2b.base.security.jwt.events",
         "io.tech1.framework.b2b.base.security.jwt.filters",
@@ -42,15 +42,14 @@ import static org.springframework.http.HttpMethod.*;
         "io.tech1.framework.b2b.base.security.jwt.incidents.converters",
         "io.tech1.framework.b2b.base.security.jwt.resources",
         "io.tech1.framework.b2b.base.security.jwt.services",
+        "io.tech1.framework.b2b.base.security.jwt.tokens",
         "io.tech1.framework.b2b.base.security.jwt.utils",
-        "io.tech1.framework.b2b.base.security.jwt.validators",
-        // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.utilities.browsers",
-        "io.tech1.framework.utilities.geo"
+        "io.tech1.framework.b2b.base.security.jwt.validators"
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity
 @Import({
+        ApplicationUtilities.class,
         ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
         ApplicationBaseSecurityJwtMvc.class,

@@ -27,7 +27,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Map;
 
-import static io.tech1.framework.domain.tests.constants.TestsPropertiesConstants.SECURITY_JWT_CONFIGS;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -100,7 +99,7 @@ class UsersEmailsServiceImplTest {
                 null,
                 UserRequestMetadata.random()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
@@ -163,7 +162,7 @@ class UsersEmailsServiceImplTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
         when(this.userEmailUtils.getAuthenticationLoginTemplateName()).thenReturn("framework-account-accessed");
         when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
@@ -211,7 +210,7 @@ class UsersEmailsServiceImplTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SECURITY_JWT_CONFIGS);
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
         when(this.userEmailUtils.getSessionRefreshedTemplateName()).thenReturn("framework-account-accessed");
         when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(

@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
@@ -13,7 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
-import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,8 @@ public class BaseSecurityAuthenticationResource {
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final TokensService tokensService;
-    // Cookies
-    private final CookieProvider cookieProvider;
+    // Tokens
+    private final TokensProvider tokensProvider;
     // Validators
     private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
     // Utilities
@@ -73,8 +73,8 @@ public class BaseSecurityAuthenticationResource {
 
         this.baseUsersSessionsService.save(user, accessToken, refreshToken, request);
 
-        this.cookieProvider.createJwtAccessCookie(accessToken, response);
-        this.cookieProvider.createJwtRefreshCookie(refreshToken, response);
+        this.tokensProvider.createResponseAccessToken(accessToken, response);
+        this.tokensProvider.createResponseRefreshToken(refreshToken, response);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -87,15 +87,15 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws CookieAccessTokenNotFoundException {
-        var cookie = this.cookieProvider.readJwtAccessToken(request);
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(request);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
             var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
             if (validatedClaims.valid()) {
                 var username = validatedClaims.username();
                 this.sessionRegistry.logout(username, accessToken);
-                this.cookieProvider.clearCookies(response);
+                this.tokensProvider.clearTokens(response);
                 SecurityContextHolder.clearContext();
                 var session = request.getSession(false);
                 if (nonNull(session)) {
@@ -108,12 +108,13 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/refreshToken")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseRefreshTokens refreshToken(HttpServletRequest request, HttpServletResponse response) throws CookieUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest request, HttpServletResponse response) throws TokenUnauthorizedException {
         try {
             return this.tokensService.refreshSessionOrThrow(request, response);
-        } catch (CookieRefreshTokenNotFoundException | CookieRefreshTokenInvalidException | CookieRefreshTokenExpiredException | CookieRefreshTokenDbNotFoundException ex) {
-            this.cookieProvider.clearCookies(response);
-            throw new CookieUnauthorizedException(ex.getMessage());
+        } catch (RefreshTokenNotFoundException | RefreshTokenInvalidException |
+                 RefreshTokenExpiredException | RefreshTokenDbNotFoundException ex) {
+            this.tokensProvider.clearTokens(response);
+            throw new TokenUnauthorizedException(ex.getMessage());
         }
     }
 }

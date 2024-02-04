@@ -14,9 +14,17 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @EqualsAndHashCode(callSuper = true)
 public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private String subjectPrefix;
+    private final String subjectPrefix;
     @MandatoryProperty
-    private Checkbox authenticationLogin;
+    private final Checkbox authenticationLogin;
     @MandatoryProperty
-    private Checkbox sessionRefreshed;
+    private final Checkbox sessionRefreshed;
+
+    public static UsersEmailsConfigs testsHardcoded() {
+        return new UsersEmailsConfigs(
+                "[Tech1]",
+                Checkbox.enabled(),
+                Checkbox.enabled()
+        );
+    }
 }

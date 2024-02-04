@@ -32,6 +32,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         try {
             userAgentParserOrNull = new UserAgentService().loadParser(
                     List.of(
@@ -46,13 +47,12 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         } catch (ParseException | IOException ex) {
             var message = String.format("%s user agent configuration status: %s", FRAMEWORK_UTILITIES_PREFIX, FAILURE);
             LOGGER.error(message);
-            LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
-            LOGGER.error("Please check user agent parses configuration");
-            LOGGER.error(LINE_SEPARATOR_INTERPUNCT);
+            LOGGER.error("Please check user agent utility configuration");
             userAgentParserOrNull = null;
             configuredFlag = false;
             exceptionMessageOrNull = ex.getMessage();
         }
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         this.userAgentParser = userAgentParserOrNull;
         this.configured = configuredFlag;
         this.exceptionMessage = exceptionMessageOrNull;

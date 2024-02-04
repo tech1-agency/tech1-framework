@@ -16,4 +16,8 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     private final String name;
     @NonMandatoryProperty
     private String webclientURL;
+
+    public static ServerConfigs testsHardcoded() {
+        return new ServerConfigs("tech1-spring-boot-server", "http://127.0.0.1:3000");
+    }
 }

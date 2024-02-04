@@ -1,17 +1,17 @@
 package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.cookies.CookieProvider;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.CookieRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.cookie.*;
+import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +34,17 @@ public class TokensServiceImpl implements TokensService {
     private final TokensContextThrowerService tokensContextThrowerService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Cookie
-    private final CookieProvider cookieProvider;
+    private final TokensProvider tokensProvider;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @Override
     public JwtUser getJwtUserByAccessTokenOrThrow(
-            CookieAccessToken cookieAccessToken,
-            CookieRefreshToken cookieRefreshToken
-    ) throws CookieAccessTokenInvalidException, CookieRefreshTokenInvalidException, CookieAccessTokenExpiredException, CookieAccessTokenDbNotFoundException {
-        var accessToken = cookieAccessToken.getJwtAccessToken();
-        var refreshToken = cookieRefreshToken.getJwtRefreshToken();
+            RequestAccessToken requestAccessToken,
+            RequestRefreshToken requestRefreshToken
+    ) throws AccessTokenInvalidException, RefreshTokenInvalidException, AccessTokenExpiredException, AccessTokenDbNotFoundException {
+        var accessToken = requestAccessToken.getJwtAccessToken();
+        var refreshToken = requestRefreshToken.getJwtRefreshToken();
 
         var accessTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(accessToken);
         this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken);
@@ -60,8 +60,8 @@ public class TokensServiceImpl implements TokensService {
     public ResponseRefreshTokens refreshSessionOrThrow(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws CookieRefreshTokenNotFoundException, CookieRefreshTokenInvalidException, CookieRefreshTokenExpiredException, CookieRefreshTokenDbNotFoundException {
-        var oldRefreshToken = this.cookieProvider.readJwtRefreshToken(request).getJwtRefreshToken();
+    ) throws RefreshTokenNotFoundException, RefreshTokenInvalidException, RefreshTokenExpiredException, RefreshTokenDbNotFoundException {
+        var oldRefreshToken = this.tokensProvider.readRequestRefreshToken(request).getJwtRefreshToken();
 
         var refreshTokenValidatedClaims = this.tokensContextThrowerService.verifyValidityOrThrow(oldRefreshToken);
         this.tokensContextThrowerService.verifyRefreshTokenExpirationOrThrow(refreshTokenValidatedClaims);
@@ -74,8 +74,8 @@ public class TokensServiceImpl implements TokensService {
 
         this.baseUsersSessionsService.refresh(user, session, accessToken, newRefreshToken, request);
 
-        this.cookieProvider.createJwtAccessCookie(accessToken, response);
-        this.cookieProvider.createJwtRefreshCookie(newRefreshToken, response);
+        this.tokensProvider.createResponseAccessToken(accessToken, response);
+        this.tokensProvider.createResponseRefreshToken(newRefreshToken, response);
 
         var username = user.username();
         LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);

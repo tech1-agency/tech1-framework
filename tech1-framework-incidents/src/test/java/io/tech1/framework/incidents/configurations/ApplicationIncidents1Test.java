@@ -1,6 +1,8 @@
 package io.tech1.framework.incidents.configurations;
 
-import io.tech1.framework.domain.tests.constants.TestsPropertiesConstants;
+import io.tech1.framework.domain.properties.configs.AsyncConfigs;
+import io.tech1.framework.domain.properties.configs.EventsConfigs;
+import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinition;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -37,9 +39,9 @@ class ApplicationIncidents1Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(TestsPropertiesConstants.ASYNC_CONFIGS);
-            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(TestsPropertiesConstants.EVENTS_CONFIGS);
-            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(TestsPropertiesConstants.INCIDENT_CONFIGS);
+            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(AsyncConfigs.testsHardcoded());
+            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(EventsConfigs.testsHardcoded());
+            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.testsHardcoded());
             return applicationFrameworkProperties;
         }
     }
@@ -79,7 +81,7 @@ class ApplicationIncidents1Test {
     @Test
     void incidentClientDefinitionTest() {
         // Arrange
-        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(TestsPropertiesConstants.INCIDENT_CONFIGS);
+        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.testsHardcoded());
 
         // Act
         var incidentClientDefinition = this.componentUnderTest.incidentClientDefinition();

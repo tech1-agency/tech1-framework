@@ -51,13 +51,6 @@ class TokenHeadersProviderTest {
 
     private final TokenHeadersProvider componentUnderTest;
 
-    // =================================================================================================================
-    // PRIVATE METHODS
-    // =================================================================================================================
-    private JwtTokensConfigs jwtTokensConfigs() {
-        return this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
-    }
-
     @Test
     void createResponseAccessToken() {
         // Arrange
@@ -160,5 +153,12 @@ class TokenHeadersProviderTest {
 
         // Assert
         verifyNoMoreInteractions(response);
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private JwtTokensConfigs jwtTokensConfigs() {
+        return this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
     }
 }

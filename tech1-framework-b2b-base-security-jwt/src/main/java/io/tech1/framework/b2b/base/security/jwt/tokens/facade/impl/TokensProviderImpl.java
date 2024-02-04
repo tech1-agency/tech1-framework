@@ -41,26 +41,53 @@ public class TokensProviderImpl implements TokensProvider {
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        this.tokensCookiesProvider.createResponseAccessToken(jwtAccessToken, response);
+        if (this.isCookiesProviderEnabled()) {
+            this.tokensCookiesProvider.createResponseAccessToken(jwtAccessToken, response);
+        } else {
+            this.tokensHeadersProvider.createResponseAccessToken(jwtAccessToken, response);
+        }
     }
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        this.tokensCookiesProvider.createResponseRefreshToken(jwtRefreshToken, response);
+        if (this.isCookiesProviderEnabled()) {
+            this.tokensCookiesProvider.createResponseRefreshToken(jwtRefreshToken, response);
+        } else {
+            this.tokensHeadersProvider.createResponseRefreshToken(jwtRefreshToken, response);
+        }
     }
 
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
-        return this.tokensCookiesProvider.readRequestAccessToken(request);
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestAccessToken(request);
+        } else {
+            return this.tokensHeadersProvider.readRequestAccessToken(request);
+        }
     }
 
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
-        return this.tokensCookiesProvider.readRequestRefreshToken(request);
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readRequestRefreshToken(request);
+        } else {
+            return this.tokensHeadersProvider.readRequestRefreshToken(request);
+        }
     }
 
     @Override
     public void clearTokens(HttpServletResponse response) {
-        this.tokensCookiesProvider.clearTokens(response);
+        if (this.isCookiesProviderEnabled()) {
+            this.tokensCookiesProvider.clearTokens(response);
+        } else {
+            this.tokensHeadersProvider.clearTokens(response);
+        }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    public boolean isCookiesProviderEnabled() {
+        return this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getStorageMethod().isCookies();
     }
 }

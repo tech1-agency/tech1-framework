@@ -17,4 +17,11 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
     private final Cron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty
     private final Cron enableSessionsMetadataRenewCron;
+
+    public static SessionConfigs testsHardcoded() {
+        return new SessionConfigs(
+                Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
+                Cron.enabled("*/15 * * * * *", "Europe/Kiev")
+        );
+    }
 }

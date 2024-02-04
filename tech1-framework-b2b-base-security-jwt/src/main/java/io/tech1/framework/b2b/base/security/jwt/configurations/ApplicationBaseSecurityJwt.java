@@ -35,7 +35,6 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        // TODO [YYL] double-check
         "io.tech1.framework.b2b.base.security.jwt.crons",
         "io.tech1.framework.b2b.base.security.jwt.events",
         "io.tech1.framework.b2b.base.security.jwt.filters",

@@ -3,13 +3,17 @@ package io.tech1.framework.domain.properties.configs.security.jwt;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.JwtToken;
 import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
+import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-import static io.tech1.framework.domain.asserts.Asserts.*;
+import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
+import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -24,6 +28,15 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     private final JwtToken accessToken;
     @MandatoryProperty
     private final JwtToken refreshToken;
+
+    public static JwtTokensConfigs testsHardcoded() {
+        return new JwtTokensConfigs(
+                "TECH1",
+                JwtTokenStorageMethod.COOKIES,
+                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
+                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
+        );
+    }
 
     @Override
     public void assertProperties() {

@@ -1,9 +1,9 @@
 package io.tech1.framework.domain.tests.constants;
 
 import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
-import io.tech1.framework.domain.properties.base.*;
+import io.tech1.framework.domain.properties.base.Mongodb;
+import io.tech1.framework.domain.properties.base.RemoteServer;
 import io.tech1.framework.domain.properties.configs.*;
 import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
@@ -12,17 +12,10 @@ import io.tech1.framework.domain.properties.configs.utilities.GeoLocationsConfig
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
-import java.time.ZoneId;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static java.time.temporal.ChronoUnit.HOURS;
-import static java.time.temporal.ChronoUnit.SECONDS;
-
+// TODO [YYL] add testsHardcoded
 @UtilityClass
 public class TestsPropertiesConstants {
     public static final ServerConfigs SERVER_CONFIGS = new ServerConfigs("tech1-spring-boot-server", "http://127.0.0.1:3000");
@@ -77,64 +70,16 @@ public class TestsPropertiesConstants {
     public static final HardwareServerConfigs HARDWARE_SERVER_CONFIGS = new HardwareServerConfigs(
             "http://localhost:8484"
     );
+
     public static final SecurityJwtConfigs SECURITY_JWT_CONFIGS = new SecurityJwtConfigs(
-            new AuthoritiesConfigs(
-                    "io.tech1",
-                    Set.of(
-                            new Authority(SUPER_ADMIN),
-                            new Authority("admin"),
-                            new Authority("user"),
-                            new Authority(INVITATION_CODE_READ),
-                            new Authority(INVITATION_CODE_WRITE)
-                    )
-            ),
-            new CookiesConfigs(DomainConstants.TECH1, new TimeAmount(5L, SECONDS)),
-            new EssenceConfigs(
-                    new DefaultUsers(
-                            true,
-                            List.of(
-                                   new DefaultUser(
-                                            "admin12",
-                                            "password12",
-                                            ZoneId.systemDefault(),
-                                            null,
-                                            Set.of("admin")
-                                    )
-                            )
-                    ),
-                    InvitationCodes.enabled()
-            ),
-            new IncidentsConfigs(
-                    new EnumMap<>(
-                            Map.of(
-                                    AUTHENTICATION_LOGIN, true,
-                                    AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false,
-                                    AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
-                                    AUTHENTICATION_LOGOUT, false,
-                                    AUTHENTICATION_LOGOUT_MIN, false,
-                                    SESSION_REFRESHED, true,
-                                    SESSION_EXPIRED, false,
-                                    REGISTER1, true,
-                                    REGISTER1_FAILURE, true
-                            )
-                    )
-            ),
-            new JwtTokensConfigs(
-                    "TECH1",
-                    JwtTokenStorageMethod.COOKIES,
-                    new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
-                    new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
-            ),
-            new LoggingConfigs(true),
-            new SessionConfigs(
-                    Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
-                    Cron.enabled("*/15 * * * * *", "Europe/Kiev")
-            ),
-            new UsersEmailsConfigs(
-                    "[Tech1]",
-                    Checkbox.enabled(),
-                    Checkbox.enabled()
-            )
+            AuthoritiesConfigs.testsHardcoded(),
+            CookiesConfigs.testsHardcoded(),
+            EssenceConfigs.testsHardcoded(),
+            IncidentsConfigs.testsHardcoded(),
+            JwtTokensConfigs.testsHardcoded(),
+            LoggingConfigs.testsHardcoded(),
+            SessionConfigs.testsHardcoded(),
+            UsersEmailsConfigs.testsHardcoded()
     );
 
     public static final SecurityJwtWebsocketsConfigs SECURITY_JWT_WEBSOCKETS_CONFIGS = new SecurityJwtWebsocketsConfigs(

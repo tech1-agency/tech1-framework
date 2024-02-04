@@ -29,7 +29,7 @@ public class BaseSecurityUsersSessionsResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseUsersSessionsService baseUsersSessionsService;
-    // Cookie
+    // Tokens
     private final TokensProvider tokensProvider;
     // Validators
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;

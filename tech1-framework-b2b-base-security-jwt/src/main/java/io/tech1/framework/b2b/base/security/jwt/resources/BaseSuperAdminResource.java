@@ -32,7 +32,7 @@ public class BaseSuperAdminResource {
     // Services
     private final BaseSuperAdminService baseSuperAdminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
-    // Cookie
+    // Tokens
     private final TokensProvider tokensProvider;
 
     // =================================================================================================================

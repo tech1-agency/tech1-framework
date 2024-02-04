@@ -25,7 +25,7 @@ public class SecurityHandshakeHandler extends DefaultHandshakeHandler {
 
     // Services
     private final TokensService tokensService;
-    // Cookie
+    // Tokens
     private final TokensProvider tokensProvider;
 
     @Override

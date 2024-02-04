@@ -78,7 +78,7 @@ class SecurityHandshakeHandlerTest {
 
     // Services
     private final TokensService tokensService;
-    // Cookie
+    // Tokens
     private final TokensProvider tokensProvider;
 
     private final SecurityHandshakeHandler componentUnderTest;

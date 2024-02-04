@@ -16,5 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.2]
-— Tokens Provider API: add dedicated methods readRequestAccessTokenOnWebsocketHandshake, readRequestRefreshTokenOnWebsocketHandshake
+### Release Notes [Development v2.3]
+— TBD

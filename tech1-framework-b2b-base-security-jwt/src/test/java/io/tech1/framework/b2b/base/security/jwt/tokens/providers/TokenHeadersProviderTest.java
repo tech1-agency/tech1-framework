@@ -94,7 +94,7 @@ class TokenHeadersProviderTest {
 
         // Assert
         assertThat(actual.getHeaderName()).isEqualTo("csrf-header");
-        assertThat(actual.getParameterName()).isEqualTo("csrf-parameter");
+        assertThat(actual.getParameterName()).isEqualTo("_csrf");
         assertThat(actual.getToken()).isEqualTo(header);
         verify(request).getParameter(csrfConfigs.getTokenKey());
     }

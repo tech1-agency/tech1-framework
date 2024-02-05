@@ -137,7 +137,7 @@ class TokenCookiesProviderTest {
 
         // Assert
         assertThat(actual.getHeaderName()).isEqualTo("csrf-header");
-        assertThat(actual.getParameterName()).isEqualTo("csrf-parameter");
+        assertThat(actual.getParameterName()).isEqualTo("_csrf");
         assertThat(actual.getToken()).isEqualTo(cookieValue);
         verify(request).getCookies();
         assertThat(request.getCookies()).hasSize(1);

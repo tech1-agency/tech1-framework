@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CsrfConfigs extends AbstractPropertiesConfigs {
+    // WARNING: [YYL] namings?
     @MandatoryProperty
     private final String cookieName;
     @MandatoryProperty

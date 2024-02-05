@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesProvider;
 import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.domain.properties.base.JwtToken;
 import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
@@ -151,6 +152,25 @@ class TokensProviderImplTest {
         }
         if (method.isHeaders()) {
             verify(this.tokensHeadersProvider).createResponseRefreshToken(refreshAccessToken, response);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("jwtTokenStoragesArgs")
+    void readCsrfToken(JwtTokenStorageMethod method) throws CsrfTokenNotFoundException {
+        // Arrange
+        this.mockProperties(method);
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        this.componentUnderTest.readCsrfToken(request);
+
+        // Assert
+        if (method.isCookies()) {
+            verify(this.tokensCookiesProvider).readCsrfToken(request);
+        }
+        if (method.isHeaders()) {
+            verify(this.tokensHeadersProvider).readCsrfToken(request);
         }
     }
 

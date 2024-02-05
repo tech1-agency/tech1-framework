@@ -3,6 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.tokens.providers;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.domain.properties.configs.security.jwt.JwtTokensConfigs;
 import io.tech1.framework.domain.utilities.random.RandomUtility;
@@ -22,6 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -77,6 +79,38 @@ class TokenHeadersProviderTest {
         // Assert
         verify(response).addHeader(this.jwtTokensConfigs().getRefreshToken().getHeaderKey(), refreshAccessToken.value());
         verifyNoMoreInteractions(response);
+    }
+
+    @Test
+    void readCsrfToken() throws CsrfTokenNotFoundException {
+        // Arrange
+        var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+        var header = randomString();
+        var request = mock(HttpServletRequest.class);
+        when(request.getParameter(csrfConfigs.getCookieName())).thenReturn(header);
+
+        // Act
+        var actual = this.componentUnderTest.readCsrfToken(request);
+
+        // Assert
+        assertThat(actual.getHeaderName()).isEqualTo("csrf-header");
+        assertThat(actual.getParameterName()).isEqualTo("csrf-parameter");
+        assertThat(actual.getToken()).isEqualTo(header);
+        verify(request).getParameter(csrfConfigs.getCookieName());
+    }
+
+    @Test
+    void readCsrfTokenThrow() {
+        // Arrange
+        var request = mock(HttpServletRequest.class);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.readCsrfToken(request));
+
+        // Assert
+        assertThat(throwable)
+                .isInstanceOf(CsrfTokenNotFoundException.class)
+                .hasMessageContaining("Csrf token not found");
     }
 
     @Test

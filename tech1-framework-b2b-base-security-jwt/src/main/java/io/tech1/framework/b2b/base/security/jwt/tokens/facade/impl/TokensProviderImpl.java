@@ -8,11 +8,13 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenCookiesProvider;
 import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersProvider;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +56,15 @@ public class TokensProviderImpl implements TokensProvider {
             this.tokensCookiesProvider.createResponseRefreshToken(jwtRefreshToken, response);
         } else {
             this.tokensHeadersProvider.createResponseRefreshToken(jwtRefreshToken, response);
+        }
+    }
+
+    @Override
+    public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
+        if (this.isCookiesProviderEnabled()) {
+            return this.tokensCookiesProvider.readCsrfToken(request);
+        } else {
+            return this.tokensHeadersProvider.readCsrfToken(request);
         }
     }
 

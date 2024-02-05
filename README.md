@@ -18,3 +18,4 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.3]
 — Invitation Codes API: allow to create invitation codes without any authorities (authenticated-based invitation code)
+— Websocket API: add readCsrfToken method based on dedicated jwt storage method

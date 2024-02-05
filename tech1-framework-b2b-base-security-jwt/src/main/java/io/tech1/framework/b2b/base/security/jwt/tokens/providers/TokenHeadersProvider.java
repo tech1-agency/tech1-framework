@@ -5,12 +5,14 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,18 @@ public class TokenHeadersProvider implements TokenProvider {
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
         var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         response.addHeader(headerKey, jwtRefreshToken.value());
+    }
+
+    @Override
+    public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
+        var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+        // WARNING: development workaround to read request query parameters instead of request headers
+        var header = request.getParameter(csrfConfigs.getCookieName());
+        if (nonNull(header)) {
+            return new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), header);
+        } else {
+            throw new CsrfTokenNotFoundException();
+        }
     }
 
     @Override

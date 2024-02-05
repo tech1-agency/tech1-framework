@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PostgresBaseRegistrationServiceTest {
+class PostgresBaseRegistrationServiceTest {
 
     @Configuration
     static class ContextConfiguration {

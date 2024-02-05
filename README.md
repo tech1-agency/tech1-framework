@@ -17,4 +17,4 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.4]
-— TBD
+— Invitation Code API: fix "A granted authority textual representation is required"

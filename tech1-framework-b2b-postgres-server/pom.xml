@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>2.3</version>
+        <version>2.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>tech1-framework-b2b-postgres-server</artifactId>

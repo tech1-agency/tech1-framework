@@ -12,14 +12,12 @@ import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.INVITATION_CODES;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static java.util.Objects.nonNull;
 
 // Lombok
 @NoArgsConstructor
@@ -85,7 +83,7 @@ public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
         return new ResponseInvitationCode(
                 this.invitationCodeId(),
                 this.owner,
-                nonNull(this.authorities) ? this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()) : List.of(),
+                getResponseInvitationCodeAuthoritiesAsField(this.authorities),
                 this.value,
                 this.invited
         );

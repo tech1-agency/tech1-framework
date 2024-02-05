@@ -22,8 +22,8 @@ class SpringAuthoritiesUtilityTest {
     private static Stream<Arguments> getResponseInvitationCodeAuthoritiesAsFieldArgs() {
         return Stream.of(
                 Arguments.of(null, "—"),
-                Arguments.of(List.of(), "—"),
-                Arguments.of(List.of(SUPERADMIN, new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)), "invitationCode:read, invitationCode:write, superadmin")
+                Arguments.of(Set.of(), "—"),
+                Arguments.of(Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), SUPERADMIN, new SimpleGrantedAuthority(INVITATION_CODE_WRITE)), "invitationCode:read, invitationCode:write, superadmin")
         );
     }
 
@@ -61,7 +61,7 @@ class SpringAuthoritiesUtilityTest {
 
     @ParameterizedTest
     @MethodSource("getResponseInvitationCodeAuthoritiesAsFieldArgs")
-    void getResponseInvitationCodeAuthoritiesAsFieldTest(List<SimpleGrantedAuthority> authorities, String expected) {
+    void getResponseInvitationCodeAuthoritiesAsFieldTest(Set<SimpleGrantedAuthority> authorities, String expected) {
         // Act
         var actual = getResponseInvitationCodeAuthoritiesAsField(authorities);
 

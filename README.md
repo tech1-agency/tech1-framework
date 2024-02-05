@@ -18,3 +18,4 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.4]
 — Invitation Code API: fix "A granted authority textual representation is required"
+— Invitation Code API: ResponseInvitationCode field "authorities" signature (List<String → String)

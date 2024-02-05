@@ -8,7 +8,7 @@ import java.util.List;
 public record ResponseInvitationCode(
         InvitationCodeId id,
         Username owner,
-        List<String> authorities,
+        String authorities,
         String value,
         Username invited
 ) {

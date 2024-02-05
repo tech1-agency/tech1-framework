@@ -13,7 +13,6 @@ import lombok.experimental.UtilityClass;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static java.util.Collections.singletonList;
 
 @UtilityClass
 public class BaseSecurityJwtDbRandomUtility {
@@ -25,7 +24,7 @@ public class BaseSecurityJwtDbRandomUtility {
         return new ResponseInvitationCode(
                 entity(InvitationCodeId.class),
                 owner,
-                singletonList("admin"),
+                "admin",
                 randomStringLetterOrNumbersOnly(40),
                 null
         );
@@ -35,7 +34,7 @@ public class BaseSecurityJwtDbRandomUtility {
         return new ResponseInvitationCode(
                 entity(InvitationCodeId.class),
                 owner,
-                singletonList("admin"),
+                "admin",
                 randomStringLetterOrNumbersOnly(40),
                 invited
         );

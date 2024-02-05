@@ -29,7 +29,7 @@ public class SpringAuthoritiesUtility {
         return getSimpleGrantedAuthorities(Stream.of(authorities));
     }
 
-    public static String getResponseInvitationCodeAuthoritiesAsField(List<SimpleGrantedAuthority> authorities) {
+    public static String getResponseInvitationCodeAuthoritiesAsField(Set<SimpleGrantedAuthority> authorities) {
         if (!isEmpty(authorities)) {
             return authorities.stream().map(SimpleGrantedAuthority::getAuthority).sorted().collect(Collectors.joining(", "));
         } else {

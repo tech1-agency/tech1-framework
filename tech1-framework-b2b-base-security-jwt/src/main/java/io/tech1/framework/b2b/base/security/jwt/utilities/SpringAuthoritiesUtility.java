@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 @UtilityClass
 public class SpringAuthoritiesUtility {
 
@@ -25,5 +27,13 @@ public class SpringAuthoritiesUtility {
 
     public static Set<SimpleGrantedAuthority> getSimpleGrantedAuthorities(String... authorities) {
         return getSimpleGrantedAuthorities(Stream.of(authorities));
+    }
+
+    public static String getResponseInvitationCodeAuthoritiesAsField(List<SimpleGrantedAuthority> authorities) {
+        if (!isEmpty(authorities)) {
+            return authorities.stream().map(SimpleGrantedAuthority::getAuthority).sorted().collect(Collectors.joining(", "));
+        } else {
+            return "—";
+        }
     }
 }

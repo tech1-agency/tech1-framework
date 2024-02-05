@@ -87,7 +87,7 @@ class TokenHeadersProviderTest {
         var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
         var header = randomString();
         var request = mock(HttpServletRequest.class);
-        when(request.getParameter(csrfConfigs.getCookieName())).thenReturn(header);
+        when(request.getParameter(csrfConfigs.getTokenKey())).thenReturn(header);
 
         // Act
         var actual = this.componentUnderTest.readCsrfToken(request);
@@ -96,7 +96,7 @@ class TokenHeadersProviderTest {
         assertThat(actual.getHeaderName()).isEqualTo("csrf-header");
         assertThat(actual.getParameterName()).isEqualTo("csrf-parameter");
         assertThat(actual.getToken()).isEqualTo(header);
-        verify(request).getParameter(csrfConfigs.getCookieName());
+        verify(request).getParameter(csrfConfigs.getTokenKey());
     }
 
     @Test

@@ -2,7 +2,6 @@ package io.tech1.framework.b2b.base.security.jwt.tokens.providers;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
@@ -128,7 +127,7 @@ class TokenCookiesProviderTest {
         var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
         var cookie = mock(Cookie.class);
         var cookieValue = randomString();
-        when(cookie.getName()).thenReturn(csrfConfigs.getCookieName());
+        when(cookie.getName()).thenReturn(csrfConfigs.getTokenKey());
         when(cookie.getValue()).thenReturn(cookieValue);
         var request = mock(HttpServletRequest.class);
         when(request.getCookies()).thenReturn(new Cookie[] { cookie });

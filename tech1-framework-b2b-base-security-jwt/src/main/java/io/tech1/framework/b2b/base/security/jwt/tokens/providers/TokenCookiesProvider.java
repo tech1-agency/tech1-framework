@@ -70,7 +70,7 @@ public class TokenCookiesProvider implements TokenProvider {
         try {
             var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
             // WARNING: security concerns? based on https://github.com/sockjs/sockjs-node#authorisation
-            var csrfCookie = readCookie(request, csrfConfigs.getCookieName());
+            var csrfCookie = readCookie(request, csrfConfigs.getTokenKey());
             return new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), csrfCookie);
         } catch (CookieNotFoundException ex) {
             throw new CsrfTokenNotFoundException();

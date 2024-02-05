@@ -45,7 +45,7 @@ public class TokenHeadersProvider implements TokenProvider {
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
         var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
         // WARNING: development workaround to read request query parameters instead of request headers
-        var header = request.getParameter(csrfConfigs.getCookieName());
+        var header = request.getParameter(csrfConfigs.getTokenKey());
         if (nonNull(header)) {
             return new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), header);
         } else {

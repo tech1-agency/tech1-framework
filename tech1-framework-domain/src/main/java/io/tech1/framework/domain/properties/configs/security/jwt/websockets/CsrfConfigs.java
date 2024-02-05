@@ -12,15 +12,14 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CsrfConfigs extends AbstractPropertiesConfigs {
-    // WARNING: [YYL] namings?
-    @MandatoryProperty
-    private final String cookieName;
     @MandatoryProperty
     private final String headerName;
     @MandatoryProperty
     private final String parameterName;
+    @MandatoryProperty
+    private final String tokenKey;
 
     public static CsrfConfigs testsHardcoded() {
-        return new CsrfConfigs("csrf-cookie", "csrf-header", "csrf-parameter");
+        return new CsrfConfigs("csrf-header", "_csrf", "csrf-token-key");
     }
 }

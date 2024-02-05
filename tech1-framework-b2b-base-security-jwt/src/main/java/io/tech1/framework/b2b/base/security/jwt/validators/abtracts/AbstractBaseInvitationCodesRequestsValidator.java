@@ -25,7 +25,6 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
         var authorities = requestNewInvitationCodeParams.authorities();
         var availableAuthorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
 
-        assertNonNullNotEmptyOrThrow(authorities, invalidAttribute("authorities"));
         assertTrueOrThrow(availableAuthorities.containsAll(authorities), "Invitation code request params contains unsupported authority");
     }
 

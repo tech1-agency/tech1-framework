@@ -4,22 +4,22 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static io.tech1.framework.domain.utilities.http.HttpCookieUtility.*;
-import static io.tech1.framework.domain.utilities.http.HttpCookieUtility.createNullCookie;
 import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 
 @Slf4j
@@ -63,6 +63,18 @@ public class TokenCookiesProvider implements TokenProvider {
         );
 
         response.addCookie(cookie);
+    }
+
+    @Override
+    public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
+        try {
+            var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+            // WARNING: security concerns? based on https://github.com/sockjs/sockjs-node#authorisation
+            var csrfCookie = readCookie(request, csrfConfigs.getTokenKey());
+            return new DefaultCsrfToken(csrfConfigs.getHeaderName(), csrfConfigs.getParameterName(), csrfCookie);
+        } catch (CookieNotFoundException ex) {
+            throw new CsrfTokenNotFoundException();
+        }
     }
 
     @Override

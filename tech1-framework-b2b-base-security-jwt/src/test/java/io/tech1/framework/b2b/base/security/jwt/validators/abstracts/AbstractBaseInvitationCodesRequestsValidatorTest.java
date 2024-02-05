@@ -24,14 +24,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -45,10 +42,10 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationCodeParams(Collections.emptySet()), invalidAttribute("authorities")),
-                Arguments.of(new RequestNewInvitationCodeParams(new HashSet<>(asList(INVITATION_CODE_READ, "invitationCode:send"))), "Invitation code request params contains unsupported authority"),
-                Arguments.of(new RequestNewInvitationCodeParams(new HashSet<>(asList(INVITATION_CODE_READ, SUPER_ADMIN))), "Invitation code request params contains unsupported authority"),
-                Arguments.of(new RequestNewInvitationCodeParams(new HashSet<>(asList(INVITATION_CODE_READ, INVITATION_CODE_WRITE))), null)
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, "invitationCode:send")), "Invitation code request params contains unsupported authority"),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, SUPER_ADMIN)), "Invitation code request params contains unsupported authority"),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of()), null),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, INVITATION_CODE_WRITE)), null)
         );
     }
 

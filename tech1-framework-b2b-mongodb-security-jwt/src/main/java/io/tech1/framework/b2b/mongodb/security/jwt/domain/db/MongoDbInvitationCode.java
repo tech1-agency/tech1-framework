@@ -11,13 +11,11 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static java.util.Objects.nonNull;
 
 // Lombok
 @NoArgsConstructor
@@ -75,7 +73,7 @@ public class MongoDbInvitationCode {
         return new ResponseInvitationCode(
                 this.invitationCodeId(),
                 this.owner,
-                nonNull(this.authorities) ? this.authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()) : List.of(),
+                getResponseInvitationCodeAuthoritiesAsField(this.authorities),
                 this.value,
                 this.invited
         );

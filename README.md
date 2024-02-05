@@ -16,7 +16,6 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.3]
-— Invitation Codes API: allow to create invitation codes without any authorities (authenticated-based invitation code)
-— Websocket API: add readCsrfToken method based on dedicated jwt storage method
-— Configs Changes: "securityJwtWebsocketsConfigs.csrfConfigs.cookieName" → "securityJwtWebsocketsConfigs.csrfConfigs.tokenKey" + ordering
+### Release Notes [Development v2.4]
+— Invitation Code API: fix "A granted authority textual representation is required"
+— Invitation Code API: ResponseInvitationCode field "authorities" signature (List<String → String)

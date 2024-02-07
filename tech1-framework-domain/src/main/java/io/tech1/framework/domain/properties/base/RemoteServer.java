@@ -1,10 +1,8 @@
-
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,22 +15,12 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class RemoteServer extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String baseURL;
-    // TODO [YYL] String -> Username
     @MandatoryProperty
-    private final String username;
-    // TODO [YYL] String -> Password
+    private final Username username;
     @MandatoryProperty
-    private final String password;
+    private final Password password;
 
     public static RemoteServer testsHardcoded() {
-        return new RemoteServer("localhost", Username.testsHardcoded().identifier(), Password.testsHardcoded().value());
-    }
-
-    public Username getUsername() {
-        return new Username(this.username);
-    }
-
-    public Password getPassword() {
-        return new Password(this.password);
+        return new RemoteServer("localhost", Username.testsHardcoded(), Password.testsHardcoded());
     }
 }

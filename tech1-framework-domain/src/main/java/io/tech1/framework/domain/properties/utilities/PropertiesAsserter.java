@@ -74,7 +74,9 @@ public class PropertiesAsserter {
             try {
                 var propertyValue = getter.invoke(propertiesConfigs);
                 Class<?> propertyClass = propertyValue.getClass();
-                if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
+                if (AbstractPropertiesConfigsV2.class.isAssignableFrom(propertyClass)) {
+                    ((AbstractPropertiesConfigsV2) propertyValue).assertProperties(propertyName);
+                } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
                     ((AbstractPropertyConfigs) propertyValue).assertProperties(propertyName);
                 } else {
                     verifyProperty(propertyName, propertyValue);

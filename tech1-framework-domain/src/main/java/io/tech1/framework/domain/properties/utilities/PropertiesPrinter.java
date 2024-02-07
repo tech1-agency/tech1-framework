@@ -1,17 +1,27 @@
 package io.tech1.framework.domain.properties.utilities;
 
+import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullProperties;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullPropertiesRecursively;
 import static java.util.Comparator.comparing;
 
+// TODO [YYL] add more methods based on new items
 @Slf4j
 @UtilityClass
 public class PropertiesPrinter {
+
+    public static void printPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName) {
+        var properties = getNotNullProperties(propertyConfigs, parentName);
+        properties.sort(comparing(ReflectionProperty::getReadableValue));
+        properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
+    }
 
     public static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs) {
         printProperties(abstractPropertiesConfigs, "[Configuration]");

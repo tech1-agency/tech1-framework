@@ -1,8 +1,10 @@
 package io.tech1.framework.domain.properties.utilities;
 
 import io.tech1.framework.domain.asserts.Asserts;
+import io.tech1.framework.domain.constants.LogsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
@@ -23,6 +25,7 @@ import java.util.function.Function;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotEmptyOrThrow;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.PROPERTIES_ASSERTER_DEBUG;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
 import static java.util.Collections.emptyList;
@@ -30,7 +33,6 @@ import static java.util.Collections.emptyList;
 @Slf4j
 @UtilityClass
 public class PropertiesAsserter {
-
     private static final Map<Function<Class<?>, Boolean>, Consumer<ReflectionProperty>> ACTIONS = new HashMap<>();
 
     static {
@@ -59,6 +61,11 @@ public class PropertiesAsserter {
         verifyProperties(getters, abstractConfigs, parentName, emptyList());
     }
 
+    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName) {
+        var getters = getMandatoryGetters(propertyConfigs, parentName, emptyList());
+        verifyPropertiesNoInnerClass(getters, propertyConfigs, parentName);
+    }
+
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
@@ -71,6 +78,30 @@ public class PropertiesAsserter {
                 innerClass(getterValue, attributeName, projection);
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new IllegalArgumentException("Unexpected. Attribute: " + attributeName);
+            }
+        });
+    }
+
+    private static void verifyPropertiesNoInnerClass(List<Method> getters, AbstractPropertyConfigs propertyConfigs, String parentName) {
+        getters.forEach(getter -> {
+            var propertyName = parentName + "." + getPropertyName(getter);
+            try {
+                var propertyValue = getter.invoke(propertyConfigs);
+                if (LogsConstants.DEBUG) {
+                    LOGGER.info(PROPERTIES_ASSERTER_DEBUG, propertyName, propertyValue);
+                }
+                assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
+                var propertyClass = propertyValue.getClass();
+                var consumerOpt = ACTIONS.entrySet().stream()
+                        .filter(entry -> entry.getKey().apply(propertyClass))
+                        .map(Map.Entry::getValue)
+                        .findFirst();
+                if (consumerOpt.isPresent()) {
+                    var reflectionProperty = ReflectionProperty.of(propertyClass.getSimpleName(), propertyName, propertyValue);
+                    consumerOpt.get().accept(reflectionProperty);
+                }
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
             }
         });
     }
@@ -101,6 +132,27 @@ public class PropertiesAsserter {
                         var propertyName = getPropertyName(method);
                         var declaredField = property.getClass().getDeclaredField(propertyName);
                         return declaredField.isAnnotationPresent(MandatoryProperty.class) && !declaredField.isAnnotationPresent(NonMandatoryProperty.class);
+                    } catch (NoSuchFieldException ex) {
+                        return true;
+                    }
+                })
+                .filter(method -> {
+                    var lowerCaseAttribute = method.getName().toLowerCase().replaceAll("^get", "");
+                    return !skipProjection.contains(lowerCaseAttribute);
+                })
+                .toList();
+    }
+
+    private static List<Method> getMandatoryGetters(Object property, String attributeName, List<String> skipProjection) {
+        assertNonNullOrThrow(property, invalidAttribute(attributeName));
+        return ReflectionUtility.getGetters(property).stream()
+                .filter(Objects::nonNull)
+                .filter(method -> !method.getName().equals("getOrder"))
+                .filter(method -> {
+                    try {
+                        var propertyName = getPropertyName(method);
+                        var declaredField = property.getClass().getDeclaredField(propertyName);
+                        return declaredField.isAnnotationPresent(MandatoryProperty.class);
                     } catch (NoSuchFieldException ex) {
                         return true;
                     }

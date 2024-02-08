@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.reflections;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
@@ -169,6 +170,18 @@ public class ReflectionUtility {
                     }
                 })
                 .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public static List<ReflectionProperty> getProperties(String propertyName, Object property, List<Method> getters) {
+        return getters.stream()
+                .map(getter -> {
+                    try {
+                        return ReflectionProperty.of(propertyName, getPropertyName(getter), getter.invoke(property));
+                    } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
+                        return ReflectionProperty.of(propertyName, StringConstants.UNDEFINED, null);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

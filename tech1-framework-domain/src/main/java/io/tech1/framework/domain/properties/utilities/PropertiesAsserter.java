@@ -29,7 +29,10 @@ import java.util.function.Function;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotEmptyOrThrow;
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.PROPERTIES_ASSERTER_DEBUG;
+import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_ASSERTION_COMPARATOR;
+import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_PRINTER_COMPARATOR;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
 import static java.util.Collections.emptyList;
@@ -193,24 +196,33 @@ public class PropertiesAsserter {
                 .toList();
     }
 
-    private static List<Method> getMandatoryGetters(Object property, String attributeName, List<String> skipProjection) {
-        return getGetters(property, attributeName, MandatoryProperty.class, skipProjection);
+    // TODO [YYL] double-check access
+    public static List<Method> getMandatoryGetters(Object property, String propertyName, List<String> skipProjection) {
+        return getGetters(property, propertyName, Set.of(MandatoryProperty.class), skipProjection);
     }
 
-    private static List<Method> getMandatoryToggleGetters(Object property, String attributeName, List<String> skipProjection) {
-        return getGetters(property, attributeName, MandatoryToggleProperty.class, skipProjection);
+    // TODO [YYL] double-check access
+    public static List<Method> getMandatoryToggleGetters(Object property, String propertyName, List<String> skipProjection) {
+        return getGetters(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class), skipProjection);
     }
 
-    private static List<Method> getGetters(Object property, String attributeName, Class<? extends Annotation> annotation, List<String> skipProjection) {
-        assertNonNullOrThrow(property, invalidAttribute(attributeName));
+    // TODO [YYL] double-check access
+    public static List<Method> getGetters(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations, List<String> skipProjection) {
+        assertNonNullOrThrow(property, invalidAttribute(propertyName));
         return ReflectionUtility.getGetters(property).stream()
                 .filter(Objects::nonNull)
                 .filter(method -> !method.getName().equals("getOrder"))
                 .filter(method -> {
                     try {
-                        var propertyName = getPropertyName(method);
-                        var declaredField = property.getClass().getDeclaredField(propertyName);
-                        return declaredField.isAnnotationPresent(annotation);
+                        var declaredField = property.getClass().getDeclaredField(getPropertyName(method));
+                        var annotationPresent = false;
+                        for (Class<? extends Annotation> annotation : presentAnnotations) {
+                            if (declaredField.isAnnotationPresent(annotation)) {
+                                annotationPresent = true;
+                                break;
+                            }
+                        }
+                        return annotationPresent;
                     } catch (NoSuchFieldException ex) {
                         return true;
                     }
@@ -219,7 +231,7 @@ public class PropertiesAsserter {
                     var lowerCaseAttribute = method.getName().toLowerCase().replaceAll("^get", "");
                     return !skipProjection.contains(lowerCaseAttribute);
                 })
-                .sorted(Comparator.comparing(Method::getName))
+                .sorted(PROPERTIES_ASSERTION_COMPARATOR)
                 .toList();
     }
 }

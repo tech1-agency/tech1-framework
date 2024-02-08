@@ -4,13 +4,18 @@ import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
+import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_PRINTER_COMPARATOR;
+import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryGetters;
+import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryToggleGetters;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullProperties;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullPropertiesRecursively;
+import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 
 // TODO [YYL] add more methods based on new items
@@ -19,12 +24,26 @@ import static java.util.Comparator.comparing;
 public class PropertiesPrinter {
 
     public static void printPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
-        System.out.println("TODO --> printPropertiesConfigs: " + propertyName);
+//        System.out.println("TODO --> printPropertiesConfigs: " + propertyName);
     }
 
     public static void printPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
         var properties = getNotNullProperties(propertyConfigs, propertyName);
         properties.sort(comparing(ReflectionProperty::getReadableValue));
+        properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
+    }
+
+    public static void printMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
+        var getters = getMandatoryGetters(propertyConfigs, propertyName, emptyList());
+        var properties = ReflectionUtility.getProperties(propertyName, propertyConfigs, getters);
+        properties.sort(PROPERTIES_PRINTER_COMPARATOR);
+        properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
+    }
+
+    public static void printMandatoryTogglePropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
+        var getters = getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList());
+        var properties = ReflectionUtility.getProperties(propertyName, propertyConfigs, getters);
+        properties.sort(PROPERTIES_PRINTER_COMPARATOR);
         properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
     }
 

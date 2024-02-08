@@ -21,8 +21,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
@@ -52,7 +50,7 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationProperties.getServerConfigs(), "serverConfigs");
+        this.applicationProperties.getServerConfigs().assertProperties("serverConfigs");
     }
 
     @Override

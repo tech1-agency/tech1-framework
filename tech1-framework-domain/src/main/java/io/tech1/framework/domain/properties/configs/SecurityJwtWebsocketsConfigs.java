@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigs {
+public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final CsrfConfigs csrfConfigs;
     @MandatoryProperty

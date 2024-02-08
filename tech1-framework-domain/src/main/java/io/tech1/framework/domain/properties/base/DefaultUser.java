@@ -5,7 +5,6 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +21,7 @@ import static java.util.Objects.nonNull;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DefaultUser extends AbstractPropertiesConfigs {
+public class DefaultUser extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Username username;
     @MandatoryProperty

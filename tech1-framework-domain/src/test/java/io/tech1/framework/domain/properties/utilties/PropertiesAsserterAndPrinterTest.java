@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperties;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -201,7 +199,7 @@ class PropertiesAsserterAndPrinterTest {
         var securityJwtConfigs = SecurityJwtConfigs.disabledUsersEmailsConfigs();
 
         // Act
-        var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
+        var throwable = catchThrowable(() -> securityJwtConfigs.assertProperties("securityJwtConfigs"));
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -213,8 +211,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtConfigsTest() {
         // Act
-        assertProperties(SecurityJwtConfigs.testsHardcoded(), "securityJwtConfigs");
-        printProperties(SecurityJwtConfigs.testsHardcoded());
+        SecurityJwtConfigs.testsHardcoded().assertProperties("securityJwtConfigs");
+        SecurityJwtConfigs.testsHardcoded().printProperties("securityJwtConfigs");
 
         // Assert
         // no asserts
@@ -249,8 +247,8 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        assertProperties(securityJwtConfigs, "securityJwtConfigs");
-        printProperties(securityJwtConfigs);
+        securityJwtConfigs.assertProperties("securityJwtConfigs");
+        securityJwtConfigs.printProperties("securityJwtConfigs");
 
         // Assert
         // no asserts
@@ -282,7 +280,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
+        var throwable = catchThrowable(() -> securityJwtConfigs.assertProperties("securityJwtConfigs"));
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -317,7 +315,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        var throwable = catchThrowable(() -> assertProperties(securityJwtConfigs, "securityJwtConfigs"));
+        var throwable = catchThrowable(() -> securityJwtConfigs.assertProperties("securityJwtConfigs"));
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -328,8 +326,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void securityJwtWebsocketsConfigsTest() {
         // Act
-        assertProperties(SecurityJwtWebsocketsConfigs.testsHardcoded(), "securityJwtWebsocketsConfigs");
-        printProperties(SecurityJwtWebsocketsConfigs.testsHardcoded());
+        SecurityJwtWebsocketsConfigs.testsHardcoded().assertProperties("securityJwtWebsocketsConfigs");
+        SecurityJwtWebsocketsConfigs.testsHardcoded().printProperties("securityJwtWebsocketsConfigs");
 
         // Assert
         // no asserts

@@ -59,11 +59,11 @@ class EmailConfigsTest {
 
         // Assert
         assertThat(emailConfigs.isEnabled()).isTrue();
-        assertThat(emailConfigs.getHost()).isNull();
-        assertThat(emailConfigs.getPort()).isZero();
+        assertThat(emailConfigs.getHost()).isNotNull();
+        assertThat(emailConfigs.getPort()).isEqualTo(587);
         assertThat(emailConfigs.getFrom()).isEqualTo(from);
-        assertThat(emailConfigs.getUsername()).isNull();
-        assertThat(emailConfigs.getPassword()).isNull();
-        assertThat(emailConfigs.getTo()).isNull();
+        assertThat(emailConfigs.getUsername()).isEqualTo(Username.testsHardcoded());
+        assertThat(emailConfigs.getPassword()).isEqualTo(Password.testsHardcoded());
+        assertThat(emailConfigs.getTo()).isEmpty();
     }
 }

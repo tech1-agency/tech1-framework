@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------

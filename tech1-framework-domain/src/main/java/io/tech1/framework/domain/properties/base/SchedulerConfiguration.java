@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +16,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SchedulerConfiguration extends AbstractPropertiesConfigs {
+public class SchedulerConfiguration extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Long initialDelay;
     @MandatoryProperty

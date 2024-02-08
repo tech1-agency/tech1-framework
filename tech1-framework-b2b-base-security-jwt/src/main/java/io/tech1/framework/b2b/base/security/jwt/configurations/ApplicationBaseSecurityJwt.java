@@ -29,7 +29,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.annotation.PostConstruct;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
@@ -73,8 +72,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
 
     @PostConstruct
     public void init() {
-        var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
-        assertProperties(securityJwtConfigs, "securityJwtConfigs");
+        this.applicationFrameworkProperties.getSecurityJwtConfigs().assertProperties("securityJwtConfigs");
     }
 
     @Override

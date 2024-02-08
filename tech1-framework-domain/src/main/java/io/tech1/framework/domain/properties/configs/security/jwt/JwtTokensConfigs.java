@@ -39,8 +39,8 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigsV2 {
         return new JwtTokensConfigs(
                 "TECH1",
                 JwtTokenStorageMethod.COOKIES,
-                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
-                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
+                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", null),
+                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", null)
         );
     }
 

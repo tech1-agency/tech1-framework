@@ -4,10 +4,8 @@ import io.tech1.framework.domain.asserts.Asserts;
 import io.tech1.framework.domain.constants.LogsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
-import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.base.AbstractTogglePropertyConfigs;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
@@ -56,64 +54,40 @@ public class PropertiesAsserter {
         ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), invalidAttribute(cp.getPropertyName())));
     }
 
-    @Deprecated
-    public static void assertProperties(AbstractPropertiesConfigs abstractConfigs, String parentName) {
-        assertNonNullOrThrow(abstractConfigs, invalidAttribute(parentName));
-        abstractConfigs.assertProperties();
-    }
-
-    @Deprecated
-    public static void assertNotNullProperties(AbstractPropertiesConfigs abstractConfigs, String parentName) {
-        var getters = getGetters(abstractConfigs, parentName, emptyList());
-        verifyProperties(getters, abstractConfigs, parentName, emptyList());
-    }
-
     public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
         assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
         var getters = getMandatoryGetters(propertiesConfigs, propertyName, emptyList());
-        verifyPropertiesConfigs(getters, propertiesConfigs, propertyName);
+        verifyPropertiesConfigs(propertiesConfigs, propertyName, getters);
     }
 
     public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
         assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
         var getters = getMandatoryToggleGetters(propertiesConfigs, propertyName, emptyList());
-        verifyPropertiesConfigs(getters, propertiesConfigs, propertyName);
+        verifyPropertiesConfigs(propertiesConfigs, propertyName, getters);
     }
 
     public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
         assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
         var getters = getMandatoryGetters(propertyConfigs, propertyName, emptyList());
-        verifyPropertyConfigs(getters, propertyConfigs, propertyName);
+        verifyPropertyConfigs(propertyConfigs, propertyName, getters);
     }
 
     public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String propertyName) {
         assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
         var getters = getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList());
-        verifyPropertyConfigs(getters, propertyConfigs, propertyName);
+        verifyPropertyConfigs(propertyConfigs, propertyName, getters);
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    @Deprecated
-    private static void verifyProperties(List<Method> getters, Object property, String parentName, List<String> projection) {
-        getters.forEach(getter -> {
-            var propertyName = getPropertyName(getter);
-            var attributeName = parentName + "." + propertyName;
-            try {
-                var getterValue = getter.invoke(property);
-                innerClass(getterValue, attributeName, projection);
-            } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + attributeName);
-            }
-        });
-    }
-
-    private static void verifyPropertyConfigs(List<Method> getters, AbstractPropertyConfigs propertyConfigs, String parentName) {
+    private static void verifyPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName, List<Method> getters) {
+        assertNonNullOrThrow(propertyConfigs, invalidAttribute(parentName));
         getters.forEach(getter -> {
             var propertyName = parentName + "." + getPropertyName(getter);
             try {
                 var propertyValue = getter.invoke(propertyConfigs);
+                assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
                 verifyProperty(propertyName, propertyValue);
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
@@ -121,11 +95,13 @@ public class PropertiesAsserter {
         });
     }
 
-    private static void verifyPropertiesConfigs(List<Method> getters, AbstractPropertiesConfigsV2 propertiesConfigs, String parentName) {
+    private static void verifyPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String parentName, List<Method> getters) {
+        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(parentName));
         getters.forEach(getter -> {
             var propertyName = parentName + "." + getPropertyName(getter);
             try {
                 var propertyValue = getter.invoke(propertiesConfigs);
+                assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
                 Class<?> propertyClass = propertyValue.getClass();
                 if (AbstractPropertiesConfigsV2.class.isAssignableFrom(propertyClass)) {
                     ((AbstractPropertiesConfigsV2) propertyValue).assertProperties(propertyName);
@@ -154,44 +130,6 @@ public class PropertiesAsserter {
             var reflectionProperty = ReflectionProperty.of(propertyClass.getSimpleName(), propertyName, propertyValue);
             consumerOpt.get().accept(reflectionProperty);
         }
-    }
-
-    private static void innerClass(Object property, String attributeName, List<String> projection) {
-        assertNonNullOrThrow(property, invalidAttribute(attributeName));
-        var propertyClass = property.getClass();
-        var consumerOpt = ACTIONS.entrySet().stream()
-                .filter(entry -> entry.getKey().apply(propertyClass))
-                .map(Map.Entry::getValue)
-                .findFirst();
-        if (consumerOpt.isPresent()) {
-            var reflectionProperty = ReflectionProperty.of(propertyClass.getSimpleName(), attributeName, property);
-            consumerOpt.get().accept(reflectionProperty);
-        } else {
-            var getters = getGetters(property, attributeName, projection);
-            verifyProperties(getters, property, attributeName, projection);
-        }
-    }
-
-    @Deprecated
-    private static List<Method> getGetters(Object property, String attributeName, List<String> skipProjection) {
-        assertNonNullOrThrow(property, invalidAttribute(attributeName));
-        return ReflectionUtility.getGetters(property).stream()
-                .filter(Objects::nonNull)
-                .filter(method -> !method.getName().equals("getOrder"))
-                .filter(method -> {
-                    try {
-                        var propertyName = getPropertyName(method);
-                        var declaredField = property.getClass().getDeclaredField(propertyName);
-                        return declaredField.isAnnotationPresent(MandatoryProperty.class) && !declaredField.isAnnotationPresent(NonMandatoryProperty.class);
-                    } catch (NoSuchFieldException ex) {
-                        return true;
-                    }
-                })
-                .filter(method -> {
-                    var lowerCaseAttribute = method.getName().toLowerCase().replaceAll("^get", "");
-                    return !skipProjection.contains(lowerCaseAttribute);
-                })
-                .toList();
     }
 
     // TODO [YYL] double-check access

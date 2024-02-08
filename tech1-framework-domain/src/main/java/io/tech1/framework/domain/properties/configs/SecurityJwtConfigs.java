@@ -26,7 +26,7 @@ import static java.util.Objects.nonNull;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
+public class SecurityJwtConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final AuthoritiesConfigs authoritiesConfigs;
     @MandatoryProperty
@@ -101,8 +101,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties() {
-        super.assertProperties();
+    public void assertProperties(String propertyName) {
+        super.assertProperties(propertyName);
 
         // Requirements: availableAuthorities vs. defaultUsersAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();

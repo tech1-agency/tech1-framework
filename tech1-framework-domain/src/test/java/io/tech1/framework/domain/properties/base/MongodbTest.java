@@ -17,7 +17,7 @@ class MongodbTest {
         return Stream.of(
                 Arguments.of("127.0.0.1", 27017, "tech1_framework_server", null, null),
                 Arguments.of("127.0.0.1", 27017, "tech1_framework_server", Username.random(), null),
-                Arguments.of("127.0.0.1", 27017, "tech1_framework_server", null, Username.random())
+                Arguments.of("127.0.0.1", 27017, "tech1_framework_server", null, Password.random())
         );
     }
 

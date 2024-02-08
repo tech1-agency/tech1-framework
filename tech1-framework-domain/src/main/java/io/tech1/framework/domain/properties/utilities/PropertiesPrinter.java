@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.properties.utilities;
 
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
@@ -13,7 +12,6 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SE
 import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_PRINTER_COMPARATOR;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryGetters;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryToggleGetters;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullProperties;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getNotNullPropertiesRecursively;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
@@ -43,17 +41,18 @@ public class PropertiesPrinter {
         properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
     }
 
-    @Deprecated
-    public static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs) {
-        printProperties(abstractPropertiesConfigs, "[Configuration]");
-    }
-
-    public static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs, String prefix) {
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        var parentKey = abstractPropertiesConfigs.getClass().getSimpleName();
-        var properties = getNotNullPropertiesRecursively(abstractPropertiesConfigs, parentKey);
-        properties.sort(comparing(ReflectionProperty::getReadableValue));
-        properties.forEach(property -> LOGGER.info("{} - {}", prefix, property.getReadableValue()));
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-    }
+//    @Deprecated
+//    private static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs) {
+//        printProperties(abstractPropertiesConfigs, "[Configuration]");
+//    }
+//
+//    @Deprecated
+//    private static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs, String prefix) {
+//        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+//        var parentKey = abstractPropertiesConfigs.getClass().getSimpleName();
+//        var properties = getNotNullPropertiesRecursively(abstractPropertiesConfigs, parentKey);
+//        properties.sort(comparing(ReflectionProperty::getReadableValue));
+//        properties.forEach(property -> LOGGER.info("{} - {}", prefix, property.getReadableValue()));
+//        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+//    }
 }

@@ -66,7 +66,7 @@ class IPAPIGeoLocationUtilityImplConsoleTest {
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("1.1.1.1"));
 
         // Assert
-        LOGGER.warn("geoLocation: " + geoLocation);
+        LOGGER.debug("geoLocation: " + geoLocation);
     }
 
     @Test
@@ -76,6 +76,6 @@ class IPAPIGeoLocationUtilityImplConsoleTest {
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("127.0.0.1"));
 
         // Assert
-        LOGGER.warn("geoLocation: " + geoLocation);
+        LOGGER.debug("geoLocation: " + geoLocation);
     }
 }

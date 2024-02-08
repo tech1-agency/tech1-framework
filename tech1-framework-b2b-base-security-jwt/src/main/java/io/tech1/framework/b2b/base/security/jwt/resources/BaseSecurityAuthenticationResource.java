@@ -62,7 +62,7 @@ public class BaseSecurityAuthenticationResource {
         this.baseAuthenticationRequestsValidator.validateLoginRequest(requestUserLogin);
         var username = requestUserLogin.username();
         var password = requestUserLogin.password();
-        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
+        PRINTER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.identifier(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
@@ -79,7 +79,7 @@ public class BaseSecurityAuthenticationResource {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
+        PRINTER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
 
         this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
 

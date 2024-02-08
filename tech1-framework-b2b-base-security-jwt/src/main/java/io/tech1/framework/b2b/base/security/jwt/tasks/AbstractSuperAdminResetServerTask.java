@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.tasks;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public abstract class AbstractSuperAdminResetServerTask {
         if (this.getStatus().getState().isResetting()) {
             return;
         }
-        LOGGER.info(SERVER_RESET_SERVER_TASK, initiator.username(), STARTED);
+        PRINTER.info(SERVER_RESET_SERVER_TASK, initiator.username(), STARTED);
 
         try {
             this.resetOnServer(initiator);
@@ -31,6 +32,6 @@ public abstract class AbstractSuperAdminResetServerTask {
             this.incidentPublisher.publishThrowable(ex);
         }
 
-        LOGGER.info(SERVER_RESET_SERVER_TASK, initiator.username(), COMPLETED);
+        PRINTER.info(SERVER_RESET_SERVER_TASK, initiator.username(), COMPLETED);
     }
 }

@@ -1,10 +1,11 @@
 package io.tech1.framework.b2b.base.security.jwt.filters;
 
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.tokens.*;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -48,12 +49,12 @@ public class JwtTokensFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (AccessTokenNotFoundException | AccessTokenExpiredException ex) {
-            LOGGER.warn("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
+            PRINTER.error("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
             // NOTE: place to refresh token. problem how to distinguish authenticated vs. anonymous/permitAll endpoints
             filterChain.doFilter(request, response);
         } catch (RefreshTokenNotFoundException | AccessTokenInvalidException |
                  RefreshTokenInvalidException | AccessTokenDbNotFoundException ex) {
-            LOGGER.warn("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());
+            PRINTER.error("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
         }

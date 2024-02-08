@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.mongodb.server.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
 import io.tech1.framework.b2b.base.security.jwt.startup.DefaultStartupEventListener;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
@@ -40,7 +41,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
         try {
             super.onStartup();
             var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
-            LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
+            PRINTER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

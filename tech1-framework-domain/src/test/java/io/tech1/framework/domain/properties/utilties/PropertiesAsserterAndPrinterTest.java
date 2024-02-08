@@ -130,8 +130,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void incidentConfigsTest() {
         // Act
-        assertProperties(IncidentConfigs.testsHardcoded(), "incidentConfigs");
-        printProperties(IncidentConfigs.testsHardcoded());
+        IncidentConfigs.testsHardcoded().assertProperties("incidentConfigs");
+        IncidentConfigs.testsHardcoded().printProperties("incidentConfigs");
 
         // Assert
         // no asserts

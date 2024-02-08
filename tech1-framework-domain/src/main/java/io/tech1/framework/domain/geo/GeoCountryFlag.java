@@ -6,4 +6,7 @@ public record GeoCountryFlag(
         String emoji,
         String unicode
 ) {
+    public static GeoCountryFlag unknown() {
+        return new GeoCountryFlag("Unknown", "Unknown", "🏴‍", "—");
+    }
 }

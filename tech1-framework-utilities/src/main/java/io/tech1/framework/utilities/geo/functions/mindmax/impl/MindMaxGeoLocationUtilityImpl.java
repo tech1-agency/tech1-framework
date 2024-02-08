@@ -57,7 +57,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
                 throw new IllegalArgumentException(message + ". " + ex.getMessage());
             }
         } else {
-            LOGGER.warn("{} {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+            LOGGER.warn("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
             this.databaseReader = null;
         }
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
@@ -66,7 +66,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     @Override
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
         if (!this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
-            return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configuration failure"));
+            return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
         try {
             var inetAddress = InetAddress.getByName(ipAddress.value());

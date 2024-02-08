@@ -49,6 +49,7 @@ public class HardwareMonitoringConfigs extends AbstractTogglePropertiesConfigs {
         return new HardwareMonitoringConfigs(false, new EnumMap<>(HardwareName.class));
     }
 
+    // TODO [YYL] add @MandatoryPropertyMap
     @Override
     public void assertProperties(String propertyName) {
         super.assertProperties(propertyName);

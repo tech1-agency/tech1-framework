@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +18,8 @@ class EmailConfigsTest {
                 randomString(),
                 randomIntegerGreaterThanZero(),
                 Username.random().identifier(),
-                randomString(),
-                randomString(),
+                Username.random(),
+                Password.random(),
                 randomStringsAsArray(3)
         );
 

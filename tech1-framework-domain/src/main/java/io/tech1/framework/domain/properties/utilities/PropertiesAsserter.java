@@ -67,24 +67,16 @@ public class PropertiesAsserter {
         verifyProperties(getters, abstractConfigs, parentName, emptyList());
     }
 
-    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String parentName) {
-        var getters = getMandatoryGetters(propertiesConfigs, parentName, emptyList());
-        getters.forEach(getter -> {
-            var propertyName = parentName + "." + getPropertyName(getter);
-            try {
-                var propertyValue = getter.invoke(propertiesConfigs);
-                Class<?> propertyClass = propertyValue.getClass();
-                if (AbstractPropertiesConfigsV2.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertiesConfigsV2) propertyValue).assertProperties(propertyName);
-                } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertyConfigs) propertyValue).assertProperties(propertyName);
-                } else {
-                    verifyProperty(propertyName, propertyValue);
-                }
-            } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
-            }
-        });
+    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
+        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
+        var getters = getMandatoryGetters(propertiesConfigs, propertyName, emptyList());
+        verifyPropertiesConfigs(getters, propertiesConfigs, propertyName);
+    }
+
+    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
+        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
+        var getters = getMandatoryToggleGetters(propertiesConfigs, propertyName, emptyList());
+        verifyPropertiesConfigs(getters, propertiesConfigs, propertyName);
     }
 
     public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
@@ -122,6 +114,25 @@ public class PropertiesAsserter {
             try {
                 var propertyValue = getter.invoke(propertyConfigs);
                 verifyProperty(propertyName, propertyValue);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
+            }
+        });
+    }
+
+    private static void verifyPropertiesConfigs(List<Method> getters, AbstractPropertiesConfigsV2 propertiesConfigs, String parentName) {
+        getters.forEach(getter -> {
+            var propertyName = parentName + "." + getPropertyName(getter);
+            try {
+                var propertyValue = getter.invoke(propertiesConfigs);
+                Class<?> propertyClass = propertyValue.getClass();
+                if (AbstractPropertiesConfigsV2.class.isAssignableFrom(propertyClass)) {
+                    ((AbstractPropertiesConfigsV2) propertyValue).assertProperties(propertyName);
+                } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
+                    ((AbstractPropertyConfigs) propertyValue).assertProperties(propertyName);
+                } else {
+                    verifyProperty(propertyName, propertyValue);
+                }
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
             }

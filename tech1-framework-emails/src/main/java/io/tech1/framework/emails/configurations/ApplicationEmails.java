@@ -42,8 +42,8 @@ public class ApplicationEmails {
         mailSender.setHost(emailConfigs.getHost());
         mailSender.setPort(emailConfigs.getPort());
 
-        mailSender.setUsername(emailConfigs.getUsername());
-        mailSender.setPassword(emailConfigs.getPassword());
+        mailSender.setUsername(emailConfigs.getUsername().identifier());
+        mailSender.setPassword(emailConfigs.getPassword().value());
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

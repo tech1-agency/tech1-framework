@@ -1,8 +1,10 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,30 +14,30 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EmailConfigs extends AbstractPropertiesToggleConfigs {
+public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private String host;
-    @NonMandatoryProperty
-    private int port;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
+    private Integer port;
+    @MandatoryToggleProperty
     private String from;
-    @NonMandatoryProperty
-    private String username;
-    @NonMandatoryProperty
-    private String password;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
+    private Username username;
+    @MandatoryToggleProperty
+    private Password password;
+    @MandatoryToggleProperty
     private String[] to;
 
     public static EmailConfigs testsHardcoded() {
         return new EmailConfigs(
-                false,
+                true,
                 "smtp.gmail.com",
                 587,
                 "Tech1",
-                "tech1@gmail.com",
-                "Password123!",
+                Username.testsHardcoded(),
+                Password.testsHardcoded(),
                 new String[] { Email.random().value(), Email.random().value() }
         );
     }
@@ -45,6 +47,6 @@ public class EmailConfigs extends AbstractPropertiesToggleConfigs {
     }
 
     public static EmailConfigs enabled(String from) {
-        return new EmailConfigs(true, null, 0, from, null, null, null);
+        return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.testsHardcoded(), Password.testsHardcoded(), new String[] {});
     }
 }

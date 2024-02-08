@@ -53,7 +53,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
             } catch (IOException | RuntimeException ex) {
                 PRINTER.error("%s Geo location %s database loading status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
                 PRINTER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(ex.getMessage());
             }
         } else {
             PRINTER.info("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);

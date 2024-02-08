@@ -3,8 +3,8 @@ package io.tech1.framework.domain.properties.utilities;
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
-import io.tech1.framework.domain.utilities.system.SystemProperties;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,15 +22,11 @@ import static java.util.Objects.isNull;
 public class PropertiesPrinter {
 
     public static void printProperty(ReflectionProperty rf) {
-        if (SystemProperties.isPrinterEnabled()) {
-            LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
-        }
+        PRINTER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
     }
 
     public static void printProperty(Object property, String propertyName) {
-        if (SystemProperties.isPrinterEnabled()) {
-            LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
-        }
+        PRINTER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
     }
 
     public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName) {

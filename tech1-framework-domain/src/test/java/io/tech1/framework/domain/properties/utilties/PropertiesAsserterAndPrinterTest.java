@@ -29,7 +29,7 @@ class PropertiesAsserterAndPrinterTest {
 
     @BeforeAll
     public static void beforeAll() {
-        System.setProperty(SystemPropertiesConstants.TECH1_FRAMEWORK_PRINTER, "false");
+        System.setProperty(SystemPropertiesConstants.TECH1_FRAMEWORK_PRINTER_ENABLED, "false");
     }
 
     @Test

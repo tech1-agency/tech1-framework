@@ -22,11 +22,11 @@ import static java.util.Objects.isNull;
 public class PropertiesPrinter {
 
     public static void printProperty(ReflectionProperty rf) {
-        PRINTER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
+        PRINTER.debug(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
     }
 
     public static void printProperty(Object property, String propertyName) {
-        PRINTER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
+        PRINTER.debug(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
     }
 
     public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName) {

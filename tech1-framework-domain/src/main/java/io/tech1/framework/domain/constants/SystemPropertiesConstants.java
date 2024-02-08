@@ -4,5 +4,5 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class SystemPropertiesConstants {
-    public static final String TECH1_FRAMEWORK_PROPERTIES_DEBUG = "tech1.framework.propertiesDebug";
+    public static final String TECH1_FRAMEWORK_PRINTER_DEBUG = "tech1.framework.printerEnabled";
 }

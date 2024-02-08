@@ -22,13 +22,13 @@ import static java.util.Objects.isNull;
 public class PropertiesPrinter {
 
     public static void printProperty(ReflectionProperty rf) {
-        if (SystemProperties.isPropertiesDebugEnabled()) {
+        if (SystemProperties.isPrinterEnabled()) {
             LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
         }
     }
 
     public static void printProperty(Object property, String propertyName) {
-        if (SystemProperties.isPropertiesDebugEnabled()) {
+        if (SystemProperties.isPrinterEnabled()) {
             LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
         }
     }

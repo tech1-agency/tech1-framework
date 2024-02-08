@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
 import io.tech1.framework.domain.enums.Status;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
@@ -28,24 +29,24 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
 
     @Override
     public void onStartup() {
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        LOGGER.info(STARTUP_MESSAGE, Status.STARTED);
+        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        PRINTER.info(STARTUP_MESSAGE, Status.STARTED);
 
         this.environmentUtility.verifyProfilesConfiguration();
 
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().isEnabled()) {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is enabled");
+            PRINTER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is enabled");
             this.essenceConstructor.addDefaultUsers();
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is disabled");
+            PRINTER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is disabled");
         }
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is enabled");
+            PRINTER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is enabled");
             this.essenceConstructor.addDefaultUsersInvitationCodes();
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
+            PRINTER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
         }
-        LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        PRINTER.info(STARTUP_MESSAGE, Status.COMPLETED);
+        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 }

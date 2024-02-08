@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SystemProperties {
 
-    public static boolean isPropertiesDebugEnabled() {
-        return "true".equals(System.getProperty(SystemPropertiesConstants.TECH1_FRAMEWORK_PROPERTIES_DEBUG));
+    public static boolean isPrinterEnabled() {
+        return "true".equals(System.getProperty(SystemPropertiesConstants.TECH1_FRAMEWORK_PRINTER_DEBUG));
     }
 }

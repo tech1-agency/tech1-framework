@@ -4,6 +4,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
@@ -41,26 +42,24 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     ) {
         this.geoCountryFlagUtility = geoCountryFlagUtility;
         this.applicationFrameworkProperties = applicationFrameworkProperties;
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
         if (applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
             try {
-                LOGGER.info("{} {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+                PRINTER.info("{} Geo location {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
                 var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-                LOGGER.info("{} {} database loading status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
+                PRINTER.info("{} Geo location {} database configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
             } catch (IOException | RuntimeException ex) {
-                var message = String.format("%s %s database loading status: %s", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE);
-                LOGGER.error(message);
-                LOGGER.error("Please visit https://dev.maxmind.com/ and download `GeoLite2-City.mmdb` database");
-                LOGGER.error("Please add `GeoLite2-City.mmdb` database to classpath");
-                throw new IllegalArgumentException(message + ". " + ex.getMessage());
+                PRINTER.error("%s Geo location %s database loading status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
+                PRINTER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
+                throw new IllegalArgumentException();
             }
         } else {
-            LOGGER.warn("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+            PRINTER.info("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
             this.databaseReader = null;
         }
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 
     @Override

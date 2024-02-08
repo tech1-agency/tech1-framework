@@ -24,8 +24,8 @@ public class UtilitiesConfigs extends AbstractPropertiesConfigs {
     public static UtilitiesConfigs testsHardcoded() {
         return new UtilitiesConfigs(
                 GeoLocationsConfigs.disabled(),
-                GeoCountryFlagsConfigs.disabled(),
-                UserAgentConfigs.disabled()
+                GeoCountryFlagsConfigs.enabled(),
+                UserAgentConfigs.enabled()
         );
     }
 

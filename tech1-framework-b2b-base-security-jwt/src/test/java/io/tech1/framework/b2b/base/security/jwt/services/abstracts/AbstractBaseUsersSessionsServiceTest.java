@@ -122,7 +122,9 @@ class AbstractBaseUsersSessionsServiceTest {
 
         @Bean
         UserAgentDetailsUtility userAgentDetailsUtility() {
-            return new UserAgentDetailsUtilityImpl();
+            return new UserAgentDetailsUtilityImpl(
+                    this.applicationFrameworkProperties
+            );
         }
 
         @Bean

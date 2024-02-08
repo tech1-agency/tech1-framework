@@ -32,8 +32,8 @@ class AssertsTests {
     private static Stream<Arguments> assertNonNullPropertyOrThrowTest() {
         return Stream.of(
                 Arguments.of(null, "Unknown reflection property"),
-                Arguments.of(new ReflectionProperty(randomString(), "attribute1", null), "Attribute `attribute1` is invalid"),
-                Arguments.of(new ReflectionProperty(randomString(), "attribute1", new Object()), null)
+                Arguments.of(new ReflectionProperty("parent", "attribute1", null), "Attribute `parent.attribute1` is invalid"),
+                Arguments.of(new ReflectionProperty("parent", "attribute1", new Object()), null)
         );
     }
 

@@ -121,7 +121,7 @@ public class PropertiesAsserter {
                 assertNonNullPropertyOrThrow(rf);
                 verifyProperty(rf);
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected Properties Assertion. Exception: " + ex.getMessage());
+                throw new IllegalArgumentException(ex);
             }
         });
     }
@@ -132,16 +132,16 @@ public class PropertiesAsserter {
             try {
                 var rf = new ReflectionProperty(propertiesConfigsName, getPropertyName(getter), getter.invoke(propertiesConfigs));
                 assertNonNullPropertyOrThrow(rf);
-                Class<?> propertyClass = rf.getPropertyValue().getClass();
-                if (AbstractPropertiesConfigs.class.isAssignableFrom(propertyClass)) {
+                var nestedPropertyClass = rf.getPropertyValue().getClass();
+                if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyName());
-                } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
+                } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
                     ((AbstractPropertyConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyName());
                 } else {
                     verifyProperty(rf);
                 }
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected Properties Assertion. Exception: " + ex.getMessage());
+                throw new IllegalArgumentException(ex);
             }
         });
     }

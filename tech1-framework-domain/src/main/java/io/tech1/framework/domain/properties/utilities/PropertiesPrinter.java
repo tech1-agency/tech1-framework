@@ -15,6 +15,7 @@ import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIE
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedGetters;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
 import static java.util.Collections.emptyList;
+import static java.util.Objects.isNull;
 
 @Slf4j
 @UtilityClass
@@ -35,21 +36,22 @@ public class PropertiesPrinter {
     public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName) {
         var getters = getMandatoryBasedGetters(propertiesConfigs, propertiesConfigsName, emptyList());
         getters.forEach(getter -> {
-            var nestedPropertyName = getPropertyName(getter);
-            var treePropertyName = propertiesConfigsName + "." + nestedPropertyName;
             try {
-                var nestedProperty = getter.invoke(propertiesConfigs);
-                Class<?> propertyClass = nestedProperty.getClass();
-                if (AbstractPropertiesConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertiesConfigs) nestedProperty).printProperties(treePropertyName);
-                } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertyConfigs) nestedProperty).printProperties(treePropertyName);
-                } else {
-                    var rf = new ReflectionProperty(propertiesConfigsName, nestedPropertyName, nestedProperty);
+                var rf = new ReflectionProperty(propertiesConfigsName, getPropertyName(getter), getter.invoke(propertiesConfigs));
+                if (isNull(rf.getPropertyValue())) {
                     printProperty(rf);
+                } else {
+                    var nestedPropertyClass = rf.getPropertyValue().getClass();
+                    if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        ((AbstractPropertiesConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyName());
+                    } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
+                        ((AbstractPropertyConfigs) rf.getPropertyValue()).printProperties(rf.getTreePropertyName());
+                    } else {
+                        printProperty(rf);
+                    }
                 }
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + treePropertyName);
+                throw new IllegalArgumentException(ex);
             }
         });
     }

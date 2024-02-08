@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
@@ -29,6 +30,10 @@ public class Mongodb extends AbstractPropertyConfigs {
 
     public static Mongodb testsHardcoded() {
         return Mongodb.noSecurity("127.0.0.1", 27017, "tech1_framework_server");
+    }
+
+    public static Mongodb random() {
+        return Mongodb.noSecurity(randomIPv4(), randomIntegerGreaterThanZeroByBounds(26000, 30000), randomString());
     }
 
     public static Mongodb noSecurity(String host, int port, String database) {

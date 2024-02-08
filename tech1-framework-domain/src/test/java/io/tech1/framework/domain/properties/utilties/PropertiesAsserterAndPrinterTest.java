@@ -188,8 +188,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void hardwareServerConfigsTest() {
         // Act
-        assertProperties(HardwareServerConfigs.testsHardcoded(), "hardwareServerConfigs");
-        printProperties(HardwareServerConfigs.testsHardcoded());
+        HardwareServerConfigs.testsHardcoded().assertProperties("hardwareServerConfigs");
+        HardwareServerConfigs.testsHardcoded().printProperties("hardwareServerConfigs");
 
         // Assert
         // no asserts
@@ -338,8 +338,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mongodbSecurityJwtConfigsTest() {
         // Act
-        assertProperties(MongodbSecurityJwtConfigs.testsHardcoded(), "mongodbSecurityJwtConfigs");
-        printProperties(MongodbSecurityJwtConfigs.testsHardcoded());
+        MongodbSecurityJwtConfigs.testsHardcoded().assertProperties("mongodbSecurityJwtConfigs");
+        MongodbSecurityJwtConfigs.testsHardcoded().printProperties("mongodbSecurityJwtConfigs");
 
         // Assert
         // no asserts

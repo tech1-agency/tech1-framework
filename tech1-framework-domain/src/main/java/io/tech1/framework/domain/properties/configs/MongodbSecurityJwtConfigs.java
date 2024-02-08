@@ -11,13 +11,19 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
+public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final Mongodb mongodb;
 
     public static MongodbSecurityJwtConfigs testsHardcoded() {
         return new MongodbSecurityJwtConfigs(
                 Mongodb.testsHardcoded()
+        );
+    }
+
+    public static MongodbSecurityJwtConfigs random() {
+        return new MongodbSecurityJwtConfigs(
+                Mongodb.random()
         );
     }
 }

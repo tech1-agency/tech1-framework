@@ -55,7 +55,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
                 PRINTER.info("{} User agent configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, SUCCESS);
             } catch (ParseException | IOException ex) {
                 PRINTER.error("%s User agent configuration status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, FAILURE));
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(ex);
             }
         } else {
             PRINTER.info("{} User agent is disabled", FRAMEWORK_UTILITIES_PREFIX);

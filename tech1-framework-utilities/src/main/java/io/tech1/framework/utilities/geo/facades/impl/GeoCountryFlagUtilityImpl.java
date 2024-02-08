@@ -1,4 +1,3 @@
-
 package io.tech1.framework.utilities.geo.facades.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -69,7 +68,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             } catch (IOException | RuntimeException ex) {
                 PRINTER.error("%s Geo country flags %s json configuration status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, FAILURE));
                 PRINTER.error("Please verify `{}` is present in classpath", COUNTRIES_FLAGS_JSON);
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(ex.getMessage());
             }
         } else {
             this.mappedByCountryName = new HashMap<>();

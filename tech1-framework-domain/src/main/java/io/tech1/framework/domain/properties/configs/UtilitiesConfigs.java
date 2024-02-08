@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UtilitiesConfigs extends AbstractPropertiesConfigsV2 {
+public class UtilitiesConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final GeoLocationsConfigs geoLocationsConfigs;
 

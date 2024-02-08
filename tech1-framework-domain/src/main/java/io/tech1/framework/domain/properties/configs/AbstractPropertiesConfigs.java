@@ -5,7 +5,7 @@ import io.tech1.framework.domain.constants.LogsConstants;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertMandatoryPropertiesConfigs;
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printMandatoryPropertiesConfigs;
 
-public abstract class AbstractPropertiesConfigsV2 {
+public abstract class AbstractPropertiesConfigs {
 
     public void assertProperties(String propertyName) {
         assertMandatoryPropertiesConfigs(this, propertyName);

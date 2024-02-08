@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.properties.configs.security.jwt.websockets;
 
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigsV2 {
+public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private WebsocketsFeatureHardwareConfigs hardwareConfigs;
 

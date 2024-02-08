@@ -5,7 +5,7 @@ import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.JwtToken;
 import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
 import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +25,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtTokensConfigs extends AbstractPropertiesConfigsV2 {
+public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String secretKey;
     @MandatoryProperty

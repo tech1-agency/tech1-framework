@@ -4,9 +4,10 @@ import io.tech1.framework.domain.asserts.Asserts;
 import io.tech1.framework.domain.constants.LogsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.base.AbstractTogglePropertyConfigs;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
 import lombok.experimental.UtilityClass;
@@ -54,34 +55,67 @@ public class PropertiesAsserter {
         ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), invalidAttribute(cp.getPropertyName())));
     }
 
-    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
+    // =================================================================================================================
+    // Assertions
+    // =================================================================================================================
+
+    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName) {
         assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
-        var getters = getMandatoryGetters(propertiesConfigs, propertyName, emptyList());
-        verifyPropertiesConfigs(propertiesConfigs, propertyName, getters);
+        assertPropertiesConfigs(
+                propertiesConfigs,
+                propertyName,
+                getMandatoryGetters(propertiesConfigs, propertyName, emptyList())
+        );
     }
 
-    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
+    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName) {
         assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
-        var getters = getMandatoryToggleGetters(propertiesConfigs, propertyName, emptyList());
-        verifyPropertiesConfigs(propertiesConfigs, propertyName, getters);
+        assertPropertiesConfigs(
+                propertiesConfigs,
+                propertyName,
+                getMandatoryToggleGetters(propertiesConfigs, propertyName, emptyList())
+        );
     }
 
     public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
         assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
-        var getters = getMandatoryGetters(propertyConfigs, propertyName, emptyList());
-        verifyPropertyConfigs(propertyConfigs, propertyName, getters);
+        assertPropertyConfigs(
+                propertyConfigs,
+                propertyName,
+                getMandatoryGetters(propertyConfigs, propertyName, emptyList())
+        );
     }
 
     public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String propertyName) {
         assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
-        var getters = getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList());
-        verifyPropertyConfigs(propertyConfigs, propertyName, getters);
+        assertPropertyConfigs(
+                propertyConfigs,
+                propertyName,
+                getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList())
+        );
+    }
+
+    // =================================================================================================================
+    // GETTERS
+    // =================================================================================================================
+
+    public static List<Method> getMandatoryGetters(Object property, String propertyName, List<String> skipProjection) {
+        return getGetters(property, propertyName, Set.of(MandatoryProperty.class), skipProjection);
+    }
+
+    public static List<Method> getMandatoryToggleGetters(Object property, String propertyName, List<String> skipProjection) {
+        return getGetters(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class), skipProjection);
+    }
+
+    public static List<Method> getMandatoryBasedGetters(Object property, String propertyName, List<String> skipProjection) {
+        return getGetters(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class), skipProjection);
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static void verifyPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName, List<Method> getters) {
+
+    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName, List<Method> getters) {
         assertNonNullOrThrow(propertyConfigs, invalidAttribute(parentName));
         getters.forEach(getter -> {
             var propertyName = parentName + "." + getPropertyName(getter);
@@ -95,7 +129,7 @@ public class PropertiesAsserter {
         });
     }
 
-    private static void verifyPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String parentName, List<Method> getters) {
+    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String parentName, List<Method> getters) {
         assertNonNullOrThrow(propertiesConfigs, invalidAttribute(parentName));
         getters.forEach(getter -> {
             var propertyName = parentName + "." + getPropertyName(getter);
@@ -103,8 +137,8 @@ public class PropertiesAsserter {
                 var propertyValue = getter.invoke(propertiesConfigs);
                 assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
                 Class<?> propertyClass = propertyValue.getClass();
-                if (AbstractPropertiesConfigsV2.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertiesConfigsV2) propertyValue).assertProperties(propertyName);
+                if (AbstractPropertiesConfigs.class.isAssignableFrom(propertyClass)) {
+                    ((AbstractPropertiesConfigs) propertyValue).assertProperties(propertyName);
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
                     ((AbstractPropertyConfigs) propertyValue).assertProperties(propertyName);
                 } else {
@@ -132,18 +166,7 @@ public class PropertiesAsserter {
         }
     }
 
-    // TODO [YYL] double-check access
-    public static List<Method> getMandatoryGetters(Object property, String propertyName, List<String> skipProjection) {
-        return getGetters(property, propertyName, Set.of(MandatoryProperty.class), skipProjection);
-    }
-
-    // TODO [YYL] double-check access
-    public static List<Method> getMandatoryToggleGetters(Object property, String propertyName, List<String> skipProjection) {
-        return getGetters(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class), skipProjection);
-    }
-
-    // TODO [YYL] double-check access
-    public static List<Method> getGetters(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations, List<String> skipProjection) {
+    private static List<Method> getGetters(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations, List<String> skipProjection) {
         assertNonNullOrThrow(property, invalidAttribute(propertyName));
         return ReflectionUtility.getGetters(property).stream()
                 .filter(Objects::nonNull)

@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HardwareServerConfigs extends AbstractPropertiesConfigsV2 {
+public class HardwareServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String baseURL;
 

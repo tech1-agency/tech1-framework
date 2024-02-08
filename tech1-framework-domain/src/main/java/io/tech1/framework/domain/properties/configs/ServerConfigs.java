@@ -13,7 +13,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends AbstractPropertiesConfigsV2 {
+public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String name;
     @NonMandatoryProperty

@@ -12,7 +12,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EventsConfigs extends AbstractPropertiesConfigsV2 {
+public class EventsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String threadNamePrefix;
 

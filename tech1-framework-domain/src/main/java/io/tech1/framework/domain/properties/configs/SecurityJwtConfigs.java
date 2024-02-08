@@ -26,7 +26,7 @@ import static java.util.Objects.nonNull;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityJwtConfigs extends AbstractPropertiesConfigsV2 {
+public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final AuthoritiesConfigs authoritiesConfigs;
     @MandatoryProperty

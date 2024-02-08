@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigsV2 {
+public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Mongodb mongodb;
 

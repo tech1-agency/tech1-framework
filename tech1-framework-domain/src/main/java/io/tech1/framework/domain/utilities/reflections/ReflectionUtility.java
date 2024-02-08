@@ -149,21 +149,16 @@ public class ReflectionUtility {
         return traversedProperties;
     }
 
-    public static List<ReflectionProperty> getNotNullProperties(Object object, String parentKey) {
+    public static List<ReflectionProperty> getNotNullProperties(Object object, String propertyName) {
         var getters = getGetters(object);
         return getters.stream()
                 .map(getter -> {
                     try {
-                        var propertyName = getPropertyName(getter);
-                        var propertyValue = getter.invoke(object);
-                        if (isNull(propertyValue)) {
+                        var nestedProperty = getter.invoke(object);
+                        if (isNull(nestedProperty)) {
                             return null;
                         } else {
-                            return ReflectionProperty.of(
-                                    parentKey,
-                                    propertyName,
-                                    propertyValue
-                            );
+                            return new ReflectionProperty(propertyName, getPropertyName(getter), nestedProperty);
                         }
                     } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
                         return null;
@@ -173,13 +168,13 @@ public class ReflectionUtility {
                 .collect(Collectors.toList());
     }
 
-    public static List<ReflectionProperty> getProperties(String propertyName, Object property, List<Method> getters) {
+    public static List<ReflectionProperty> getProperties(Object property, String propertyName, List<Method> getters) {
         return getters.stream()
                 .map(getter -> {
                     try {
-                        return ReflectionProperty.of(propertyName, getPropertyName(getter), getter.invoke(property));
+                        return new ReflectionProperty(propertyName, getPropertyName(getter), getter.invoke(property));
                     } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
-                        return ReflectionProperty.of(propertyName, StringConstants.UNDEFINED, null);
+                        return new ReflectionProperty(propertyName, StringConstants.UNDEFINED, null);
                     }
                 })
                 .collect(Collectors.toList());

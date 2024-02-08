@@ -115,53 +115,53 @@ public class PropertiesAsserter {
     // PRIVATE METHODS
     // =================================================================================================================
 
-    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName, List<Method> getters) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(parentName));
+    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName, List<Method> getters) {
+        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
         getters.forEach(getter -> {
-            var propertyName = parentName + "." + getPropertyName(getter);
+            var nestedPropertyName = propertyName + "." + getPropertyName(getter);
             try {
-                var propertyValue = getter.invoke(propertyConfigs);
-                assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
-                verifyProperty(propertyName, propertyValue);
+                var nestedProperty = getter.invoke(propertyConfigs);
+                assertNonNullOrThrow(nestedProperty, invalidAttribute(nestedPropertyName));
+                verifyProperty(nestedProperty, nestedPropertyName);
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
+                throw new IllegalArgumentException("Unexpected. Attribute: " + nestedPropertyName);
             }
         });
     }
 
-    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String parentName, List<Method> getters) {
-        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(parentName));
+    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName, List<Method> getters) {
+        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
         getters.forEach(getter -> {
-            var propertyName = parentName + "." + getPropertyName(getter);
+            var nestedPropertyName = propertyName + "." + getPropertyName(getter);
             try {
-                var propertyValue = getter.invoke(propertiesConfigs);
-                assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
-                Class<?> propertyClass = propertyValue.getClass();
+                var nestedProperty = getter.invoke(propertiesConfigs);
+                assertNonNullOrThrow(nestedProperty, invalidAttribute(nestedPropertyName));
+                Class<?> propertyClass = nestedProperty.getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertiesConfigs) propertyValue).assertProperties(propertyName);
+                    ((AbstractPropertiesConfigs) nestedProperty).assertProperties(nestedPropertyName);
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertyConfigs) propertyValue).assertProperties(propertyName);
+                    ((AbstractPropertyConfigs) nestedProperty).assertProperties(nestedPropertyName);
                 } else {
-                    verifyProperty(propertyName, propertyValue);
+                    verifyProperty(nestedProperty, nestedPropertyName);
                 }
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + propertyName);
+                throw new IllegalArgumentException("Unexpected. Attribute: " + nestedPropertyName);
             }
         });
     }
 
-    private static void verifyProperty(String propertyName, Object propertyValue) {
+    private static void verifyProperty(Object property, String propertyName) {
         if (LogsConstants.DEBUG) {
-            LOGGER.info(PROPERTIES_ASSERTER_DEBUG, propertyName, propertyValue);
+            LOGGER.info(PROPERTIES_ASSERTER_DEBUG, propertyName, property);
         }
-        assertNonNullOrThrow(propertyValue, invalidAttribute(propertyName));
-        var propertyClass = propertyValue.getClass();
+        assertNonNullOrThrow(property, invalidAttribute(propertyName));
+        var propertyClass = property.getClass();
         var consumerOpt = ACTIONS.entrySet().stream()
                 .filter(entry -> entry.getKey().apply(propertyClass))
                 .map(Map.Entry::getValue)
                 .findFirst();
         if (consumerOpt.isPresent()) {
-            var reflectionProperty = ReflectionProperty.of(propertyClass.getSimpleName(), propertyName, propertyValue);
+            var reflectionProperty = new ReflectionProperty(propertyClass.getSimpleName(), propertyName, property);
             consumerOpt.get().accept(reflectionProperty);
         }
     }
@@ -183,7 +183,7 @@ public class PropertiesAsserter {
                         }
                         return annotationPresent;
                     } catch (NoSuchFieldException ex) {
-                        return true;
+                        return false;
                     }
                 })
                 .filter(method -> {

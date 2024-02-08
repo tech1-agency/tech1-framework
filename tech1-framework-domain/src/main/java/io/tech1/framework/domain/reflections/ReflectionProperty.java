@@ -66,16 +66,4 @@ public class ReflectionProperty {
             );
         }
     }
-
-    public static ReflectionProperty of(
-            String parentPropertyName,
-            String propertyName,
-            Object propertyValue
-    ) {
-        return new ReflectionProperty(
-                parentPropertyName,
-                propertyName,
-                propertyValue
-        );
-    }
 }

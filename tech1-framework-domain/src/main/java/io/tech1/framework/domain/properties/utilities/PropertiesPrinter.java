@@ -2,6 +2,7 @@ package io.tech1.framework.domain.properties.utilities;
 
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +18,17 @@ import static java.util.Comparator.comparing;
 @UtilityClass
 public class PropertiesPrinter {
 
-    public static void printPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName) {
-        var properties = getNotNullProperties(propertyConfigs, parentName);
+    public static void printPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
+        var properties = getNotNullProperties(propertyConfigs, propertyName);
         properties.sort(comparing(ReflectionProperty::getReadableValue));
         properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
     }
 
+    public static void printPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
+        System.out.println("TODO --> printPropertiesConfigs: " + propertyName);
+    }
+
+    @Deprecated
     public static void printProperties(AbstractPropertiesConfigs abstractPropertiesConfigs) {
         printProperties(abstractPropertiesConfigs, "[Configuration]");
     }

@@ -37,10 +37,10 @@ public class JwtToken extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(String parentName) {
-        super.assertProperties(parentName);
+    public void assertProperties(String propertyName) {
+        super.assertProperties(propertyName);
         var bothProvided = nonNull(this.cookieKey) && nonNull(this.headerKey);
-        assertFalseOrThrow(bothProvided, "Attribute `%s` requires only `cookieKey` or `headerKey` to be provided".formatted(parentName));
+        assertFalseOrThrow(bothProvided, "Attribute `%s` requires only `cookieKey` or `headerKey` to be provided".formatted(propertyName));
     }
 
     public String getKey(JwtTokenStorageMethod method) {

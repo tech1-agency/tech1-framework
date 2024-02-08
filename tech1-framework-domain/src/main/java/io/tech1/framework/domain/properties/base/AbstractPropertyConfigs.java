@@ -7,13 +7,13 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.p
 
 public abstract class AbstractPropertyConfigs {
 
-    public void assertProperties(String parentName) {
-        assertMandatoryPropertyConfigs(this, parentName);
+    public void assertProperties(String propertyName) {
+        assertMandatoryPropertyConfigs(this, propertyName);
     }
 
-    public void printProperties(String parentName) {
+    public void printProperties(String propertyName) {
         if (LogsConstants.DEBUG) {
-            printPropertyConfigs(this, parentName);
+            printPropertyConfigs(this, propertyName);
         }
     }
 }

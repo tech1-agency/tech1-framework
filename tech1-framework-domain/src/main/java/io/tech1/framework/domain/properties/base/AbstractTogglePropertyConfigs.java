@@ -7,11 +7,11 @@ public abstract class AbstractTogglePropertyConfigs extends AbstractPropertyConf
     abstract boolean isEnabled();
 
     @Override
-    public void assertProperties(String parentName) {
+    public void assertProperties(String propertyName) {
         if (this.isEnabled()) {
-            assertMandatoryTogglePropertyConfigs(this, parentName);
+            assertMandatoryTogglePropertyConfigs(this, propertyName);
         } else {
-            assertMandatoryPropertyConfigs(this, parentName);
+            assertMandatoryPropertyConfigs(this, propertyName);
         }
     }
 }

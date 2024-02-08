@@ -67,8 +67,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void asyncConfigsTest() {
         // Act
-        assertProperties(AsyncConfigs.testsHardcoded(), "asyncConfigs");
-        printProperties(AsyncConfigs.testsHardcoded());
+        AsyncConfigs.testsHardcoded().assertProperties("asyncConfigs");
+        AsyncConfigs.testsHardcoded().printProperties("asyncConfigs");
 
         // Assert
         // no asserts

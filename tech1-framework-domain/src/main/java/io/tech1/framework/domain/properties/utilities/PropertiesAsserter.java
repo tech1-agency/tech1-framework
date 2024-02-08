@@ -67,7 +67,7 @@ public class PropertiesAsserter {
         verifyProperties(getters, abstractConfigs, parentName, emptyList());
     }
 
-    public static void assertPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String parentName) {
+    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String parentName) {
         var getters = getMandatoryGetters(propertiesConfigs, parentName, emptyList());
         getters.forEach(getter -> {
             var propertyName = parentName + "." + getPropertyName(getter);
@@ -87,16 +87,16 @@ public class PropertiesAsserter {
         });
     }
 
-    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String parentName) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(parentName));
-        var getters = getMandatoryGetters(propertyConfigs, parentName, emptyList());
-        verifyPropertyConfigs(getters, propertyConfigs, parentName);
+    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
+        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
+        var getters = getMandatoryGetters(propertyConfigs, propertyName, emptyList());
+        verifyPropertyConfigs(getters, propertyConfigs, propertyName);
     }
 
-    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String parentName) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(parentName));
-        var getters = getMandatoryToggleGetters(propertyConfigs, parentName, emptyList());
-        verifyPropertyConfigs(getters, propertyConfigs, parentName);
+    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String propertyName) {
+        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
+        var getters = getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList());
+        verifyPropertyConfigs(getters, propertyConfigs, propertyName);
     }
 
     // =================================================================================================================

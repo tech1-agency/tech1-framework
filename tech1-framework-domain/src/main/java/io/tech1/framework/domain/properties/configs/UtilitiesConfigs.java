@@ -11,15 +11,19 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UtilitiesConfigs extends AbstractPropertiesConfigs {
+public class UtilitiesConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final GeoLocationsConfigs geoLocationsConfigs;
 
     public static UtilitiesConfigs testsHardcoded() {
         return new UtilitiesConfigs(
-                new GeoLocationsConfigs(
-                        false
-                )
+                GeoLocationsConfigs.disabled()
+        );
+    }
+
+    public static UtilitiesConfigs random() {
+        return new UtilitiesConfigs(
+                GeoLocationsConfigs.random()
         );
     }
 }

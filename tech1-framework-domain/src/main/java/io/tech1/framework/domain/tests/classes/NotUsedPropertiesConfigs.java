@@ -4,31 +4,21 @@ import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.ScheduledJob;
 import io.tech1.framework.domain.properties.base.SpringLogging;
 import io.tech1.framework.domain.properties.base.SpringServer;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 // Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NotUsedPropertiesConfigs extends AbstractPropertiesConfigs {
+public class NotUsedPropertiesConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
-    private ScheduledJob scheduledJob;
+    private final ScheduledJob scheduledJob;
     @MandatoryProperty
-    private SpringServer springServer;
+    private final SpringServer springServer;
     @MandatoryProperty
-    private SpringLogging springLogging;
-
-    // NOTE: test-NotUsedPropertiesConfigs
-    public static NotUsedPropertiesConfigs of(
-            ScheduledJob scheduledJob,
-            SpringServer springServer,
-            SpringLogging springLogging
-    ) {
-        var instance = new NotUsedPropertiesConfigs();
-        instance.scheduledJob = scheduledJob;
-        instance.springServer = springServer;
-        instance.springLogging = springLogging;
-        return instance;
-    }
+    private final SpringLogging springLogging;
 }

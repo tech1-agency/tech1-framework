@@ -30,15 +30,15 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void notUsedPropertiesConfigsTest() {
         // Arrange
-        var notUsedPropertiesConfigs = NotUsedPropertiesConfigs.of(
+        var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
                 new ScheduledJob(true, SchedulerConfiguration.testsHardcoded()),
                 new SpringServer(8080),
                 new SpringLogging("logback-test.xml")
         );
 
         // Act
-        assertProperties(notUsedPropertiesConfigs, "notUsedPropertiesConfigs");
-        printProperties(notUsedPropertiesConfigs);
+        notUsedPropertiesConfigs.assertProperties("notUsedPropertiesConfigs");
+        notUsedPropertiesConfigs.printProperties("notUsedPropertiesConfigs");
 
         // Assert
         // no asserts
@@ -47,8 +47,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void serverConfigsTest() {
         // Act
-        assertProperties(ServerConfigs.testsHardcoded(), "serverConfigs");
-        printProperties(ServerConfigs.testsHardcoded());
+        ServerConfigs.testsHardcoded().assertProperties("serverConfigs");
+        ServerConfigs.testsHardcoded().printProperties("serverConfigs");
 
         // Assert
         // no asserts
@@ -57,8 +57,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void utilitiesConfigsTest() {
         // Act
-        assertProperties(UtilitiesConfigs.testsHardcoded(), "utilitiesConfigs");
-        printProperties(UtilitiesConfigs.testsHardcoded());
+        UtilitiesConfigs.testsHardcoded().assertProperties("utilitiesConfigs");
+        UtilitiesConfigs.testsHardcoded().printProperties("utilitiesConfigs");
 
         // Assert
         // no asserts
@@ -87,15 +87,11 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsDisabledTest() {
         // Arrange
-        var mvcConfigs = new MvcConfigs(
-                false,
-                null,
-                null
-        );
+        var mvcConfigs = new MvcConfigs(false, null, null);
 
         // Act
-        assertProperties(mvcConfigs, "mvcConfigs");
-        printProperties(mvcConfigs);
+        mvcConfigs.assertProperties("mvcConfigs");
+        mvcConfigs.printProperties("mvcConfigs");
 
         // Assert
         // no asserts
@@ -104,8 +100,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void mvcConfigsTest() {
         // Act
-        assertProperties(MvcConfigs.testsHardcoded(), "mvcConfigs");
-        printProperties(MvcConfigs.testsHardcoded());
+        MvcConfigs.testsHardcoded().assertProperties("mvcConfigs");
+        MvcConfigs.testsHardcoded().printProperties("mvcConfigs");
 
         // Assert
         // no asserts
@@ -147,7 +143,7 @@ class PropertiesAsserterAndPrinterTest {
         var hardwareMonitoringConfigs = HardwareMonitoringConfigs.disabled();
 
         // Act
-        assertProperties(hardwareMonitoringConfigs, "hardwareMonitoringConfigs");
+        HardwareMonitoringConfigs.disabled().assertProperties("hardwareMonitoringConfigs");
 
         // Assert
         var thresholdsConfigs = hardwareMonitoringConfigs.getThresholdsConfigs();
@@ -168,7 +164,7 @@ class PropertiesAsserterAndPrinterTest {
         );
 
         // Act
-        var throwable = catchThrowable(() -> assertProperties(hardwareMonitoringConfigs, "hardwareMonitoringConfigs"));
+        var throwable = catchThrowable(() -> hardwareMonitoringConfigs.assertProperties("hardwareMonitoringConfigs"));
 
         // Assert
         assertThat(throwable).isNotNull();
@@ -179,8 +175,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void hardwareMonitoringConfigsTest() {
         // Act
-        assertProperties(HardwareMonitoringConfigs.testsHardcoded(), "hardwareMonitoringConfigs");
-        printProperties(HardwareMonitoringConfigs.testsHardcoded());
+        HardwareMonitoringConfigs.testsHardcoded().assertProperties("hardwareMonitoringConfigs");
+        HardwareMonitoringConfigs.testsHardcoded().printProperties("hardwareMonitoringConfigs");
 
         // Assert
         var thresholdsConfigs = HardwareMonitoringConfigs.testsHardcoded().getThresholdsConfigs();

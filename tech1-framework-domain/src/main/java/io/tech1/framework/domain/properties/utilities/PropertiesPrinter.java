@@ -35,6 +35,7 @@ public class PropertiesPrinter {
         properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
     }
 
+    // TODO [YYL] what about NOT MANDATORY?
     public static void printMandatoryTogglePropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
         var getters = getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList());
         var properties = ReflectionUtility.getProperties(propertyName, propertyConfigs, getters);

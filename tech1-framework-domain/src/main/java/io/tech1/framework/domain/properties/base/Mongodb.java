@@ -1,8 +1,9 @@
 package io.tech1.framework.domain.properties.base;
 
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,17 +15,17 @@ import static java.util.Objects.nonNull;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Mongodb extends AbstractPropertiesConfigs {
+public class Mongodb extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String host;
     @MandatoryProperty
-    private final int port;
+    private final Integer port;
     @MandatoryProperty
     private final String database;
     @NonMandatoryProperty
-    private String username;
+    private Username username;
     @NonMandatoryProperty
-    private String password;
+    private Password password;
 
     public static Mongodb testsHardcoded() {
         return Mongodb.noSecurity("127.0.0.1", 27017, "tech1_framework_server");
@@ -36,7 +37,7 @@ public class Mongodb extends AbstractPropertiesConfigs {
 
     public final String connectionString() {
         if (isAuthenticationRequired()) {
-            return "mongodb://" + this.username + ":" + this.password + "@" + this.host + ":" + this.port + "/" + this.database;
+            return "mongodb://" + this.username.identifier() + ":" + this.password.value() + "@" + this.host + ":" + this.port + "/" + this.database;
         } else {
             return "mongodb://" + this.host + ":" + this.port + "/" + this.database;
         }

@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.concurrent.TimeUnit;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
@@ -32,7 +31,7 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsTest() {
         // Arrange
         var notUsedPropertiesConfigs = NotUsedPropertiesConfigs.of(
-                new ScheduledJob(true, new SchedulerConfiguration(10, 10, TimeUnit.SECONDS)),
+                new ScheduledJob(true, SchedulerConfiguration.testsHardcoded()),
                 new SpringServer(8080),
                 new SpringLogging("logback-test.xml")
         );

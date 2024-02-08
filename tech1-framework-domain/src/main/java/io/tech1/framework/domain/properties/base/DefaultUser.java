@@ -6,6 +6,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +15,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 import java.time.ZoneId;
 import java.util.Set;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsSet;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
@@ -22,9 +24,9 @@ import static java.util.Objects.nonNull;
 @EqualsAndHashCode(callSuper = true)
 public class DefaultUser extends AbstractPropertiesConfigs {
     @MandatoryProperty
-    private final String username;
+    private final Username username;
     @MandatoryProperty
-    private final String password;
+    private final Password password;
     @MandatoryProperty
     private final ZoneId zoneId;
     @NonMandatoryProperty
@@ -32,15 +34,27 @@ public class DefaultUser extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Set<String> authorities;
 
-    public Username getUsername() {
-        return Username.of(this.username);
+    public static DefaultUser testsHardcoded() {
+        return new DefaultUser(
+                Username.testsHardcoded(),
+                Password.testsHardcoded(),
+                ZoneId.of("Europe/Kiev"),
+                Email.testsHardcoded().value(),
+                Set.of("user", "admin")
+        );
     }
 
-    public Password getPassword() {
-        return Password.of(this.password);
+    public static DefaultUser random() {
+        return new DefaultUser(
+                Username.random(),
+                Password.random(),
+                RandomUtility.randomZoneId(),
+                Email.random().value(),
+                randomStringsAsSet(3)
+        );
     }
 
-    public Email getEmail() {
+    public Email getEmailOrNull() {
         return nonNull(this.email) ? Email.of(this.email) : null;
     }
 }

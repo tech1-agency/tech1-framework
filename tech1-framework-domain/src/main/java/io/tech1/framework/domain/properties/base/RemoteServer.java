@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -22,5 +24,9 @@ public class RemoteServer extends AbstractPropertyConfigs {
 
     public static RemoteServer testsHardcoded() {
         return new RemoteServer("localhost", Username.testsHardcoded(), Password.testsHardcoded());
+    }
+
+    public static RemoteServer random() {
+        return new RemoteServer(randomIPv4(), Username.random(), Password.random());
     }
 }

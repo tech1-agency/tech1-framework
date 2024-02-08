@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,14 +21,14 @@ class DefaultUsersTest {
                 Arguments.of(null, emptySet()),
                 Arguments.of(
                         List.of(
-                                new DefaultUser("user1", "pass1", systemDefault(), null, null)
+                                new DefaultUser(Username.of("user1"), Password.of("pass1"), systemDefault(), null, null)
                         ),
                         emptySet()
                 ),
                 Arguments.of(
                         List.of(
-                                new DefaultUser("user1", "pass1", systemDefault(), null, Set.of("user")),
-                                new DefaultUser("user2", "pass2", systemDefault(), null, Set.of("admin", "user"))
+                                new DefaultUser(Username.of("user1"), Password.of("pass1"), systemDefault(), null, Set.of("user")),
+                                new DefaultUser(Username.of("user2"), Password.of("pass2"), systemDefault(), null, Set.of("admin", "user"))
                         ),
                         Set.of("user", "admin")
                 )

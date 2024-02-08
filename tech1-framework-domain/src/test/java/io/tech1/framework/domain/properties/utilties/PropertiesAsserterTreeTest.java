@@ -2,10 +2,10 @@ package io.tech1.framework.domain.properties.utilties;
 
 import io.tech1.framework.domain.properties.base.Cron;
 import io.tech1.framework.domain.properties.base.RemoteServer;
-import io.tech1.framework.domain.properties.base.TestsCronRemoteServer;
-import io.tech1.framework.domain.properties.base.TestsCronRemoteServer2;
 import org.junit.jupiter.api.Test;
 
+// TODO [YYL] delete
+@Deprecated
 class PropertiesAsserterTreeTest {
 
     @Test
@@ -23,24 +23,6 @@ class PropertiesAsserterTreeTest {
         // Act
         Cron.enabled().assertProperties("cron");
         Cron.enabled().printProperties("cron");
-
-        // Assert
-        // no asserts
-    }
-
-    @Test
-    void testsTest() {
-        // Act
-        TestsCronRemoteServer.testsHardcoded().assertProperties("tests");
-
-        // Assert
-        // no asserts
-    }
-
-    @Test
-    void tests2Test() {
-        // Act
-        TestsCronRemoteServer2.testsHardcoded().assertProperties("server2");
 
         // Assert
         // no asserts

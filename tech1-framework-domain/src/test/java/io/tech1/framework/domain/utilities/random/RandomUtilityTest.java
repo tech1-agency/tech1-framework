@@ -16,10 +16,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -703,6 +705,24 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(getAvailableZoneIds()).contains(actual.toZoneId().getId());
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomTimeUnitTest() {
+        // Act
+        var timeUnit = randomTimeUnit();
+
+        // Assert
+        assertThat(TimeUnit.values()).contains(timeUnit);
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomChronoUnitTest() {
+        // Act
+        var chronoUnit = randomChronoUnit();
+
+        // Assert
+        assertThat(ChronoUnit.values()).contains(chronoUnit);
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)

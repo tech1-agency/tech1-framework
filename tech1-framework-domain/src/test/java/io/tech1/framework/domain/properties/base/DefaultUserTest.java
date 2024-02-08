@@ -14,7 +14,7 @@ class DefaultUserTest {
         var defaultUsers = SecurityJwtConfigs.testsHardcoded().getEssenceConfigs().getDefaultUsers();
 
         // Act
-        var email = defaultUsers.getUsers().get(0).getEmail();
+        var email = defaultUsers.getUsers().get(0).getEmailOrNull();
 
         // Assert
         assertThat(email).isNull();
@@ -26,7 +26,7 @@ class DefaultUserTest {
         var defaultUsers = entity(DefaultUser.class);
 
         // Act
-        var email = defaultUsers.getEmail();
+        var email = defaultUsers.getEmailOrNull();
 
         // Assert
         assertThat(email).isNotNull();

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -320,6 +321,14 @@ public class RandomUtility {
 
     public static TimeZone randomTimeZone() {
         return TimeZone.getTimeZone(randomZoneId());
+    }
+
+    public static TimeUnit randomTimeUnit() {
+        return randomEnum(TimeUnit.class);
+    }
+
+    public static ChronoUnit randomChronoUnit() {
+        return randomEnum(ChronoUnit.class);
     }
 
     @SuppressWarnings("deprecation")

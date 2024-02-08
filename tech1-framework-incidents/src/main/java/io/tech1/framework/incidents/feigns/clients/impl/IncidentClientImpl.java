@@ -1,7 +1,6 @@
 package io.tech1.framework.incidents.feigns.clients.impl;
 
 import feign.FeignException;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.feigns.clients.IncidentClient;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinition;
@@ -23,7 +22,7 @@ public class IncidentClientImpl implements IncidentClient {
         try {
             this.incidentClientDefinition.registerIncident(incident);
         } catch (FeignException ex) {
-            PRINTER.error(
+            LOGGER.error(
                     "[Server]: `ops-incident-server` is probably offline. IncidentType: `{}`. Exception: `{}`",
                     incident.getType(),
                     ex.getMessage()

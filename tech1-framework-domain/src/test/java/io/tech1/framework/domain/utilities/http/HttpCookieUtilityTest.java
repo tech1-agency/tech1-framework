@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.utilities.http;
 
-import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
+import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -64,8 +63,8 @@ class HttpCookieUtilityTest {
         assertThat(actual.getMaxAge()).isZero();
         // ignored
         assertThat(cookieValue).isNotNull();
-        PRINTER.info("httpOnly is ignored: " + httpOnly);
-        PRINTER.info("maxAge is ignored: " + maxAge);
+        LOGGER.info("httpOnly is ignored: " + httpOnly);
+        LOGGER.info("maxAge is ignored: " + maxAge);
     }
 
     @Test

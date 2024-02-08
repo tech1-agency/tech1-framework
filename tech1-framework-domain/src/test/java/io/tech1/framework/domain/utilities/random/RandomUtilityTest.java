@@ -5,8 +5,7 @@ import io.tech1.framework.domain.constants.BigDecimalConstants;
 import io.tech1.framework.domain.constants.BigIntegerConstants;
 import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
 import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
-import io.tech1.framework.domain.tests.enums.EnumUnderTests;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
+import io.tech1.framework.domain.tests.enums.EnumUnderTests
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -98,7 +97,7 @@ class RandomUtilityTest {
         var actual = randomBoolean();
 
         // Assert
-        PRINTER.info("randomBoolean is ignored: " + actual);
+        LOGGER.info("randomBoolean is ignored: " + actual);
     }
 
     @Test

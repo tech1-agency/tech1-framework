@@ -6,7 +6,6 @@ import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +38,10 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         if (this.applicationFrameworkProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled()) {
             try {
-                PRINTER.info("{} User agent is enabled", FRAMEWORK_UTILITIES_PREFIX);
+                LOGGER.info("{} User agent is enabled", FRAMEWORK_UTILITIES_PREFIX);
                 userAgentParserOrNull = new UserAgentService().loadParser(
                         List.of(
                                 BrowsCapField.BROWSER,
@@ -52,18 +51,18 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
                 );
                 configuredFlag = true;
                 exceptionMessageOrNull = null;
-                PRINTER.info("{} User agent configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, SUCCESS);
+                LOGGER.info("{} User agent configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, SUCCESS);
             } catch (ParseException | IOException ex) {
-                PRINTER.error("%s User agent configuration status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, FAILURE));
+                LOGGER.error("%s User agent configuration status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, FAILURE));
                 throw new IllegalArgumentException(ex);
             }
         } else {
-            PRINTER.info("{} User agent is disabled", FRAMEWORK_UTILITIES_PREFIX);
+            LOGGER.info("{} User agent is disabled", FRAMEWORK_UTILITIES_PREFIX);
             userAgentParserOrNull = null;
             configuredFlag = false;
             exceptionMessageOrNull = contactDevelopmentTeam("User agent configuration failure");
         }
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         this.userAgentParser = userAgentParserOrNull;
         this.configured = configuredFlag;
         this.exceptionMessage = exceptionMessageOrNull;

@@ -5,7 +5,6 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.base.BaseSecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,6 +29,6 @@ public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
         super.onAuthenticationLogin(event);
-        PRINTER.info("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: `{}`", event.username());
+        LOGGER.info("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: `{}`", event.username());
     }
 }

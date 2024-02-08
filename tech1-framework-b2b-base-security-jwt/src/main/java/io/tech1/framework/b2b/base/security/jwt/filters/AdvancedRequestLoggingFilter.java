@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.filters;
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,15 +44,15 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
         }
 
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().isAdvancedRequestLoggingEnabled()) {
-            PRINTER.info("============================================================================================");
-            PRINTER.info("Method: (@" + cachedRequest.getMethod() + ", " + cachedRequest.getServletPath() + ")");
-            PRINTER.info("Current User: " + this.securityPrincipalUtils.getAuthenticatedUsernameOrUnexpected());
+            LOGGER.info("============================================================================================");
+            LOGGER.info("Method: (@" + cachedRequest.getMethod() + ", " + cachedRequest.getServletPath() + ")");
+            LOGGER.info("Current User: " + this.securityPrincipalUtils.getAuthenticatedUsernameOrUnexpected());
             if (!payload.isBlank()) {
-                PRINTER.info("Payload: \n" + payload);
+                LOGGER.info("Payload: \n" + payload);
             } else {
-                PRINTER.info("No Payload");
+                LOGGER.info("No Payload");
             }
-            PRINTER.info("============================================================================================");
+            LOGGER.info("============================================================================================");
         }
 
         filterChain.doFilter(cachedRequest, response);

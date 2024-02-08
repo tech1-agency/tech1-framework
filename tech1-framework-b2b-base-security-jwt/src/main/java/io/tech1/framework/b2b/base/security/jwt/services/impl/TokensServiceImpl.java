@@ -12,7 +12,6 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.tokens.*;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +78,7 @@ public class TokensServiceImpl implements TokensService {
         this.tokensProvider.createResponseRefreshToken(newRefreshToken, response);
 
         var username = user.username();
-        PRINTER.info("JWT refresh token operation was successfully completed. Username: {}", username);
+        LOGGER.info("JWT refresh token operation was successfully completed. Username: {}", username);
 
         this.sessionRegistry.renew(username, oldRefreshToken, accessToken, newRefreshToken);
 

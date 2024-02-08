@@ -3,7 +3,6 @@ package io.tech1.framework.utilities.geo.facades.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.domain.geo.GeoCountryFlag;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +41,10 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             ApplicationFrameworkProperties applicationFrameworkProperties
     ) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         if (this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs().isEnabled()) {
             try {
-                PRINTER.info("{} Geo country flags {} json is enabled", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON);
+                LOGGER.info("{} Geo country flags {} json is enabled", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON);
                 var resource = resourceLoader.getResource("classpath:" + COUNTRIES_FLAGS_JSON);
                 var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
                 var objectMapper = new ObjectMapper();
@@ -64,18 +63,18 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
                                         Function.identity()
                                 )
                         );
-                PRINTER.info("{} Geo country flags {} json configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, SUCCESS);
+                LOGGER.info("{} Geo country flags {} json configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, SUCCESS);
             } catch (IOException | RuntimeException ex) {
-                PRINTER.error("%s Geo country flags %s json configuration status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, FAILURE));
-                PRINTER.error("Please verify `{}` is present in classpath", COUNTRIES_FLAGS_JSON);
+                LOGGER.error("%s Geo country flags %s json configuration status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, FAILURE));
+                LOGGER.error("Please verify `{}` is present in classpath", COUNTRIES_FLAGS_JSON);
                 throw new IllegalArgumentException(ex.getMessage());
             }
         } else {
             this.mappedByCountryName = new HashMap<>();
             this.mappedByCountryCode = new HashMap<>();
-            PRINTER.info("{} Geo country flags {} json is disabled", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON);
+            LOGGER.info("{} Geo country flags {} json is disabled", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON);
         }
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 
     @Override

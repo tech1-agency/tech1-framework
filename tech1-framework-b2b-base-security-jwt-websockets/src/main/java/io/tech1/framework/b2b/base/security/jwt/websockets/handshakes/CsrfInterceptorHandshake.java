@@ -2,7 +2,6 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +39,7 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
         } catch (CsrfTokenNotFoundException ex1) {
             return false;
         } catch (RuntimeException ex2) {
-            PRINTER.error("Please check websocket handshake configuration. Exception: `{}`", ex2.getMessage(), ex2);
+            LOGGER.error("Please check websocket handshake configuration. Exception: `{}`", ex2.getMessage(), ex2);
             return false;
         }
     }

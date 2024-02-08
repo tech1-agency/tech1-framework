@@ -5,7 +5,6 @@ import io.tech1.framework.domain.properties.base.JwtToken;
 import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -55,7 +54,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
 
     @Override
     public void assertProperties(String propertyName) {
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         super.assertProperties(propertyName);
         if (this.storageMethod.isCookies()) {
             assertFalseOrThrow(
@@ -69,13 +68,13 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
                     "Please make sure `%s.accessToken.headerKey` and `%s.refreshToken.headerKey` are different".formatted(propertyName, propertyName)
             );
         }
-        PRINTER.info(
+        LOGGER.info(
                 "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
                 FRAMEWORK_PROPERTIES_PREFIX,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),
                 this.refreshToken.getKey(this.storageMethod)
         );
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 }

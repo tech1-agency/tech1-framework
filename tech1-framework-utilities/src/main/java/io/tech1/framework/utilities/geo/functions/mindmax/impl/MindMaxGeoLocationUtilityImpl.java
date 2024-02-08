@@ -4,7 +4,6 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
@@ -42,24 +41,24 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     ) {
         this.geoCountryFlagUtility = geoCountryFlagUtility;
         this.applicationFrameworkProperties = applicationFrameworkProperties;
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         if (applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
             try {
-                PRINTER.info("{} Geo location {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+                LOGGER.info("{} Geo location {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
                 var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-                PRINTER.info("{} Geo location {} database configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
+                LOGGER.info("{} Geo location {} database configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
             } catch (IOException | RuntimeException ex) {
-                PRINTER.error("%s Geo location %s database loading status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
-                PRINTER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
+                LOGGER.error("%s Geo location %s database loading status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
+                LOGGER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
                 throw new IllegalArgumentException(ex.getMessage());
             }
         } else {
-            PRINTER.info("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+            LOGGER.info("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
             this.databaseReader = null;
         }
-        PRINTER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 
     @Override

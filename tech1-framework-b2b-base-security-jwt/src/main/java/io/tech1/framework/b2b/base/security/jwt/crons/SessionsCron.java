@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.crons;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.crons.AbstractBaseCron;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +40,7 @@ public class SessionsCron extends AbstractBaseCron {
                 this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
                 () -> {
                     var usernames = this.sessionRegistry.getActiveSessionsUsernames();
-                    PRINTER.info("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: `{}`", usernames.size());
+                    LOGGER.info("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: `{}`", usernames.size());
                     this.sessionRegistry.cleanByExpiredRefreshTokens(usernames);
                 }
         );

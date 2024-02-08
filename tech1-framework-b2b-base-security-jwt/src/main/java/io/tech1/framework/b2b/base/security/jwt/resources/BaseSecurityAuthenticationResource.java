@@ -14,7 +14,6 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.exceptions.tokens.*;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class BaseSecurityAuthenticationResource {
         this.baseAuthenticationRequestsValidator.validateLoginRequest(requestUserLogin);
         var username = requestUserLogin.username();
         var password = requestUserLogin.password();
-        PRINTER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
+        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.identifier(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
@@ -79,7 +78,7 @@ public class BaseSecurityAuthenticationResource {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        PRINTER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
+        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
 
         this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
 
@@ -102,7 +101,7 @@ public class BaseSecurityAuthenticationResource {
                 if (nonNull(session)) {
                     session.invalidate();
                 }
-                PRINTER.info("Logout attempt completed successfully. Username: {}", username);
+                LOGGER.info("Logout attempt completed successfully. Username: {}", username);
             }
         }
     }

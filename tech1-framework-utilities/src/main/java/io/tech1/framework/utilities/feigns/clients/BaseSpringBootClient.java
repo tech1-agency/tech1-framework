@@ -2,7 +2,6 @@ package io.tech1.framework.utilities.feigns.clients;
 
 import feign.RetryableException;
 import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.utilities.feigns.definitions.SpringBootClientFeign;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
@@ -31,7 +30,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
         try {
             return this.springBootClientFeign.info();
         } catch (RetryableException ex) {
-            PRINTER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
+            LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return undefinedSpringBootActuatorInfo();
         }
     }
@@ -46,7 +45,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
         try {
             return this.springBootClientFeign.health();
         } catch (RetryableException ex) {
-            PRINTER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
+            LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return undefinedSpringBootActuatorHealth();
         }
     }

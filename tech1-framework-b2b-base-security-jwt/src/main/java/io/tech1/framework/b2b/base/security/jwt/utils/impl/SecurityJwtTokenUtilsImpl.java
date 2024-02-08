@@ -10,7 +10,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParam
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.utilities.printer.PRINTER;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,10 +88,10 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
             var claims = Jwts.parser().setSigningKey(this.base64EncodedSecretKey).parseClaimsJws(jwtToken).getBody();
             return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims);
         } catch (ExpiredJwtException ex1) {
-            PRINTER.info("JWT token expired", ex1);
+            LOGGER.info("JWT token expired", ex1);
             return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, ex1.getClaims());
         } catch (JwtException | IllegalArgumentException ex2) {
-            PRINTER.info("JWT token exception", ex2);
+            LOGGER.info("JWT token exception", ex2);
             return JwtTokenValidatedClaims.invalid(isAccess, isRefresh, jwtToken);
         }
     }

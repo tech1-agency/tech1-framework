@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.utilities;
 
 import io.tech1.framework.domain.asserts.Asserts;
+import io.tech1.framework.domain.properties.annotations.MandatoryMapProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
@@ -8,13 +9,12 @@ import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.base.AbstractTogglePropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
-import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
+import io.tech1.framework.domain.utilities.enums.EnumUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -24,13 +24,15 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_ASSERTION_COMPARATOR;
-import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperty;
+import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
+import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoiningWildcard;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
-import static java.util.Collections.emptyList;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttributeRequiredMissingValues;
+import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j
 @UtilityClass
@@ -62,7 +64,7 @@ public class PropertiesAsserter {
         assertPropertiesConfigs(
                 propertiesConfigs,
                 propertyName,
-                getMandatoryGetters(propertiesConfigs, propertyName, emptyList())
+                getMandatoryFields(propertiesConfigs, propertyName)
         );
     }
 
@@ -71,7 +73,7 @@ public class PropertiesAsserter {
         assertPropertiesConfigs(
                 propertiesConfigs,
                 propertyName,
-                getMandatoryToggleGetters(propertiesConfigs, propertyName, emptyList())
+                getMandatoryToggleFields(propertiesConfigs, propertyName)
         );
     }
 
@@ -80,7 +82,7 @@ public class PropertiesAsserter {
         assertPropertyConfigs(
                 propertyConfigs,
                 propertyName,
-                getMandatoryGetters(propertyConfigs, propertyName, emptyList())
+                getMandatoryFields(propertyConfigs, propertyName)
         );
     }
 
@@ -89,7 +91,7 @@ public class PropertiesAsserter {
         assertPropertyConfigs(
                 propertyConfigs,
                 propertyName,
-                getMandatoryToggleGetters(propertyConfigs, propertyName, emptyList())
+                getMandatoryToggleFields(propertyConfigs, propertyName)
         );
     }
 
@@ -97,40 +99,40 @@ public class PropertiesAsserter {
     // GETTERS
     // =================================================================================================================
 
-    public static List<Method> getMandatoryGetters(Object property, String propertyName, List<String> skipProjection) {
-        return getGetters(property, propertyName, Set.of(MandatoryProperty.class), skipProjection);
+    public static List<Field> getMandatoryFields(Object property, String propertyName) {
+        return getFields(property, propertyName, Set.of(MandatoryProperty.class));
     }
 
-    public static List<Method> getMandatoryToggleGetters(Object property, String propertyName, List<String> skipProjection) {
-        return getGetters(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class), skipProjection);
+    public static List<Field> getMandatoryToggleFields(Object property, String propertyName) {
+        return getFields(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
-    public static List<Method> getMandatoryBasedGetters(Object property, String propertyName, List<String> skipProjection) {
-        return getGetters(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class), skipProjection);
+    public static List<Field> getMandatoryBasedFields(Object property, String propertyName) {
+        return getFields(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
 
-    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyConfigsName, List<Method> getters) {
+    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyConfigsName, List<Field> fields) {
         assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyConfigsName));
-        getters.forEach(getter -> {
+        fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertyConfigsName, getPropertyName(getter), getter.invoke(propertyConfigs));
+                var rf = new ReflectionProperty(propertyConfigsName, field, field.get(propertyConfigs));
                 assertNonNullPropertyOrThrow(rf);
                 verifyProperty(rf);
-            } catch (IllegalAccessException | InvocationTargetException ex) {
+            } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);
             }
         });
     }
 
-    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName, List<Method> getters) {
+    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName, List<Field> fields) {
         assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertiesConfigsName));
-        getters.forEach(getter -> {
+        fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertiesConfigsName, getPropertyName(getter), getter.invoke(propertiesConfigs));
+                var rf = new ReflectionProperty(propertiesConfigsName, field, field.get(propertiesConfigs));
                 assertNonNullPropertyOrThrow(rf);
                 var nestedPropertyClass = rf.getPropertyValue().getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
@@ -140,45 +142,51 @@ public class PropertiesAsserter {
                 } else {
                     verifyProperty(rf);
                 }
-            } catch (IllegalAccessException | InvocationTargetException ex) {
+            } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);
             }
         });
     }
 
+    @SuppressWarnings("rawtypes")
     private static void verifyProperty(ReflectionProperty rf) {
-        printProperty(rf);
+        var property = rf.getPropertyValue();
+        if (rf.getField().isAnnotationPresent(MandatoryMapProperty.class)) {
+            var annotation = rf.getField().getAnnotation(MandatoryMapProperty.class);
+            Class<? extends Enum<?>> keySetClass = annotation.keySetClass();
+            var castedProperty = (Map) property;
+            var size = (annotation.size() == -1) ? keySetClass.getEnumConstants().length : annotation.size();
+            //noinspection unchecked
+            assertTrueOrThrow(
+                    castedProperty.size() == size,
+                    invalidAttributeRequiredMissingValues(
+                            rf.getTreePropertyName(),
+                            baseJoiningWildcard(keySetClass),
+                            baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass)))
+                    )
+            );
+        }
         ACTIONS.entrySet().stream()
-                .filter(entry -> entry.getKey().apply(rf.getPropertyValue().getClass()))
+                .filter(entry -> entry.getKey().apply(property.getClass()))
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .ifPresent(consumer -> consumer.accept(rf));
     }
 
-    private static List<Method> getGetters(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations, List<String> skipProjection) {
+    private static List<Field> getFields(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
         assertNonNullOrThrow(property, invalidAttribute(propertyName));
-        return ReflectionUtility.getGetters(property).stream()
+        return Stream.of(property.getClass().getDeclaredFields())
                 .filter(Objects::nonNull)
-                .filter(method -> !method.getName().equals("getOrder"))
-                .filter(method -> {
-                    try {
-                        var declaredField = property.getClass().getDeclaredField(getPropertyName(method));
-                        var annotationPresent = false;
-                        for (Class<? extends Annotation> annotation : presentAnnotations) {
-                            if (declaredField.isAnnotationPresent(annotation)) {
-                                annotationPresent = true;
-                                break;
-                            }
+                .map(field -> {
+                    for (Class<? extends Annotation> annotation : presentAnnotations) {
+                        if (field.isAnnotationPresent(annotation)) {
+                            field.setAccessible(true);
+                            return field;
                         }
-                        return annotationPresent;
-                    } catch (NoSuchFieldException ex) {
-                        return false;
                     }
+                    return null;
                 })
-                .filter(method -> {
-                    var lowerCaseAttribute = method.getName().toLowerCase().replaceAll("^get", "");
-                    return !skipProjection.contains(lowerCaseAttribute);
-                })
+                .filter(Objects::nonNull)
                 .sorted(PROPERTIES_ASSERTION_COMPARATOR)
                 .toList();
     }

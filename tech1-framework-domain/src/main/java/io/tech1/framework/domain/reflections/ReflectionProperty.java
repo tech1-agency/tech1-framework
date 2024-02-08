@@ -2,6 +2,7 @@ package io.tech1.framework.domain.reflections;
 
 import lombok.Data;
 
+import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.util.Arrays;
 
@@ -15,18 +16,17 @@ import static org.springframework.util.StringUtils.uncapitalize;
 public class ReflectionProperty {
     private static final String READABLE_PROPERTY = "%s: `%s`";
 
-    private final String parentPropertyName;
+    private final Field field;
     private final String propertyName;
     private final String treePropertyName;
     private final Object propertyValue;
     private final String readableValue;
 
-    public ReflectionProperty(String parentPropertyName, String propertyName, Object propertyValue) {
+    public ReflectionProperty(String parentPropertyName, Field field, Object propertyValue) {
         assertNonNullOrThrow(parentPropertyName, invalidAttribute("ReflectionProperty.parentPropertyName"));
-        assertNonNullOrThrow(propertyName, invalidAttribute("ReflectionProperty.propertyName"));
 
-        this.parentPropertyName = parentPropertyName;
-        this.propertyName = propertyName;
+        this.field = field;
+        this.propertyName = field.getName();
         this.treePropertyName = uncapitalize(parentPropertyName) + "." + uncapitalize(propertyName);
         this.propertyValue = propertyValue;
 

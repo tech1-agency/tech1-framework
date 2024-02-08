@@ -3,19 +3,16 @@ package io.tech1.framework.domain.properties.utilities;
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
-import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_PRINTER_COMPARATOR;
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedGetters;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
-import static java.util.Collections.emptyList;
+import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
+import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getProperties;
 import static java.util.Objects.isNull;
 
+// TODO [YYL] add printing as configuration parameter?
 @Slf4j
 @UtilityClass
 public class PropertiesPrinter {
@@ -24,15 +21,11 @@ public class PropertiesPrinter {
         LOGGER.debug(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
     }
 
-    public static void printProperty(Object property, String propertyName) {
-        LOGGER.debug(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
-    }
-
     public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName) {
-        var getters = getMandatoryBasedGetters(propertiesConfigs, propertiesConfigsName, emptyList());
-        getters.forEach(getter -> {
+        var fields = getMandatoryBasedFields(propertiesConfigs, propertiesConfigsName);
+        fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertiesConfigsName, getPropertyName(getter), getter.invoke(propertiesConfigs));
+                var rf = new ReflectionProperty(propertiesConfigsName, field, field.get(propertiesConfigs));
                 if (isNull(rf.getPropertyValue())) {
                     printProperty(rf);
                 } else {
@@ -45,15 +38,15 @@ public class PropertiesPrinter {
                         printProperty(rf);
                     }
                 }
-            } catch (IllegalAccessException | InvocationTargetException ex) {
+            } catch (IllegalAccessException ex) {
                 throw new IllegalArgumentException(ex);
             }
         });
     }
 
     public static void printMandatoryBasedConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
-        var getters = getMandatoryBasedGetters(propertyConfigs, propertyName, emptyList());
-        var rfs = ReflectionUtility.getProperties(propertyConfigs, propertyName, getters);
+        var fields = getMandatoryBasedFields(propertyConfigs, propertyName);
+        var rfs = getProperties(propertyConfigs, propertyName, fields);
         rfs.sort(PROPERTIES_PRINTER_COMPARATOR);
         rfs.forEach(PropertiesPrinter::printProperty);
     }

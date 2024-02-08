@@ -14,5 +14,4 @@ public abstract class AbstractTogglePropertyConfigs extends AbstractPropertyConf
             assertMandatoryPropertyConfigs(this, parentName);
         }
     }
-
 }

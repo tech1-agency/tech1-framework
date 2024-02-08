@@ -20,14 +20,7 @@ public class PropertiesPrinter {
 
     }
 
-    public static void printMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
-        var getters = getMandatoryBasedGetters(propertyConfigs, propertyName, emptyList());
-        var properties = ReflectionUtility.getProperties(propertyName, propertyConfigs, getters);
-        properties.sort(PROPERTIES_PRINTER_COMPARATOR);
-        properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
-    }
-
-    public static void printMandatoryTogglePropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
+    public static void printMandatoryBasedConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
         var getters = getMandatoryBasedGetters(propertyConfigs, propertyName, emptyList());
         var properties = ReflectionUtility.getProperties(propertyName, propertyConfigs, getters);
         properties.sort(PROPERTIES_PRINTER_COMPARATOR);

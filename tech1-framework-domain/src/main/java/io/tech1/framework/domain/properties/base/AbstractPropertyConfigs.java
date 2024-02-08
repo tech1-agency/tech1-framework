@@ -4,7 +4,7 @@ import io.tech1.framework.domain.constants.LogsConstants;
 import lombok.extern.slf4j.Slf4j;
 
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertMandatoryPropertyConfigs;
-import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printMandatoryPropertyConfigs;
+import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printMandatoryBasedConfigs;
 
 @Slf4j
 public abstract class AbstractPropertyConfigs {
@@ -15,7 +15,7 @@ public abstract class AbstractPropertyConfigs {
 
     public void printProperties(String propertyName) {
         if (LogsConstants.DEBUG) {
-            printMandatoryPropertyConfigs(this, propertyName);
+            printMandatoryBasedConfigs(this, propertyName);
         }
     }
 }

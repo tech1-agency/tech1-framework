@@ -26,7 +26,7 @@ public class Asserts {
         if (isNull(reflectionProperty)) {
             throw new IllegalArgumentException("Unknown reflection property");
         }
-        assertNonNullOrThrow(reflectionProperty.getPropertyValue(), invalidAttribute(reflectionProperty.getPropertyName()));
+        assertNonNullOrThrow(reflectionProperty.getPropertyValue(), invalidAttribute(reflectionProperty.getTreePropertyName()));
     }
 
     public static void assertNonBlankOrThrow(String object, String message) {

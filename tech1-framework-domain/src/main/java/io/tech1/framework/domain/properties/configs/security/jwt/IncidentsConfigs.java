@@ -58,7 +58,7 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
         assertTrueOrThrow(
                 this.typesConfigs.size() == 9,
                 missingMappingsKeys(
-                        "incidentsConfigs.typesConfigs",
+                        propertyName + ".typesConfigs",
                         baseJoining(SecurityJwtIncidentType.class),
                         baseJoining(disjunction)
                 )

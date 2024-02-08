@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.properties.utilties;
 
+import io.tech1.framework.domain.constants.SystemPropertiesConstants;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.domain.properties.base.ScheduledJob;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
@@ -10,6 +11,7 @@ import io.tech1.framework.domain.properties.configs.security.jwt.IncidentsConfig
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
 import io.tech1.framework.domain.utilities.collections.CollectorUtility;
 import io.tech1.framework.domain.utilities.enums.EnumUtility;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 class PropertiesAsserterAndPrinterTest {
+
+    @BeforeAll
+    public static void beforeAll() {
+        System.setProperty(SystemPropertiesConstants.TECH1_FRAMEWORK_PROPERTIES_DEBUG, "true");
+    }
 
     @Test
     void notUsedPropertiesConfigsTest() {
@@ -204,6 +211,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
+        System.out.println(throwable.getMessage());
         assertThat(throwable.getMessage()).startsWith("Attribute `securityJwtConfigs.");
         assertThat(throwable.getMessage()).endsWith("` is invalid");
     }
@@ -285,7 +293,7 @@ class PropertiesAsserterAndPrinterTest {
         // Assert
         assertThat(throwable).isNotNull();
         assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Attribute `incidentsConfigs.typesConfigs` requirements: `[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register1, Register1 Failure, Session Expired, Session Refreshed]`, disjunction: `[Session Refreshed]`");
+        assertThat(throwable.getMessage()).isEqualTo("Attribute `securityJwtConfigs.incidentsConfigs.typesConfigs` requirements: `[Authentication Login, Authentication Login Failure Username/Masked Password, Authentication Login Failure Username/Password, Authentication Logout, Authentication Logout Min, Register1, Register1 Failure, Session Expired, Session Refreshed]`, disjunction: `[Session Refreshed]`");
     }
 
     @Test

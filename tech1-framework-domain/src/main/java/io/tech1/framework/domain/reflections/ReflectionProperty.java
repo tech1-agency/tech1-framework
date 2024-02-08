@@ -13,21 +13,21 @@ import static org.springframework.util.StringUtils.uncapitalize;
 // Lombok
 @Data
 public class ReflectionProperty {
+    private static final String READABLE_PROPERTY = "%s: `%s`";
+
     private final String parentPropertyName;
     private final String propertyName;
+    private final String treePropertyName;
     private final Object propertyValue;
     private final String readableValue;
 
-    public ReflectionProperty(
-            String parentPropertyName,
-            String propertyName,
-            Object propertyValue
-    ) {
+    public ReflectionProperty(String parentPropertyName, String propertyName, Object propertyValue) {
         assertNonNullOrThrow(parentPropertyName, invalidAttribute("ReflectionProperty.parentPropertyName"));
         assertNonNullOrThrow(propertyName, invalidAttribute("ReflectionProperty.propertyName"));
 
         this.parentPropertyName = parentPropertyName;
         this.propertyName = propertyName;
+        this.treePropertyName = uncapitalize(parentPropertyName) + "." + uncapitalize(propertyName);
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
@@ -43,27 +43,12 @@ public class ReflectionProperty {
 
         if (isArrayOfStrings) {
             var castedPropertyValue = (String[]) this.propertyValue;
-            this.readableValue = String.format(
-                    "%s.%s: `%s`",
-                    uncapitalize(parentPropertyName),
-                    uncapitalize(this.propertyName),
-                    Arrays.toString(castedPropertyValue)
-            );
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName,Arrays.toString(castedPropertyValue));
         } else if (isZoneId) {
             var castedPropertyValue = (ZoneId) this.propertyValue;
-            this.readableValue = String.format(
-                    "%s.%s: `%s`",
-                    uncapitalize(parentPropertyName),
-                    uncapitalize(this.propertyName),
-                    castedPropertyValue.getId()
-            );
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, castedPropertyValue.getId());
         } else {
-            this.readableValue = String.format(
-                    "%s.%s: `%s`",
-                    uncapitalize(parentPropertyName),
-                    uncapitalize(this.propertyName),
-                    this.propertyValue
-            );
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, this.propertyValue);
         }
     }
 }

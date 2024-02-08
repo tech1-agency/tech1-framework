@@ -4,6 +4,7 @@ import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import io.tech1.framework.domain.utilities.reflections.ReflectionUtility;
+import io.tech1.framework.domain.utilities.system.SystemProperties;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,23 +20,36 @@ import static java.util.Collections.emptyList;
 @UtilityClass
 public class PropertiesPrinter {
 
-    public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName) {
-        var getters = getMandatoryBasedGetters(propertiesConfigs, propertyName, emptyList());
+    public static void printProperty(ReflectionProperty rf) {
+        if (SystemProperties.isPropertiesDebugEnabled()) {
+            LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
+        }
+    }
+
+    public static void printProperty(Object property, String propertyName) {
+        if (SystemProperties.isPropertiesDebugEnabled()) {
+            LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`", propertyName, property);
+        }
+    }
+
+    public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName) {
+        var getters = getMandatoryBasedGetters(propertiesConfigs, propertiesConfigsName, emptyList());
         getters.forEach(getter -> {
-            var nextedPropertyName = propertyName + "." + getPropertyName(getter);
+            var nestedPropertyName = getPropertyName(getter);
+            var treePropertyName = propertiesConfigsName + "." + nestedPropertyName;
             try {
                 var nestedProperty = getter.invoke(propertiesConfigs);
                 Class<?> propertyClass = nestedProperty.getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertiesConfigs) nestedProperty).printProperties(nextedPropertyName);
+                    ((AbstractPropertiesConfigs) nestedProperty).printProperties(treePropertyName);
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertyConfigs) nestedProperty).printProperties(nextedPropertyName);
+                    ((AbstractPropertyConfigs) nestedProperty).printProperties(treePropertyName);
                 } else {
-                    var rf = new ReflectionProperty(propertyName, getPropertyName(getter), nestedProperty);
-                    LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}", rf.getReadableValue());
+                    var rf = new ReflectionProperty(propertiesConfigsName, nestedPropertyName, nestedProperty);
+                    printProperty(rf);
                 }
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + nextedPropertyName);
+                throw new IllegalArgumentException("Unexpected. Attribute: " + treePropertyName);
             }
         });
     }
@@ -44,6 +58,6 @@ public class PropertiesPrinter {
         var getters = getMandatoryBasedGetters(propertyConfigs, propertyName, emptyList());
         var rfs = ReflectionUtility.getProperties(propertyConfigs, propertyName, getters);
         rfs.sort(PROPERTIES_PRINTER_COMPARATOR);
-        rfs.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
+        rfs.forEach(PropertiesPrinter::printProperty);
     }
 }

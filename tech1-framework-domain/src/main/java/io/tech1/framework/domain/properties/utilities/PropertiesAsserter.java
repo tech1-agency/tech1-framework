@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.properties.utilities;
 
 import io.tech1.framework.domain.asserts.Asserts;
-import io.tech1.framework.domain.constants.LogsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
@@ -26,10 +25,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotEmptyOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.PROPERTIES_ASSERTER_DEBUG;
+import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_ASSERTION_COMPARATOR;
+import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperty;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getPropertyName;
 import static java.util.Collections.emptyList;
@@ -115,55 +113,46 @@ public class PropertiesAsserter {
     // PRIVATE METHODS
     // =================================================================================================================
 
-    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName, List<Method> getters) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
+    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyConfigsName, List<Method> getters) {
+        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyConfigsName));
         getters.forEach(getter -> {
-            var nestedPropertyName = propertyName + "." + getPropertyName(getter);
             try {
-                var nestedProperty = getter.invoke(propertyConfigs);
-                assertNonNullOrThrow(nestedProperty, invalidAttribute(nestedPropertyName));
-                verifyProperty(nestedProperty, nestedPropertyName);
+                var rf = new ReflectionProperty(propertyConfigsName, getPropertyName(getter), getter.invoke(propertyConfigs));
+                assertNonNullPropertyOrThrow(rf);
+                verifyProperty(rf);
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + nestedPropertyName);
+                throw new IllegalArgumentException("Unexpected Properties Assertion. Exception: " + ex.getMessage());
             }
         });
     }
 
-    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName, List<Method> getters) {
-        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
+    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName, List<Method> getters) {
+        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertiesConfigsName));
         getters.forEach(getter -> {
-            var nestedPropertyName = propertyName + "." + getPropertyName(getter);
             try {
-                var nestedProperty = getter.invoke(propertiesConfigs);
-                assertNonNullOrThrow(nestedProperty, invalidAttribute(nestedPropertyName));
-                Class<?> propertyClass = nestedProperty.getClass();
+                var rf = new ReflectionProperty(propertiesConfigsName, getPropertyName(getter), getter.invoke(propertiesConfigs));
+                assertNonNullPropertyOrThrow(rf);
+                Class<?> propertyClass = rf.getPropertyValue().getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertiesConfigs) nestedProperty).assertProperties(nestedPropertyName);
+                    ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyName());
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(propertyClass)) {
-                    ((AbstractPropertyConfigs) nestedProperty).assertProperties(nestedPropertyName);
+                    ((AbstractPropertyConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyName());
                 } else {
-                    verifyProperty(nestedProperty, nestedPropertyName);
+                    verifyProperty(rf);
                 }
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new IllegalArgumentException("Unexpected. Attribute: " + nestedPropertyName);
+                throw new IllegalArgumentException("Unexpected Properties Assertion. Exception: " + ex.getMessage());
             }
         });
     }
 
-    private static void verifyProperty(Object property, String propertyName) {
-        if (LogsConstants.DEBUG) {
-            LOGGER.info(PROPERTIES_ASSERTER_DEBUG, propertyName, property);
-        }
-        assertNonNullOrThrow(property, invalidAttribute(propertyName));
-        var propertyClass = property.getClass();
-        var consumerOpt = ACTIONS.entrySet().stream()
-                .filter(entry -> entry.getKey().apply(propertyClass))
+    private static void verifyProperty(ReflectionProperty rf) {
+        printProperty(rf);
+        ACTIONS.entrySet().stream()
+                .filter(entry -> entry.getKey().apply(rf.getPropertyValue().getClass()))
                 .map(Map.Entry::getValue)
-                .findFirst();
-        if (consumerOpt.isPresent()) {
-            var reflectionProperty = new ReflectionProperty(propertyClass.getSimpleName(), propertyName, property);
-            consumerOpt.get().accept(reflectionProperty);
-        }
+                .findFirst()
+                .ifPresent(consumer -> consumer.accept(rf));
     }
 
     private static List<Method> getGetters(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations, List<String> skipProjection) {

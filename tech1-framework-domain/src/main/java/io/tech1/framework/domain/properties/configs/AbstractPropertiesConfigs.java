@@ -1,7 +1,5 @@
 package io.tech1.framework.domain.properties.configs;
 
-import io.tech1.framework.domain.constants.LogsConstants;
-
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertMandatoryPropertiesConfigs;
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printMandatoryPropertiesConfigs;
 
@@ -12,8 +10,6 @@ public abstract class AbstractPropertiesConfigs {
     }
 
     public void printProperties(String propertyName) {
-        if (LogsConstants.DEBUG) {
-            printMandatoryPropertiesConfigs(this, propertyName);
-        }
+        printMandatoryPropertiesConfigs(this, propertyName);
     }
 }

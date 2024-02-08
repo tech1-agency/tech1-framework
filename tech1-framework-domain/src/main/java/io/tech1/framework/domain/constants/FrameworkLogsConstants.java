@@ -23,11 +23,6 @@ public class FrameworkLogsConstants {
     public static final String FRAMEWORK_SERVER = FRAMEWORK_PREFIX + "Server]";
 
     // =================================================================================================================
-    // Properties
-    // =================================================================================================================
-    public static final String PROPERTIES_ASSERTER_DEBUG = FRAMEWORK_PROPERTIES_PREFIX + " — {}: `{}`";
-
-    // =================================================================================================================
     // Incidents
     // =================================================================================================================
     public static final String INCIDENT_FEATURE_DISABLED = FRAMEWORK_INCIDENT_PREFIX + " `{}` feature is disabled";

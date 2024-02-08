@@ -23,9 +23,7 @@ public class ApplicationMVC implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
-        var mvcConfigs = this.applicationFrameworkProperties.getMvcConfigs();
-        mvcConfigs.assertProperties("mvcConfigs");
-        mvcConfigs.printProperties("tech1.mvcConfigs");
+        this.applicationFrameworkProperties.getMvcConfigs().assertProperties("mvcConfigs");
     }
 
     @Override

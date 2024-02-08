@@ -20,7 +20,6 @@ import java.util.Base64;
 import java.util.UUID;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
@@ -38,7 +37,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
     ) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
-        assertProperties(jwtTokensConfigs, "securityJwtConfigs.jwtTokensConfigs");
+        jwtTokensConfigs.assertProperties("securityJwtConfigs.jwtTokensConfigs");
         this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(jwtTokensConfigs.getSecretKey().getBytes());
     }
 

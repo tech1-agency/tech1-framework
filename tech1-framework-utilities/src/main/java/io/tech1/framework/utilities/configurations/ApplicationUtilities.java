@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
@@ -25,6 +23,6 @@ public class ApplicationUtilities {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getUtilitiesConfigs(), "utilitiesConfigs");
+        this.applicationFrameworkProperties.getUtilitiesConfigs().assertProperties("utilitiesConfigs");
     }
 }

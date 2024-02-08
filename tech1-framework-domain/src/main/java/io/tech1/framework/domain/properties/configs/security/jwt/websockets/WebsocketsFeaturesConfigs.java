@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.properties.configs.security.jwt.websockets;
 
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,13 +11,19 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
+public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigsV2 {
     @NonMandatoryProperty
     private WebsocketsFeatureHardwareConfigs hardwareConfigs;
 
     public static WebsocketsFeaturesConfigs testsHardcoded() {
         return new WebsocketsFeaturesConfigs(
                 WebsocketsFeatureHardwareConfigs.testsHardcoded()
+        );
+    }
+
+    public static WebsocketsFeaturesConfigs random() {
+        return new WebsocketsFeaturesConfigs(
+                WebsocketsFeatureHardwareConfigs.random()
         );
     }
 }

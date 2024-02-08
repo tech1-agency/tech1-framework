@@ -15,7 +15,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoo
 @EqualsAndHashCode(callSuper = true)
 public class GeoLocationsConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
-    private final boolean geoLiteCityDatabaseEnabled;
+    private final Boolean geoLiteCityDatabaseEnabled;
 
     public static GeoLocationsConfigs testsHardcoded() {
         return new GeoLocationsConfigs(true);
@@ -31,5 +31,9 @@ public class GeoLocationsConfigs extends AbstractPropertyConfigs {
 
     public static GeoLocationsConfigs disabled() {
         return new GeoLocationsConfigs(false);
+    }
+
+    public boolean isGeoLiteCityDatabaseEnabled() {
+        return this.geoLiteCityDatabaseEnabled;
     }
 }

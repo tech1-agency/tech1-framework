@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import static java.util.Objects.nonNull;
 public class DefaultUsers extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private List<DefaultUser> users;
 
     public static DefaultUsers testsHardcoded() {

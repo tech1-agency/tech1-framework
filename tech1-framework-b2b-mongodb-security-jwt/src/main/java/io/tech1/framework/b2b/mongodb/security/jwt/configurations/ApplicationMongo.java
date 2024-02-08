@@ -7,7 +7,6 @@ import com.mongodb.client.MongoClients;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +20,6 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import javax.annotation.PostConstruct;
-
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 
 @Configuration
 @Import({
@@ -46,8 +43,7 @@ public class ApplicationMongo {
 
     @PostConstruct
     public void init() {
-        var mongodbSecurityJwtConfigs = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs();
-        assertProperties(mongodbSecurityJwtConfigs, "mongodbSecurityJwtConfigs");
+        this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().assertProperties("mongodbSecurityJwtConfigs");
     }
 
     @Bean(name = "tech1MongoClient")
@@ -68,7 +64,6 @@ public class ApplicationMongo {
         );
     }
 
-    @Qualifier(value = "tech1MongoTemplate")
     @Bean(name = "tech1MongoTemplate")
     public MongoTemplate tech1MongoTemplate() {
         var dbRefResolver = new DefaultDbRefResolver(this.tech1MongoDatabaseFactory());

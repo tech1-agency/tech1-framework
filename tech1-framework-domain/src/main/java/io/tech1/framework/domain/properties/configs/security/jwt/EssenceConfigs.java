@@ -6,7 +6,7 @@ import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.DefaultUser;
 import io.tech1.framework.domain.properties.base.DefaultUsers;
 import io.tech1.framework.domain.properties.base.InvitationCodes;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class EssenceConfigs extends AbstractPropertiesConfigs {
+public class EssenceConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final DefaultUsers defaultUsers;
     @MandatoryProperty
@@ -41,6 +41,13 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
                         )
                 ),
                 InvitationCodes.enabled()
+        );
+    }
+
+    public static EssenceConfigs random() {
+        return new EssenceConfigs(
+                DefaultUsers.random(),
+                InvitationCodes.random()
         );
     }
 }

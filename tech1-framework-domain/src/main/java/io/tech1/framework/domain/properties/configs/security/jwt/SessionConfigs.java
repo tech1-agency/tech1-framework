@@ -2,7 +2,7 @@ package io.tech1.framework.domain.properties.configs.security.jwt;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Cron;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SessionConfigs extends AbstractPropertiesConfigs {
+public class SessionConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final Cron cleanSessionsByExpiredRefreshTokensCron;
     @MandatoryProperty
@@ -22,6 +22,13 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
         return new SessionConfigs(
                 Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
                 Cron.enabled("*/15 * * * * *", "Europe/Kiev")
+        );
+    }
+
+    public static SessionConfigs random() {
+        return new SessionConfigs(
+                Cron.random(),
+                Cron.random()
         );
     }
 }

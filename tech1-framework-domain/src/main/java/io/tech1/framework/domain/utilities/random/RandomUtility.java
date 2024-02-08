@@ -295,6 +295,10 @@ public class RandomUtility {
         }
     }
 
+    public static <T> Map<T, Boolean> getEnumMapMappedRandomBoolean(T[] values) {
+        return Stream.of(values).collect(Collectors.toMap(item -> item, item -> randomBoolean()));
+    }
+
     public static <T> boolean containsPrimitiveWrapper(Class<T> type) {
         return PRIMITIVE_WRAPPERS.containsKey(type);
     }

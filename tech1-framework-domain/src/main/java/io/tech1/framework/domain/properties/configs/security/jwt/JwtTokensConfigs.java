@@ -1,10 +1,11 @@
 package io.tech1.framework.domain.properties.configs.security.jwt;
 
+import io.tech1.framework.domain.constants.LogsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.JwtToken;
 import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
 import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigsV2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,9 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
@@ -23,7 +25,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class JwtTokensConfigs extends AbstractPropertiesConfigs {
+public class JwtTokensConfigs extends AbstractPropertiesConfigsV2 {
     @MandatoryProperty
     private final String secretKey;
     @MandatoryProperty
@@ -42,33 +44,42 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
         );
     }
 
+    public static JwtTokensConfigs random() {
+        return new JwtTokensConfigs(
+                randomString(),
+                randomEnum(JwtTokenStorageMethod.class),
+                JwtToken.random(),
+                JwtToken.random()
+        );
+    }
+
     @Override
-    public void assertProperties() {
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        super.assertProperties();
+    public void assertProperties(String propertyName) {
+        if (LogsConstants.DEBUG) {
+            LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        }
+        super.assertProperties(propertyName);
         if (this.storageMethod.isCookies()) {
-            assertNonNullOrThrow(this.accessToken.getCookieKey(), "Please specify `jwtTokensConfigs.accessToken.cookieKey` attribute");
-            assertNonNullOrThrow(this.refreshToken.getCookieKey(), "Please specify `jwtTokensConfigs.refreshToken.cookieKey` attribute");
             assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
-                    "Please make sure `jwtTokensConfigs.accessToken.cookieKey` and `jwtTokensConfigs.refreshToken.cookieKey` are different"
+                    "Please make sure `%s.accessToken.cookieKey` and `%s.refreshToken.cookieKey` are different".formatted(propertyName, propertyName)
             );
         }
         if (this.storageMethod.isHeaders()) {
-            assertNonNullOrThrow(this.accessToken.getHeaderKey(), "Please specify `jwtTokensConfigs.accessToken.headerKey` attribute");
-            assertNonNullOrThrow(this.refreshToken.getHeaderKey(), "Please specify `jwtTokensConfigs.refreshToken.headerKey` attribute");
             assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
-                    "Please make sure `jwtTokensConfigs.accessToken.headerKey` and `jwtTokensConfigs.refreshToken.headerKey` are different"
+                    "Please make sure `%s.accessToken.headerKey` and `%s.refreshToken.headerKey` are different".formatted(propertyName, propertyName)
             );
         }
-        LOGGER.info(
-                "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
-                FRAMEWORK_PROPERTIES_PREFIX,
-                this.storageMethod,
-                this.accessToken.getKey(this.storageMethod),
-                this.refreshToken.getKey(this.storageMethod)
-        );
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        if (LogsConstants.DEBUG) {
+            LOGGER.info(
+                    "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
+                    FRAMEWORK_PROPERTIES_PREFIX,
+                    this.storageMethod,
+                    this.accessToken.getKey(this.storageMethod),
+                    this.refreshToken.getKey(this.storageMethod)
+            );
+            LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        }
     }
 }

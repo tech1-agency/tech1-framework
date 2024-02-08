@@ -12,7 +12,6 @@ import org.springframework.scheduling.support.TaskUtils;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 
@@ -25,7 +24,7 @@ public class ApplicationEvents {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getEventsConfigs(), "eventsConfigs");
+        this.applicationFrameworkProperties.getEventsConfigs().assertProperties("eventsConfigs");
     }
 
     @Bean(name = "applicationEventMulticaster")

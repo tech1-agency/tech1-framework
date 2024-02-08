@@ -16,8 +16,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Slf4j
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
@@ -32,7 +30,7 @@ public class ApplicationIncidents {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getIncidentConfigs(), "incidentConfigs");
+        this.applicationFrameworkProperties.getIncidentConfigs().assertProperties("incidentConfigs");
     }
 
     @Bean

@@ -24,6 +24,6 @@ public class ApplicationHardwareMonitoring {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getHardwareMonitoringConfigs(), "hardwareMonitoringConfigs");
+        this.applicationFrameworkProperties.getHardwareMonitoringConfigs().assertProperties("hardwareMonitoringConfigs");
     }
 }

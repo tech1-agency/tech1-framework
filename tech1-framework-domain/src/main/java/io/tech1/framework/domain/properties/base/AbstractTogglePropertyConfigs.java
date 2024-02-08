@@ -6,7 +6,7 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.p
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printMandatoryTogglePropertyConfigs;
 
 public abstract class AbstractTogglePropertyConfigs extends AbstractPropertyConfigs {
-    abstract boolean isEnabled();
+    protected abstract boolean isEnabled();
 
     @Override
     public void assertProperties(String propertyName) {

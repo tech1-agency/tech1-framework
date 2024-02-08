@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
@@ -11,9 +10,11 @@ import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.exceptions.tokens.*;
+import io.tech1.framework.domain.utilities.printer.PRINTER;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ public class BaseSecurityAuthenticationResource {
                 if (nonNull(session)) {
                     session.invalidate();
                 }
-                LOGGER.debug("Logout attempt completed successfully. Username: {}", username);
+                PRINTER.info("Logout attempt completed successfully. Username: {}", username);
             }
         }
     }

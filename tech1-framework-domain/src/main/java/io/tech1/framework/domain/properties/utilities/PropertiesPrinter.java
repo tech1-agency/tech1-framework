@@ -23,14 +23,9 @@ import static java.util.Comparator.comparing;
 @UtilityClass
 public class PropertiesPrinter {
 
-    public static void printPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
-//        System.out.println("TODO --> printPropertiesConfigs: " + propertyName);
-    }
-
-    public static void printPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
-        var properties = getNotNullProperties(propertyConfigs, propertyName);
-        properties.sort(comparing(ReflectionProperty::getReadableValue));
-        properties.forEach(property -> LOGGER.info(FRAMEWORK_PROPERTIES_PREFIX + " — {}",  property.getReadableValue()));
+    public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigsV2 propertiesConfigs, String propertyName) {
+        var getters = getMandatoryGetters(propertiesConfigs, propertyName, emptyList());
+        // TODO [YYL] complete
     }
 
     public static void printMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {

@@ -77,8 +77,8 @@ class PropertiesAsserterAndPrinterTest {
     @Test
     void eventsConfigsTest() {
         // Act
-        assertProperties(EventsConfigs.testsHardcoded(), "eventsConfigs");
-        printProperties(EventsConfigs.testsHardcoded());
+        EventsConfigs.testsHardcoded().assertProperties("eventsConfigs");
+        EventsConfigs.testsHardcoded().printProperties("eventsConfigs");
 
         // Assert
         // no asserts
@@ -113,12 +113,9 @@ class PropertiesAsserterAndPrinterTest {
 
     @Test
     void emailConfigsDisabledTest() {
-        // Arrange
-        var emailConfigs = EmailConfigs.disabled();
-
         // Act
-        emailConfigs.assertProperties("emailConfigs");
-        emailConfigs.printProperties("emailConfigs");
+        EmailConfigs.disabled().assertProperties("emailConfigs");
+        EmailConfigs.disabled().printProperties("emailConfigs");
 
         // Assert
         // no asserts
@@ -126,12 +123,9 @@ class PropertiesAsserterAndPrinterTest {
 
     @Test
     void emailConfigsTest() {
-        // Arrange
-        var emailConfigs = EmailConfigs.testsHardcoded();
-
         // Act
-        emailConfigs.assertProperties("emailConfigs");
-        emailConfigs.printProperties("emailConfigs");
+        EmailConfigs.testsHardcoded().assertProperties("emailConfigs");
+        EmailConfigs.testsHardcoded().printProperties("emailConfigs");
 
         // Assert
         // no asserts

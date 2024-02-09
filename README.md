@@ -22,4 +22,3 @@ Last deployed version: **1.16**
 — Properties API: 
     1/ Add "utilitiesConfigs.geoCountryFlagsConfigs.enabled"
     2/ Add "utilitiesConfigs.userAgentConfigs.enabled"
-— System Properties API: add "tech1.framework.propertiesDebug" 

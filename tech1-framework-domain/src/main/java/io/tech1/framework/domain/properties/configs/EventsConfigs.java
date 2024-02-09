@@ -23,4 +23,9 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     public static EventsConfigs random() {
         return new EventsConfigs(randomString());
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

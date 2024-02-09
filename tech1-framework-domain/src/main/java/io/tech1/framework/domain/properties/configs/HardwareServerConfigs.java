@@ -27,4 +27,9 @@ public class HardwareServerConfigs extends AbstractPropertiesConfigs {
                 randomIPv4()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

@@ -26,4 +26,9 @@ public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
                 Mongodb.random()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

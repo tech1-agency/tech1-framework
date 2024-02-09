@@ -37,4 +37,9 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
                 Checkbox.enabled()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

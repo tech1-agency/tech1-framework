@@ -58,4 +58,9 @@ public class HardwareMonitoringConfigs extends AbstractTogglePropertiesConfigs {
                     );
         }
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

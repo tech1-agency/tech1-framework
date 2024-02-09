@@ -21,4 +21,9 @@ public class NotUsedPropertiesConfigs extends AbstractPropertiesConfigs {
     private final SpringServer springServer;
     @MandatoryProperty
     private final SpringLogging springLogging;
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

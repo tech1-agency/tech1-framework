@@ -23,4 +23,9 @@ public class AsyncConfigs extends AbstractPropertiesConfigs {
     public static AsyncConfigs random() {
         return new AsyncConfigs(randomString());
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

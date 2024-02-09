@@ -15,7 +15,7 @@ public enum EnumValue1 implements EnumValue<String> {
 
     @JsonCreator
     public static EnumValue1 findBotType(String value) {
-        return EnumCreatorUtility.findEnumIgnoreCaseOrThrow(EnumValue1.class, value);
+        return EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow(EnumValue1.class, value);
     }
 
     @JsonValue

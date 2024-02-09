@@ -9,50 +9,80 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.enums.EnumValue1.FRAMEWORK;
 import static io.tech1.framework.domain.tests.enums.EnumValue1.TECH1;
-import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumIgnoreCaseOrThrow;
+import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumByNameOrThrow;
+import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 class EnumCreatorUtilityTest {
 
-    private static Stream<Arguments> ignoreCaseOkArgs() {
+    private static Stream<Arguments> findEnumByValueIgnoreCaseOrThrowArgs() {
         return Stream.of(
-                Arguments.of("Tech1", TECH1),
-                Arguments.of("tech1", TECH1),
-                Arguments.of("TECh1", TECH1),
-                Arguments.of("Framework", FRAMEWORK),
-                Arguments.of("framework", FRAMEWORK),
-                Arguments.of("fraMEwork", FRAMEWORK)
+                Arguments.of("Tech1", false, TECH1, null),
+                Arguments.of("tech1", false, TECH1, null),
+                Arguments.of("TECh1", false, TECH1, null),
+                Arguments.of("Framework", false, FRAMEWORK, null),
+                Arguments.of("framework", false, FRAMEWORK, null),
+                Arguments.of("fraMEwork", false, FRAMEWORK, null),
+                Arguments.of("Tech2", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
+                Arguments.of("Server", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
+                Arguments.of(null, true, null, "Required values: `[Framework, Tech1]`. Missing values: `[null]`")
         );
     }
 
-    private static Stream<Arguments> ignoreCaseFailureArgs() {
+    private static Stream<Arguments> findEnumByNameOrThrowArgs() {
         return Stream.of(
-                Arguments.of("Tech2", "Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid. Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
-                Arguments.of("Server", "Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid. Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
-                Arguments.of(null, "Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid. Required values: `[Framework, Tech1]`. Missing values: `[null]`")
+                Arguments.of("TECH1", false, TECH1, null),
+                Arguments.of("tech1", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[tech1]`"),
+                Arguments.of("TECh1", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[TECh1]`"),
+                Arguments.of("FRAMEWORK", false, FRAMEWORK, null),
+                Arguments.of("framework", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[framework]`"),
+                Arguments.of("fraMEwork", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[fraMEwork]`"),
+                Arguments.of("Tech2", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
+                Arguments.of("Server", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
+                Arguments.of(null, true, null, "Required values: `[Framework, Tech1]`. Missing values: `[null]`")
         );
     }
 
     @ParameterizedTest
-    @MethodSource("ignoreCaseOkArgs")
-    void ignoreCaseOkArgs(String name, EnumValue1 expected) {
+    @MethodSource("findEnumByValueIgnoreCaseOrThrowArgs")
+    void findEnumByValueIgnoreCaseOrThrowTest(String name, boolean exception, EnumValue1 expected, String expectedMessage) {
         // Act
-        var actual = findEnumIgnoreCaseOrThrow(EnumValue1.class, name);
+        var throwable = catchThrowable(() -> {
+            // Act
+            var actual = findEnumByValueIgnoreCaseOrThrow(EnumValue1.class, name);
+
+            // Assert
+            assertThat(actual).isEqualTo(expected);
+        });
 
         // Assert
-        assertThat(actual).isEqualTo(expected);
+        if (exception) {
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageStartingWith("Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid")
+                    .hasMessageEndingWith(expectedMessage);
+        }
     }
 
     @ParameterizedTest
-    @MethodSource("ignoreCaseFailureArgs")
-    void ignoreCaseFailureArgs(String name, String expectedMessage) {
+    @MethodSource("findEnumByNameOrThrowArgs")
+    void findEnumByNameOrThrowTest(String name, boolean exception, EnumValue1 expected, String expectedMessage) {
         // Act
-        var throwable = catchThrowable(() -> findEnumIgnoreCaseOrThrow(EnumValue1.class, name));
+        var throwable = catchThrowable(() -> {
+            // Act
+            var actual = findEnumByNameOrThrow(EnumValue1.class, name);
+
+            // Assert
+            assertThat(actual).isEqualTo(expected);
+        });
 
         // Assert
-        assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(expectedMessage);
+        if (exception) {
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageStartingWith("Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid")
+                    .hasMessageEndingWith(expectedMessage);
+        }
     }
 }

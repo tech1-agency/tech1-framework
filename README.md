@@ -19,4 +19,5 @@ Last deployed version: **1.16**
 ### Release Notes [Development v2.6]
 — Bash Scripts: dedicated next_version.sh script 
 — Random API: add randomElementExcept()
-— Enum Creator API: add findEnumIgnoreCaseOrThrow()
+— Enum Creator API: add findEnumByValueIgnoreCaseOrThrow()
+— Enum Creator API: add findEnumByNameOrThrow()

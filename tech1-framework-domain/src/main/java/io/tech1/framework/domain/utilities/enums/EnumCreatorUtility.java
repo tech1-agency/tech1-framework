@@ -4,21 +4,35 @@ import io.tech1.framework.domain.enums.EnumValue;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttributeRequiredMissingValues;
 
 @UtilityClass
 public class EnumCreatorUtility {
-    public static <E extends Enum<E> & EnumValue<String>> E findEnumIgnoreCaseOrThrow(Class<E> enumClass, String value) {
+    public static <E extends Enum<E> & EnumValue<String>> E findEnumByValueIgnoreCaseOrThrow(Class<E> enumClass, String value) {
+        Predicate<E> filter = e -> e.getValue().equalsIgnoreCase(value);
+        return findEnumByPredicateIgnoreCaseOrThrow(enumClass, value, filter);
+    }
+
+    public static <E extends Enum<E> & EnumValue<String>> E findEnumByNameOrThrow(Class<E> enumClass, String name) {
+        Predicate<E> filter = e -> e.name().equals(name);
+        return findEnumByPredicateIgnoreCaseOrThrow(enumClass, name, filter);
+    }
+
+    // ================================================================================================================
+    // PRIVATE METHODS
+    // ================================================================================================================
+    public static <E extends Enum<E> & EnumValue<String>> E findEnumByPredicateIgnoreCaseOrThrow(Class<E> enumClass, String param, Predicate<E> predicate) {
         return Arrays.stream(enumClass.getEnumConstants())
-                .filter(e -> e.getValue().equalsIgnoreCase(value))
+                .filter(predicate)
                 .findFirst()
                 .orElseThrow(() -> {
                     var message = invalidAttributeRequiredMissingValues(
                             enumClass.getName(),
                             baseJoining(enumClass),
-                            value
+                            param
                     );
                     return new IllegalArgumentException(message);
                 });

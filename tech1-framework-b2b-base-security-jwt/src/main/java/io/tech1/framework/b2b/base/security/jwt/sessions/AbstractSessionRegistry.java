@@ -67,7 +67,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         var username = session.username();
         boolean added = this.sessions.add(session);
         if (added) {
-            LOGGER.info(SESSION_REGISTRY_REGISTER_SESSION, username);
+            LOGGER.debug(SESSION_REGISTRY_REGISTER_SESSION, username);
             this.securityJwtPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
         }
     }
@@ -78,14 +78,14 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         var newSession = new Session(username, newAccessToken, newRefreshToken);
         var added = this.sessions.add(newSession);
         if (added) {
-            LOGGER.info(SESSION_REGISTRY_RENEW_SESSION, username);
+            LOGGER.debug(SESSION_REGISTRY_RENEW_SESSION, username);
             this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
     @Override
     public void logout(Username username, JwtAccessToken accessToken) {
-        LOGGER.info(SESSION_REGISTRY_REMOVE_SESSION, username);
+        LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
         if (removed) {
             this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
@@ -112,7 +112,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             var refreshToken = tuple.b();
             var metadata = tuple.c();
 
-            LOGGER.info(SESSION_REGISTRY_EXPIRE_SESSION, username);
+            LOGGER.debug(SESSION_REGISTRY_EXPIRE_SESSION, username);
             var sessionOpt = this.sessions.stream()
                     .filter(session -> session.refreshToken().equals(refreshToken))
                     .findFirst();
@@ -126,7 +126,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         });
 
         var deleted = this.usersSessionsRepository.delete(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
-        LOGGER.info("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
+        LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 
     @Override

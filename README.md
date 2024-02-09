@@ -21,3 +21,4 @@ Last deployed version: **1.16**
 — Random API: add randomElementExcept()
 — Enum Creator API: add findEnumByValueIgnoreCaseOrThrow()
 — Enum Creator API: add findEnumByNameOrThrow()
+— Enum Creator API: add findUnknownValue()

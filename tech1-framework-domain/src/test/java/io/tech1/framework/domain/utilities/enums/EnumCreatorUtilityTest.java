@@ -1,6 +1,8 @@
 package io.tech1.framework.domain.utilities.enums;
 
 import io.tech1.framework.domain.tests.enums.EnumValue1;
+import io.tech1.framework.domain.tests.enums.EnumValue2;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,8 +11,8 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.enums.EnumValue1.FRAMEWORK;
 import static io.tech1.framework.domain.tests.enums.EnumValue1.TECH1;
-import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumByNameOrThrow;
-import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
+import static io.tech1.framework.domain.tests.enums.EnumValue2.UNKNOWN;
+import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -60,7 +62,7 @@ class EnumCreatorUtilityTest {
         if (exception) {
             assertThat(throwable)
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageStartingWith("Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid")
+                    .hasMessageStartingWith("Attribute `EnumValue1` is invalid")
                     .hasMessageEndingWith(expectedMessage);
         }
     }
@@ -81,8 +83,28 @@ class EnumCreatorUtilityTest {
         if (exception) {
             assertThat(throwable)
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageStartingWith("Attribute `io.tech1.framework.domain.tests.enums.EnumValue1` is invalid")
+                    .hasMessageStartingWith("Attribute `EnumValue1` is invalid")
                     .hasMessageEndingWith(expectedMessage);
         }
+    }
+
+    @Test
+    void findUnknownValueOk() {
+        // Act
+        var actual = findUnknownValue(EnumValue2.class);
+
+        // Assert
+        assertThat(actual).isEqualTo(UNKNOWN);
+    }
+
+    @Test
+    void findUnknownValueFailure() {
+        // Act
+        var throwable = catchThrowable(() -> findUnknownValue(EnumValue1.class));
+
+        // Assert
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("EnumValue1 does not have UNKNOWN enum value");
     }
 }

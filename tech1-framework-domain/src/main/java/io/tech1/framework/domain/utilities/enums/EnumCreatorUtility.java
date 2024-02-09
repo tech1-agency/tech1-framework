@@ -21,6 +21,13 @@ public class EnumCreatorUtility {
         return findEnumByPredicateIgnoreCaseOrThrow(enumClass, name, filter);
     }
 
+    public static <E extends Enum<E>> E findUnknownValue(Class<E> enumClass) {
+        return Arrays.stream(enumClass.getEnumConstants())
+                .filter(e -> "UNKNOWN".equals(e.name()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(enumClass.getSimpleName() + " does not have UNKNOWN enum value"));
+    }
+
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
@@ -30,7 +37,7 @@ public class EnumCreatorUtility {
                 .findFirst()
                 .orElseThrow(() -> {
                     var message = invalidAttributeRequiredMissingValues(
-                            enumClass.getName(),
+                            enumClass.getSimpleName(),
                             baseJoining(enumClass),
                             param
                     );

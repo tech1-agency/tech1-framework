@@ -49,4 +49,9 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     public static EmailConfigs enabled(String from) {
         return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.testsHardcoded(), Password.testsHardcoded(), new String[] {});
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

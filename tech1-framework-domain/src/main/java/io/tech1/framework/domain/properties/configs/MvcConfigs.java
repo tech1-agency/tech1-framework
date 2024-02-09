@@ -50,4 +50,9 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
                 CorsConfigs.random()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

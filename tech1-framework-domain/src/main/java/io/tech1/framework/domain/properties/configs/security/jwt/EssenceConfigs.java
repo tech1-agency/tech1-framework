@@ -50,4 +50,9 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
                 InvitationCodes.random()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

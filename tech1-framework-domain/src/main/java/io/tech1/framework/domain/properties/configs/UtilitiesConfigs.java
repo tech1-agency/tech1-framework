@@ -36,4 +36,9 @@ public class UtilitiesConfigs extends AbstractPropertiesConfigs {
                 UserAgentConfigs.random()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

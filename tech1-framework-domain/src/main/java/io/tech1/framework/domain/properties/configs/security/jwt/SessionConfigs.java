@@ -31,4 +31,9 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
                 Cron.random()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

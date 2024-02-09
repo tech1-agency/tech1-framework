@@ -26,4 +26,9 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     public static ServerConfigs random() {
         return new ServerConfigs(randomString(), randomString());
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

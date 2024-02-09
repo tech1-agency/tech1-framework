@@ -53,6 +53,11 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
+
+    @Override
     public void assertProperties(String propertyName) {
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         super.assertProperties(propertyName);

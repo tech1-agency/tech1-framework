@@ -4,7 +4,8 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertMandatoryTogglePropertiesConfigs;
 
 public abstract class AbstractTogglePropertiesConfigs extends AbstractPropertiesConfigs {
-    protected abstract boolean isEnabled();
+    public abstract boolean isParentPropertiesNode();
+    public abstract boolean isEnabled();
 
     @Override
     public void assertProperties(String propertyName) {
@@ -12,6 +13,9 @@ public abstract class AbstractTogglePropertiesConfigs extends AbstractProperties
             assertMandatoryTogglePropertiesConfigs(this, propertyName);
         } else {
             assertMandatoryPropertiesConfigs(this, propertyName);
+        }
+        if (this.isParentPropertiesNode()) {
+            printProperties(propertyName);
         }
     }
 }

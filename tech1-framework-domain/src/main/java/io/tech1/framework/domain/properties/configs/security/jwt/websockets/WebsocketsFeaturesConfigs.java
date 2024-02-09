@@ -26,4 +26,9 @@ public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
                 WebsocketsFeatureHardwareConfigs.random()
         );
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

@@ -101,6 +101,11 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
+
+    @Override
     public void assertProperties(String propertyName) {
         super.assertProperties(propertyName);
 

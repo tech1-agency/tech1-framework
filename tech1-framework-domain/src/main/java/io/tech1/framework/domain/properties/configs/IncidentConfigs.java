@@ -35,4 +35,9 @@ public class IncidentConfigs extends AbstractTogglePropertiesConfigs {
     public static IncidentConfigs disabled() {
         return new IncidentConfigs(false, null);
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

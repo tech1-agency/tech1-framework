@@ -29,4 +29,9 @@ public class CookiesConfigs extends AbstractPropertiesConfigs {
     public static CookiesConfigs random() {
         return new CookiesConfigs(randomString(), TimeAmount.random());
     }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

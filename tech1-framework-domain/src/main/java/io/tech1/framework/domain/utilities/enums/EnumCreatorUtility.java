@@ -21,6 +21,13 @@ public class EnumCreatorUtility {
         return findEnumByPredicateIgnoreCaseOrThrow(enumClass, name, filter);
     }
 
+    public static <E extends Enum<E>> E findEnumByNameOrUnknown(Class<E> enumClass, String name) {
+        return Arrays.stream(enumClass.getEnumConstants())
+                .filter(e -> e.name().equals(name))
+                .findFirst()
+                .orElse(findUnknownValue(enumClass));
+    }
+
     public static <E extends Enum<E>> E findUnknownValue(Class<E> enumClass) {
         return Arrays.stream(enumClass.getEnumConstants())
                 .filter(e -> "UNKNOWN".equals(e.name()))

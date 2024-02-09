@@ -9,10 +9,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.enums.EnumValue1.FRAMEWORK;
-import static io.tech1.framework.domain.tests.enums.EnumValue1.TECH1;
 import static io.tech1.framework.domain.tests.enums.EnumValue2.UNKNOWN;
 import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -20,12 +19,12 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByValueIgnoreCaseOrThrowArgs() {
         return Stream.of(
-                Arguments.of("Tech1", false, TECH1, null),
-                Arguments.of("tech1", false, TECH1, null),
-                Arguments.of("TECh1", false, TECH1, null),
-                Arguments.of("Framework", false, FRAMEWORK, null),
-                Arguments.of("framework", false, FRAMEWORK, null),
-                Arguments.of("fraMEwork", false, FRAMEWORK, null),
+                Arguments.of("Tech1", false, EnumValue1.TECH1, null),
+                Arguments.of("tech1", false, EnumValue1.TECH1, null),
+                Arguments.of("TECh1", false, EnumValue1.TECH1, null),
+                Arguments.of("Framework", false, EnumValue1.FRAMEWORK, null),
+                Arguments.of("framework", false, EnumValue1.FRAMEWORK, null),
+                Arguments.of("fraMEwork", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("Tech2", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
                 Arguments.of("Server", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
                 Arguments.of(null, true, null, "Required values: `[Framework, Tech1]`. Missing values: `[null]`")
@@ -34,15 +33,24 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByNameOrThrowArgs() {
         return Stream.of(
-                Arguments.of("TECH1", false, TECH1, null),
+                Arguments.of("TECH1", false, EnumValue1.TECH1, null),
                 Arguments.of("tech1", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[tech1]`"),
                 Arguments.of("TECh1", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[TECh1]`"),
-                Arguments.of("FRAMEWORK", false, FRAMEWORK, null),
+                Arguments.of("FRAMEWORK", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("framework", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[framework]`"),
                 Arguments.of("fraMEwork", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[fraMEwork]`"),
                 Arguments.of("Tech2", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
                 Arguments.of("Server", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
                 Arguments.of(null, true, null, "Required values: `[Framework, Tech1]`. Missing values: `[null]`")
+        );
+    }
+
+    private static Stream<Arguments> findEnumByNameOrUnknownArgs() {
+        return Stream.of(
+                Arguments.of("TECH1", EnumValue2.TECH1),
+                Arguments.of("FRAMEWORK", EnumValue2.FRAMEWORK),
+                Arguments.of("123", EnumValue2.UNKNOWN),
+                Arguments.of(randomString(), EnumValue2.UNKNOWN)
         );
     }
 
@@ -86,6 +94,16 @@ class EnumCreatorUtilityTest {
                     .hasMessageStartingWith("Attribute `EnumValue1` is invalid")
                     .hasMessageEndingWith(expectedMessage);
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("findEnumByNameOrUnknownArgs")
+    void findEnumByNameOrUnknownTest(String value, EnumValue2 expected) {
+        // Act
+        var actual = findEnumByNameOrUnknown(EnumValue2.class, value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

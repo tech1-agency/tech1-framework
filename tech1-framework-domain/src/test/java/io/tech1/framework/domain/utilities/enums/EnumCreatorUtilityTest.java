@@ -50,7 +50,8 @@ class EnumCreatorUtilityTest {
                 Arguments.of("Tech1", EnumValue2.TECH1),
                 Arguments.of("Framework", EnumValue2.FRAMEWORK),
                 Arguments.of("123", EnumValue2.UNKNOWN),
-                Arguments.of(randomString(), EnumValue2.UNKNOWN)
+                Arguments.of(randomString(), EnumValue2.UNKNOWN),
+                Arguments.of(null, EnumValue2.UNKNOWN)
         );
     }
 
@@ -59,7 +60,8 @@ class EnumCreatorUtilityTest {
                 Arguments.of("tech1", EnumValue2.TECH1),
                 Arguments.of("framework", EnumValue2.FRAMEWORK),
                 Arguments.of("TTT", EnumValue2.UNKNOWN),
-                Arguments.of(randomString(), EnumValue2.UNKNOWN)
+                Arguments.of(randomString(), EnumValue2.UNKNOWN),
+                Arguments.of(null, EnumValue2.UNKNOWN)
         );
     }
 
@@ -68,7 +70,8 @@ class EnumCreatorUtilityTest {
                 Arguments.of("TECH1", EnumValue2.TECH1),
                 Arguments.of("FRAMEWORK", EnumValue2.FRAMEWORK),
                 Arguments.of("123", EnumValue2.UNKNOWN),
-                Arguments.of(randomString(), EnumValue2.UNKNOWN)
+                Arguments.of(randomString(), EnumValue2.UNKNOWN),
+                Arguments.of(null, EnumValue2.UNKNOWN)
         );
     }
 

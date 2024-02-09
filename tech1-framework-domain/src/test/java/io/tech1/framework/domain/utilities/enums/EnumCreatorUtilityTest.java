@@ -54,6 +54,15 @@ class EnumCreatorUtilityTest {
         );
     }
 
+    private static Stream<Arguments> findEnumByValueIgnoreCaseOrUnknownArgs() {
+        return Stream.of(
+                Arguments.of("tech1", EnumValue2.TECH1),
+                Arguments.of("framework", EnumValue2.FRAMEWORK),
+                Arguments.of("TTT", EnumValue2.UNKNOWN),
+                Arguments.of(randomString(), EnumValue2.UNKNOWN)
+        );
+    }
+
     private static Stream<Arguments> findEnumByNameOrUnknownArgs() {
         return Stream.of(
                 Arguments.of("TECH1", EnumValue2.TECH1),
@@ -113,6 +122,27 @@ class EnumCreatorUtilityTest {
 
         // Assert
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("findEnumByValueIgnoreCaseOrUnknownArgs")
+    void findEnumByValueIgnoreCaseOrUnknownTest(String value, EnumValue2 expected) {
+        // Act
+        var actual = findEnumByValueIgnoreCaseOrUnknown(EnumValue2.class, value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void findEnumByValueIgnoreCaseOrUnknownFailureTest() {
+        // Act
+        var throwable = catchThrowable(() -> findEnumByValueIgnoreCaseOrUnknown(EnumValue1.class, "TEST"));
+
+        // Assert
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("EnumValue1 does not have UNKNOWN enum value");
     }
 
     @ParameterizedTest

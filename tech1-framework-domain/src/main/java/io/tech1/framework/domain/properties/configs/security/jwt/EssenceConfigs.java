@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.properties.configs.security.jwt;
 
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.DefaultUser;
 import io.tech1.framework.domain.properties.base.DefaultUsers;
@@ -30,8 +32,8 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
                         true,
                         List.of(
                                 new DefaultUser(
-                                        "admin12",
-                                        "password12",
+                                        Username.of("admin12"),
+                                        Password.of("password12"),
                                         ZoneId.systemDefault(),
                                         null,
                                         Set.of("admin")
@@ -40,5 +42,17 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
                 ),
                 InvitationCodes.enabled()
         );
+    }
+
+    public static EssenceConfigs random() {
+        return new EssenceConfigs(
+                DefaultUsers.random(),
+                InvitationCodes.random()
+        );
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
     }
 }

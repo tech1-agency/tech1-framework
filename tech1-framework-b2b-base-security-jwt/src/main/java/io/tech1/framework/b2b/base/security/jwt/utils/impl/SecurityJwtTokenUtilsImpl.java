@@ -20,7 +20,6 @@ import java.util.Base64;
 import java.util.UUID;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
@@ -38,7 +37,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
     ) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
-        assertProperties(jwtTokensConfigs, "securityJwtConfigs.jwtTokensConfigs");
+        jwtTokensConfigs.assertProperties("securityJwtConfigs.jwtTokensConfigs");
         this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(jwtTokensConfigs.getSecretKey().getBytes());
     }
 
@@ -89,10 +88,10 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
             var claims = Jwts.parser().setSigningKey(this.base64EncodedSecretKey).parseClaimsJws(jwtToken).getBody();
             return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims);
         } catch (ExpiredJwtException ex1) {
-            LOGGER.error("JWT token expired", ex1);
+            LOGGER.info("JWT token expired", ex1);
             return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, ex1.getClaims());
         } catch (JwtException | IllegalArgumentException ex2) {
-            LOGGER.error("JWT token exception", ex2);
+            LOGGER.info("JWT token exception", ex2);
             return JwtTokenValidatedClaims.invalid(isAccess, isRefresh, jwtToken);
         }
     }

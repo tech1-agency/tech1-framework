@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -26,5 +28,18 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
                 Checkbox.enabled(),
                 Checkbox.enabled()
         );
+    }
+
+    public static UsersEmailsConfigs random() {
+        return new UsersEmailsConfigs(
+                randomString(),
+                Checkbox.enabled(),
+                Checkbox.enabled()
+        );
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
     }
 }

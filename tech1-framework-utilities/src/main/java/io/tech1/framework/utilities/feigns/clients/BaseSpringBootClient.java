@@ -30,7 +30,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
         try {
             return this.springBootClientFeign.info();
         } catch (RetryableException ex) {
-            LOGGER.warn(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
+            LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return undefinedSpringBootActuatorInfo();
         }
     }
@@ -45,7 +45,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
         try {
             return this.springBootClientFeign.health();
         } catch (RetryableException ex) {
-            LOGGER.warn(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
+            LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return undefinedSpringBootActuatorHealth();
         }
     }

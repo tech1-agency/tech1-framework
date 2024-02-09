@@ -1,0 +1,35 @@
+package io.tech1.framework.domain.properties.configs.utilities;
+
+import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.base.AbstractTogglePropertyConfigs;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConstructorBinding;
+
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+
+// Lombok (property-based)
+@AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class GeoCountryFlagsConfigs extends AbstractTogglePropertyConfigs {
+    @MandatoryProperty
+    private final boolean enabled;
+
+    public static GeoCountryFlagsConfigs testsHardcoded() {
+        return new GeoCountryFlagsConfigs(true);
+    }
+
+    public static GeoCountryFlagsConfigs random() {
+        return randomBoolean() ? enabled() : disabled();
+    }
+
+    public static GeoCountryFlagsConfigs enabled() {
+        return testsHardcoded();
+    }
+
+    public static GeoCountryFlagsConfigs disabled() {
+        return new GeoCountryFlagsConfigs(false);
+    }
+}

@@ -1,6 +1,8 @@
 package io.tech1.framework.utilities.browsers.impl;
 
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -38,12 +41,18 @@ class UserAgentDetailsUtilityImplTest {
     }
 
     @Configuration
+    @Import({
+            ApplicationFrameworkPropertiesContext.class
+    })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
         UserAgentDetailsUtility userAgentDetailsUtility() {
-            return new UserAgentDetailsUtilityImpl();
+            return new UserAgentDetailsUtilityImpl(
+                    this.applicationFrameworkProperties
+            );
         }
     }
 

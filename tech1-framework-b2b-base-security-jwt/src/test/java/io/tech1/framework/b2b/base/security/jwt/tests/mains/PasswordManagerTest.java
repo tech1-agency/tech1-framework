@@ -47,7 +47,7 @@ class PasswordManagerTest {
 
         // Print
         // Uncomment only in development purposes to avoid printing encoded password during "mvn clean test"
-        LOGGER.info(encodedPassword);
+        LOGGER.debug(encodedPassword);
     }
 
 }

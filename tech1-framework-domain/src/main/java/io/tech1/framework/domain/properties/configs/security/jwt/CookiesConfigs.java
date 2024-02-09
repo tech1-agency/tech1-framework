@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 // Lombok (property-based)
@@ -23,5 +24,14 @@ public class CookiesConfigs extends AbstractPropertiesConfigs {
 
     public static CookiesConfigs testsHardcoded() {
         return new CookiesConfigs(DomainConstants.TECH1, new TimeAmount(5L, SECONDS));
+    }
+
+    public static CookiesConfigs random() {
+        return new CookiesConfigs(randomString(), TimeAmount.random());
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
     }
 }

@@ -1,8 +1,11 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
+import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
@@ -10,39 +13,29 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoo
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
-public class Cron implements AbstractToggleProperty {
+@EqualsAndHashCode(callSuper = true)
+public class Cron extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @MandatoryProperty
+    @MandatoryToggleProperty
     private String expression;
-    @MandatoryProperty
+    @MandatoryToggleProperty
     private String zoneId;
 
-    public static Cron enabled(
-            String expression,
-            String zoneId
-    ) {
-        return new Cron(
-                true,
-                expression,
-                zoneId
-        );
+    public static Cron testsHardcoded() {
+        return new Cron(true, "*/30 * * * * *", "Europe/Kiev");
+    }
+
+    public static Cron enabled(String expression, String zoneId) {
+        return new Cron(true, expression, zoneId);
     }
 
     public static Cron enabled() {
-        return new Cron(
-                true,
-                "*/30 * * * * *",
-                "Europe/Kiev"
-        );
+        return testsHardcoded();
     }
 
     public static Cron disabled() {
-        return new Cron(
-                false,
-                null,
-                null
-        );
+        return new Cron(false, null, null);
     }
 
     public static Cron random() {

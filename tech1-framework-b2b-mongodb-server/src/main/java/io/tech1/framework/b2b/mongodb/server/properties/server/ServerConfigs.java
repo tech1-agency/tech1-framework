@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.mongodb.server.properties.server;
 
 import io.tech1.framework.b2b.mongodb.server.domain.enums.UserAuthority;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ServerConfigs extends AbstractPropertiesConfigs {
+public class ServerConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String targetAttribute1;
     @MandatoryProperty

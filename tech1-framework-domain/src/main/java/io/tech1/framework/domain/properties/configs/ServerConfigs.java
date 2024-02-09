@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -19,5 +21,14 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
 
     public static ServerConfigs testsHardcoded() {
         return new ServerConfigs("tech1-spring-boot-server", "http://127.0.0.1:3000");
+    }
+
+    public static ServerConfigs random() {
+        return new ServerConfigs(randomString(), randomString());
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
     }
 }

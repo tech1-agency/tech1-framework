@@ -1,9 +1,9 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
+import io.tech1.framework.domain.properties.annotations.MandatoryMapProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.utilities.enums.EnumUtility;
+import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,19 +15,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
-import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.missingMappingsKeys;
-import static org.apache.commons.collections4.SetUtils.disjunction;
-
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
+public class HardwareMonitoringConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
+    @MandatoryMapProperty(propertyName = "thresholdsConfigs", keySetClass = HardwareName.class)
     private Map<HardwareName, BigDecimal> thresholdsConfigs;
 
     public static HardwareMonitoringConfigs testsHardcoded() {
@@ -46,26 +42,7 @@ public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
     }
 
     public static HardwareMonitoringConfigs disabled() {
-        return new HardwareMonitoringConfigs(
-                false,
-                new EnumMap<>(HardwareName.class)
-        );
-    }
-
-    @Override
-    public void assertProperties() {
-        super.assertProperties();
-        if (this.enabled) {
-            var disjunction = disjunction(this.thresholdsConfigs.keySet(), EnumUtility.set(HardwareName.class));
-            assertTrueOrThrow(
-                    this.thresholdsConfigs.size() == 5,
-                    missingMappingsKeys(
-                            "hardwareMonitoringConfigs.thresholdsConfigs",
-                            baseJoining(HardwareName.class),
-                            baseJoining(disjunction)
-                    )
-            );
-        }
+        return new HardwareMonitoringConfigs(false, new EnumMap<>(HardwareName.class));
     }
 
     public Map<HardwareName, BigDecimal> getThresholdsConfigs() {
@@ -80,5 +57,10 @@ public class HardwareMonitoringConfigs extends AbstractPropertiesToggleConfigs {
                             )
                     );
         }
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
     }
 }

@@ -12,9 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
@@ -37,29 +38,39 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
         return new JwtTokensConfigs(
                 "TECH1",
                 JwtTokenStorageMethod.COOKIES,
-                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
-                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
+                new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", null),
+                new JwtToken(new TimeAmount(12L, HOURS), "rjwt", null)
+        );
+    }
+
+    public static JwtTokensConfigs random() {
+        return new JwtTokensConfigs(
+                randomString(),
+                randomEnum(JwtTokenStorageMethod.class),
+                JwtToken.random(),
+                JwtToken.random()
         );
     }
 
     @Override
-    public void assertProperties() {
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
+
+    @Override
+    public void assertProperties(String propertyName) {
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        super.assertProperties();
+        super.assertProperties(propertyName);
         if (this.storageMethod.isCookies()) {
-            assertNonNullOrThrow(this.accessToken.getCookieKey(), "Please specify `jwtTokensConfigs.accessToken.cookieKey` attribute");
-            assertNonNullOrThrow(this.refreshToken.getCookieKey(), "Please specify `jwtTokensConfigs.refreshToken.cookieKey` attribute");
             assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
-                    "Please make sure `jwtTokensConfigs.accessToken.cookieKey` and `jwtTokensConfigs.refreshToken.cookieKey` are different"
+                    "Please make sure `%s.accessToken.cookieKey` and `%s.refreshToken.cookieKey` are different".formatted(propertyName, propertyName)
             );
         }
         if (this.storageMethod.isHeaders()) {
-            assertNonNullOrThrow(this.accessToken.getHeaderKey(), "Please specify `jwtTokensConfigs.accessToken.headerKey` attribute");
-            assertNonNullOrThrow(this.refreshToken.getHeaderKey(), "Please specify `jwtTokensConfigs.refreshToken.headerKey` attribute");
             assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
-                    "Please make sure `jwtTokensConfigs.accessToken.headerKey` and `jwtTokensConfigs.refreshToken.headerKey` are different"
+                    "Please make sure `%s.accessToken.headerKey` and `%s.refreshToken.headerKey` are different".formatted(propertyName, propertyName)
             );
         }
         LOGGER.info(

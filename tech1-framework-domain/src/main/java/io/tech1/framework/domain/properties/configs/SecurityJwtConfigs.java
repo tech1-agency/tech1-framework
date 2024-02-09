@@ -3,9 +3,7 @@ package io.tech1.framework.domain.properties.configs;
 import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Checkbox;
-import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
-import io.tech1.framework.domain.utilities.enums.EnumUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,13 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
-import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD;
-import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD;
-import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.missingMappingsKeys;
-import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
-import static org.apache.commons.collections4.SetUtils.disjunction;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -109,26 +101,13 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties() {
-        super.assertProperties();
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 
-        var typesConfigs = this.incidentsConfigs.getTypesConfigs();
-        var disjunction = disjunction(typesConfigs.keySet(), EnumUtility.set(SecurityJwtIncidentType.class));
-        assertTrueOrThrow(
-                typesConfigs.size() == 9,
-                missingMappingsKeys(
-                        "incidentsConfigs.typesConfigs",
-                        baseJoining(SecurityJwtIncidentType.class),
-                        baseJoining(disjunction)
-                )
-        );
-
-        var loginFailureUsernamePassword = typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD);
-        var loginFailureUsernameMaskedPassword = typesConfigs.get(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD);
-
-        if (TRUE.equals(loginFailureUsernamePassword) && TRUE.equals(loginFailureUsernameMaskedPassword)) {
-            throw new IllegalArgumentException("Please configure login failure incident feature. Only one feature type could be enabled");
-        }
+    @Override
+    public void assertProperties(String propertyName) {
+        super.assertProperties(propertyName);
 
         // Requirements: availableAuthorities vs. defaultUsersAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();

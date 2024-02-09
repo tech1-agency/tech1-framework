@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
@@ -30,6 +29,6 @@ public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
         super.onAuthenticationLogin(event);
-        LOGGER.warn("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: `{}`", event.username());
+        LOGGER.info("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: `{}`", event.username());
     }
 }

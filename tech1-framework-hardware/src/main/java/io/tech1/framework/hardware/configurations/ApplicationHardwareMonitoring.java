@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
@@ -24,6 +22,6 @@ public class ApplicationHardwareMonitoring {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getHardwareMonitoringConfigs(), "hardwareMonitoringConfigs");
+        this.applicationFrameworkProperties.getHardwareMonitoringConfigs().assertProperties("hardwareMonitoringConfigs");
     }
 }

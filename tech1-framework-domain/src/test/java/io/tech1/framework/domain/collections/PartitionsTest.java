@@ -35,7 +35,7 @@ class PartitionsTest {
 
         var throwable = catchThrowable(() -> {
             var partition = actual.get(-1);
-            LOGGER.warn("Not reachable. Partition (-1): `{}`", partition);
+            LOGGER.debug("Not reachable. Partition (-1): `{}`", partition);
         });
 
         assertThat(throwable).isInstanceOf(IndexOutOfBoundsException.class);

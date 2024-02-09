@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -16,5 +18,14 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
 
     public static EventsConfigs testsHardcoded() {
         return new EventsConfigs("tech1-events");
+    }
+
+    public static EventsConfigs random() {
+        return new EventsConfigs(randomString());
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
     }
 }

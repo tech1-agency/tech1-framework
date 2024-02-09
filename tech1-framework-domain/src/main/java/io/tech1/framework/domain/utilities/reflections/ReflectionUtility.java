@@ -141,34 +141,39 @@ public class ReflectionUtility {
             if (breakoutClassesPredicate.test(property.getPropertyValue())) {
                 traversedProperties.add(property);
             } else {
-                var nestedParentKey = property.getParentPropertyName() + "." + property.getPropertyName();
-                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), nestedParentKey));
+                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), property.getTreePropertyName()));
             }
         });
         return traversedProperties;
     }
 
-    public static List<ReflectionProperty> getNotNullProperties(Object object, String parentKey) {
-        var getters = getGetters(object);
-        return getters.stream()
-                .map(getter -> {
+    public static List<ReflectionProperty> getNotNullProperties(Object object, String propertyName) {
+        return Stream.of(object.getClass().getDeclaredFields())
+                .map(field -> {
                     try {
-                        var propertyName = getPropertyName(getter);
-                        var propertyValue = getter.invoke(object);
-                        if (isNull(propertyValue)) {
+                        var nestedProperty = field.get(object);
+                        if (isNull(nestedProperty)) {
                             return null;
                         } else {
-                            return ReflectionProperty.of(
-                                    parentKey,
-                                    propertyName,
-                                    propertyValue
-                            );
+                            return new ReflectionProperty(propertyName, field, nestedProperty);
                         }
-                    } catch (IllegalAccessException | InvocationTargetException | RuntimeException ex) {
+                    } catch (IllegalAccessException | RuntimeException ex) {
                         return null;
                     }
                 })
                 .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public static List<ReflectionProperty> getProperties(Object property, String propertyName, List<Field> fields) {
+        return fields.stream()
+                .map(field -> {
+                    try {
+                        return new ReflectionProperty(propertyName, field, field.get(property));
+                    } catch (IllegalAccessException | RuntimeException ex) {
+                        return new ReflectionProperty(propertyName, field, null);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

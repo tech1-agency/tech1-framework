@@ -53,7 +53,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                             defaultUser.getZoneId().getId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities())
                     );
-                    user.setEmail(defaultUser.getEmail());
+                    user.setEmail(defaultUser.getEmailOrNull());
                     return user;
                 })
                 .toList();

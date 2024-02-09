@@ -20,4 +20,15 @@ public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
                 WebsocketsFeatureHardwareConfigs.testsHardcoded()
         );
     }
+
+    public static WebsocketsFeaturesConfigs random() {
+        return new WebsocketsFeaturesConfigs(
+                WebsocketsFeatureHardwareConfigs.random()
+        );
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

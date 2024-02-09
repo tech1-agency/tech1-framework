@@ -44,20 +44,18 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         if (applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
             try {
-                LOGGER.info("{} {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+                LOGGER.info("{} Geo location {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
                 var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-                LOGGER.info("{} {} database loading status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
+                LOGGER.info("{} Geo location {} database configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
             } catch (IOException | RuntimeException ex) {
-                var message = String.format("%s %s database loading status: %s", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE);
-                LOGGER.error(message);
-                LOGGER.error("Please visit https://dev.maxmind.com/ and download `GeoLite2-City.mmdb` database");
-                LOGGER.error("Please add `GeoLite2-City.mmdb` database to classpath");
-                throw new IllegalArgumentException(message + ". " + ex.getMessage());
+                LOGGER.error("%s Geo location %s database loading status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
+                LOGGER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
+                throw new IllegalArgumentException(ex.getMessage());
             }
         } else {
-            LOGGER.warn("{} {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
+            LOGGER.info("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
             this.databaseReader = null;
         }
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
@@ -66,7 +64,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     @Override
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
         if (!this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
-            return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configuration failure"));
+            return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
         try {
             var inetAddress = InetAddress.getByName(ipAddress.value());

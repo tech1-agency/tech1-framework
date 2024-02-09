@@ -12,8 +12,6 @@ import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationSpringBootServer {
@@ -25,7 +23,7 @@ public class ApplicationSpringBootServer {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getServerConfigs(), "serverConfigs");
+        this.applicationFrameworkProperties.getServerConfigs().assertProperties("serverConfigs");
     }
 
     @Bean

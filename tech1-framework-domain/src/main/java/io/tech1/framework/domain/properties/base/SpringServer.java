@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,15 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SpringServer extends AbstractPropertiesConfigs {
+public class SpringServer extends AbstractPropertyConfigs {
     @MandatoryProperty
-    private final int port;
+    private final Integer port;
+
+    public static SpringServer testsHardcoded() {
+        return new SpringServer(8080);
+    }
+
+    public static SpringServer random() {
+        return new SpringServer(RandomUtility.randomIntegerGreaterThanZeroByBounds(8000, 8100));
+    }
 }

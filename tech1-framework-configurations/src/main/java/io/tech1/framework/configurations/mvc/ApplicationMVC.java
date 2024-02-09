@@ -11,9 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_CORS_PREFIX;
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printProperties;
 import static java.util.Objects.nonNull;
 
 @Configuration
@@ -26,9 +23,7 @@ public class ApplicationMVC implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
-        var mvcConfigs = this.applicationFrameworkProperties.getMvcConfigs();
-        assertProperties(mvcConfigs, "mvcConfigs");
-        printProperties(mvcConfigs, FRAMEWORK_CORS_PREFIX);
+        this.applicationFrameworkProperties.getMvcConfigs().assertProperties("mvcConfigs");
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static java.lang.System.currentTimeMillis;
+import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @Getter
@@ -30,7 +30,7 @@ public class ExceptionEntity {
         assertNonNullOrThrow(exceptionEntityType, invalidAttribute("ResponseExceptionEntity.exceptionEntityType"));
         this.exceptionEntityType = exceptionEntityType;
         this.attributes = new HashMap<>(attributes);
-        this.timestamp = currentTimeMillis();
+        this.timestamp = getCurrentTimestamp();
     }
 
     public void addAttribute(String attributeKey, Object value) {

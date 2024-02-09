@@ -19,8 +19,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 @Slf4j
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -31,7 +29,7 @@ public class ApplicationEmails {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getEmailConfigs(), "emailConfigs");
+        this.applicationFrameworkProperties.getEmailConfigs().assertProperties("emailConfigs");
     }
 
     @Bean
@@ -42,8 +40,8 @@ public class ApplicationEmails {
         mailSender.setHost(emailConfigs.getHost());
         mailSender.setPort(emailConfigs.getPort());
 
-        mailSender.setUsername(emailConfigs.getUsername());
-        mailSender.setPassword(emailConfigs.getPassword());
+        mailSender.setUsername(emailConfigs.getUsername().identifier());
+        mailSender.setPassword(emailConfigs.getPassword().value());
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

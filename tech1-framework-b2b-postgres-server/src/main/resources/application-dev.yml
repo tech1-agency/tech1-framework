@@ -18,6 +18,10 @@ tech1:
   utilitiesConfigs:
     geoLocationsConfigs:
       geoLiteCityDatabaseEnabled: false
+    geoCountryFlagsConfigs:
+      enabled: false
+    userAgentConfigs:
+      enabled: false
   incidentConfigs:
     enabled: true
     remoteServer:

@@ -33,4 +33,18 @@ public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigs {
                 WebsocketsFeaturesConfigs.testsHardcoded()
         );
     }
+
+    public static SecurityJwtWebsocketsConfigs random() {
+        return new SecurityJwtWebsocketsConfigs(
+                CsrfConfigs.random(),
+                StompEndpointRegistryConfigs.random(),
+                MessageBrokerRegistryConfigs.random(),
+                WebsocketsFeaturesConfigs.random()
+        );
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return true;
+    }
 }

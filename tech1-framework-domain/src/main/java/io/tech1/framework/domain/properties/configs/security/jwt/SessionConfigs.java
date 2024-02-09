@@ -24,4 +24,16 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
                 Cron.enabled("*/15 * * * * *", "Europe/Kiev")
         );
     }
+
+    public static SessionConfigs random() {
+        return new SessionConfigs(
+                Cron.random(),
+                Cron.random()
+        );
+    }
+
+    @Override
+    public boolean isParentPropertiesNode() {
+        return false;
+    }
 }

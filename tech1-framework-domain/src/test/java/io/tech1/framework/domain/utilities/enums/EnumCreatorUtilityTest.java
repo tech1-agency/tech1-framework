@@ -2,6 +2,7 @@ package io.tech1.framework.domain.utilities.enums;
 
 import io.tech1.framework.domain.tests.enums.EnumValue1;
 import io.tech1.framework.domain.tests.enums.EnumValue2;
+import io.tech1.framework.domain.tests.enums.EnumValue3;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -62,6 +63,20 @@ class EnumCreatorUtilityTest {
                 Arguments.of("TTT", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),
                 Arguments.of(null, EnumValue2.UNKNOWN)
+        );
+    }
+
+    private static Stream<Arguments> findEnumByIntegerValueTest() {
+        return Stream.of(
+                Arguments.of(0, EnumValue3.EMAIL_SENT),
+                Arguments.of(1, EnumValue3.CANCELLED),
+                Arguments.of(2, EnumValue3.AWAITING_APPROVAL),
+                Arguments.of(3, EnumValue3.REJECTED),
+                Arguments.of(4, EnumValue3.PROCESSING),
+                Arguments.of(5, EnumValue3.FAILURE),
+                Arguments.of(6, EnumValue3.COMPLETED),
+                Arguments.of(7, EnumValue3.UNKNOWN),
+                Arguments.of(999, EnumValue3.UNKNOWN)
         );
     }
 
@@ -146,6 +161,16 @@ class EnumCreatorUtilityTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("EnumValue1 does not have UNKNOWN enum value");
+    }
+
+    @ParameterizedTest
+    @MethodSource("findEnumByIntegerValueTest")
+    void findEnumByValueOrUnknownTest(int value, EnumValue3 expected) {
+        // Act
+        var actual = findEnumByValueOrUnknown(EnumValue3.class, value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest

@@ -11,14 +11,34 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 
 @UtilityClass
 public class EnumCreatorUtility {
+    // =================================================================================================================
+    // THROWERS
+    // =================================================================================================================
+
     public static <E extends Enum<E> & EnumValue<String>> E findEnumByValueIgnoreCaseOrThrow(Class<E> enumClass, String value) {
         Predicate<E> filter = e -> e.getValue().equalsIgnoreCase(value);
-        return findEnumByPredicateIgnoreCaseOrThrow(enumClass, value, filter);
+        return findEnumOrThrow(enumClass, value, filter);
     }
 
     public static <E extends Enum<E> & EnumValue<String>> E findEnumByNameOrThrow(Class<E> enumClass, String name) {
         Predicate<E> filter = e -> e.name().equals(name);
-        return findEnumByPredicateIgnoreCaseOrThrow(enumClass, name, filter);
+        return findEnumOrThrow(enumClass, name, filter);
+    }
+
+    // =================================================================================================================
+    // FALLBACK: UNKNOWN
+    // =================================================================================================================
+
+    public static <E extends Enum<E> & EnumValue<String>> E findEnumByValueOrUnknown(Class<E> enumClass, String value) {
+        return findEnumOrUnknown(enumClass, string -> string.equals(value));
+    }
+
+    public static <E extends Enum<E> & EnumValue<String>> E findEnumByValueIgnoreCaseOrUnknown(Class<E> enumClass, String value) {
+        return findEnumOrUnknown(enumClass, string -> string.equalsIgnoreCase(value));
+    }
+
+    public static <E extends Enum<E> & EnumValue<Integer>> E findEnumByValueOrUnknown(Class<E> enumClass, int value) {
+        return findEnumOrUnknown(enumClass, integer -> integer.equals(value));
     }
 
     public static <E extends Enum<E>> E findEnumByNameOrUnknown(Class<E> enumClass, String name) {
@@ -38,7 +58,7 @@ public class EnumCreatorUtility {
     // ================================================================================================================
     // PRIVATE METHODS
     // ================================================================================================================
-    public static <E extends Enum<E> & EnumValue<String>> E findEnumByPredicateIgnoreCaseOrThrow(Class<E> enumClass, String param, Predicate<E> predicate) {
+    public static <E extends Enum<E> & EnumValue<String>> E findEnumOrThrow(Class<E> enumClass, String param, Predicate<E> predicate) {
         return Arrays.stream(enumClass.getEnumConstants())
                 .filter(predicate)
                 .findFirst()
@@ -50,5 +70,12 @@ public class EnumCreatorUtility {
                     );
                     return new IllegalArgumentException(message);
                 });
+    }
+
+    private static <E extends Enum<E> & EnumValue<V>, V> E findEnumOrUnknown(Class<E> enumClass, Predicate<V> predicate) {
+        return Arrays.stream(enumClass.getEnumConstants())
+                .filter(e -> predicate.test(e.getValue()))
+                .findFirst()
+                .orElse(findUnknownValue(enumClass));
     }
 }

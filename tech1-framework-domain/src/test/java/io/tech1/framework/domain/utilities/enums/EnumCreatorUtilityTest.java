@@ -45,6 +45,15 @@ class EnumCreatorUtilityTest {
         );
     }
 
+    private static Stream<Arguments> findEnumByValueOrUnknownArgs() {
+        return Stream.of(
+                Arguments.of("Tech1", EnumValue2.TECH1),
+                Arguments.of("Framework", EnumValue2.FRAMEWORK),
+                Arguments.of("123", EnumValue2.UNKNOWN),
+                Arguments.of(randomString(), EnumValue2.UNKNOWN)
+        );
+    }
+
     private static Stream<Arguments> findEnumByNameOrUnknownArgs() {
         return Stream.of(
                 Arguments.of("TECH1", EnumValue2.TECH1),
@@ -94,6 +103,16 @@ class EnumCreatorUtilityTest {
                     .hasMessageStartingWith("Attribute `EnumValue1` is invalid")
                     .hasMessageEndingWith(expectedMessage);
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("findEnumByValueOrUnknownArgs")
+    void findEnumByValueOrUnknownTest(String value, EnumValue2 expected) {
+        // Act
+        var actual = findEnumByValueOrUnknown(EnumValue2.class, value);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest

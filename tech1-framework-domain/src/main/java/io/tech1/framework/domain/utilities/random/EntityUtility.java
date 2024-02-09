@@ -19,7 +19,9 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -107,6 +109,8 @@ public class EntityUtility {
         addClassRule(Username.class::equals, parameterClass -> Username.random());
         addClassRule(Password.class::equals, parameterClass -> Password.random());
         addClassRule(Email.class::equals, parameterClass -> Email.random());
+        addClassRule(TimeUnit.class::equals, parameterClass -> randomTimeUnit());
+        addClassRule(ChronoUnit.class::equals, parameterClass -> randomChronoUnit());
 
         addClassRule(IPAddress.class::equals, parameterClass -> IPAddress.random());
         addClassRule(GeoLocation.class::equals, parameterClass -> GeoLocation.random());

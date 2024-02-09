@@ -22,7 +22,7 @@ public class IncidentClientImpl implements IncidentClient {
         try {
             this.incidentClientDefinition.registerIncident(incident);
         } catch (FeignException ex) {
-            LOGGER.warn(
+            LOGGER.error(
                     "[Server]: `ops-incident-server` is probably offline. IncidentType: `{}`. Exception: `{}`",
                     incident.getType(),
                     ex.getMessage()

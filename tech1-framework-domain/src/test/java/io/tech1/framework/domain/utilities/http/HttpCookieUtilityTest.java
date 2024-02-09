@@ -63,8 +63,8 @@ class HttpCookieUtilityTest {
         assertThat(actual.getMaxAge()).isZero();
         // ignored
         assertThat(cookieValue).isNotNull();
-        LOGGER.debug("httpOnly is ignored: " + httpOnly);
-        LOGGER.debug("maxAge is ignored: " + maxAge);
+        LOGGER.info("httpOnly is ignored: " + httpOnly);
+        LOGGER.info("maxAge is ignored: " + maxAge);
     }
 
     @Test

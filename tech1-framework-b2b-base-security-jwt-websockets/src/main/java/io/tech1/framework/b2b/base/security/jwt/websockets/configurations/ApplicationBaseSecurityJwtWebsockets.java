@@ -16,8 +16,6 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 import javax.annotation.PostConstruct;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
-
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
  * <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#websocket">Documentation #2</a>
@@ -42,7 +40,7 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs(), "securityJwtWebsocketsConfigs");
+        this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().assertProperties("securityJwtWebsocketsConfigs");
     }
 
     @Override

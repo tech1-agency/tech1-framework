@@ -1,17 +1,23 @@
 package io.tech1.framework.domain.properties.configs.mvc;
 
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
+import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
+import io.tech1.framework.domain.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import java.util.Set;
+
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CorsConfigs extends AbstractPropertiesConfigs {
+public class CorsConfigs extends AbstractPropertyConfigs {
     @NonMandatoryProperty
     private String pathPattern;
     @NonMandatoryProperty
@@ -33,6 +39,17 @@ public class CorsConfigs extends AbstractPropertiesConfigs {
                 new String[] { "Access-Control-Allow-Origin" },
                 true,
                 null
+        );
+    }
+
+    public static CorsConfigs random() {
+        return new CorsConfigs(
+                randomString(),
+                new String[] { randomString(), randomString() },
+                new String[] { RandomUtility.randomElement(Set.of("GET", "POST", "PUT", "DELETE")) },
+                new String[] { randomString() },
+                randomBoolean(),
+                new String[] { randomString() }
         );
     }
 }

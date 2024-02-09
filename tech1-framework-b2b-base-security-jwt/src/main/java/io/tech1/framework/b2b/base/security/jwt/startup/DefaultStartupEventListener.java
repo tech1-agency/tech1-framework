@@ -34,16 +34,16 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
         this.environmentUtility.verifyProfilesConfiguration();
 
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().isEnabled()) {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is enabled");
+            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is enabled");
             this.essenceConstructor.addDefaultUsers();
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is disabled");
+            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is disabled");
         }
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is enabled");
+            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is enabled");
             this.essenceConstructor.addDefaultUsersInvitationCodes();
         } else {
-            LOGGER.warn(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
+            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
         }
         LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);

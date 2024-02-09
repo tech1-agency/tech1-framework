@@ -20,4 +20,10 @@ public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
                 Mongodb.testsHardcoded()
         );
     }
+
+    public static MongodbSecurityJwtConfigs random() {
+        return new MongodbSecurityJwtConfigs(
+                Mongodb.random()
+        );
+    }
 }

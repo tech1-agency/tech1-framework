@@ -2,6 +2,8 @@ package io.tech1.framework.utilities.geo.functions.ipapi.utility.impl;
 
 import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
 import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.facades.impl.GeoCountryFlagUtilityImpl;
 import io.tech1.framework.utilities.geo.functions.ipapi.configurations.IPAPIConfiguration;
@@ -29,17 +31,20 @@ class IPAPIGeoLocationUtilityImplConsoleTest {
 
     @Configuration
     @Import({
-            IPAPIConfiguration.class
+            IPAPIConfiguration.class,
+            ApplicationFrameworkPropertiesContext.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         private final IPAPIFeign ipapiFeign;
         private final ResourceLoader resourceLoader;
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
         GeoCountryFlagUtility geoCountryFlagUtility() {
             return new GeoCountryFlagUtilityImpl(
-                    this.resourceLoader
+                    this.resourceLoader,
+                    this.applicationFrameworkProperties
             );
         }
 
@@ -61,7 +66,7 @@ class IPAPIGeoLocationUtilityImplConsoleTest {
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("1.1.1.1"));
 
         // Assert
-        LOGGER.warn("geoLocation: " + geoLocation);
+        LOGGER.debug("geoLocation: " + geoLocation);
     }
 
     @Test
@@ -71,6 +76,6 @@ class IPAPIGeoLocationUtilityImplConsoleTest {
         var geoLocation = this.componentUnderTest.getGeoLocation(new IPAddress("127.0.0.1"));
 
         // Assert
-        LOGGER.warn("geoLocation: " + geoLocation);
+        LOGGER.debug("geoLocation: " + geoLocation);
     }
 }

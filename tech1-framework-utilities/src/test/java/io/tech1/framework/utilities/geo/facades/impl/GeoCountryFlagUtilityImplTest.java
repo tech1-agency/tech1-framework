@@ -1,5 +1,7 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -38,14 +41,19 @@ class GeoCountryFlagUtilityImplTest {
     }
 
     @Configuration
+    @Import({
+            ApplicationFrameworkPropertiesContext.class
+    })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         private final ResourceLoader resourceLoader;
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
         GeoCountryFlagUtility geoCountryFlagUtility() {
             return new GeoCountryFlagUtilityImpl(
-                    this.resourceLoader
+                    this.resourceLoader,
+                    this.applicationFrameworkProperties
             );
         }
     }

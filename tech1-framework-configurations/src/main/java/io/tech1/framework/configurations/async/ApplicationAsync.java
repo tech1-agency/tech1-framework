@@ -14,7 +14,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import javax.annotation.PostConstruct;
 import java.util.concurrent.Executor;
 
-import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertProperties;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 
@@ -29,7 +28,7 @@ public class ApplicationAsync implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        assertProperties(this.applicationFrameworkProperties.getAsyncConfigs(), "asyncConfigs");
+        this.applicationFrameworkProperties.getAsyncConfigs().assertProperties("asyncConfigs");
     }
 
     @Override

@@ -29,6 +29,6 @@ public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
         super.onAuthenticationLogin(event);
-        LOGGER.warn("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: `{}`", event.username());
+        LOGGER.info("[Server] SecurityJwtSubscriber.onAuthenticationLogin(). Username: `{}`", event.username());
     }
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -17,6 +19,12 @@ public class HardwareServerConfigs extends AbstractPropertiesConfigs {
     public static HardwareServerConfigs testsHardcoded() {
         return new HardwareServerConfigs(
                 "http://localhost:8484"
+        );
+    }
+
+    public static HardwareServerConfigs random() {
+        return new HardwareServerConfigs(
+                randomIPv4()
         );
     }
 }

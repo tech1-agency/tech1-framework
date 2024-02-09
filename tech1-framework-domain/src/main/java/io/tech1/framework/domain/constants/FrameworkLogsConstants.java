@@ -15,7 +15,6 @@ public class FrameworkLogsConstants {
     public static final String FRAMEWORK_PREFIX = "[Tech1 Framework, ";
     public static final String FRAMEWORK_PROPERTIES_PREFIX = FRAMEWORK_PREFIX + "Properties]";
     public static final String FRAMEWORK_UTILITIES_PREFIX = FRAMEWORK_PREFIX + "Utilities]";
-    public static final String FRAMEWORK_CORS_PREFIX = FRAMEWORK_PREFIX + "CORS]";
     public static final String FRAMEWORK_INCIDENT_PREFIX = FRAMEWORK_PREFIX + "Incident]";
     public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = FRAMEWORK_PREFIX + "B2B SecurityJWT]";
     public static final String FRAMEWORK_SESSION_REGISTRY_PREFIX = FRAMEWORK_PREFIX + "SessionRegistry]";

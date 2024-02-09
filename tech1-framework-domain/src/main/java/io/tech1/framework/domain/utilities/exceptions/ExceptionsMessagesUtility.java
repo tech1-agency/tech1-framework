@@ -15,6 +15,10 @@ public class ExceptionsMessagesUtility {
         return String.format(INVALID_ATTRIBUTE, attributeName);
     }
 
+    public static String invalidAttributeRequiredMissingValues(String attributeName, String required, String missing) {
+        return String.format(INVALID_ATTRIBUTE_REQUIRED_MISSING_VALUES, attributeName, required, missing);
+    }
+
     public static String entityNotFound(String entity, String entityId) {
         return String.format(ENTITY_NOT_FOUND, entity, entityId);
     }
@@ -25,9 +29,5 @@ public class ExceptionsMessagesUtility {
 
     public static String entityAccessDenied(String entity, String entityId) {
         return String.format(ENTITY_ACCESS_DENIED, entity, entityId);
-    }
-
-    public static String missingMappingsKeys(String attributeName, String requirements, String disjunction) {
-        return String.format(MISSING_MAPPINGS_KEYS, attributeName, requirements, disjunction);
     }
 }

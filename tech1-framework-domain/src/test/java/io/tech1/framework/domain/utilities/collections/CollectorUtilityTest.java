@@ -25,7 +25,7 @@ class CollectorUtilityTest {
             var actual = list.stream()
                     .filter(element -> element % 2 == 0)
                     .collect(toSingleton());
-            LOGGER.warn("Not reachable. Actual: `{}`", actual);
+            LOGGER.debug("Not reachable. Actual: `{}`", actual);
         });
 
         // Assert

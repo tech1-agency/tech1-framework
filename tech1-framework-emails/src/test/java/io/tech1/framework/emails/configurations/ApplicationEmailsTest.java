@@ -63,8 +63,8 @@ class ApplicationEmailsTest {
         var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
         assertThat(javaMailSender.getHost()).isEqualTo(emailConfigs.getHost());
         assertThat(javaMailSender.getPort()).isEqualTo(emailConfigs.getPort());
-        assertThat(javaMailSender.getUsername()).isEqualTo(emailConfigs.getUsername());
-        assertThat(javaMailSender.getPassword()).isEqualTo(emailConfigs.getPassword());
+        assertThat(javaMailSender.getUsername()).isEqualTo(emailConfigs.getUsername().identifier());
+        assertThat(javaMailSender.getPassword()).isEqualTo(emailConfigs.getPassword().value());
         assertThat(javaMailSender.getJavaMailProperties()).hasSize(4);
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.transport.protocol", "smtp");
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.smtp.auth", "true");

@@ -1,15 +1,15 @@
 package io.tech1.framework.b2b.base.security.jwt.services.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensContextThrowerService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +78,7 @@ public class TokensServiceImpl implements TokensService {
         this.tokensProvider.createResponseRefreshToken(newRefreshToken, response);
 
         var username = user.username();
-        LOGGER.debug("JWT refresh token operation was successfully completed. Username: {}", username);
+        LOGGER.info("JWT refresh token operation was successfully completed. Username: {}", username);
 
         this.sessionRegistry.renew(username, oldRefreshToken, accessToken, newRefreshToken);
 

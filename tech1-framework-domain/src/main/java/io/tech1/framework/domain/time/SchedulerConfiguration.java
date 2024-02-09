@@ -15,5 +15,4 @@ public record SchedulerConfiguration(
                 TimeUnit.DAYS
         );
     }
-
 }

@@ -5,9 +5,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticatio
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogout;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionExpired;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionRefreshed;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
@@ -67,7 +67,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         var username = session.username();
         boolean added = this.sessions.add(session);
         if (added) {
-            LOGGER.debug(SESSION_REGISTRY_REGISTER_SESSION, username);
+            LOGGER.info(SESSION_REGISTRY_REGISTER_SESSION, username);
             this.securityJwtPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
         }
     }
@@ -78,14 +78,14 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         var newSession = new Session(username, newAccessToken, newRefreshToken);
         var added = this.sessions.add(newSession);
         if (added) {
-            LOGGER.debug(SESSION_REGISTRY_RENEW_SESSION, username);
+            LOGGER.info(SESSION_REGISTRY_RENEW_SESSION, username);
             this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
     @Override
     public void logout(Username username, JwtAccessToken accessToken) {
-        LOGGER.debug(SESSION_REGISTRY_REMOVE_SESSION, username);
+        LOGGER.info(SESSION_REGISTRY_REMOVE_SESSION, username);
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
         if (removed) {
             this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
@@ -112,7 +112,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             var refreshToken = tuple.b();
             var metadata = tuple.c();
 
-            LOGGER.debug(SESSION_REGISTRY_EXPIRE_SESSION, username);
+            LOGGER.info(SESSION_REGISTRY_EXPIRE_SESSION, username);
             var sessionOpt = this.sessions.stream()
                     .filter(session -> session.refreshToken().equals(refreshToken))
                     .findFirst();
@@ -126,7 +126,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         });
 
         var deleted = this.usersSessionsRepository.delete(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
-        LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
+        LOGGER.info("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
     }
 
     @Override

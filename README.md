@@ -22,3 +22,4 @@ Last deployed version: **1.16**
 — Enum Creator API: add findEnumByValueIgnoreCaseOrThrow(), findEnumByValueOrUnknown(), findEnumByValueIgnoreCaseOrUnknown(), findEnumByValueOrUnknown()
 — Enum Creator API: add findEnumByNameOrThrow(), findEnumByNameOrUnknown()
 — Enum Creator API: add findUnknownValue()
+— Properties API: delete "emailConfigs.to"

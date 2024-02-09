@@ -17,4 +17,5 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.6]
-— TBD
+— Bash Scripts: dedicated next_version.sh script 
+— Random API: randomElementExcept

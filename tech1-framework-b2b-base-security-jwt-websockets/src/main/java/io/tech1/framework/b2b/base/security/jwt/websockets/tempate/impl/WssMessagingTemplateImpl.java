@@ -38,6 +38,9 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
     // PRIVATE METHODS
     // =================================================================================================================
     private void sendObjectToUser(Username username, String destination, Object data) {
+        if (!this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getTemplateConfigs().isEnabled()) {
+            return;
+        }
         var brokerConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
         try {
             this.messagingTemplate.convertAndSendToUser(

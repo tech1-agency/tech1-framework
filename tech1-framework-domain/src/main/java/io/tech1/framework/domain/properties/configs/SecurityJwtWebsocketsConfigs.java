@@ -2,10 +2,7 @@ package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.properties.configs.security.jwt.websockets.CsrfConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.websockets.MessageBrokerRegistryConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.websockets.StompEndpointRegistryConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.websockets.WebsocketsFeaturesConfigs;
+import io.tech1.framework.domain.properties.configs.security.jwt.websockets.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +19,8 @@ public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigs {
     private final StompEndpointRegistryConfigs stompConfigs;
     @MandatoryProperty
     private final MessageBrokerRegistryConfigs brokerConfigs;
+    @MandatoryProperty
+    private final WebsocketsTemplateConfigs templateConfigs;
     @NonMandatoryProperty
     private WebsocketsFeaturesConfigs featuresConfigs;
 
@@ -30,6 +29,7 @@ public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigs {
                 CsrfConfigs.testsHardcoded(),
                 StompEndpointRegistryConfigs.testsHardcoded(),
                 MessageBrokerRegistryConfigs.testsHardcoded(),
+                WebsocketsTemplateConfigs.testsHardcoded(),
                 WebsocketsFeaturesConfigs.testsHardcoded()
         );
     }
@@ -39,6 +39,7 @@ public class SecurityJwtWebsocketsConfigs extends AbstractPropertiesConfigs {
                 CsrfConfigs.random(),
                 StompEndpointRegistryConfigs.random(),
                 MessageBrokerRegistryConfigs.random(),
+                WebsocketsTemplateConfigs.random(),
                 WebsocketsFeaturesConfigs.random()
         );
     }

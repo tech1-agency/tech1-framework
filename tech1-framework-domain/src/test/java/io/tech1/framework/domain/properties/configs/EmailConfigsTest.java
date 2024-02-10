@@ -5,7 +5,8 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIntegerGreaterThanZero;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailConfigsTest {
@@ -19,8 +20,7 @@ class EmailConfigsTest {
                 randomIntegerGreaterThanZero(),
                 Username.random().identifier(),
                 Username.random(),
-                Password.random(),
-                randomStringsAsArray(3)
+                Password.random()
         );
 
         // Assert
@@ -30,8 +30,6 @@ class EmailConfigsTest {
         assertThat(emailConfigs.getFrom()).isNotNull();
         assertThat(emailConfigs.getUsername()).isNotNull();
         assertThat(emailConfigs.getPassword()).isNotNull();
-        assertThat(emailConfigs.getTo()).isNotNull();
-        assertThat(emailConfigs.getTo()).hasSize(3);
     }
 
     @Test
@@ -46,7 +44,6 @@ class EmailConfigsTest {
         assertThat(emailConfigs.getFrom()).isNull();
         assertThat(emailConfigs.getUsername()).isNull();
         assertThat(emailConfigs.getPassword()).isNull();
-        assertThat(emailConfigs.getTo()).isNull();
     }
 
     @Test
@@ -64,6 +61,5 @@ class EmailConfigsTest {
         assertThat(emailConfigs.getFrom()).isEqualTo(from);
         assertThat(emailConfigs.getUsername()).isEqualTo(Username.testsHardcoded());
         assertThat(emailConfigs.getPassword()).isEqualTo(Password.testsHardcoded());
-        assertThat(emailConfigs.getTo()).isEmpty();
     }
 }

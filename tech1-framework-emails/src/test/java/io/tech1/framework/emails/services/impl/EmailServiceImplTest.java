@@ -161,32 +161,6 @@ class EmailServiceImplTest {
     }
 
     @Test
-    void systemSendPlainEnabledTest() {
-        // Arrange
-        var to1 = Email.random().value();
-        var to2 = Email.random().value();
-        var from = Email.random().value();
-        var subject = randomString();
-        var message = randomString();
-        var emailConfigs = EmailConfigs.enabled(from);
-        emailConfigs.setTo(new String[] { to1, to2 } );
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
-
-        // Act
-        this.componentUnderTest.sendPlain(subject, message);
-
-        // Assert
-        verify(this.applicationFrameworkProperties, times(2)).getEmailConfigs();
-        var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
-        verify(this.javaMailSender).send(mailMessageAC.capture());
-        var simpleMailMessage = mailMessageAC.getValue();
-        assertThat(simpleMailMessage.getTo()).isEqualTo(new String[] { to1, to2 });
-        assertThat(simpleMailMessage.getSubject()).isEqualTo(subject);
-        assertThat(simpleMailMessage.getText()).isEqualTo(message);
-        assertThat(simpleMailMessage.getFrom()).isEqualTo(from);
-    }
-
-    @Test
     void listSendPlainEnabledTest() {
         // Arrange
         var to = Email.random().value();

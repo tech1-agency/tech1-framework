@@ -36,12 +36,6 @@ public class EmailServiceImpl implements EmailService {
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public void sendPlain(String subject, String message) {
-        var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
-        this.sendPlain(emailConfigs.getTo(), subject, message);
-    }
-
-    @Override
     public void sendPlain(String[] to, String subject, String message) {
         var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {

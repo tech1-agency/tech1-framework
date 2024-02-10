@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.properties.configs;
 
-import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
@@ -27,8 +26,6 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     private Username username;
     @MandatoryToggleProperty
     private Password password;
-    @MandatoryToggleProperty
-    private String[] to;
 
     public static EmailConfigs testsHardcoded() {
         return new EmailConfigs(
@@ -37,17 +34,16 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
                 587,
                 "Tech1",
                 Username.testsHardcoded(),
-                Password.testsHardcoded(),
-                new String[] { Email.random().value(), Email.random().value() }
+                Password.testsHardcoded()
         );
     }
 
     public static EmailConfigs disabled() {
-        return new EmailConfigs(false, null, 0, null, null, null, null);
+        return new EmailConfigs(false, null, 0, null, null, null);
     }
 
     public static EmailConfigs enabled(String from) {
-        return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.testsHardcoded(), Password.testsHardcoded(), new String[] {});
+        return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.testsHardcoded(), Password.testsHardcoded());
     }
 
     @Override

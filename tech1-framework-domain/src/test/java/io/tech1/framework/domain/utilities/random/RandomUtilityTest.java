@@ -475,6 +475,86 @@ class RandomUtilityTest {
         assertThat(set).contains(actual);
     }
 
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomElementExceptList1Test() {
+        // Act
+        var actual = randomElementExcept(
+                List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_2, EXAMPLE_3),
+                List.of(EXAMPLE_4)
+        );
+
+        // Assert
+        assertThat(actual)
+                .isIn(Set.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3))
+                .isNotIn(Set.of(EXAMPLE_4));
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomElementExceptList2Test() {
+        // Act
+        var actual = randomElementExcept(
+                List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_2, EXAMPLE_3),
+                List.of(EXAMPLE_2, EXAMPLE_4)
+        );
+
+        // Assert
+        assertThat(actual)
+                .isIn(Set.of(EXAMPLE_1, EXAMPLE_3))
+                .isNotIn(Set.of(EXAMPLE_2, EXAMPLE_4));
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomElementExceptList3Test() {
+        // Act
+        var actual = randomElementExcept(
+                List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_2, EXAMPLE_3),
+                List.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_2, EXAMPLE_3)
+        );
+
+        // Assert
+        assertThat(actual).isNull();
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomElementExceptSetTest() {
+        // Act
+        var actual = randomElementExcept(
+                Set.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3),
+                Set.of(EXAMPLE_4)
+        );
+
+        // Assert
+        assertThat(actual)
+                .isIn(Set.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3))
+                .isNotIn(Set.of(EXAMPLE_4));
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomElementExceptSet2Test() {
+        // Act
+        var actual = randomElementExcept(
+                Set.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3),
+                Set.of(EXAMPLE_2, EXAMPLE_4)
+        );
+
+        // Assert
+        assertThat(actual)
+                .isIn(Set.of(EXAMPLE_1, EXAMPLE_3))
+                .isNotIn(Set.of(EXAMPLE_2, EXAMPLE_4));
+    }
+
+    @RepeatedTest(SMALL_ITERATIONS_COUNT)
+    void randomElementExceptSet3Test() {
+        // Act
+        var actual = randomElementExcept(
+                Set.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3),
+                Set.of(EXAMPLE_1, EXAMPLE_2, EXAMPLE_3)
+        );
+
+        // Assert
+        assertThat(actual).isNull();
+    }
+
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
     void randomLocalDateTest() {
         // Act

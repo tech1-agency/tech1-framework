@@ -212,6 +212,22 @@ public class RandomUtility {
         return randomElement(new ArrayList<>(set));
     }
 
+    public static <T> T randomElementExcept(List<T> options, List<T> except) {
+        return randomElementExcept(
+                new HashSet<>(options),
+                new HashSet<>(except)
+        );
+    }
+
+    public static <T> T randomElementExcept(Set<T> options, Set<T> except) {
+        Set<T> availableOptions = new HashSet<>(options);
+        availableOptions.removeAll(except);
+        if (availableOptions.isEmpty()) {
+            return null;
+        }
+        return RandomUtility.randomElement(availableOptions);
+    }
+
     public static LocalDate randomLocalDate() {
         return randomLocalDateByBounds(2000, LocalDate.now().getYear());
     }

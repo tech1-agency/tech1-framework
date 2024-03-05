@@ -3,7 +3,6 @@ name: main
 on:
   push:
     branches:
-      - dev
       - main
   workflow_dispatch:
 
@@ -11,6 +10,8 @@ env:
   REGISTRY: ghcr.io
   MONGODB_REPO: tech1-io/tech1-framework-b2b-mongodb-server
   POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
+  VERSION: '2.6.1-SNAPSHOT'
+  DOCKER_REQUIRED: 'false'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -39,19 +40,22 @@ jobs:
             -s release-github/m2-settings.xml deploy -Prelease-github
 
       - name: Docker login
+        if: env.DOCKER_REQUIRED == 'true'
         run: docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker [mongodb]
+        if: env.DOCKER_REQUIRED == 'true'
         run: |
           cd tech1-framework-b2b-mongodb-server
-          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}} .
-          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{github.ref_name}}
+          docker build -t ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{ env.VERSION }} .
+          docker push ${{ env.REGISTRY }}/${{ env.MONGODB_REPO }}:${{ env.VERSION }}
 
       - name: Docker [postgres]
+        if: env.DOCKER_REQUIRED == 'true'
         run: |
           cd tech1-framework-b2b-postgres-server
-          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}} .
-          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{github.ref_name}}
+          docker build -t ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{ env.VERSION }} .
+          docker push ${{ env.REGISTRY }}/${{ env.POSTGRES_REPO }}:${{ env.VERSION }}
 
       - name: Tech1 mails@v2 outputs
         if: always()

@@ -1,5 +1,7 @@
 package io.tech1.framework.utilities.resources.actuator;
 
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -27,7 +30,13 @@ import static org.mockito.Mockito.*;
 class BaseInfoResourceTest {
 
     @Configuration
+    @Import({
+            ApplicationFrameworkPropertiesContext.class
+    })
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
         @Bean
         EnvironmentUtility environmentUtility() {
             return mock(EnvironmentUtility.class);
@@ -36,12 +45,16 @@ class BaseInfoResourceTest {
         @Bean
         BaseInfoResource baseInfoResource() {
             return new BaseInfoResource(
-                    this.environmentUtility()
+                    this.environmentUtility(),
+                    this.applicationFrameworkProperties
             );
         }
     }
 
+    // Utilities
     private final EnvironmentUtility environmentUtility;
+    // Properties
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final BaseInfoResource componentUnderTest;
 
@@ -76,7 +89,8 @@ class BaseInfoResourceTest {
         verify(builder).withDetails(builderDetailsAC.capture());
         var details = builderDetailsAC.getValue();
         assertThat(details)
-                .hasSize(1)
-                .containsEntry("activeProfile", activeProfile);
+                .hasSize(2)
+                .containsEntry("activeProfile", activeProfile)
+                .containsEntry("maven", this.applicationFrameworkProperties.getMavenConfigs().asMavenDetails());
     }
 }

@@ -18,3 +18,5 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.6.1]
 — Migrate git management "dev/main" → "main/version" 
+— Add "mavenConfigs" → ApplicationFrameworkProperties (required maven-resource-plugin configured)
+— Add "maven" → BaseInfoResource

@@ -25,6 +25,15 @@
 
     <build>
         <finalName>app</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.mmdb</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <!-- Spring Boot -->
             <plugin>
@@ -32,7 +41,13 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${version.dependency.springframework.boot}</version>
             </plugin>
-            <!-- Verifier: GIT => `/info` endpoint -->
+            <!-- maven <version></version> => `/actuator/info` endpoint -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${version.plugin.resource}</version>
+            </plugin>
+            <!-- git => `actuator/info` endpoint -->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>

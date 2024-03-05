@@ -95,6 +95,7 @@
         <version.plugin.nexus>1.6.13</version.plugin.nexus>
         <version.plugin.jacoco>0.8.9</version.plugin.jacoco>
         <version.plugin.javadoc>3.5.0</version.plugin.javadoc>
+        <version.plugin.resource>3.3.1</version.plugin.resource>
         <version.plugin.source>3.2.1</version.plugin.source>
         <version.plugin.surefire>3.0.0</version.plugin.surefire>
     </properties>
@@ -517,7 +518,19 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Verifier: GIT => `/info` endpoint -->
+                <!-- maven <version></version> => `/actuator/info` endpoint -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.plugin.resource}</version>
+                    <configuration>
+                        <delimiters>
+                            <delimiter>@</delimiter>
+                        </delimiters>
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                    </configuration>
+                </plugin>
+                <!-- git => `actuator/info` endpoint -->
                 <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>

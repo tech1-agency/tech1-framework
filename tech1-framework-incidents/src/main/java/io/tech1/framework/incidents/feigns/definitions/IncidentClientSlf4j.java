@@ -8,6 +8,7 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWO
 @Slf4j
 public class IncidentClientSlf4j implements IncidentClientDefinition {
 
+    // TODO [YYL] print details
     @Override
     public void registerIncident(Incident incident) {
         LOGGER.info(FRAMEWORK_INCIDENT_PREFIX + " IncidentType: `{}`", incident.getType());

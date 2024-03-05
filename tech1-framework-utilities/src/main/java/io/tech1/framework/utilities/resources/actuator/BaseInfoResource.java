@@ -1,5 +1,6 @@
 package io.tech1.framework.utilities.resources.actuator;
 
+import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,14 @@ public class BaseInfoResource implements InfoContributor {
 
     // Utilities
     private final EnvironmentUtility environmentUtility;
+    // Properties
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
     public void contribute(Info.Builder builder) {
         Map<String, Object> details = new HashMap<>();
         details.put("activeProfile", this.environmentUtility.getActiveProfile());
+        details.put("maven", this.applicationFrameworkProperties.getMavenConfigs().asMavenDetails());
         builder.withDetails(details);
     }
 }

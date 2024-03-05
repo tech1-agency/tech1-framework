@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.domain.constants.FrameworkConstants.VERSION_RUNTIME;
 import static io.tech1.framework.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER_1;
 import static io.tech1.framework.domain.enums.Status.COMPLETED;
 
@@ -40,7 +39,8 @@ public class StartupEventListener extends DefaultStartupEventListener {
         try {
             super.onStartup();
             var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
-            LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), VERSION_RUNTIME, COMPLETED);
+            var mavenDetails = this.applicationFrameworkProperties.getMavenConfigs().asMavenDetails();
+            LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

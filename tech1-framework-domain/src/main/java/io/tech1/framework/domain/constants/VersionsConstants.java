@@ -3,7 +3,6 @@ package io.tech1.framework.domain.constants;
 import io.tech1.framework.domain.base.Version;
 import lombok.experimental.UtilityClass;
 
-// MIGRATE: tech1-framework
 @UtilityClass
 public class VersionsConstants {
     public static final Version VERSION_1_0 = Version.of("1.0");

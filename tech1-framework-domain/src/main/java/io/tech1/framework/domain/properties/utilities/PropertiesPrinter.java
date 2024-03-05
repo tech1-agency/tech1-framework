@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
-import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_PRINTER_COMPARATOR;
+import static io.tech1.framework.domain.comparators.ReflectionsComparators.PROPERTIES_PRINTER_COMPARATOR;
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.getMandatoryBasedFields;
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getProperties;
 import static java.util.Objects.isNull;

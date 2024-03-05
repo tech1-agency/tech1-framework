@@ -29,12 +29,12 @@ spring:
 
 # Tech1 Framework
 tech1:
+  serverConfigs:
+    name: tech1-framework-b2b-postgres-server
   mavenConfigs:
     groupId: @project.groupId@
     artifactId: @project.artifactId@
     version: @project.version@
-  serverConfigs:
-    name: tech1-framework-b2b-postgres-server
   asyncConfigs:
     threadNamePrefix: tps1-async
   eventsConfigs:

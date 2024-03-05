@@ -23,8 +23,8 @@ public class ApplicationSpringBootServer {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getMavenConfigs().assertProperties("mavenConfigs");
         this.applicationFrameworkProperties.getServerConfigs().assertProperties("serverConfigs");
+        this.applicationFrameworkProperties.getMavenConfigs().assertProperties("mavenConfigs");
     }
 
     @Bean

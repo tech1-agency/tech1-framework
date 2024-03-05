@@ -27,7 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
-import static io.tech1.framework.domain.constants.ReflectionsConstants.PROPERTIES_ASSERTION_COMPARATOR;
+import static io.tech1.framework.domain.comparators.ReflectionsComparators.PROPERTIES_ASSERTION_COMPARATOR;
 import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
 import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoiningWildcard;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;

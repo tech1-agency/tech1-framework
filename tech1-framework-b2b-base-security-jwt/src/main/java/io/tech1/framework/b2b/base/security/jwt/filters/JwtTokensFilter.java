@@ -48,7 +48,6 @@ public class JwtTokensFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (AccessTokenNotFoundException | AccessTokenExpiredException ex) {
-            // TODO [YYL] why on actuator?
             LOGGER.error("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
             // NOTE: place to refresh token. problem how to distinguish authenticated vs. anonymous/permitAll endpoints
             filterChain.doFilter(request, response);

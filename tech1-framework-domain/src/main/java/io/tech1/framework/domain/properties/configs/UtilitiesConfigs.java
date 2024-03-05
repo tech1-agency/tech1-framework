@@ -39,6 +39,6 @@ public class UtilitiesConfigs extends AbstractPropertiesConfigs {
 
     @Override
     public boolean isParentPropertiesNode() {
-        return false;
+        return true;
     }
 }

@@ -11,6 +11,7 @@ public class ApplicationFrameworkPropertiesContext {
     @Bean
     public ApplicationFrameworkProperties applicationFrameworkProperties() {
         var properties = new ApplicationFrameworkProperties();
+        properties.setMavenConfigs(MavenConfigs.testsHardcoded());
         properties.setServerConfigs(ServerConfigs.testsHardcoded());
         properties.setUtilitiesConfigs(UtilitiesConfigs.testsHardcoded());
         properties.setAsyncConfigs(AsyncConfigs.testsHardcoded());

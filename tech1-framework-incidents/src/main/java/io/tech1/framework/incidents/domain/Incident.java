@@ -5,6 +5,7 @@ import io.tech1.framework.domain.base.Username;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -30,8 +31,7 @@ public class Incident {
         this.addAll(attributes);
     }
 
-    public static Incident copyOf(Incident incident) {
-        assertNonNullOrThrow(incident, invalidAttribute("Incident.incident"));
+    public static Incident copyOf(@NotNull Incident incident) {
         var instance = new Incident();
         instance.addAll(incident.getAttributes());
         return instance;

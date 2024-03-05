@@ -14,6 +14,7 @@ import org.springframework.core.PriorityOrdered;
 )
 @Data
 public class ApplicationFrameworkProperties implements PriorityOrdered {
+    private MavenConfigs mavenConfigs;
     private ServerConfigs serverConfigs;
     private UtilitiesConfigs utilitiesConfigs;
     private AsyncConfigs asyncConfigs;

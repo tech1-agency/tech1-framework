@@ -85,16 +85,15 @@
         <version.dependency.junit>5.9.3</version.dependency.junit>
         <version.dependency.testcontainers>1.18.0</version.dependency.testcontainers>
         <!-- plugins -->
-        <version.plugin.compiler>3.11.0</version.plugin.compiler>
         <version.plugin.build.helper>3.4.0</version.plugin.build.helper>
+        <version.plugin.compiler>3.11.0</version.plugin.compiler>
         <version.plugin.dependency>3.5.0</version.plugin.dependency>
         <version.plugin.failsafe>3.1.2</version.plugin.failsafe>
         <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
-        <version.plugin.gpg>3.0.1</version.plugin.gpg>
-        <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
-        <version.plugin.nexus>1.6.13</version.plugin.nexus>
         <version.plugin.jacoco>0.8.9</version.plugin.jacoco>
         <version.plugin.javadoc>3.5.0</version.plugin.javadoc>
+        <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
+        <version.plugin.resource>3.3.1</version.plugin.resource>
         <version.plugin.source>3.2.1</version.plugin.source>
         <version.plugin.surefire>3.0.0</version.plugin.surefire>
     </properties>
@@ -357,110 +356,6 @@
                 </repository>
             </distributionManagement>
         </profile>
-        <profile>
-            <!-- No Longer Supported from 25.01.2024 -->
-            <id>release</id>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>ossrh</id>
-                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
-            <build>
-                <plugins>
-                    <!-- Source -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${version.plugin.source}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- JavaDoc -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${version.plugin.javadoc}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <sourcepath>${project.delombok.output}</sourcepath>
-                            <quiet>true</quiet>
-                            <doclint>none</doclint>
-                            <source>${version.java}</source>
-                        </configuration>
-                    </plugin>
-                    <!-- https://stackoverflow.com/questions/11329965/how-to-ignore-the-java-source-directory-during-maven-compilation -->
-                    <!-- Lombok -->
-                    <plugin>
-                        <groupId>org.projectlombok</groupId>
-                        <artifactId>lombok-maven-plugin</artifactId>
-                        <version>${version.plugin.lombok}</version>
-                        <executions>
-                            <execution>
-                                <phase>generate-sources</phase>
-                                <goals>
-                                    <goal>delombok</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <sourceDirectory>src/main/java</sourceDirectory>
-                            <addOutputDirectory>false</addOutputDirectory>
-                            <outputDirectory>${project.delombok.output}</outputDirectory>
-                            <encoding>${project.build.sourceEncoding}</encoding>
-                        </configuration>
-                    </plugin>
-                    <!-- GPG -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${version.plugin.gpg}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <keyname>${gpg.keyname}</keyname>
-                                    <passphraseServerId>${gpg.passphrase}</passphraseServerId>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- Nexus -->
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${version.plugin.nexus}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 
     <build>
@@ -517,7 +412,19 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Verifier: GIT => `/info` endpoint -->
+                <!-- maven <version></version> => `/actuator/info` endpoint -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.plugin.resource}</version>
+                    <configuration>
+                        <delimiters>
+                            <delimiter>@</delimiter>
+                        </delimiters>
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                    </configuration>
+                </plugin>
+                <!-- git => `actuator/info` endpoint -->
                 <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>

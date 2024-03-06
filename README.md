@@ -21,3 +21,4 @@ Last deployed version: **1.16**
 — Add "mavenConfigs" → ApplicationFrameworkProperties (required maven-resource-plugin configured)  
 — Add "maven" → BaseInfoResource  
 — Migrate: SchedulerConfiguration.getDeviatedSchedulerConfiguration()  
+— Migrate: RoundingUtility.divideOrFallback()  

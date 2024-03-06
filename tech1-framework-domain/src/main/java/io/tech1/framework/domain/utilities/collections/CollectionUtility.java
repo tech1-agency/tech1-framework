@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.CollectionUtils.*;
@@ -84,5 +85,9 @@ public class CollectionUtility {
 
     public static BigDecimal minOrZero(List<BigDecimal> values) {
         return !isEmpty(values) ? Collections.min(values) : ZERO;
+    }
+
+    public static String baseJoiningRaw(Collection<?> collection) {
+        return collection.stream().map(Object::toString).sorted().collect(Collectors.joining(COMMA_COLLECTORS));
     }
 }

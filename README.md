@@ -28,3 +28,4 @@ Last deployed version: **1.16**
 — Migrate: JwtUser.hasAllAuthorities()  
 — Migrate: CollectionUtility.baseJoiningRaw()  
 — Migrate: DatetimeConstants + json.deserializers  
+— Add: prototype on Plurable + Plurals  

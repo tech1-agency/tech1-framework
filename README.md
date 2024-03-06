@@ -31,3 +31,4 @@ Last deployed version: **1.16**
 — Add: prototype on Plurable + Plurals  
 — Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  
 — Add: "maven" attributes → SpringBootActuatorInfo (usage AbstractSpringBootClient)  
+— Add: ServerName → AbstractSpringBootClient  

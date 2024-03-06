@@ -37,7 +37,7 @@ class IncidentClientSlf4jTest {
         this.componentUnderTest.registerIncident(incident);
 
         // Assert
-        verify(incident).getType();
+        verify(incident).print();
         verifyNoMoreInteractions(incident);
     }
 }

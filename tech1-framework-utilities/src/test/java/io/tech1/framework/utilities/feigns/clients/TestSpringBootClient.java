@@ -11,6 +11,6 @@ class TestSpringBootClient extends BaseSpringBootClient {
 
     @Override
     public ServerName getServerName() {
-        return new ServerName("test-server");
+        return ServerName.testsHardcoded();
     }
 }

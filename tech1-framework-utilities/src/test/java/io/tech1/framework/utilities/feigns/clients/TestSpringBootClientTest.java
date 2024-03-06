@@ -2,6 +2,7 @@ package io.tech1.framework.utilities.feigns.clients;
 
 import feign.Request;
 import feign.RetryableException;
+import io.tech1.framework.domain.base.ServerName;
 import io.tech1.framework.utilities.feigns.definitions.SpringBootClientFeign;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
@@ -79,7 +80,7 @@ class TestSpringBootClientTest {
         var serverName = this.componentUnderTest.getServerName();
 
         // Assert
-        assertThat(serverName).isEqualTo("test-server");
+        assertThat(serverName).isEqualTo(ServerName.testsHardcoded());
     }
 
     @Test
@@ -148,7 +149,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).info();
-        assertThat(tuple2.a()).isEqualTo("test-server");
+        assertThat(tuple2.a()).isEqualTo(ServerName.testsHardcoded());
         assertThat(tuple2.b()).isNull();
     }
 
@@ -182,7 +183,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).health();
-        assertThat(tuple2.a()).isEqualTo("test-server");
+        assertThat(tuple2.a()).isEqualTo(ServerName.testsHardcoded());
         assertThat(tuple2.b()).isNull();
     }
 }

@@ -25,3 +25,4 @@ Last deployed version: **1.16**
 — Migrate: ClassicState, ClassicStatePermissions, AbstractClassicStateManager  
 — Migrate: TriggerType (AUTO, CRON, MANUAL)
 — Enhance: AbstractTrigger → AutoTrigger, CronTrigger, UserTrigger  
+— Migrate: JwtUser.hasAllAuthorities()  

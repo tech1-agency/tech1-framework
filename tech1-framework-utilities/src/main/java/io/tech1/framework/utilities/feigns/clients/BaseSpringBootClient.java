@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import static io.tech1.framework.domain.constants.LogsConstants.SERVER_OFFLINE;
 import static io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth.undefinedSpringBootActuatorHealth;
-import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo.undefinedSpringBootActuatorInfo;
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -22,7 +21,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
     @Override
     public boolean isAlive() {
         var info = this.info();
-        return nonNull(info) && !undefinedSpringBootActuatorInfo().equals(info);
+        return nonNull(info) && !SpringBootActuatorInfo.undefined().equals(info);
     }
 
     @Override
@@ -31,7 +30,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
             return this.springBootClientFeign.info();
         } catch (RetryableException ex) {
             LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
-            return undefinedSpringBootActuatorInfo();
+            return SpringBootActuatorInfo.undefined();
         }
     }
 

@@ -16,20 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.0]
-— Migrate git management "dev/main" → "main/version"  
-— Add "mavenConfigs" → ApplicationFrameworkProperties (required maven-resource-plugin configured)  
-— Add "maven" → BaseInfoResource  
-— Migrate: SchedulerConfiguration.getDeviatedSchedulerConfiguration()  
-— Migrate: RoundingUtility.divideOrFallback()  
-— Migrate: ClassicState, ClassicStatePermissions, AbstractClassicStateManager  
-— Migrate: TriggerType (AUTO, CRON, MANUAL)
-— Enhance: AbstractTrigger → AutoTrigger, CronTrigger, UserTrigger  
-— Migrate: JwtUser.hasAllAuthorities()  
-— Migrate: CollectionUtility.baseJoiningRaw()  
-— Migrate: DatetimeConstants + json.deserializers  
-— Add: prototype on Plurable + Plurals  
-— Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  
-— Add: "maven" attributes → SpringBootActuatorInfo (usage AbstractSpringBootClient)  
-— Add: ServerName → AbstractSpringBootClient  
-— Add: ServerName → applicationFrameworkProperties.serverConfigs.name  
+### Release Notes [Development v2.7.1]
+— TBD

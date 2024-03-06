@@ -3,7 +3,7 @@ package io.tech1.framework.domain.triggers;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.tech1.framework.domain.base.Username;
 
-public record UserTrigger(Username username) implements AbstractTrigger {
+public record AutoTrigger(Username username) implements AbstractTrigger {
 
     @Override
     public Username getUsername() {
@@ -12,12 +12,12 @@ public record UserTrigger(Username username) implements AbstractTrigger {
 
     @Override
     public TriggerType getTriggerType() {
-        return TriggerType.USER;
+        return TriggerType.AUTO;
     }
 
     @JsonValue
     @Override
     public String getReadableDetails() {
-        return this.getTriggerType().getValue() + " trigger, username: " + this.username;
+        return this.getTriggerType().getValue() + " trigger, username: " + this.getUsername();
     }
 }

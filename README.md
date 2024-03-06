@@ -22,3 +22,6 @@ Last deployed version: **1.16**
 — Add "maven" → BaseInfoResource  
 — Migrate: SchedulerConfiguration.getDeviatedSchedulerConfiguration()  
 — Migrate: RoundingUtility.divideOrFallback()  
+— Migrate: ClassicState, ClassicStatePermissions, AbstractClassicStateManager  
+— Migrate: TriggerType (AUTO, CRON, MANUAL)
+— Enhance: AbstractTrigger → AutoTrigger, CronTrigger, UserTrigger  

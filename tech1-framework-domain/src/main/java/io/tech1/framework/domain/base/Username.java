@@ -14,6 +14,14 @@ public record Username(@NotNull String identifier) {
         return new Username(identifier);
     }
 
+    public static Username cron() {
+        return of("cron");
+    }
+
+    public static Username ops() {
+        return of("ops");
+    }
+
     public static Username random() {
         return of(randomString());
     }

@@ -1,12 +1,12 @@
-package io.tech1.framework.b2b.base.security.jwt.filters;
+package io.tech1.framework.b2b.base.security.jwt.filters.jwt;
 
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
@@ -64,18 +64,29 @@ class JwtTokensFilterTest {
         }
 
         @Bean
+        JwtTokensFilterExtension jwtTokenFilterExtension() {
+            return mock(JwtTokensFilterExtension.class);
+        }
+
+        @Bean
         JwtTokensFilter jwtAccessTokenFilter() {
             return new JwtTokensFilter(
                     this.sessionRegistry(),
                     this.tokenService(),
-                    this.cookieProvider()
+                    this.cookieProvider(),
+                    this.jwtTokenFilterExtension()
             );
         }
     }
 
+    // Session
     private final SessionRegistry sessionRegistry;
+    // Services
     private final TokensService tokensService;
+    // Tokens
     private final TokensProvider tokensProvider;
+    // Filters
+    private final JwtTokensFilterExtension jwtTokensFilterExtension;
 
     private final JwtTokensFilter componentUnderTest;
 
@@ -84,7 +95,8 @@ class JwtTokensFilterTest {
         reset(
                 this.sessionRegistry,
                 this.tokensService,
-                this.tokensProvider
+                this.tokensProvider,
+                this.jwtTokensFilterExtension
         );
     }
 
@@ -93,7 +105,8 @@ class JwtTokensFilterTest {
         verifyNoMoreInteractions(
                 this.sessionRegistry,
                 this.tokensService,
-                this.tokensProvider
+                this.tokensProvider,
+                this.jwtTokensFilterExtension
         );
     }
 
@@ -221,7 +234,7 @@ class JwtTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(filterChain).doFilter(request, response);
+        verify(this.jwtTokensFilterExtension).doFilter(request, response, filterChain);
         verifyNoMoreInteractions(
                 request,
                 response,

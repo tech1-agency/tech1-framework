@@ -29,3 +29,4 @@ Last deployed version: **1.16**
 — Migrate: CollectionUtility.baseJoiningRaw()  
 — Migrate: DatetimeConstants + json.deserializers  
 — Add: prototype on Plurable + Plurals  
+— Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  

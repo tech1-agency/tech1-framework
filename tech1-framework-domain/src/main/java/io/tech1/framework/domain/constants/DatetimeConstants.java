@@ -20,4 +20,7 @@ public class DatetimeConstants {
 
     public static final DateTimeFormatter DTF41 = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     public static final DateTimeFormatter DTF42 = DateTimeFormatter.ofPattern("dd MMMM");
+
+    public static final DateTimeFormatter DTF51 = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static final DateTimeFormatter DTF52 = DateTimeFormatter.ofPattern("HH:mm");
 }

@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.base.security.jwt.filters;
+package io.tech1.framework.b2b.base.security.jwt.filters.jwt;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
@@ -33,9 +33,11 @@ public class JwtTokensFilter extends OncePerRequestFilter {
     private final TokensService tokensService;
     // Tokens
     private final TokensProvider tokensProvider;
+    // Filters
+    private final JwtTokensFilterExtension jwtTokensFilterExtension;
 
     @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         try {
             var cookieAccessToken = this.tokensProvider.readRequestAccessToken(request);
             var cookieRefreshToken = this.tokensProvider.readRequestRefreshToken(request);
@@ -46,7 +48,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
 
             this.sessionRegistry.register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
 
-            filterChain.doFilter(request, response);
+            this.jwtTokensFilterExtension.doFilter(request, response, filterChain);
         } catch (AccessTokenNotFoundException | AccessTokenExpiredException ex) {
             LOGGER.error("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
             // NOTE: place to refresh token. problem how to distinguish authenticated vs. anonymous/permitAll endpoints

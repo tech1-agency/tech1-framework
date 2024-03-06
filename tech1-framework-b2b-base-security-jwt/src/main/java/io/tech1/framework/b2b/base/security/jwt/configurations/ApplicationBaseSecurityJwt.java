@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.configurations;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.filters.JwtTokensFilter;
+import io.tech1.framework.b2b.base.security.jwt.filters.jwt.JwtTokensFilter;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;

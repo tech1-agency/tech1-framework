@@ -4,6 +4,7 @@ import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
 
+// TODO [YYL] add ServerName class
 public interface AbstractSpringBootClient {
     String getServerName();
     boolean isAlive();

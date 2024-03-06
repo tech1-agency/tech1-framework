@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static io.tech1.framework.domain.constants.LogsConstants.SERVER_OFFLINE;
-import static io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth.undefinedSpringBootActuatorHealth;
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -45,7 +44,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
             return this.springBootClientFeign.health();
         } catch (RetryableException ex) {
             LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
-            return undefinedSpringBootActuatorHealth();
+            return SpringBootActuatorHealth.undefined();
         }
     }
 

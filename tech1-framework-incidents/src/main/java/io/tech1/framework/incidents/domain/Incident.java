@@ -5,16 +5,18 @@ import io.tech1.framework.domain.base.Username;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
+import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.util.Objects.nonNull;
 
+@Slf4j
 // Lombok
 @Getter
 @EqualsAndHashCode
@@ -43,6 +45,15 @@ public class Incident {
 
     public void addAll(Map<String, Object> attributes) {
         this.attributes.putAll(attributes);
+    }
+
+    public void print() {
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(FRAMEWORK_INCIDENT_PREFIX + " IncidentType: `{}`", this.getType());
+        this.attributes.entrySet().stream()
+                .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
+                .forEach(entry -> LOGGER.info(entry.getKey() + " — " + entry.getValue()));
+        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 
     @JsonIgnore

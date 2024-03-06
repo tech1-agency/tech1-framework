@@ -12,7 +12,6 @@ import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.
 import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getProperties;
 import static java.util.Objects.isNull;
 
-// TODO [YYL] add printing as configuration parameter?
 @Slf4j
 @UtilityClass
 public class PropertiesPrinter {

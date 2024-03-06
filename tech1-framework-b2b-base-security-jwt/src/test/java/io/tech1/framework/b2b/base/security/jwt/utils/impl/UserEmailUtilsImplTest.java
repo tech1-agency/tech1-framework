@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.time.ZoneOffset;
 
-import static io.tech1.framework.domain.constants.DatetimeConstants.DTF1;
+import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
@@ -97,7 +97,7 @@ class UserEmailUtilsImplTest {
                 .endsWith(" (UTC)");
         subject = subject.replace("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ", "");
         subject = subject.replace(" (UTC)", "");
-        var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF1), ZoneOffset.UTC);
+        var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);
     }
 

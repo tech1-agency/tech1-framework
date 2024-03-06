@@ -27,3 +27,4 @@ Last deployed version: **1.16**
 — Enhance: AbstractTrigger → AutoTrigger, CronTrigger, UserTrigger  
 — Migrate: JwtUser.hasAllAuthorities()  
 — Migrate: CollectionUtility.baseJoiningRaw()  
+— Migrate: DatetimeConstants + json.deserializers  

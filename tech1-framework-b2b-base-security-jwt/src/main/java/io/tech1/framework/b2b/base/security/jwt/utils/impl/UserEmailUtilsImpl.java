@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.tech1.framework.domain.constants.DatetimeConstants.DTF1;
+import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
 import static java.time.ZoneOffset.UTC;
 
@@ -36,7 +36,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
         var environment = this.environmentUtility.getActiveProfile();
         var server = "[" + serverConfigs.getName() + "@" + environment + "]";
-        var time = LocalDateTime.now(UTC).format(DTF1) + " (UTC)";
+        var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
         return prefix + " " + eventName + " on " + server + " — " + time;
     }
 

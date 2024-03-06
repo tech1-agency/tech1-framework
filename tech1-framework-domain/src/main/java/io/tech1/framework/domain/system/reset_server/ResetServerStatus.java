@@ -64,7 +64,7 @@ public class ResetServerStatus {
         this.state = ResetServerState.READY;
         this.stage = this.stagesCount;
         this.percentage = progressTuplePercentage(this.stage, this.stagesCount);
-        var time = convertTimestamp(getCurrentTimestamp(), zoneId).format(DatetimeConstants.DTF1);
+        var time = convertTimestamp(getCurrentTimestamp(), zoneId).format(DatetimeConstants.DTF11);
         this.description = "Successfully completed at " + time;
     }
 }

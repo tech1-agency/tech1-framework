@@ -30,3 +30,4 @@ Last deployed version: **1.16**
 — Migrate: DatetimeConstants + json.deserializers  
 — Add: prototype on Plurable + Plurals  
 — Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  
+— Add: "maven" attributes → SpringBootActuatorInfo (usage AbstractSpringBootClient)  

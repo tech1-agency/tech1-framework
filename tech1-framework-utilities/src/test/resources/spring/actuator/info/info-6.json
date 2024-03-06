@@ -1,0 +1,15 @@
+{
+  "git": {
+    "branch": "dev",
+    "commit": {
+      "id": "1234567",
+      "time": "01.01.2024 15:00:00"
+    }
+  },
+  "activeProfile": "dev",
+  "maven": {
+    "groupId": "io.tech1.framework",
+    "artifactId": "tech1-server",
+    "version": "v1.61803398875"
+  }
+}

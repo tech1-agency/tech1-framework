@@ -19,7 +19,8 @@ class VersionTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> versionsTests() {
         return Stream.of(
                 Arguments.of(Version.of("1.1"), "version-1.json"),
-                Arguments.of(Version.unknown(), "version-2.json")
+                Arguments.of(Version.undefined(), "version-2.json"),
+                Arguments.of(Version.unknown(), "version-3.json")
         );
     }
 

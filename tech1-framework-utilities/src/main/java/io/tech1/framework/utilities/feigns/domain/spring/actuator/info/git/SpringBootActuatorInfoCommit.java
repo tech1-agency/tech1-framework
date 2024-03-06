@@ -9,11 +9,17 @@ public record SpringBootActuatorInfoCommit(
         @JsonProperty("time") String time
 ) {
 
-    public static SpringBootActuatorInfoCommit undefinedSpringBootActuatorInfoCommit() {
+    public static SpringBootActuatorInfoCommit undefined() {
         return new SpringBootActuatorInfoCommit(
                 UNDEFINED,
                 UNDEFINED
         );
     }
 
+    public static SpringBootActuatorInfoCommit testsHardcoded() {
+        return new SpringBootActuatorInfoCommit(
+                "1234567",
+                "01.01.2024 15:00:00"
+        );
+    }
 }

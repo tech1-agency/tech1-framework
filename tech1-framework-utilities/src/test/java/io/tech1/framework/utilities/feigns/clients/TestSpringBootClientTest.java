@@ -3,6 +3,7 @@ package io.tech1.framework.utilities.feigns.clients;
 import feign.Request;
 import feign.RetryableException;
 import io.tech1.framework.utilities.feigns.definitions.SpringBootClientFeign;
+import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -22,9 +23,6 @@ import java.util.Map;
 
 import static feign.Request.HttpMethod.GET;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth.undefinedSpringBootActuatorHealth;
-import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo.undefinedSpringBootActuatorInfo;
-import static io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit.undefinedSpringBootActuatorInfoGit;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -110,7 +108,7 @@ class TestSpringBootClientTest {
     @Test
     void aliveTest() {
         // Arrange
-        when(this.springBootClientFeign.info()).thenReturn(new SpringBootActuatorInfo(undefinedSpringBootActuatorInfoGit(), null, "dev"));
+        when(this.springBootClientFeign.info()).thenReturn(SpringBootActuatorInfo.testsHardcoded());
 
         // Act
         var alive = this.componentUnderTest.isAlive();
@@ -130,7 +128,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).info();
-        assertThat(info).isEqualTo(undefinedSpringBootActuatorInfo());
+        assertThat(info).isEqualTo(SpringBootActuatorInfo.undefined());
     }
 
     @Test
@@ -164,7 +162,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).health();
-        assertThat(health).isEqualTo(undefinedSpringBootActuatorHealth());
+        assertThat(health).isEqualTo(SpringBootActuatorHealth.undefined());
     }
 
     @Test

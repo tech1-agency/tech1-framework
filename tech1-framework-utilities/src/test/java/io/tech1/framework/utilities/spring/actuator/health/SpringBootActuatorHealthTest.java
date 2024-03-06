@@ -12,7 +12,6 @@ import org.springframework.boot.actuate.health.Status;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
-import static io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth.undefinedSpringBootActuatorHealth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
@@ -21,7 +20,7 @@ class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
         return Stream.of(
                 Arguments.of(new SpringBootActuatorHealth(Status.UP), "health-1.json"),
                 Arguments.of(new SpringBootActuatorHealth(Status.DOWN), "health-2.json"),
-                Arguments.of(undefinedSpringBootActuatorHealth(), "health-3.json")
+                Arguments.of(SpringBootActuatorHealth.undefined(), "health-3.json")
         );
     }
 

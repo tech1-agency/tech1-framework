@@ -25,7 +25,7 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
     }
 
     public final List<ID> getIds() {
-        return this.values.stream().map(Plurable::getId).collect(Collectors.toList());
+        return this.values.stream().map(Plurable::getId).toList();
     }
 
     public final Set<ID> getUniqueIds() {

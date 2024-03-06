@@ -1,6 +1,7 @@
 package io.tech1.framework.utilities.feigns.clients;
 
 import feign.RetryableException;
+import io.tech1.framework.domain.base.ServerName;
 import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.utilities.feigns.definitions.SpringBootClientFeign;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
@@ -34,7 +35,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
     }
 
     @Override
-    public Tuple2<String, SpringBootActuatorInfo> infoMappedByServerName() {
+    public Tuple2<ServerName, SpringBootActuatorInfo> infoMappedByServerName() {
         return new Tuple2<>(this.getServerName(), this.info());
     }
 
@@ -49,7 +50,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
     }
 
     @Override
-    public Tuple2<String, SpringBootActuatorHealth> healthMappedByServerName() {
+    public Tuple2<ServerName, SpringBootActuatorHealth> healthMappedByServerName() {
         return new Tuple2<>(this.getServerName(), this.health());
     }
 }

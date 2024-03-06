@@ -93,9 +93,9 @@ class UserEmailUtilsImplTest {
         // Assert
         verify(this.environmentUtility).getActiveProfile();
         assertThat(subject)
-                .startsWith("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ")
+                .startsWith("[Tech1] Authentication Login on [tech1-server@stage] — ")
                 .endsWith(" (UTC)");
-        subject = subject.replace("[Tech1] Authentication Login on [tech1-spring-boot-server@stage] — ", "");
+        subject = subject.replace("[Tech1] Authentication Login on [tech1-server@stage] — ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);

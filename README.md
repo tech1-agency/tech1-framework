@@ -16,7 +16,7 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.6.1]
+### Release Notes [Development v2.7.0]
 — Migrate git management "dev/main" → "main/version"  
 — Add "mavenConfigs" → ApplicationFrameworkProperties (required maven-resource-plugin configured)  
 — Add "maven" → BaseInfoResource  
@@ -31,3 +31,5 @@ Last deployed version: **1.16**
 — Add: prototype on Plurable + Plurals  
 — Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  
 — Add: "maven" attributes → SpringBootActuatorInfo (usage AbstractSpringBootClient)  
+— Add: ServerName → AbstractSpringBootClient  
+— Add: ServerName → applicationFrameworkProperties.serverConfigs.name  

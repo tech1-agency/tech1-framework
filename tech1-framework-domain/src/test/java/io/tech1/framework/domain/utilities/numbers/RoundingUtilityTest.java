@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.*;
+import static java.math.BigDecimal.TEN;
+import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,6 +48,15 @@ class RoundingUtilityTest {
                 Arguments.of(BigDecimal.valueOf(10), null, 4, BigDecimal.ONE),
                 Arguments.of(BigDecimal.valueOf(10), BigDecimal.ZERO, 5, BigDecimal.ONE),
                 Arguments.of(BigDecimal.valueOf(10), null, 5, BigDecimal.ONE)
+        );
+    }
+
+    private static Stream<Arguments> divideOrFallbackTest() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(10), BigDecimal.valueOf(3), 3, TEN, BigDecimal.valueOf(3.333)),
+                Arguments.of(BigDecimal.valueOf(10), null, 4, TEN, TEN),
+                Arguments.of(BigDecimal.valueOf(10), ZERO, 5, TEN, TEN),
+                Arguments.of(BigDecimal.valueOf(10), null, 5, TEN, TEN)
         );
     }
 
@@ -108,6 +119,22 @@ class RoundingUtilityTest {
 
         // Act
         var actual = divideOrOne(divider, divisor, scale);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("divideOrFallbackTest")
+    void divideOrFallbackTest(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal fallback, BigDecimal expected) {
+        // Arrange
+        if (isNull(divisor)) {
+            divisor = mock(BigDecimal.class);
+            when(divisor.compareTo(any(BigDecimal.class))).thenThrow(new RuntimeException());
+        }
+
+        // Act
+        var actual = divideOrFallback(divider, divisor, scale, fallback);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

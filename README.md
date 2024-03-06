@@ -17,6 +17,16 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.6.1]
-— Migrate git management "dev/main" → "main/version" 
-— Add "mavenConfigs" → ApplicationFrameworkProperties (required maven-resource-plugin configured)
-— Add "maven" → BaseInfoResource
+— Migrate git management "dev/main" → "main/version"  
+— Add "mavenConfigs" → ApplicationFrameworkProperties (required maven-resource-plugin configured)  
+— Add "maven" → BaseInfoResource  
+— Migrate: SchedulerConfiguration.getDeviatedSchedulerConfiguration()  
+— Migrate: RoundingUtility.divideOrFallback()  
+— Migrate: ClassicState, ClassicStatePermissions, AbstractClassicStateManager  
+— Migrate: TriggerType (AUTO, CRON, MANUAL)
+— Enhance: AbstractTrigger → AutoTrigger, CronTrigger, UserTrigger  
+— Migrate: JwtUser.hasAllAuthorities()  
+— Migrate: CollectionUtility.baseJoiningRaw()  
+— Migrate: DatetimeConstants + json.deserializers  
+— Add: prototype on Plurable + Plurals  
+— Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  

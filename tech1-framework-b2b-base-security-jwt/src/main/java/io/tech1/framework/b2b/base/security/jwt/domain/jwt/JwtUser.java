@@ -65,15 +65,6 @@ public record JwtUser(
         return true;
     }
 
-    @JsonIgnore
-    public JwtTokenCreationParams getJwtTokenCreationParams() {
-        return new JwtTokenCreationParams(
-                this.username,
-                this.authorities,
-                this.zoneId
-        );
-    }
-
     public static JwtUser random() {
         return new JwtUser(
                 UserId.random(),
@@ -103,6 +94,19 @@ public record JwtUser(
                 "",
                 Map.of()
         );
+    }
+
+    @JsonIgnore
+    public JwtTokenCreationParams getJwtTokenCreationParams() {
+        return new JwtTokenCreationParams(
+                this.username,
+                this.authorities,
+                this.zoneId
+        );
+    }
+
+    public boolean hasAllAuthorities(Set<SimpleGrantedAuthority> authorities) {
+        return this.authorities.containsAll(authorities);
     }
 }
 

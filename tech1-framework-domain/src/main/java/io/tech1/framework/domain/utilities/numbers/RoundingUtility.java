@@ -57,6 +57,18 @@ public class RoundingUtility {
         }
     }
 
+    public static BigDecimal divideOrFallback(BigDecimal divider, BigDecimal divisor, int scale, BigDecimal fallback) {
+        try {
+            if (nonNull(divisor) && divisor.compareTo(ZERO) != 0) {
+                return divider.divide(divisor, scale, RoundingMode.HALF_UP);
+            } else {
+                return fallback;
+            }
+        } catch (RuntimeException ex) {
+            return fallback;
+        }
+    }
+
     public static String format(BigDecimal value) {
         return format(value, DEFAULT_SCALE);
     }

@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserTriggerTest extends AbstractSerializationDeserializationRunner {
-    private static final UserTrigger USER_TRIGGER = new UserTrigger(Username.testsHardcoded());
+class AutoTriggerTest extends AbstractSerializationDeserializationRunner {
+    private static final AutoTrigger AUTO_TRIGGER = new AutoTrigger(Username.ops());
 
     @Override
     protected String getFileName() {
-        return "trigger-user.json";
+        return "trigger-auto.json";
     }
 
     @Override
@@ -22,7 +22,7 @@ class UserTriggerTest extends AbstractSerializationDeserializationRunner {
     @Test
     void serializeTest() {
         // Act
-        var json = this.writeValueAsString(USER_TRIGGER);
+        var json = this.writeValueAsString(AUTO_TRIGGER);
 
         // Assert
         assertThat(json).isEqualTo(this.readFile());

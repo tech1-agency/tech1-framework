@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.utilities.collections;
 
 import io.tech1.framework.domain.tests.constants.TestsJunitConstants;
+import io.tech1.framework.domain.tests.enums.EnumUnderTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,8 +10,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static io.tech1.framework.domain.utilities.collections.CollectionUtility.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -290,5 +293,14 @@ class CollectionUtilityTest {
 
         // Assert
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @RepeatedTest(FIVE_TIMES)
+    void baseJoiningRawTest() {
+        // Act
+        var actual = baseJoiningRaw(Stream.of(EnumUnderTests.values()).collect(Collectors.toSet()));
+
+        // Assert
+        assertThat(actual).isEqualTo("EXAMPLE_1, EXAMPLE_2, EXAMPLE_3, EXAMPLE_4");
     }
 }

@@ -1,4 +1,4 @@
-package io.tech1.framework.b2b.base.security.jwt.filters;
+package io.tech1.framework.b2b.base.security.jwt.filters.logging;
 
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;

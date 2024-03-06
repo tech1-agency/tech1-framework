@@ -8,6 +8,7 @@ public class StringConstants {
     public static final String SLASH = "/";
     public static final String SEMICOLON = ";";
     public static final String COMMA = ",";
+    public static final String COMMA_COLLECTORS = ", ";
 
     public static final String UNDEFINED = "[?]";
     public static final String UNKNOWN = "Unknown";

@@ -32,3 +32,4 @@ Last deployed version: **1.16**
 — Enhance: JwtTokensFilters → JwtTokensFilters + JwtTokensFiltersExtension  
 — Add: "maven" attributes → SpringBootActuatorInfo (usage AbstractSpringBootClient)  
 — Add: ServerName → AbstractSpringBootClient  
+— Add: ServerName → applicationFrameworkProperties.serverConfigs.name  

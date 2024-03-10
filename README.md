@@ -18,3 +18,5 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.1]
 — Add base: ObjectId, PropertyId, UsernamePasswordCredentials
+— Modification: IncidentAuthenticationLoginFailureUsernamePassword(username, password) → IncidentAuthenticationLoginFailureUsernamePassword(credentials)
+— Modification: IncidentAuthenticationLoginFailureUsernameMaskedPassword(username, password) → IncidentAuthenticationLoginFailureUsernameMaskedPassword(credentials)

@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticatio
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -58,14 +59,12 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
             );
             this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernamePassword(
                     new IncidentAuthenticationLoginFailureUsernamePassword(
-                            username,
-                            password
+                            new UsernamePasswordCredentials(username, password)
                     )
             );
             this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
                     new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
-                            username,
-                            password
+                            UsernamePasswordCredentials.mask5(username, password)
                     )
             );
         }

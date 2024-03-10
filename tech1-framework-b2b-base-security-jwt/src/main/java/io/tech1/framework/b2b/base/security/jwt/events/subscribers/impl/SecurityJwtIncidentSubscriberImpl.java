@@ -37,14 +37,14 @@ public class SecurityJwtIncidentSubscriberImpl extends AbstractEventSubscriber i
 
     @Override
     public void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incidentAuthenticationLoginFailureUsernamePassword.username());
+        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incidentAuthenticationLoginFailureUsernamePassword.credentials().username());
         var incident = this.incidentConverter.convert(incidentAuthenticationLoginFailureUsernamePassword);
         this.incidentClient.registerIncident(incident);
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incidentAuthenticationLoginFailureUsernameMaskedPassword.username());
+        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incidentAuthenticationLoginFailureUsernameMaskedPassword.credentials().username());
         var incident = this.incidentConverter.convert(incidentAuthenticationLoginFailureUsernameMaskedPassword);
         this.incidentClient.registerIncident(incident);
     }

@@ -47,7 +47,7 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
     }
 
     @Test
-    void randomEmailTest() {
+    void randomTest() {
         // Arrange
         var domain = "@tech1.io";
         var randomLength = 32;

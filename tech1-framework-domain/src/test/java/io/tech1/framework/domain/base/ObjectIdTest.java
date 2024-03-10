@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PasswordTest extends AbstractSerializationDeserializationRunner {
-    private static final Password PASSWORD = Password.of("admin123!");
+class ObjectIdTest extends AbstractSerializationDeserializationRunner {
+    private static final ObjectId OBJECT_ID = ObjectId.testsHardcoded();
 
     @Override
     protected String getFileName() {
-        return "password-1.json";
+        return "object-id-1.json";
     }
 
     @Override
@@ -25,7 +25,7 @@ class PasswordTest extends AbstractSerializationDeserializationRunner {
     @Test
     void serializeTest() {
         // Act
-        var json = this.writeValueAsString(PASSWORD);
+        var json = this.writeValueAsString(OBJECT_ID);
 
         // Assert
         assertThat(json).isEqualTo(this.readFile());
@@ -36,21 +36,21 @@ class PasswordTest extends AbstractSerializationDeserializationRunner {
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<Password>() {};
+        var typeReference = new TypeReference<ObjectId>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isEqualTo(PASSWORD);
-        assertThat(actual.value()).isEqualTo(PASSWORD.value());
-        assertThat(actual.toString()).hasToString(PASSWORD.value());
+        assertThat(actual).isEqualTo(OBJECT_ID);
+        assertThat(actual.value()).isEqualTo(OBJECT_ID.value());
+        assertThat(actual.toString()).hasToString(OBJECT_ID.value());
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomTest() {
         // Act
-        var actual = Password.random();
+        var actual = ObjectId.random();
 
         // Assert
         assertThat(actual).isNotNull();

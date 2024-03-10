@@ -57,7 +57,7 @@ class VersionTest extends AbstractFolderSerializationRunner {
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUsernameTest() {
+    void randomTest() {
         // Act
         var actual = Version.random();
 

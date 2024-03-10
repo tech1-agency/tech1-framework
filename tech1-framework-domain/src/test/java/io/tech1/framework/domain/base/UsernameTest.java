@@ -48,7 +48,7 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomUsernameTest() {
+    void randomTest() {
         // Act
         var actual = Username.random();
 

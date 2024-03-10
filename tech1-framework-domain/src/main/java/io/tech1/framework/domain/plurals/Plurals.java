@@ -21,7 +21,7 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
 
     protected Plurals(List<T> values) {
         this.values = unmodifiableList(values);
-        this.mappedValues = values.stream().collect(Collectors.toUnmodifiableMap(Plurable::id, entry -> entry));
+        this.mappedValues = values.stream().collect(Collectors.toUnmodifiableMap(Plurable::getId, entry -> entry));
     }
 
     public final T getOne(ID id) {
@@ -29,7 +29,7 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
     }
 
     public final List<ID> getIds() {
-        return this.values.stream().map(Plurable::id).toList();
+        return this.values.stream().map(Plurable::getId).toList();
     }
 
     public final Set<ID> getUniqueIds() {

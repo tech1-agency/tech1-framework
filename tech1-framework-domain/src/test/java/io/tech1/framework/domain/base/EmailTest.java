@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.constants.DomainConstants;
 import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailTest extends AbstractSerializationDeserializationRunner {
-    private static final Email EMAIL = Email.of("info@" + DomainConstants.TECH1);
+    private static final Email EMAIL = Email.testsHardcoded();
 
     @Override
     protected String getFileName() {

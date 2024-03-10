@@ -10,7 +10,7 @@ import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMAL
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PasswordTest extends AbstractSerializationDeserializationRunner {
-    private static final Password PASSWORD = Password.of("admin123!");
+    private static final Password PASSWORD = Password.testsHardcoded();
 
     @Override
     protected String getFileName() {

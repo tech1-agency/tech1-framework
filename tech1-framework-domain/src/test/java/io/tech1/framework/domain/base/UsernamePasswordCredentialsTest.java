@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UsernameTest extends AbstractSerializationDeserializationRunner {
-    private static final Username USERNAME = Username.testsHardcoded();
+class UsernamePasswordCredentialsTest extends AbstractSerializationDeserializationRunner {
+    private static final UsernamePasswordCredentials CREDENTIALS = UsernamePasswordCredentials.testsHardcoded();
 
     @Override
     protected String getFileName() {
-        return "username-1.json";
+        return "username-password-credentials-1.json";
     }
 
     @Override
@@ -25,7 +25,7 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
     @Test
     void serializeTest() {
         // Act
-        var json = this.writeValueAsString(USERNAME);
+        var json = this.writeValueAsString(CREDENTIALS);
 
         // Assert
         assertThat(json).isEqualTo(this.readFile());
@@ -36,24 +36,25 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<Username>() {};
+        var typeReference = new TypeReference<UsernamePasswordCredentials>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isEqualTo(USERNAME);
-        assertThat(actual.identifier()).isEqualTo(USERNAME.identifier());
-        assertThat(actual.toString()).hasToString(USERNAME.identifier());
+        assertThat(actual).isEqualTo(CREDENTIALS);
+        assertThat(actual.username()).isEqualTo(Username.testsHardcoded());
+        assertThat(actual.password()).isEqualTo(Password.testsHardcoded());
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomTest() {
         // Act
-        var actual = Username.random();
+        var actual = UsernamePasswordCredentials.random();
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.identifier()).isNotNull();
+        assertThat(actual.username()).isNotNull();
+        assertThat(actual.password()).isNotNull();
     }
 }

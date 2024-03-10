@@ -1,24 +1,20 @@
 package io.tech1.framework.feigns.clients.openai.domain.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
-// Lombok
-@Data
-public class OpenaiCompletionsRequest {
-    private final String model;
+public record OpenaiCompletionsRequest(
+        String model,
+        String prompt,
+        @JsonProperty("max_tokens") int maxTokens,
+        double temperature
+) {
 
-    private final String prompt;
-
-    @JsonProperty("max_tokens")
-    private final int maxTokens;
-
-    private final double temperature;
-
-    public OpenaiCompletionsRequest(String prompt) {
-        this.model = "text-davinci-003";
-        this.prompt = prompt;
-        this.maxTokens = 4000;
-        this.temperature = 1.0;
+    public static OpenaiCompletionsRequest davinci003(String prompt) {
+        return new OpenaiCompletionsRequest(
+                "text-davinci-003",
+                prompt,
+                4000,
+                1.0d
+        );
     }
 }

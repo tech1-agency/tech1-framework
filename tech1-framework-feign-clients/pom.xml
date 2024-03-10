@@ -11,7 +11,7 @@
         <version>2.7.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tech1-framework-configurations</artifactId>
+    <artifactId>tech1-framework-feign-clients</artifactId>
 
     <dependencies>
         <!-- Tech1: Framework -->
@@ -20,11 +20,6 @@
             <artifactId>tech1-framework-utilities</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
-        </dependency>
-        <!-- Spring Boot: Secure Sensitive Configurations -->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

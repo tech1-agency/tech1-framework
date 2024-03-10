@@ -85,17 +85,17 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         var sessionsTable = this.usersSessionsRepository.getSessionsTable(accessTokens("awt3", "atoken11", "atoken"), new RequestAccessToken("atoken"));
         assertThat(sessionsTable.activeSessions()).hasSize(3);
         assertThat(sessionsTable.activeSessions().get(0).current()).isTrue();
-        assertThat(sessionsTable.activeSessions().get(0).who().identifier()).isEqualTo("sa");
+        assertThat(sessionsTable.activeSessions().get(0).who().value()).isEqualTo("sa");
         assertThat(sessionsTable.activeSessions().get(1).current()).isFalse();
-        assertThat(sessionsTable.activeSessions().get(1).who().identifier()).isEqualTo("tech1");
+        assertThat(sessionsTable.activeSessions().get(1).who().value()).isEqualTo("tech1");
         assertThat(sessionsTable.activeSessions().get(2).current()).isFalse();
-        assertThat(sessionsTable.activeSessions().get(2).who().identifier()).isEqualTo("user1");
+        assertThat(sessionsTable.activeSessions().get(2).who().value()).isEqualTo("user1");
         assertThat(sessionsTable.inactiveSessions()).hasSize(4);
         sessionsTable.inactiveSessions().forEach(inactiveSession -> assertThat(inactiveSession.current()).isFalse());
-        assertThat(sessionsTable.inactiveSessions().get(0).who().identifier()).isEqualTo("tech1");
-        assertThat(sessionsTable.inactiveSessions().get(1).who().identifier()).isEqualTo("tech1");
-        assertThat(sessionsTable.inactiveSessions().get(2).who().identifier()).isEqualTo("tech1");
-        assertThat(sessionsTable.inactiveSessions().get(3).who().identifier()).isEqualTo("user1");
+        assertThat(sessionsTable.inactiveSessions().get(0).who().value()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(1).who().value()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(2).who().value()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(3).who().value()).isEqualTo("user1");
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.testsHardcoded(), Username.of("sa")))).hasSize(5);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.testsHardcoded(), Username.of("user1")))).hasSize(6);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user1"), Username.of("sa")))).hasSize(3);
@@ -173,7 +173,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         // Act-Assert-1
         this.usersSessionsRepository.deleteByUsernames(Set.of(Username.testsHardcoded(), Username.of("sa")));
         assertThat(this.usersSessionsRepository.count()).isEqualTo(1);
-        assertThat(this.usersSessionsRepository.findAll().get(0).getUsername().identifier()).isEqualTo("user1");
+        assertThat(this.usersSessionsRepository.findAll().get(0).getUsername().value()).isEqualTo("user1");
     }
 
     @Test
@@ -188,7 +188,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunner 
         var sessions = this.usersSessionsRepository.findAll();
         assertThat(count1).isEqualTo(4);
         assertThat(count2).isEqualTo(2);
-        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(Username.testsHardcoded().identifier(), "admin"));
+        assertThat(toUsernamesAsStrings2(sessions)).isEqualTo(List.of(Username.testsHardcoded().value(), "admin"));
         assertThat(toAccessTokensAsStrings2(sessions)).isEqualTo(List.of("token2", "token4"));
     }
 

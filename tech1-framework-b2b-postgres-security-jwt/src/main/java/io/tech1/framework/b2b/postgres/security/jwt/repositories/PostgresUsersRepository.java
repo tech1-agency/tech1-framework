@@ -46,7 +46,7 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         if (nonNull(user)) {
             return user.asJwtUser();
         } else {
-            throw new UsernameNotFoundException(entityNotFound("Username", username.identifier()));
+            throw new UsernameNotFoundException(entityNotFound("Username", username.value()));
         }
     }
 

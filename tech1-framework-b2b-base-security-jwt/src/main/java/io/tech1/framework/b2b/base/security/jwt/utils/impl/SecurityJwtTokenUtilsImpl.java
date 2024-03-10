@@ -57,7 +57,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
 
     @Override
     public String createJwtToken(JwtTokenCreationParams creationParams, TimeAmount timeAmount) {
-        var claims = Jwts.claims().setSubject(creationParams.username().identifier());
+        var claims = Jwts.claims().setSubject(creationParams.username().value());
         claims.put("authorities", creationParams.authorities());
         var zoneId = creationParams.zoneId();
         var expiration = LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit());

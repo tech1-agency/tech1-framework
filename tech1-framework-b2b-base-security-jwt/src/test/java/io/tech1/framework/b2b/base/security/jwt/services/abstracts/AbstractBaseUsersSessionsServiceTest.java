@@ -422,7 +422,7 @@ class AbstractBaseUsersSessionsServiceTest {
         );
         assertThat(sessionsValidatedTuple2.expiredSessions()).isNotNull();
         assertThat(sessionsValidatedTuple2.expiredSessions()).hasSize(1);
-        assertThat(sessionsValidatedTuple2.expiredSessions().get(0).a().identifier()).isEqualTo("multiuser43");
+        assertThat(sessionsValidatedTuple2.expiredSessions().get(0).a().value()).isEqualTo("multiuser43");
     }
 
     @Test

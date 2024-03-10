@@ -44,7 +44,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
     @Override
     public Set<String> getActiveSessionsUsernamesIdentifiers() {
         return this.sessions.stream()
-                .map(session -> session.username().identifier())
+                .map(session -> session.username().value())
                 .collect(Collectors.toSet());
     }
 

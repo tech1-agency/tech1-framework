@@ -99,7 +99,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         // Act
         this.mvc.perform(get("/sessions/current"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(currentClientUser.getUsername().identifier()))
+                .andExpect(jsonPath("$.username").value(currentClientUser.getUsername().value()))
                 .andExpect(jsonPath("$.email").value(currentClientUser.getEmail().value()))
                 .andExpect(jsonPath("$.name").value(currentClientUser.getName()))
                 .andExpect(jsonPath("$.zoneId").value(currentClientUser.getZoneId().getId()))

@@ -134,7 +134,7 @@ class TokensServiceImplTest {
         var user = entity(JwtUser.class);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(accessToken)).thenReturn(accessTokenValidatedClaims);
         when(this.tokensContextThrowerService.verifyValidityOrThrow(refreshToken)).thenReturn(refreshTokenValidatedClaims);
-        when(this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.username().identifier())).thenReturn(user);
+        when(this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.username().value())).thenReturn(user);
 
         // Act
         var actual = this.componentUnderTest.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
@@ -144,7 +144,7 @@ class TokensServiceImplTest {
         verify(this.tokensContextThrowerService).verifyValidityOrThrow(refreshToken);
         verify(this.tokensContextThrowerService).verifyAccessTokenExpirationOrThrow(accessTokenValidatedClaims);
         verify(this.tokensContextThrowerService).verifyDbPresenceOrThrow(accessToken, accessTokenValidatedClaims);
-        verify(this.jwtUserDetailsService).loadUserByUsername(accessTokenValidatedClaims.username().identifier());
+        verify(this.jwtUserDetailsService).loadUserByUsername(accessTokenValidatedClaims.username().value());
         assertThat(actual).isEqualTo(user);
     }
 

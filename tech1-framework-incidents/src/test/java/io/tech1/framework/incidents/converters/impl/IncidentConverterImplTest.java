@@ -2,6 +2,7 @@ package io.tech1.framework.incidents.converters.impl;
 
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -50,12 +51,12 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Throwable");
-        assertThat(actual.getUsername().identifier()).isEqualTo("Unknown");
+        assertThat(actual.getUsername().value()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(4);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
-        assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
-        assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
+        assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
+        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
         assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
         assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident1Test");
     }
@@ -75,16 +76,16 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Throwable");
-        assertThat(actual.getUsername().identifier()).isEqualTo("Unknown");
+        assertThat(actual.getUsername().value()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(6);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "method", "params");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
-        assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
-        assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
+        assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
+        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes()).containsEntry("params", object + ", param1, 1");
         assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
         assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident2Test");
         assertThat(actual.getAttributes().get("method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
-        assertThat(actual.getAttributes().get("params")).isEqualTo(object + ", param1, 1");
     }
 
     @Test
@@ -101,25 +102,22 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Throwable");
-        assertThat(actual.getUsername().identifier()).isEqualTo("Unknown");
+        assertThat(actual.getUsername().value()).isEqualTo("Unknown");
         assertThat(actual.getAttributes()).hasSize(5);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "key1");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Throwable");
-        assertThat(actual.getAttributes().get("exception")).isEqualTo(NullPointerException.class);
-        assertThat(actual.getAttributes().get("message")).isEqualTo("Tech1");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
+        assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
+        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes()).containsEntry("key1", object);
         assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
         assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident3Test");
-        assertThat(actual.getAttributes().get("key1")).isEqualTo(object);
     }
 
     @Test
     void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
-        var password = Password.of("passwordTOP123!");
         var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
-                username,
-                password
+                UsernamePasswordCredentials.testsHardcoded()
         );
 
         // Act
@@ -128,22 +126,22 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Password");
-        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("password")).isEqualTo(password);
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Authentication Login Failure Username/Password");
+        assertThat(actual.getAttributes()).containsEntry("username", Username.testsHardcoded());
+        assertThat(actual.getAttributes()).containsEntry("password", Password.testsHardcoded());
     }
 
     @Test
     void convertAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
-        var password = Password.of("passwordTOP123!");
         var incident = new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
-                username,
-                password
+                UsernamePasswordCredentials.mask5(
+                        Username.testsHardcoded(),
+                        Password.testsHardcoded()
+                )
         );
 
         // Act
@@ -152,12 +150,12 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(3);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Login Failure Username/Masked Password");
-        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
-        assertThat(actual.getAttributes().get("password")).isEqualTo(Password.of("passw**********"));
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Authentication Login Failure Username/Masked Password");
+        assertThat(actual.getAttributes()).containsEntry("username", Username.testsHardcoded());
+        assertThat(actual.getAttributes()).containsEntry("password", new Password("Passw***********"));
     }
 
     @Test
@@ -174,10 +172,10 @@ class IncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Logout Min");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes()).hasSize(2);
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username");
-        assertThat(actual.getAttributes().get("incidentType")).isEqualTo("Authentication Logout Min");
-        assertThat(actual.getAttributes().get("username")).isEqualTo(username);
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Authentication Logout Min");
+        assertThat(actual.getAttributes()).containsEntry("username", username);
     }
 }

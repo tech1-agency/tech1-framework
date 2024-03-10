@@ -40,7 +40,7 @@ public class ApplicationEmails {
         mailSender.setHost(emailConfigs.getHost());
         mailSender.setPort(emailConfigs.getPort());
 
-        mailSender.setUsername(emailConfigs.getUsername().identifier());
+        mailSender.setUsername(emailConfigs.getUsername().value());
         mailSender.setPassword(emailConfigs.getPassword().value());
 
         var props = mailSender.getJavaMailProperties();

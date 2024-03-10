@@ -66,7 +66,7 @@ public class BaseSecurityJwtDbRandomUtility {
     }
 
     public static UserSession session(Username owner, String accessToken) {
-        return session(owner.identifier(), accessToken, entity(JwtRefreshToken.class).value());
+        return session(owner.value(), accessToken, entity(JwtRefreshToken.class).value());
     }
 
     public static UserSession session(String owner) {

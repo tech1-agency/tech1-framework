@@ -69,7 +69,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(8)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where", "exception")
@@ -98,7 +98,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")
@@ -129,7 +129,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Logout");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")
@@ -160,7 +160,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Refreshed");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")
@@ -191,7 +191,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Expired");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")
@@ -218,7 +218,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(2)
                 .containsOnlyKeys("incidentType", "username")
@@ -244,7 +244,7 @@ class SecurityJwtIncidentConverterImplTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1 Failure");
-        assertThat(actual.getUsername().identifier()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
         assertThat(actual.getAttributes())
                 .hasSize(5)
                 .containsOnlyKeys("incidentType", "username", "exception", "invitationCode", "invitationCodeOwner")

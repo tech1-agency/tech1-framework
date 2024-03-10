@@ -18,7 +18,9 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.1]
 — Add base: ObjectId, PropertyId, UsernamePasswordCredentials
+— Modification: Username(identifier) → Username(value)
 — Modification: IncidentAuthenticationLoginFailureUsernamePassword(username, password) → IncidentAuthenticationLoginFailureUsernamePassword(credentials)
 — Modification: IncidentAuthenticationLoginFailureUsernameMaskedPassword(username, password) → IncidentAuthenticationLoginFailureUsernameMaskedPassword(credentials)
 — Modification: RemoteServer(baseURL, username, password) → RemoteServer(baseURL, credentials) + 
 — Modification: "tech1.incidentConfigs.remoteServer" property
+— Modification: add @Getter to Plurals, add immutability on values and values

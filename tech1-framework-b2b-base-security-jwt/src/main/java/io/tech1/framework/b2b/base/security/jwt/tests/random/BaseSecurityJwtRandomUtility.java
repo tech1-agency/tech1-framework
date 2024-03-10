@@ -57,7 +57,7 @@ public class BaseSecurityJwtRandomUtility {
 
     public static Claims validClaims() {
         var claims = new DefaultClaims();
-        claims.setSubject(Username.testsHardcoded().identifier());
+        claims.setSubject(Username.testsHardcoded().value());
         var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.setIssuedAt(getIssuedAt());
@@ -68,7 +68,7 @@ public class BaseSecurityJwtRandomUtility {
 
     public static Claims expiredClaims() {
         var claims = new DefaultClaims();
-        claims.setSubject(Username.testsHardcoded().identifier());
+        claims.setSubject(Username.testsHardcoded().value());
         var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);

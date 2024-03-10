@@ -39,13 +39,16 @@ public class ApplicationIncidents {
         if (incidentConfigs.isEnabled()) {
             var incidentServer = incidentConfigs.getRemoteServer();
             var incidentServerBaseURL = incidentServer.getBaseURL();
-            var username = incidentServer.getUsername();
-            var password = incidentServer.getPassword();
             return Feign.builder()
                     .client(new OkHttpClient())
                     .encoder(new JacksonEncoder())
                     .decoder(new JacksonDecoder())
-                    .requestInterceptor(new BasicAuthRequestInterceptor(username.identifier(), password.value()))
+                    .requestInterceptor(
+                            new BasicAuthRequestInterceptor(
+                                    incidentServer.getCredentials().username().value(),
+                                    incidentServer.getCredentials().password().value()
+                            )
+                    )
                     .target(IncidentClientDefinition.class, incidentServerBaseURL);
         } else {
             return new IncidentClientSlf4j();

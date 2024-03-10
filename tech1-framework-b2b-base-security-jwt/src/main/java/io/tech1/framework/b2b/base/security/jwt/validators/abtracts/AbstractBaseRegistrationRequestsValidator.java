@@ -43,7 +43,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
 
         var user = this.mongoUsersRepository.findByUsernameAsJwtUserOrNull(username);
         if (nonNull(user)) {
-            var exception = entityAlreadyUsed("Username", username.identifier());
+            var exception = entityAlreadyUsed("Username", username.value());
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             username,

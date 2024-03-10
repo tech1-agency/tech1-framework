@@ -9,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationH
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import lombok.RequiredArgsConstructor;
@@ -163,14 +164,18 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         );
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(
                 new IncidentAuthenticationLoginFailureUsernamePassword(
-                        username,
-                        password
+                        new UsernamePasswordCredentials(
+                                username,
+                                password
+                        )
                 )
         );
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(
                 new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
-                        username,
-                        password
+                        UsernamePasswordCredentials.mask5(
+                                username,
+                                password
+                        )
                 )
         );
     }

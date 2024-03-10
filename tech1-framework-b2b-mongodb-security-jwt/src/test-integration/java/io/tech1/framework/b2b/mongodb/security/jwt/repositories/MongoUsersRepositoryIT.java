@@ -125,7 +125,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessage("Username: Not Found, id = " + username.identifier());
+                .hasMessage("Username: Not Found, id = " + username.value());
     }
 
     @Test

@@ -59,7 +59,7 @@ public class JwtTokensFilter extends OncePerRequestFilter {
         } catch (
                 RefreshTokenNotFoundException |
                 AccessTokenInvalidException |
-                 RefreshTokenInvalidException |
+                RefreshTokenInvalidException |
                 AccessTokenDbNotFoundException ex
         ) {
             LOGGER.info("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());

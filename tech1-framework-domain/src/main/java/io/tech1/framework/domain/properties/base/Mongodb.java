@@ -42,7 +42,7 @@ public class Mongodb extends AbstractPropertyConfigs {
 
     public final String connectionString() {
         if (isAuthenticationRequired()) {
-            return "mongodb://" + this.username.identifier() + ":" + this.password.value() + "@" + this.host + ":" + this.port + "/" + this.database;
+            return "mongodb://" + this.username.value() + ":" + this.password.value() + "@" + this.host + ":" + this.port + "/" + this.database;
         } else {
             return "mongodb://" + this.host + ":" + this.port + "/" + this.database;
         }

@@ -75,10 +75,10 @@ public class PostgresSecurityJwtDbDummies {
     // UserSessions
     // =================================================================================================================
     public static List<PostgresDbUserSession> dummyUserSessionsData1() {
-        var session1 = session(Username.testsHardcoded().identifier(), "awt1", "rwt1");
-        var session2 = session(Username.testsHardcoded().identifier(), "awt2", "rwt2");
-        var session3 = session(Username.testsHardcoded().identifier(), "awt3", "rwt3");
-        var session4 = session(Username.testsHardcoded().identifier(), "awt4", "rwt4");
+        var session1 = session(Username.testsHardcoded().value(), "awt1", "rwt1");
+        var session2 = session(Username.testsHardcoded().value(), "awt2", "rwt2");
+        var session3 = session(Username.testsHardcoded().value(), "awt3", "rwt3");
+        var session4 = session(Username.testsHardcoded().value(), "awt4", "rwt4");
         var session5 = session("user1", "atoken11", "rtoken11");
         var session6 = session("user1", "atoken12", "rtoken12");
         var session7 = session("sa", "atoken", "rtoken");

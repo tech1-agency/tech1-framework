@@ -41,7 +41,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         if (nonNull(user)) {
             return user.asJwtUser();
         } else {
-            throw new UsernameNotFoundException(entityNotFound("Username", username.identifier()));
+            throw new UsernameNotFoundException(entityNotFound("Username", username.value()));
         }
     }
 

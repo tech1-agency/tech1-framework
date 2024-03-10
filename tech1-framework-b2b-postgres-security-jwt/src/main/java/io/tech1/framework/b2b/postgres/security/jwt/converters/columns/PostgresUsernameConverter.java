@@ -12,7 +12,7 @@ public class PostgresUsernameConverter implements AttributeConverter<Username, S
 
     @Override
     public String convertToDatabaseColumn(Username username) {
-        return nonNull(username) ? username.identifier() : null;
+        return nonNull(username) ? username.value() : null;
     }
 
     @Override

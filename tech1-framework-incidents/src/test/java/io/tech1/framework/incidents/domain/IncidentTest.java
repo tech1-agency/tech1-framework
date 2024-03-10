@@ -68,6 +68,6 @@ class IncidentTest {
         var actual = incident.getUsername();
 
         // Assert
-        assertThat(actual.identifier()).isEqualTo(expected);
+        assertThat(actual.value()).isEqualTo(expected);
     }
 }

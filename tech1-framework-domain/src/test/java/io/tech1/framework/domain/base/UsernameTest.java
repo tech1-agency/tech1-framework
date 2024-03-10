@@ -43,8 +43,8 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
 
         // Assert
         assertThat(actual).isEqualTo(USERNAME);
-        assertThat(actual.identifier()).isEqualTo(USERNAME.identifier());
-        assertThat(actual.toString()).hasToString(USERNAME.identifier());
+        assertThat(actual.value()).isEqualTo(USERNAME.value());
+        assertThat(actual.toString()).hasToString(USERNAME.value());
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
@@ -54,6 +54,6 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.identifier()).isNotNull();
+        assertThat(actual.value()).isNotNull();
     }
 }

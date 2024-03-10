@@ -53,7 +53,7 @@ public class TokensServiceImpl implements TokensService {
         this.tokensContextThrowerService.verifyDbPresenceOrThrow(accessToken, accessTokenValidatedClaims);
 
         // JWT Access Token: isValid + isAlive
-        return this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.username().identifier());
+        return this.jwtUserDetailsService.loadUserByUsername(accessTokenValidatedClaims.username().value());
     }
 
     @Override

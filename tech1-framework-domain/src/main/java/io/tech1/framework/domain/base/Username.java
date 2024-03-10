@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
-public record Username(@NotNull String identifier) {
+public record Username(@NotNull String value) {
 
     @JsonCreator
     public static Username of(String identifier) {
@@ -37,6 +37,6 @@ public record Username(@NotNull String identifier) {
     @JsonValue
     @Override
     public String toString() {
-        return this.identifier;
+        return this.value;
     }
 }

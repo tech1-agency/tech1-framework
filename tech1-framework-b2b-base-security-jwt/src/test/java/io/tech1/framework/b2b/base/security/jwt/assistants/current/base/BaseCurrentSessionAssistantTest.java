@@ -234,7 +234,7 @@ class BaseCurrentSessionAssistantTest {
         var username = Username.random();
         var requestAccessToken = RequestAccessToken.random();
         var sessionsTable = entity(ResponseUserSessionsTable.class);
-        when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.identifier());
+        when(this.securityPrincipalUtils.getAuthenticatedUsername()).thenReturn(username.value());
         when(this.sessionRegistry.getSessionsTable(username, requestAccessToken)).thenReturn(sessionsTable);
 
         // Act

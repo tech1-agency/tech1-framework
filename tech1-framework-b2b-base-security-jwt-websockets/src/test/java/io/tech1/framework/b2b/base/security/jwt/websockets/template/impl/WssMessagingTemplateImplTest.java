@@ -104,14 +104,14 @@ class WssMessagingTemplateImplTest {
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
         var destination = "/" + randomString();
-        doThrow(ex).when(this.simpMessagingTemplate).convertAndSendToUser(username.identifier(), "/queue" + destination, websocketEvent);
+        doThrow(ex).when(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
 
         // Act
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);
 
         // Assert
         verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtWebsocketsConfigs();
-        verify(this.simpMessagingTemplate).convertAndSendToUser(username.identifier(), "/queue" + destination, websocketEvent);
+        verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
         verify(this.incidentPublisher).publishThrowable(IncidentThrowable.of(ex));
         verifyNoMoreInteractions(this.simpMessagingTemplate);
     }
@@ -139,7 +139,7 @@ class WssMessagingTemplateImplTest {
         // Assert
         if (expectedSend) {
             verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtWebsocketsConfigs();
-            verify(this.simpMessagingTemplate).convertAndSendToUser(username.identifier(), "/queue" + destination, websocketEvent);
+            verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
             verifyNoMoreInteractions(this.simpMessagingTemplate);
         } else {
             verify(this.applicationFrameworkProperties).getSecurityJwtWebsocketsConfigs();

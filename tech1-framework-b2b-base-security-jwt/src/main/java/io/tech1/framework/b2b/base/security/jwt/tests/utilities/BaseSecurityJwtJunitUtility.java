@@ -12,13 +12,13 @@ public class BaseSecurityJwtJunitUtility {
 
     public static List<String> toUsernamesAsStrings0(Set<Username> usernames) {
         return usernames.stream()
-                .map(Username::identifier)
+                .map(Username::value)
                 .collect(Collectors.toList());
     }
 
     public static List<String> toUsernamesAsStrings0(List<Username> usernames) {
         return usernames.stream()
-                .map(Username::identifier)
+                .map(Username::value)
                 .collect(Collectors.toList());
     }
 }

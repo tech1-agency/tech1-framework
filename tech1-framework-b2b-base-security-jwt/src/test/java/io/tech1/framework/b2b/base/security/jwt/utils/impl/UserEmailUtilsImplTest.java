@@ -137,7 +137,7 @@ class UserEmailUtilsImplTest {
         assertThat(variables)
                 .hasSize(7)
                 .containsEntry("year", now(UTC).getYear())
-                .containsEntry("username", username.identifier())
+                .containsEntry("username", username.value())
                 .containsEntry("accessMethod", accountAccessMethod.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")
                 .containsEntry("what", "Chrome, macOS on Desktop")

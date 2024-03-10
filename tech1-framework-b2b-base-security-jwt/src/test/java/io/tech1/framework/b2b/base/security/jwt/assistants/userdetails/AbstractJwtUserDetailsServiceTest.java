@@ -60,7 +60,7 @@ class AbstractJwtUserDetailsServiceTest {
         var username = Username.random();
 
         // Act
-        this.jwtUserDetailsService.loadUserByUsername(username.identifier());
+        this.jwtUserDetailsService.loadUserByUsername(username.value());
 
         // Assert
         verify(this.usersRepository).loadUserByUsername(username);

@@ -44,7 +44,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
         var brokerConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
         try {
             this.messagingTemplate.convertAndSendToUser(
-                    username.identifier(),
+                    username.value(),
                     brokerConfigs.getSimpleDestination() + destination,
                     data
             );

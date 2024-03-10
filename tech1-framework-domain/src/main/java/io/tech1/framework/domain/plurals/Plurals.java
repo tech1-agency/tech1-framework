@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.plurals;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
@@ -8,7 +9,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.unmodifiableList;
+
 // Lombok
+@Getter
 @EqualsAndHashCode
 @ToString
 public abstract class Plurals<T extends Plurable<ID>, ID> {
@@ -16,8 +20,8 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
     protected final Map<ID, T> mappedValues;
 
     protected Plurals(List<T> values) {
-        this.values = values;
-        this.mappedValues = values.stream().collect(Collectors.toMap(Plurable::getId, entry -> entry));
+        this.values = unmodifiableList(values);
+        this.mappedValues = values.stream().collect(Collectors.toUnmodifiableMap(Plurable::id, entry -> entry));
     }
 
     public final T getOne(ID id) {
@@ -25,7 +29,7 @@ public abstract class Plurals<T extends Plurable<ID>, ID> {
     }
 
     public final List<ID> getIds() {
-        return this.values.stream().map(Plurable::getId).toList();
+        return this.values.stream().map(Plurable::id).toList();
     }
 
     public final Set<ID> getUniqueIds() {

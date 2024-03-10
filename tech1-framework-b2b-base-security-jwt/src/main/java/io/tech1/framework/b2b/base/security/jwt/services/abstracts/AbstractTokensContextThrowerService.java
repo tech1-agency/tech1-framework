@@ -79,7 +79,7 @@ public abstract class AbstractTokensContextThrowerService implements TokensConte
             SecurityContextHolder.clearContext();
             throw new RefreshTokenDbNotFoundException(username);
         }
-        var user = this.jwtUserDetailsService.loadUserByUsername(username.identifier());
+        var user = this.jwtUserDetailsService.loadUserByUsername(username.value());
         return new Tuple2<>(user, databasePresence.value());
     }
 }

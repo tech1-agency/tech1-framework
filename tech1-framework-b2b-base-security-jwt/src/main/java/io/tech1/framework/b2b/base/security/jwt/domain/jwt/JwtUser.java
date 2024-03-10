@@ -42,7 +42,7 @@ public record JwtUser(
 
     @Override
     public String getUsername() {
-        return this.username.identifier();
+        return this.username.value();
     }
 
     @Override

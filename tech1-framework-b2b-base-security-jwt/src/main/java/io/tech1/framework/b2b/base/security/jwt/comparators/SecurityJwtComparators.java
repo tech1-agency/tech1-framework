@@ -19,7 +19,7 @@ public class SecurityJwtComparators {
         } else if (isNull(o2.invited())) {
             return 1;
         } else {
-            return comparing((ResponseInvitationCode code) -> code.invited().identifier()).compare(o1, o2);
+            return comparing((ResponseInvitationCode code) -> code.invited().value()).compare(o1, o2);
         }
     };
 
@@ -27,9 +27,9 @@ public class SecurityJwtComparators {
             .thenComparing(ResponseUserSession2::where);
 
     public static final Comparator<ResponseUserSession2> ACTIVE_SESSIONS_AS_SUPERADMIN = comparing(ResponseUserSession2::current).reversed()
-            .thenComparing((ResponseUserSession2 session) -> session.who().identifier())
+            .thenComparing((ResponseUserSession2 session) -> session.who().value())
             .thenComparing(ResponseUserSession2::where);
 
-    public static final Comparator<ResponseUserSession2> INACTIVE_SESSIONS_AS_SUPERADMIN = comparing((ResponseUserSession2 session) -> session.who().identifier())
+    public static final Comparator<ResponseUserSession2> INACTIVE_SESSIONS_AS_SUPERADMIN = comparing((ResponseUserSession2 session) -> session.who().value())
             .thenComparing(ResponseUserSession2::where);
 }

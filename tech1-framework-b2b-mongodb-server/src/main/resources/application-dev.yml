@@ -17,8 +17,9 @@ tech1:
     enabled: true
     remoteServer:
       baseURL: http://localhost:8973
-      username: admin
-      password: admin
+      credentials:
+        username: admin
+        password: admin
   mvcConfigs:
     corsConfigs:
       allowedOrigins:

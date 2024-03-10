@@ -40,7 +40,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
     @Override
     public void publishAuthenticationLoginFailureUsernamePassword(IncidentAuthenticationLoginFailureUsernamePassword incident) {
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD)) {
-            LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.username());
+            LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.credentials().username());
             this.applicationEventPublisher.publishEvent(incident);
         }
     }
@@ -48,7 +48,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
     @Override
     public void publishAuthenticationLoginFailureUsernameMaskedPassword(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
         if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD)) {
-            LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.username());
+            LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.credentials().username());
             this.applicationEventPublisher.publishEvent(incident);
         }
     }

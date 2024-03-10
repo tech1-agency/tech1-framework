@@ -17,4 +17,8 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.7.1]
-— TBD
+— Add base: ObjectId, PropertyId, UsernamePasswordCredentials
+— Modification: IncidentAuthenticationLoginFailureUsernamePassword(username, password) → IncidentAuthenticationLoginFailureUsernamePassword(credentials)
+— Modification: IncidentAuthenticationLoginFailureUsernameMaskedPassword(username, password) → IncidentAuthenticationLoginFailureUsernameMaskedPassword(credentials)
+— Modification: RemoteServer(baseURL, username, password) → RemoteServer(baseURL, credentials) + 
+— Modification: "tech1.incidentConfigs.remoteServer" property

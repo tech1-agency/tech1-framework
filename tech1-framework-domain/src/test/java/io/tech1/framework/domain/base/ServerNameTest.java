@@ -48,7 +48,7 @@ class ServerNameTest extends AbstractSerializationDeserializationRunner {
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
-    void randomPasswordTest() {
+    void randomTest() {
         // Act
         var actual = ServerName.random();
 

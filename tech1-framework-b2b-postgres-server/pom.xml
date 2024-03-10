@@ -33,6 +33,13 @@
                     <exclude>**/*.mmdb</exclude>
                 </excludes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.mmdb</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <!-- Spring Boot -->

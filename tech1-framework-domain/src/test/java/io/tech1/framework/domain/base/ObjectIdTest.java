@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UsernameTest extends AbstractSerializationDeserializationRunner {
-    private static final Username USERNAME = Username.testsHardcoded();
+class ObjectIdTest extends AbstractSerializationDeserializationRunner {
+    private static final ObjectId OBJECT_ID = ObjectId.testsHardcoded();
 
     @Override
     protected String getFileName() {
-        return "username-1.json";
+        return "object-id-1.json";
     }
 
     @Override
@@ -25,7 +25,7 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
     @Test
     void serializeTest() {
         // Act
-        var json = this.writeValueAsString(USERNAME);
+        var json = this.writeValueAsString(OBJECT_ID);
 
         // Assert
         assertThat(json).isEqualTo(this.readFile());
@@ -36,24 +36,24 @@ class UsernameTest extends AbstractSerializationDeserializationRunner {
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<Username>() {};
+        var typeReference = new TypeReference<ObjectId>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         // Assert
-        assertThat(actual).isEqualTo(USERNAME);
-        assertThat(actual.identifier()).isEqualTo(USERNAME.identifier());
-        assertThat(actual.toString()).hasToString(USERNAME.identifier());
+        assertThat(actual).isEqualTo(OBJECT_ID);
+        assertThat(actual.value()).isEqualTo(OBJECT_ID.value());
+        assertThat(actual.toString()).hasToString(OBJECT_ID.value());
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
     void randomTest() {
         // Act
-        var actual = Username.random();
+        var actual = ObjectId.random();
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.identifier()).isNotNull();
+        assertThat(actual.value()).isNotNull();
     }
 }

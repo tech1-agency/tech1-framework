@@ -57,8 +57,8 @@ public class IncidentConverterImpl implements IncidentConverter {
     public Incident convert(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword) {
         return this.convertAuthenticationLoginFailure(
                 AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD.toString(),
-                incidentAuthenticationLoginFailureUsernamePassword.username(),
-                incidentAuthenticationLoginFailureUsernamePassword.password()
+                incidentAuthenticationLoginFailureUsernamePassword.credentials().username(),
+                incidentAuthenticationLoginFailureUsernamePassword.credentials().password()
         );
     }
 
@@ -66,8 +66,8 @@ public class IncidentConverterImpl implements IncidentConverter {
     public Incident convert(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword) {
         return this.convertAuthenticationLoginFailure(
                 AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD.toString(),
-                incidentAuthenticationLoginFailureUsernameMaskedPassword.username(),
-                incidentAuthenticationLoginFailureUsernameMaskedPassword.password()
+                incidentAuthenticationLoginFailureUsernameMaskedPassword.credentials().username(),
+                incidentAuthenticationLoginFailureUsernameMaskedPassword.credentials().password()
         );
     }
 

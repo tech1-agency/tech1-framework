@@ -1,7 +1,6 @@
 package io.tech1.framework.domain.properties.base;
 
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,15 +17,13 @@ public class RemoteServer extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String baseURL;
     @MandatoryProperty
-    private final Username username;
-    @MandatoryProperty
-    private final Password password;
+    private final UsernamePasswordCredentials credentials;
 
     public static RemoteServer testsHardcoded() {
-        return new RemoteServer("localhost", Username.testsHardcoded(), Password.testsHardcoded());
+        return new RemoteServer("localhost", UsernamePasswordCredentials.testsHardcoded());
     }
 
     public static RemoteServer random() {
-        return new RemoteServer(randomIPv4(), Username.random(), Password.random());
+        return new RemoteServer(randomIPv4(), UsernamePasswordCredentials.testsHardcoded());
     }
 }

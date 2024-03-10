@@ -49,13 +49,20 @@ public class JwtTokensFilter extends OncePerRequestFilter {
             this.sessionRegistry.register(new Session(user.username(), cookieAccessToken.getJwtAccessToken(), cookieRefreshToken.getJwtRefreshToken()));
 
             this.jwtTokensFilterExtension.doFilter(request, response, filterChain);
-        } catch (AccessTokenNotFoundException | AccessTokenExpiredException ex) {
-            LOGGER.error("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
+        } catch (
+                AccessTokenNotFoundException |
+                AccessTokenExpiredException ex
+        ) {
+            LOGGER.info("JWT tokens filter, access token is required. Message: {}", ex.getMessage());
             // NOTE: place to refresh token. problem how to distinguish authenticated vs. anonymous/permitAll endpoints
             filterChain.doFilter(request, response);
-        } catch (RefreshTokenNotFoundException | AccessTokenInvalidException |
-                 RefreshTokenInvalidException | AccessTokenDbNotFoundException ex) {
-            LOGGER.error("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());
+        } catch (
+                RefreshTokenNotFoundException |
+                AccessTokenInvalidException |
+                 RefreshTokenInvalidException |
+                AccessTokenDbNotFoundException ex
+        ) {
+            LOGGER.info("JWT tokens filter, clear cookies. Message: {}", ex.getMessage());
             this.tokensProvider.clearTokens(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
         }

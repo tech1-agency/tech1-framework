@@ -31,7 +31,7 @@ public enum TriggerType implements EnumValue<String> {
         return this.value;
     }
 
-    public boolean isAutomatically() {
+    public boolean isAuto() {
         return AUTO.equals(this);
     }
 

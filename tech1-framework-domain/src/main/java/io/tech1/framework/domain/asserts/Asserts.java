@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.asserts;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
 import lombok.experimental.UtilityClass;
 
@@ -58,6 +59,14 @@ public class Asserts {
             throw new IllegalArgumentException(message);
         }
         return object;
+    }
+
+    public static <T> void assertUniqueOrThrow(Collection<T> options, T object, PropertyId propertyId) {
+        if (options.contains(object)) {
+            throw new IllegalArgumentException(
+                    "Property %s must be unique".formatted(propertyId.value())
+            );
+        }
     }
 
     // =================================================================================================================

@@ -1,11 +1,14 @@
 package io.tech1.framework.domain.asserts;
 
+import io.tech1.framework.domain.base.PropertyId;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
@@ -64,6 +67,15 @@ class AssertsTests {
         return Stream.of(
                 Arguments.of(randomString(), null),
                 Arguments.of(null, randomString())
+        );
+    }
+
+    private static Stream<Arguments> assertUniqueOrThrowTest() {
+        return Stream.of(
+                Arguments.of(randomString(), null),
+                Arguments.of(null, null),
+                Arguments.of("ONE", "Property field-name must be unique"),
+                Arguments.of("THREE", "Property field-name must be unique")
         );
     }
 
@@ -201,6 +213,25 @@ class AssertsTests {
             // Assert
             assertThat(actual).isEqualTo(object);
         });
+
+        // Assert
+        if (isNull(expectedErrorMessage)) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isNotNull();
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertUniqueOrThrowTest")
+    void assertUniqueOrThrowTest(String check, String expectedErrorMessage) {
+        // Arrange
+        var options = new HashSet<>(Set.of("ONE", "TWO", "THREE"));
+
+        // Act
+        var throwable = catchThrowable(() -> assertUniqueOrThrow(options, check, new PropertyId("field-name")));
 
         // Assert
         if (isNull(expectedErrorMessage)) {

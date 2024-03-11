@@ -1,5 +1,6 @@
 package io.tech1.framework.configurations.server;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import io.tech1.framework.utilities.environment.base.BaseEnvironmentUtility;
@@ -23,8 +24,8 @@ public class ApplicationSpringBootServer {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getServerConfigs().assertProperties("serverConfigs");
-        this.applicationFrameworkProperties.getMavenConfigs().assertProperties("mavenConfigs");
+        this.applicationFrameworkProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.applicationFrameworkProperties.getMavenConfigs().assertProperties(new PropertyId("mavenConfigs"));
     }
 
     @Bean

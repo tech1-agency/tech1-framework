@@ -1,13 +1,13 @@
 package io.tech1.framework.domain.reflections;
 
+import io.tech1.framework.domain.base.PropertyId;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.util.Arrays;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.uncapitalize;
 
@@ -18,16 +18,14 @@ public class ReflectionProperty {
 
     private final Field field;
     private final String propertyName;
-    private final String treePropertyName;
+    private final PropertyId treePropertyId;
     private final Object propertyValue;
     private final String readableValue;
 
-    public ReflectionProperty(String parentPropertyName, Field field, Object propertyValue) {
-        assertNonNullOrThrow(parentPropertyName, invalidAttribute("ReflectionProperty.parentPropertyName"));
-
+    public ReflectionProperty(@NotNull PropertyId propertyId, Field field, Object propertyValue) {
         this.field = field;
         this.propertyName = field.getName();
-        this.treePropertyName = uncapitalize(parentPropertyName) + "." + uncapitalize(propertyName);
+        this.treePropertyId = new PropertyId(uncapitalize(propertyId.value()) + "." + uncapitalize(this.propertyName));
         this.propertyValue = propertyValue;
 
         // supports only String[] and ZoneId (on 5+ cases refactoring or extraction required)
@@ -43,12 +41,12 @@ public class ReflectionProperty {
 
         if (isArrayOfStrings) {
             var castedPropertyValue = (String[]) this.propertyValue;
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName,Arrays.toString(castedPropertyValue));
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), Arrays.toString(castedPropertyValue));
         } else if (isZoneId) {
             var castedPropertyValue = (ZoneId) this.propertyValue;
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, castedPropertyValue.getId());
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), castedPropertyValue.getId());
         } else {
-            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyName, this.propertyValue);
+            this.readableValue = READABLE_PROPERTY.formatted(this.treePropertyId.value(), this.propertyValue);
         }
     }
 }

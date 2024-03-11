@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
+import io.tech1.framework.domain.asserts.ConsoleAsserts;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -42,10 +44,14 @@ public class JwtToken extends AbstractPropertyConfigs {
     }
 
     @Override
-    public void assertProperties(String propertyName) {
-        super.assertProperties(propertyName);
-        var bothProvided = nonNull(this.cookieKey) && nonNull(this.headerKey);
-        assertFalseOrThrow(bothProvided, "Attribute `%s` requires only `cookieKey` or `headerKey` to be provided".formatted(propertyName));
+    public void assertProperties(PropertyId propertyId) {
+        super.assertProperties(propertyId);
+        assertFalseOrThrow(
+                nonNull(this.cookieKey) && nonNull(this.headerKey),
+                "Attribute \"%s\" requires only \"cookieKey\" or \"headerKey\" to be provided".formatted(
+                        ConsoleAsserts.RED_TEXT.format(propertyId.value())
+                )
+        );
     }
 
     public String getKey(JwtTokenStorageMethod method) {

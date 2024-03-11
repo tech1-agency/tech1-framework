@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.utilities;
 
-import io.tech1.framework.domain.asserts.Asserts;
+import io.tech1.framework.domain.asserts.ConsoleAsserts;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.properties.annotations.MandatoryMapProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
@@ -26,12 +27,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.asserts.Asserts.*;
+import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.domain.asserts.ConsoleAsserts.*;
 import static io.tech1.framework.domain.comparators.ReflectionsComparators.PROPERTIES_ASSERTION_COMPARATOR;
+import static io.tech1.framework.domain.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
 import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoiningWildcard;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttributeRequiredMissingValues;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j
@@ -40,58 +42,58 @@ public class PropertiesAsserter {
     private static final Map<Function<Class<?>, Boolean>, Consumer<ReflectionProperty>> ACTIONS = new HashMap<>();
 
     static {
-        ACTIONS.put(Date.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(LocalDate.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(LocalDateTime.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(ChronoUnit.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(TimeUnit.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Boolean.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Short.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Integer.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Long.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(BigInteger.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(BigDecimal.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(String.class::equals, Asserts::assertNonNullPropertyOrThrow);
-        ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), invalidAttribute(cp.getPropertyName())));
+        ACTIONS.put(Date.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(LocalDate.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(LocalDateTime.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(ChronoUnit.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(TimeUnit.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Boolean.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Short.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Integer.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Long.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(BigInteger.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(BigDecimal.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(String.class::equals, ConsoleAsserts::assertNonNullPropertyOrThrow);
+        ACTIONS.put(Collection.class::isAssignableFrom, cp -> assertNonNullNotEmptyOrThrow((Collection<?>) cp.getPropertyValue(), new PropertyId(cp.getPropertyName())));
     }
 
     // =================================================================================================================
     // Assertions
     // =================================================================================================================
 
-    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName) {
-        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
+    public static void assertMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId) {
+        assertNonNullOrThrow(propertiesConfigs, propertyId);
         assertPropertiesConfigs(
                 propertiesConfigs,
-                propertyName,
-                getMandatoryFields(propertiesConfigs, propertyName)
+                propertyId,
+                getMandatoryFields(propertiesConfigs, propertyId)
         );
     }
 
-    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertyName) {
-        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertyName));
+    public static void assertMandatoryTogglePropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId) {
+        assertNonNullOrThrow(propertiesConfigs, propertyId);
         assertPropertiesConfigs(
                 propertiesConfigs,
-                propertyName,
-                getMandatoryToggleFields(propertiesConfigs, propertyName)
+                propertyId,
+                getMandatoryToggleFields(propertiesConfigs, propertyId)
         );
     }
 
-    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyName) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
+    public static void assertMandatoryPropertyConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId) {
+        assertNonNullOrThrow(propertyConfigs, propertyId);
         assertPropertyConfigs(
                 propertyConfigs,
-                propertyName,
-                getMandatoryFields(propertyConfigs, propertyName)
+                propertyId,
+                getMandatoryFields(propertyConfigs, propertyId)
         );
     }
 
-    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, String propertyName) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyName));
+    public static void assertMandatoryTogglePropertyConfigs(AbstractTogglePropertyConfigs propertyConfigs, PropertyId propertyId) {
+        assertNonNullOrThrow(propertyConfigs, propertyId);
         assertPropertyConfigs(
                 propertyConfigs,
-                propertyName,
-                getMandatoryToggleFields(propertyConfigs, propertyName)
+                propertyId,
+                getMandatoryToggleFields(propertyConfigs, propertyId)
         );
     }
 
@@ -99,27 +101,27 @@ public class PropertiesAsserter {
     // GETTERS
     // =================================================================================================================
 
-    public static List<Field> getMandatoryFields(Object property, String propertyName) {
-        return getFields(property, propertyName, Set.of(MandatoryProperty.class));
+    public static List<Field> getMandatoryFields(Object property, PropertyId propertyId) {
+        return getFields(property, propertyId, Set.of(MandatoryProperty.class));
     }
 
-    public static List<Field> getMandatoryToggleFields(Object property, String propertyName) {
-        return getFields(property, propertyName, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
+    public static List<Field> getMandatoryToggleFields(Object property, PropertyId propertyId) {
+        return getFields(property, propertyId, Set.of(MandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
-    public static List<Field> getMandatoryBasedFields(Object property, String propertyName) {
-        return getFields(property, propertyName, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
+    public static List<Field> getMandatoryBasedFields(Object property, PropertyId propertyId) {
+        return getFields(property, propertyId, Set.of(MandatoryProperty.class, NonMandatoryProperty.class, MandatoryToggleProperty.class));
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
 
-    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, String propertyConfigsName, List<Field> fields) {
-        assertNonNullOrThrow(propertyConfigs, invalidAttribute(propertyConfigsName));
+    private static void assertPropertyConfigs(AbstractPropertyConfigs propertyConfigs, PropertyId propertyId, List<Field> fields) {
+        assertNonNullOrThrow(propertyConfigs, propertyId);
         fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertyConfigsName, field, field.get(propertyConfigs));
+                var rf = new ReflectionProperty(propertyId, field, field.get(propertyConfigs));
                 assertNonNullPropertyOrThrow(rf);
                 verifyProperty(rf);
             } catch (IllegalAccessException ex) {
@@ -128,17 +130,17 @@ public class PropertiesAsserter {
         });
     }
 
-    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, String propertiesConfigsName, List<Field> fields) {
-        assertNonNullOrThrow(propertiesConfigs, invalidAttribute(propertiesConfigsName));
+    private static void assertPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId, List<Field> fields) {
+        assertNonNullOrThrow(propertiesConfigs, propertyId);
         fields.forEach(field -> {
             try {
-                var rf = new ReflectionProperty(propertiesConfigsName, field, field.get(propertiesConfigs));
+                var rf = new ReflectionProperty(propertyId, field, field.get(propertiesConfigs));
                 assertNonNullPropertyOrThrow(rf);
                 var nestedPropertyClass = rf.getPropertyValue().getClass();
                 if (AbstractPropertiesConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyName());
+                    ((AbstractPropertiesConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyId());
                 } else if (AbstractPropertyConfigs.class.isAssignableFrom(nestedPropertyClass)) {
-                    ((AbstractPropertyConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyName());
+                    ((AbstractPropertyConfigs) rf.getPropertyValue()).assertProperties(rf.getTreePropertyId());
                 } else {
                     verifyProperty(rf);
                 }
@@ -159,10 +161,11 @@ public class PropertiesAsserter {
             //noinspection unchecked
             assertTrueOrThrow(
                     castedProperty.size() == size,
-                    invalidAttributeRequiredMissingValues(
-                            rf.getTreePropertyName(),
+                    "%s. Options: \"[%s]\". Required: \"[%s]\". Disjunction: \"[%s]\"".formatted(
+                            invalidProperty(rf.getTreePropertyId()),
                             baseJoiningWildcard(keySetClass),
-                            baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass)))
+                            baseJoiningRaw(castedProperty.keySet()),
+                            ConsoleAsserts.RED_TEXT.format(baseJoining(disjunction(castedProperty.keySet(), EnumUtility.setWildcard(keySetClass))))
                     )
             );
         }
@@ -173,8 +176,8 @@ public class PropertiesAsserter {
                 .ifPresent(consumer -> consumer.accept(rf));
     }
 
-    private static List<Field> getFields(Object property, String propertyName, Set<Class<? extends Annotation>> presentAnnotations) {
-        assertNonNullOrThrow(property, invalidAttribute(propertyName));
+    private static List<Field> getFields(Object property, PropertyId propertyId, Set<Class<? extends Annotation>> presentAnnotations) {
+        assertNonNullOrThrow(property, propertyId);
         return Stream.of(property.getClass().getDeclaredFields())
                 .filter(Objects::nonNull)
                 .map(field -> {

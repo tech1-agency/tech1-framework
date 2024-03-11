@@ -1,19 +1,21 @@
 package io.tech1.framework.domain.properties.configs;
 
+import io.tech1.framework.domain.base.PropertyId;
+
 import static io.tech1.framework.domain.properties.utilities.PropertiesAsserter.assertMandatoryPropertiesConfigs;
 import static io.tech1.framework.domain.properties.utilities.PropertiesPrinter.printMandatoryPropertiesConfigs;
 
 public abstract class AbstractPropertiesConfigs {
     public abstract boolean isParentPropertiesNode();
 
-    public void assertProperties(String propertyName) {
-        assertMandatoryPropertiesConfigs(this, propertyName);
+    public void assertProperties(PropertyId propertyId) {
+        assertMandatoryPropertiesConfigs(this, propertyId);
         if (this.isParentPropertiesNode()) {
-            printProperties(propertyName);
+            printProperties(propertyId);
         }
     }
 
-    public void printProperties(String propertyName) {
-        printMandatoryPropertiesConfigs(this, propertyName);
+    public void printProperties(PropertyId propertyId) {
+        printMandatoryPropertiesConfigs(this, propertyId);
     }
 }

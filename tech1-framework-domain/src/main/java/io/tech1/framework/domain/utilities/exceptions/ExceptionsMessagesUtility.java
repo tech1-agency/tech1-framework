@@ -13,8 +13,8 @@ public class ExceptionsMessagesUtility {
         return "Attribute `%s` is invalid".formatted(attributeName);
     }
 
-    public static String invalidAttributeRequiredMissingValues(String attributeName, String required, String missing) {
-        return "Attribute `%s` is invalid. Required: `[%s]`. Missing: `[%s]`".formatted(attributeName, required, missing);
+    public static String invalidAttributeOptionUnexpectedValue(String attributeName, String options, String unexpected) {
+        return "Attribute `%s` is invalid. Options: `[%s]`. Unexpected: `[%s]`".formatted(attributeName, options, unexpected);
     }
 
     public static String entityNotFound(String entity, String entityId) {

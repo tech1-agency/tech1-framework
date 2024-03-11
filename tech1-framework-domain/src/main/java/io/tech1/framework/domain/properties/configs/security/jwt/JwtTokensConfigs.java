@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.properties.configs.security.jwt;
 
+import io.tech1.framework.domain.asserts.ConsoleAsserts;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.JwtToken;
 import io.tech1.framework.domain.properties.base.JwtTokenStorageMethod;
@@ -58,19 +60,25 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties(String propertyName) {
+    public void assertProperties(PropertyId propertyId) {
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        super.assertProperties(propertyName);
+        super.assertProperties(propertyId);
         if (this.storageMethod.isCookies()) {
             assertFalseOrThrow(
                     this.accessToken.getCookieKey().equals(this.refreshToken.getCookieKey()),
-                    "Please make sure `%s.accessToken.cookieKey` and `%s.refreshToken.cookieKey` are different".formatted(propertyName, propertyName)
+                    "Please make sure \"%s.accessToken.cookieKey\" and \"%s.refreshToken.cookieKey\" are different".formatted(
+                            ConsoleAsserts.RED_TEXT.format(propertyId.value()),
+                            ConsoleAsserts.RED_TEXT.format(propertyId.value())
+                    )
             );
         }
         if (this.storageMethod.isHeaders()) {
             assertFalseOrThrow(
                     this.accessToken.getHeaderKey().equals(this.refreshToken.getHeaderKey()),
-                    "Please make sure `%s.accessToken.headerKey` and `%s.refreshToken.headerKey` are different".formatted(propertyName, propertyName)
+                    "Please make sure \"%s.accessToken.headerKey\" and \"%s.refreshToken.headerKey\" are different".formatted(
+                            ConsoleAsserts.RED_TEXT.format(propertyId.value()),
+                            ConsoleAsserts.RED_TEXT.format(propertyId.value())
+                    )
             );
         }
         LOGGER.info(

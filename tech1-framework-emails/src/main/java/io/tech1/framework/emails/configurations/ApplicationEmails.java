@@ -1,5 +1,6 @@
 package io.tech1.framework.emails.configurations;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.emails.services.EmailService;
 import io.tech1.framework.emails.services.impl.EmailServiceImpl;
 import io.tech1.framework.emails.utilities.EmailUtility;
@@ -29,7 +30,7 @@ public class ApplicationEmails {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getEmailConfigs().assertProperties("emailConfigs");
+        this.applicationFrameworkProperties.getEmailConfigs().assertProperties(new PropertyId("emailConfigs"));
     }
 
     @Bean

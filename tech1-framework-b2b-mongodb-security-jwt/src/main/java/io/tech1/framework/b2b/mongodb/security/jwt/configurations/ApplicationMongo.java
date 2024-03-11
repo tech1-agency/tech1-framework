@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class ApplicationMongo {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().assertProperties("mongodbSecurityJwtConfigs");
+        this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().assertProperties(new PropertyId("mongodbSecurityJwtConfigs"));
     }
 
     @Bean(name = "tech1MongoClient")

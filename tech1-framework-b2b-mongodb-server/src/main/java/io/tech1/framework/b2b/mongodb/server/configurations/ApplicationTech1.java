@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.configurations.AbstractApplicati
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.b2b.mongodb.security.jwt.configurations.ApplicationMongo;
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.hardware.configurations.ApplicationHardwareMonitoring;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.hardware.monitoring.subscribers.HardwareMonitoringSubscriber;
@@ -42,7 +43,7 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
 
     @PostConstruct
     public void init() {
-        this.applicationProperties.getServerConfigs().assertProperties("serverConfigs");
+        this.applicationProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
     }
 
     @Override

@@ -27,3 +27,5 @@ Last deployed version: **1.16**
 — Add: feign-clients (GitHub, Openai)
 — Add: Asserts.assertUniqueOrThrow
 — Add: ConsoleAsserts (jcolor-based): assertContainsAllOrThrow, assertEqualsOrThrow
+— Modification: assertProperties(String propertyName) → assertProperties(PropertyId propertyId)
+— Modification: printProperties(String propertyName) → printProperties(PropertyId propertyId)

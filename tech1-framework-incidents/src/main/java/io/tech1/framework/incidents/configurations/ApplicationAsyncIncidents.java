@@ -1,5 +1,6 @@
 package io.tech1.framework.incidents.configurations;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -32,7 +33,7 @@ public class ApplicationAsyncIncidents implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getAsyncConfigs().assertProperties("asyncConfigs");
+        this.applicationFrameworkProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package io.tech1.framework.hardware.configurations;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,6 @@ public class ApplicationHardwareMonitoring {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getHardwareMonitoringConfigs().assertProperties("hardwareMonitoringConfigs");
+        this.applicationFrameworkProperties.getHardwareMonitoringConfigs().assertProperties(new PropertyId("hardwareMonitoringConfigs"));
     }
 }

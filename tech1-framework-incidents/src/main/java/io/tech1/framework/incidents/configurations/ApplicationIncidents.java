@@ -5,6 +5,7 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinition;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -30,7 +31,7 @@ public class ApplicationIncidents {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getIncidentConfigs().assertProperties("incidentConfigs");
+        this.applicationFrameworkProperties.getIncidentConfigs().assertProperties(new PropertyId("incidentConfigs"));
     }
 
     @Bean

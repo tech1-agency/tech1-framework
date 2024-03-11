@@ -26,3 +26,4 @@ Last deployed version: **1.16**
 — Modification: add @Getter to Plurals, add immutability on values and values
 — Add: feign-clients (GitHub, Openai)
 — Add: Asserts.assertUniqueOrThrow
+— Add: ConsoleAsserts (jcolor-based): assertContainsAllOrThrow, assertEqualsOrThrow

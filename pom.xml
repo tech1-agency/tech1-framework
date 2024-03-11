@@ -74,6 +74,7 @@
         <version.dependency.jackson>2.15.0</version.dependency.jackson>
         <version.dependency.jakarta>2.3.3</version.dependency.jakarta>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
+        <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
         <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
         <version.dependency.liquibase>4.21.1</version.dependency.liquibase>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
@@ -195,6 +196,12 @@
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-core</artifactId>
                 <version>${version.dependency.tomcat.embed}</version>
+            </dependency>
+            <!-- JColor (console asserts) -->
+            <dependency>
+                <groupId>com.diogonunes</groupId>
+                <artifactId>JColor</artifactId>
+                <version>${version.dependency.jcolor}</version>
             </dependency>
             <!-- Lombok -->
             <dependency>

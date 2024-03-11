@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.utilities.reflections;
 
 import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
 import io.tech1.framework.domain.properties.base.TimeAmount;
@@ -114,7 +115,7 @@ public class ReflectionUtility {
                 .collect(Collectors.toList());
     }
 
-    public static List<ReflectionProperty> getNotNullPropertiesRecursively(Object object, String parentKey) {
+    public static List<ReflectionProperty> getNotNullPropertiesRecursively(Object object, PropertyId propertyId) {
         Predicate<Object> breakoutClassesPredicate = breakoutObj -> {
             var clazz = breakoutObj.getClass();
             var isArray = clazz.isArray();
@@ -136,18 +137,18 @@ public class ReflectionUtility {
         };
 
         List<ReflectionProperty> traversedProperties = new ArrayList<>();
-        var properties = getNotNullProperties(object, parentKey);
+        var properties = getNotNullProperties(object, propertyId);
         properties.forEach(property -> {
             if (breakoutClassesPredicate.test(property.getPropertyValue())) {
                 traversedProperties.add(property);
             } else {
-                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), property.getTreePropertyName()));
+                traversedProperties.addAll(getNotNullPropertiesRecursively(property.getPropertyValue(), property.getTreePropertyId()));
             }
         });
         return traversedProperties;
     }
 
-    public static List<ReflectionProperty> getNotNullProperties(Object object, String propertyName) {
+    public static List<ReflectionProperty> getNotNullProperties(Object object, PropertyId propertyId) {
         return Stream.of(object.getClass().getDeclaredFields())
                 .map(field -> {
                     try {
@@ -155,7 +156,7 @@ public class ReflectionUtility {
                         if (isNull(nestedProperty)) {
                             return null;
                         } else {
-                            return new ReflectionProperty(propertyName, field, nestedProperty);
+                            return new ReflectionProperty(propertyId, field, nestedProperty);
                         }
                     } catch (IllegalAccessException | RuntimeException ex) {
                         return null;
@@ -165,13 +166,13 @@ public class ReflectionUtility {
                 .collect(Collectors.toList());
     }
 
-    public static List<ReflectionProperty> getProperties(Object property, String propertyName, List<Field> fields) {
+    public static List<ReflectionProperty> getProperties(Object property, PropertyId propertyId, List<Field> fields) {
         return fields.stream()
                 .map(field -> {
                     try {
-                        return new ReflectionProperty(propertyName, field, field.get(property));
+                        return new ReflectionProperty(propertyId, field, field.get(property));
                     } catch (IllegalAccessException | RuntimeException ex) {
-                        return new ReflectionProperty(propertyName, field, null);
+                        return new ReflectionProperty(propertyId, field, null);
                     }
                 })
                 .collect(Collectors.toList());

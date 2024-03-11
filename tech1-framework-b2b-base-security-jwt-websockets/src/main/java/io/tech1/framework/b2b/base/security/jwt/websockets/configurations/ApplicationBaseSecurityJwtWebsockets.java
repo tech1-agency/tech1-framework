@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.configurations;
 
 import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.CsrfInterceptorHandshake;
 import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.SecurityHandshakeHandler;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().assertProperties("securityJwtWebsocketsConfigs");
+        this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().assertProperties(new PropertyId("securityJwtWebsocketsConfigs"));
     }
 
     @Override

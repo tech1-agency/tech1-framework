@@ -13,4 +13,9 @@ public record TestObject(
     public static TestObject random() {
         return new TestObject(ObjectId.random(), randomString());
     }
+
+    @Override
+    public ObjectId getId() {
+        return this.id;
+    }
 }

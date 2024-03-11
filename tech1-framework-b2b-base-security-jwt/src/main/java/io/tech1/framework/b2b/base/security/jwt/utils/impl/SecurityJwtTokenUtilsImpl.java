@@ -9,6 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
     ) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
-        jwtTokensConfigs.assertProperties("securityJwtConfigs.jwtTokensConfigs");
+        jwtTokensConfigs.assertProperties(new PropertyId("securityJwtConfigs.jwtTokensConfigs"));
         this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(jwtTokensConfigs.getSecretKey().getBytes());
     }
 

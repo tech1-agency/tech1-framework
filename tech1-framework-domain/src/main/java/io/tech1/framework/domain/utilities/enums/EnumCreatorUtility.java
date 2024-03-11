@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttributeRequiredMissingValues;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttributeOptionUnexpectedValue;
 
 @UtilityClass
 public class EnumCreatorUtility {
@@ -63,7 +63,7 @@ public class EnumCreatorUtility {
                 .filter(predicate)
                 .findFirst()
                 .orElseThrow(() -> {
-                    var message = invalidAttributeRequiredMissingValues(
+                    var message = invalidAttributeOptionUnexpectedValue(
                             enumClass.getSimpleName(),
                             baseJoining(enumClass),
                             param

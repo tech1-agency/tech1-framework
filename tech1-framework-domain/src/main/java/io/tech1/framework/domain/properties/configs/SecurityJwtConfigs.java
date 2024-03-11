@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.properties.configs;
 
 import io.tech1.framework.domain.base.AbstractAuthority;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Checkbox;
 import io.tech1.framework.domain.properties.configs.security.jwt.*;
@@ -106,8 +107,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     }
 
     @Override
-    public void assertProperties(String propertyName) {
-        super.assertProperties(propertyName);
+    public void assertProperties(PropertyId propertyId) {
+        super.assertProperties(propertyId);
 
         // Requirements: availableAuthorities vs. defaultUsersAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();

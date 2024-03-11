@@ -1,12 +1,11 @@
 package io.tech1.framework.domain.asserts;
 
-import io.tech1.framework.domain.reflections.ReflectionProperty;
+import io.tech1.framework.domain.base.PropertyId;
 import lombok.experimental.UtilityClass;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.isNull;
 
@@ -20,13 +19,6 @@ public class Asserts {
         if (isNull(object)) {
             throw new IllegalArgumentException(message);
         }
-    }
-
-    public static void assertNonNullPropertyOrThrow(ReflectionProperty reflectionProperty) {
-        if (isNull(reflectionProperty)) {
-            throw new IllegalArgumentException("Unknown reflection property");
-        }
-        assertNonNullOrThrow(reflectionProperty.getPropertyValue(), invalidAttribute(reflectionProperty.getTreePropertyName()));
     }
 
     public static void assertNonBlankOrThrow(String object, String message) {
@@ -58,6 +50,14 @@ public class Asserts {
             throw new IllegalArgumentException(message);
         }
         return object;
+    }
+
+    public static <T> void assertUniqueOrThrow(Collection<T> options, T object, PropertyId propertyId) {
+        if (options.contains(object)) {
+            throw new IllegalArgumentException(
+                    "Property %s must be unique".formatted(propertyId.value())
+            );
+        }
     }
 
     // =================================================================================================================

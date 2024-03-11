@@ -1,5 +1,6 @@
 package io.tech1.framework.configurations.async;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -28,7 +29,7 @@ public class ApplicationAsync implements AsyncConfigurer {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getAsyncConfigs().assertProperties("asyncConfigs");
+        this.applicationFrameworkProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
     }
 
     @Override

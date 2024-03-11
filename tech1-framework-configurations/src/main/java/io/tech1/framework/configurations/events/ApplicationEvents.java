@@ -1,5 +1,6 @@
 package io.tech1.framework.configurations.events;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ApplicationEvents {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getEventsConfigs().assertProperties("eventsConfigs");
+        this.applicationFrameworkProperties.getEventsConfigs().assertProperties(new PropertyId("eventsConfigs"));
     }
 
     @Bean(name = "applicationEventMulticaster")

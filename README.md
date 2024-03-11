@@ -24,3 +24,8 @@ Last deployed version: **1.16**
 — Modification: RemoteServer(baseURL, username, password) → RemoteServer(baseURL, credentials) + 
 — Modification: "tech1.incidentConfigs.remoteServer" property
 — Modification: add @Getter to Plurals, add immutability on values and values
+— Add: feign-clients (GitHub, Openai)
+— Add: Asserts.assertUniqueOrThrow
+— Add: ConsoleAsserts (jcolor-based): assertContainsAllOrThrow, assertEqualsOrThrow
+— Modification: assertProperties(String propertyName) → assertProperties(PropertyId propertyId)
+— Modification: printProperties(String propertyName) → printProperties(PropertyId propertyId)

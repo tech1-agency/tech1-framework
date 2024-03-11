@@ -1,5 +1,6 @@
 package io.tech1.framework.incidents.configurations;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.incidents.handlers.ErrorHandlerPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class ApplicationEventsIncidents {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getEventsConfigs().assertProperties("eventsConfigs");
+        this.applicationFrameworkProperties.getEventsConfigs().assertProperties(new PropertyId("eventsConfigs"));
     }
 
     @Bean(name = "applicationEventMulticaster")

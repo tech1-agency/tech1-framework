@@ -26,23 +26,23 @@ class EnumCreatorUtilityTest {
                 Arguments.of("Framework", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("framework", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("fraMEwork", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("Tech2", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
-                Arguments.of("Server", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
-                Arguments.of(null, true, null, "Required values: `[Framework, Tech1]`. Missing values: `[null]`")
+                Arguments.of("Tech2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Tech2]`"),
+                Arguments.of("Server", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Server]`"),
+                Arguments.of(null, true, null, "Options: `[Framework, Tech1]`. Unexpected: `[null]`")
         );
     }
 
     private static Stream<Arguments> findEnumByNameOrThrowArgs() {
         return Stream.of(
                 Arguments.of("TECH1", false, EnumValue1.TECH1, null),
-                Arguments.of("tech1", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[tech1]`"),
-                Arguments.of("TECh1", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[TECh1]`"),
+                Arguments.of("tech1", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[tech1]`"),
+                Arguments.of("TECh1", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[TECh1]`"),
                 Arguments.of("FRAMEWORK", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("framework", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[framework]`"),
-                Arguments.of("fraMEwork", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[fraMEwork]`"),
-                Arguments.of("Tech2", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Tech2]`"),
-                Arguments.of("Server", true, null, "Required values: `[Framework, Tech1]`. Missing values: `[Server]`"),
-                Arguments.of(null, true, null, "Required values: `[Framework, Tech1]`. Missing values: `[null]`")
+                Arguments.of("framework", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[framework]`"),
+                Arguments.of("fraMEwork", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[fraMEwork]`"),
+                Arguments.of("Tech2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Tech2]`"),
+                Arguments.of("Server", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Server]`"),
+                Arguments.of(null, true, null, "Options: `[Framework, Tech1]`. Unexpected: `[null]`")
         );
     }
 

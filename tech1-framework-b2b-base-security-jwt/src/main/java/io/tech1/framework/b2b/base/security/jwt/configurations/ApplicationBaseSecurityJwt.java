@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDen
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -72,7 +73,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getSecurityJwtConfigs().assertProperties("securityJwtConfigs");
+        this.applicationFrameworkProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
     }
 
     @Override

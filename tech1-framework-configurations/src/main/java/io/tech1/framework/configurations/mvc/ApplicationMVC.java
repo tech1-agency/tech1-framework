@@ -1,5 +1,6 @@
 package io.tech1.framework.configurations.mvc;
 
+import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +24,7 @@ public class ApplicationMVC implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getMvcConfigs().assertProperties("mvcConfigs");
+        this.applicationFrameworkProperties.getMvcConfigs().assertProperties(new PropertyId("mvcConfigs"));
     }
 
     @Override

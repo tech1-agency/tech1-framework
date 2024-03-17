@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.DateUtility.getAbsDifferenceByTimeUnit;
@@ -34,10 +34,10 @@ class DateUtilityTest {
     @MethodSource("convertLocalDateTimeTest")
     void convertLocalDateTimeTest(LocalDateTime localDateTime, String expected) throws ParseException {
         // Arrange
-        SDF.setTimeZone(getTimeZone(EET_ZONE_ID));
+        SDF.setTimeZone(getTimeZone(UKRAINE));
 
         // Act
-        var actual = convertLocalDateTime(localDateTime, EET_ZONE_ID);
+        var actual = convertLocalDateTime(localDateTime, UKRAINE);
 
         // Assert
         assertThat(actual).isEqualTo(SDF.parse(expected));

@@ -66,7 +66,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Username.of("tech1"),
                 Email.of("tech1@" + DomainConstants.TECH1),
                 "Tech1",
-                ZoneIdsConstants.EET_ZONE_ID,
+                ZoneIdsConstants.UKRAINE,
                 Set.of(
                         new SimpleGrantedAuthority("user"),
                         new SimpleGrantedAuthority("admin")

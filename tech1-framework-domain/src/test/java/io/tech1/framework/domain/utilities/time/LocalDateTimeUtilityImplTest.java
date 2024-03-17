@@ -13,8 +13,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND_ZONE_ID;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.*;
 import static java.time.Month.DECEMBER;
@@ -46,33 +46,33 @@ class LocalDateTimeUtilityImplTest {
 
     private static Stream<Arguments> isBetweenTest() {
         return Stream.of(
-                Arguments.of(1640438177000L, EET_ZONE_ID, _25_11_2021),
+                Arguments.of(1640438177000L, UKRAINE, _25_11_2021),
                 Arguments.of(1640445377000L, UTC, _25_11_2021),
-                Arguments.of(1324818977000L, EET_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(1324818977000L, UKRAINE, _25_11_2021.minusYears(10)),
                 Arguments.of(1324826177000L, UTC, _25_11_2021.minusYears(10)),
-                Arguments.of(1009286177000L, EET_ZONE_ID, _25_11_2021.minusYears(20)),
+                Arguments.of(1009286177000L, UKRAINE, _25_11_2021.minusYears(20)),
                 Arguments.of(1009293377000L, UTC, _25_11_2021.minusYears(20))
         );
     }
 
     private static Stream<Arguments> convertDateTest() {
         return Stream.of(
-                Arguments.of(new Date(1640438177000L), EET_ZONE_ID, _25_11_2021),
+                Arguments.of(new Date(1640438177000L), UKRAINE, _25_11_2021),
                 Arguments.of(new Date(1640445377000L), UTC, _25_11_2021),
-                Arguments.of(new Date(1324818977000L), EET_ZONE_ID, _25_11_2021.minusYears(10)),
+                Arguments.of(new Date(1324818977000L), UKRAINE, _25_11_2021.minusYears(10)),
                 Arguments.of(new Date(1324826177000L), UTC, _25_11_2021.minusYears(10)),
-                Arguments.of(new Date(1009286177000L), EET_ZONE_ID, _25_11_2021.minusYears(20)),
+                Arguments.of(new Date(1009286177000L), UKRAINE, _25_11_2021.minusYears(20)),
                 Arguments.of(new Date(1009293377000L), UTC, _25_11_2021.minusYears(20))
         );
     }
 
     private static Stream<Arguments> getTimestampTest() {
         return Stream.of(
-                Arguments.of(_25_11_2021, EET_ZONE_ID, 1640438177000L),
+                Arguments.of(_25_11_2021, UKRAINE, 1640438177000L),
                 Arguments.of(_25_11_2021, UTC, 1640445377000L),
-                Arguments.of(_25_11_2021.minusYears(10), EET_ZONE_ID, 1324818977000L),
+                Arguments.of(_25_11_2021.minusYears(10), UKRAINE, 1324818977000L),
                 Arguments.of(_25_11_2021.minusYears(10), UTC, 1324826177000L),
-                Arguments.of(_25_11_2021.minusYears(20), EET_ZONE_ID, 1009286177000L),
+                Arguments.of(_25_11_2021.minusYears(20), UKRAINE, 1009286177000L),
                 Arguments.of(_25_11_2021.minusYears(20), UTC, 1009293377000L)
         );
     }
@@ -162,8 +162,8 @@ class LocalDateTimeUtilityImplTest {
     @Test
     void nowByTimezoneIncludingDaylightSavingTimeTest() {
         // Act
-        var actual1 = nowByTimezone(getTimeZone(POLAND_ZONE_ID));
-        var actual2 = nowByTimezone(getTimeZone(EET_ZONE_ID));
+        var actual1 = nowByTimezone(getTimeZone(POLAND));
+        var actual2 = nowByTimezone(getTimeZone(UKRAINE));
 
         // Assert
         var actual1Truncated = actual1.truncatedTo(SECONDS);
@@ -174,8 +174,8 @@ class LocalDateTimeUtilityImplTest {
     @Test
     void nowByZoneIdIncludingDaylightSavingTimeTest() {
         // Act
-        var actual1 = nowByZoneId(POLAND_ZONE_ID);
-        var actual2 = nowByZoneId(EET_ZONE_ID);
+        var actual1 = nowByZoneId(POLAND);
+        var actual2 = nowByZoneId(UKRAINE);
 
         // Assert
         var actual1Truncated = actual1.truncatedTo(SECONDS);

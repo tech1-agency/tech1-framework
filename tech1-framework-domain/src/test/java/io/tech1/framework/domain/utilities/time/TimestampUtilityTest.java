@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND_ZONE_ID;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
@@ -125,7 +125,7 @@ class TimestampUtilityTest {
     @ParameterizedTest
     void getStartOfMonthTimestampTest(long timestamp, long expected) {
         // Act
-        var actual = getStartOfMonthTimestamp(timestamp, EET_ZONE_ID);
+        var actual = getStartOfMonthTimestamp(timestamp, UKRAINE);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
@@ -135,8 +135,8 @@ class TimestampUtilityTest {
     void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID);
-        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID);
+        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE);
+        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND);
 
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
@@ -148,8 +148,8 @@ class TimestampUtilityTest {
     void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID);
-        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID);
+        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE);
+        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND);
 
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
@@ -161,8 +161,8 @@ class TimestampUtilityTest {
     void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
-        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(EET_ZONE_ID, 3);
-        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(POLAND_ZONE_ID, 3);
+        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE, 3);
+        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(POLAND, 3);
 
         // Assert
         assertThat(timestampUTC)
@@ -170,8 +170,8 @@ class TimestampUtilityTest {
                 .isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
         var localDateTimeUTC = convertTimestamp(timestampUTC, UTC);
-        var localDateTimeUkraine = convertTimestamp(timestampUkraine, EET_ZONE_ID);
-        var localDateTimePoland = convertTimestamp(timestampPoland, POLAND_ZONE_ID);
+        var localDateTimeUkraine = convertTimestamp(timestampUkraine, UKRAINE);
+        var localDateTimePoland = convertTimestamp(timestampPoland, POLAND);
         assertThat(localDateTimeUTC.toString()).endsWith("00:00");
         assertThat(localDateTimeUkraine.toString()).endsWith("00:00");
         assertThat(localDateTimePoland.toString()).endsWith("00:00");

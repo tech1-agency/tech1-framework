@@ -15,7 +15,7 @@ class RequestUserRegistration1Test extends AbstractSerializationDeserializationR
             Username.testsHardcoded(),
             Password.of("password123"),
             Password.of("password123"),
-            ZoneIdsConstants.EET_ZONE_ID.getId(),
+            ZoneIdsConstants.UKRAINE.getId(),
             "TJ5veLJvqi78AARpiDVXQ9u0q9rbo3zpE6LtbWBH"
     );
 

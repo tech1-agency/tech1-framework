@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
@@ -241,7 +241,7 @@ class SecurityJwtTokenUtilsImplTest {
     void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> authorities) throws ParseException {
         // Arrange
         var sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT_PATTERN);
-        sdf.setTimeZone(getTimeZone(EET_ZONE_ID));
+        sdf.setTimeZone(getTimeZone(UKRAINE));
 
         // Act
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));

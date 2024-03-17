@@ -59,7 +59,7 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
         assertThat(this.writeValueAsString(status)).isEqualTo(readFile(this.getFolder(), "reset-server-status-3.json"));
 
         // Act-4
-        status.complete(ZoneIdsConstants.EET_ZONE_ID);
+        status.complete(ZoneIdsConstants.UKRAINE);
 
         // Assert-4
         assertThat(status.getState()).isEqualTo(READY);

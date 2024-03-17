@@ -7,10 +7,10 @@ import java.time.ZoneId;
 @UtilityClass
 public class ZoneIdsConstants {
     // Poland
-    public static final ZoneId POLAND_ZONE_ID = ZoneId.of("Poland");
+    public static final ZoneId POLAND = ZoneId.of("Poland");
 
     // Ukraine, Kyiv
     // Daylight Saving Time; EEST: Eastern European Summer Time; UTC+3
     // Standard Time; EET: Eastern European Time; UTC+2
-    public static final ZoneId EET_ZONE_ID = ZoneId.of("Europe/Kiev");
+    public static final ZoneId UKRAINE = ZoneId.of("Europe/Kiev");
 }

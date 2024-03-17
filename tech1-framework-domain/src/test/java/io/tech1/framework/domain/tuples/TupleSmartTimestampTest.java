@@ -2,14 +2,14 @@ package io.tech1.framework.domain.tuples;
 
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TupleSmartTimestampTest extends AbstractTupleTest {
     private static final TupleSmartTimestamp TUPLE = TupleSmartTimestamp.of(
             1668419401637L,
-            EET_ZONE_ID,
+            UKRAINE,
             DEFAULT_DATE_FORMAT_PATTERN
     );
 

@@ -99,7 +99,7 @@ public record JwtUser(
                 UserId.testsHardcoded(),
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
-                ZoneIdsConstants.EET_ZONE_ID,
+                ZoneIdsConstants.UKRAINE,
                 Set.of(),
                 Email.testsHardcoded(),
                 "",

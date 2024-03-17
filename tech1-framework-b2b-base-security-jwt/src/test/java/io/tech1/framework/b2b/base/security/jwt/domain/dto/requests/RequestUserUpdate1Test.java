@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserUpdate1Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserUpdate1 REQUEST = new RequestUserUpdate1(
-            ZoneIdsConstants.EET_ZONE_ID.getId(),
+            ZoneIdsConstants.UKRAINE.getId(),
             Email.testsHardcoded(),
             "Tech1 Tests"
     );

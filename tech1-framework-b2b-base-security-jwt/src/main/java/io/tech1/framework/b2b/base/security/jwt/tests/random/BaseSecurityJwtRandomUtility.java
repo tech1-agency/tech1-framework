@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -14,7 +13,6 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
@@ -88,9 +86,5 @@ public class BaseSecurityJwtRandomUtility {
                 randomBoolean(),
                 randomBoolean()
         );
-    }
-
-    public static RequestUserRegistration1 registration1() {
-        return new RequestUserRegistration1(Username.of("registration11"), Password.random(), Password.random(), randomZoneId().getId(), randomString());
     }
 }

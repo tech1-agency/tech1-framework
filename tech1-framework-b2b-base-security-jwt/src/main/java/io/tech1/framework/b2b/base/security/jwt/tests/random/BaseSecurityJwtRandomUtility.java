@@ -2,16 +2,12 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
 
@@ -26,7 +22,8 @@ import java.util.stream.Stream;
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
@@ -72,19 +69,5 @@ public class BaseSecurityJwtRandomUtility {
         claims.setExpiration(expiration);
         claims.put("authorities", getSimpleGrantedAuthorities("admin", "user"));
         return claims;
-    }
-
-    public static UserSession randomPersistedSession() {
-        return UserSession.ofPersisted(
-                UserSessionId.random(),
-                getCurrentTimestamp(),
-                getCurrentTimestamp(),
-                Username.random(),
-                JwtAccessToken.random(),
-                JwtRefreshToken.random(),
-                UserRequestMetadata.random(),
-                randomBoolean(),
-                randomBoolean()
-        );
     }
 }

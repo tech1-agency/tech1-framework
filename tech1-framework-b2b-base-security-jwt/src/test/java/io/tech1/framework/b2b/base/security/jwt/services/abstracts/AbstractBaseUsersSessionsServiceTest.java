@@ -49,8 +49,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.randomPersistedSession;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.session;
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomPersistedSession;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;

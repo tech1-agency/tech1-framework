@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 public record UserSession(
@@ -20,6 +21,20 @@ public record UserSession(
         boolean metadataRenewCron,
         boolean metadataRenewManually
 ) {
+
+    public static UserSession randomPersistedSession() {
+        return UserSession.ofPersisted(
+                UserSessionId.random(),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                Username.random(),
+                JwtAccessToken.random(),
+                JwtRefreshToken.random(),
+                UserRequestMetadata.random(),
+                randomBoolean(),
+                randomBoolean()
+        );
+    }
 
     public static UserSession ofPersisted(
             UserSessionId id,

@@ -11,11 +11,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.ZoneId;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
@@ -80,6 +78,19 @@ public record JwtUser(
                         randomString(), randomString(),
                         randomString(), randomInteger()
                 )
+        );
+    }
+
+    public static JwtUser randomSuperadmin() {
+        return new JwtUser(
+                UserId.random(),
+                Username.random(),
+                Password.random(),
+                randomZoneId(),
+                getSimpleGrantedAuthorities(SUPER_ADMIN),
+                Email.random(),
+                randomString(),
+                new HashMap<>()
         );
     }
 

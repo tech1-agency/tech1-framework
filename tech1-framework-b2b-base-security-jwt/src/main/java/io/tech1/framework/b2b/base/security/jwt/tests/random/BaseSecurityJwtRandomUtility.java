@@ -2,11 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
@@ -14,35 +10,18 @@ import lombok.experimental.UtilityClass;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
 
 @UtilityClass
 public class BaseSecurityJwtRandomUtility {
-
-    public static JwtUser randomSuperadmin() {
-        return new JwtUser(
-                UserId.random(),
-                Username.random(),
-                Password.random(),
-                randomZoneId(),
-                getSimpleGrantedAuthorities(SUPER_ADMIN),
-                Email.random(),
-                randomString(),
-                new HashMap<>()
-        );
-    }
 
     public static Set<JwtAccessToken> accessTokens(String... accessTokens) {
         return Stream.of(accessTokens).map(JwtAccessToken::new).collect(Collectors.toSet());

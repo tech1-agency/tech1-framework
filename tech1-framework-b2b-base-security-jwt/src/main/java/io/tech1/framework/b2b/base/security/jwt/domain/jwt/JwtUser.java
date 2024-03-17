@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -99,7 +99,7 @@ public record JwtUser(
                 UserId.testsHardcoded(),
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
-                TestsZoneIdsConstants.EET_ZONE_ID,
+                ZoneIdsConstants.EET_ZONE_ID,
                 Set.of(),
                 Email.testsHardcoded(),
                 "",

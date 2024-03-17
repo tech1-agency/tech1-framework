@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.time;
 
-import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,8 +10,9 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_TIME_ZONE;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.DateUtility.getAbsDifferenceByTimeUnit;
 import static java.time.LocalDateTime.of;
@@ -34,7 +34,7 @@ class DateUtilityTest {
     @MethodSource("convertLocalDateTimeTest")
     void convertLocalDateTimeTest(LocalDateTime localDateTime, String expected) throws ParseException {
         // Arrange
-        SDF.setTimeZone(TestsZoneIdsConstants.EET_TIME_ZONE);
+        SDF.setTimeZone(EET_TIME_ZONE);
 
         // Act
         var actual = convertLocalDateTime(localDateTime, EET_ZONE_ID);

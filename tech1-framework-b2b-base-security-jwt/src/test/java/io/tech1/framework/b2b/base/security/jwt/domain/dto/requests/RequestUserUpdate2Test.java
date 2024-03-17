@@ -1,16 +1,16 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserUpdate2Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserUpdate2 REQUEST = new RequestUserUpdate2(
-            EET_ZONE_ID.getId(),
+            ZoneIdsConstants.EET_ZONE_ID.getId(),
             "Tech1 Tests"
     );
 

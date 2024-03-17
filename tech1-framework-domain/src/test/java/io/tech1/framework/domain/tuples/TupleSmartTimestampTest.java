@@ -2,8 +2,8 @@ package io.tech1.framework.domain.tuples;
 
 import org.junit.jupiter.api.Test;
 
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TupleSmartTimestampTest extends AbstractTupleTest {

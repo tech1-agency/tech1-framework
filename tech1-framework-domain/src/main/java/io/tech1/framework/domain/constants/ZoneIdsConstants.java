@@ -1,4 +1,4 @@
-package io.tech1.framework.domain.tests.constants;
+package io.tech1.framework.domain.constants;
 
 import lombok.experimental.UtilityClass;
 
@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.util.TimeZone;
 
 @UtilityClass
-public class TestsZoneIdsConstants {
+public class ZoneIdsConstants {
     // Poland
     public static final TimeZone POLAND_TIME_ZONE = TimeZone.getTimeZone("Poland");
     public static final ZoneId POLAND_ZONE_ID = ZoneId.of("Poland");

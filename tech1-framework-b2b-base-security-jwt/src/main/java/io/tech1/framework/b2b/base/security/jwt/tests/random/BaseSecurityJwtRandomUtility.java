@@ -2,10 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
@@ -76,10 +74,6 @@ public class BaseSecurityJwtRandomUtility {
         claims.setExpiration(expiration);
         claims.put("authorities", getSimpleGrantedAuthorities("admin", "user"));
         return claims;
-    }
-
-    public static InvitationCode randomInvitationCode() {
-        return new InvitationCode(InvitationCodeId.random(), Username.random(), getSimpleGrantedAuthorities(SUPER_ADMIN), randomString(), Username.random());
     }
 
     public static UserSession randomPersistedSession() {

@@ -1,6 +1,5 @@
 package io.tech1.framework.domain.utilities.time;
 
-import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,7 +13,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.*;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.*;
 import static java.time.Month.DECEMBER;
@@ -22,6 +22,7 @@ import static java.time.ZoneOffset.UTC;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
+import static java.util.TimeZone.getTimeZone;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateTimeUtilityImplTest {
@@ -161,8 +162,8 @@ class LocalDateTimeUtilityImplTest {
     @Test
     void nowByTimezoneIncludingDaylightSavingTimeTest() {
         // Act
-        var actual1 = nowByTimezone(POLAND_TIME_ZONE);
-        var actual2 = nowByTimezone(ZoneIdsConstants.EET_TIME_ZONE);
+        var actual1 = nowByTimezone(getTimeZone(POLAND_ZONE_ID));
+        var actual2 = nowByTimezone(getTimeZone(EET_ZONE_ID));
 
         // Assert
         var actual1Truncated = actual1.truncatedTo(SECONDS);

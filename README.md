@@ -18,3 +18,4 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.2]
 — Modification: BaseSecurityJwtRandomUtility migrate random methods to appropriate classes
+— Modification: TestsZoneIdsConstants migrated to ZoneIdsConstants (EET_ZONE_ID → Ukraine)

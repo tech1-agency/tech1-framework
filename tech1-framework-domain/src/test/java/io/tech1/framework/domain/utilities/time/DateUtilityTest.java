@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_TIME_ZONE;
 import static io.tech1.framework.domain.constants.ZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.domain.utilities.time.DateUtility.getAbsDifferenceByTimeUnit;
 import static java.time.LocalDateTime.of;
 import static java.time.Month.DECEMBER;
+import static java.util.TimeZone.getTimeZone;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DateUtilityTest {
@@ -34,7 +34,7 @@ class DateUtilityTest {
     @MethodSource("convertLocalDateTimeTest")
     void convertLocalDateTimeTest(LocalDateTime localDateTime, String expected) throws ParseException {
         // Arrange
-        SDF.setTimeZone(EET_TIME_ZONE);
+        SDF.setTimeZone(getTimeZone(EET_ZONE_ID));
 
         // Act
         var actual = convertLocalDateTime(localDateTime, EET_ZONE_ID);

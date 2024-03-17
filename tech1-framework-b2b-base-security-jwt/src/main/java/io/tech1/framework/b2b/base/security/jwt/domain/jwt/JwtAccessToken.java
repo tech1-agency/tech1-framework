@@ -2,8 +2,11 @@ package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
@@ -25,6 +28,10 @@ public record JwtAccessToken(@NotNull String value) {
 
     public static JwtAccessToken testsHardcoded() {
         return of("D9F4AF096BEE11C93D84");
+    }
+
+    public static Set<JwtAccessToken> accessTokens(String... tokens) {
+        return Stream.of(tokens).map(JwtAccessToken::new).collect(Collectors.toSet());
     }
 
     @JsonValue

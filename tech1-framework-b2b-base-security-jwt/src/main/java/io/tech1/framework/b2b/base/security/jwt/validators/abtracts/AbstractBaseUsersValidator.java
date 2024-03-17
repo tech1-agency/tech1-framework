@@ -11,12 +11,12 @@ import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbersWithLength;
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
+    // WARNING: Configs vs. Hardcoded?
     protected static final int NEW_PASSWORD_MIN_LENGTH = 8;
 
     // Repositories
@@ -56,13 +56,10 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
         assertNonNullNotBlankOrThrow(newPassword, invalidAttribute("newPassword"));
         assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
 
-        if (!containsCamelCaseLettersAndNumbersWithLength(newPassword, NEW_PASSWORD_MIN_LENGTH)) {
-            var message = "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least " + NEW_PASSWORD_MIN_LENGTH + " characters long";
-            throw new IllegalArgumentException(message);
-        }
+        newPassword.assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(NEW_PASSWORD_MIN_LENGTH);
+
         if (!newPassword.equals(confirmPassword)) {
-            var message = "Confirm password should match new password";
-            throw new IllegalArgumentException(message);
+            throw new IllegalArgumentException("Confirm password should match new password");
         }
     }
 }

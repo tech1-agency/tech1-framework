@@ -93,8 +93,4 @@ public class BaseSecurityJwtRandomUtility {
     public static RequestUserRegistration1 registration1() {
         return new RequestUserRegistration1(Username.of("registration11"), Password.random(), Password.random(), randomZoneId().getId(), randomString());
     }
-
-    public static ResetServerStatus randomResetServerStatus() {
-        return new ResetServerStatus(10);
-    }
 }

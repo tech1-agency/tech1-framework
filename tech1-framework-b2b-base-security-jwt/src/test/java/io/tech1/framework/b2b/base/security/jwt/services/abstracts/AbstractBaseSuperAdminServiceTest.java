@@ -28,7 +28,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomResetServerStatus;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,7 +74,7 @@ class AbstractBaseSuperAdminServiceTest {
             ) {
                 @Override
                 public ResetServerStatus getStatus() {
-                    return randomResetServerStatus();
+                    return ResetServerStatus.random();
                 }
 
                 @Override
@@ -137,7 +136,7 @@ class AbstractBaseSuperAdminServiceTest {
         var actual = this.componentUnderTest.getResetServerStatus();
 
         // Assert
-        assertThat(actual).isEqualTo(randomResetServerStatus());
+        assertThat(actual).isEqualTo(ResetServerStatus.random());
     }
 
     @Test

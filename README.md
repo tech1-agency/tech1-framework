@@ -20,3 +20,4 @@ Last deployed version: **1.16**
 — Modification: BaseSecurityJwtRandomUtility migrate random methods to appropriate classes
 — Modification: TestsZoneIdsConstants migrated to ZoneIdsConstants (EET_ZONE_ID → Ukraine)
 — Addition: AbstractObjectMapperRunner.writeValueAsPlainString() 
+— Addition: Toggle enum (ENABLED/DISABLED) + boolean constructor 

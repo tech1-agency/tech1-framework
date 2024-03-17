@@ -4,8 +4,10 @@ import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
+import io.tech1.framework.domain.enums.Toggle;
 import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.domain.properties.configs.utilities.UserAgentConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -39,9 +41,10 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         boolean configuredFlag;
         String exceptionMessageOrNull;
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        if (this.applicationFrameworkProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled()) {
+        var userAgentConfigs = this.applicationFrameworkProperties.getUtilitiesConfigs().getUserAgentConfigs();
+        LOGGER.info("{} User agent — {}", FRAMEWORK_UTILITIES_PREFIX, Toggle.of(userAgentConfigs.isEnabled()));
+        if (userAgentConfigs.isEnabled()) {
             try {
-                LOGGER.info("{} User agent is enabled", FRAMEWORK_UTILITIES_PREFIX);
                 userAgentParserOrNull = new UserAgentService().loadParser(
                         List.of(
                                 BrowsCapField.BROWSER,
@@ -57,7 +60,6 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
                 throw new IllegalArgumentException(ex);
             }
         } else {
-            LOGGER.info("{} User agent is disabled", FRAMEWORK_UTILITIES_PREFIX);
             userAgentParserOrNull = null;
             configuredFlag = false;
             exceptionMessageOrNull = contactDevelopmentTeam("User agent configuration failure");

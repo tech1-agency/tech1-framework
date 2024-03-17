@@ -2,6 +2,7 @@ package io.tech1.framework.utilities.geo.functions.mindmax.impl;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import io.tech1.framework.domain.enums.Toggle;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
@@ -42,9 +43,10 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
         this.geoCountryFlagUtility = geoCountryFlagUtility;
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        if (applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
+        var geoLocationsConfigs = applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs();
+        LOGGER.info("{} Geo location {} database — {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, Toggle.of(geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()));
+        if (geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()) {
             try {
-                LOGGER.info("{} Geo location {} database is enabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
                 var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
@@ -55,7 +57,6 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
                 throw new IllegalArgumentException(ex.getMessage());
             }
         } else {
-            LOGGER.info("{} Geo location {} database is disabled", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME);
             this.databaseReader = null;
         }
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);

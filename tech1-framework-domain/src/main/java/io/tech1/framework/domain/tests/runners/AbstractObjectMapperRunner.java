@@ -12,9 +12,19 @@ public abstract class AbstractObjectMapperRunner {
             .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
             .build();
 
+    protected static final ObjectMapper PLAIN_OBJECT_MAPPER = JsonMapper.builder()
+            .build();
+
     @SneakyThrows
     protected final String writeValueAsString(Object object) {
         return OBJECT_MAPPER
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(object);
+    }
+
+    @SneakyThrows
+    protected final String writeValueAsPlainString(Object object) {
+        return PLAIN_OBJECT_MAPPER
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(object);
     }

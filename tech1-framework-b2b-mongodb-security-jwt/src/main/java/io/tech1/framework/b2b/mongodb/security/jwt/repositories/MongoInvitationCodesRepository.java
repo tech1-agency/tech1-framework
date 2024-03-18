@@ -59,10 +59,10 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
         return entity.invitationCodeId();
     }
 
-    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams request) {
         var invitationCode = new MongoDbInvitationCode(
                 owner,
-                getSimpleGrantedAuthorities(requestNewInvitationCodeParams.authorities())
+                getSimpleGrantedAuthorities(request.authorities())
         );
         var entity = this.save(invitationCode);
         return entity.invitationCodeId();

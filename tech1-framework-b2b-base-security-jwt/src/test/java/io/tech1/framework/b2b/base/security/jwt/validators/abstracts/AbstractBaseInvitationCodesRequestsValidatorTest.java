@@ -28,7 +28,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -73,9 +72,9 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateCreateNewInvitationCodeTest")
-    void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams requestNewInvitationCodeParams, String exceptionMessage) {
+    void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams request, String exceptionMessage) {
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitationCode(requestNewInvitationCodeParams));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitationCode(request));
 
         // Assert
         if (nonNull(exceptionMessage)) {
@@ -90,8 +89,8 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     @Test
     void validateDeleteByIdNotFoundTest() {
         // Arrange
-        var username = entity(Username.class);
-        var invitationCodeId = entity(InvitationCodeId.class);
+        var username = Username.random();
+        var invitationCodeId = InvitationCodeId.random();
         when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.absent());
 
         // Act
@@ -107,10 +106,10 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     @Test
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
-        var username = entity(Username.class);
-        var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(InvitationCode.class);
-        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(dbInvitationCode));
+        var username = Username.random();
+        var invitationCodeId = InvitationCodeId.random();
+        var invitationCode = InvitationCode.random();
+        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(invitationCode));
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
@@ -125,12 +124,12 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     @Test
     void validateDeleteByIdOkTest() {
         // Arrange
-        var invitationCodeId = entity(InvitationCodeId.class);
-        var dbInvitationCode = entity(InvitationCode.class);
-        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(dbInvitationCode));
+        var invitationCodeId = InvitationCodeId.random();
+        var invitationCode = InvitationCode.random();
+        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(invitationCode));
 
         // Act
-        this.componentUnderTest.validateDeleteById(dbInvitationCode.owner(), invitationCodeId);
+        this.componentUnderTest.validateDeleteById(invitationCode.owner(), invitationCodeId);
 
         // Assert
         verify(this.invitationCodesRepository).isPresent(invitationCodeId);

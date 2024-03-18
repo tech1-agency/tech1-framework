@@ -7,6 +7,6 @@ import io.tech1.framework.domain.base.Username;
 
 public interface BaseInvitationCodesService {
     ResponseInvitationCodes findByOwner(Username owner);
-    void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
+    void save(Username owner, RequestNewInvitationCodeParams request);
     void deleteById(InvitationCodeId invitationCodeId);
 }

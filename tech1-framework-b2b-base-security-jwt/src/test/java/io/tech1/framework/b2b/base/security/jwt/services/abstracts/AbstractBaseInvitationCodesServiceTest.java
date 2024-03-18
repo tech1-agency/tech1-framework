@@ -19,11 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.HashSet;
-
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.getInvitationCode;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsList;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -107,19 +103,19 @@ class AbstractBaseInvitationCodesServiceTest {
     void saveTest() {
         // Arrange
         var username = Username.random();
-        var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
+        var request = RequestNewInvitationCodeParams.random();
 
         // Act
-        this.componentUnderTest.save(username, requestNewInvitationCodeParams);
+        this.componentUnderTest.save(username, request);
 
         // Assert
-        verify(this.invitationCodesRepository).saveAs(username, requestNewInvitationCodeParams);
+        verify(this.invitationCodesRepository).saveAs(username, request);
     }
 
     @Test
     void deleteByIdTest() {
         // Arrange
-        var invitationCodeId = entity(InvitationCodeId.class);
+        var invitationCodeId = InvitationCodeId.random();
 
         // Act
         this.componentUnderTest.deleteById(invitationCodeId);

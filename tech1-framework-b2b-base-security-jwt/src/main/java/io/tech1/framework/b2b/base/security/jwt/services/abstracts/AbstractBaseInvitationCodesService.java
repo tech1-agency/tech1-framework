@@ -31,8 +31,8 @@ public abstract class AbstractBaseInvitationCodesService implements BaseInvitati
     }
 
     @Override
-    public void save(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
-        this.invitationCodesRepository.saveAs(owner, requestNewInvitationCodeParams);
+    public void save(Username owner, RequestNewInvitationCodeParams request) {
+        this.invitationCodesRepository.saveAs(owner, request);
     }
 
     @Override

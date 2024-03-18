@@ -17,5 +17,5 @@ public interface InvitationCodesRepository {
     long countByOwner(Username username);
     void delete(InvitationCodeId invitationCodeId);
     InvitationCodeId saveAs(InvitationCode invitationCode);
-    InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams);
+    InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams request);
 }

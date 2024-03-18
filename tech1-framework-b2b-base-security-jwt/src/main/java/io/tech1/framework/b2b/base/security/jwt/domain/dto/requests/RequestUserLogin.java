@@ -7,4 +7,11 @@ public record RequestUserLogin(
         Username username,
         Password password
 ) {
+    public static RequestUserLogin testsHardcoded() {
+        return new RequestUserLogin(Username.testsHardcoded(), Password.testsHardcoded());
+    }
+
+    public static RequestUserLogin random() {
+        return new RequestUserLogin(Username.random(), Password.random());
+    }
 }

@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 import io.jsonwebtoken.Claims;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
@@ -12,6 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsServic
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.base.Username;
@@ -37,8 +37,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
@@ -112,10 +110,10 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     @Test
     void loginTest() throws Exception {
         // Arrange
-        var requestUserLogin = entity(RequestUserLogin.class);
-        var username = requestUserLogin.username();
-        var password = requestUserLogin.password();
-        var user = entity(JwtUser.class);
+        var request = RequestUserLogin.testsHardcoded();
+        var username = request.username();
+        var password = request.password();
+        var user = JwtUser.testsHardcoded();
         when(this.jwtUserDetailsService.loadUserByUsername(username.value())).thenReturn(user);
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
@@ -127,7 +125,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         // Act
         this.mvc.perform(
                         post("/authentication/login")
-                                .content(this.objectMapper.writeValueAsString(requestUserLogin))
+                                .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -139,7 +137,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginRequest(requestUserLogin);
+        verify(this.baseAuthenticationRequestsValidator).validateLoginRequest(request);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.value(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());
@@ -169,7 +167,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     @Test
     void logoutInvalidJwtRefreshTokenTest() throws Exception {
         // Arrange
-        var requestAccessToken = new RequestAccessToken(randomString());
+        var requestAccessToken = RequestAccessToken.random();
         var accessToken = requestAccessToken.getJwtAccessToken();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.securityJwtTokenUtils.validate(accessToken)).thenReturn(JwtTokenValidatedClaims.invalid(accessToken));
@@ -263,14 +261,14 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
     @Test
     void refreshTokenValidTest() throws Exception {
         // Arrange
-        var userSession1 = entity(ResponseRefreshTokens.class);
-        when(this.tokensService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenReturn(userSession1);
+        var response = ResponseRefreshTokens.random();
+        when(this.tokensService.refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class))).thenReturn(response);
 
         // Act
         this.mvc.perform(post("/authentication/refreshToken"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken", equalTo(userSession1.accessToken().value())))
-                .andExpect(jsonPath("$.refreshToken", equalTo(userSession1.refreshToken().value())));
+                .andExpect(jsonPath("$.accessToken", equalTo(response.accessToken().value())))
+                .andExpect(jsonPath("$.refreshToken", equalTo(response.refreshToken().value())));
 
         // Assert
         verify(this.tokensService).refreshSessionOrThrow(any(HttpServletRequest.class), any(HttpServletResponse.class));

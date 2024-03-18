@@ -7,4 +7,8 @@ public record ResponseRefreshTokens(
         JwtAccessToken accessToken,
         JwtRefreshToken refreshToken
 ) {
+
+    public static ResponseRefreshTokens random() {
+        return new ResponseRefreshTokens(JwtAccessToken.random(), JwtRefreshToken.random());
+    }
 }

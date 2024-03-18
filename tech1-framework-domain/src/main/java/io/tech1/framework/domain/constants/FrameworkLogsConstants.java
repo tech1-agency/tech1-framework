@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.constants;
 
+import io.tech1.framework.domain.enums.Toggle;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -23,7 +24,7 @@ public class FrameworkLogsConstants {
     // =================================================================================================================
     // Incidents
     // =================================================================================================================
-    public static final String INCIDENT_FEATURE_DISABLED = FRAMEWORK_INCIDENT_PREFIX + " `{}` feature is disabled";
+    public static final String INCIDENT_FEATURE_DISABLED = FRAMEWORK_INCIDENT_PREFIX + " `{}` feature is " + Toggle.DISABLED.getLowerCase();
     public static final String INCIDENT = FRAMEWORK_INCIDENT_PREFIX + " `{}`. incident type: `{}`";
     public static final String INCIDENT_THROWABLE = FRAMEWORK_INCIDENT_PREFIX + " `{}` - throwable. Message: `{}`";
     public static final String INCIDENT_AUTHENTICATION_LOGIN = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /login. Username: `{}`";

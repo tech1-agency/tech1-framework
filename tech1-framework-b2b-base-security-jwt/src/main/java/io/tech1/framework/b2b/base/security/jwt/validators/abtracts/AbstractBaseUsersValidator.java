@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.validators.abtracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
@@ -11,23 +11,23 @@ import lombok.AllArgsConstructor;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbersWithLength;
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
+    // WARNING: Configs vs. Hardcoded?
     protected static final int NEW_PASSWORD_MIN_LENGTH = 8;
 
     // Repositories
     protected final UsersRepository usersRepository;
 
     @Override
-    public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 requestUserUpdate1) {
-        var zoneId = requestUserUpdate1.zoneId();
+    public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 request) {
+        var zoneId = request.zoneId();
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
 
-        var email = requestUserUpdate1.email();
+        var email = request.email();
 
         var invalidEmailMessage = invalidAttribute("email");
         assertNonNullOrThrow(email, invalidEmailMessage);
@@ -43,26 +43,23 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
     }
 
     @Override
-    public void validateUserUpdateRequest2(RequestUserUpdate2 requestUserUpdate2) {
-        var zoneId = requestUserUpdate2.zoneId();
+    public void validateUserUpdateRequest2(RequestUserUpdate2 request) {
+        var zoneId = request.zoneId();
         assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
     }
 
     @Override
-    public void validateUserChangePasswordRequest1(RequestUserChangePassword1 requestUserChangePassword1) {
-        var newPassword = requestUserChangePassword1.newPassword();
-        var confirmPassword = requestUserChangePassword1.confirmPassword();
+    public void validateUserChangePasswordRequestBasic(RequestUserChangePasswordBasic request) {
+        var newPassword = request.newPassword();
+        var confirmPassword = request.confirmPassword();
 
         assertNonNullNotBlankOrThrow(newPassword, invalidAttribute("newPassword"));
         assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
 
-        if (!containsCamelCaseLettersAndNumbersWithLength(newPassword, NEW_PASSWORD_MIN_LENGTH)) {
-            var message = "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least " + NEW_PASSWORD_MIN_LENGTH + " characters long";
-            throw new IllegalArgumentException(message);
-        }
+        newPassword.assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(NEW_PASSWORD_MIN_LENGTH);
+
         if (!newPassword.equals(confirmPassword)) {
-            var message = "Confirm password should match new password";
-            throw new IllegalArgumentException(message);
+            throw new IllegalArgumentException("Provided new password and confirm password are not the same");
         }
     }
 }

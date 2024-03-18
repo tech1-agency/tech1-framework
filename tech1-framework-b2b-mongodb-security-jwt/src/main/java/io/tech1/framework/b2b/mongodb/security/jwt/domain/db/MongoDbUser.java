@@ -37,13 +37,15 @@ public class MongoDbUser {
     private Set<SimpleGrantedAuthority> authorities;
     private Email email;
     private String name;
+    private boolean passwordChangeRequired;
     private Map<String, Object> attributes;
 
-    public MongoDbUser(Username username, Password password, String zoneId, Set<SimpleGrantedAuthority> authorities) {
+    public MongoDbUser(Username username, Password password, ZoneId zoneId, Set<SimpleGrantedAuthority> authorities,  boolean passwordChangeRequired) {
         this.username = username;
         this.password = password;
-        this.zoneId = ZoneId.of(zoneId);
+        this.zoneId = zoneId;
         this.authorities = authorities;
+        this.passwordChangeRequired = passwordChangeRequired;
         this.attributes = new HashMap<>();
     }
 
@@ -55,6 +57,7 @@ public class MongoDbUser {
         this.authorities = user.authorities();
         this.email = user.email();
         this.name = user.name();
+        this.passwordChangeRequired = user.passwordChangeRequired();
         this.attributes = user.attributes();
     }
 
@@ -81,6 +84,7 @@ public class MongoDbUser {
                 this.authorities,
                 this.email,
                 this.name,
+                this.passwordChangeRequired,
                 this.attributes
         );
     }

@@ -31,6 +31,10 @@ public class ResetServerStatus {
     private TuplePercentage percentage;
     private String description;
 
+    public static ResetServerStatus random() {
+        return new ResetServerStatus(10);
+    }
+
     public ResetServerStatus(long stagesCount) {
         this.state = ResetServerState.READY;
         this.stage = 0L;

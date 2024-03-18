@@ -1,7 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.essence;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
-import io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
@@ -17,7 +16,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+
 @Slf4j
 @Service
 public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
@@ -50,7 +50,8 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                             username,
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
-                            SpringAuthoritiesUtility.getSimpleGrantedAuthorities(defaultUser.getAuthorities())
+                            getSimpleGrantedAuthorities(defaultUser.getAuthorities()),
+                            defaultUser.isPasswordChangeRequired()
                     );
                     user.setEmail(defaultUser.getEmailOrNull());
                     return user;

@@ -322,6 +322,34 @@
 			"name": "Users",
 			"item": [
 				{
+					"name": "ChangePasswordRequired",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"Admin24!\",\n    \"confirmPassword\": \"Admin24!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/users/changePasswordRequired",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"users",
+								"changePasswordRequired"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ChangePassword1",
 					"request": {
 						"method": "POST",

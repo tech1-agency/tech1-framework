@@ -5,7 +5,7 @@ import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.DomainConstants;
-import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -66,7 +66,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
                 Username.of("tech1"),
                 Email.of("tech1@" + DomainConstants.TECH1),
                 "Tech1",
-                TestsZoneIdsConstants.EET_ZONE_ID,
+                ZoneIdsConstants.UKRAINE,
                 Set.of(
                         new SimpleGrantedAuthority("user"),
                         new SimpleGrantedAuthority("admin")

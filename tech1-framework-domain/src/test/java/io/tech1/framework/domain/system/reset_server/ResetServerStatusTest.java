@@ -1,11 +1,11 @@
 package io.tech1.framework.domain.system.reset_server;
 
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.Test;
 
 import static io.tech1.framework.domain.system.reset_server.ResetServerState.READY;
 import static io.tech1.framework.domain.system.reset_server.ResetServerState.RESETTING;
-import static io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants.EET_ZONE_ID;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
@@ -59,7 +59,7 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
         assertThat(this.writeValueAsString(status)).isEqualTo(readFile(this.getFolder(), "reset-server-status-3.json"));
 
         // Act-4
-        status.complete(EET_ZONE_ID);
+        status.complete(ZoneIdsConstants.UKRAINE);
 
         // Assert-4
         assertThat(status.getState()).isEqualTo(READY);

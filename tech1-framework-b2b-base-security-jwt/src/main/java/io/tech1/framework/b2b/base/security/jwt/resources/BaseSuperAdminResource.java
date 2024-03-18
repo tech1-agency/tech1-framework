@@ -64,8 +64,8 @@ public class BaseSuperAdminResource {
     // =================================================================================================================
 
     @GetMapping("/sessions")
-    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
+    public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         return this.baseSuperAdminService.getSessions(cookie);
     }
 
@@ -82,8 +82,8 @@ public class BaseSuperAdminResource {
 
     @DeleteMapping("/sessions")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
+    public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrentAsSuperuser(cookie);
     }
 }

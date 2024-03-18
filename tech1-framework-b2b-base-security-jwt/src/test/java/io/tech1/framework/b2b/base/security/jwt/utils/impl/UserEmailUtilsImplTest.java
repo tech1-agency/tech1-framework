@@ -26,6 +26,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.time.ZoneOffset;
 
 import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
+import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
@@ -82,7 +83,7 @@ class UserEmailUtilsImplTest {
         );
     }
 
-    @RepeatedTest(5)
+    @RepeatedTest(FIVE_TIMES)
     void getSubjectTest() {
         // Arrange
         when(this.environmentUtility.getActiveProfile()).thenReturn("stage");

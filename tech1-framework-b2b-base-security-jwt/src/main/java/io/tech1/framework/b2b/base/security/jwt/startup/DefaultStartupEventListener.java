@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
 import io.tech1.framework.domain.enums.Status;
+import io.tech1.framework.domain.enums.Toggle;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
@@ -33,18 +34,18 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
 
         this.environmentUtility.verifyProfilesConfiguration();
 
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers().isEnabled()) {
-            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is enabled");
+        var defaultUsers = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
+        LOGGER.info("{} Essence defaultUsers — {}", FRAMEWORK_B2B_SECURITY_JWT_PREFIX, Toggle.of(defaultUsers.isEnabled()));
+        if (defaultUsers.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
-        } else {
-            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is disabled");
         }
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
-            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is enabled");
+
+        var invitationCodes = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes();
+        LOGGER.info("{} Essence invitationCodes — {}", FRAMEWORK_B2B_SECURITY_JWT_PREFIX, Toggle.of(invitationCodes.isEnabled()));
+        if (invitationCodes.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitationCodes();
-        } else {
-            LOGGER.info(FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `invitationCodes` is disabled");
         }
+
         LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }

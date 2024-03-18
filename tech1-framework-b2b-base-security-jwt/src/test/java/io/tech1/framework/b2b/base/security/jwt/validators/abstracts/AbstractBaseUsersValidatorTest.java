@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -43,15 +43,15 @@ import static org.mockito.Mockito.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class AbstractBaseUsersValidatorTest {
 
-    private static Stream<Arguments> validateUserChangePasswordRequest1Test() {
+    private static Stream<Arguments> validateUserChangePasswordRequestBasicArgs() {
         return Stream.of(
-                Arguments.of(new RequestUserChangePassword1(null, null), invalidAttribute("newPassword")),
-                Arguments.of(new RequestUserChangePassword1(Password.of("simple"), null), invalidAttribute("confirmPassword")),
-                Arguments.of(new RequestUserChangePassword1(Password.of("simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1(Password.of("Simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1(Password.of("Simple1"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePassword1(Password.of("ComPLEx12"), Password.of("NoMatch")), "Confirm password should match new password"),
-                Arguments.of(new RequestUserChangePassword1(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
+                Arguments.of(new RequestUserChangePasswordBasic(null, null), invalidAttribute("newPassword")),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("simple"), null), invalidAttribute("confirmPassword")),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple1"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("NoMatch")), "Provided new password and confirm password are not the same"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
         );
     }
 
@@ -197,10 +197,10 @@ class AbstractBaseUsersValidatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("validateUserChangePasswordRequest1Test")
-    void validateUserChangePasswordRequest1Test(RequestUserChangePassword1 requestUserChangePassword1, String exceptionMessage) {
+    @MethodSource("validateUserChangePasswordRequestBasicArgs")
+    void validateUserChangePasswordRequestBasic(RequestUserChangePasswordBasic request, String exceptionMessage) {
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserChangePasswordRequest1(requestUserChangePassword1));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserChangePasswordRequestBasic(request));
 
         // Assert
         if (nonNull(exceptionMessage)) {
@@ -211,5 +211,4 @@ class AbstractBaseUsersValidatorTest {
             assertThat(throwable).isNull();
         }
     }
-
 }

@@ -63,10 +63,10 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
         return entity.invitationCodeId();
     }
 
-    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams request) {
         var invitationCode = new PostgresDbInvitationCode(
                 owner,
-                getSimpleGrantedAuthorities(requestNewInvitationCodeParams.authorities())
+                getSimpleGrantedAuthorities(request.authorities())
         );
         var entity = this.save(invitationCode);
         return entity.invitationCodeId();

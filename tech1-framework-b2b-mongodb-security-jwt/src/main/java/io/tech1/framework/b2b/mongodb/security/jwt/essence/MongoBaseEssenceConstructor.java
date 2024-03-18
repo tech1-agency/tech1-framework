@@ -50,8 +50,9 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                     var user = new MongoDbUser(
                             username,
                             defaultUser.getPassword(),
-                            defaultUser.getZoneId().getId(),
-                            getSimpleGrantedAuthorities(defaultUser.getAuthorities())
+                            defaultUser.getZoneId(),
+                            getSimpleGrantedAuthorities(defaultUser.getAuthorities()),
+                            defaultUser.isPasswordChangeRequired()
                     );
                     user.setEmail(defaultUser.getEmailOrNull());
                     return user;

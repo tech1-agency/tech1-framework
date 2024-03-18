@@ -1,5 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
@@ -21,7 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.*;
+import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser.randomSuperadmin;
 import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
@@ -161,15 +163,14 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var user = randomSuperadmin();
-        var userId1 = this.usersRepository.saveAs(user);
+        var userId1 = this.usersRepository.saveAs(randomSuperadmin());
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
         // Act-Assert-1
-        var userId2 = this.usersRepository.saveAs(registration1(), Password.random(), randomInvitationCode());
+        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.testsHardcoded(), Password.random(), InvitationCode.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
     }

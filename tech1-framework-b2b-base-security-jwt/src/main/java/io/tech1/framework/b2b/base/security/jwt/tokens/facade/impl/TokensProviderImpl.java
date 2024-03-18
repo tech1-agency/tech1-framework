@@ -60,56 +60,56 @@ public class TokensProviderImpl implements TokensProvider {
     }
 
     @Override
-    public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
+    public DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws CsrfTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
-            return this.tokensCookiesProvider.readCsrfToken(request);
+            return this.tokensCookiesProvider.readCsrfToken(httpRequest);
         } else {
-            return this.tokensHeadersProvider.readCsrfToken(request);
+            return this.tokensHeadersProvider.readCsrfToken(httpRequest);
         }
     }
 
     @Override
-    public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
+    public RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
-            return this.tokensCookiesProvider.readRequestAccessToken(request);
+            return this.tokensCookiesProvider.readRequestAccessToken(httpRequest);
         } else {
-            return this.tokensHeadersProvider.readRequestAccessToken(request);
+            return this.tokensHeadersProvider.readRequestAccessToken(httpRequest);
         }
     }
 
     @Override
-    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException {
+    public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
-            return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(request);
+            return this.tokensCookiesProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
         } else {
-            return this.tokensHeadersProvider.readRequestAccessTokenOnWebsocketHandshake(request);
+            return this.tokensHeadersProvider.readRequestAccessTokenOnWebsocketHandshake(httpRequest);
         }
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
+    public RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws RefreshTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
-            return this.tokensCookiesProvider.readRequestRefreshToken(request);
+            return this.tokensCookiesProvider.readRequestRefreshToken(httpRequest);
         } else {
-            return this.tokensHeadersProvider.readRequestRefreshToken(request);
+            return this.tokensHeadersProvider.readRequestRefreshToken(httpRequest);
         }
     }
 
     @Override
-    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException {
+    public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws RefreshTokenNotFoundException {
         if (this.isCookiesProviderEnabled()) {
-            return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
+            return this.tokensCookiesProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
         } else {
-            return this.tokensHeadersProvider.readRequestRefreshTokenOnWebsocketHandshake(request);
+            return this.tokensHeadersProvider.readRequestRefreshTokenOnWebsocketHandshake(httpRequest);
         }
     }
 
     @Override
-    public void clearTokens(HttpServletResponse response) {
+    public void clearTokens(HttpServletResponse httpResponse) {
         if (this.isCookiesProviderEnabled()) {
-            this.tokensCookiesProvider.clearTokens(response);
+            this.tokensCookiesProvider.clearTokens(httpResponse);
         } else {
-            this.tokensHeadersProvider.clearTokens(response);
+            this.tokensHeadersProvider.clearTokens(httpResponse);
         }
     }
 

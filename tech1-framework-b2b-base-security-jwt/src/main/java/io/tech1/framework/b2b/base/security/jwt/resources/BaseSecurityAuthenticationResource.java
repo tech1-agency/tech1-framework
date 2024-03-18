@@ -57,10 +57,10 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser login(@RequestBody RequestUserLogin requestUserLogin, HttpServletRequest request, HttpServletResponse response) {
-        this.baseAuthenticationRequestsValidator.validateLoginRequest(requestUserLogin);
-        var username = requestUserLogin.username();
-        var password = requestUserLogin.password();
+    public CurrentClientUser login(@RequestBody RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        this.baseAuthenticationRequestsValidator.validateLoginRequest(request);
+        var username = request.username();
+        var password = request.password();
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
 
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
@@ -71,10 +71,10 @@ public class BaseSecurityAuthenticationResource {
         var accessToken = this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams());
         var refreshToken = this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams());
 
-        this.baseUsersSessionsService.save(user, accessToken, refreshToken, request);
+        this.baseUsersSessionsService.save(user, accessToken, refreshToken, httpRequest);
 
-        this.tokensProvider.createResponseAccessToken(accessToken, response);
-        this.tokensProvider.createResponseRefreshToken(refreshToken, response);
+        this.tokensProvider.createResponseAccessToken(accessToken, httpResponse);
+        this.tokensProvider.createResponseRefreshToken(refreshToken, httpResponse);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -87,17 +87,17 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readRequestAccessToken(request);
+    public void logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         if (nonNull(cookie.value())) {
             var accessToken = cookie.getJwtAccessToken();
             var validatedClaims = this.securityJwtTokenUtils.validate(accessToken);
             if (validatedClaims.valid()) {
                 var username = validatedClaims.username();
                 this.sessionRegistry.logout(username, accessToken);
-                this.tokensProvider.clearTokens(response);
+                this.tokensProvider.clearTokens(httpResponse);
                 SecurityContextHolder.clearContext();
-                var session = request.getSession(false);
+                var session = httpRequest.getSession(false);
                 if (nonNull(session)) {
                     session.invalidate();
                 }
@@ -108,12 +108,16 @@ public class BaseSecurityAuthenticationResource {
 
     @PostMapping("/refreshToken")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseRefreshTokens refreshToken(HttpServletRequest request, HttpServletResponse response) throws TokenUnauthorizedException {
+    public ResponseRefreshTokens refreshToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws TokenUnauthorizedException {
         try {
-            return this.tokensService.refreshSessionOrThrow(request, response);
-        } catch (RefreshTokenNotFoundException | RefreshTokenInvalidException |
-                 RefreshTokenExpiredException | RefreshTokenDbNotFoundException ex) {
-            this.tokensProvider.clearTokens(response);
+            return this.tokensService.refreshSessionOrThrow(httpRequest, httpResponse);
+        } catch (
+                RefreshTokenNotFoundException |
+                RefreshTokenInvalidException |
+                RefreshTokenExpiredException |
+                RefreshTokenDbNotFoundException ex
+        ) {
+            this.tokensProvider.clearTokens(httpResponse);
             throw new TokenUnauthorizedException(ex.getMessage());
         }
     }

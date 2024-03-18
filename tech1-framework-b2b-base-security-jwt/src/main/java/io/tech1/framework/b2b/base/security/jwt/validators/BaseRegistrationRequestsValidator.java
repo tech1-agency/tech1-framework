@@ -4,5 +4,5 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserR
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
 
 public interface BaseRegistrationRequestsValidator {
-    void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException;
+    void validateRegistrationRequest1(RequestUserRegistration1 request) throws RegistrationException;
 }

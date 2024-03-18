@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
+import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
@@ -16,16 +17,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.HashSet;
-
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
-import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.randomInvitationCode;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -140,7 +139,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
     void saveIntegrationTests() {
         // Arrange
         var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
-        var requestNewInvitationCodeParams = new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
+        var request = RequestNewInvitationCodeParams.random();
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
@@ -150,20 +149,20 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(randomInvitationCode());
+        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(InvitationCode.random());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
 
         // Act-Assert-3
-        this.invitationCodesRepository.saveAs(Username.testsHardcoded(), requestNewInvitationCodeParams);
+        this.invitationCodesRepository.saveAs(Username.testsHardcoded(), request);
         assertThat(this.invitationCodesRepository.count()).isEqualTo(8);
         var ownedInvitationCodes = this.invitationCodesRepository.findByOwner(Username.testsHardcoded());
         assertThat(ownedInvitationCodes).hasSize(1);
         var ownedInvitationCode = ownedInvitationCodes.get(0);
         assertThat(ownedInvitationCode.getOwner()).isEqualTo(Username.testsHardcoded());
-        assertThat(ownedInvitationCode.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(requestNewInvitationCodeParams.authorities()));
+        assertThat(ownedInvitationCode.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(request.authorities()));
         assertThat(ownedInvitationCode.getValue()).hasSize(40);
     }
 }

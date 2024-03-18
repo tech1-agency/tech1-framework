@@ -14,6 +14,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 import java.time.ZoneId;
 import java.util.Set;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsSet;
 import static java.util.Objects.nonNull;
 
@@ -30,6 +31,8 @@ public class DefaultUser extends AbstractPropertyConfigs {
     private final ZoneId zoneId;
     @NonMandatoryProperty
     private String email;
+    @NonMandatoryProperty
+    private final Boolean passwordChangeRequired;
     @MandatoryProperty
     private final Set<String> authorities;
 
@@ -39,6 +42,7 @@ public class DefaultUser extends AbstractPropertyConfigs {
                 Password.testsHardcoded(),
                 ZoneId.of("Europe/Kiev"),
                 Email.testsHardcoded().value(),
+                false,
                 Set.of("user", "admin")
         );
     }
@@ -49,11 +53,16 @@ public class DefaultUser extends AbstractPropertyConfigs {
                 Password.random(),
                 RandomUtility.randomZoneId(),
                 Email.random().value(),
+                randomBoolean(),
                 randomStringsAsSet(3)
         );
     }
 
     public Email getEmailOrNull() {
         return nonNull(this.email) ? Email.of(this.email) : null;
+    }
+
+    public boolean isPasswordChangeRequired() {
+        return Boolean.TRUE.equals(this.passwordChangeRequired);
     }
 }

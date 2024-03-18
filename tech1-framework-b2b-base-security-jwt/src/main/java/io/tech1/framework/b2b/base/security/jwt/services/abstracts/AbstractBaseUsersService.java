@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -23,38 +23,40 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void updateUser1(JwtUser user, RequestUserUpdate1 requestUserUpdate1) {
+    public void updateUser1(JwtUser user, RequestUserUpdate1 request) {
         user = new JwtUser(
                 user.id(),
                 user.username(),
                 user.password(),
-                ZoneId.of(requestUserUpdate1.zoneId()),
+                ZoneId.of(request.zoneId()),
                 user.authorities(),
-                requestUserUpdate1.email(),
-                requestUserUpdate1.name(),
+                request.email(),
+                request.name(),
+                user.passwordChangeRequired(),
                 user.attributes()
         );
         this.saveAndReauthenticate(user);
     }
 
     @Override
-    public void updateUser2(JwtUser user, RequestUserUpdate2 requestUserUpdate2) {
+    public void updateUser2(JwtUser user, RequestUserUpdate2 request) {
         user = new JwtUser(
                 user.id(),
                 user.username(),
                 user.password(),
-                ZoneId.of(requestUserUpdate2.zoneId()),
+                ZoneId.of(request.zoneId()),
                 user.authorities(),
                 user.email(),
-                requestUserUpdate2.name(),
+                request.name(),
+                user.passwordChangeRequired(),
                 user.attributes()
         );
         this.saveAndReauthenticate(user);
     }
 
     @Override
-    public void changePassword1(JwtUser user, RequestUserChangePassword1 requestUserChangePassword1) {
-        var hashPassword = this.bCryptPasswordEncoder.encode(requestUserChangePassword1.newPassword().value());
+    public void changePasswordRequired(JwtUser user, RequestUserChangePasswordBasic request) {
+        var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
         user = new JwtUser(
                 user.id(),
                 user.username(),
@@ -63,6 +65,24 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.authorities(),
                 user.email(),
                 user.name(),
+                false,
+                user.attributes()
+        );
+        this.saveAndReauthenticate(user);
+    }
+
+    @Override
+    public void changePassword1(JwtUser user, RequestUserChangePasswordBasic request) {
+        var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
+        user = new JwtUser(
+                user.id(),
+                user.username(),
+                Password.of(hashPassword),
+                user.zoneId(),
+                user.authorities(),
+                user.email(),
+                user.name(),
+                user.passwordChangeRequired(),
                 user.attributes()
         );
         this.saveAndReauthenticate(user);

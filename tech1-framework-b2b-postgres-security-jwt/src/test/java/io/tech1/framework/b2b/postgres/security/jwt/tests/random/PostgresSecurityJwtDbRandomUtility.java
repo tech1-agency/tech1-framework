@@ -64,7 +64,8 @@ public class PostgresSecurityJwtDbRandomUtility {
                 Username.of(username),
                 Password.random(),
                 randomZoneId(),
-                getSimpleGrantedAuthorities(authorities)
+                getSimpleGrantedAuthorities(authorities),
+                randomBoolean()
         );
         user.setEmail(Email.of(username + "@" + DomainConstants.TECH1));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));

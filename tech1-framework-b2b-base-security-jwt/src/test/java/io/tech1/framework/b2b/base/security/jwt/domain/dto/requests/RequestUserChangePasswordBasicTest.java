@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestUserChangePassword1Test extends AbstractSerializationDeserializationRunner {
-    private static final RequestUserChangePassword1 REQUEST = new RequestUserChangePassword1(
+class RequestUserChangePasswordBasicTest extends AbstractSerializationDeserializationRunner {
+    private static final RequestUserChangePasswordBasic REQUEST = new RequestUserChangePasswordBasic(
             Password.of("password123"),
             Password.of("password123")
     );
@@ -31,7 +31,7 @@ class RequestUserChangePassword1Test extends AbstractSerializationDeserializatio
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<RequestUserChangePassword1>() {};
+        var typeReference = new TypeReference<RequestUserChangePasswordBasic>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);

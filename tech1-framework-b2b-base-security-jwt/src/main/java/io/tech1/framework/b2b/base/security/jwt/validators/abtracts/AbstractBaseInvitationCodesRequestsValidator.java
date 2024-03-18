@@ -21,8 +21,8 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     @Override
-    public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
-        var authorities = requestNewInvitationCodeParams.authorities();
+    public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams request) {
+        var authorities = request.authorities();
         var availableAuthorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
 
         assertTrueOrThrow(availableAuthorities.containsAll(authorities), "Invitation code request params contains unsupported authority");

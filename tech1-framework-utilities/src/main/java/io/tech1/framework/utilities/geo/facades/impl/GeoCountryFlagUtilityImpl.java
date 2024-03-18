@@ -2,6 +2,7 @@ package io.tech1.framework.utilities.geo.facades.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.tech1.framework.domain.enums.Toggle;
 import io.tech1.framework.domain.geo.GeoCountryFlag;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
@@ -42,9 +43,10 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     ) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        if (this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs().isEnabled()) {
+        var geoCountryFlagsConfigs = this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
+        LOGGER.info("{} Geo country flags {} json — {}", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
+        if (geoCountryFlagsConfigs.isEnabled()) {
             try {
-                LOGGER.info("{} Geo country flags {} json is enabled", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON);
                 var resource = resourceLoader.getResource("classpath:" + COUNTRIES_FLAGS_JSON);
                 var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
                 var objectMapper = new ObjectMapper();
@@ -72,7 +74,6 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
         } else {
             this.mappedByCountryName = new HashMap<>();
             this.mappedByCountryCode = new HashMap<>();
-            LOGGER.info("{} Geo country flags {} json is disabled", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON);
         }
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }

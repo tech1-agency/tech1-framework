@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class RequestUserRegistration1Test extends AbstractSerializationDeserializationR
             Username.testsHardcoded(),
             Password.of("password123"),
             Password.of("password123"),
-            TestsZoneIdsConstants.EET_ZONE_ID.getId(),
+            ZoneIdsConstants.UKRAINE.getId(),
             "TJ5veLJvqi78AARpiDVXQ9u0q9rbo3zpE6LtbWBH"
     );
 

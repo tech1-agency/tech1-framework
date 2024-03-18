@@ -67,7 +67,8 @@ tech1:
         users:
           - username: admin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
-            zoneId: "Europe/Kiev" # JavaScript: Intl.DateTimeFormat().resolvedOptions().timeZone
+            zoneId: "Europe/Kiev"
+            passwordChangeRequired: false
             authorities: [ "admin", "invitationCode:write" ]
       invitationCodes:
         enabled: true

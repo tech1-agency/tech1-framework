@@ -55,15 +55,19 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column
     private String name;
 
+    @Column(name = "password_change_required", nullable = false)
+    private boolean passwordChangeRequired;
+
     @Convert(converter = PostgresMapStringsObjectsConverter.class)
     @Column(length = 65535)
     private Map<String, Object> attributes;
 
-    public PostgresDbUser(Username username, Password password, ZoneId zoneId, Set<SimpleGrantedAuthority> authorities) {
+    public PostgresDbUser(Username username, Password password, ZoneId zoneId, Set<SimpleGrantedAuthority> authorities, boolean passwordChangeRequired) {
         this.username = username;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
+        this.passwordChangeRequired = passwordChangeRequired;
     }
 
     public PostgresDbUser(JwtUser user) {
@@ -74,6 +78,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
         this.authorities = user.authorities();
         this.email = user.email();
         this.name = user.name();
+        this.passwordChangeRequired = user.passwordChangeRequired();
         this.attributes = user.attributes();
     }
 
@@ -99,6 +104,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.authorities,
                 this.email,
                 this.name,
+                this.passwordChangeRequired,
                 this.attributes
         );
     }

@@ -5,17 +5,15 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tests.constants.TestsZoneIdsConstants;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.ZoneId;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 
@@ -27,6 +25,7 @@ public record JwtUser(
         Set<SimpleGrantedAuthority> authorities,
         Email email,
         String name,
+        boolean passwordChangeRequired,
         Map<String, Object> attributes
 ) implements UserDetails {
 
@@ -76,10 +75,27 @@ public record JwtUser(
                 ),
                 Email.random(),
                 randomString(),
-                Map.of(
-                        randomString(), randomString(),
-                        randomString(), randomInteger()
+                randomBoolean(),
+                new HashMap<>(
+                        Map.of(
+                            randomString(), randomString(),
+                            randomString(), randomInteger()
+                        )
                 )
+        );
+    }
+
+    public static JwtUser randomSuperadmin() {
+        return new JwtUser(
+                UserId.random(),
+                Username.random(),
+                Password.random(),
+                randomZoneId(),
+                getSimpleGrantedAuthorities(SUPER_ADMIN),
+                Email.random(),
+                randomString(),
+                false,
+                new HashMap<>()
         );
     }
 
@@ -88,11 +104,12 @@ public record JwtUser(
                 UserId.testsHardcoded(),
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
-                TestsZoneIdsConstants.EET_ZONE_ID,
-                Set.of(),
+                ZoneIdsConstants.UKRAINE,
+                getSimpleGrantedAuthorities("user"),
                 Email.testsHardcoded(),
                 "",
-                Map.of()
+                false,
+                new HashMap<>()
         );
     }
 

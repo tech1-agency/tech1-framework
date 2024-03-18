@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,9 +55,9 @@ class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner1 {
     }
 
     @Test
-    void update1Test() throws Exception {
+    void register1() throws Exception {
         // Arrange
-        var requestUserRegistration1 = entity(RequestUserRegistration1.class);
+        var requestUserRegistration1 = RequestUserRegistration1.testsHardcoded();
 
         // Act
         this.mvc.perform(

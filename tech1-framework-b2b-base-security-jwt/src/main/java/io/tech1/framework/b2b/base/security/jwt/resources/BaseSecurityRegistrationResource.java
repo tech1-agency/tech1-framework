@@ -33,10 +33,10 @@ public class BaseSecurityRegistrationResource {
 
     @PostMapping("/register1")
     @ResponseStatus(HttpStatus.OK)
-    public void register1(@RequestBody RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
-        this.baseRegistrationRequestsValidator.validateRegistrationRequest1(requestUserRegistration1);
-        this.baseRegistrationService.register1(requestUserRegistration1);
-        this.securityJwtPublisher.publishRegistration1(new EventRegistration1(requestUserRegistration1));
-        this.securityJwtIncidentPublisher.publishRegistration1(new IncidentRegistration1(requestUserRegistration1.username()));
+    public void register1(@RequestBody RequestUserRegistration1 request) throws RegistrationException {
+        this.baseRegistrationRequestsValidator.validateRegistrationRequest1(request);
+        this.baseRegistrationService.register1(request);
+        this.securityJwtPublisher.publishRegistration1(new EventRegistration1(request));
+        this.securityJwtIncidentPublisher.publishRegistration1(new IncidentRegistration1(request.username()));
     }
 }

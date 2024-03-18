@@ -27,4 +27,14 @@ public record InvitationCode(
                 Username.random()
         );
     }
+
+    public static InvitationCode randomNoInvited() {
+        return new InvitationCode(
+                InvitationCodeId.random(),
+                Username.random(),
+                getSimpleGrantedAuthorities(SUPER_ADMIN),
+                randomString(),
+                null
+        );
+    }
 }

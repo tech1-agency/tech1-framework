@@ -37,10 +37,10 @@ public class BaseSecurityInvitationCodesResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void save(@RequestBody RequestNewInvitationCodeParams requestNewInvitationCodeParams) {
+    public void save(@RequestBody RequestNewInvitationCodeParams request) {
+        this.baseInvitationCodesRequestsValidator.validateCreateNewInvitationCode(request);
         var owner = this.currentSessionAssistant.getCurrentUsername();
-        this.baseInvitationCodesRequestsValidator.validateCreateNewInvitationCode(requestNewInvitationCodeParams);
-        this.baseInvitationCodesService.save(owner, requestNewInvitationCodeParams);
+        this.baseInvitationCodesService.save(owner, request);
     }
 
     @DeleteMapping("/{invitationCodeId}")

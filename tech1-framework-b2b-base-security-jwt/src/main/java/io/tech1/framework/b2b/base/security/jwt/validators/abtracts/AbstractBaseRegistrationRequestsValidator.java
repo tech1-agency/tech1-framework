@@ -27,12 +27,12 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     protected final UsersRepository mongoUsersRepository;
 
     @Override
-    public void validateRegistrationRequest1(RequestUserRegistration1 requestUserRegistration1) throws RegistrationException {
-        var username = requestUserRegistration1.username();
-        var zoneId = requestUserRegistration1.zoneId();
-        var password = requestUserRegistration1.password();
-        var confirmPassword = requestUserRegistration1.confirmPassword();
-        var invitationCode = requestUserRegistration1.invitationCode();
+    public void validateRegistrationRequest1(RequestUserRegistration1 request) throws RegistrationException {
+        var username = request.username();
+        var zoneId = request.zoneId();
+        var password = request.password();
+        var confirmPassword = request.confirmPassword();
+        var invitationCode = request.invitationCode();
 
         assertNonNullOrThrow(username, invalidAttribute("username"));
         assertNonNullOrThrow(password, invalidAttribute("password"));

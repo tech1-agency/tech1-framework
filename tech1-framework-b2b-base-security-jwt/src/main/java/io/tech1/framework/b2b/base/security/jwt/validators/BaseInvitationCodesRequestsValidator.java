@@ -5,6 +5,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.domain.base.Username;
 
 public interface BaseInvitationCodesRequestsValidator {
-    void validateCreateNewInvitationCode(RequestNewInvitationCodeParams requestNewInvitationCodeParams);
+    void validateCreateNewInvitationCode(RequestNewInvitationCodeParams request);
     void validateDeleteById(Username username, InvitationCodeId invitationCodeId);
 }

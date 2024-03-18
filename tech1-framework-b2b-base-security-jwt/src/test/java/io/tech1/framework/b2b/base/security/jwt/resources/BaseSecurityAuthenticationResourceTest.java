@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDe
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRefreshTokens;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.*;
+import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
@@ -119,7 +120,7 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
         var refreshToken = JwtRefreshToken.random();
         when(this.securityJwtTokenUtils.createJwtAccessToken(user.getJwtTokenCreationParams())).thenReturn(accessToken);
         when(this.securityJwtTokenUtils.createJwtRefreshToken(user.getJwtTokenCreationParams())).thenReturn(refreshToken);
-        var currentClientUser = randomCurrentClientUser();
+        var currentClientUser = CurrentClientUser.random();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
 
         // Act

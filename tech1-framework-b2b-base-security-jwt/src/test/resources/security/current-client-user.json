@@ -3,6 +3,7 @@
   "email" : "tech1@tech1.io",
   "name" : "Tech1",
   "zoneId" : "Europe/Kiev",
+  "passwordChangeRequired" : false,
   "authorities" : [ "admin", "user" ],
   "attributes" : {
     "key1" : "value1",

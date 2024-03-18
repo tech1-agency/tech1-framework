@@ -24,3 +24,4 @@ Last deployed version: **1.16**
 — Addition: Password.assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow()
 — Addition: DefaultUser.passwordChangeRequired used in EssenseConstructor
 — Addition: API /users/changePasswordRequired
+— Addition: CurrentClientUser.passwordChangeRequired

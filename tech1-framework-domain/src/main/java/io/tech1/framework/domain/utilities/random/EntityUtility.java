@@ -135,6 +135,7 @@ public class EntityUtility {
         });
     }
 
+    // TASKS: add random method to classes that uses this method
     public static <T> T entity(Class<? extends T> type) {
         try {
             var clazzFunction = CONSTRUCTORS_RULES.get(type);

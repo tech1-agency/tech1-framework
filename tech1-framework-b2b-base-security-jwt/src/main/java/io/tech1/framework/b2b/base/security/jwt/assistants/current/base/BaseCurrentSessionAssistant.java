@@ -3,9 +3,9 @@ package io.tech1.framework.b2b.base.security.jwt.assistants.current.base;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
@@ -70,6 +70,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
                 user.email(),
                 user.name(),
                 user.zoneId(),
+                user.passwordChangeRequired(),
                 user.authorities(),
                 attributes
         );

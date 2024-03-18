@@ -22,7 +22,7 @@ public class BaseSecurityJwtDbRandomUtility {
     // =================================================================================================================
     public static ResponseInvitationCode getInvitationCode(Username owner) {
         return new ResponseInvitationCode(
-                entity(InvitationCodeId.class),
+                InvitationCodeId.random(),
                 owner,
                 "admin",
                 randomStringLetterOrNumbersOnly(40),
@@ -32,7 +32,7 @@ public class BaseSecurityJwtDbRandomUtility {
 
     public static ResponseInvitationCode getInvitationCode(Username owner, Username invited) {
         return new ResponseInvitationCode(
-                entity(InvitationCodeId.class),
+                InvitationCodeId.random(),
                 owner,
                 "admin",
                 randomStringLetterOrNumbersOnly(40),
@@ -45,7 +45,7 @@ public class BaseSecurityJwtDbRandomUtility {
     // =================================================================================================================
     public static UserSession session(Username owner, JwtAccessToken accessToken, JwtRefreshToken refreshToken) {
         return UserSession.ofPersisted(
-                entity(UserSessionId.class),
+                UserSessionId.random(),
                 getCurrentTimestamp(),
                 getCurrentTimestamp(),
                 owner,

@@ -1,15 +1,16 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
+import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.RequiredArgsConstructor;
@@ -91,8 +92,8 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     @Test
     void getCurrentClientUserCronEnabledTest() throws Exception {
         // Arrange
-        var currentClientUser = randomCurrentClientUser();
-        var session = entity(UserSession.class);
+        var currentClientUser = CurrentClientUser.random();
+        var session = UserSession.randomPersistedSession();
         when(this.currentSessionAssistant.getCurrentClientUser()).thenReturn(currentClientUser);
         when(this.currentSessionAssistant.getCurrentUserSession(any(HttpServletRequest.class))).thenReturn(session);
 

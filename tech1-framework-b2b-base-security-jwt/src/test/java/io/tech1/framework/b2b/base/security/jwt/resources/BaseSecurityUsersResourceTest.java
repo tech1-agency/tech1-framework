@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,65 +52,86 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner1 {
     }
 
     @Test
-    void update1Test() throws Exception {
+    void update1() throws Exception {
         // Arrange
-        var requestUserUpdate1 = entity(RequestUserUpdate1.class);
-        var user = entity(JwtUser.class);
+        var request = RequestUserUpdate1.testsHardcoded();
+        var user = JwtUser.testsHardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
                 post("/users/update1")
-                        .content(this.objectMapper.writeValueAsString(requestUserUpdate1))
+                        .content(this.objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersValidator).validateUserUpdateRequest1(user.username(), requestUserUpdate1);
-        verify(this.baseUsersService).updateUser1(user, requestUserUpdate1);
+        verify(this.baseUsersValidator).validateUserUpdateRequest1(user.username(), request);
+        verify(this.baseUsersService).updateUser1(user, request);
     }
 
     @Test
-    void update2Test() throws Exception {
+    void update2() throws Exception {
         // Arrange
-        var requestUserUpdate2 = entity(RequestUserUpdate2.class);
-        var user = entity(JwtUser.class);
+        var request = RequestUserUpdate2.testsHardcoded();
+        var user = JwtUser.testsHardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
                         post("/users/update2")
-                                .content(this.objectMapper.writeValueAsString(requestUserUpdate2))
+                                .content(this.objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         // Assert
+        verify(this.baseUsersValidator).validateUserUpdateRequest2(request);
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersValidator).validateUserUpdateRequest2(requestUserUpdate2);
-        verify(this.baseUsersService).updateUser2(user, requestUserUpdate2);
+        verify(this.baseUsersService).updateUser2(user, request);
     }
 
     @Test
-    void changePassword1Test() throws Exception {
+    void changePasswordRequired() throws Exception {
         // Arrange
-        var requestUserChangePassword1 = entity(RequestUserChangePassword1.class);
-        var user = entity(JwtUser.class);
+        var request = RequestUserChangePasswordBasic.testsHardcoded();
+        var user = JwtUser.testsHardcoded();
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
+
+        // Act
+        this.mvc.perform(
+                        post("/users/changePasswordRequired")
+                                .content(this.objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.baseUsersValidator).validateUserChangePasswordRequestBasic(request);
+        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.baseUsersService).changePasswordRequired(user, request);
+    }
+
+    @Test
+    void changePassword1() throws Exception {
+        // Arrange
+        var request = RequestUserChangePasswordBasic.testsHardcoded();
+        var user = JwtUser.testsHardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
         this.mvc.perform(
                 post("/users/changePassword1")
-                        .content(this.objectMapper.writeValueAsString(requestUserChangePassword1))
+                        .content(this.objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         // Assert
+        verify(this.baseUsersValidator).validateUserChangePasswordRequestBasic(request);
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersValidator).validateUserChangePasswordRequest1(requestUserChangePassword1);
-        verify(this.baseUsersService).changePassword1(user, requestUserChangePassword1);
+        verify(this.baseUsersService).changePassword1(user, request);
     }
 }

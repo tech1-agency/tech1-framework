@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.resources;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePassword1;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
@@ -30,25 +30,33 @@ public class BaseSecurityUsersResource {
 
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)
-    public void update1(@RequestBody RequestUserUpdate1 requestUserUpdate1) {
+    public void update1(@RequestBody RequestUserUpdate1 request) {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
-        this.baseUsersValidator.validateUserUpdateRequest1(user.username(), requestUserUpdate1);
-        this.baseUsersService.updateUser1(user, requestUserUpdate1);
+        this.baseUsersValidator.validateUserUpdateRequest1(user.username(), request);
+        this.baseUsersService.updateUser1(user, request);
     }
 
     @PostMapping("/update2")
     @ResponseStatus(HttpStatus.OK)
-    public void update1(@RequestBody RequestUserUpdate2 requestUserUpdate2) {
+    public void update1(@RequestBody RequestUserUpdate2 request) {
+        this.baseUsersValidator.validateUserUpdateRequest2(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
-        this.baseUsersValidator.validateUserUpdateRequest2(requestUserUpdate2);
-        this.baseUsersService.updateUser2(user, requestUserUpdate2);
+        this.baseUsersService.updateUser2(user, request);
+    }
+
+    @PostMapping("/changePasswordRequired")
+    @ResponseStatus(HttpStatus.OK)
+    public void changePasswordRequired(@RequestBody RequestUserChangePasswordBasic request) {
+        this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
+        var user = this.currentSessionAssistant.getCurrentJwtUser();
+        this.baseUsersService.changePasswordRequired(user, request);
     }
 
     @PostMapping("/changePassword1")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@RequestBody RequestUserChangePassword1 requestUserChangePassword1) {
+    public void changePassword(@RequestBody RequestUserChangePasswordBasic request) {
+        this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
-        this.baseUsersValidator.validateUserChangePasswordRequest1(requestUserChangePassword1);
-        this.baseUsersService.changePassword1(user, requestUserChangePassword1);
+        this.baseUsersService.changePassword1(user, request);
     }
 }

@@ -35,16 +35,16 @@ public class BaseSecurityUsersSessionsResource {
     private final BaseUsersSessionsRequestsValidator baseUsersSessionsRequestsValidator;
 
     @GetMapping
-    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
-        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
+    public ResponseUserSessionsTable getSessionsTable(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
+        var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         return this.currentSessionAssistant.getCurrentUserDbSessionsTable(cookie);
     }
 
     @GetMapping("/current")
-    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+    public CurrentClientUser getCurrentClientUser(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
         var user = this.currentSessionAssistant.getCurrentClientUser();
-        var session = this.currentSessionAssistant.getCurrentUserSession(httpServletRequest);
-        this.baseUsersSessionsService.renewUserRequestMetadata(session, httpServletRequest);
+        var session = this.currentSessionAssistant.getCurrentUserSession(httpRequest);
+        this.baseUsersSessionsService.renewUserRequestMetadata(session, httpRequest);
         return user;
     }
 
@@ -65,9 +65,9 @@ public class BaseSecurityUsersSessionsResource {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllExceptCurrent(HttpServletRequest httpServletRequest) throws AccessTokenNotFoundException {
+    public void deleteAllExceptCurrent(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        var cookie = this.tokensProvider.readRequestAccessToken(httpServletRequest);
+        var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
         this.baseUsersSessionsService.deleteAllExceptCurrent(username, cookie);
     }
 }

@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 public interface TokensProvider {
     void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);
     void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response);
-    DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException;
-    RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException;
-    RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException;
-    RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException;
-    RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException;
-    void clearTokens(HttpServletResponse response);
+    DefaultCsrfToken readCsrfToken(HttpServletRequest httpRequest) throws CsrfTokenNotFoundException;
+    RequestAccessToken readRequestAccessToken(HttpServletRequest httpRequest) throws AccessTokenNotFoundException;
+    RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws AccessTokenNotFoundException;
+    RequestRefreshToken readRequestRefreshToken(HttpServletRequest httpRequest) throws RefreshTokenNotFoundException;
+    RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest httpRequest) throws RefreshTokenNotFoundException;
+    void clearTokens(HttpServletResponse httpResponse);
 }

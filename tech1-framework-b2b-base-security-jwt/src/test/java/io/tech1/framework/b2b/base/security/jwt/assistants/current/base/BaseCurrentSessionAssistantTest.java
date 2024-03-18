@@ -157,16 +157,7 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserTest() {
         // Arrange
-        var user = new JwtUser(
-                UserId.random(),
-                Username.random(),
-                Password.random(),
-                randomZoneId(),
-                new HashSet<>(),
-                Email.random(),
-                randomString(),
-                new HashMap<>()
-        );
+        var user = JwtUser.testsHardcoded();
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);

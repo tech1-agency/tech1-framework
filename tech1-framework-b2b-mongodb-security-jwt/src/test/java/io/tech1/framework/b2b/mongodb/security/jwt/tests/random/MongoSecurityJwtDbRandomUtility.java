@@ -63,8 +63,9 @@ public class MongoSecurityJwtDbRandomUtility {
         var user = new MongoDbUser(
                 Username.of(username),
                 Password.random(),
-                randomZoneId().getId(),
-                getSimpleGrantedAuthorities(authorities)
+                randomZoneId(),
+                getSimpleGrantedAuthorities(authorities),
+                randomBoolean()
         );
         user.setEmail(Email.of(username + "@" + DomainConstants.TECH1));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));

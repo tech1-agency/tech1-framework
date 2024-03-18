@@ -1,5 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
+import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,7 +27,19 @@ public class DefaultUsers extends AbstractTogglePropertyConfigs {
     private List<DefaultUser> users;
 
     public static DefaultUsers testsHardcoded() {
-        return new DefaultUsers(true, new ArrayList<>());
+        return new DefaultUsers(
+                true,
+                List.of(
+                        new DefaultUser(
+                                Username.of("admin12"),
+                                Password.of("password12"),
+                                ZoneId.systemDefault(),
+                                null,
+                                false,
+                                Set.of("admin")
+                        )
+                )
+        );
     }
 
     public static DefaultUsers random() {

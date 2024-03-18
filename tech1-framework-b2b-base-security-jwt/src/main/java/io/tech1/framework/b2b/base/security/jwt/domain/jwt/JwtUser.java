@@ -25,6 +25,7 @@ public record JwtUser(
         Set<SimpleGrantedAuthority> authorities,
         Email email,
         String name,
+        boolean passwordChangeRequired,
         Map<String, Object> attributes
 ) implements UserDetails {
 
@@ -74,9 +75,12 @@ public record JwtUser(
                 ),
                 Email.random(),
                 randomString(),
-                Map.of(
-                        randomString(), randomString(),
-                        randomString(), randomInteger()
+                randomBoolean(),
+                new HashMap<>(
+                        Map.of(
+                            randomString(), randomString(),
+                            randomString(), randomInteger()
+                        )
                 )
         );
     }
@@ -90,6 +94,7 @@ public record JwtUser(
                 getSimpleGrantedAuthorities(SUPER_ADMIN),
                 Email.random(),
                 randomString(),
+                false,
                 new HashMap<>()
         );
     }
@@ -100,10 +105,11 @@ public record JwtUser(
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
                 ZoneIdsConstants.UKRAINE,
-                Set.of(),
+                getSimpleGrantedAuthorities("user"),
                 Email.testsHardcoded(),
                 "",
-                Map.of()
+                false,
+                new HashMap<>()
         );
     }
 

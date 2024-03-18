@@ -32,6 +32,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.authorities(),
                 requestUserUpdate1.email(),
                 requestUserUpdate1.name(),
+                user.passwordChangeRequired(),
                 user.attributes()
         );
         this.saveAndReauthenticate(user);
@@ -47,6 +48,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.authorities(),
                 user.email(),
                 requestUserUpdate2.name(),
+                user.passwordChangeRequired(),
                 user.attributes()
         );
         this.saveAndReauthenticate(user);
@@ -63,6 +65,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.authorities(),
                 user.email(),
                 user.name(),
+                user.passwordChangeRequired(),
                 user.attributes()
         );
         this.saveAndReauthenticate(user);

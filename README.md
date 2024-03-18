@@ -22,3 +22,4 @@ Last deployed version: **1.16**
 — Addition: AbstractObjectMapperRunner.writeValueAsPlainString() 
 — Addition: Toggle enum (ENABLED/DISABLED) + boolean constructor 
 — Addition: Password.assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow()
+— Addition: DefaultUser.passwordChangeRequired used in EssenseConstructor

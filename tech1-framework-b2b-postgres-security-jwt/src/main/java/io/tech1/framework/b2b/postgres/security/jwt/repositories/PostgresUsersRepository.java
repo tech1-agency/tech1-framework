@@ -70,7 +70,8 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
                 requestUserRegistration1.username(),
                 password,
                 ZoneId.of(requestUserRegistration1.zoneId()),
-                invitationCode.authorities()
+                invitationCode.authorities(),
+                false
         );
         var entity = this.save(user);
         return entity.userId();

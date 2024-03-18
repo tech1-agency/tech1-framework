@@ -16,12 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.2]
-— Modification: BaseSecurityJwtRandomUtility migrate random methods to appropriate classes
-— Modification: TestsZoneIdsConstants migrated to ZoneIdsConstants (EET_ZONE_ID → UKRAINE)
-— Addition: AbstractObjectMapperRunner.writeValueAsPlainString() 
-— Addition: Toggle enum (ENABLED/DISABLED) + boolean constructor 
-— Addition: Password.assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow()
-— Addition: DefaultUser.passwordChangeRequired used in EssenseConstructor
-— Addition: API /users/changePasswordRequired
-— Addition: CurrentClientUser.passwordChangeRequired
+### Release Notes [Development v2.7.3]
+— TBD

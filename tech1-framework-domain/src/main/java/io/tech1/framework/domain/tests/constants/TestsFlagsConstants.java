@@ -4,9 +4,9 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class TestsFlagsConstants {
-    public static final String FLAG_UNKNOWN = "🏴‍";
-    public static final String FLAG_UKRAINE = "🇺🇦";
-    public static final String FLAG_PORTUGAL = "🇵🇹";
-    public static final String FLAG_UK = "🇬🇧";
-    public static final String FLAG_USA = "🇺🇸";
+    public static final String UNKNOWN = "🏴‍";
+    public static final String UKRAINE = "🇺🇦";
+    public static final String PORTUGAL = "🇵🇹";
+    public static final String UK = "🇬🇧";
+    public static final String USA = "🇺🇸";
 }

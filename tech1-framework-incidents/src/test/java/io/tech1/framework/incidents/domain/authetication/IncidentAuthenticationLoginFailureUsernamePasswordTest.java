@@ -4,7 +4,7 @@ import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UKRAINE;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginFailureUsernamePasswordTest {
@@ -31,7 +31,7 @@ class IncidentAuthenticationLoginFailureUsernamePasswordTest {
                 .containsEntry("username", incident.credentials().username())
                 .containsEntry("password", incident.credentials().password())
                 .containsEntry("browser", "Chrome")
-                .containsEntry("countryFlag", FLAG_UKRAINE)
+                .containsEntry("countryFlag", UKRAINE)
                 .containsEntry("ipAddress", "127.0.0.1")
                 .containsEntry("what", "Chrome, macOS on Desktop")
                 .containsEntry("where", "Ukraine, Lviv");

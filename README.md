@@ -24,3 +24,4 @@ Last deployed version: **1.16**
 — Addition: Timestamp(long value)
 — Addition: RemoteServer.containsCredentials(UsernamePasswordCredentials credentials)
 — Deletion: IncidentConverter, SecurityJwtIncidentConverter
+— Modification: TestsFlagsConstants remove prefix FLAG_

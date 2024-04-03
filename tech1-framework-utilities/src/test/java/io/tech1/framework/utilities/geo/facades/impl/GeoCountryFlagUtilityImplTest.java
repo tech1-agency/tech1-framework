@@ -1,5 +1,6 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
+import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
@@ -31,12 +32,12 @@ class GeoCountryFlagUtilityImplTest {
 
     private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
-                Arguments.of(null, null, FLAG_UNKNOWN),
-                Arguments.of("Ukraine", "UA", FLAG_UKRAINE),
-                Arguments.of("Portugal", "PT", FLAG_PORTUGAL),
-                Arguments.of("United States", "US", FLAG_USA),
-                Arguments.of(UNKNOWN, UNKNOWN, FLAG_UNKNOWN),
-                Arguments.of(UNDEFINED, UNDEFINED, FLAG_UNKNOWN)
+                Arguments.of(null, null, TestsFlagsConstants.UNKNOWN),
+                Arguments.of("Ukraine", "UA", UKRAINE),
+                Arguments.of("Portugal", "PT", PORTUGAL),
+                Arguments.of("United States", "US", USA),
+                Arguments.of(UNKNOWN, UNKNOWN, TestsFlagsConstants.UNKNOWN),
+                Arguments.of(UNDEFINED, UNDEFINED, TestsFlagsConstants.UNKNOWN)
         );
     }
 

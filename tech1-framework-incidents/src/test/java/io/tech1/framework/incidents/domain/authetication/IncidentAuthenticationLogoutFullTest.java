@@ -7,7 +7,7 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UK;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLogoutFullTest {
@@ -19,7 +19,7 @@ class IncidentAuthenticationLogoutFullTest {
         var incident = new IncidentAuthenticationLogoutFull(
                 username,
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
                         UserAgentDetails.processed("Mozilla", "MacOS", "Desktop")
                 )
         );
@@ -37,7 +37,7 @@ class IncidentAuthenticationLogoutFullTest {
                 .containsEntry("incidentType", "Authentication Logout")
                 .containsEntry("username", username)
                 .containsEntry("browser", "Mozilla")
-                .containsEntry("countryFlag", FLAG_UK)
+                .containsEntry("countryFlag", UK)
                 .containsEntry("ipAddress", "2.2.2.2")
                 .containsEntry("what", "Mozilla, MacOS on Desktop")
                 .containsEntry("where", "UK, London");

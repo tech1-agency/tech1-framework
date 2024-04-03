@@ -49,7 +49,7 @@ import java.util.stream.Stream;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.randomPersistedSession;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.session;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UNKNOWN;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
@@ -185,7 +185,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.a()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.b()).isEqualTo(FLAG_UNKNOWN);
+        assertThat(whereTuple3.b()).isEqualTo(UNKNOWN);
         assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
@@ -231,7 +231,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(requestMetadata.getGeoLocation().getIpAddr()).isEqualTo(ipAddr);
         var whereTuple3 = requestMetadata.getWhereTuple3();
         assertThat(whereTuple3.a()).isEqualTo(ipAddr);
-        assertThat(whereTuple3.b()).isEqualTo(FLAG_UNKNOWN);
+        assertThat(whereTuple3.b()).isEqualTo(UNKNOWN);
         assertThat(whereTuple3.c()).isEqualTo("Processing...Please wait!");
         var whatTuple2 = requestMetadata.getWhatTuple2();
         assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);

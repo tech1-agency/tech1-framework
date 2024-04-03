@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UK;
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_USA;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UK;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.USA;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,7 +44,7 @@ class ResponseUserSessionsTableTest {
                 new RequestAccessToken(randomString()),
                 new JwtAccessToken("token1"),
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", FLAG_UK, "London"),
+                        GeoLocation.processed(new IPAddress("2.2.2.2"), "UK", "UK", UK, "London"),
                         UserAgentDetails.random()
                 )
         );
@@ -55,7 +55,7 @@ class ResponseUserSessionsTableTest {
                 new RequestAccessToken("token2"),
                 new JwtAccessToken("token2"),
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", FLAG_USA, "New York"),
+                        GeoLocation.processed(new IPAddress("3.3.3.3"), "USA", "US", USA, "New York"),
                         UserAgentDetails.valid()
                 )
         );
@@ -66,7 +66,7 @@ class ResponseUserSessionsTableTest {
                 new RequestAccessToken(randomString()),
                 new JwtAccessToken("token3"),
                 UserRequestMetadata.processed(
-                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", FLAG_UK, "Liverpool"),
+                        GeoLocation.processed(new IPAddress("3.3.3.3"), "UK", "UK", UK, "Liverpool"),
                         UserAgentDetails.invalid()
                 )
         );

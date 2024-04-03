@@ -7,7 +7,7 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UNKNOWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginTest {
@@ -37,7 +37,7 @@ class IncidentAuthenticationLoginTest {
                 .containsEntry("incidentType", "Authentication Login")
                 .containsEntry("username", username)
                 .containsEntry("browser", "[?]")
-                .containsEntry("countryFlag", FLAG_UNKNOWN)
+                .containsEntry("countryFlag", UNKNOWN)
                 .containsEntry("ipAddress", "8.8.8.8")
                 .containsEntry("what", "[?], [?] on [?]")
                 .containsEntry("where", "Unknown, Unknown")
@@ -66,7 +66,7 @@ class IncidentAuthenticationLoginTest {
                 .containsEntry("incidentType", "Authentication Login")
                 .containsEntry("username", username)
                 .containsEntry("browser", "[?]")
-                .containsEntry("countryFlag", FLAG_UNKNOWN)
+                .containsEntry("countryFlag", UNKNOWN)
                 .containsEntry("ipAddress", "127.0.0.1")
                 .containsEntry("what", "—")
                 .containsEntry("where", "Processing...Please wait!");

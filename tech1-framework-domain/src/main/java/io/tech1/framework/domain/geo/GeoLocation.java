@@ -2,13 +2,14 @@ package io.tech1.framework.domain.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 import static io.tech1.framework.domain.constants.StringConstants.*;
 import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UNKNOWN;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.nonNull;
@@ -44,7 +45,7 @@ public class GeoLocation {
         if (nonNull(countryFlag)) {
             this.countryFlag = countryFlag;
         } else {
-            this.countryFlag = FLAG_UNKNOWN;
+            this.countryFlag = TestsFlagsConstants.UNKNOWN;
         }
         if (nonNull(country)) {
             this.country = country.trim();
@@ -64,7 +65,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 UNKNOWN,
                 UNKNOWN,
-                FLAG_UNKNOWN,
+                TestsFlagsConstants.UNKNOWN,
                 UNKNOWN,
                 exceptionDetails
         );
@@ -77,7 +78,7 @@ public class GeoLocation {
                 getIpAddrOrUnknown(ipAddress),
                 UNDEFINED,
                 UNDEFINED,
-                FLAG_UNKNOWN,
+                TestsFlagsConstants.UNKNOWN,
                 UNDEFINED,
                 EMPTY
         );

@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UKRAINE;
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UKRAINE;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomFeignException;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -110,7 +110,7 @@ class IPAPIGeoLocationUtilityImplTest {
         var ipAddress = IPAddress.random();
         var ipapiResponse = new IPAPIResponse("success", "Ukraine", "UA", "Lviv", null);
         when(this.ipapiFeign.getIPAPIResponse(ipAddress.value())).thenReturn(ipapiResponse);
-        when(this.countryFlagUtility.getFlagEmojiByCountryCode("UA")).thenReturn(FLAG_UKRAINE);
+        when(this.countryFlagUtility.getFlagEmojiByCountryCode("UA")).thenReturn(UKRAINE);
 
         // Act
         var actual = this.componentUnderTest.getGeoLocation(ipAddress);
@@ -121,7 +121,7 @@ class IPAPIGeoLocationUtilityImplTest {
         assertThat(actual.getIpAddr()).isEqualTo(ipAddress.value());
         assertThat(actual.getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getCountryCode()).isEqualTo("UA");
-        assertThat(actual.getCountryFlag()).isEqualTo(FLAG_UKRAINE);
+        assertThat(actual.getCountryFlag()).isEqualTo(UKRAINE);
         assertThat(actual.getCity()).isEqualTo("Lviv");
     }
 }

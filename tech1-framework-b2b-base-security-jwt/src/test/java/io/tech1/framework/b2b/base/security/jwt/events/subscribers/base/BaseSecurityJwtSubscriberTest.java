@@ -10,10 +10,15 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsServic
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +32,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -52,11 +58,17 @@ class BaseSecurityJwtSubscriberTest {
         }
 
         @Bean
+        UserMetadataUtils userMetadataUtils() {
+            return mock(UserMetadataUtils.class);
+        }
+
+        @Bean
         SecurityJwtSubscriber securityJwtSubscriber() {
             return new BaseSecurityJwtSubscriber(
                     this.securityJwtIncidentPublisher(),
                     this.userEmailService(),
-                    this.baseUsersSessionsService()
+                    this.baseUsersSessionsService(),
+                    this.userMetadataUtils()
             );
         }
     }
@@ -66,6 +78,8 @@ class BaseSecurityJwtSubscriberTest {
     // Services
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
+    // Utils
+    private final UserMetadataUtils userMetadataUtils;
 
     private final SecurityJwtSubscriber componentUnderTest;
 
@@ -74,7 +88,8 @@ class BaseSecurityJwtSubscriberTest {
         reset(
                 this.securityJwtIncidentPublisher,
                 this.usersEmailsService,
-                this.baseUsersSessionsService
+                this.baseUsersSessionsService,
+                this.userMetadataUtils
         );
     }
 
@@ -83,7 +98,8 @@ class BaseSecurityJwtSubscriberTest {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
                 this.usersEmailsService,
-                this.baseUsersSessionsService
+                this.baseUsersSessionsService,
+                this.userMetadataUtils
         );
     }
 
@@ -96,19 +112,38 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLogin(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        assertThat(event).isNotNull();
     }
 
     @Test
     void onAuthenticationLoginFailureTest() {
         // Arrange
-        var event = entity(EventAuthenticationLoginFailure.class);
+        var event = EventAuthenticationLoginFailure.testsHardcoded();
+        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
 
         // Act
         this.componentUnderTest.onAuthenticationLoginFailure(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader());
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(
+                new IncidentAuthenticationLoginFailureUsernamePassword(
+                        new UsernamePasswordCredentials(
+                                event.username(),
+                                event.password()
+                        ),
+                        UserRequestMetadata.valid()
+                )
+        );
+        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(
+                new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
+                        UsernamePasswordCredentials.mask5(
+                                event.username(),
+                                event.password()
+                        ),
+                        UserRequestMetadata.valid()
+                )
+        );
     }
 
     @Test
@@ -120,7 +155,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onAuthenticationLogout(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        assertThat(event).isNotNull();
     }
 
     @Test
@@ -132,7 +167,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onRegistration1(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        assertThat(event).isNotNull();
     }
 
     @Test
@@ -144,7 +179,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onRegistration1Failure(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        assertThat(event).isNotNull();
     }
 
     @Test
@@ -156,7 +191,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onSessionRefreshed(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        assertThat(event).isNotNull();
     }
 
     @Test
@@ -168,7 +203,7 @@ class BaseSecurityJwtSubscriberTest {
         this.componentUnderTest.onSessionExpired(event);
 
         // Assert
-        verifyNoMoreInteractions(this.securityJwtIncidentPublisher);
+        assertThat(event).isNotNull();
     }
 
     @Test

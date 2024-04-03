@@ -7,6 +7,8 @@ import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -34,6 +36,18 @@ public class SecurityJwtIncidentConverterImpl implements SecurityJwtIncidentConv
                 incidentAuthenticationLogin.username(),
                 incidentAuthenticationLogin.userRequestMetadata()
         );
+    }
+
+    // TODO [YYL-clean]
+    @Override
+    public Incident convert(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword) {
+        return null;
+    }
+
+    // TODO [YYL-clean]
+    @Override
+    public Incident convert(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword) {
+        return null;
     }
 
     @Override

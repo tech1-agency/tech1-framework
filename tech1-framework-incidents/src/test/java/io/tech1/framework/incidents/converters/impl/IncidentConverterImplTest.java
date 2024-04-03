@@ -3,6 +3,7 @@ package io.tech1.framework.incidents.converters.impl;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -113,11 +114,13 @@ class IncidentConverterImplTest {
         assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.converters.impl.IncidentConverterImplTest.convertThrowableIncident3Test");
     }
 
+    // TODO [YYL-clean]
     @Test
     void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
         var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
-                UsernamePasswordCredentials.testsHardcoded()
+                UsernamePasswordCredentials.testsHardcoded(),
+                UserRequestMetadata.valid()
         );
 
         // Act
@@ -134,6 +137,7 @@ class IncidentConverterImplTest {
         assertThat(actual.getAttributes()).containsEntry("password", Password.testsHardcoded());
     }
 
+    // TODO [YYL-clean]
     @Test
     void convertAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
         // Arrange
@@ -141,7 +145,8 @@ class IncidentConverterImplTest {
                 UsernamePasswordCredentials.mask5(
                         Username.testsHardcoded(),
                         Password.testsHardcoded()
-                )
+                ),
+                UserRequestMetadata.valid()
         );
 
         // Act

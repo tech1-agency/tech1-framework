@@ -3,6 +3,7 @@ package io.tech1.framework.incidents.domain.authetication;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,7 +35,8 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
                 UsernamePasswordCredentials.mask5(
                         username,
                         new Password(password)
-                )
+                ),
+                UserRequestMetadata.valid()
         );
 
         // Assert

@@ -15,7 +15,6 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.impl.SecurityJwtTokenUtilsImpl;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.enums.Status;
-import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
@@ -23,9 +22,7 @@ import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
-import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
-import io.tech1.framework.utilities.browsers.impl.UserAgentDetailsUtilityImpl;
-import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
+import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,11 +106,6 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        GeoLocationFacadeUtility geoLocationFacadeUtility() {
-            return mock(GeoLocationFacadeUtility.class);
-        }
-
-        @Bean
         public SecurityJwtTokenUtils securityJwtTokenUtils() {
             return new SecurityJwtTokenUtilsImpl(
                     this.applicationFrameworkProperties
@@ -121,10 +113,8 @@ class AbstractBaseUsersSessionsServiceTest {
         }
 
         @Bean
-        UserAgentDetailsUtility userAgentDetailsUtility() {
-            return new UserAgentDetailsUtilityImpl(
-                    this.applicationFrameworkProperties
-            );
+        UserMetadataUtils userMetadataUtils() {
+            return mock(UserMetadataUtils.class);
         }
 
         @Bean
@@ -132,21 +122,18 @@ class AbstractBaseUsersSessionsServiceTest {
             return new AbstractBaseUsersSessionsService(
                     this.securityJwtPublisher(),
                     this.usersSessionsRepository(),
-                    this.geoLocationFacadeUtility(),
-                    this.securityJwtTokenUtils(),
-                    this.userAgentDetailsUtility()
+                    this.userMetadataUtils(),
+                    this.securityJwtTokenUtils()
             ) {};
         }
     }
 
     // Publishers
-    protected final SecurityJwtPublisher securityJwtPublisher;
+    private final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
-    protected final UsersSessionsRepository usersSessionsRepository;
-    // Utilities
-    protected final GeoLocationFacadeUtility geoLocationFacadeUtility;
-    protected final SecurityJwtTokenUtils securityJwtTokenUtils;
-    protected final UserAgentDetailsUtility userAgentDetailsUtility;
+    private final UsersSessionsRepository usersSessionsRepository;
+    // Utils
+    private final UserMetadataUtils userMetadataUtils;
 
     private final AbstractBaseUsersSessionsService componentUnderTest;
 
@@ -155,7 +142,7 @@ class AbstractBaseUsersSessionsServiceTest {
         reset(
                 this.securityJwtPublisher,
                 this.usersSessionsRepository,
-                this.geoLocationFacadeUtility
+                this.userMetadataUtils
         );
     }
 
@@ -164,7 +151,7 @@ class AbstractBaseUsersSessionsServiceTest {
         verifyNoMoreInteractions(
                 this.securityJwtPublisher,
                 this.usersSessionsRepository,
-                this.geoLocationFacadeUtility
+                this.userMetadataUtils
         );
     }
 
@@ -296,20 +283,17 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void saveUserRequestMetadataEventSessionUserRequestMetadataAddTest() {
         var event = entity(EventSessionUserRequestMetadataAdd.class);
-        var geoLocation = GeoLocation.random();
-        when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
+        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
+        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
-        var requestMetadata = userSessionAC.getValue().metadata();
-        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
+        assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
     }
 
     @Test
@@ -322,20 +306,17 @@ class AbstractBaseUsersSessionsServiceTest {
                 TupleToggle.disabled(),
                 TupleToggle.disabled()
         );
-        var geoLocation = GeoLocation.random();
-        when(this.geoLocationFacadeUtility.getGeoLocation(event.clientIpAddr())).thenReturn(geoLocation);
+        when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(event.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(event);
 
         // Assert
-        verify(this.geoLocationFacadeUtility).getGeoLocation(event.clientIpAddr());
+        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(event.clientIpAddr(), event.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
-        var requestMetadata = userSessionAC.getValue().metadata();
-        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(event.userAgentHeader()));
+        assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
     }
 
     @ParameterizedTest
@@ -359,7 +340,6 @@ class AbstractBaseUsersSessionsServiceTest {
                 false,
                 false
         );
-        var geoLocation = GeoLocation.random();
         var saveFunction = new FunctionSessionUserRequestMetadataSave(
                 username,
                 session,
@@ -368,22 +348,20 @@ class AbstractBaseUsersSessionsServiceTest {
                 metadataRenewCron,
                 metadataRenewManually
         );
-        when(this.geoLocationFacadeUtility.getGeoLocation(saveFunction.clientIpAddr())).thenReturn(geoLocation);
+        when(this.userMetadataUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(saveFunction.session());
 
         // Act
         this.componentUnderTest.saveUserRequestMetadata(saveFunction);
 
         // Assert
-        verify(this.geoLocationFacadeUtility).getGeoLocation(saveFunction.clientIpAddr());
+        verify(this.userMetadataUtils).getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader());
         var userSessionAC = ArgumentCaptor.forClass(UserSession.class);
         verify(this.usersSessionsRepository).saveAs(userSessionAC.capture());
         var sessionProcessedMetadata = userSessionAC.getValue();
         assertThat(sessionProcessedMetadata.metadataRenewCron()).isEqualTo(expectedMetadataRenewCron);
         assertThat(sessionProcessedMetadata.metadataRenewManually()).isEqualTo(expectedMetadataRenewManually);
-        var requestMetadata = sessionProcessedMetadata.metadata();
-        assertThat(requestMetadata.getGeoLocation()).isEqualTo(geoLocation);
-        assertThat(requestMetadata.getUserAgentDetails()).isEqualTo(this.userAgentDetailsUtility.getUserAgentDetails(saveFunction.userAgentHeader()));
+        assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
     }
 
     @Test

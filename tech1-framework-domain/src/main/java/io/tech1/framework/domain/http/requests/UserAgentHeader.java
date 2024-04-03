@@ -16,11 +16,22 @@ import static java.util.Objects.isNull;
 public class UserAgentHeader {
     private final String value;
 
+    public static UserAgentHeader testsHardcoded() {
+        return new UserAgentHeader("Chrome, macOS on Desktop");
+    }
+
     public UserAgentHeader(HttpServletRequest request) {
         if (isNull(request) || isNull(request.getHeader("User-Agent"))) {
             this.value = StringConstants.EMPTY;
         } else {
             this.value = request.getHeader("User-Agent");
         }
+    }
+
+    // =================================================================================================================
+    // PRIVATE METHODS
+    // =================================================================================================================
+    private UserAgentHeader(String value) {
+        this.value = value;
     }
 }

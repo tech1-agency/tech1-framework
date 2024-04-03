@@ -6,6 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
+import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,14 @@ public class PostgresBaseUsersSessionsService extends AbstractBaseUsersSessionsS
     public PostgresBaseUsersSessionsService(
             SecurityJwtPublisher securityJwtPublisher,
             PostgresUsersSessionsRepository usersSessionsRepository,
-            GeoLocationFacadeUtility geoLocationFacadeUtility,
-            SecurityJwtTokenUtils securityJwtTokenUtils,
-            UserAgentDetailsUtility userAgentDetailsUtility
+            UserMetadataUtils userMetadataUtils,
+            SecurityJwtTokenUtils securityJwtTokenUtils
     ) {
         super(
                 securityJwtPublisher,
                 usersSessionsRepository,
-                geoLocationFacadeUtility,
-                securityJwtTokenUtils,
-                userAgentDetailsUtility
+                userMetadataUtils,
+                securityJwtTokenUtils
         );
     }
 }

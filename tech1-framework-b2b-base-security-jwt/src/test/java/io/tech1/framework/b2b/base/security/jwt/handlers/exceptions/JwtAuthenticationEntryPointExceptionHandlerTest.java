@@ -3,15 +3,12 @@ package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLoginFailure;
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationHandlersContext;
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import io.tech1.framework.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +50,6 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     }
 
     private final SecurityJwtPublisher securityJwtPublisher;
-    private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     private final HttpRequestUtils httpRequestUtils;
     private final ObjectMapper objectMapper;
 
@@ -62,7 +58,6 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.httpRequestUtils
         );
@@ -71,7 +66,6 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.securityJwtIncidentPublisher,
                 this.securityJwtPublisher,
                 this.httpRequestUtils
         );
@@ -130,15 +124,14 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         var printWriter = mock(PrintWriter.class);
         when(response.getWriter()).thenReturn(printWriter);
         var request = mock(HttpServletRequest.class);
+        when(request.getHeader("X-Forwarded-For")).thenReturn(IPAddress.localhost().value());
         var badCredentialsException = mock(BadCredentialsException.class);
         when(badCredentialsException.getMessage()).thenReturn(randomString());
         when(this.httpRequestUtils.isCachedEndpoint(request)).thenReturn(true);
-        var usernameString = "admin11";
-        var passwordString = "Admin11!";
         var payload = objectMapper.writeValueAsString(
                 Map.of(
-                        "username", usernameString,
-                        "password", passwordString
+                        "username", Username.testsHardcoded().value(),
+                        "password", Password.testsHardcoded().value()
                 )
         );
         when(this.httpRequestUtils.getCachedPayload(request)).thenReturn(payload);
@@ -147,6 +140,8 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         this.componentUnderTest.commence(request, response, badCredentialsException);
 
         // Assert
+        verify(request).getHeader("X-Forwarded-For");
+        verify(request).getHeader("User-Agent");
         assertAndVerifyBasicCommence(
                 request,
                 response,
@@ -155,29 +150,12 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         );
         verify(this.httpRequestUtils).isCachedEndpoint(request);
         verify(this.httpRequestUtils).getCachedPayload(request);
-        var username = Username.of(usernameString);
-        var password = Password.of(passwordString);
-        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(
-                new EventAuthenticationLoginFailure(
-                        username
-                )
-        );
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernamePassword(
-                new IncidentAuthenticationLoginFailureUsernamePassword(
-                        new UsernamePasswordCredentials(
-                                username,
-                                password
-                        )
-                )
-        );
-        verify(this.securityJwtIncidentPublisher).publishAuthenticationLoginFailureUsernameMaskedPassword(
-                new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
-                        UsernamePasswordCredentials.mask5(
-                                username,
-                                password
-                        )
-                )
-        );
+        var eventAC = ArgumentCaptor.forClass(EventAuthenticationLoginFailure.class);
+        verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eventAC.capture());
+        assertThat(eventAC.getValue().username()).isEqualTo(Username.testsHardcoded());
+        assertThat(eventAC.getValue().password()).isEqualTo(Password.testsHardcoded());
+        assertThat(eventAC.getValue().ipAddress()).isEqualTo(IPAddress.localhost());
+
     }
 
     // =================================================================================================================

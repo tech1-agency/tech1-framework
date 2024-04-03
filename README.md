@@ -19,3 +19,4 @@ Last deployed version: **1.16**
 ### Release Notes [Development v2.7.3]
 — Addition: Add user request metadata to login failure incidents
 — Addition: ExceptionsMessagesUtility: pleaseWait(), notImplementedYet()
+— Addition: ClassicStateGroupedMappings

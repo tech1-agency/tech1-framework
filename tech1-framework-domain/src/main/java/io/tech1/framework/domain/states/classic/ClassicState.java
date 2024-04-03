@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.tech1.framework.domain.enums.EnumValue;
 import lombok.AllArgsConstructor;
 
+import java.util.Comparator;
 import java.util.Set;
 
 import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
@@ -21,6 +22,8 @@ public enum ClassicState implements EnumValue<String> {
     TERMINATED("Terminated"),
     COMPLETING("Completing"),
     COMPLETED("Completed");
+
+    public static final Comparator<ClassicState> ORDINAL_COMPARATOR = Comparator.comparing(ClassicState::ordinal);
 
     private final String value;
 

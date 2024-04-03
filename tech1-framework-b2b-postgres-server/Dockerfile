@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17.0.7_7-jdk-alpine
 WORKDIR /app
 EXPOSE ${PORT}
 ADD /target/app.jar app.jar

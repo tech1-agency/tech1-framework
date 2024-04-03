@@ -1,15 +1,14 @@
 package io.tech1.framework.domain.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import static io.tech1.framework.domain.constants.StringConstants.*;
 import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.nonNull;
@@ -40,7 +39,7 @@ public class GeoLocation {
         if (nonNull(countryCode)) {
             this.countryCode = countryCode;
         } else {
-            this.countryCode = UNKNOWN;
+            this.countryCode = StringConstants.UNKNOWN;
         }
         if (nonNull(countryFlag)) {
             this.countryFlag = countryFlag;
@@ -51,7 +50,7 @@ public class GeoLocation {
             this.country = country.trim();
             this.city = nonNull(city) ? city.trim() : null;
         } else {
-            this.country = UNKNOWN;
+            this.country = StringConstants.UNKNOWN;
             this.city = null;
         }
         this.exceptionDetails = exceptionDetails;
@@ -63,10 +62,10 @@ public class GeoLocation {
     ) {
         return new GeoLocation(
                 getIpAddrOrUnknown(ipAddress),
-                UNKNOWN,
-                UNKNOWN,
+                StringConstants.UNKNOWN,
+                StringConstants.UNKNOWN,
                 TestsFlagsConstants.UNKNOWN,
-                UNKNOWN,
+                StringConstants.UNKNOWN,
                 exceptionDetails
         );
     }
@@ -76,11 +75,11 @@ public class GeoLocation {
     ) {
         return new GeoLocation(
                 getIpAddrOrUnknown(ipAddress),
-                UNDEFINED,
-                UNDEFINED,
+                StringConstants.UNDEFINED,
+                StringConstants.UNDEFINED,
                 TestsFlagsConstants.UNKNOWN,
-                UNDEFINED,
-                EMPTY
+                StringConstants.UNDEFINED,
+                StringConstants.EMPTY
         );
     }
 
@@ -97,7 +96,7 @@ public class GeoLocation {
                 countryCode,
                 countryFlag,
                 city,
-                EMPTY
+                StringConstants.EMPTY
         );
     }
 
@@ -131,13 +130,13 @@ public class GeoLocation {
         if (countryPresent) {
             return this.country + ", " + this.city;
         }
-        return UNKNOWN;
+        return StringConstants.UNKNOWN;
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
     public static String getIpAddrOrUnknown(IPAddress ipAddress) {
-        return nonNull(ipAddress) ? ipAddress.value() : UNKNOWN;
+        return nonNull(ipAddress) ? ipAddress.value() : StringConstants.UNKNOWN;
     }
 }

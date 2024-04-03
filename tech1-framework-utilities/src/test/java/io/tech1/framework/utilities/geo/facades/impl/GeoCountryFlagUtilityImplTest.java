@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -33,9 +32,9 @@ class GeoCountryFlagUtilityImplTest {
     private static Stream<Arguments> getFlagEmojiTest() {
         return Stream.of(
                 Arguments.of(null, null, TestsFlagsConstants.UNKNOWN),
-                Arguments.of("Ukraine", "UA", UKRAINE),
-                Arguments.of("Portugal", "PT", PORTUGAL),
-                Arguments.of("United States", "US", USA),
+                Arguments.of("Ukraine", "UA", TestsFlagsConstants.UKRAINE),
+                Arguments.of("Portugal", "PT", TestsFlagsConstants.PORTUGAL),
+                Arguments.of("United States", "US", TestsFlagsConstants.USA),
                 Arguments.of(UNKNOWN, UNKNOWN, TestsFlagsConstants.UNKNOWN),
                 Arguments.of(UNDEFINED, UNDEFINED, TestsFlagsConstants.UNKNOWN)
         );

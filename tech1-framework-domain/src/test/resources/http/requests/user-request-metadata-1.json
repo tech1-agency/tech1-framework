@@ -17,7 +17,7 @@
   "whereTuple3" : {
     "a" : "127.0.0.1",
     "b" : "🏴‍",
-    "c" : "Processing...Please wait!"
+    "c" : "Processing. Please wait..."
   },
   "whatTuple2" : {
     "a" : "[?]",

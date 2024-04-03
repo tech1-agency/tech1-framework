@@ -69,6 +69,6 @@ class IncidentAuthenticationLoginTest {
                 .containsEntry("countryFlag", UNKNOWN)
                 .containsEntry("ipAddress", "127.0.0.1")
                 .containsEntry("what", "—")
-                .containsEntry("where", "Processing...Please wait!");
+                .containsEntry("where", "Processing. Please wait...");
     }
 }

@@ -25,3 +25,4 @@ Last deployed version: **1.16**
 — Addition: RemoteServer.containsCredentials(UsernamePasswordCredentials credentials)
 — Deletion: IncidentConverter, SecurityJwtIncidentConverter
 — Modification: TestsFlagsConstants remove prefix FLAG_
+— Modification: docker images openjdk:17-alpine → eclipse-temurin:17.0.7_7-jdk-alpine

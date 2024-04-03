@@ -23,3 +23,4 @@ Last deployed version: **1.16**
 — Addition: JwtUser: testsHardcoded(Set<SimpleGrantedAuthority> authorities)
 — Addition: Timestamp(long value)
 — Addition: RemoteServer.containsCredentials(UsernamePasswordCredentials credentials)
+— Deletion: IncidentConverter, SecurityJwtIncidentConverter

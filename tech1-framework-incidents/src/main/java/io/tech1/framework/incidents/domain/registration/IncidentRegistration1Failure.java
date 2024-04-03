@@ -29,7 +29,10 @@ public record IncidentRegistration1Failure(
 
     @Override
     public Incident getPlainIncident() {
-        var incident = new Incident(SecurityJwtIncidentType.REGISTER1_FAILURE, this.username);
+        var incident = new Incident(
+                SecurityJwtIncidentType.REGISTER1_FAILURE,
+                this.username
+        );
         incident.add(EXCEPTION, this.exception);
         incident.add(INVITATION_CODE, this.invitationCode);
         incident.add(INVITATION_CODE_OWNER, this.invitationCodeOwner);

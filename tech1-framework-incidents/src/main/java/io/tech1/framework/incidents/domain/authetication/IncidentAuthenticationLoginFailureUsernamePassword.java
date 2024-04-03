@@ -15,8 +15,8 @@ public record IncidentAuthenticationLoginFailureUsernamePassword(
     public Incident getPlainIncident() {
         return new Incident(
                 SecurityJwtIncidentType.AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD,
-                this.credentials.username(),
-                this.credentials.password()
+                this.credentials,
+                this.userRequestMetadata
         );
     }
 }

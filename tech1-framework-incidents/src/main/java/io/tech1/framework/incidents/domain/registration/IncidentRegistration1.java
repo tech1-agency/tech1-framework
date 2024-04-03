@@ -11,6 +11,9 @@ public record IncidentRegistration1(
 
     @Override
     public Incident getPlainIncident() {
-        return new Incident(SecurityJwtIncidentType.REGISTER1, this.username);
+        return new Incident(
+                SecurityJwtIncidentType.REGISTER1,
+                this.username
+        );
     }
 }

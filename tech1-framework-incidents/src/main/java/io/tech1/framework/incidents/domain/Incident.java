@@ -3,6 +3,7 @@ package io.tech1.framework.incidents.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
@@ -41,42 +42,39 @@ public class Incident {
         this.addAll(attributes);
     }
 
-    public Incident(SecurityJwtIncidentType type, Username username) {
+    public Incident(String type) {
         this();
-        this.addType(type.getValue());
+        this.add(IncidentAttributes.Keys.TYPE, type);
+    }
+
+    public Incident(SecurityJwtIncidentType type) {
+        this(type.getValue());
+    }
+
+    public Incident(SecurityJwtIncidentType type, Username username) {
+        this(type);
         this.addUsername(username);
     }
 
-    public Incident(SecurityJwtIncidentType type, Username username, Password password) {
-        this();
-        this.addType(type.getValue());
-        this.addUsername(username);
-        this.addPassword(password);
+    public Incident(SecurityJwtIncidentType type, UsernamePasswordCredentials credentials) {
+        this(type);
+        this.addUsername(credentials.username());
+        this.addPassword(credentials.password());
     }
 
     public Incident(SecurityJwtIncidentType type, Username username, UserRequestMetadata userRequestMetadata) {
-        this();
-        this.addType(type.getValue());
+        this(type);
         this.addUsername(username);
+        this.addUserRequestMetadata(userRequestMetadata);
+    }
 
-        var tupleResponseException = userRequestMetadata.getException();
-        if (!tupleResponseException.isOk()) {
-            this.add(EXCEPTION, tupleResponseException.getMessage());
-        }
-
-        var whereTuple3 = userRequestMetadata.getWhereTuple3();
-        this.add(IP_ADDRESS, whereTuple3.a());
-        this.add(COUNTRY_FLAG, whereTuple3.b());
-        this.add(WHERE, whereTuple3.c());
-
-        var whatTuple2 = userRequestMetadata.getWhatTuple2();
-        this.add(BROWSER, whatTuple2.a());
-        this.add(WHAT, whatTuple2.b());
+    public Incident(SecurityJwtIncidentType type, UsernamePasswordCredentials credentials, UserRequestMetadata userRequestMetadata) {
+        this(type, credentials);
+        this.addUserRequestMetadata(userRequestMetadata);
     }
 
     public Incident(IncidentThrowable incidentThrowable) {
-        this();
-        this.add(IncidentAttributes.Keys.TYPE, IncidentAttributes.IncidentsTypes.THROWABLE);
+        this(IncidentAttributes.IncidentsTypes.THROWABLE);
 
         var throwable = incidentThrowable.getThrowable();
         this.add(IncidentAttributes.Keys.EXCEPTION, throwable.getClass());
@@ -121,16 +119,28 @@ public class Incident {
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
     }
 
-    public void addType(String type) {
-        this.add(IncidentAttributes.Keys.TYPE, type);
-    }
-
     public void addUsername(Username username) {
         this.add(IncidentAttributes.Keys.USERNAME, username);
     }
 
     public void addPassword(Password password) {
         this.add(IncidentAttributes.Keys.PASSWORD, password);
+    }
+
+    public void addUserRequestMetadata(UserRequestMetadata userRequestMetadata) {
+        var tupleResponseException = userRequestMetadata.getException();
+        if (!tupleResponseException.isOk()) {
+            this.add(EXCEPTION, tupleResponseException.getMessage());
+        }
+
+        var whereTuple3 = userRequestMetadata.getWhereTuple3();
+        this.add(IP_ADDRESS, whereTuple3.a());
+        this.add(COUNTRY_FLAG, whereTuple3.b());
+        this.add(WHERE, whereTuple3.c());
+
+        var whatTuple2 = userRequestMetadata.getWhatTuple2();
+        this.add(BROWSER, whatTuple2.a());
+        this.add(WHAT, whatTuple2.b());
     }
 
     @JsonIgnore

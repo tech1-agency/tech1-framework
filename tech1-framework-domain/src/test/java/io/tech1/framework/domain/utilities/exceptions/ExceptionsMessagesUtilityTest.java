@@ -9,6 +9,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ExceptionsMessagesUtilityTest {
 
     @Test
+    void pleaseWaitTest() {
+        // Arrange
+        var prefix = randomString();
+
+        // Act
+        var actual = pleaseWait(prefix);
+
+        // Assert
+        assertThat(actual).isEqualTo(prefix + ". Please wait...");
+    }
+
+    @Test
     void contactDevelopmentTeamTest() {
         // Arrange
         var prefix = randomString();
@@ -18,6 +30,15 @@ class ExceptionsMessagesUtilityTest {
 
         // Assert
         assertThat(actual).isEqualTo(prefix + ". Please contact development team");
+    }
+
+    @Test
+    void notImplementedYetTest() {
+        // Act
+        var actual = notImplementedYet();
+
+        // Assert
+        assertThat(actual).isEqualTo("Not implemented yet. Please contact development team");
     }
 
     @Test

@@ -1,11 +1,10 @@
 package io.tech1.framework.incidents.domain.authetication;
 
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginFailureUsernamePasswordTest {
@@ -25,10 +24,16 @@ class IncidentAuthenticationLoginFailureUsernamePasswordTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
         assertThat(actual.getUsername().value()).isEqualTo("tech1");
-        assertThat(actual.getAttributes()).hasSize(3);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes()).containsEntry("incidentType", "Authentication Login Failure Username/Password");
-        assertThat(actual.getAttributes()).containsEntry("username", Username.testsHardcoded());
-        assertThat(actual.getAttributes()).containsEntry("password", Password.testsHardcoded());
+        assertThat(actual.getAttributes())
+                .hasSize(8)
+                .containsOnlyKeys("incidentType", "username", "password", "browser", "countryFlag", "ipAddress", "what", "where")
+                .containsEntry("incidentType", "Authentication Login Failure Username/Password")
+                .containsEntry("username", incident.credentials().username())
+                .containsEntry("password", incident.credentials().password())
+                .containsEntry("browser", "Chrome")
+                .containsEntry("countryFlag", FLAG_UKRAINE)
+                .containsEntry("ipAddress", "127.0.0.1")
+                .containsEntry("what", "Chrome, macOS on Desktop")
+                .containsEntry("where", "Ukraine, Lviv");
     }
 }

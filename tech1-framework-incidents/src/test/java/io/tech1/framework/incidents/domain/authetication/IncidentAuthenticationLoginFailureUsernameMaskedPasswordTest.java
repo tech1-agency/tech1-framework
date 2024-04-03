@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.FLAG_UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
@@ -64,10 +65,16 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
         assertThat(actual.getUsername().value()).isEqualTo("tech1");
-        assertThat(actual.getAttributes()).hasSize(3);
-        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
-        assertThat(actual.getAttributes()).containsEntry("incidentType", "Authentication Login Failure Username/Masked Password");
-        assertThat(actual.getAttributes()).containsEntry("username", Username.testsHardcoded());
-        assertThat(actual.getAttributes()).containsEntry("password", new Password("Passw***********"));
+        assertThat(actual.getAttributes())
+                .hasSize(8)
+                .containsOnlyKeys("incidentType", "username", "password", "browser", "countryFlag", "ipAddress", "what", "where")
+                .containsEntry("incidentType", "Authentication Login Failure Username/Masked Password")
+                .containsEntry("username", incident.credentials().username())
+                .containsEntry("password", incident.credentials().password())
+                .containsEntry("browser", "Chrome")
+                .containsEntry("countryFlag", FLAG_UKRAINE)
+                .containsEntry("ipAddress", "127.0.0.1")
+                .containsEntry("what", "Chrome, macOS on Desktop")
+                .containsEntry("where", "Ukraine, Lviv");
     }
 }

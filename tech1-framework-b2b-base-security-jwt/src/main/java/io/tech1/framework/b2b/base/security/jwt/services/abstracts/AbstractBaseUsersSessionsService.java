@@ -5,10 +5,10 @@ import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRe
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventSessionUserRequestMetadataRenew;
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionUserRequestMetadataSave;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
@@ -19,8 +19,7 @@ import io.tech1.framework.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tuples.Tuple3;
 import io.tech1.framework.domain.tuples.TupleToggle;
-import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
-import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
+import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -43,10 +42,10 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     protected final SecurityJwtPublisher securityJwtPublisher;
     // Repositories
     protected final UsersSessionsRepository usersSessionsRepository;
+    // Utils
+    protected final UserMetadataUtils userMetadataUtils;
     // Utilities
-    protected final GeoLocationFacadeUtility geoLocationFacadeUtility;
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
-    protected final UserAgentDetailsUtility userAgentDetailsUtility;
 
     @Override
     public void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest) {
@@ -114,8 +113,6 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
 
     @Override
     public UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
-        var geoLocation = this.geoLocationFacadeUtility.getGeoLocation(saveFunction.clientIpAddr());
-        var userAgentDetails = this.userAgentDetailsUtility.getUserAgentDetails(saveFunction.userAgentHeader());
         var session = saveFunction.session();
         var sessionProcessedMetadata = ofPersisted(
                 session.id(),
@@ -124,7 +121,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                 session.username(),
                 session.accessToken(),
                 session.refreshToken(),
-                UserRequestMetadata.processed(geoLocation, userAgentDetails),
+                this.userMetadataUtils.getUserRequestMetadataProcessed(saveFunction.clientIpAddr(), saveFunction.userAgentHeader()),
                 saveFunction.metadataRenewCron().enabled() ? saveFunction.metadataRenewCron().value() : session.metadataRenewCron(),
                 saveFunction.metadataRenewManually().enabled() ? saveFunction.metadataRenewManually().value() : session.metadataRenewManually()
         );

@@ -7,9 +7,13 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,8 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     // Services
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
+    // Utils
+    private final UserMetadataUtils userMetadataUtils;
 
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
@@ -35,6 +41,28 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     @Override
     public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
         LOGGER.debug(SECURITY_JWT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.username());
+        var userRequestMetadata = this.userMetadataUtils.getUserRequestMetadataProcessed(
+                event.ipAddress(),
+                event.userAgentHeader()
+        );
+        this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernamePassword(
+                new IncidentAuthenticationLoginFailureUsernamePassword(
+                        new UsernamePasswordCredentials(
+                                event.username(),
+                                event.password()
+                        ),
+                        userRequestMetadata
+                )
+        );
+        this.securityJwtIncidentPublisher.publishAuthenticationLoginFailureUsernameMaskedPassword(
+                new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
+                        UsernamePasswordCredentials.mask5(
+                                event.username(),
+                                event.password()
+                        ),
+                        userRequestMetadata
+                )
+        );
     }
 
     @Override

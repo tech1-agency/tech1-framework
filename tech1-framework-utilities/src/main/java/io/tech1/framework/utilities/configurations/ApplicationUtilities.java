@@ -13,7 +13,9 @@ import javax.annotation.PostConstruct;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.utilities.browsers",
-        "io.tech1.framework.utilities.geo"
+        "io.tech1.framework.utilities.geo",
+        // -------------------------------------------------------------------------------------------------------------
+        "io.tech1.framework.utilities.utils"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

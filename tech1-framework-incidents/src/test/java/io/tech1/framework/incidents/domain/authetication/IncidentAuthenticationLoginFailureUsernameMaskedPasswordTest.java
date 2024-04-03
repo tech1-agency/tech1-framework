@@ -3,6 +3,8 @@ package io.tech1.framework.incidents.domain.authetication;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,12 +36,38 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
                 UsernamePasswordCredentials.mask5(
                         username,
                         new Password(password)
-                )
+                ),
+                UserRequestMetadata.valid()
         );
 
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.credentials().username()).isEqualTo(username);
         assertThat(actual.credentials().password().value()).isEqualTo(expected);
+    }
+
+    @Test
+    void convertAuthenticationLoginFailureUsernameMaskedPasswordIncidentTest() {
+        // Arrange
+        var incident = new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
+                UsernamePasswordCredentials.mask5(
+                        Username.testsHardcoded(),
+                        Password.testsHardcoded()
+                ),
+                UserRequestMetadata.valid()
+        );
+
+        // Act
+        var actual = incident.getPlainIncident();
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Masked Password");
+        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getAttributes()).hasSize(3);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "username", "password");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Authentication Login Failure Username/Masked Password");
+        assertThat(actual.getAttributes()).containsEntry("username", Username.testsHardcoded());
+        assertThat(actual.getAttributes()).containsEntry("password", new Password("Passw***********"));
     }
 }

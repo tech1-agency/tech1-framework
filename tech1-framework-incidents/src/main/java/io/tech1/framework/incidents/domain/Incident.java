@@ -1,7 +1,12 @@
 package io.tech1.framework.incidents.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,11 +15,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.domain.utilities.exceptions.TraceUtility.getTrace;
+import static io.tech1.framework.incidents.domain.IncidentAttributes.Keys.*;
 import static java.util.Objects.nonNull;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j
 // Lombok
@@ -31,6 +40,60 @@ public class Incident {
     public Incident(Map<String, Object> attributes) {
         this.attributes = new TreeMap<>();
         this.addAll(attributes);
+    }
+
+    public Incident(String type) {
+        this();
+        this.add(IncidentAttributes.Keys.TYPE, type);
+    }
+
+    public Incident(SecurityJwtIncidentType type) {
+        this(type.getValue());
+    }
+
+    public Incident(SecurityJwtIncidentType type, Username username) {
+        this(type);
+        this.addUsername(username);
+    }
+
+    public Incident(SecurityJwtIncidentType type, UsernamePasswordCredentials credentials) {
+        this(type);
+        this.addUsername(credentials.username());
+        this.addPassword(credentials.password());
+    }
+
+    public Incident(SecurityJwtIncidentType type, Username username, UserRequestMetadata userRequestMetadata) {
+        this(type);
+        this.addUsername(username);
+        this.addUserRequestMetadata(userRequestMetadata);
+    }
+
+    public Incident(SecurityJwtIncidentType type, UsernamePasswordCredentials credentials, UserRequestMetadata userRequestMetadata) {
+        this(type, credentials);
+        this.addUserRequestMetadata(userRequestMetadata);
+    }
+
+    public Incident(IncidentThrowable incidentThrowable) {
+        this(IncidentAttributes.IncidentsTypes.THROWABLE);
+
+        var throwable = incidentThrowable.getThrowable();
+        this.add(IncidentAttributes.Keys.EXCEPTION, throwable.getClass());
+        this.add(IncidentAttributes.Keys.TRACE, getTrace(throwable));
+        this.add(IncidentAttributes.Keys.MESSAGE, throwable.getMessage());
+
+        var method = incidentThrowable.getMethod();
+        if (nonNull(method)) {
+            this.add(IncidentAttributes.Keys.METHOD, method.toString());
+        }
+
+        var params = incidentThrowable.getParams();
+        if (!isEmpty(params)) {
+            this.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(", ")));
+        }
+
+        if (!isEmpty(incidentThrowable.getAttributes())) {
+            incidentThrowable.getAttributes().forEach(this::add);
+        }
     }
 
     public static Incident copyOf(@NotNull Incident incident) {
@@ -54,6 +117,30 @@ public class Incident {
                 .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
                 .forEach(entry -> LOGGER.info(entry.getKey() + " — " + entry.getValue()));
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+    }
+
+    public void addUsername(Username username) {
+        this.add(IncidentAttributes.Keys.USERNAME, username);
+    }
+
+    public void addPassword(Password password) {
+        this.add(IncidentAttributes.Keys.PASSWORD, password);
+    }
+
+    public void addUserRequestMetadata(UserRequestMetadata userRequestMetadata) {
+        var tupleResponseException = userRequestMetadata.getException();
+        if (!tupleResponseException.isOk()) {
+            this.add(EXCEPTION, tupleResponseException.getMessage());
+        }
+
+        var whereTuple3 = userRequestMetadata.getWhereTuple3();
+        this.add(IP_ADDRESS, whereTuple3.a());
+        this.add(COUNTRY_FLAG, whereTuple3.b());
+        this.add(WHERE, whereTuple3.c());
+
+        var whatTuple2 = userRequestMetadata.getWhatTuple2();
+        this.add(BROWSER, whatTuple2.a());
+        this.add(WHAT, whatTuple2.b());
     }
 
     @JsonIgnore

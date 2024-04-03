@@ -100,12 +100,18 @@ public record JwtUser(
     }
 
     public static JwtUser testsHardcoded() {
+        return testsHardcoded(
+                getSimpleGrantedAuthorities("user")
+        );
+    }
+
+    public static JwtUser testsHardcoded(Set<SimpleGrantedAuthority> authorities) {
         return new JwtUser(
                 UserId.testsHardcoded(),
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
                 ZoneIdsConstants.UKRAINE,
-                getSimpleGrantedAuthorities("user"),
+                authorities,
                 Email.testsHardcoded(),
                 "",
                 false,

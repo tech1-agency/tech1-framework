@@ -4,8 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
-import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
-import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
+import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,16 +18,14 @@ public class MongoBaseUsersSessionsService extends AbstractBaseUsersSessionsServ
     public MongoBaseUsersSessionsService(
             SecurityJwtPublisher securityJwtPublisher,
             MongoUsersSessionsRepository usersSessionsRepository,
-            GeoLocationFacadeUtility geoLocationFacadeUtility,
-            SecurityJwtTokenUtils securityJwtTokenUtils,
-            UserAgentDetailsUtility userAgentDetailsUtility
+            UserMetadataUtils userMetadataUtils,
+            SecurityJwtTokenUtils securityJwtTokenUtils
     ) {
         super(
                 securityJwtPublisher,
                 usersSessionsRepository,
-                geoLocationFacadeUtility,
-                securityJwtTokenUtils,
-                userAgentDetailsUtility
+                userMetadataUtils,
+                securityJwtTokenUtils
         );
     }
 }

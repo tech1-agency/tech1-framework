@@ -1,6 +1,5 @@
 package io.tech1.framework.incidents.events.subscribers.impl;
 
-import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.events.subscribers.IncidentSubscriber;
 import io.tech1.framework.incidents.feigns.clients.IncidentClient;
@@ -34,39 +33,29 @@ class IncidentSubscriberImplTest {
         }
 
         @Bean
-        IncidentConverter incidentConverter() {
-            return mock(IncidentConverter.class);
-        }
-
-        @Bean
         IncidentSubscriber incidentPublisher() {
             return new IncidentSubscriberImpl(
-                    this.incidentClient(),
-                    this.incidentConverter()
+                    this.incidentClient()
             );
         }
     }
 
     // Clients
     private final IncidentClient incidentClient;
-    // Converters
-    private final IncidentConverter incidentConverter;
 
     private final IncidentSubscriber componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.incidentClient,
-                this.incidentConverter
+                this.incidentClient
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.incidentClient,
-                this.incidentConverter
+                this.incidentClient
         );
     }
 
@@ -123,15 +112,12 @@ class IncidentSubscriberImplTest {
     @Test
     void onEventThrowableIncidentTest() {
         // Arrange
-        var incident = randomIncident();
-        var throwableIncident = randomThrowableIncident();
-        when(this.incidentConverter.convert(throwableIncident)).thenReturn(incident);
+        var incident = randomThrowableIncident();
 
         // Act
-        this.componentUnderTest.onEvent(throwableIncident);
+        this.componentUnderTest.onEvent(incident);
 
         // Assert
-        verify(this.incidentConverter).convert(throwableIncident);
-        verify(this.incidentClient).registerIncident(incident);
+        verify(this.incidentClient).registerIncident(new Incident(incident));
     }
 }

@@ -5,8 +5,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ExceptionsMessagesUtility {
 
+    public static String pleaseWait(String prefix) {
+        return "%s. Please wait...".formatted(prefix);
+    }
+
     public static String contactDevelopmentTeam(String prefix) {
         return "%s. Please contact development team".formatted(prefix);
+    }
+
+    public static String notImplementedYet() {
+        return contactDevelopmentTeam("Not implemented yet");
     }
 
     public static String invalidAttribute(String attributeName) {

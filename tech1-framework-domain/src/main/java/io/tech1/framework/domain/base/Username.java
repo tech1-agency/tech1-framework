@@ -10,8 +10,8 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 public record Username(@NotNull String value) {
 
     @JsonCreator
-    public static Username of(String identifier) {
-        return new Username(identifier);
+    public static Username of(String value) {
+        return new Username(value);
     }
 
     public static Username cron() {

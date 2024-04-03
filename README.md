@@ -21,3 +21,4 @@ Last deployed version: **1.16**
 — Addition: ExceptionsMessagesUtility: pleaseWait(), notImplementedYet()
 — Addition: ClassicStateGroupedMappings
 — Addition: JwtUser: testsHardcoded(Set<SimpleGrantedAuthority> authorities)
+— Addition: Timestamp(long value)

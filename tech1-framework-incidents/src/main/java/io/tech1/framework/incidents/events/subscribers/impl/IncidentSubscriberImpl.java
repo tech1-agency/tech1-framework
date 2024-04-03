@@ -1,7 +1,6 @@
 package io.tech1.framework.incidents.events.subscribers.impl;
 
 import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
-import io.tech1.framework.incidents.converters.IncidentConverter;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -27,8 +26,6 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
 
     // Clients
     private final IncidentClient incidentClient;
-    // Converters
-    private final IncidentConverter incidentConverter;
 
     @Override
     public void onEvent(IncidentSystemResetServerStarted incident) {
@@ -59,9 +56,8 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
     }
 
     @Override
-    public void onEvent(IncidentThrowable incidentThrowable) {
-        LOGGER.debug(INCIDENT_THROWABLE, this.getType(), incidentThrowable.getThrowable().getMessage());
-        var incident = this.incidentConverter.convert(incidentThrowable);
-        this.incidentClient.registerIncident(incident);
+    public void onEvent(IncidentThrowable incident) {
+        LOGGER.debug(INCIDENT_THROWABLE, this.getType(), incident.getThrowable().getMessage());
+        this.incidentClient.registerIncident(new Incident(incident));
     }
 }

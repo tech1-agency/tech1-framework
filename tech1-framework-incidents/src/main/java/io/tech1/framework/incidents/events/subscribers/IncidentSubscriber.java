@@ -21,5 +21,5 @@ public interface IncidentSubscriber {
 
     @Async
     @EventListener
-    void onEvent(IncidentThrowable incidentThrowable);
+    void onEvent(IncidentThrowable incident);
 }

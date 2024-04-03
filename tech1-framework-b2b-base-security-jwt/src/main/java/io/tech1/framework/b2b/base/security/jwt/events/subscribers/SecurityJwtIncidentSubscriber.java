@@ -11,29 +11,29 @@ import org.springframework.scheduling.annotation.Async;
 public interface SecurityJwtIncidentSubscriber {
     @Async
     @EventListener
-    void onEvent(IncidentAuthenticationLogin incidentAuthenticationLogin);
+    void onEvent(IncidentAuthenticationLogin incident);
     @Async
     @EventListener
-    void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incidentAuthenticationLoginFailureUsernamePassword);
+    void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incident);
     @Async
     @EventListener
-    void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incidentAuthenticationLoginFailureUsernameMaskedPassword);
+    void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident);
     @Async
     @EventListener
-    void onEvent(IncidentAuthenticationLogoutMin incidentAuthenticationLogoutMin);
+    void onEvent(IncidentAuthenticationLogoutMin incident);
     @Async
     @EventListener
-    void onEvent(IncidentAuthenticationLogoutFull incidentAuthenticationLogoutFull);
+    void onEvent(IncidentAuthenticationLogoutFull incident);
     @Async
     @EventListener
-    void onEvent(IncidentRegistration1 incidentRegistration1);
+    void onEvent(IncidentRegistration1 incident);
     @Async
     @EventListener
-    void onEvent(IncidentRegistration1Failure incidentRegistration1Failure);
+    void onEvent(IncidentRegistration1Failure incident);
     @Async
     @EventListener
-    void onEvent(IncidentSessionRefreshed incidentSessionRefreshed);
+    void onEvent(IncidentSessionRefreshed incident);
     @Async
     @EventListener
-    void onEvent(IncidentSessionExpired incidentSessionExpired);
+    void onEvent(IncidentSessionExpired incident);
 }

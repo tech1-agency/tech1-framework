@@ -1,13 +1,16 @@
 package io.tech1.framework.incidents.domain;
 
+import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomMethod;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.randomIncident;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -69,5 +72,79 @@ class IncidentTest {
 
         // Assert
         assertThat(actual.value()).isEqualTo(expected);
+    }
+
+    @Test
+    void convertThrowableIncident1Test() {
+        // Arrange
+        var throwable = new NullPointerException("Tech1");
+        var throwableIncident = IncidentThrowable.of(throwable);
+
+        // Act
+        var actual = new Incident(throwableIncident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Throwable");
+        assertThat(actual.getUsername().value()).isEqualTo("Unknown");
+        assertThat(actual.getAttributes()).hasSize(4);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
+        assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
+        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.domain.IncidentTest.convertThrowableIncident1Test");
+    }
+
+    @Test
+    void convertThrowableIncident2Test() {
+        // Arrange
+        var object = new Object();
+        var throwable = new NullPointerException("Tech1");
+        var method = randomMethod();
+        var params = List.of(object, "param1", 1L);
+        var throwableIncident = IncidentThrowable.of(throwable, method, params);
+
+        // Act
+        var actual = new Incident(throwableIncident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Throwable");
+        assertThat(actual.getUsername().value()).isEqualTo("Unknown");
+        assertThat(actual.getAttributes()).hasSize(6);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "method", "params");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
+        assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
+        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes()).containsEntry("params", object + ", param1, 1");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.domain.IncidentTest.convertThrowableIncident2Test");
+        assertThat(actual.getAttributes().get("method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
+    }
+
+    @Test
+    void convertThrowableIncident3Test() {
+        // Arrange
+        var object = new Object();
+        var throwable = new NullPointerException("Tech1");
+        var attributes = Map.of("key1", object);
+        var throwableIncident = IncidentThrowable.of(throwable, attributes);
+
+        // Act
+        var actual = new Incident(throwableIncident);
+
+        // Assert
+        assertThat(actual).isNotNull();
+        assertThat(actual.getType()).isEqualTo("Throwable");
+        assertThat(actual.getUsername().value()).isEqualTo("Unknown");
+        assertThat(actual.getAttributes()).hasSize(5);
+        assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "key1");
+        assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
+        assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
+        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes()).containsEntry("key1", object);
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at io.tech1.framework.incidents.domain.IncidentTest.convertThrowableIncident3Test");
     }
 }

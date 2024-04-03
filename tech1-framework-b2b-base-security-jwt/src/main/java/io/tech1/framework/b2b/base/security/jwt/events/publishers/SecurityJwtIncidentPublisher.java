@@ -8,9 +8,7 @@ import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
 
 public interface SecurityJwtIncidentPublisher {
     void publishAuthenticationLogin(IncidentAuthenticationLogin incident);
-    // TODO [YYL-clean]
     void publishAuthenticationLoginFailureUsernamePassword(IncidentAuthenticationLoginFailureUsernamePassword incident);
-    // TODO [YYL-clean]
     void publishAuthenticationLoginFailureUsernameMaskedPassword(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident);
     void publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin incident);
     void publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull incident);

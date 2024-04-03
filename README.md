@@ -22,3 +22,4 @@ Last deployed version: **1.16**
 — Addition: ClassicStateGroupedMappings
 — Addition: JwtUser: testsHardcoded(Set<SimpleGrantedAuthority> authorities)
 — Addition: Timestamp(long value)
+— Addition: RemoteServer.containsCredentials(UsernamePasswordCredentials credentials)

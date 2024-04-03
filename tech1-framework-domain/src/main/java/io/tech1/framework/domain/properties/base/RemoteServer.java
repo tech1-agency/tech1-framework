@@ -5,6 +5,7 @@ import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
@@ -25,5 +26,9 @@ public class RemoteServer extends AbstractPropertyConfigs {
 
     public static RemoteServer random() {
         return new RemoteServer(randomIPv4(), UsernamePasswordCredentials.testsHardcoded());
+    }
+
+    public boolean containsCredentials(@NotNull UsernamePasswordCredentials credentials) {
+        return this.credentials.equals(credentials);
     }
 }

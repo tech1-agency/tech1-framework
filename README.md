@@ -16,13 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.3]
-— Addition: Add user request metadata to login failure incidents
-— Addition: ExceptionsMessagesUtility: pleaseWait(), notImplementedYet()
-— Addition: ClassicStateGroupedMappings
-— Addition: JwtUser: testsHardcoded(Set<SimpleGrantedAuthority> authorities)
-— Addition: Timestamp(long value)
-— Addition: RemoteServer.containsCredentials(UsernamePasswordCredentials credentials)
-— Deletion: IncidentConverter, SecurityJwtIncidentConverter
-— Modification: TestsFlagsConstants remove prefix FLAG_
-— Modification: docker images openjdk:17-alpine → eclipse-temurin:17.0.7_7-jdk-alpine
+### Release Notes [Development v2.7.4]
+— TBD

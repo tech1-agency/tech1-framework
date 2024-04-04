@@ -21,7 +21,7 @@ import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesU
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(value = {
+    @ExceptionHandler({
             CookieNotFoundException.class,
             AccessTokenNotFoundException.class,
             AccessTokenInvalidException.class,
@@ -38,16 +38,16 @@ public class ResourceExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(value = {
-            AccessDeniedException.class,
+    @ExceptionHandler({
+            AccessDeniedException.class
     })
     public ResponseEntity<ExceptionEntity> accessDeniedException(AccessDeniedException ex) {
         var response = ExceptionEntity.of(ex);
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(value = {
-            RegistrationException.class,
+    @ExceptionHandler({
+            RegistrationException.class
     })
     public ResponseEntity<ExceptionEntity> registerException(RegistrationException ex) {
         var response = ExceptionEntity.of(
@@ -58,8 +58,8 @@ public class ResourceExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = {
-            IllegalArgumentException.class,
+    @ExceptionHandler({
+            IllegalArgumentException.class
     })
     public ResponseEntity<ExceptionEntity> internalServerError(IllegalArgumentException ex) {
         var response = ExceptionEntity.of(ex);

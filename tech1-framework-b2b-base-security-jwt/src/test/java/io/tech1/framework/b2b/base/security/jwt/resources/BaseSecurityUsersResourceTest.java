@@ -88,7 +88,6 @@ class BaseSecurityUsersResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.baseUsersValidator).validateUserUpdateRequest2(request);
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersService).updateUser2(user, request);
     }

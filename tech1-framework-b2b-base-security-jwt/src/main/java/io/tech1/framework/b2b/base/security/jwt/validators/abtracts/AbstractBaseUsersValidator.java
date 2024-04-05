@@ -2,16 +2,14 @@ package io.tech1.framework.b2b.base.security.jwt.validators.abtracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
 import io.tech1.framework.domain.base.Username;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.asserts.Asserts.*;
+import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotBlankOrThrow;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,12 +26,6 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
         if (nonNull(user) && !user.username().equals(username)) {
             throw new IllegalArgumentException("Email is already used");
         }
-    }
-
-    @Override
-    public void validateUserUpdateRequest2(RequestUserUpdate2 request) {
-        var zoneId = request.zoneId();
-        assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
     }
 
     @Override

@@ -12,8 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.time.ZoneId;
-
 @AllArgsConstructor
 public abstract class AbstractBaseUsersService implements BaseUsersService {
 
@@ -44,7 +42,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.id(),
                 user.username(),
                 user.password(),
-                ZoneId.of(request.zoneId()),
+                request.zoneId(),
                 user.authorities(),
                 user.email(),
                 request.name(),

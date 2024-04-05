@@ -20,8 +20,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.time.ZoneId;
-
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -102,7 +100,7 @@ class AbstractBaseUsersServiceTest {
         // Assert
         verify(this.usersRepository).saveAs(userAC.capture());
         assertThat(userAC.getValue().username()).isEqualTo(user.username());
-        assertThat(userAC.getValue().zoneId()).isEqualTo(ZoneId.of(request.zoneId()));
+        assertThat(userAC.getValue().zoneId()).isEqualTo(request.zoneId());
         assertThat(userAC.getValue().name()).isEqualTo(request.name());
         // no verifications on static SecurityContextHolder
     }

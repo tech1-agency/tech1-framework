@@ -40,8 +40,7 @@ public class BaseSecurityUsersResource {
 
     @PostMapping("/update2")
     @ResponseStatus(HttpStatus.OK)
-    public void update1(@RequestBody RequestUserUpdate2 request) {
-        this.baseUsersValidator.validateUserUpdateRequest2(request);
+    public void update1(@RequestBody @Valid RequestUserUpdate2 request) {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersService.updateUser2(user, request);
     }

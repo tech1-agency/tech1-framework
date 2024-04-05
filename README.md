@@ -22,3 +22,4 @@ Last deployed version: **1.16**
 — Addition: add @Valid → RequestUserRegistration1
 — Addition: add @Valid → RequestNewInvitationCodeParams
 — Addition: add @Valid → RequestUserUpdate1
+— Addition: add @Valid → RequestUserUpdate2

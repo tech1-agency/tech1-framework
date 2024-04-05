@@ -2,7 +2,6 @@ package io.tech1.framework.b2b.base.security.jwt.validators.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserChangePasswordBasic;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
@@ -90,25 +89,10 @@ class AbstractBaseUsersValidatorTest {
     }
 
     @Test
-    void validateUserUpdateRequest1InvalidZoneIdTest() {
-        // Arrange
-        var username = entity(Username.class);
-        var requestUserUpdate1 = new RequestUserUpdate1("invalidZoneId", Email.random(), randomString());
-
-        // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
-
-        // Assert
-        assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Attribute `zoneId` is invalid");
-    }
-
-    @Test
     void validateUserUpdateRequest1InvalidEmailTest() {
         // Arrange
         var username = entity(Username.class);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), Email.of(randomString()), randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), Email.of(randomString()), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -125,7 +109,7 @@ class AbstractBaseUsersValidatorTest {
         var username = entity(Username.class);
         var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(null);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -141,7 +125,7 @@ class AbstractBaseUsersValidatorTest {
         var user= entity(JwtUser.class);
         var email = Email.random();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(user.username(), requestUserUpdate1));
@@ -158,7 +142,7 @@ class AbstractBaseUsersValidatorTest {
         var email = Email.random();
         var user = entity(JwtUser.class);
         when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId().getId(), email, randomString());
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
@@ -168,32 +152,6 @@ class AbstractBaseUsersValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Attribute `email` is invalid");
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
-    }
-
-    @Test
-    void validateUserUpdateRequest2InvalidZoneIdTest() {
-        // Arrange
-        var requestUserUpdate2 = new RequestUserUpdate2("invalidZoneId", randomString());
-
-        // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2));
-
-        // Assert
-        assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Attribute `zoneId` is invalid");
-    }
-
-    @Test
-    void validateUserUpdateRequest2Test() {
-        // Arrange
-        var requestUserUpdate2 = new RequestUserUpdate2(randomZoneId().getId(), randomString());
-
-        // Act
-        this.componentUnderTest.validateUserUpdateRequest2(requestUserUpdate2);
-
-        // Assert
-        // no asserts
     }
 
     @ParameterizedTest

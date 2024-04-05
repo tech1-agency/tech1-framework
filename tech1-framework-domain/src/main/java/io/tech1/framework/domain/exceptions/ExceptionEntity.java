@@ -1,18 +1,20 @@
 package io.tech1.framework.domain.exceptions;
 
+import io.tech1.framework.domain.tuples.Tuple2;
 import io.tech1.framework.domain.utilities.strings.StringUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static org.springframework.util.StringUtils.capitalize;
 
 // Lombok
 @Getter
@@ -45,7 +47,16 @@ public class ExceptionEntity {
     public ExceptionEntity(MethodArgumentNotValidException exception) {
         this.exceptionEntityType = ExceptionEntityType.ERROR;
         var message = exception.getBindingResult().getFieldErrors().stream()
-                .map(item -> StringUtility.convertCamelCaseToSplit(item.getField()) + " " + item.getDefaultMessage())
+                .map(item -> {
+                    // E.G. "bollingerBands.numberOfPeriods" -> "Bollinger bands Number of periods"
+                    var fieldName = Stream.of(item.getField().split("\\."))
+                            .map(StringUtility::convertCamelCaseToSplit)
+                            .collect(Collectors.joining(" "));
+                    // E.G: "Bollinger bands Number of periods" → "Bollinger bands number of periods"
+                    fieldName = capitalize(fieldName.toLowerCase());
+                    return new Tuple2<>(fieldName, item.getDefaultMessage());
+                })
+                .map(tuple2 -> tuple2.a() + " " + tuple2.b())
                 .sorted()
                 .collect(Collectors.joining(". "));
         this.attributes = Map.of(

@@ -24,21 +24,9 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
 
     @Override
     public void validateUserUpdateRequest1(Username username, RequestUserUpdate1 request) {
-        var zoneId = request.zoneId();
-        assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
-
-        var email = request.email();
-
-        var invalidEmailMessage = invalidAttribute("email");
-        assertNonNullOrThrow(email, invalidEmailMessage);
-
-        if (!isEmail(email)) {
-            throw new IllegalArgumentException(invalidEmailMessage);
-        }
-        var user = this.usersRepository.findByEmailAsJwtUserOrNull(email);
-        // `email` is already used by other user in the system
+        var user = this.usersRepository.findByEmailAsJwtUserOrNull(request.email());
         if (nonNull(user) && !user.username().equals(username)) {
-            throw new IllegalArgumentException(invalidEmailMessage);
+            throw new IllegalArgumentException("Email is already used");
         }
     }
 

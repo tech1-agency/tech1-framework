@@ -21,3 +21,4 @@ Last deployed version: **1.16**
 — Addition: @Valid-based-annotations: @ValidUsername, @ValidPasswordNotBlank, @ValidPasswordCamelCaseLettersAndNumbers
 — Addition: add @Valid → RequestUserRegistration1
 — Addition: add @Valid → RequestNewInvitationCodeParams
+— Addition: add @Valid → RequestUserUpdate1

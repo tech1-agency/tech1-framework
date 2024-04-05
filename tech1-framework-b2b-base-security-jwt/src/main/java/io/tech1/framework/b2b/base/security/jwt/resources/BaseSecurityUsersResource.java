@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
@@ -30,7 +32,7 @@ public class BaseSecurityUsersResource {
 
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)
-    public void update1(@RequestBody RequestUserUpdate1 request) {
+    public void update1(@RequestBody @Valid RequestUserUpdate1 request) {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersValidator.validateUserUpdateRequest1(user.username(), request);
         this.baseUsersService.updateUser1(user, request);

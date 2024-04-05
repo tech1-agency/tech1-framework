@@ -36,10 +36,10 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
     public void validateDeleteById(Username username, InvitationCodeId invitationCodeId) {
         var tuplePresence = this.invitationCodesRepository.isPresent(invitationCodeId);
         if (!tuplePresence.present()) {
-            throw new IllegalArgumentException(entityNotFound("InvitationCode", invitationCodeId.value()));
+            throw new IllegalArgumentException(entityNotFound("Invitation code", invitationCodeId.value()));
         }
         if (!username.equals(tuplePresence.value().owner())) {
-            throw new AccessDeniedException(entityAccessDenied("InvitationCode", invitationCodeId.value()));
+            throw new AccessDeniedException(entityAccessDenied("Invitation code", invitationCodeId.value()));
         }
     }
 }

@@ -52,7 +52,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
         var invitationCode = this.invitationCodesRepository.findByValueAsAny(request.invitationCode());
         if (nonNull(invitationCode)) {
             if (nonNull(invitationCode.invited())) {
-                var message = entityAlreadyUsed("InvitationCode", invitationCode.value());
+                var message = entityAlreadyUsed("Invitation code", invitationCode.value());
                 this.securityJwtPublisher.publishRegistration1Failure(
                         new EventRegistration1Failure(
                                 request.username(),
@@ -72,7 +72,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                 throw new RegistrationException(message);
             }
         } else {
-            var exception = entityNotFound("InvitationCode", request.invitationCode());
+            var exception = entityNotFound("Invitation code", request.invitationCode());
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             request.username(),

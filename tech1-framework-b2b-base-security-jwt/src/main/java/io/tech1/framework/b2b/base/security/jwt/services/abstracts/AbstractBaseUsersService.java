@@ -28,7 +28,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.id(),
                 user.username(),
                 user.password(),
-                ZoneId.of(request.zoneId()),
+                request.zoneId(),
                 user.authorities(),
                 request.email(),
                 request.name(),

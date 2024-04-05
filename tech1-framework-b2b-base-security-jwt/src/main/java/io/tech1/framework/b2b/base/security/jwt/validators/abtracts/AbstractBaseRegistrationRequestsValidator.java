@@ -12,7 +12,8 @@ import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Fai
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,7 +28,6 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 request) throws RegistrationException {
-        request.password().assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(8);
         request.assertPasswordsOrThrow();
         var user = this.mongoUsersRepository.findByUsernameAsJwtUserOrNull(request.username());
         if (nonNull(user)) {

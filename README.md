@@ -18,5 +18,5 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.4]
 — Modification: ExceptionEntity static of() → constructors
-— Addition: spring-boot-starter-validation annotations: @ValidUsername, @ValidPasswordNotBlank
+— Addition: @Valid-based-annotations: @ValidUsername, @ValidPasswordNotBlank, @ValidPasswordCamelCaseLettersAndNumbers
 — Addition: spring-boot-starter-validation on RequestUserRegistration1

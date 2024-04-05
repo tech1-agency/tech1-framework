@@ -13,8 +13,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbersWithLength;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;
 
@@ -38,6 +40,7 @@ public record Password(@NotNull String value) {
         }
     }
 
+    @Deprecated
     public void assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(int length) {
         if (!containsCamelCaseLettersAndNumbersWithLength(this.value, length)) {
             throw new IllegalArgumentException("New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least %s characters long".formatted(length));
@@ -66,6 +69,49 @@ public record Password(@NotNull String value) {
         @Override
         public boolean isValid(Password password, ConstraintValidatorContext constraintValidatorContext) {
             return nonNull(password) && hasLength(password.value);
+        }
+    }
+
+    @Target({
+            ElementType.FIELD,
+            ElementType.METHOD
+    })
+    @Retention(RetentionPolicy.RUNTIME)
+    @Constraint(validatedBy = ConstraintValidatorOnPasswordCamelCaseLettersAndNumbers.class)
+    public @interface ValidPasswordCamelCaseLettersAndNumbers {
+        String message() default "must not be blank, must be between {min} and {max} symbols, must contain: an uppercase latin letter, a lowercase latin letter and a number";
+        Class<?>[] groups() default {};
+        Class<? extends Payload>[] payload() default {};
+        int min() default 0;
+        int max() default Integer.MAX_VALUE;
+    }
+
+    private static class ConstraintValidatorOnPasswordCamelCaseLettersAndNumbers implements ConstraintValidator<ValidPasswordCamelCaseLettersAndNumbers, Password> {
+        private int min;
+        private int max;
+        private String message;
+
+        @Override
+        public void initialize(ValidPasswordCamelCaseLettersAndNumbers constraintAnnotation) {
+            this.min = constraintAnnotation.min();
+            this.max = constraintAnnotation.max();
+            this.message = constraintAnnotation.message();
+        }
+
+        @Override
+        public boolean isValid(Password password, ConstraintValidatorContext constraintValidatorContext) {
+            if (isNull(password)) {
+                return false;
+            }
+            if (!hasLength(password.value)) {
+                return false;
+            }
+            if (password.value.length() < this.min || password.value.length() > this.max) {
+                constraintValidatorContext.disableDefaultConstraintViolation();
+                constraintValidatorContext.buildConstraintViolationWithTemplate(this.message).addConstraintViolation();
+                return false;
+            }
+            return containsCamelCaseLettersAndNumbers(password.value);
         }
     }
 }

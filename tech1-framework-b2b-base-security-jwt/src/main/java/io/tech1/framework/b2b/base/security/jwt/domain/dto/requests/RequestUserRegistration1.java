@@ -5,7 +5,6 @@ import io.tech1.framework.domain.base.Username;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import java.time.ZoneId;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
@@ -13,7 +12,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZon
 
 public record RequestUserRegistration1(
         @Username.ValidUsername Username username,
-        @Password.ValidPasswordNotBlank Password password,
+        @Password.ValidPasswordCamelCaseLettersAndNumbers(min = 8, max = 20) Password password,
         @Password.ValidPasswordNotBlank Password confirmPassword,
         @NotNull ZoneId zoneId,
         @NotBlank String invitationCode

@@ -39,7 +39,6 @@ import static org.springframework.http.HttpMethod.*;
         "io.tech1.framework.b2b.base.security.jwt.events",
         "io.tech1.framework.b2b.base.security.jwt.filters",
         "io.tech1.framework.b2b.base.security.jwt.handlers.exceptions",
-        "io.tech1.framework.b2b.base.security.jwt.incidents.converters",
         "io.tech1.framework.b2b.base.security.jwt.resources",
         "io.tech1.framework.b2b.base.security.jwt.services",
         "io.tech1.framework.b2b.base.security.jwt.tokens",
@@ -117,8 +116,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
         urlRegistry.antMatchers(POST, basePathPrefix +"/authentication/logout").permitAll();
         urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll();
         urlRegistry.antMatchers(GET, basePathPrefix + "/session/current").authenticated();
-//        urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").denyAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").anonymous();
+        urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").denyAll();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/update1").denyAll();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/update2").authenticated();
         urlRegistry.antMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();

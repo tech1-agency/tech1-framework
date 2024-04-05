@@ -12,6 +12,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationV
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
+import io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -94,7 +95,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = "Username: Already Used, id = " + request.username();
+        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Username", request.username().value());
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);
@@ -127,7 +128,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = "InvitationCode: Already Used, id = " + invitationCode.value();
+        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Invitation code", invitationCode.value());
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);
@@ -164,7 +165,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = "InvitationCode: Not Found, id = " + invitationCode;
+        var exception = ExceptionsMessagesUtility.entityNotFound("Invitation code", invitationCode);
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);

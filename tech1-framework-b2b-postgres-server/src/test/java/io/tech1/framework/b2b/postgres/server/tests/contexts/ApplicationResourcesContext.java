@@ -18,13 +18,13 @@ public class ApplicationResourcesContext {
 
     // Services
     @Bean
-    public UsersService usersService() {
+    UsersService usersService() {
         return mock(UsersService.class);
     }
 
     // Utilities
     @Bean
-    public EnvironmentUtility environmentUtils() {
+    EnvironmentUtility environmentUtils() {
         return mock(EnvironmentUtility.class);
     }
 }

@@ -17,22 +17,22 @@ import static org.mockito.Mockito.mock;
 public class TestsApplicationHandlersContext {
 
     @Bean
-    public SecurityJwtPublisher securityJwtPublisher() {
+    SecurityJwtPublisher securityJwtPublisher() {
         return mock(SecurityJwtPublisher.class);
     }
 
     @Bean
-    public SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
+    SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
         return mock(SecurityJwtIncidentPublisher.class);
     }
 
     @Bean
-    public HttpRequestUtils httpRequestUtility() {
+    HttpRequestUtils httpRequestUtility() {
         return mock(HttpRequestUtils.class);
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 }

@@ -27,6 +27,7 @@ import java.util.Set;
 import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyUsersData1;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,7 +72,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.loadUserByUsername(Username.of("sa1"))).isNotNull();
         assertThat(catchThrowable(() -> this.usersRepository.loadUserByUsername(Username.of("sa777"))))
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessageStartingWith("Username: Not Found, id = sa777");
+                .hasMessageStartingWith(entityNotFound("Username", "sa777"));
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
         assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + DomainConstants.TECH1))).isNotNull();
@@ -127,7 +128,7 @@ class MongoUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessage("Username: Not Found, id = " + username.value());
+                .hasMessageStartingWith(entityNotFound("Username", username.value()));
     }
 
     @Test

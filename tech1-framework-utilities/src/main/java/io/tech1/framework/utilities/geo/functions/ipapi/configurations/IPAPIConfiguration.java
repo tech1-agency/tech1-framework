@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class IPAPIConfiguration {
 
     @Bean
-    public IPAPIFeign ipapiFeign() {
+    IPAPIFeign ipapiFeign() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())

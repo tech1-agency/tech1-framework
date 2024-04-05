@@ -27,6 +27,7 @@ import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser.random
 import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,7 +73,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.loadUserByUsername(Username.of("sa1"))).isNotNull();
         assertThat(catchThrowable(() -> this.usersRepository.loadUserByUsername(Username.of("sa777"))))
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessageStartingWith("Username: Not Found, id = sa777");
+                .hasMessageStartingWith(entityNotFound("Username", "sa777"));
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
         assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + DomainConstants.TECH1))).isNotNull();
@@ -128,7 +129,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         var throwable = catchThrowable(() -> this.usersRepository.loadUserByUsername(username));
         assertThat(throwable)
                 .isInstanceOf(UsernameNotFoundException.class)
-                .hasMessage("Username: Not Found, id = " + username.value());
+                .hasMessageStartingWith(entityNotFound("Username", username.value()));
     }
 
     @Test

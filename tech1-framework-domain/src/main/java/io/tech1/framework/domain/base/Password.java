@@ -57,7 +57,7 @@ public record Password(@NotNull String value) {
         Class<? extends Payload>[] payload() default {};
     }
 
-    private static class ConstraintValidatorOnPasswordNotBlank implements ConstraintValidator<ValidPasswordNotBlank, Password> {
+    public static class ConstraintValidatorOnPasswordNotBlank implements ConstraintValidator<ValidPasswordNotBlank, Password> {
         @Override
         public boolean isValid(Password password, ConstraintValidatorContext constraintValidatorContext) {
             return nonNull(password) && hasLength(password.value);
@@ -78,7 +78,7 @@ public record Password(@NotNull String value) {
         int max() default Integer.MAX_VALUE;
     }
 
-    private static class ConstraintValidatorOnPasswordCamelCaseLettersAndNumbers implements ConstraintValidator<ValidPasswordCamelCaseLettersAndNumbers, Password> {
+    public static class ConstraintValidatorOnPasswordCamelCaseLettersAndNumbers implements ConstraintValidator<ValidPasswordCamelCaseLettersAndNumbers, Password> {
         private int min;
         private int max;
         private String message;

@@ -24,4 +24,6 @@ Last deployed version: **1.16**
 — Addition: add @Valid → RequestUserUpdate1
 — Addition: add @Valid → RequestUserUpdate2
 — Addition: add @Valid → RequestUserChangePasswordBasic
+— Addition: add @Valid → RequestUserLogin
 — Modification: UserSession assertAccess(sessionId, username) → Service
+— Modification: messages in ExceptionsMessagesUtility

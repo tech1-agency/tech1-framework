@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -41,8 +42,8 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, "invitationCode:send")), "Invitation code request params contains unsupported authority"),
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, SUPER_ADMIN)), "Invitation code request params contains unsupported authority"),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, "invitationCode:send")), "Authorities must contains: [admin, invitationCode:read, invitationCode:write, user]"),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, SUPER_ADMIN)), "Authorities must contains: [admin, invitationCode:read, invitationCode:write, user]"),
                 Arguments.of(new RequestNewInvitationCodeParams(Set.of()), null),
                 Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, INVITATION_CODE_WRITE)), null)
         );
@@ -99,7 +100,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("InvitationCode: Not Found, id = " + invitationCodeId);
+                .hasMessage("Invitation code is not found. Id: " + invitationCodeId);
         verify(this.invitationCodesRepository).isPresent(invitationCodeId);
     }
 
@@ -116,8 +117,8 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
         // Assert
         assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("InvitationCode: Access Denied, id = " + invitationCodeId.value());
+                .isInstanceOf(AccessDeniedException.class)
+                .hasMessage("Access denied on invitation code. Id: " + invitationCodeId.value());
         verify(this.invitationCodesRepository).isPresent(invitationCodeId);
     }
 

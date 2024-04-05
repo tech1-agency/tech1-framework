@@ -64,7 +64,7 @@ class JwtAccessDeniedExceptionHandlerTest {
         verify(httpServletResponse).setContentType("application/json;charset=UTF-8");
         verify(httpServletResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(httpServletResponse).getWriter();
-        verify(exception).getMessage();
+        verify(exception, times(2)).getMessage();
         verify(printWriter).write(jsonAC.capture());
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
         HashMap<String, Object> json = objectMapper.readValue(jsonAC.getValue(), typeRef);

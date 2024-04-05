@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 public class TestsApplicationResourcesContext {
 
     @Bean
-    public ResourceExceptionHandler resourceExceptionHandler() {
+    ResourceExceptionHandler resourceExceptionHandler() {
         return new ResourceExceptionHandler();
     }
 
@@ -36,7 +36,7 @@ public class TestsApplicationResourcesContext {
     // Authentication
     // =================================================================================================================
     @Bean
-    public AuthenticationManager authenticationManager() {
+    AuthenticationManager authenticationManager() {
         return mock(AuthenticationManager.class);
     }
 
@@ -44,7 +44,7 @@ public class TestsApplicationResourcesContext {
     // Session
     // =================================================================================================================
     @Bean
-    public SessionRegistry sessionRegistry() {
+    SessionRegistry sessionRegistry() {
         return mock(SessionRegistry.class);
     }
 
@@ -52,32 +52,32 @@ public class TestsApplicationResourcesContext {
     // Services
     // =================================================================================================================
     @Bean
-    public BaseUsersService userService() {
+    BaseUsersService userService() {
         return mock(BaseUsersService.class);
     }
 
     @Bean
-    public BaseInvitationCodesService invitationCodeService() {
+    BaseInvitationCodesService invitationCodeService() {
         return mock(BaseInvitationCodesService.class);
     }
 
     @Bean
-    public BaseRegistrationService registrationService() {
+    BaseRegistrationService registrationService() {
         return mock(BaseRegistrationService.class);
     }
 
     @Bean
-    public BaseSuperAdminService superAdminService() {
+    BaseSuperAdminService superAdminService() {
         return mock(BaseSuperAdminService.class);
     }
 
     @Bean
-    public TokensService tokenService() {
+    TokensService tokenService() {
         return mock(TokensService.class);
     }
 
     @Bean
-    public BaseUsersSessionsService jwtRefreshTokenService() {
+    BaseUsersSessionsService jwtRefreshTokenService() {
         return mock(BaseUsersSessionsService.class);
     }
 
@@ -85,12 +85,12 @@ public class TestsApplicationResourcesContext {
     // Assistants
     // =================================================================================================================
     @Bean
-    public CurrentSessionAssistant currentSessionAssistant() {
+    CurrentSessionAssistant currentSessionAssistant() {
         return mock(CurrentSessionAssistant.class);
     }
 
     @Bean
-    public JwtUserDetailsService jwtUserDetailsAssistant() {
+    JwtUserDetailsService jwtUserDetailsAssistant() {
         return mock(JwtUserDetailsService.class);
     }
 
@@ -98,17 +98,17 @@ public class TestsApplicationResourcesContext {
     // Publishers
     // =================================================================================================================
     @Bean
-    public SecurityJwtPublisher securityJwtPublisher() {
+    SecurityJwtPublisher securityJwtPublisher() {
         return mock(SecurityJwtPublisher.class);
     }
 
     @Bean
-    public SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
+    SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
         return mock(SecurityJwtIncidentPublisher.class);
     }
 
     @Bean
-    public IncidentPublisher incidentPublisher() {
+    IncidentPublisher incidentPublisher() {
         return mock(IncidentPublisher.class);
     }
 
@@ -116,7 +116,7 @@ public class TestsApplicationResourcesContext {
     // Tokens
     // =================================================================================================================
     @Bean
-    public TokensProvider tokensProvider() {
+    TokensProvider tokensProvider() {
         return mock(TokensProvider.class);
     }
 
@@ -124,12 +124,12 @@ public class TestsApplicationResourcesContext {
     // Utilities
     // =================================================================================================================
     @Bean
-    public SecurityJwtTokenUtils securityJwtTokenUtility() {
+    SecurityJwtTokenUtils securityJwtTokenUtility() {
         return mock(SecurityJwtTokenUtils.class);
     }
 
     @Bean
-    public EnvironmentUtility environmentUtility() {
+    EnvironmentUtility environmentUtility() {
         return mock(EnvironmentUtility.class);
     }
 
@@ -137,27 +137,27 @@ public class TestsApplicationResourcesContext {
     // Validators
     // =================================================================================================================
     @Bean
-    public BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
+    BaseAuthenticationRequestsValidator authenticationRequestsValidator() {
         return mock(BaseAuthenticationRequestsValidator.class);
     }
 
     @Bean
-    public BaseInvitationCodesRequestsValidator invitationCodeRequestsValidator() {
+    BaseInvitationCodesRequestsValidator invitationCodeRequestsValidator() {
         return mock(BaseInvitationCodesRequestsValidator.class);
     }
 
     @Bean
-    public BaseRegistrationRequestsValidator registrationRequestsValidator() {
+    BaseRegistrationRequestsValidator registrationRequestsValidator() {
         return mock(BaseRegistrationRequestsValidator.class);
     }
 
     @Bean
-    public BaseUsersSessionsRequestsValidator sessionsRequestsValidator() {
+    BaseUsersSessionsRequestsValidator sessionsRequestsValidator() {
         return mock(BaseUsersSessionsRequestsValidator.class);
     }
 
     @Bean
-    public BaseUsersValidator userRequestsValidator() {
+    BaseUsersValidator userRequestsValidator() {
         return mock(BaseUsersValidator.class);
     }
 }

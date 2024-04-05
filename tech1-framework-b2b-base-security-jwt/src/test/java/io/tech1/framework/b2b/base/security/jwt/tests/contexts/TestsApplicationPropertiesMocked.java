@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 public class TestsApplicationPropertiesMocked {
 
     @Bean
-    public ApplicationFrameworkProperties applicationFrameworkProperties() {
+    ApplicationFrameworkProperties applicationFrameworkProperties() {
         var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
         when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(MvcConfigs.testsHardcoded());
         return applicationFrameworkProperties;

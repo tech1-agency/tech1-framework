@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"admin777\",\n    \"zoneId\": \"Europe/Kiev\",\n    \"password\": \"Admin23!\",\n    \"confirmPassword\": \"Admin23!\",\n    \"invitationCode\": \"6wqfyVlYTOQiy2OnbjK9W7x3V9BNMzxi1X7GYN8R\"\n}",
+							"raw": "{\n    \"username\": \"admin777\",\n    \"zoneId\": \"Europe/Kiev\",\n    \"invitationCode\": \"JM2JvAtgFuMs3ZV4figB5zfZq2DZny2MsHMYKX66\",\n    \"password\": \"Admin23!\",\n    \"confirmPassword\": \"Admin23!\"\n} ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -129,6 +129,33 @@
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCodes",
+							"host": [
+								"{{serverURL}}"
+							],
+							"path": [
+								"{{frameworkBasePathPrefix}}",
+								"invitationCodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"authorities\": [\"unsupported\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{serverURL}}/{{frameworkBasePathPrefix}}/invitationCodes",
 							"host": [

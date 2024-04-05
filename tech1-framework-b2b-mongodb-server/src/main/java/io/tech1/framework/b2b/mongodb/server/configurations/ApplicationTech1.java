@@ -58,7 +58,7 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
     }
 
     @Bean
-    public HardwareMonitoringSubscriber hardwareMonitoringSubscriber() {
+    HardwareMonitoringSubscriber hardwareMonitoringSubscriber() {
         return new BaseHardwareMonitoringSubscriber(
                 this.hardwareMonitoringStore
         );

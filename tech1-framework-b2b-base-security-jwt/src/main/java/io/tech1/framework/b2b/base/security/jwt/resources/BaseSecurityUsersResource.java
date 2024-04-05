@@ -47,7 +47,7 @@ public class BaseSecurityUsersResource {
 
     @PostMapping("/changePasswordRequired")
     @ResponseStatus(HttpStatus.OK)
-    public void changePasswordRequired(@RequestBody RequestUserChangePasswordBasic request) {
+    public void changePasswordRequired(@RequestBody @Valid RequestUserChangePasswordBasic request) {
         this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersService.changePasswordRequired(user, request);
@@ -55,7 +55,7 @@ public class BaseSecurityUsersResource {
 
     @PostMapping("/changePassword1")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@RequestBody RequestUserChangePasswordBasic request) {
+    public void changePassword(@RequestBody @Valid RequestUserChangePasswordBasic request) {
         this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersService.changePassword1(user, request);

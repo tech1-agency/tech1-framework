@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationFeignClientGitHub {
 
     @Bean
-    public GithubDefinition githubClient() {
+    GithubDefinition githubClient() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())

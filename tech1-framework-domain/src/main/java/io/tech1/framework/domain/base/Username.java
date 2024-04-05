@@ -63,7 +63,7 @@ public record Username(@NotNull String value) {
         Class<? extends Payload>[] payload() default {};
     }
 
-    private static class ConstraintValidatorOnUsername implements ConstraintValidator<ValidUsername, Username> {
+    public static class ConstraintValidatorOnUsername implements ConstraintValidator<ValidUsername, Username> {
         @Override
         public boolean isValid(Username username, ConstraintValidatorContext constraintValidatorContext) {
             return nonNull(username) && hasLength(username.value);

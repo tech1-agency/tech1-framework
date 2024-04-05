@@ -57,7 +57,7 @@ public record Email(@NotNull String value) {
         Class<? extends Payload>[] payload() default {};
     }
 
-    private static class ConstraintValidatorOnEmail implements ConstraintValidator<ValidEmail, Email> {
+    public static class ConstraintValidatorOnEmail implements ConstraintValidator<ValidEmail, Email> {
         @Override
         public boolean isValid(Email email, ConstraintValidatorContext constraintValidatorContext) {
             if (isNull(email)) {

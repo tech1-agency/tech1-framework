@@ -12,7 +12,6 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.b2b.base.security.jwt.validators.BaseAuthenticationRequestsValidator;
 import io.tech1.framework.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import static io.tech1.framework.domain.enums.Status.COMPLETED;
 import static io.tech1.framework.domain.enums.Status.STARTED;
@@ -50,15 +50,12 @@ public class BaseSecurityAuthenticationResource {
     private final TokensService tokensService;
     // Tokens
     private final TokensProvider tokensProvider;
-    // Validators
-    private final BaseAuthenticationRequestsValidator baseAuthenticationRequestsValidator;
     // Utilities
     private final SecurityJwtTokenUtils securityJwtTokenUtils;
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public CurrentClientUser login(@RequestBody RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
-        this.baseAuthenticationRequestsValidator.validateLoginRequest(request);
+    public CurrentClientUser login(@RequestBody @Valid RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         var username = request.username();
         var password = request.password();
         LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);

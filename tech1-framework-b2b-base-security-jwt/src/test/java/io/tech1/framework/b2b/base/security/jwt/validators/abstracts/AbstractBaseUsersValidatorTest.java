@@ -28,7 +28,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
@@ -44,12 +43,10 @@ class AbstractBaseUsersValidatorTest {
 
     private static Stream<Arguments> validateUserChangePasswordRequestBasicArgs() {
         return Stream.of(
-                Arguments.of(new RequestUserChangePasswordBasic(null, null), invalidAttribute("newPassword")),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("simple"), null), invalidAttribute("confirmPassword")),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple1"), Password.of(randomString())), "New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least 8 characters long"),
-                Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("NoMatch")), "Provided new password and confirm password are not the same"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("simple"), Password.of(randomString())), "Passwords must be same"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple"), Password.of(randomString())), "Passwords must be same"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("Simple1"), Password.of(randomString())), "Passwords must be same"),
+                Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("NoMatch")), "Passwords must be same"),
                 Arguments.of(new RequestUserChangePasswordBasic(Password.of("ComPLEx12"), Password.of("ComPLEx12")), null)
         );
     }
@@ -86,21 +83,6 @@ class AbstractBaseUsersValidatorTest {
         verifyNoMoreInteractions(
                 this.usersRepository
         );
-    }
-
-    @Test
-    void validateUserUpdateRequest1InvalidEmailTest() {
-        // Arrange
-        var username = entity(Username.class);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), Email.of(randomString()), randomString());
-
-        // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
-
-        // Assert
-        assertThat(throwable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Attribute `email` is invalid");
     }
 
     @Test
@@ -150,7 +132,7 @@ class AbstractBaseUsersValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Attribute `email` is invalid");
+                .hasMessage("Email is already used");
         verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 

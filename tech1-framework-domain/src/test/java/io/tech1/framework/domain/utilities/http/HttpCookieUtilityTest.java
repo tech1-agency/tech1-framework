@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.utilities.http;
 
 import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
+import io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ class HttpCookieUtilityTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getPath()).isEqualTo("/");
         assertThat(actual.getName()).isEqualTo(cookieKey);
-        assertThat(actual.getValue()).isNull();;
+        assertThat(actual.getValue()).isNull();
         assertThat(actual.getDomain()).isEqualTo(domain);
         assertThat(actual.isHttpOnly()).isTrue();
         assertThat(actual.getMaxAge()).isZero();
@@ -79,7 +80,7 @@ class HttpCookieUtilityTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(CookieNotFoundException.class)
-                .hasMessage("Cookie: Not Found, id = " + cookieKey);
+                .hasMessage(ExceptionsMessagesUtility.entityNotFound("Cookie", cookieKey));
     }
 
     @Test
@@ -98,7 +99,7 @@ class HttpCookieUtilityTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(CookieNotFoundException.class)
-                .hasMessage("Cookie: Not Found, id = " + cookieKey);
+                .hasMessage(ExceptionsMessagesUtility.entityNotFound("Cookie", cookieKey));
     }
 
     @RepeatedTest(5)

@@ -183,7 +183,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         assertThat(attributes)
                 .containsEntry("shortMessage", exception.getMessage())
                 .containsEntry("fullMessage", exception.getMessage());
-        verify(exception, times(3)).getMessage();
+        verify(exception, times(4)).getMessage();
         verifyNoMoreInteractions(
                 request,
                 response,

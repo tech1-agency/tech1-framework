@@ -4,8 +4,8 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 
 public record RequestUserLogin(
-        Username username,
-        Password password
+        @Username.ValidUsername Username username,
+        @Password.ValidPasswordNotBlank Password password
 ) {
     public static RequestUserLogin testsHardcoded() {
         return new RequestUserLogin(Username.testsHardcoded(), Password.testsHardcoded());

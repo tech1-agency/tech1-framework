@@ -13,4 +13,8 @@ public record RequestNewInvitationCodeParams(
     public static RequestNewInvitationCodeParams random() {
         return new RequestNewInvitationCodeParams(new HashSet<>(randomStringsAsList(3)));
     }
+
+    public static RequestNewInvitationCodeParams testsHardcoded() {
+        return new RequestNewInvitationCodeParams(new HashSet<>(Set.of("invitationCode:read", "invitationCode:write")));
+    }
 }

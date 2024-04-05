@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationFeignClientOpenai {
 
     @Bean
-    public OpenaiDefinition openaiDefinition() {
+    OpenaiDefinition openaiDefinition() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())

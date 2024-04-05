@@ -5,7 +5,6 @@ import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
@@ -24,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
@@ -129,46 +127,40 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
     @Test
     void renewManuallyTest() throws Exception {
         // Arrange
-        var user = entity(JwtUser.class);
-        var sessionId = entity(UserSessionId.class);
-        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
 
         // Act
         this.mvc.perform(
-                        post("/sessions/" + sessionId + "/renew/manually")
+                        post("/sessions/" + UserSessionId.testsHardcoded() + "/renew/manually")
                 )
                 .andExpect(status().isOk());
 
         // Assert
-        verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersSessionsService).assertAccess(user.username(), sessionId);
-        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(sessionId);
+        verify(this.currentSessionAssistant).getCurrentUsername();
+        verify(this.baseUsersSessionsService).assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded());
+        verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(UserSessionId.testsHardcoded());
     }
 
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        var username = entity(Username.class);
-        var sessionId = entity(UserSessionId.class);
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
 
         // Act
-        this.mvc.perform(delete("/sessions/" + sessionId))
+        this.mvc.perform(delete("/sessions/" + UserSessionId.testsHardcoded()))
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsService).assertAccess(username, sessionId);
-        verify(this.baseUsersSessionsService).deleteById(sessionId);
+        verify(this.baseUsersSessionsService).assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded());
+        verify(this.baseUsersSessionsService).deleteById(UserSessionId.testsHardcoded());
     }
 
     @Test
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
-        var username = entity(Username.class);
-        var requestAccessToken = RequestAccessToken.random();
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
-        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(RequestAccessToken.testsHardcoded());
 
         // Act
         this.mvc.perform(delete("/sessions"))
@@ -177,6 +169,6 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(username, requestAccessToken);
+        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(Username.testsHardcoded(), RequestAccessToken.testsHardcoded());
     }
 }

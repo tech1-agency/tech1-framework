@@ -82,22 +82,21 @@ class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner1 {
     @Test
     void saveTest() throws Exception {
         // Arrange
-        var owner = Username.random();
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
-        var requestNewInvitationCodeParams = entity(RequestNewInvitationCodeParams.class);
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
+        var request = RequestNewInvitationCodeParams.testsHardcoded();
 
         // Act
         this.mvc.perform(
                 post("/invitationCodes")
-                        .content(this.objectMapper.writeValueAsString(requestNewInvitationCodeParams))
+                        .content(this.objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationCodesRequestsValidator).validateCreateNewInvitationCode(requestNewInvitationCodeParams);
-        verify(this.baseInvitationCodesService).save(owner, requestNewInvitationCodeParams);
+        verify(this.baseInvitationCodesRequestsValidator).validateCreateNewInvitationCode(request);
+        verify(this.baseInvitationCodesService).save(Username.testsHardcoded(), request);
     }
 
     @Test

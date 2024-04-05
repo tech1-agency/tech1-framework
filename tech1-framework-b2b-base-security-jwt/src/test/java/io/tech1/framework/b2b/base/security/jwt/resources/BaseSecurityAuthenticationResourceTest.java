@@ -138,7 +138,6 @@ class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.attributes", notNullValue()));
 
         // Assert
-        verify(this.baseAuthenticationRequestsValidator).validateLoginRequest(request);
         verify(this.authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(username.value(), password.value()));
         verify(this.jwtUserDetailsService).loadUserByUsername(username.value());
         verify(this.securityJwtTokenUtils).createJwtAccessToken(user.getJwtTokenCreationParams());

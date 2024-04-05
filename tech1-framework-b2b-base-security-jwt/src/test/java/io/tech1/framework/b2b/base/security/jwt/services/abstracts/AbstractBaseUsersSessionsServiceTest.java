@@ -21,6 +21,7 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
+import io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.utils.UserMetadataUtils;
@@ -179,7 +180,7 @@ class AbstractBaseUsersSessionsServiceTest {
         verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded());
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage("Session: Access Denied, id = 8DE052C55BD26A1A6F0E");
+                .hasMessage(ExceptionsMessagesUtility.entityAccessDenied("Session", UserSessionId.testsHardcoded().value()));
     }
 
     @Test

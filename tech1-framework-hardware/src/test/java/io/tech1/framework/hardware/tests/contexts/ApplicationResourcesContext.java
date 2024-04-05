@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 @EnableWebMvc
 public class ApplicationResourcesContext {
     @Bean
-    public HardwareMonitoringPublisher hardwareMonitoringPublisher() {
+    HardwareMonitoringPublisher hardwareMonitoringPublisher() {
         return mock(HardwareMonitoringPublisher.class);
     }
 }

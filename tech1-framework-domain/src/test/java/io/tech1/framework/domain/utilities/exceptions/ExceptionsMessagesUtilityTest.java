@@ -63,7 +63,7 @@ class ExceptionsMessagesUtilityTest {
         var actual = entityNotFound(entity, entityId);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + ": Not Found, id = " + entityId);
+        assertThat(actual).isEqualTo(entity + " is not found. Id: " + entityId);
     }
 
     @Test
@@ -76,7 +76,7 @@ class ExceptionsMessagesUtilityTest {
         var actual = entityAlreadyUsed(entity, entityId);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + ": Already Used, id = " + entityId);
+        assertThat(actual).isEqualTo(entity + " is already used. Id: " + entityId);
     }
 
     @Test
@@ -89,6 +89,6 @@ class ExceptionsMessagesUtilityTest {
         var actual = entityAccessDenied(entity, entityId);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + ": Access Denied, id = " + entityId);
+        assertThat(actual).isEqualTo("Access denied on " + entity.toLowerCase() + ". Id: " + entityId);
     }
 }

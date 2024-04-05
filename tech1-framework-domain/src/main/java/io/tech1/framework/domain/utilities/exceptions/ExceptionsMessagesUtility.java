@@ -26,14 +26,14 @@ public class ExceptionsMessagesUtility {
     }
 
     public static String entityNotFound(String entity, String entityId) {
-        return "%s: Not Found, id = %s".formatted(entity, entityId);
+        return "%s is not found. Id: %s".formatted(entity, entityId);
     }
 
     public static String entityAlreadyUsed(String entity, String entityId) {
-        return "%s: Already Used, id = %s".formatted(entity, entityId);
+        return "%s is already used. Id: %s".formatted(entity, entityId);
     }
 
     public static String entityAccessDenied(String entity, String entityId) {
-        return "%s: Access Denied, id = %s".formatted(entity, entityId);
+        return "Access denied on %s. Id: %s".formatted(entity.toLowerCase(), entityId);
     }
 }

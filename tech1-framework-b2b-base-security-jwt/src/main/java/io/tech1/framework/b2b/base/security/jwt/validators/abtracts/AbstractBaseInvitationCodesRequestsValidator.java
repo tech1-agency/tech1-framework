@@ -8,9 +8,12 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 
-import static io.tech1.framework.domain.asserts.Asserts.*;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
+import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.domain.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {
@@ -22,25 +25,21 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
 
     @Override
     public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams request) {
-        var authorities = request.authorities();
         var availableAuthorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
-
-        assertTrueOrThrow(availableAuthorities.containsAll(authorities), "Invitation code request params contains unsupported authority");
+        assertTrueOrThrow(
+                availableAuthorities.containsAll(request.authorities()),
+                "Authorities must contains: [%s]".formatted(baseJoiningRaw(availableAuthorities))
+        );
     }
 
     @Override
     public void validateDeleteById(Username username, InvitationCodeId invitationCodeId) {
-        assertNonNullOrThrow(invitationCodeId, invalidAttribute("invitationCodeId"));
-        assertNonNullOrThrow(username, invalidAttribute("owner"));
-
         var tuplePresence = this.invitationCodesRepository.isPresent(invitationCodeId);
-
         if (!tuplePresence.present()) {
             throw new IllegalArgumentException(entityNotFound("InvitationCode", invitationCodeId.value()));
         }
-
         if (!username.equals(tuplePresence.value().owner())) {
-            throw new IllegalArgumentException(entityAccessDenied("InvitationCode", invitationCodeId.value()));
+            throw new AccessDeniedException(entityAccessDenied("InvitationCode", invitationCodeId.value()));
         }
     }
 }

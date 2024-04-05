@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
@@ -37,7 +39,7 @@ public class BaseSecurityInvitationCodesResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void save(@RequestBody RequestNewInvitationCodeParams request) {
+    public void save(@RequestBody @Valid RequestNewInvitationCodeParams request) {
         this.baseInvitationCodesRequestsValidator.validateCreateNewInvitationCode(request);
         var owner = this.currentSessionAssistant.getCurrentUsername();
         this.baseInvitationCodesService.save(owner, request);

@@ -29,6 +29,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -100,7 +102,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Invitation code is not found. Id: " + invitationCodeId);
+                .hasMessage(entityNotFound("Invitation code", invitationCodeId.value()));
         verify(this.invitationCodesRepository).isPresent(invitationCodeId);
     }
 
@@ -118,7 +120,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage("Access denied on invitation code. Id: " + invitationCodeId.value());
+                .hasMessage(entityAccessDenied("Invitation code", invitationCodeId.value()));
         verify(this.invitationCodesRepository).isPresent(invitationCodeId);
     }
 

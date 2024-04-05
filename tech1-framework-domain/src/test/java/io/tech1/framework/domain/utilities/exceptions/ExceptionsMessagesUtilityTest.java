@@ -57,38 +57,35 @@ class ExceptionsMessagesUtilityTest {
     void entityNotFoundTest() {
         // Arrange
         var entity = randomString();
-        var entityId = randomString();
 
         // Act
-        var actual = entityNotFound(entity, entityId);
+        var actual = entityNotFound("userNAME", entity);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + " is not found. Id: " + entityId);
+        assertThat(actual).isEqualTo("Username " + entity + " is not found");
     }
 
     @Test
     void entityAlreadyUsedTest() {
         // Arrange
         var entity = randomString();
-        var entityId = randomString();
 
         // Act
-        var actual = entityAlreadyUsed(entity, entityId);
+        var actual = entityAlreadyUsed("userNAME", entity);
 
         // Assert
-        assertThat(actual).isEqualTo(entity + " is already used. Id: " + entityId);
+        assertThat(actual).isEqualTo("Username " + entity + " is already used");
     }
 
     @Test
     void entityAccessDeniedTest() {
         // Arrange
         var entity = randomString();
-        var entityId = randomString();
 
         // Act
-        var actual = entityAccessDenied(entity, entityId);
+        var actual = entityAccessDenied("userNAME", entity);
 
         // Assert
-        assertThat(actual).isEqualTo("Access denied on " + entity.toLowerCase() + ". Id: " + entityId);
+        assertThat(actual).isEqualTo("Username " + entity + " access denied");
     }
 }

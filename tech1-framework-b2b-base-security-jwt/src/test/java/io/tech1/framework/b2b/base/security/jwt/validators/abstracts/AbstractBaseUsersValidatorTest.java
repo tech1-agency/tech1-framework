@@ -28,6 +28,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
@@ -120,20 +121,19 @@ class AbstractBaseUsersValidatorTest {
     @Test
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
-        var username = entity(Username.class);
-        var email = Email.random();
-        var user = entity(JwtUser.class);
-        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
-        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), email, randomString());
+        var username = Username.random();
+        var user = JwtUser.testsHardcoded();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(user.email())).thenReturn(user);
+        var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), user.email(), randomString());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateUserUpdateRequest1(username, requestUserUpdate1));
 
         // Assert
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(user.email());
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Email is already used");
-        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
+                .hasMessage(entityAlreadyUsed("Email", user.email().value()));
     }
 
     @ParameterizedTest

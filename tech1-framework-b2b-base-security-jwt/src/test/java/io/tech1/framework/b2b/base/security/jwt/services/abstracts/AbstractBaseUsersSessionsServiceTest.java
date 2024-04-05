@@ -21,7 +21,6 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
-import io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.utils.UserMetadataUtils;
@@ -53,6 +52,7 @@ import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ran
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.session;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
@@ -180,7 +180,7 @@ class AbstractBaseUsersSessionsServiceTest {
         verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded());
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage(ExceptionsMessagesUtility.entityAccessDenied("Session", UserSessionId.testsHardcoded().value()));
+                .hasMessage(entityAccessDenied("Session", UserSessionId.testsHardcoded().value()));
     }
 
     @Test

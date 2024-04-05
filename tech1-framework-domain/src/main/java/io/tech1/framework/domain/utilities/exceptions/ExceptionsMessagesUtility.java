@@ -2,6 +2,8 @@ package io.tech1.framework.domain.utilities.exceptions;
 
 import lombok.experimental.UtilityClass;
 
+import static org.springframework.util.StringUtils.capitalize;
+
 @UtilityClass
 public class ExceptionsMessagesUtility {
 
@@ -25,15 +27,15 @@ public class ExceptionsMessagesUtility {
         return "Attribute `%s` is invalid. Options: `[%s]`. Unexpected: `[%s]`".formatted(attributeName, options, unexpected);
     }
 
-    public static String entityNotFound(String entity, String entityId) {
-        return "%s is not found. Id: %s".formatted(entity, entityId);
+    public static String entityNotFound(String entityType, String entity) {
+        return "%s %s is not found".formatted(capitalize(entityType.toLowerCase()), entity);
     }
 
-    public static String entityAlreadyUsed(String entity, String entityId) {
-        return "%s is already used. Id: %s".formatted(entity, entityId);
+    public static String entityAlreadyUsed(String entityType, String entity) {
+        return "%s %s is already used".formatted(capitalize(entityType.toLowerCase()), entity);
     }
 
-    public static String entityAccessDenied(String entity, String entityId) {
-        return "Access denied on %s. Id: %s".formatted(entity.toLowerCase(), entityId);
+    public static String entityAccessDenied(String entityType, String entity) {
+        return "%s %s access denied".formatted(capitalize(entityType.toLowerCase()), entity);
     }
 }

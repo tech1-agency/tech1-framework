@@ -12,7 +12,6 @@ import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Fai
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.*;
 import static java.util.Objects.nonNull;
 
@@ -28,74 +27,63 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
 
     @Override
     public void validateRegistrationRequest1(RequestUserRegistration1 request) throws RegistrationException {
-        var username = request.username();
-        var zoneId = request.zoneId();
-        var password = request.password();
-        var confirmPassword = request.confirmPassword();
-        var invitationCode = request.invitationCode();
-
-        assertNonNullOrThrow(username, invalidAttribute("username"));
-        assertNonNullOrThrow(password, invalidAttribute("password"));
-        assertNonNullOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
-        assertNonNullNotBlankOrThrow(invitationCode, invalidAttribute("invitationCode"));
-
-        assertZoneIdOrThrow(zoneId, invalidAttribute("zoneId"));
-
-        var user = this.mongoUsersRepository.findByUsernameAsJwtUserOrNull(username);
+        request.password().assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(8);
+        request.assertPasswordsOrThrow();
+        var user = this.mongoUsersRepository.findByUsernameAsJwtUserOrNull(request.username());
         if (nonNull(user)) {
-            var exception = entityAlreadyUsed("Username", username.value());
+            var message = entityAlreadyUsed("Username", request.username().value());
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
-                            username,
-                            invitationCode,
-                            exception
+                            request.username(),
+                            request.invitationCode(),
+                            message
                     )
             );
             this.securityJwtIncidentPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
-                            username,
-                            invitationCode,
-                            exception
+                            request.username(),
+                            request.invitationCode(),
+                            message
                     )
             );
-            throw new RegistrationException(exception);
+            throw new RegistrationException(message);
         }
 
-        var dbInvitationCode = this.invitationCodesRepository.findByValueAsAny(invitationCode);
-        if (nonNull(dbInvitationCode)) {
-            if (nonNull(dbInvitationCode.invited())) {
-                var exception = entityAlreadyUsed("InvitationCode", dbInvitationCode.value());
+        var invitationCode = this.invitationCodesRepository.findByValueAsAny(request.invitationCode());
+        if (nonNull(invitationCode)) {
+            if (nonNull(invitationCode.invited())) {
+                var message = entityAlreadyUsed("InvitationCode", invitationCode.value());
                 this.securityJwtPublisher.publishRegistration1Failure(
                         new EventRegistration1Failure(
-                                username,
-                                invitationCode,
-                                dbInvitationCode.owner(),
-                                exception
+                                request.username(),
+                                request.invitationCode(),
+                                invitationCode.owner(),
+                                message
                         )
                 );
                 this.securityJwtIncidentPublisher.publishRegistration1Failure(
                         new IncidentRegistration1Failure(
-                                username,
-                                invitationCode,
-                                dbInvitationCode.owner(),
-                                exception
+                                request.username(),
+                                request.invitationCode(),
+                                invitationCode.owner(),
+                                message
                         )
                 );
-                throw new RegistrationException(exception);
+                throw new RegistrationException(message);
             }
         } else {
-            var exception = entityNotFound("InvitationCode", invitationCode);
+            var exception = entityNotFound("InvitationCode", request.invitationCode());
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
-                            username,
-                            invitationCode,
+                            request.username(),
+                            request.invitationCode(),
                             exception
                     )
             );
             this.securityJwtIncidentPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
-                            username,
-                            invitationCode,
+                            request.username(),
+                            request.invitationCode(),
                             exception
                     )
             );

@@ -10,8 +10,8 @@ public record EventRegistration1Failure(
 ) {
     public static EventRegistration1Failure of(
             Username username,
-            String exception,
-            String invitationCode
+            String invitationCode,
+            String exception
     ) {
         return new EventRegistration1Failure(
                 username,

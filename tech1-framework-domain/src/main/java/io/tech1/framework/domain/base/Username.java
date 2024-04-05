@@ -4,8 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import javax.validation.Constraint;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import javax.validation.Payload;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static java.util.Objects.nonNull;
+import static org.springframework.util.StringUtils.hasLength;
 
 public record Username(@NotNull String value) {
 
@@ -38,5 +49,24 @@ public record Username(@NotNull String value) {
     @Override
     public String toString() {
         return this.value;
+    }
+
+    @Target({
+            ElementType.FIELD,
+            ElementType.METHOD
+    })
+    @Retention(RetentionPolicy.RUNTIME)
+    @Constraint(validatedBy = ConstraintValidatorOnUsername.class)
+    public @interface ValidUsername {
+        String message() default "is invalid";
+        Class<?>[] groups() default {};
+        Class<? extends Payload>[] payload() default {};
+    }
+
+    private static class ConstraintValidatorOnUsername implements ConstraintValidator<ValidUsername, Username> {
+        @Override
+        public boolean isValid(Username username, ConstraintValidatorContext constraintValidatorContext) {
+            return nonNull(username) && hasLength(username.value);
+        }
     }
 }

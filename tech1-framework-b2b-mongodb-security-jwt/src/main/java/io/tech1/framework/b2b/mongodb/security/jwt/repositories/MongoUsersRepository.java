@@ -16,7 +16,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,7 +64,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         var user = new MongoDbUser(
                 requestUserRegistration1.username(),
                 password,
-                ZoneId.of(requestUserRegistration1.zoneId()),
+                requestUserRegistration1.zoneId(),
                 invitationCode.authorities(),
                 false
         );

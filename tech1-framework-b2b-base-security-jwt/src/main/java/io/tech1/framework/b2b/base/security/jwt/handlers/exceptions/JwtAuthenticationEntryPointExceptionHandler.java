@@ -37,7 +37,7 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write(this.objectMapper.writeValueAsString(ExceptionEntity.of(exception)));
+        response.getWriter().write(this.objectMapper.writeValueAsString(new ExceptionEntity(exception)));
 
         // in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
         if (exception instanceof BadCredentialsException && this.httpRequestUtils.isCachedEndpoint(request)) {

@@ -29,7 +29,7 @@ public class JwtAccessDeniedExceptionHandler implements AccessDeniedHandler {
     ) throws IOException {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        var response = ExceptionEntity.of(exception);
+        var response = new ExceptionEntity(exception);
         httpServletResponse.getWriter().write(this.objectMapper.writeValueAsString(response));
     }
 }

@@ -89,7 +89,7 @@ class AbstractBaseRegistrationServiceTest {
                 Username.random(),
                 Password.random(),
                 Password.random(),
-                randomZoneId().getId(),
+                randomZoneId(),
                 randomString()
         );
         var invitationCode = entity(InvitationCode.class);

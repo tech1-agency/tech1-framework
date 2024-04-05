@@ -61,7 +61,7 @@ class ResourceExceptionHandlerTest {
     @MethodSource("unauthorizedResponseErrorMessageTest")
     void unauthorizedResponseErrorMessageTest(Exception exception) {
         // Act
-        var response = this.componentUnderTest.cookiesUnauthorizedExceptions(exception);
+        var response = this.componentUnderTest.unauthorizedExceptions(exception);
 
         // Assert
         assertThat(response.getBody()).isNotNull();
@@ -79,7 +79,7 @@ class ResourceExceptionHandlerTest {
         var exception = new AccessDeniedException(message);
 
         // Act
-        var response = this.componentUnderTest.accessDeniedException(exception);
+        var response = this.componentUnderTest.forbiddenExceptions(exception);
 
         // Assert
         assertThat(response.getBody()).isNotNull();

@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
@@ -33,7 +35,7 @@ public class BaseSecurityRegistrationResource {
 
     @PostMapping("/register1")
     @ResponseStatus(HttpStatus.OK)
-    public void register1(@RequestBody RequestUserRegistration1 request) throws RegistrationException {
+    public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws RegistrationException {
         this.baseRegistrationRequestsValidator.validateRegistrationRequest1(request);
         this.baseRegistrationService.register1(request);
         this.securityJwtPublisher.publishRegistration1(new EventRegistration1(request));

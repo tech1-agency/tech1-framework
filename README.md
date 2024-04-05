@@ -17,4 +17,6 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.7.4]
-— TBD
+— Modification: ExceptionEntity static of() → constructors
+— Addition: spring-boot-starter-validation annotations: @ValidUsername, @ValidPasswordNotBlank
+— Addition: spring-boot-starter-validation on RequestUserRegistration1

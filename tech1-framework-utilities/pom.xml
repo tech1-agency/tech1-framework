@@ -21,11 +21,6 @@
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
-        <!-- Spring Boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
         <!-- Browser Capabilities -->
         <dependency>
             <groupId>com.blueconic</groupId>

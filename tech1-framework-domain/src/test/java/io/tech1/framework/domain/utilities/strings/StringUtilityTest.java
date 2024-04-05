@@ -56,6 +56,18 @@ class StringUtilityTest {
         );
     }
 
+    private static Stream<Arguments> convertCamelCaseToSplitArgs() {
+        return Stream.of(
+                Arguments.of("", ""),
+                Arguments.of("abc", "Abc"),
+                Arguments.of("abcDefGht", "Abc def ght"),
+                Arguments.of("invitationCode", "Invitation code"),
+                Arguments.of("invitationCodeRequest", "Invitation code request"),
+                Arguments.of("invitationCodeRequestLong", "Invitation code request long"),
+                Arguments.of("invitationCodeRequestLongLongLong", "Invitation code request long long long")
+        );
+    }
+
     private static Stream<Arguments> hasLengthTest() {
         return Stream.of(
                 Arguments.of(null, false),
@@ -104,6 +116,16 @@ class StringUtilityTest {
     void getShortenValueOrUndefinedTest(String value, int maxLength, String expected) {
         // Act
         var actual = getShortenValueOrUndefined(value, maxLength);
+
+        // Assert
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("convertCamelCaseToSplitArgs")
+    void convertCamelCaseToSplitTest(String value, String expected) {
+        // Act
+        var actual = convertCamelCaseToSplit(value);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

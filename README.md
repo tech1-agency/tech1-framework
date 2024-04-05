@@ -16,15 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.4]
-— Modification: ExceptionEntity static of() → constructors
-— Addition: @Valid-based-annotations (used): @ValidUsername, @ValidPasswordNotBlank, @ValidPasswordCamelCaseLettersAndNumbers
-— Addition: @Valid-based-annotations (unused): @ValidTimestamp, @ValidServerName, @ValidVersion
-— Addition: add @Valid → RequestUserRegistration1
-— Addition: add @Valid → RequestNewInvitationCodeParams
-— Addition: add @Valid → RequestUserUpdate1
-— Addition: add @Valid → RequestUserUpdate2
-— Addition: add @Valid → RequestUserChangePasswordBasic
-— Addition: add @Valid → RequestUserLogin
-— Modification: UserSession assertAccess(sessionId, username) → Service
-— Modification: messages in ExceptionsMessagesUtility
+### Release Notes [Development v2.7.5]
+— TBD

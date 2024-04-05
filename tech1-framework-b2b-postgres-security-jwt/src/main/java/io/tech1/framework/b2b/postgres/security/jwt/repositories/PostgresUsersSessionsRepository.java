@@ -31,6 +31,12 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default TuplePresence<UserSession> isPresent(UserSessionId sessionId, Username username) {
+        return this.findByIdAndUsername(sessionId.value(), username)
+                .map(entity -> present(entity.userSession()))
+                .orElseGet(TuplePresence::absent);
+    }
+
     default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
         return this.findById(sessionId.value())
                 .map(entity -> present(entity.userSession()))
@@ -121,6 +127,7 @@ public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresD
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
+    Optional<PostgresDbUserSession> findByIdAndUsername(String sessionId, Username username);
     Optional<PostgresDbUserSession> findByAccessToken(JwtAccessToken accessToken);
     Optional<PostgresDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
     List<PostgresDbUserSession> findByUsername(Username username);

@@ -141,7 +141,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseUsersSessionsRequestsValidator).validateAccess(user.username(), sessionId);
+        verify(this.baseUsersSessionsService).assertAccess(user.username(), sessionId);
         verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(sessionId);
     }
 
@@ -158,7 +158,7 @@ class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsRequestsValidator).validateAccess(username, sessionId);
+        verify(this.baseUsersSessionsService).assertAccess(username, sessionId);
         verify(this.baseUsersSessionsService).deleteById(sessionId);
     }
 

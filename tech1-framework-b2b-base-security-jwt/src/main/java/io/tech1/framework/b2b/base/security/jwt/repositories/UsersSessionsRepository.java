@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface UsersSessionsRepository {
+    TuplePresence<UserSession> isPresent(UserSessionId userSessionId, Username username);
     TuplePresence<UserSession> isPresent(UserSessionId userSessionId);
     TuplePresence<UserSession> isPresent(JwtAccessToken accessToken);
     TuplePresence<UserSession> isPresent(JwtRefreshToken refreshToken);

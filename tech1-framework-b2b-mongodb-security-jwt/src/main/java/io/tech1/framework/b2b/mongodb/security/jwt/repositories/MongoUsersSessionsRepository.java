@@ -30,6 +30,12 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Any
     // ================================================================================================================
+    default TuplePresence<UserSession> isPresent(UserSessionId sessionId, Username username) {
+        return this.findByIdAndUsername(sessionId.value(), username)
+                .map(entity -> present(entity.userSession()))
+                .orElseGet(TuplePresence::absent);
+    }
+
     default TuplePresence<UserSession> isPresent(UserSessionId sessionId) {
         return this.findById(sessionId.value())
                 .map(entity -> present(entity.userSession()))
@@ -115,6 +121,7 @@ public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUse
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
+    Optional<MongoDbUserSession> findByIdAndUsername(String sessionId, Username username);
     Optional<MongoDbUserSession> findByAccessToken(JwtAccessToken accessToken);
     Optional<MongoDbUserSession> findByRefreshToken(JwtRefreshToken refreshToken);
     List<MongoDbUserSession> findByUsername(Username username);

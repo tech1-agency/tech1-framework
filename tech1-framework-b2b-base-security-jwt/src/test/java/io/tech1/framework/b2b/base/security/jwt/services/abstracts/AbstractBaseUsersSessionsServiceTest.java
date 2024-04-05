@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -57,6 +58,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -153,6 +155,31 @@ class AbstractBaseUsersSessionsServiceTest {
                 this.usersSessionsRepository,
                 this.userMetadataUtils
         );
+    }
+
+    @Test
+    void assertAccess() {
+        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded())).thenReturn(TuplePresence.present(UserSession.randomPersistedSession()));
+
+        // Act
+        this.componentUnderTest.assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded());
+
+        // Assert
+        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded());
+    }
+
+    @Test
+    void assertAccessNoAccess() {
+        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded())).thenReturn(TuplePresence.absent());
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded()));
+
+        // Assert
+        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded());
+        assertThat(throwable)
+                .isInstanceOf(AccessDeniedException.class)
+                .hasMessage("Session: Access Denied, id = 8DE052C55BD26A1A6F0E");
     }
 
     @Test

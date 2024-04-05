@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserUpdate2Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserUpdate2 REQUEST = new RequestUserUpdate2(
-            ZoneIdsConstants.UKRAINE.getId(),
+            ZoneIdsConstants.UKRAINE,
             "Tech1 Tests"
     );
 

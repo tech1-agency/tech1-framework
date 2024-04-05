@@ -66,6 +66,9 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationRepositoriesRunn
 
         // Assert
         assertThat(count).isEqualTo(7);
+        assertThat(this.usersSessionsRepository.isPresent(existentSessionId, Username.random())).isEqualTo(TuplePresence.absent());
+        assertThat(this.usersSessionsRepository.isPresent(existentSessionId, savedSession.getUsername())).isEqualTo(TuplePresence.present(savedSession.userSession()));
+        assertThat(this.usersSessionsRepository.isPresent(notExistentSessionId, Username.random())).isEqualTo(TuplePresence.absent());
         assertThat(this.usersSessionsRepository.isPresent(existentSessionId)).isEqualTo(TuplePresence.present(savedSession.userSession()));
         assertThat(this.usersSessionsRepository.isPresent(notExistentSessionId)).isEqualTo(TuplePresence.absent());
         assertThat(this.usersSessionsRepository.isPresent(JwtAccessToken.of("awt1")).present()).isTrue();

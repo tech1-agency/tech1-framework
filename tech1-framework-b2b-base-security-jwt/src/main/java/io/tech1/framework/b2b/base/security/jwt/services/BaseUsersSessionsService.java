@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 public interface BaseUsersSessionsService {
+    void assertAccess(Username username, UserSessionId sessionId);
     void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest);
     void refresh(JwtUser user, UserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest);
     UserSession saveUserRequestMetadata(EventSessionUserRequestMetadataAdd event);

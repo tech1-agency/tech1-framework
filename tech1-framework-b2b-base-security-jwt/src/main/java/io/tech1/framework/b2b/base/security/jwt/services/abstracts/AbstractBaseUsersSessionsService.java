@@ -22,6 +22,7 @@ import io.tech1.framework.domain.tuples.TupleToggle;
 import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
+import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
@@ -46,6 +48,14 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     protected final UserMetadataUtils userMetadataUtils;
     // Utilities
     protected final SecurityJwtTokenUtils securityJwtTokenUtils;
+
+    @Override
+    public void assertAccess(Username username, UserSessionId sessionId) {
+        var tuplePresence = this.usersSessionsRepository.isPresent(sessionId, username);
+        if (!tuplePresence.present()) {
+            throw new AccessDeniedException(entityAccessDenied("Session", sessionId.value()));
+        }
+    }
 
     @Override
     public void save(JwtUser user, JwtAccessToken accessToken, JwtRefreshToken refreshToken, HttpServletRequest httpServletRequest) {

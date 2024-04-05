@@ -8,15 +8,10 @@ import io.tech1.framework.domain.base.Username;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotBlankOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
-    // WARNING: Configs vs. Hardcoded?
-    protected static final int NEW_PASSWORD_MIN_LENGTH = 8;
-
     // Repositories
     protected final UsersRepository usersRepository;
 
@@ -30,16 +25,6 @@ public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {
 
     @Override
     public void validateUserChangePasswordRequestBasic(RequestUserChangePasswordBasic request) {
-        var newPassword = request.newPassword();
-        var confirmPassword = request.confirmPassword();
-
-        assertNonNullNotBlankOrThrow(newPassword, invalidAttribute("newPassword"));
-        assertNonNullNotBlankOrThrow(confirmPassword, invalidAttribute("confirmPassword"));
-
-        newPassword.assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(NEW_PASSWORD_MIN_LENGTH);
-
-        if (!newPassword.equals(confirmPassword)) {
-            throw new IllegalArgumentException("Provided new password and confirm password are not the same");
-        }
+        request.assertPasswordsOrThrow();
     }
 }

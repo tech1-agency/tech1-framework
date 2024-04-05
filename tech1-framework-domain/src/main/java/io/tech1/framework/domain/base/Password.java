@@ -14,7 +14,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
-import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbersWithLength;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -37,13 +36,6 @@ public record Password(@NotNull String value) {
     public void assertEqualsOrThrow(Password password) {
         if (!this.equals(password)) {
             throw new IllegalArgumentException("Passwords must be same");
-        }
-    }
-
-    @Deprecated
-    public void assertContainsCamelCaseLettersAndNumbersWithLengthOrThrow(int length) {
-        if (!containsCamelCaseLettersAndNumbersWithLength(this.value, length)) {
-            throw new IllegalArgumentException("New password should contain an uppercase latin letter, a lowercase latin letter, a number and be at least %s characters long".formatted(length));
         }
     }
 

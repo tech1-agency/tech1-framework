@@ -18,7 +18,8 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.4]
 — Modification: ExceptionEntity static of() → constructors
-— Addition: @Valid-based-annotations: @ValidUsername, @ValidPasswordNotBlank, @ValidPasswordCamelCaseLettersAndNumbers
+— Addition: @Valid-based-annotations (used): @ValidUsername, @ValidPasswordNotBlank, @ValidPasswordCamelCaseLettersAndNumbers
+— Addition: @Valid-based-annotations (unused): @ValidTimestamp, @ValidServerName, @ValidVersion
 — Addition: add @Valid → RequestUserRegistration1
 — Addition: add @Valid → RequestNewInvitationCodeParams
 — Addition: add @Valid → RequestUserUpdate1

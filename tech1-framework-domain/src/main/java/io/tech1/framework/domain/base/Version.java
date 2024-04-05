@@ -4,9 +4,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
+import javax.validation.Constraint;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import javax.validation.Payload;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static java.util.Objects.nonNull;
+import static org.springframework.util.StringUtils.hasLength;
 
 public record Version(@NotNull String value) {
 
@@ -35,5 +46,24 @@ public record Version(@NotNull String value) {
     @Override
     public String toString() {
         return this.value;
+    }
+
+    @Target({
+            ElementType.FIELD,
+            ElementType.METHOD
+    })
+    @Retention(RetentionPolicy.RUNTIME)
+    @Constraint(validatedBy = ConstraintValidatorOnVersion.class)
+    public @interface ValidVersion {
+        String message() default "is invalid";
+        Class<?>[] groups() default {};
+        Class<? extends Payload>[] payload() default {};
+    }
+
+    public static class ConstraintValidatorOnVersion implements ConstraintValidator<ValidVersion, Version> {
+        @Override
+        public boolean isValid(Version version, ConstraintValidatorContext constraintValidatorContext) {
+            return nonNull(version) && hasLength(version.value);
+        }
     }
 }

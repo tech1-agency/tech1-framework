@@ -81,13 +81,11 @@ public record Password(@NotNull String value) {
     public static class ConstraintValidatorOnPasswordCamelCaseLettersAndNumbers implements ConstraintValidator<ValidPasswordCamelCaseLettersAndNumbers, Password> {
         private int min;
         private int max;
-        private String message;
 
         @Override
         public void initialize(ValidPasswordCamelCaseLettersAndNumbers constraintAnnotation) {
             this.min = constraintAnnotation.min();
             this.max = constraintAnnotation.max();
-            this.message = constraintAnnotation.message();
         }
 
         @Override
@@ -99,8 +97,6 @@ public record Password(@NotNull String value) {
                 return false;
             }
             if (password.value.length() < this.min || password.value.length() > this.max) {
-                constraintValidatorContext.disableDefaultConstraintViolation();
-                constraintValidatorContext.buildConstraintViolationWithTemplate(this.message).addConstraintViolation();
                 return false;
             }
             return containsCamelCaseLettersAndNumbers(password.value);

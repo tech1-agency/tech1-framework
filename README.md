@@ -16,17 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.5]
-— Modification: add methods including message is optional
-— Addition: add hasLength
-— Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on long
-— Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on BigDecimal
-— Addition: assertSortedOrThrow on collections
-— Addition: assertFirstValueLesserOrThrow, assertFirstValueLesserOrEqualOrThrow, assertBetweenExcludedOrThrow, assertBetweenIncludedOrThrow
-— Addition: Incident: setType(type)
-— Deletion: IncidentThrowable
-— Addition: StringConstants.Properties
-— Deletion: TimeAmount.of() constructor
-— Addition: TimeAmount: testsHardcoded(), forever()
-— Addition: TimeAmount: Constraint Validation
-
+### Release Notes [Development v2.7.6]
+— TBD

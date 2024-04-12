@@ -32,6 +32,23 @@ public class Asserts {
     }
 
     // =================================================================================================================
+    // 1 assert complexity: non blank
+    // =================================================================================================================
+    public static void assertNonBlankOrThrow(String object, String message) {
+        if (object.isBlank()) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertNonBlankOrThrow(String object) {
+        assertNonBlankOrThrow(object, null);
+    }
+
+    // =================================================================================================================
     // 1 assert complexity: has length
     // =================================================================================================================
     public static void assertHasLengthOrThrow(String object, String message) {

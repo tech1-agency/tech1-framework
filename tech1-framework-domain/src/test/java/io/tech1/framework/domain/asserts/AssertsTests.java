@@ -114,9 +114,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -124,15 +124,15 @@ class AssertsTests {
     @MethodSource("assertNonBlankOrThrowTest")
     void assertNonBlankOrThrowTest(String object, String expectedErrorMessage) {
         // Act
-        var throwable = catchThrowable(() -> assertHasLengthOrThrow(object, expectedErrorMessage));
+        var throwable = catchThrowable(() -> assertNonBlankOrThrow(object, expectedErrorMessage));
 
         // Assert
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -146,9 +146,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -162,9 +162,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -178,9 +178,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -200,9 +200,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -219,9 +219,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -238,9 +238,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 
@@ -254,9 +254,9 @@ class AssertsTests {
         if (isNull(expectedErrorMessage)) {
             assertThat(throwable).isNull();
         } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
+            assertThat(throwable)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expectedErrorMessage);
         }
     }
 }

@@ -18,4 +18,4 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.5]
 — Asserts: add methods including message is optional
-— Asserts: not blank → has length
+— Asserts: add hasLength

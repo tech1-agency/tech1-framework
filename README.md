@@ -25,4 +25,5 @@ Last deployed version: **1.16**
 — Addition: assertFirstValueLesserOrThrow, assertFirstValueLesserOrEqualOrThrow, assertBetweenExcludedOrThrow, assertBetweenIncludedOrThrow
 — Addition: Incident: setType(type)
 — Deletion: IncidentThrowable
+— Addition: StringConstants.Properties
 

@@ -23,12 +23,12 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
 
     @Override
     public void onEvent(IncidentSystemResetServerStarted incident) {
-        this.onEvent(new Incident(incident));
+        this.onEvent(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentSystemResetServerCompleted incident) {
-        this.onEvent(new Incident(incident));
+        this.onEvent(incident.getPlainIncident());
     }
 
     @Override

@@ -17,5 +17,6 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.7.5]
-— Asserts: add methods including message is optional
-— Asserts: add hasLength
+— Modification: add methods including message is optional
+— Addition: add hasLength
+— Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on long

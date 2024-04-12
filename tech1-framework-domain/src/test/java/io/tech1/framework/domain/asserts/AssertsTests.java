@@ -79,6 +79,16 @@ class AssertsTests {
         );
     }
 
+    private static Stream<Arguments> assertLongsArgs() {
+        return Stream.of(
+                Arguments.of(-100, true, true, false, false),
+                Arguments.of(-1, true, true, false, false),
+                Arguments.of(0, true, false, true, false),
+                Arguments.of(1, false, false, true, true),
+                Arguments.of(100, false, false, true, true)
+        );
+    }
+
     // =================================================================================================================
     // 1+ asserts complexity
     // =================================================================================================================
@@ -181,6 +191,41 @@ class AssertsTests {
             assertThat(throwable)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertLongsArgs")
+    void assertLongsTest(long value, boolean conditionPositive, boolean conditionPositiveOrZero, boolean conditionNegative, boolean conditionNegativeOrZero) {
+        // Act
+        var positive = catchThrowable(() -> assertPositiveOrThrow(value));
+        var positiveOrZero = catchThrowable(() -> assertPositiveOrZeroOrThrow(value));
+        var negative = catchThrowable(() -> assertNegativeOrThrow(value));
+        var negativeOrZero = catchThrowable(() -> assertNegativeOrZeroOrThrow(value));
+
+        // Assert
+        if (conditionPositive) {
+            assertThat(positive).isNull();
+        } else {
+            assertThat(positive).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (conditionPositiveOrZero) {
+            assertThat(positiveOrZero).isNull();
+        } else {
+            assertThat(positiveOrZero).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (conditionNegative) {
+            assertThat(negative).isNull();
+        } else {
+            assertThat(negative).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (conditionNegativeOrZero) {
+            assertThat(negativeOrZero).isNull();
+        } else {
+            assertThat(negativeOrZero).isInstanceOf(IllegalArgumentException.class);
         }
     }
 

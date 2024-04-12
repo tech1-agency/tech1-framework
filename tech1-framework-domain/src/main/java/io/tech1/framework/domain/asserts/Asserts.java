@@ -97,6 +97,65 @@ public class Asserts {
     }
 
     // =================================================================================================================
+    // 1 assert complexity: long
+    // =================================================================================================================
+    public static void assertPositiveOrThrow(long value, String message) {
+        if (value > 0) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertPositiveOrThrow(long value) {
+        assertPositiveOrThrow(value, null);
+    }
+
+    public static void assertPositiveOrZeroOrThrow(long value, String message) {
+        if (value >= 0) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertPositiveOrZeroOrThrow(long value) {
+        assertPositiveOrZeroOrThrow(value, null);
+    }
+
+    public static void assertNegativeOrThrow(long value, String message) {
+        if (value < 0) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertNegativeOrThrow(long value) {
+        assertNegativeOrThrow(value, null);
+    }
+
+    public static void assertNegativeOrZeroOrThrow(long value, String message) {
+        if (value <= 0) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertNegativeOrZeroOrThrow(long value) {
+        assertNegativeOrZeroOrThrow(value, null);
+    }
+
+    // =================================================================================================================
     // 1 assert complexity: collections
     // =================================================================================================================
     public static void assertNonEmptyOrThrow(Collection<?> collection, String message) {

@@ -232,6 +232,66 @@ public class Asserts {
         assertNegativeOrZeroOrThrow(value, null);
     }
 
+    public static void assertFirstValueLesserOrThrow(BigDecimal value1, BigDecimal value2, String message) {
+        if (isFirstValueLesser(value1, value2)) {
+            return;
+        }
+        if (hasLength(message)) {
+            throw new IllegalArgumentException(message);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void assertFirstValueLesserOrThrow(BigDecimal value1, BigDecimal value2) {
+        assertFirstValueLesserOrThrow(value1, value2, null);
+    }
+
+    public static void assertFirstValueLesserOrEqualOrThrow(BigDecimal value1, BigDecimal value2, String message) {
+        if (isFirstValueLesserOrEqual(value1, value2)) {
+            return;
+        }
+        if (hasLength(message)) {
+            throw new IllegalArgumentException(message);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void assertFirstValueLesserOrEqualOrThrow(BigDecimal value1, BigDecimal value2) {
+        assertFirstValueLesserOrEqualOrThrow(value1, value2, null);
+    }
+
+    public static void assertBetweenExcludedOrThrow(BigDecimal value, BigDecimal left, BigDecimal right, String message) {
+        if (isFirstValueLesser(left, value) && isFirstValueLesser(value, right)) {
+            return;
+        }
+        if (hasLength(message)) {
+            throw new IllegalArgumentException(message);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void assertBetweenExcludedOrThrow(BigDecimal value, BigDecimal left, BigDecimal right) {
+        assertBetweenExcludedOrThrow(value, left, right, null);
+    }
+
+    public static void assertBetweenIncludedOrThrow(BigDecimal value, BigDecimal left, BigDecimal right, String message) {
+        if (isFirstValueLesserOrEqual(left, value) && isFirstValueLesserOrEqual(value, right)) {
+            return;
+        }
+        if (hasLength(message)) {
+            throw new IllegalArgumentException(message);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void assertBetweenIncludedOrThrow(BigDecimal value, BigDecimal left, BigDecimal right) {
+        assertBetweenIncludedOrThrow(value, left, right, null);
+    }
+
     // =================================================================================================================
     // 1 assert complexity: collections
     // =================================================================================================================

@@ -10,7 +10,9 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
+import static io.tech1.framework.domain.constants.BigDecimalConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.isNull;
@@ -91,10 +93,19 @@ class AssertsTests {
         return Stream.of(
                 Arguments.of(new BigDecimal("-100.00"), false, false, true, true),
                 Arguments.of(new BigDecimal("-1.00"), false, false, true, true),
-                Arguments.of(BigDecimal.ZERO, false, true, false, true),
+                Arguments.of(ZERO, false, true, false, true),
                 Arguments.of(new BigDecimal("0.00"), false, true, false, true),
                 Arguments.of(new BigDecimal("1.00"), true, true, false, false),
                 Arguments.of(new BigDecimal("100.00"), true, true, false, false)
+        );
+    }
+
+    private static Stream<Arguments> assertBigDecimalsBetweenArgs() {
+        return Stream.of(
+                Arguments.of(MINUS_ONE, ZERO, TWO, true, true),
+                Arguments.of(MINUS_ONE, MINUS_ONE, TWO, false, true),
+                Arguments.of(MINUS_ONE, TWO, TWO, false, true),
+                Arguments.of(MINUS_ONE, ONE_HUNDRED, TWO, false, false)
         );
     }
 
@@ -281,6 +292,27 @@ class AssertsTests {
             assertThat(negativeOrZero).isNull();
         } else {
             assertThat(negativeOrZero).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertBigDecimalsBetweenArgs")
+    void assertBetweenTests(BigDecimal left, BigDecimal value, BigDecimal right, boolean excludedCondition, boolean includedCondition) {
+        // Act
+        var excluded = catchThrowable(() -> assertBetweenExcludedOrThrow(value, left, right));
+        var included = catchThrowable(() -> assertBetweenIncludedOrThrow(value, left, right));
+
+        // Assert
+        if (excludedCondition) {
+            assertThat(excluded).isNull();
+        } else {
+            assertThat(excluded).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (includedCondition) {
+            assertThat(included).isNull();
+        } else {
+            assertThat(included).isInstanceOf(IllegalArgumentException.class);
         }
     }
 

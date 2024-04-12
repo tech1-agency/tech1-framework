@@ -82,24 +82,6 @@ class AssertsTests {
     // =================================================================================================================
     // 1+ asserts complexity
     // =================================================================================================================
-    private static Stream<Arguments> assertNonNullNotBlankOrThrowTest() {
-        return Stream.of(
-                Arguments.of(new Object(), null),
-                Arguments.of(null, randomString()),
-                Arguments.of("", randomString()),
-                Arguments.of("  ", randomString())
-        );
-    }
-
-    private static Stream<Arguments> assertNonNullNotEmptyOrThrowTest() {
-        return Stream.of(
-                Arguments.of(List.of(randomString(), randomString()), null),
-                Arguments.of(null, randomString()),
-                Arguments.of(emptyList(), randomString()),
-                Arguments.of(emptySet(), randomString())
-        );
-    }
-
     private static Stream<Arguments> assertZoneIdOrThrowTest() {
         return Stream.of(
                 Arguments.of("", randomString()),
@@ -142,7 +124,7 @@ class AssertsTests {
     @MethodSource("assertNonBlankOrThrowTest")
     void assertNonBlankOrThrowTest(String object, String expectedErrorMessage) {
         // Act
-        var throwable = catchThrowable(() -> assertNonBlankOrThrow(object, expectedErrorMessage));
+        var throwable = catchThrowable(() -> assertHasLengthOrThrow(object, expectedErrorMessage));
 
         // Assert
         if (isNull(expectedErrorMessage)) {
@@ -246,38 +228,6 @@ class AssertsTests {
     // =================================================================================================================
     // 1+ asserts complexity
     // =================================================================================================================
-    @ParameterizedTest
-    @MethodSource("assertNonNullNotBlankOrThrowTest")
-    void assertNonNullNotBlankOrThrowTest(Object object, String expectedErrorMessage) {
-        // Act
-        var throwable = catchThrowable(() -> assertNonNullNotBlankOrThrow(object, expectedErrorMessage));
-
-        // Assert
-        if (isNull(expectedErrorMessage)) {
-            assertThat(throwable).isNull();
-        } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
-        }
-    }
-
-    @ParameterizedTest
-    @MethodSource("assertNonNullNotEmptyOrThrowTest")
-    void assertNonNullNotEmptyOrThrowTest(Collection<?> collection, String expectedErrorMessage) {
-        // Act
-        var throwable = catchThrowable(() -> assertNonNullNotEmptyOrThrow(collection, expectedErrorMessage));
-
-        // Assert
-        if (isNull(expectedErrorMessage)) {
-            assertThat(throwable).isNull();
-        } else {
-            assertThat(throwable).isNotNull();
-            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
-            assertThat(throwable.getMessage()).isEqualTo(expectedErrorMessage);
-        }
-    }
-
     @ParameterizedTest
     @MethodSource("assertZoneIdOrThrowTest")
     void assertZoneIdOrThrowTest(String zoneId, String expectedErrorMessage) {

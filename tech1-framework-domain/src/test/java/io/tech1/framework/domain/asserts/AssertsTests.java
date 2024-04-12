@@ -79,22 +79,22 @@ class AssertsTests {
 
     private static Stream<Arguments> assertLongsArgs() {
         return Stream.of(
-                Arguments.of(-100, true, true, false, false),
-                Arguments.of(-1, true, true, false, false),
-                Arguments.of(0, true, false, true, false),
-                Arguments.of(1, false, false, true, true),
-                Arguments.of(100, false, false, true, true)
+                Arguments.of(-100, false, false, true, true),
+                Arguments.of(-1, false, false, true, true),
+                Arguments.of(0, false, true, false, true),
+                Arguments.of(1, true, true, false, false),
+                Arguments.of(100, true, true, false, false)
         );
     }
 
     private static Stream<Arguments> assertBigDecimalsArgs() {
         return Stream.of(
-                Arguments.of(new BigDecimal("-100.00"), true, true, false, false),
-                Arguments.of(new BigDecimal("-1.00"), true, true, false, false),
-                Arguments.of(BigDecimal.ZERO, true, false, true, false),
-                Arguments.of(new BigDecimal("0.00"), true, false, true, false),
-                Arguments.of(new BigDecimal("1.00"), false, false, true, true),
-                Arguments.of(new BigDecimal("100.00"), false, false, true, true)
+                Arguments.of(new BigDecimal("-100.00"), false, false, true, true),
+                Arguments.of(new BigDecimal("-1.00"), false, false, true, true),
+                Arguments.of(BigDecimal.ZERO, false, true, false, true),
+                Arguments.of(new BigDecimal("0.00"), false, true, false, true),
+                Arguments.of(new BigDecimal("1.00"), true, true, false, false),
+                Arguments.of(new BigDecimal("100.00"), true, true, false, false)
         );
     }
 

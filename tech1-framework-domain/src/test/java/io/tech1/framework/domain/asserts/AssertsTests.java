@@ -6,10 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
@@ -98,6 +95,17 @@ class AssertsTests {
                 Arguments.of(new BigDecimal("0.00"), true, false, true, false),
                 Arguments.of(new BigDecimal("1.00"), false, false, true, true),
                 Arguments.of(new BigDecimal("100.00"), false, false, true, true)
+        );
+    }
+
+    private static Stream<Arguments> assertSortedOrThrowTest() {
+        return Stream.of(
+                Arguments.of(List.of(1, 2, 3, 5, 6), Comparator.naturalOrder(), true),
+                Arguments.of(List.of(1, 2, 2, 3, 3, 5, 5, 6), Comparator.naturalOrder(), true),
+                Arguments.of(List.of(1, 2, 3, 5, 6), Comparator.naturalOrder().reversed(), false),
+                Arguments.of(List.of(6, 5, 4, 2, 1, 100), Comparator.naturalOrder().reversed(), false),
+                Arguments.of(List.of(100, 1, 0, -1, -100), Comparator.naturalOrder().reversed(), true),
+                Arguments.of(List.of(100, 1, 0, 0, 0, 0, -1, -100), Comparator.naturalOrder().reversed(), true)
         );
     }
 
@@ -295,6 +303,20 @@ class AssertsTests {
             assertThat(throwable)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(expectedErrorMessage);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertSortedOrThrowTest")
+    void assertSortedOrThrowTest(Collection<Integer> collection, Comparator<Integer> comparator, boolean isSorted) {
+        // Act
+        var throwable = catchThrowable(() -> assertSortedOrThrow(collection, comparator));
+
+        // Assert
+        if (isSorted) {
+            assertThat(throwable).isNull();
+        } else {
+            assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
         }
     }
 

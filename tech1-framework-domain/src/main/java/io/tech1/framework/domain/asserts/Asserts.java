@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Comparator;
 
 import static io.tech1.framework.domain.utilities.numbers.BigDecimalUtility.*;
 import static java.time.ZoneId.getAvailableZoneIds;
@@ -232,6 +233,29 @@ public class Asserts {
 
     public static void assertNonEmptyOrThrow(Collection<?> collection) {
         assertNonEmptyOrThrow(collection, null);
+    }
+
+    public static <T> void assertSortedOrThrow(Collection<T> collection, Comparator<T> comparator, String message) {
+        var iterator = collection.iterator();
+        if (!iterator.hasNext()) {
+            return;
+        }
+        T current = iterator.next();
+        while (iterator.hasNext()) {
+            T next = iterator.next();
+            if (comparator.compare(current, next) > 0) {
+                if (hasLength(message)) {
+                    throw new IllegalArgumentException(message);
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
+            current = next;
+        }
+    }
+
+    public static <T> void assertSortedOrThrow(Collection<T> collection, Comparator<T> comparator) {
+        assertSortedOrThrow(collection, comparator, null);
     }
 
     public static <T> void assertUniqueOrThrow(Collection<T> options, T object, PropertyId propertyId) {

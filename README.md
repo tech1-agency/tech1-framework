@@ -21,3 +21,4 @@ Last deployed version: **1.16**
 — Addition: add hasLength
 — Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on long
 — Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on BigDecimal
+— Addition: assertSortedOrThrow on collections

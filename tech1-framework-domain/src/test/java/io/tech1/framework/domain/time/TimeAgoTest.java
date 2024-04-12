@@ -15,13 +15,13 @@ class TimeAgoTest {
     private static Stream<Arguments> constructorTest() {
         return Stream.of(
                 Arguments.of(getCurrentTimestamp(), "just now"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(10L, SECONDS).toMillis(), "10 seconds ago"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(1L, MINUTES).toMillis(), "1 minute ago"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(10L, MINUTES).toMillis(), "10 minutes ago"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(2L, HOURS).toMillis(), "2 hours ago"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(25L, DAYS).toMillis(), "25 days ago"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(25L, MONTHS).toMillis(), "2 years ago"),
-                Arguments.of(getCurrentTimestamp() - TimeAmount.of(2L, YEARS).toMillis(), "2 years ago")
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(10L, SECONDS).toMillis(), "10 seconds ago"),
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(1L, MINUTES).toMillis(), "1 minute ago"),
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(10L, MINUTES).toMillis(), "10 minutes ago"),
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(2L, HOURS).toMillis(), "2 hours ago"),
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(25L, DAYS).toMillis(), "25 days ago"),
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(25L, MONTHS).toMillis(), "2 years ago"),
+                Arguments.of(getCurrentTimestamp() - new TimeAmount(2L, YEARS).toMillis(), "2 years ago")
         );
     }
 

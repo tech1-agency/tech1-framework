@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
 import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND;
+import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
@@ -19,13 +19,13 @@ import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampUtilityTest {
-    private static final Long _2_HOUR_AGO = getPastRange(TimeAmount.of(2L, HOURS)).from();
-    private static final Long _5_MINUTES_AGO = getPastRange(TimeAmount.of(5L, MINUTES)).from();
-    private static final Long _1_MINUTE_AGO = getPastRange(TimeAmount.of(1L, MINUTES)).from();
-    private static final Long _2_MINUTES_FUTURE = getFutureRange(TimeAmount.of(2L, MINUTES)).to();
-    private static final Long _1_HOUR_FUTURE = getFutureRange(TimeAmount.of(1L, HOURS)).to();
+    private static final Long _2_HOUR_AGO = getPastRange(new TimeAmount(2L, HOURS)).from();
+    private static final Long _5_MINUTES_AGO = getPastRange(new TimeAmount(5L, MINUTES)).from();
+    private static final Long _1_MINUTE_AGO = getPastRange(new TimeAmount(1L, MINUTES)).from();
+    private static final Long _2_MINUTES_FUTURE = getFutureRange(new TimeAmount(2L, MINUTES)).to();
+    private static final Long _1_HOUR_FUTURE = getFutureRange(new TimeAmount(1L, HOURS)).to();
 
-    private static final long _5_SECONDS = TimeAmount.of(5L, SECONDS).toMillis();
+    private static final long _5_SECONDS = new TimeAmount(5L, SECONDS).toMillis();
 
     private static Stream<Arguments> toUnixTimeTest() {
         return Stream.of(
@@ -183,7 +183,7 @@ class TimestampUtilityTest {
         var currentTimestamp = getCurrentTimestamp();
 
         // Act
-        var actual = getPastRange(currentTimestamp, TimeAmount.of(5, SECONDS));
+        var actual = getPastRange(currentTimestamp, new TimeAmount(5, SECONDS));
 
         // Assert
         assertThat(actual.to()).isGreaterThan(actual.from());
@@ -196,7 +196,7 @@ class TimestampUtilityTest {
         var currentTimestamp = getCurrentTimestamp();
 
         // Act
-        var actual = getFutureRange(currentTimestamp, TimeAmount.of(5, SECONDS));
+        var actual = getFutureRange(currentTimestamp, new TimeAmount(5, SECONDS));
 
         // Assert
         assertThat(actual.to()).isGreaterThan(actual.from());

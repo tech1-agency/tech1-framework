@@ -31,7 +31,7 @@ public class TimeAmount extends AbstractPropertyConfigs {
     }
 
     public io.tech1.framework.domain.time.TimeAmount getTimeAmount() {
-        return io.tech1.framework.domain.time.TimeAmount.of(
+        return new io.tech1.framework.domain.time.TimeAmount(
                 this.amount,
                 this.unit
         );

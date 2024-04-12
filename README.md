@@ -26,4 +26,5 @@ Last deployed version: **1.16**
 — Addition: Incident: setType(type)
 — Deletion: IncidentThrowable
 — Addition: StringConstants.Properties
+— Deletion: TimeAmount.of() constructor
 

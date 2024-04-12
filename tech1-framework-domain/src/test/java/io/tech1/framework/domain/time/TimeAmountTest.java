@@ -13,10 +13,10 @@ class TimeAmountTest {
 
     private static Stream<Arguments> toTest() {
         return Stream.of(
-                Arguments.of(TimeAmount.of(10L, SECONDS), 10L, 10000L),
-                Arguments.of(TimeAmount.of(10L, MINUTES), 600L, 600000L),
-                Arguments.of(TimeAmount.of(10L, HOURS), 36000L, 36000000L),
-                Arguments.of(TimeAmount.of(10L, DAYS), 864000L, 864000000L)
+                Arguments.of(new TimeAmount(10L, SECONDS), 10L, 10000L),
+                Arguments.of(new TimeAmount(10L, MINUTES), 600L, 600000L),
+                Arguments.of(new TimeAmount(10L, HOURS), 36000L, 36000000L),
+                Arguments.of(new TimeAmount(10L, DAYS), 864000L, 864000000L)
         );
     }
 

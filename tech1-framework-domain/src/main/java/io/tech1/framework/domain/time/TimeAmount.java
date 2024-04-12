@@ -29,14 +29,8 @@ public class TimeAmount {
         this.unit = unit;
     }
 
-    public static TimeAmount of(
-            long amount,
-            ChronoUnit unit
-    ) {
-        return new TimeAmount(
-                amount,
-                unit
-        );
+    public static TimeAmount forever() {
+        return new TimeAmount(1L, ChronoUnit.FOREVER);
     }
 
     public long toSeconds() {

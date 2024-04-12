@@ -56,8 +56,8 @@ class TimeAmountTest extends AbstractSerializationDeserializationRunner {
 
         // Assert
         assertThat(actual).isEqualTo(TIME_AMOUNT);
-        assertThat(actual.getAmount()).isEqualTo(TIME_AMOUNT.getAmount());
-        assertThat(actual.getUnit()).isEqualTo(TIME_AMOUNT.getUnit());
+        assertThat(actual.amount()).isEqualTo(TIME_AMOUNT.amount());
+        assertThat(actual.unit()).isEqualTo(TIME_AMOUNT.unit());
     }
 
     @ParameterizedTest

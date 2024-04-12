@@ -28,4 +28,5 @@ Last deployed version: **1.16**
 — Addition: StringConstants.Properties
 — Deletion: TimeAmount.of() constructor
 — Addition: TimeAmount: testsHardcoded(), forever()
+— Addition: TimeAmount: Constraint Validation
 

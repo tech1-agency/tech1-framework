@@ -1,6 +1,8 @@
 package io.tech1.framework.incidents.events.subscribers.impl;
 
 import io.tech1.framework.incidents.domain.Incident;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import io.tech1.framework.incidents.events.subscribers.IncidentSubscriber;
 import io.tech1.framework.incidents.feigns.clients.IncidentClient;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -62,7 +63,7 @@ class IncidentSubscriberImplTest {
     @Test
     void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = randomIncidentSystemResetServerStarted();
+        var incidentSystemResetServerStarted = IncidentSystemResetServerStarted.testsHardcoded();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);
@@ -81,7 +82,7 @@ class IncidentSubscriberImplTest {
     @Test
     void onEventIncidentSystemResetServerCompletedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = randomIncidentSystemResetServerCompleted();
+        var incidentSystemResetServerStarted = IncidentSystemResetServerCompleted.testsHardcoded();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);
@@ -100,24 +101,12 @@ class IncidentSubscriberImplTest {
     @Test
     void onEventIncidentTest() {
         // Arrange
-        var incident = randomIncident();
+        var incident = Incident.random();
 
         // Act
         this.componentUnderTest.onEvent(incident);
 
         // Assert
         verify(this.incidentClient).registerIncident(incident);
-    }
-
-    @Test
-    void onEventThrowableIncidentTest() {
-        // Arrange
-        var incident = randomThrowableIncident();
-
-        // Act
-        this.componentUnderTest.onEvent(incident);
-
-        // Assert
-        verify(this.incidentClient).registerIncident(new Incident(incident));
     }
 }

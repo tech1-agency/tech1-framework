@@ -6,7 +6,6 @@ import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.impl.WssMessa
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.websockets.*;
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -112,7 +111,7 @@ class WssMessagingTemplateImplTest {
         // Assert
         verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtWebsocketsConfigs();
         verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
-        verify(this.incidentPublisher).publishThrowable(IncidentThrowable.of(ex));
+        verify(this.incidentPublisher).publishThrowable(ex);
         verifyNoMoreInteractions(this.simpMessagingTemplate);
     }
 

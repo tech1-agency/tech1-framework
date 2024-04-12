@@ -1,6 +1,8 @@
 package io.tech1.framework.incidents.events.publishers.impl;
 
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
+import io.tech1.framework.incidents.domain.Incident;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -72,7 +73,7 @@ class IncidentPublisherImplTest {
     @Test
     void publishResetServerStartedTest() {
         // Arrange
-        var incident = randomIncidentSystemResetServerStarted();
+        var incident = IncidentSystemResetServerStarted.testsHardcoded();
 
         // Act
         this.componentUnderTest.publishResetServerStarted(incident);
@@ -84,7 +85,7 @@ class IncidentPublisherImplTest {
     @Test
     void publishResetServerCompletedTest() {
         // Arrange
-        var incident = randomIncidentSystemResetServerCompleted();
+        var incident = IncidentSystemResetServerCompleted.testsHardcoded();
 
         // Act
         this.componentUnderTest.publishResetServerCompleted(incident);
@@ -96,7 +97,7 @@ class IncidentPublisherImplTest {
     @Test
     void publishIncidentTest() {
         // Arrange
-        var incident = randomIncident();
+        var incident = Incident.random();
 
         // Act
         this.componentUnderTest.publishIncident(incident);
@@ -108,24 +109,12 @@ class IncidentPublisherImplTest {
     @Test
     void publishThrowableIncidentTest() {
         // Arrange
-        var incident = randomThrowableIncident();
+        var incident = new Incident(new Throwable("tech1"));
 
         // Act
-        this.componentUnderTest.publishThrowable(incident);
+        this.componentUnderTest.publishIncident(incident);
 
         // Assert
         verify(this.applicationEventPublisher).publishEvent(incident);
-    }
-
-    @Test
-    void publishThrowableTest() {
-        // Arrange
-        var throwable = randomThrowableIncident().getThrowable();
-
-        // Act
-        this.componentUnderTest.publishThrowable(throwable);
-
-        // Assert
-        verify(this.applicationEventPublisher).publishEvent(IncidentThrowable.of(throwable));
     }
 }

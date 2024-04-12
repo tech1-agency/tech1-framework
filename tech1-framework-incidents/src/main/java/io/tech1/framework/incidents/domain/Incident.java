@@ -6,21 +6,26 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
+import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.domain.utilities.exceptions.TraceUtility.getTrace;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.incidents.domain.IncidentAttributes.Keys.*;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -44,7 +49,7 @@ public class Incident {
 
     public Incident(String type) {
         this();
-        this.add(IncidentAttributes.Keys.TYPE, type);
+        this.setType(type);
     }
 
     public Incident(SecurityJwtIncidentType type) {
@@ -73,27 +78,50 @@ public class Incident {
         this.addUserRequestMetadata(userRequestMetadata);
     }
 
-    public Incident(IncidentThrowable incidentThrowable) {
+    public Incident(Throwable throwable) {
         this(IncidentAttributes.IncidentsTypes.THROWABLE);
 
-        var throwable = incidentThrowable.getThrowable();
         this.add(IncidentAttributes.Keys.EXCEPTION, throwable.getClass());
         this.add(IncidentAttributes.Keys.TRACE, getTrace(throwable));
         this.add(IncidentAttributes.Keys.MESSAGE, throwable.getMessage());
+    }
 
-        var method = incidentThrowable.getMethod();
+    public Incident(Throwable throwable, Method method, List<Object> params) {
+        this(throwable);
+
         if (nonNull(method)) {
             this.add(IncidentAttributes.Keys.METHOD, method.toString());
         }
 
-        var params = incidentThrowable.getParams();
         if (!isEmpty(params)) {
-            this.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(", ")));
+            this.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(COMMA_COLLECTORS)));
         }
+    }
 
-        if (!isEmpty(incidentThrowable.getAttributes())) {
-            incidentThrowable.getAttributes().forEach(this::add);
+    public Incident(Throwable throwable, Map<String, Object> attributes) {
+        this(throwable);
+
+        if (!isEmpty(attributes)) {
+            attributes.forEach(this::add);
         }
+    }
+
+    public Incident(IncidentSystemResetServerStarted incident) {
+        this("Reset Server Started");
+        this.addUsername(incident.username());
+    }
+
+    public Incident(IncidentSystemResetServerCompleted incident) {
+        this("Reset Server Completed");
+        this.addUsername(incident.username());
+    }
+
+    public static Incident random() {
+        var incident = new Incident(randomString());
+        incident.add(randomString(), randomString());
+        incident.add(randomString(), randomString());
+        incident.add(randomString(), randomString());
+        return incident;
     }
 
     public static Incident copyOf(@NotNull Incident incident) {
@@ -117,6 +145,10 @@ public class Incident {
                 .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
                 .forEach(entry -> LOGGER.info(entry.getKey() + " — " + entry.getValue()));
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+    }
+
+    public void setType(String type) {
+        this.add(IncidentAttributes.Keys.TYPE, type);
     }
 
     public void addUsername(Username username) {

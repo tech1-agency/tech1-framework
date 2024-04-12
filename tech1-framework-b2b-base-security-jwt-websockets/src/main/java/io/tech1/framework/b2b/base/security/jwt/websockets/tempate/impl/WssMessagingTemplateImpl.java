@@ -3,7 +3,6 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.tempate.impl;
 import io.tech1.framework.b2b.base.security.jwt.websockets.domain.events.WebsocketEvent;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingTemplate;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +48,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
                     data
             );
         } catch (MessagingException ex) {
-            this.incidentPublisher.publishThrowable(IncidentThrowable.of(ex));
+            this.incidentPublisher.publishThrowable(ex);
         }
     }
 }

@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.handlers;
 
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
+import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -20,8 +20,8 @@ public class AsyncUncaughtExceptionHandlerPublisher implements AsyncUncaughtExce
 
     @Override
     public void handleUncaughtException(@NotNull Throwable throwable, @NotNull Method method, Object @NotNull ... params) {
-        this.incidentPublisher.publishThrowable(
-                IncidentThrowable.of(
+        this.incidentPublisher.publishIncident(
+                new Incident(
                         throwable,
                         method,
                         Arrays.asList(params)

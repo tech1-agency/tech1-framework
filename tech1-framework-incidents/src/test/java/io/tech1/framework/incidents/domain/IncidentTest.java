@@ -1,6 +1,5 @@
 package io.tech1.framework.incidents.domain;
 
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,7 +11,6 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomMethod;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.incidents.tests.random.IncidentsRandomUtility.randomIncident;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentTest {
@@ -34,7 +32,7 @@ class IncidentTest {
     @Test
     void copyOfTest() {
         // Arrange
-        var incident = randomIncident();
+        var incident = Incident.random();
 
         // Act
         var copy = Incident.copyOf(incident);
@@ -78,10 +76,9 @@ class IncidentTest {
     void convertThrowableIncident1Test() {
         // Arrange
         var throwable = new NullPointerException("Tech1");
-        var throwableIncident = IncidentThrowable.of(throwable);
 
         // Act
-        var actual = new Incident(throwableIncident);
+        var actual = new Incident(throwable);
 
         // Assert
         assertThat(actual).isNotNull();
@@ -103,10 +100,9 @@ class IncidentTest {
         var throwable = new NullPointerException("Tech1");
         var method = randomMethod();
         var params = List.of(object, "param1", 1L);
-        var throwableIncident = IncidentThrowable.of(throwable, method, params);
 
         // Act
-        var actual = new Incident(throwableIncident);
+        var actual = new Incident(throwable, method, params);
 
         // Assert
         assertThat(actual).isNotNull();
@@ -129,10 +125,9 @@ class IncidentTest {
         var object = new Object();
         var throwable = new NullPointerException("Tech1");
         var attributes = Map.of("key1", object);
-        var throwableIncident = IncidentThrowable.of(throwable, attributes);
 
         // Act
-        var actual = new Incident(throwableIncident);
+        var actual = new Incident(throwable, attributes);
 
         // Assert
         assertThat(actual).isNotNull();

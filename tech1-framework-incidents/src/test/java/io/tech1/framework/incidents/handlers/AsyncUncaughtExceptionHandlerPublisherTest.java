@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.handlers;
 
-import io.tech1.framework.incidents.domain.throwable.IncidentThrowable;
+import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -69,6 +69,6 @@ class AsyncUncaughtExceptionHandlerPublisherTest {
         this.componentUnderTest.handleUncaughtException(throwable, method, params);
 
         // Assert
-        verify(this.incidentPublisher).publishThrowable(IncidentThrowable.of(throwable, method, Arrays.asList(params)));
+        verify(this.incidentPublisher).publishIncident(new Incident(throwable, method, Arrays.asList(params)));
     }
 }

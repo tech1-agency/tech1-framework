@@ -29,6 +29,10 @@ public class TimeAmount {
         this.unit = unit;
     }
 
+    public static TimeAmount testsHardcoded() {
+        return new TimeAmount(30L, ChronoUnit.SECONDS);
+    }
+
     public static TimeAmount forever() {
         return new TimeAmount(1L, ChronoUnit.FOREVER);
     }

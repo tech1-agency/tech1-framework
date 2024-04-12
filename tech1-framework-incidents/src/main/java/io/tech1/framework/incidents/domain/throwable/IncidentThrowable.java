@@ -4,14 +4,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullNotBlankOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-
+// TODO [YYL-incidents] check obsolete-ness
 // Lombok
 @NoArgsConstructor
 @Getter
@@ -25,38 +24,21 @@ public class IncidentThrowable {
 
     private Map<String, Object> attributes;
 
-    public static IncidentThrowable of(
-            Throwable throwable
-    ) {
-        assertNonNullNotBlankOrThrow(throwable, invalidAttribute("ThrowableIncident.throwable"));
+    public static IncidentThrowable of(@NotNull Throwable throwable) {
         var incident = new IncidentThrowable();
         incident.throwable = throwable;
         return incident;
     }
 
-    public static IncidentThrowable of(
-            Throwable throwable,
-            Method method,
-            List<Object> params
-    ) {
-        var incident = of(
-                throwable
-        );
-        assertNonNullNotBlankOrThrow(method, invalidAttribute("ThrowableIncident.method"));
-        assertNonNullNotBlankOrThrow(params, invalidAttribute("ThrowableIncident.params"));
+    public static IncidentThrowable of(@NotNull Throwable throwable, @NotNull Method method, @NotNull List<Object> params) {
+        var incident = of(throwable);
         incident.method = method;
         incident.params = params;
         return incident;
     }
 
-    public static IncidentThrowable of(
-            Throwable throwable,
-            Map<String, Object> attributes
-    ) {
-        assertNonNullNotBlankOrThrow(attributes, invalidAttribute("ThrowableIncident.attributes"));
-        var incident = of(
-                throwable
-        );
+    public static IncidentThrowable of(@NotNull Throwable throwable, @NotNull Map<String, Object> attributes) {
+        var incident = of(throwable);
         incident.attributes = attributes;
         return incident;
     }

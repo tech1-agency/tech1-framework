@@ -20,3 +20,4 @@ Last deployed version: **1.16**
 — Modification: add methods including message is optional
 — Addition: add hasLength
 — Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on long
+— Addition: assertPositiveOrThrow, assertPositiveOrZeroOrThrow, assertNegativeOrThrow, assertNegativeOrZeroOrThrow on BigDecimal

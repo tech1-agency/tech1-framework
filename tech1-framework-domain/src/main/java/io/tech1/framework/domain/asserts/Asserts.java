@@ -3,9 +3,11 @@ package io.tech1.framework.domain.asserts;
 import io.tech1.framework.domain.base.PropertyId;
 import lombok.experimental.UtilityClass;
 
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
+import static io.tech1.framework.domain.utilities.numbers.BigDecimalUtility.*;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.isNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -152,6 +154,66 @@ public class Asserts {
     }
 
     public static void assertNegativeOrZeroOrThrow(long value) {
+        assertNegativeOrZeroOrThrow(value, null);
+    }
+
+    // =================================================================================================================
+    // 1 assert complexity: BigDecimal
+    // =================================================================================================================
+
+    public static void assertPositiveOrThrow(BigDecimal value, String message) {
+        if (isPositive(value)) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertPositiveOrThrow(BigDecimal value) {
+        assertPositiveOrThrow(value, null);
+    }
+
+    public static void assertPositiveOrZeroOrThrow(BigDecimal value, String message) {
+        if (isPositiveOrZero(value)) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertPositiveOrZeroOrThrow(BigDecimal value) {
+        assertPositiveOrZeroOrThrow(value, null);
+    }
+
+    public static void assertNegativeOrThrow(BigDecimal value, String message) {
+        if (isNegative(value)) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertNegativeOrThrow(BigDecimal value) {
+        assertNegativeOrThrow(value, null);
+    }
+
+    public static void assertNegativeOrZeroOrThrow(BigDecimal value, String message) {
+        if (isNegativeOrZero(value)) {
+            if (hasLength(message)) {
+                throw new IllegalArgumentException(message);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public static void assertNegativeOrZeroOrThrow(BigDecimal value) {
         assertNegativeOrZeroOrThrow(value, null);
     }
 

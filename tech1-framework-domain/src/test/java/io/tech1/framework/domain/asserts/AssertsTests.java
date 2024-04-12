@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -86,6 +87,17 @@ class AssertsTests {
                 Arguments.of(0, true, false, true, false),
                 Arguments.of(1, false, false, true, true),
                 Arguments.of(100, false, false, true, true)
+        );
+    }
+
+    private static Stream<Arguments> assertBigDecimalsArgs() {
+        return Stream.of(
+                Arguments.of(new BigDecimal("-100.00"), true, true, false, false),
+                Arguments.of(new BigDecimal("-1.00"), true, true, false, false),
+                Arguments.of(BigDecimal.ZERO, true, false, true, false),
+                Arguments.of(new BigDecimal("0.00"), true, false, true, false),
+                Arguments.of(new BigDecimal("1.00"), false, false, true, true),
+                Arguments.of(new BigDecimal("100.00"), false, false, true, true)
         );
     }
 
@@ -197,6 +209,41 @@ class AssertsTests {
     @ParameterizedTest
     @MethodSource("assertLongsArgs")
     void assertLongsTest(long value, boolean conditionPositive, boolean conditionPositiveOrZero, boolean conditionNegative, boolean conditionNegativeOrZero) {
+        // Act
+        var positive = catchThrowable(() -> assertPositiveOrThrow(value));
+        var positiveOrZero = catchThrowable(() -> assertPositiveOrZeroOrThrow(value));
+        var negative = catchThrowable(() -> assertNegativeOrThrow(value));
+        var negativeOrZero = catchThrowable(() -> assertNegativeOrZeroOrThrow(value));
+
+        // Assert
+        if (conditionPositive) {
+            assertThat(positive).isNull();
+        } else {
+            assertThat(positive).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (conditionPositiveOrZero) {
+            assertThat(positiveOrZero).isNull();
+        } else {
+            assertThat(positiveOrZero).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (conditionNegative) {
+            assertThat(negative).isNull();
+        } else {
+            assertThat(negative).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        if (conditionNegativeOrZero) {
+            assertThat(negativeOrZero).isNull();
+        } else {
+            assertThat(negativeOrZero).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("assertBigDecimalsArgs")
+    void assertBigDecimalsTest(BigDecimal value, boolean conditionPositive, boolean conditionPositiveOrZero, boolean conditionNegative, boolean conditionNegativeOrZero) {
         // Act
         var positive = catchThrowable(() -> assertPositiveOrThrow(value));
         var positiveOrZero = catchThrowable(() -> assertPositiveOrZeroOrThrow(value));

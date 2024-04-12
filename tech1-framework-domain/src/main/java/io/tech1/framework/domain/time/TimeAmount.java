@@ -42,10 +42,10 @@ public record TimeAmount(long amount, ChronoUnit unit) {
         String message() default "must be between than {minAmount} {minUnit} and {maxAmount} {maxUnit}";
         Class<?>[] groups() default {};
         Class<? extends Payload>[] payload() default {};
-        int minAmount();
-        ChronoUnit minUnit();
-        int maxAmount();
-        ChronoUnit maxUnit();
+        int minAmount() default Integer.MIN_VALUE;
+        ChronoUnit minUnit() default ChronoUnit.FOREVER;
+        int maxAmount() default Integer.MAX_VALUE;
+        ChronoUnit maxUnit() default ChronoUnit.FOREVER;
     }
 
     public static class ConstraintValidatorOnTimeAmount implements ConstraintValidator<TimeAmount.ValidTimeAmount, TimeAmount> {

@@ -23,3 +23,5 @@ Last deployed version: **1.16**
 — Modification: ZoneIdsConstants.UKRAINE: "Europe/Kiev" to "Europe/Kyiv"
 — Addition: HtmlOptionTest to mains package
 — Modification: EnvironmentUtility: verifyOneActiveProfile, getOneActiveProfileOrDash
+— Addition: SpringBootActuatorInfo: dash(), offline()
+— Modification: SpringBootActuatorInfo: "[?]" to "—"

@@ -20,7 +20,7 @@ class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {
         return Stream.of(
                 Arguments.of(new SpringBootActuatorHealth(Status.UP), "health-1.json"),
                 Arguments.of(new SpringBootActuatorHealth(Status.DOWN), "health-2.json"),
-                Arguments.of(SpringBootActuatorHealth.undefined(), "health-3.json")
+                Arguments.of(SpringBootActuatorHealth.unknown(), "health-3.json")
         );
     }
 

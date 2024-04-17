@@ -2,6 +2,7 @@ package io.tech1.framework.domain.maven;
 
 import io.tech1.framework.domain.base.Version;
 
+import static io.tech1.framework.domain.constants.StringConstants.DASH;
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 
 public record MavenDetails(
@@ -12,6 +13,10 @@ public record MavenDetails(
 
     public static MavenDetails undefined() {
         return new MavenDetails(UNDEFINED, UNDEFINED, Version.undefined());
+    }
+
+    public static MavenDetails dash() {
+        return new MavenDetails(DASH, DASH, Version.dash());
     }
 
     public static MavenDetails testsHardcoded() {

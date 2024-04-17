@@ -2,17 +2,17 @@ package io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.constants.StringConstants.DASH;
 
 public record SpringBootActuatorInfoGit(
         @JsonProperty("commit") SpringBootActuatorInfoCommit commit,
         @JsonProperty("branch") String branch
 ) {
 
-    public static SpringBootActuatorInfoGit undefined() {
+    public static SpringBootActuatorInfoGit dash() {
         return new SpringBootActuatorInfoGit(
-                SpringBootActuatorInfoCommit.undefined(),
-                UNDEFINED
+                SpringBootActuatorInfoCommit.dash(),
+                DASH
         );
     }
 

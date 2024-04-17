@@ -7,10 +7,14 @@ public record SpringBootActuatorHealth(
         @JsonInclude(JsonInclude.Include.NON_NULL) Status status
 ) {
 
-    public static SpringBootActuatorHealth undefined() {
+    public static SpringBootActuatorHealth unknown() {
         return new SpringBootActuatorHealth(
                 Status.UNKNOWN
         );
+    }
+
+    public static SpringBootActuatorHealth offline() {
+        return unknown();
     }
 
     public static SpringBootActuatorHealth testsHardcoded() {

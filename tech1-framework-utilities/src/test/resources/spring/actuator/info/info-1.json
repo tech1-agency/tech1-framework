@@ -1,15 +1,15 @@
 {
   "git" : {
     "commit" : {
-      "id" : "[?]",
-      "time" : "[?]"
+      "id" : "—",
+      "time" : "—"
     },
-    "branch" : "[?]"
+    "branch" : "—"
   },
-  "activeProfile" : "[?]",
+  "activeProfile" : "—",
   "maven": {
-    "groupId": "[?]",
-    "artifactId": "[?]",
-    "version": "[?]"
+    "groupId": "—",
+    "artifactId": "—",
+    "version": "—"
   }
 }

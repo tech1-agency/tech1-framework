@@ -21,7 +21,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
     @Override
     public boolean isAlive() {
         var info = this.info();
-        return nonNull(info) && !SpringBootActuatorInfo.undefined().equals(info);
+        return nonNull(info) && !SpringBootActuatorInfo.offline().equals(info);
     }
 
     @Override
@@ -30,7 +30,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
             return this.springBootClientFeign.info();
         } catch (RetryableException ex) {
             LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
-            return SpringBootActuatorInfo.undefined();
+            return SpringBootActuatorInfo.offline();
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
             return this.springBootClientFeign.health();
         } catch (RetryableException ex) {
             LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
-            return SpringBootActuatorHealth.undefined();
+            return SpringBootActuatorHealth.offline();
         }
     }
 

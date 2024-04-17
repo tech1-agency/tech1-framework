@@ -7,9 +7,8 @@ import io.tech1.framework.domain.maven.MavenDetails;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.constants.StringConstants.DASH;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -25,13 +24,18 @@ public record SpringBootActuatorInfo(
         @JsonInclude(JsonInclude.Include.NON_NULL) String activeProfile,
         @JsonInclude(JsonInclude.Include.NON_NULL) MavenDetails maven
 ) {
-    public static SpringBootActuatorInfo undefined() {
+
+    public static SpringBootActuatorInfo dash() {
         return new SpringBootActuatorInfo(
-                SpringBootActuatorInfoGit.undefined(),
+                SpringBootActuatorInfoGit.dash(),
                 null,
-                UNDEFINED,
-                MavenDetails.undefined()
+                DASH,
+                MavenDetails.dash()
         );
+    }
+
+    public static SpringBootActuatorInfo offline() {
+        return dash();
     }
 
     public static SpringBootActuatorInfo testsHardcoded() {
@@ -44,27 +48,27 @@ public record SpringBootActuatorInfo(
     }
 
     @JsonIgnore
-    public String getProfile() {
+    public String getProfileOrDash() {
         if (nonNull(this.activeProfile)) {
             return this.activeProfile;
         } else if (!isEmpty(this.activeProfiles)) {
             return this.activeProfiles.get(0);
         } else {
-            return UNDEFINED;
+            return DASH;
         }
     }
 
     @JsonIgnore
-    public boolean isProfileUndefined() {
-        return UNDEFINED.equals(this.getProfile());
+    public boolean isProfileDash() {
+        return DASH.equals(this.getProfileOrDash());
     }
 
     @JsonIgnore
-    public Version getMavenVersion() {
-        if (Objects.nonNull(this.maven)) {
+    public Version getMavenVersionOrDash() {
+        if (nonNull(this.maven)) {
             return this.maven.version();
         } else {
-            return Version.undefined();
+            return Version.dash();
         }
     }
 }

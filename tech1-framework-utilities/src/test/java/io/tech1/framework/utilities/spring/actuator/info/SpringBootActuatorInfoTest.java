@@ -22,58 +22,58 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> deserializeTest() {
         return Stream.of(
                 Arguments.of(
-                        SpringBootActuatorInfo.undefined(),
-                        "[?]",
+                        SpringBootActuatorInfo.dash(),
+                        "—",
                         true,
-                        Version.undefined(),
+                        Version.dash(),
                         "info-1.json"
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.undefined(),
+                                SpringBootActuatorInfoGit.dash(),
                                 new ArrayList<>(),
                                 null,
                                 null
                         ),
-                        "[?]",
+                        "—",
                         true,
-                        Version.undefined(),
+                        Version.dash(),
                         "info-2.json"
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.undefined(),
+                                SpringBootActuatorInfoGit.dash(),
                                 new ArrayList<>(List.of("dev", "prod")),
                                 null,
                                 null
                         ),
                         "dev",
                         false,
-                        Version.undefined(),
+                        Version.dash(),
                         "info-3.json"
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.undefined(),
+                                SpringBootActuatorInfoGit.dash(),
                                 null,
                                 "stage",
                                 null
                         ),
                         "stage",
                         false,
-                        Version.undefined(),
+                        Version.dash(),
                         "info-4.json"
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.undefined(),
+                                SpringBootActuatorInfoGit.dash(),
                                 null,
                                 null,
                                 null
                         ),
-                        "[?]",
+                        "—",
                         true,
-                        Version.undefined(),
+                        Version.dash(),
                         "info-5.json"
                 ),
                 Arguments.of(
@@ -96,7 +96,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("deserializeTest")
-    void deserializeTest(SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isUndefined, Version version, String fileName) {
+    void deserializeTest(SpringBootActuatorInfo springBootActuatorInfo, String profile, boolean isDash, Version version, String fileName) {
         // Arrange
         var json = readFile(this.getFolder(), fileName);
         var typeReference = new TypeReference<SpringBootActuatorInfo>() {};
@@ -105,8 +105,8 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
         var actual = OBJECT_MAPPER.readValue(json, typeReference);
 
         assertThat(actual).isEqualTo(springBootActuatorInfo);
-        assertThat(actual.getProfile()).isEqualTo(profile);
-        assertThat(actual.isProfileUndefined()).isEqualTo(isUndefined);
-        assertThat(actual.getMavenVersion()).isEqualTo(version);
+        assertThat(actual.getProfileOrDash()).isEqualTo(profile);
+        assertThat(actual.isProfileDash()).isEqualTo(isDash);
+        assertThat(actual.getMavenVersionOrDash()).isEqualTo(version);
     }
 }

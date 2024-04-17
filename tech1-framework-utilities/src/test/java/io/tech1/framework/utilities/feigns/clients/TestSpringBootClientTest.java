@@ -129,7 +129,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).info();
-        assertThat(info).isEqualTo(SpringBootActuatorInfo.undefined());
+        assertThat(info).isEqualTo(SpringBootActuatorInfo.offline());
     }
 
     @Test
@@ -163,7 +163,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).health();
-        assertThat(health).isEqualTo(SpringBootActuatorHealth.undefined());
+        assertThat(health).isEqualTo(SpringBootActuatorHealth.unknown());
     }
 
     @Test

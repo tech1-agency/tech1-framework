@@ -1,8 +1,9 @@
 package io.tech1.framework.utilities.environment;
 
 public interface EnvironmentUtility {
-    void verifyProfilesConfiguration();
-    String getActiveProfile();
+    void verifyOneActiveProfile();
+    String getOneActiveProfile();
+    String getOneActiveProfileOrDash();
     boolean isDev();
     boolean isStage();
     boolean isProd();

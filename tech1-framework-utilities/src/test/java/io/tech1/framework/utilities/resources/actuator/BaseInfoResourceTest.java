@@ -78,13 +78,13 @@ class BaseInfoResourceTest {
         // Arrange
         var activeProfile = randomString();
         var builder = mock(Info.Builder.class);
-        when(this.environmentUtility.getActiveProfile()).thenReturn(activeProfile);
+        when(this.environmentUtility.getOneActiveProfileOrDash()).thenReturn(activeProfile);
 
         // Act
         this.componentUnderTest.contribute(builder);
 
         // Assert
-        verify(this.environmentUtility).getActiveProfile();
+        verify(this.environmentUtility).getOneActiveProfileOrDash();
         var builderDetailsAC = ArgumentCaptor.forClass(Map.class);
         verify(builder).withDetails(builderDetailsAC.capture());
         var details = builderDetailsAC.getValue();

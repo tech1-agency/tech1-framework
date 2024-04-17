@@ -1,50 +1,61 @@
 package io.tech1.framework.utilities.environment.base;
 
+import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseEnvironmentUtility implements EnvironmentUtility {
 
-    private static final String PROFILE_DEVELOPMENT = "dev";
-    private static final String PROFILE_STAGE = "stage";
-    private static final String PROFILE_PRODUCTION = "prod";
-
     private final Environment environment;
 
     @Override
-    public void verifyProfilesConfiguration() {
-        assertTrueOrThrow(this.environment.getActiveProfiles().length == 1, "Base Environment Utility contains ONLY one active profile");
+    public void verifyOneActiveProfile() {
+        assertTrueOrThrow(this.environment.getActiveProfiles().length == 1, "Expected one active profile");
     }
 
     @Override
-    public String getActiveProfile() {
+    public String getOneActiveProfile() {
         return this.environment.getActiveProfiles()[0];
     }
 
     @Override
+    public String getOneActiveProfileOrDash() {
+        var activeProfiles = new ArrayList<>(List.of(this.environment.getActiveProfiles()));
+        if (isEmpty(activeProfiles) || activeProfiles.size() > 1) {
+            return StringConstants.DASH;
+        } else {
+            return activeProfiles.get(0);
+        }
+    }
+
+    @Override
     public boolean isDev() {
-        return this.isProfile(PROFILE_DEVELOPMENT);
+        return this.isProfile("dev");
     }
 
     @Override
     public boolean isStage() {
-        return this.isProfile(PROFILE_STAGE);
+        return this.isProfile("stage");
     }
 
     @Override
     public boolean isProd() {
-        return this.isProfile(PROFILE_PRODUCTION);
+        return this.isProfile("prod");
     }
 
     @Override
     public boolean isProfile(String profile) {
-        return profile.equals(this.getActiveProfile());
+        return profile.equals(this.getOneActiveProfile());
     }
 }

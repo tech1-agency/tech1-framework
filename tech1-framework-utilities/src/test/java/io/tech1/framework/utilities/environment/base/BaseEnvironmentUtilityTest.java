@@ -82,12 +82,13 @@ class BaseEnvironmentUtilityTest {
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { "dev", "prod" });
 
         // Act
-        var throwable = catchThrowable(this.componentUnderTest::verifyProfilesConfiguration);
+        var throwable = catchThrowable(this.componentUnderTest::verifyOneActiveProfile);
 
         // Assert
         verify(this.environment).getActiveProfiles();
-        assertThat(throwable.getClass()).isEqualTo(IllegalArgumentException.class);
-        assertThat(throwable.getMessage()).isEqualTo("Base Environment Utility contains ONLY one active profile");
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Expected one active profile");
     }
 
     @Test
@@ -96,7 +97,7 @@ class BaseEnvironmentUtilityTest {
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { "dev" });
 
         // Act
-        this.componentUnderTest.verifyProfilesConfiguration();
+        this.componentUnderTest.verifyOneActiveProfile();
 
         // Assert
         verify(this.environment).getActiveProfiles();
@@ -109,7 +110,7 @@ class BaseEnvironmentUtilityTest {
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { expectedProfile });
 
         // Act
-        String actualActiveProfile = this.componentUnderTest.getActiveProfile();
+        String actualActiveProfile = this.componentUnderTest.getOneActiveProfile();
 
         // Assert
         verify(this.environment).getActiveProfiles();
@@ -123,7 +124,7 @@ class BaseEnvironmentUtilityTest {
         when(this.environment.getActiveProfiles()).thenReturn(new String[] { expectedProfile, randomString() });
 
         // Act
-        var actualActiveProfile = this.componentUnderTest.getActiveProfile();
+        var actualActiveProfile = this.componentUnderTest.getOneActiveProfile();
 
         // Assert
         verify(this.environment).getActiveProfiles();

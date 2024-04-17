@@ -5,7 +5,6 @@ import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -25,8 +24,6 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     // Resources
     private final ResourceLoader resourceLoader;
-    // Utilities
-    private final EnvironmentUtility environmentUtility;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -34,8 +31,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     public String getSubject(String eventName) {
         var prefix = this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
         var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
-        var environment = this.environmentUtility.getActiveProfile();
-        var server = "[" + serverConfigs.getName() + "@" + environment + "]";
+        var server = "\"" + serverConfigs.getName() + "\"";
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
         return prefix + " " + eventName + " on " + server + " — " + time;
     }

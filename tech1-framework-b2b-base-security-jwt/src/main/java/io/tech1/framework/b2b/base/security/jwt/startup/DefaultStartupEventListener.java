@@ -4,7 +4,6 @@ import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstruct
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.enums.Toggle;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
 
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
-    // Utilities
-    protected final EnvironmentUtility environmentUtility;
     // Properties
     protected final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -31,8 +28,6 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
     public void onStartup() {
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(STARTUP_MESSAGE, Status.STARTED);
-
-        this.environmentUtility.verifyProfilesConfiguration();
 
         var defaultUsers = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
         LOGGER.info("{} Essence defaultUsers — {}", FRAMEWORK_B2B_SECURITY_JWT_PREFIX, Toggle.of(defaultUsers.isEnabled()));

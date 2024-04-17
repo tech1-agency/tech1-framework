@@ -8,7 +8,6 @@ import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.EssenceConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,22 +59,15 @@ class DefaultStartupEventListenerTest {
         }
 
         @Bean
-        EnvironmentUtility environmentUtility() {
-            return mock(EnvironmentUtility.class);
-        }
-
-        @Bean
         BaseStartupEventListener baseStartupEventListener() {
             return new DefaultStartupEventListener(
                     this.essenceConstructor(),
-                    this.environmentUtility(),
                     this.applicationFrameworkProperties()
             );
         }
     }
 
     private final AbstractEssenceConstructor essenceConstructor;
-    private final EnvironmentUtility environmentUtility;
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final DefaultStartupEventListener componentUnderTest;
@@ -84,7 +76,6 @@ class DefaultStartupEventListenerTest {
     void beforeEach() {
         reset(
                 this.essenceConstructor,
-                this.environmentUtility,
                 this.applicationFrameworkProperties
         );
     }
@@ -93,7 +84,6 @@ class DefaultStartupEventListenerTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.essenceConstructor,
-                this.environmentUtility,
                 this.applicationFrameworkProperties
         );
     }
@@ -132,7 +122,6 @@ class DefaultStartupEventListenerTest {
         this.componentUnderTest.onStartup();
 
         // Assert
-        verify(this.environmentUtility).verifyProfilesConfiguration();
         verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtConfigs();
         if (isDefaultUsersEnabled) {
             verify(this.essenceConstructor).addDefaultUsers();
@@ -142,7 +131,6 @@ class DefaultStartupEventListenerTest {
         }
         reset(
                 this.essenceConstructor,
-                this.environmentUtility,
                 this.applicationFrameworkProperties
         );
     }

@@ -7,10 +7,7 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.utilities.time.LocalDateTimeUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
-import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +30,6 @@ import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -50,53 +46,26 @@ class UserEmailUtilsImplTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        EnvironmentUtility environmentUtility() {
-            return mock(EnvironmentUtility.class);
-        }
-
-        @Bean
         UserEmailUtils userEmailUtility() {
             return new UserEmailUtilsImpl(
                     this.resourceLoader,
-                    this.environmentUtility(),
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    // Utilities
-    private final EnvironmentUtility environmentUtility;
-
     private final UserEmailUtils componentUnderTest;
-
-    @BeforeEach
-    void beforeEach() {
-        reset(
-                this.environmentUtility
-        );
-    }
-
-    @AfterEach
-    void afterEach() {
-        verifyNoMoreInteractions(
-                this.environmentUtility
-        );
-    }
 
     @RepeatedTest(FIVE_TIMES)
     void getSubjectTest() {
-        // Arrange
-        when(this.environmentUtility.getActiveProfile()).thenReturn("stage");
-
         // Act
         var subject = this.componentUnderTest.getSubject("Authentication Login");
 
         // Assert
-        verify(this.environmentUtility).getActiveProfile();
         assertThat(subject)
-                .startsWith("[Tech1] Authentication Login on [tech1-server@stage] — ")
+                .startsWith("[Tech1] Authentication Login on \"tech1-server\" — ")
                 .endsWith(" (UTC)");
-        subject = subject.replace("[Tech1] Authentication Login on [tech1-server@stage] — ", "");
+        subject = subject.replace("[Tech1] Authentication Login on \"tech1-server\" — ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);

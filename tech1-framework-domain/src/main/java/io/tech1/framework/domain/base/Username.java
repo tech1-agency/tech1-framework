@@ -13,7 +13,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.domain.constants.StringConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;
@@ -39,6 +39,14 @@ public record Username(@NotNull String value) {
 
     public static Username unknown() {
         return of(UNKNOWN);
+    }
+
+    public static Username dash() {
+        return of(DASH);
+    }
+
+    public static Username hyphen() {
+        return of(HYPHEN);
     }
 
     public static Username testsHardcoded() {

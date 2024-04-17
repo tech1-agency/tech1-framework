@@ -13,6 +13,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static io.tech1.framework.domain.constants.StringConstants.DASH;
+import static io.tech1.framework.domain.constants.StringConstants.HYPHEN;
 import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.isNull;
@@ -27,6 +29,14 @@ public record Password(@NotNull String value) {
 
     public static Password random() {
         return of(randomString());
+    }
+
+    public static Password dash() {
+        return of(DASH);
+    }
+
+    public static Password hyphen() {
+        return of(HYPHEN);
     }
 
     public static Password testsHardcoded() {

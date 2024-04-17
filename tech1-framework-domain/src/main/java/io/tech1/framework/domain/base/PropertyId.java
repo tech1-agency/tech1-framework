@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.constants.StringConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record PropertyId(@NotNull String value) {
@@ -19,6 +19,14 @@ public record PropertyId(@NotNull String value) {
 
     public static PropertyId undefined() {
         return of(UNDEFINED);
+    }
+
+    public static PropertyId dash() {
+        return of(DASH);
+    }
+
+    public static PropertyId hyphen() {
+        return of(HYPHEN);
     }
 
     public static PropertyId testsHardcoded() {

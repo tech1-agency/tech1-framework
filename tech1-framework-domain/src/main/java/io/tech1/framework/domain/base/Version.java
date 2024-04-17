@@ -13,8 +13,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.domain.constants.StringConstants.*;
+import static io.tech1.framework.domain.constants.StringConstants.HYPHEN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;
@@ -36,6 +36,14 @@ public record Version(@NotNull String value) {
 
     public static Version unknown() {
         return of(UNKNOWN);
+    }
+
+    public static Version dash() {
+        return of(DASH);
+    }
+
+    public static Version hyphen() {
+        return of(HYPHEN);
     }
 
     public static Version testsHardcoded() {

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.domain.constants.StringConstants.*;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record ObjectId(@NotNull String value) {
@@ -29,6 +29,14 @@ public record ObjectId(@NotNull String value) {
 
     public static ObjectId undefined() {
         return of(UNDEFINED);
+    }
+
+    public static ObjectId dash() {
+        return of(DASH);
+    }
+
+    public static ObjectId hyphen() {
+        return of(HYPHEN);
     }
 
     public static ObjectId testsHardcoded() {

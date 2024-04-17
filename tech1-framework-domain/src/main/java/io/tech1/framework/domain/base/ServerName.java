@@ -13,6 +13,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static io.tech1.framework.domain.constants.StringConstants.DASH;
+import static io.tech1.framework.domain.constants.StringConstants.HYPHEN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;
@@ -26,6 +28,14 @@ public record ServerName(@NotNull String value) {
 
     public static ServerName random() {
         return of(randomString());
+    }
+
+    public static ServerName dash() {
+        return of(DASH);
+    }
+
+    public static ServerName hyphen() {
+        return of(HYPHEN);
     }
 
     public static ServerName testsHardcoded() {

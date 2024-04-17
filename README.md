@@ -16,12 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.6]
-— Addition: StringConstants: DASH, HYPHEN
-— Addition: "domain.base" package classes: add dash(), hyphen() methods
-— Addition: DatetimeConstants.DTF14: "dd-MM-yyyy HH:mm:ss.SSS"
-— Modification: ZoneIdsConstants.UKRAINE: "Europe/Kiev" to "Europe/Kyiv"
-— Addition: HtmlOptionTest to mains package
-— Modification: EnvironmentUtility: verifyOneActiveProfile, getOneActiveProfileOrDash
-— Addition: SpringBootActuatorInfo: dash(), offline()
-— Modification: SpringBootActuatorInfo: "[?]" to "—"
+### Release Notes [Development v2.7.7]
+— TBD

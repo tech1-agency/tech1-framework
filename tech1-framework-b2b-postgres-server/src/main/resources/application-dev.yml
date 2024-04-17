@@ -65,18 +65,18 @@ tech1:
       cleanSessionsByExpiredRefreshTokensCron:
         enabled: true
         expression: "*/30 * * * * *"
-        zoneId: "Europe/Kiev"
+        zoneId: "Europe/Kyiv"
       enableSessionsMetadataRenewCron:
         enabled: true
         expression: "*/30 * * * * *"
-        zoneId: "Europe/Kiev"
+        zoneId: "Europe/Kyiv"
     essenceConfigs:
       defaultUsers:
         enabled: true
         users:
           - username: admin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
-            zoneId: "Europe/Kiev"
+            zoneId: "Europe/Kyiv"
             passwordChangeRequired: false
             authorities: [ "admin", "invitationCode:write" ]
       invitationCodes:

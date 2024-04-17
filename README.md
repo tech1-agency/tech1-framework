@@ -19,3 +19,5 @@ Last deployed version: **1.16**
 ### Release Notes [Development v2.7.6]
 — Addition: StringConstants: DASH, HYPHEN
 — Addition: "domain.base" package classes: add dash(), hyphen() methods
+— Addition: DatetimeConstants.DTF14: "dd-MM-yyyy HH:mm:ss.SSS"
+— Modification: ZoneIdsConstants.UKRAINE: "Europe/Kiev" to "Europe/Kyiv"

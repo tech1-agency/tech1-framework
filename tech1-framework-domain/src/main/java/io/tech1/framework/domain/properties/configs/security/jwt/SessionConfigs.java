@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.properties.configs.security.jwt;
 
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.base.Cron;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
@@ -20,8 +21,8 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
 
     public static SessionConfigs testsHardcoded() {
         return new SessionConfigs(
-                Cron.enabled("*/30 * * * * *", "Europe/Kiev"),
-                Cron.enabled("*/15 * * * * *", "Europe/Kiev")
+                Cron.enabled("*/30 * * * * *", ZoneIdsConstants.UKRAINE.getId()),
+                Cron.enabled("*/15 * * * * *", ZoneIdsConstants.UKRAINE.getId())
         );
     }
 

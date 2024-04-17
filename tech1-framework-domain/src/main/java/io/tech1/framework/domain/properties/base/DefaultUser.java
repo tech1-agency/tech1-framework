@@ -3,6 +3,7 @@ package io.tech1.framework.domain.properties.base;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.utilities.random.RandomUtility;
@@ -40,7 +41,7 @@ public class DefaultUser extends AbstractPropertyConfigs {
         return new DefaultUser(
                 Username.testsHardcoded(),
                 Password.testsHardcoded(),
-                ZoneId.of("Europe/Kiev"),
+                ZoneIdsConstants.UKRAINE,
                 Email.testsHardcoded().value(),
                 false,
                 Set.of("user", "admin")

@@ -2,7 +2,7 @@
   "username" : "tech1",
   "email" : "tech1@tech1.io",
   "name" : "Tech1",
-  "zoneId" : "Europe/Kiev",
+  "zoneId" : "Europe/Kyiv",
   "passwordChangeRequired" : false,
   "authorities" : [ "admin", "user" ],
   "attributes" : {

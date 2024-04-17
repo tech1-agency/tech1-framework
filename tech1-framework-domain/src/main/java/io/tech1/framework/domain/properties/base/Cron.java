@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.properties.base;
 
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
@@ -23,7 +24,7 @@ public class Cron extends AbstractTogglePropertyConfigs {
     private String zoneId;
 
     public static Cron testsHardcoded() {
-        return new Cron(true, "*/30 * * * * *", "Europe/Kiev");
+        return new Cron(true, "*/30 * * * * *", ZoneIdsConstants.UKRAINE.getId());
     }
 
     public static Cron enabled(String expression, String zoneId) {

@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"admin777\",\n    \"zoneId\": \"Europe/Kiev\",\n    \"invitationCode\": \"JM2JvAtgFuMs3ZV4figB5zfZq2DZny2MsHMYKX66\",\n    \"password\": \"Admin23!\",\n    \"confirmPassword\": \"Admin23!\"\n} ",
+							"raw": "{\n    \"username\": \"admin777\",\n    \"zoneId\": \"Europe/Kyiv\",\n    \"invitationCode\": \"JM2JvAtgFuMs3ZV4figB5zfZq2DZny2MsHMYKX66\",\n    \"password\": \"Admin23!\",\n    \"confirmPassword\": \"Admin23!\"\n} ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -411,7 +411,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"zoneId\": \"Europe/Kiev\",\n    \"email\": \"iuywiueywqeuqyeqwieyqueqi@tech1.io\",\n    \"name\": \"Admin11 Surname\"\n}",
+							"raw": "{\n    \"zoneId\": \"Europe/Kyiv\",\n    \"email\": \"iuywiueywqeuqyeqwieyqueqi@tech1.io\",\n    \"name\": \"Admin11 Surname\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -439,7 +439,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"zoneId\": \"Europe/Kiev\",\n    \"name\": \"Admin11 Surname2\"\n}",
+							"raw": "{\n    \"zoneId\": \"Europe/Kyiv\",\n    \"name\": \"Admin11 Surname2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -1,6 +1,7 @@
 package io.tech1.framework.domain.asserts;
 
 import io.tech1.framework.domain.base.PropertyId;
+import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -128,7 +129,7 @@ class AssertsTests {
                 Arguments.of("", randomString()),
                 Arguments.of("Europe/Kiev1", randomString()),
                 Arguments.of("Europe/Kiev2", randomString()),
-                Arguments.of("Europe/Kiev", null)
+                Arguments.of(ZoneIdsConstants.UKRAINE.getId(), null)
         );
     }
 

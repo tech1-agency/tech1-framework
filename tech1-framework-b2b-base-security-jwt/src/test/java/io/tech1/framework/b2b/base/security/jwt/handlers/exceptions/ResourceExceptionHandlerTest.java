@@ -57,6 +57,12 @@ class ResourceExceptionHandlerTest {
         );
     }
 
+    private static Stream<Arguments> forbiddenResponseErrorMessageTest() {
+        return Stream.of(
+                Arguments.of(new AccessDeniedException(randomString()))
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("unauthorizedResponseErrorMessageTest")
     void unauthorizedResponseErrorMessageTest(Exception exception) {
@@ -72,12 +78,9 @@ class ResourceExceptionHandlerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
-    @Test
-    void accessDeniedExceptionTest() {
-        // Arrange
-        var message = randomString();
-        var exception = new AccessDeniedException(message);
-
+    @ParameterizedTest
+    @MethodSource("forbiddenResponseErrorMessageTest")
+    void forbiddenExceptionsTest(Exception exception) {
         // Act
         var response = this.componentUnderTest.forbiddenExceptions(exception);
 

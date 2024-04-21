@@ -48,22 +48,22 @@ class JwtAccessDeniedExceptionHandlerTest {
     @Test
     void handleTest() throws IOException {
         // Arrange
-        var httpServletResponse = mock(HttpServletResponse.class);
+        var response = mock(HttpServletResponse.class);
         var printWriter = mock(PrintWriter.class);
-        when(httpServletResponse.getWriter()).thenReturn(printWriter);
-        var httpServletRequest = mock(HttpServletRequest.class);
+        when(response.getWriter()).thenReturn(printWriter);
+        var request = mock(HttpServletRequest.class);
         var exception = mock(AccessDeniedException.class);
         var exceptionMessage = randomString();
         when(exception.getMessage()).thenReturn(exceptionMessage);
         var jsonAC = ArgumentCaptor.forClass(String.class);
 
         // Act
-        this.componentUnderTest.handle(httpServletRequest, httpServletResponse, exception);
+        this.componentUnderTest.handle(request, response, exception);
 
         // Assert
-        verify(httpServletResponse).setContentType("application/json;charset=UTF-8");
-        verify(httpServletResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
-        verify(httpServletResponse).getWriter();
+        verify(response).setContentType("application/json;charset=UTF-8");
+        verify(response).setStatus(HttpServletResponse.SC_FORBIDDEN);
+        verify(response).getWriter();
         verify(exception, times(2)).getMessage();
         verify(printWriter).write(jsonAC.capture());
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {};
@@ -77,8 +77,8 @@ class JwtAccessDeniedExceptionHandlerTest {
                 .containsEntry("shortMessage", exceptionMessage)
                 .containsEntry("fullMessage", exceptionMessage);
         verifyNoMoreInteractions(
-                httpServletRequest,
-                httpServletResponse,
+                request,
+                response,
                 exception
         );
     }

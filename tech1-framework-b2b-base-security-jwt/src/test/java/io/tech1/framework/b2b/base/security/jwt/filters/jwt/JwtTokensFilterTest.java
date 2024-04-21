@@ -4,6 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.Session;
+import io.tech1.framework.b2b.base.security.jwt.filters.jwt_extension.JwtTokensFilterExtension;
+import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
@@ -17,10 +19,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -31,6 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -69,12 +75,18 @@ class JwtTokensFilterTest {
         }
 
         @Bean
+        JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler() {
+            return mock(JwtAccessDeniedExceptionHandler.class);
+        }
+
+        @Bean
         JwtTokensFilter jwtAccessTokenFilter() {
             return new JwtTokensFilter(
                     this.sessionRegistry(),
                     this.tokenService(),
                     this.cookieProvider(),
-                    this.jwtTokenFilterExtension()
+                    this.jwtTokenFilterExtension(),
+                    this.jwtAccessDeniedExceptionHandler()
             );
         }
     }
@@ -85,8 +97,10 @@ class JwtTokensFilterTest {
     private final TokensService tokensService;
     // Tokens
     private final TokensProvider tokensProvider;
-    // Filters
+    // Extension
     private final JwtTokensFilterExtension jwtTokensFilterExtension;
+    // Handlers
+    private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
 
     private final JwtTokensFilter componentUnderTest;
 
@@ -96,7 +110,8 @@ class JwtTokensFilterTest {
                 this.sessionRegistry,
                 this.tokensService,
                 this.tokensProvider,
-                this.jwtTokensFilterExtension
+                this.jwtTokensFilterExtension,
+                this.jwtAccessDeniedExceptionHandler
         );
     }
 
@@ -106,7 +121,8 @@ class JwtTokensFilterTest {
                 this.sessionRegistry,
                 this.tokensService,
                 this.tokensProvider,
-                this.jwtTokensFilterExtension
+                this.jwtTokensFilterExtension,
+                this.jwtAccessDeniedExceptionHandler
         );
     }
 
@@ -234,7 +250,77 @@ class JwtTokensFilterTest {
         verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
         // no verifications on static SecurityContextHolder
         verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
-        verify(this.jwtTokensFilterExtension).doFilter(request, response, filterChain);
+        verify(this.jwtTokensFilterExtension).doFilter(request);
+        verify(filterChain).doFilter(request, response);
+        verifyNoMoreInteractions(
+                request,
+                response,
+                filterChain
+        );
+    }
+
+    @Test
+    void tokenExtensionUnauthorizedExceptionTest() throws Exception {
+        // Arrange
+        var request = mock(HttpServletRequest.class);
+        var response = mock(HttpServletResponse.class);
+        var filterChain = mock(FilterChain.class);
+        var user = entity(JwtUser.class);
+        var requestAccessToken = RequestAccessToken.random();
+        var requestRefreshToken = RequestRefreshToken.random();
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
+        doThrow(new TokenExtensionUnauthorizedException(randomString())).when(this.jwtTokensFilterExtension).doFilter(request);
+
+        // Act
+        this.componentUnderTest.doFilterInternal(request, response, filterChain);
+
+        // Assert
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
+        // no verifications on static SecurityContextHolder
+        verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
+        verify(this.jwtTokensFilterExtension).doFilter(request);
+        verify(this.tokensProvider).clearTokens(response);
+        verify(response).sendError(HttpStatus.UNAUTHORIZED.value());
+        verifyNoMoreInteractions(
+                request,
+                response,
+                filterChain
+        );
+    }
+
+    @Test
+    void tokenExtensionAccessDeniedExceptionTest() throws Exception {
+        // Arrange
+        var request = mock(HttpServletRequest.class);
+        var response = mock(HttpServletResponse.class);
+        var filterChain = mock(FilterChain.class);
+        var user = entity(JwtUser.class);
+        var requestAccessToken = RequestAccessToken.random();
+        var requestRefreshToken = RequestRefreshToken.random();
+        when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
+        when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenReturn(user);
+        var exception = new TokenExtensionAccessDeniedException(randomString());
+        doThrow(exception).when(this.jwtTokensFilterExtension).doFilter(request);
+
+        // Act
+        this.componentUnderTest.doFilterInternal(request, response, filterChain);
+
+        // Assert
+        verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
+        verify(this.tokensProvider).readRequestRefreshToken(any(HttpServletRequest.class));
+        verify(this.tokensService).getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken);
+        // no verifications on static SecurityContextHolder
+        verify(this.sessionRegistry).register(new Session(user.username(), requestAccessToken.getJwtAccessToken(), requestRefreshToken.getJwtRefreshToken()));
+        verify(this.jwtTokensFilterExtension).doFilter(request);
+        verify(this.tokensProvider).clearTokens(response);
+        var exceptionAC = ArgumentCaptor.forClass(AccessDeniedException.class);
+        verify(this.jwtAccessDeniedExceptionHandler).handle(eq(request), eq(response), exceptionAC.capture());
+        assertThat(exceptionAC.getValue().getMessage()).isEqualTo(exception.getMessage());
         verifyNoMoreInteractions(
                 request,
                 response,

@@ -8,23 +8,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.*;
+import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
+import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.isEmail;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpRequestFieldsUtilityTest {
-
-    private static Stream<Arguments> containsCamelCaseLettersAndNumbersWithLengthTest() {
-        return Stream.of(
-                Arguments.of("only_lowercase", 5, false),
-                Arguments.of("only_lowercase", 100, false),
-                Arguments.of("ONLY_UPPERCASE", 5, false),
-                Arguments.of("ONLY_UPPERCASE", 100, false),
-                Arguments.of("BoTh_CaSeS", 5, false),
-                Arguments.of("BoTh_CaSeS", 100, false),
-                Arguments.of("BoTh_CaSeS123", 100, false),
-                Arguments.of("BoTh_CaSeS123", 5, true)
-        );
-    }
 
     private static Stream<Arguments> containsCamelCaseLettersAndNumbersArgs() {
         return Stream.of(
@@ -54,16 +42,6 @@ class HttpRequestFieldsUtilityTest {
     void containsCamelCaseLettersAndNumbersTest(String password, boolean expected) {
         // Act
         var actual = containsCamelCaseLettersAndNumbers(password);
-
-        // Assert
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("containsCamelCaseLettersAndNumbersWithLengthTest")
-    void containsCamelCaseLettersAndNumbersWithLengthTest(String password, int length, boolean expected) {
-        // Act
-        var actual = containsCamelCaseLettersAndNumbersWithLength(password, length);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

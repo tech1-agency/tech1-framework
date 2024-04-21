@@ -22,14 +22,9 @@ public class JwtAccessDeniedExceptionHandler implements AccessDeniedHandler {
     private final ObjectMapper objectMapper;
 
     @Override
-    public void handle(
-            HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse,
-            AccessDeniedException exception
-    ) throws IOException {
-        httpServletResponse.setContentType("application/json;charset=UTF-8");
-        httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        var response = new ExceptionEntity(exception);
-        httpServletResponse.getWriter().write(this.objectMapper.writeValueAsString(response));
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getWriter().write(this.objectMapper.writeValueAsString(new ExceptionEntity(exception)));
     }
 }

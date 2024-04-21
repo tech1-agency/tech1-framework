@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -37,7 +38,6 @@ import static org.springframework.http.HttpMethod.*;
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.base.security.jwt.crons",
         "io.tech1.framework.b2b.base.security.jwt.events",
-        "io.tech1.framework.b2b.base.security.jwt.filters",
         "io.tech1.framework.b2b.base.security.jwt.handlers.exceptions",
         "io.tech1.framework.b2b.base.security.jwt.resources",
         "io.tech1.framework.b2b.base.security.jwt.services",
@@ -52,6 +52,8 @@ import static org.springframework.http.HttpMethod.*;
         ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
         ApplicationBaseSecurityJwtMvc.class,
+        ApplicationBaseSecurityJwtFilters.class,
+        ApplicationBaseSecurityJwtPasswords.class,
         ApplicationIncidents.class,
         ApplicationEmails.class
 })
@@ -60,6 +62,8 @@ public class ApplicationBaseSecurityJwt {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;
+    // Passwords
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // Filters
     private final JwtTokensFilter jwtTokensFilter;
     // Handlers
@@ -75,13 +79,16 @@ public class ApplicationBaseSecurityJwt {
         this.applicationFrameworkProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
     }
 
-    @Bean
-    public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
-        var authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder
+    @Autowired
+    void configureAuthenticationManager(AuthenticationManagerBuilder builder) throws Exception {
+        builder
                 .userDetailsService(this.jwtUserDetailsService)
-                .passwordEncoder(this.bCryptPasswordEncoder());
-        return authenticationManagerBuilder.build();
+                .passwordEncoder(this.bCryptPasswordEncoder);
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
@@ -107,7 +114,7 @@ public class ApplicationBaseSecurityJwt {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         var urlRegistry = http.authorizeRequests();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/login").anonymous();
+        urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/login").permitAll();
         urlRegistry.antMatchers(POST, basePathPrefix +"/authentication/logout").permitAll();
         urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll();
         urlRegistry.antMatchers(GET, basePathPrefix + "/session/current").authenticated();
@@ -133,10 +140,5 @@ public class ApplicationBaseSecurityJwt {
 
         urlRegistry.anyRequest().authenticated();
         return http.build();
-    }
-
-    @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(11);
     }
 }

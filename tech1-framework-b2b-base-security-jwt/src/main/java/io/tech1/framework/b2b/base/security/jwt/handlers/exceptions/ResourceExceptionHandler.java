@@ -68,7 +68,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler({
             AccessDeniedException.class
     })
-    public ResponseEntity<ExceptionEntity> forbiddenExceptions(AccessDeniedException ex) {
+    public ResponseEntity<ExceptionEntity> forbiddenExceptions(Exception ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.FORBIDDEN);
     }
 

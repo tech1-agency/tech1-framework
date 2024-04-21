@@ -131,7 +131,7 @@ public class ApplicationBaseSecurityJwt {
             urlRegistry.antMatchers( basePathPrefix + "/invitationCode/**").denyAll();
         }
         urlRegistry.antMatchers(basePathPrefix + "/hardware/**").authenticated();
-        urlRegistry.antMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPER_ADMIN);
+        urlRegistry.antMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN);
         urlRegistry.antMatchers(basePathPrefix + "/**").authenticated();
 
         urlRegistry.antMatchers("/actuator/**").permitAll();

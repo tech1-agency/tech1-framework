@@ -29,7 +29,7 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
         return new AuthoritiesConfigs(
                 "io.tech1",
                 Set.of(
-                        new Authority(SUPER_ADMIN),
+                        new Authority(SUPERADMIN),
                         new Authority("admin"),
                         new Authority("user"),
                         new Authority(INVITATION_CODE_READ),
@@ -52,7 +52,7 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
     public Set<String> getAvailableAuthorities() {
         return this.authorities.stream()
                 .map(Authority::getValue)
-                .filter(authority -> !SUPER_ADMIN.equals(authority))
+                .filter(authority -> !SUPERADMIN.equals(authority))
                 .collect(Collectors.toSet());
     }
 }

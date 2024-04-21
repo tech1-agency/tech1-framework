@@ -7,7 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.domain.base.AbstractAuthority.SUPERADMIN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 public record InvitationCode(
@@ -23,7 +23,7 @@ public record InvitationCode(
         return new InvitationCode(
                 InvitationCodeId.random(),
                 Username.random(),
-                getSimpleGrantedAuthorities(SUPER_ADMIN),
+                getSimpleGrantedAuthorities(SUPERADMIN),
                 randomString(),
                 Username.random()
         );
@@ -33,7 +33,7 @@ public record InvitationCode(
         return new InvitationCode(
                 InvitationCodeId.random(),
                 Username.random(),
-                getSimpleGrantedAuthorities(SUPER_ADMIN),
+                getSimpleGrantedAuthorities(SUPERADMIN),
                 randomString(),
                 null
         );

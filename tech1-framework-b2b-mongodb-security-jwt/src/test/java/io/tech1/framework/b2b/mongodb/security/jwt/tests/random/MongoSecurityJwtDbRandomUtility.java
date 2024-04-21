@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPER_ADMIN;
+import static io.tech1.framework.domain.base.AbstractAuthority.SUPERADMIN;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
 import static org.springframework.util.StringUtils.capitalize;
 
@@ -44,7 +44,7 @@ public class MongoSecurityJwtDbRandomUtility {
     // Users
     // =================================================================================================================
     public static MongoDbUser superadmin(String username) {
-        return randomUserBy(username, SUPER_ADMIN);
+        return randomUserBy(username, SUPERADMIN);
     }
 
     public static MongoDbUser admin(String username) {

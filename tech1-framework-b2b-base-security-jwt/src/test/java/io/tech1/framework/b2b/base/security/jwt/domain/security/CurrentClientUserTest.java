@@ -48,7 +48,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> hasAuthorityTest() {
         return Stream.of(
                 Arguments.of("user2", true),
-                Arguments.of(AbstractAuthority.SUPER_ADMIN, true),
+                Arguments.of(AbstractAuthority.SUPERADMIN, true),
                 Arguments.of(AbstractAuthority.INVITATION_CODE_READ, false),
                 Arguments.of(AbstractAuthority.INVITATION_CODE_WRITE, false)
         );

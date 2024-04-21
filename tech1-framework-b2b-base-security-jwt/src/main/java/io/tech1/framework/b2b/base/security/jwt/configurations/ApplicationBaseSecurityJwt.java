@@ -20,11 +20,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.PostConstruct;
@@ -56,7 +56,7 @@ import static org.springframework.http.HttpMethod.*;
         ApplicationEmails.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
+public class ApplicationBaseSecurityJwt {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;
@@ -75,38 +75,33 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
         this.applicationFrameworkProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
+        var authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
                 .userDetailsService(this.jwtUserDetailsService)
                 .passwordEncoder(this.bCryptPasswordEncoder());
+        return authenticationManagerBuilder.build();
     }
 
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return this.abstractApplicationSecurityJwtConfigurer::configure;
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        this.abstractApplicationSecurityJwtConfigurer.configure(web);
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getFrameworkBasePathPrefix();
         http.cors()
                 .and()
-                    .csrf()
-                        .disable()
+                    .csrf().disable()
                     .addFilterBefore(
                             this.jwtTokensFilter,
                             UsernamePasswordAuthenticationFilter.class
                     )
                     .exceptionHandling()
-                        .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
-                        .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
+                    .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
+                    .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
                 .and()
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -137,6 +132,7 @@ public class ApplicationBaseSecurityJwt extends WebSecurityConfigurerAdapter {
         this.abstractApplicationSecurityJwtConfigurer.configure(http);
 
         urlRegistry.anyRequest().authenticated();
+        return http.build();
     }
 
     @Bean

@@ -17,4 +17,5 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.7.7]
-— TBD
+— Migration: WebSecurityConfigurerAdapter → SecurityFilterChain + WebSecurityCustomizer
+— Migration: Spring 2.7.11 → 2.7.18

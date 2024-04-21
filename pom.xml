@@ -79,7 +79,7 @@
         <version.dependency.liquibase>4.21.1</version.dependency.liquibase>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
         <version.dependency.postresql.hibernate.types>2.21.1</version.dependency.postresql.hibernate.types>
-        <version.dependency.springframework.boot>2.7.11</version.dependency.springframework.boot>
+        <version.dependency.springframework.boot>2.7.18</version.dependency.springframework.boot>
         <version.dependency.tomcat.embed>9.0.74</version.dependency.tomcat.embed>
         <!-- dependencies, scope == test -->
         <version.dependency.assertj>3.24.2</version.dependency.assertj>

@@ -18,7 +18,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
-import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
@@ -58,7 +57,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunne
         var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
 
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
-        var notExistentInvitationCode = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);
+        var notExistentInvitationCode = randomStringLetterOrNumbersOnly(InvitationCode.DEFAULT_INVITATION_CODE_LENGTH);
 
         var savedInvitationCode = saved.get(0);
         var existentInvitationCodeId = savedInvitationCode.invitationCodeId();

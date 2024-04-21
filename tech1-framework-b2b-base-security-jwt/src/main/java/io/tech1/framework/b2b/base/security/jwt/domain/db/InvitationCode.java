@@ -17,6 +17,7 @@ public record InvitationCode(
         String value,
         Username invited
 ) {
+    public static final int DEFAULT_INVITATION_CODE_LENGTH = 40;
 
     public static InvitationCode random() {
         return new InvitationCode(

@@ -18,7 +18,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
-import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
@@ -59,7 +58,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRu
         var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
 
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
-        var notExistentInvitationCode = randomStringLetterOrNumbersOnly(DEFAULT_INVITATION_CODE_LENGTH);
+        var notExistentInvitationCode = randomStringLetterOrNumbersOnly(InvitationCode.DEFAULT_INVITATION_CODE_LENGTH);
 
         var savedInvitationCode = saved.get(0);
         var existentInvitationCodeId = savedInvitationCode.invitationCodeId();

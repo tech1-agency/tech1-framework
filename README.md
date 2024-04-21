@@ -16,10 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.7.7]
-— Migration: WebSecurityConfigurerAdapter → SecurityFilterChain + WebSecurityCustomizer
-— Migration: Spring 2.7.11 → 2.7.18
-— Addition: JwtUser.testsHardcoded(attributes)
-— Modification: Add extension 401/403 exception handling
-— Migration: configureAuthenticationManager + authenticationManager
-— Migration: testcontainers 1.18.0 → 1.19.7
+### Release Notes [Development v2.7.8]
+— TBD

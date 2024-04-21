@@ -19,3 +19,4 @@ Last deployed version: **1.16**
 ### Release Notes [Development v2.7.7]
 — Migration: WebSecurityConfigurerAdapter → SecurityFilterChain + WebSecurityCustomizer
 — Migration: Spring 2.7.11 → 2.7.18
+— Addition: JwtUser.testsHardcoded(attributes)

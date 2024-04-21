@@ -119,6 +119,12 @@ public record JwtUser(
         );
     }
 
+    public static JwtUser testsHardcoded(Map<String, Object> attributes) {
+        var user = JwtUser.testsHardcoded();
+        user.attributes().putAll(attributes);
+        return user;
+    }
+
     @JsonIgnore
     public JwtTokenCreationParams getJwtTokenCreationParams() {
         return new JwtTokenCreationParams(

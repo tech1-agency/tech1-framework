@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
@@ -87,51 +85,51 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
     // ================================================================================================================
     // Queries
     // ================================================================================================================
-    @Query(value = "SELECT * FROM " + USERS + " u WHERE u.authorities LIKE %:authority%", nativeQuery = true)
-    List<PostgresDbUser> findByAuthority(@Param("authority") SimpleGrantedAuthority authority);
+    @Query(value = "SELECT * FROM " + PostgresDbUser.PG_TABLE_NAME + " u WHERE u.authorities LIKE %:authority%", nativeQuery = true)
+    List<PostgresDbUser> findByAuthority(@Param("authority") String authority);
 
-    @Query(value = "SELECT u.username FROM " + USERS + " u WHERE u.authorities LIKE %:authority%", nativeQuery = true)
-    List<PostgresDbUserProjection1> findByAuthorityProjectionUsernames(@Param("authority") SimpleGrantedAuthority authority);
+    @Query(value = "SELECT u.username FROM " + PostgresDbUser.PG_TABLE_NAME + " u WHERE u.authorities LIKE %:authority%", nativeQuery = true)
+    List<PostgresDbUserProjection1> findByAuthorityProjectionUsernames(@Param("authority") String authority);
 
-    @Query(value = "SELECT * FROM " + USERS + " u WHERE u.authorities NOT LIKE %:authority%", nativeQuery = true)
-    List<PostgresDbUser> findByAuthorityNotEqual(@Param("authority") SimpleGrantedAuthority authority);
+    @Query(value = "SELECT * FROM " + PostgresDbUser.PG_TABLE_NAME + " u WHERE u.authorities NOT LIKE %:authority%", nativeQuery = true)
+    List<PostgresDbUser> findByAuthorityNotEqual(@Param("authority") String authority);
 
-    @Query(value = "SELECT * FROM " + USERS + " u WHERE u.authorities NOT LIKE %:authority%", nativeQuery = true)
-    List<PostgresDbUserProjection1> findByAuthorityNotEqualProjectionUsernames(@Param("authority") SimpleGrantedAuthority authority);
-
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM " + USERS + " u WHERE u.authorities LIKE %:authority%", nativeQuery = true)
-    void deleteByAuthority(@Param("authority") SimpleGrantedAuthority authority);
+    @Query(value = "SELECT * FROM " + PostgresDbUser.PG_TABLE_NAME + " u WHERE u.authorities NOT LIKE %:authority%", nativeQuery = true)
+    List<PostgresDbUserProjection1> findByAuthorityNotEqualProjectionUsernames(@Param("authority") String authority);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM " + USERS + " u WHERE u.authorities NOT LIKE %:authority%", nativeQuery = true)
-    void deleteByAuthorityNotEqual(@Param("authority") SimpleGrantedAuthority authority);
+    @Query(value = "DELETE FROM " + PostgresDbUser.PG_TABLE_NAME + " u WHERE u.authorities LIKE %:authority%", nativeQuery = true)
+    void deleteByAuthority(@Param("authority") String authority);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + PostgresDbUser.PG_TABLE_NAME + " u WHERE u.authorities NOT LIKE %:authority%", nativeQuery = true)
+    void deleteByAuthorityNotEqual(@Param("authority") String authority);
 
     default List<PostgresDbUser> findByAuthoritySuperadmin() {
-        return this.findByAuthority(SUPERADMIN);
+        return this.findByAuthority(SUPERADMIN.getAuthority());
     }
 
     default Set<Username> findSuperadminsUsernames() {
-        return this.findByAuthorityProjectionUsernames(SUPERADMIN).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toSet());
+        return this.findByAuthorityProjectionUsernames(SUPERADMIN.getAuthority()).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toSet());
     }
 
     default List<PostgresDbUser> findByAuthorityNotSuperadmin() {
-        return this.findByAuthorityNotEqual(SUPERADMIN);
+        return this.findByAuthorityNotEqual(SUPERADMIN.getAuthority());
     }
 
     default Set<Username> findNotSuperadminsUsernames() {
-        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toSet());
+        return this.findByAuthorityNotEqualProjectionUsernames(SUPERADMIN.getAuthority()).stream().map(PostgresDbUserProjection1::getAsUsername).collect(Collectors.toSet());
     }
 
     @Transactional
     default void deleteByAuthoritySuperadmin() {
-        this.deleteByAuthority(SUPERADMIN);
+        this.deleteByAuthority(SUPERADMIN.getAuthority());
     }
 
     @Transactional
     default void deleteByAuthorityNotSuperadmin() {
-        this.deleteByAuthorityNotEqual(SUPERADMIN);
+        this.deleteByAuthorityNotEqual(SUPERADMIN.getAuthority());
     }
 }

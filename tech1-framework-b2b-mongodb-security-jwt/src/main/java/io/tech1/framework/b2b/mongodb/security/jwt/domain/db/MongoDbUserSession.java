@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.*;
@@ -26,8 +26,10 @@ import static java.util.Objects.isNull;
 @EqualsAndHashCode
 @ToString
 // Mongodb
-@Document(collection = "tech1_users_sessions")
+@Document(collection = MongoDbUserSession.MONGO_TABLE_NAME)
 public class MongoDbUserSession {
+    public static final String MONGO_TABLE_NAME = "tech1_users_sessions";
+
     @Id
     private String id;
     private long createdAt;

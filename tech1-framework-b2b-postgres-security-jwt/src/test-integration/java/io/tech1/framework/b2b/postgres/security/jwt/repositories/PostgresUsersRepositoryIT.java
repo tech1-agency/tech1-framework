@@ -87,7 +87,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
         assertThat(this.usersRepository.findByUsernameIn(
                 Set.of(
                         Username.of("sa1"),
-                        Username.of("admin"),
+                        Username.of("admin1"),
                         Username.of("not_real1")
                 )
         )).hasSize(2);
@@ -105,7 +105,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
 
         assertThat(toUsernamesAsStrings1(this.usersRepository.findByAuthorityNotSuperadmin()))
                 .hasSize(3)
-                .containsExactlyInAnyOrder("admin", "user1", "user2");
+                .containsExactlyInAnyOrder("admin1", "user1", "user2");
 
         assertThat(toUsernamesAsStrings0(this.usersRepository.findSuperadminsUsernames()))
                 .hasSize(3)
@@ -113,7 +113,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationRepositoriesRunner {
 
         assertThat(toUsernamesAsStrings0(this.usersRepository.findNotSuperadminsUsernames()))
                 .hasSize(3)
-                .containsExactlyInAnyOrder("admin", "user1", "user2");
+                .containsExactlyInAnyOrder("admin1", "user1", "user2");
 
         var jwtUser = this.usersRepository.loadUserByUsername(Username.of("sa1"));
         assertThat(jwtUser).isNotNull();

@@ -22,3 +22,4 @@ Last deployed version: **1.16**
 — Addition: JwtUser.testsHardcoded(attributes)
 — Modification: Add extension 401/403 exception handling
 — Migration: configureAuthenticationManager + authenticationManager
+— Migration: testcontainers 1.18.0 → 1.19.7

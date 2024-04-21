@@ -24,15 +24,15 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @EqualsAndHashCode
 @ToString
 // Mongodb
-@Document(collection = "tech1_invitation_codes")
+@Document(collection = MongoDbInvitationCode.MONGO_TABLE_NAME)
 public class MongoDbInvitationCode {
+    public static final String MONGO_TABLE_NAME = "tech1_invitation_codes";
+
     @Id
     private String id;
-
     private Username owner;
     private Set<SimpleGrantedAuthority> authorities;
     private String value;
-
     private Username invited;
 
     public MongoDbInvitationCode(Username owner, Set<SimpleGrantedAuthority> authorities) {

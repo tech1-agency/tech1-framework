@@ -26,11 +26,12 @@ import static java.util.Objects.nonNull;
 @EqualsAndHashCode
 @ToString
 // Mongodb
-@Document(collection = "tech1_users")
+@Document(collection = MongoDbUser.MONGO_TABLE_NAME)
 public class MongoDbUser {
+    public static final String MONGO_TABLE_NAME = "tech1_users";
+
     @Id
     private String id;
-
     private Username username;
     private Password password;
     private ZoneId zoneId;

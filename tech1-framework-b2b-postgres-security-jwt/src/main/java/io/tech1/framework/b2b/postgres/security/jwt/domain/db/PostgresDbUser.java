@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -29,8 +28,9 @@ import static java.util.Objects.nonNull;
 @ToString(callSuper = true)
 // JPA
 @Entity
-@Table(name = USERS)
+@Table(name = PostgresDbUser.PG_TABLE_NAME)
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
+    public static final String PG_TABLE_NAME = "tech1_users";
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)

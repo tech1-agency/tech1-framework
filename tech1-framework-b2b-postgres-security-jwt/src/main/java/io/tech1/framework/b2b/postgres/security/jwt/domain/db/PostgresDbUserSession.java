@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJwtAccessTokenConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJwtRefreshTokenConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUserRequestMetadataConverter;
@@ -20,7 +20,6 @@ import javax.persistence.*;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
-import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.USERS_SESSIONS;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok
@@ -31,8 +30,9 @@ import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTabl
 @ToString(callSuper = true)
 // JPA
 @Entity
-@Table(name = USERS_SESSIONS)
+@Table(name = PostgresDbUserSession.PG_TABLE_NAME)
 public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
+    public static final String PG_TABLE_NAME = "tech1_users_sessions";
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false)

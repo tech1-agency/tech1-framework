@@ -64,7 +64,7 @@ public class MongoSecurityJwtDbDummies {
         return List.of(
                 superadmin("sa1"),
                 superadmin("sa2"),
-                admin("admin"),
+                admin("admin1"),
                 randomUserBy("user1", Set.of("user", INVITATION_CODE_WRITE)),
                 randomUserBy("user2", Set.of("user", INVITATION_CODE_READ)),
                 randomUserBy("sa3", Set.of(INVITATION_CODE_READ, SUPER_ADMIN, INVITATION_CODE_WRITE))

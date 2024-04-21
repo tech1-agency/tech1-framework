@@ -16,7 +16,6 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.DEFAULT_INVITATION_CODE_LENGTH;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
-import static io.tech1.framework.b2b.postgres.security.jwt.constants.PostgreTablesConstants.INVITATION_CODES;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 // Lombok
@@ -27,8 +26,9 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @ToString(callSuper = true)
 // JPA
 @Entity
-@Table(name = INVITATION_CODES)
+@Table(name = PostgresDbInvitationCode.PG_TABLE_NAME)
 public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
+    public static final String PG_TABLE_NAME = "tech1_invitation_codes";
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)

@@ -38,7 +38,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
 
     public static JwtTokensConfigs testsHardcoded() {
         return new JwtTokensConfigs(
-                "TECH1",
+                "nbVwWebIpNnZ1rsNZFmkAQGiOZAijWtSt5X6FZx/qHA=",
                 JwtTokenStorageMethod.COOKIES,
                 new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", null),
                 new JwtToken(new TimeAmount(12L, HOURS), "rjwt", null)

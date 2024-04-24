@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.UUID;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
@@ -30,7 +30,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
     // Values
-    private final String base64EncodedSecretKey;
+    private final SecretKey secretKey;
 
     @Autowired
     public SecurityJwtTokenUtilsImpl(
@@ -39,7 +39,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
         jwtTokensConfigs.assertProperties(new PropertyId("securityJwtConfigs.jwtTokensConfigs"));
-        this.base64EncodedSecretKey = Base64.getEncoder().encodeToString(jwtTokensConfigs.getSecretKey().getBytes());
+        this.secretKey = Keys.hmacShaKeyFor(jwtTokensConfigs.getSecretKey().getBytes());
     }
 
     @Override
@@ -58,16 +58,16 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
 
     @Override
     public String createJwtToken(JwtTokenCreationParams creationParams, TimeAmount timeAmount) {
-        var claims = Jwts.claims().setSubject(creationParams.username().value());
-        claims.put("authorities", creationParams.authorities());
+        var claims = Jwts.claims().subject(creationParams.username().value());
+        claims.add("authorities", creationParams.authorities());
         var zoneId = creationParams.zoneId();
         var expiration = LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit());
         return Jwts.builder()
-                .setId(UUID.randomUUID().toString())
-                .setClaims(claims)
-                .setIssuedAt(getIssuedAt())
-                .setExpiration(convertLocalDateTime(expiration, zoneId))
-                .signWith(SignatureAlgorithm.HS256, this.base64EncodedSecretKey)
+                .id(UUID.randomUUID().toString())
+                .claims(claims.build())
+                .issuedAt(getIssuedAt())
+                .expiration(convertLocalDateTime(expiration, zoneId))
+                .signWith(this.secretKey)
                 .compact();
     }
 
@@ -86,7 +86,7 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
     // =================================================================================================================
     private JwtTokenValidatedClaims validate(String jwtToken, boolean isAccess, boolean isRefresh) {
         try {
-            var claims = Jwts.parser().setSigningKey(this.base64EncodedSecretKey).parseClaimsJws(jwtToken).getBody();
+            var claims = Jwts.parser().verifyWith(this.secretKey).build().parseSignedClaims(jwtToken).getPayload();
             return JwtTokenValidatedClaims.valid(isAccess, isRefresh, jwtToken, claims);
         } catch (ExpiredJwtException ex1) {
             LOGGER.info("JWT token expired", ex1);

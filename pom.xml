@@ -75,7 +75,7 @@
         <version.dependency.jakarta>4.0.2</version.dependency.jakarta>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
-        <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
+        <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
         <version.dependency.liquibase>4.24.0</version.dependency.liquibase>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
         <version.dependency.postresql.hibernate.utils>3.7.4</version.dependency.postresql.hibernate.utils>
@@ -515,6 +515,8 @@
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
+                    <!-- https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention  -->
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
             <!-- Copy Dependency: Lombok (Sonar Purposes) -->

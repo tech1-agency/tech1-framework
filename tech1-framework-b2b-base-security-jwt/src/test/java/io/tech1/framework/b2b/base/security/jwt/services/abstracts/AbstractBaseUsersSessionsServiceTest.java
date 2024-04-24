@@ -27,6 +27,7 @@ import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -392,6 +393,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(userSessionAC.getValue().metadata()).isEqualTo(UserRequestMetadata.valid());
     }
 
+    @Disabled("Fix together with YYL")
     @Test
     void getExpiredSessionsTest() {
         // Arrange

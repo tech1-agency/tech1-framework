@@ -7,7 +7,7 @@ import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;

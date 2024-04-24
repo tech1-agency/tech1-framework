@@ -6,7 +6,7 @@ import io.tech1.framework.domain.properties.base.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -8,17 +8,33 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
+import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
+import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
  * <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#websocket">Documentation #2</a>
+ * <p>
+ * Spring Boot 3 Migration Issues 24.04.2024:
+ * <p>
+ * <a href="https://github.com/spring-projects/spring-security/issues/13640">
+ * EnableWebSocketSecurity is not 1:1 replacement for AbstractSecurityWebSocketMessageBrokerConfigurer
+ * </a>
+ * <p>
+ * <a href="https://github.com/jhipster/generator-jhipster/issues/20404">
+ * Migrate to Spring Security 6's @EnableWebSocketSecurity
+ * </a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
 @Slf4j
@@ -29,9 +45,9 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSocketMessageBroker
+@EnableWebSocketSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-// TODO [VB] deprecated
-public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class ApplicationBaseSecurityJwtWebsockets implements WebSocketMessageBrokerConfigurer {
 
     // Handshakes
     private final CsrfInterceptorHandshake csrfInterceptorHandshake;
@@ -53,10 +69,10 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
                 .withSockJS();
     }
 
-    // TODO [VB] deprecated
-    @Override
-    protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
-        registry.anyMessage().authenticated();
+    @Bean
+    public AuthorizationManager<Message<?>> authorizationManager(MessageMatcherDelegatingAuthorizationManager.Builder messages) {
+        messages.anyMessage().authenticated();
+        return messages.build();
     }
 
     @Override
@@ -67,13 +83,4 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());
     }
 
-    /**
-     * Determines if a CSRF token is required for connecting. This protects against remote
-     * sites from connecting to the application and being able to read/write data over the
-     * connection. The default is false (the token is required).
-     */
-    @Override
-    protected boolean sameOriginDisabled() {
-        return false;
-    }
 }

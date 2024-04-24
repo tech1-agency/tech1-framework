@@ -5,7 +5,6 @@ import io.tech1.framework.domain.base.Version;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-// TODO [YYL] never used
 @Converter
 public class PostgresVersionConverter implements AttributeConverter<Version, String> {
 

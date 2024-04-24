@@ -32,11 +32,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-        </dependency>
         <!-- JSONs: Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

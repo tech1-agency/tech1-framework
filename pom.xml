@@ -72,7 +72,6 @@
         <version.dependency.feign>12.3</version.dependency.feign>
         <version.dependency.geoip2>4.0.1</version.dependency.geoip2>
         <version.dependency.jackson>2.15.4</version.dependency.jackson>
-        <version.dependency.jakarta>4.0.2</version.dependency.jakarta>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
         <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
@@ -136,12 +135,6 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${version.dependency.liquibase}</version>
-            </dependency>
-            <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
-            <dependency>
-                <groupId>jakarta.xml.bind</groupId>
-                <artifactId>jakarta.xml.bind-api</artifactId>
-                <version>${version.dependency.jakarta}</version>
             </dependency>
             <!-- HTTP Client: Feign-->
             <dependency>

@@ -114,32 +114,38 @@ public class ApplicationBaseSecurityJwt {
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        var urlRegistry = http.authorizeRequests();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/login").permitAll();
-        urlRegistry.antMatchers(POST, basePathPrefix +"/authentication/logout").permitAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll();
-        urlRegistry.antMatchers(GET, basePathPrefix + "/session/current").authenticated();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").denyAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/user/update1").denyAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/user/update2").authenticated();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
+        http.authorizeHttpRequests(authorizeHttpRequests -> {
+            authorizeHttpRequests
+                    .requestMatchers(POST, basePathPrefix + "/authentication/login").permitAll()
+                    .requestMatchers(POST, basePathPrefix +"/authentication/logout").permitAll()
+                    .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
+                    .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
+                    .requestMatchers(POST, basePathPrefix + "/registration/register1").denyAll()
+                    .requestMatchers(POST, basePathPrefix + "/user/update1").denyAll()
+                    .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
+                    .requestMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
 
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
-            urlRegistry.antMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ);
-            urlRegistry.antMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE);
-            urlRegistry.antMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);
-        } else {
-            urlRegistry.antMatchers( basePathPrefix + "/invitationCode/**").denyAll();
-        }
-        urlRegistry.antMatchers(basePathPrefix + "/hardware/**").authenticated();
-        urlRegistry.antMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN);
-        urlRegistry.antMatchers(basePathPrefix + "/**").authenticated();
+            if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
+                authorizeHttpRequests
+                        .requestMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ)
+                        .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE)
+                        .requestMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);
+            } else {
+                authorizeHttpRequests.requestMatchers( basePathPrefix + "/invitationCode/**").denyAll();
+            }
 
-        urlRegistry.antMatchers("/actuator/**").permitAll();
+            authorizeHttpRequests
+                    .requestMatchers(basePathPrefix + "/hardware/**").authenticated()
+                    .requestMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN)
+                    .requestMatchers(basePathPrefix + "/**").authenticated();
+
+            authorizeHttpRequests.requestMatchers("/actuator/**").permitAll();
+
+            authorizeHttpRequests.anyRequest().authenticated();
+        });
 
         this.abstractApplicationSecurityJwtConfigurer.configure(http);
 
-        urlRegistry.anyRequest().authenticated();
         return http.build();
     }
 }

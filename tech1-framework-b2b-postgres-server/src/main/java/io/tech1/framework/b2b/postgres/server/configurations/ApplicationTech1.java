@@ -61,11 +61,12 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
         // no tech1-server configurations yet
     }
 
-    // TODO [VB] deprecated
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        var urlRegistry = http.authorizeRequests();
-        urlRegistry.antMatchers("/hardware/**").permitAll();
+        http.authorizeHttpRequests(authorizeHttpRequests ->
+                authorizeHttpRequests
+                        .requestMatchers("/hardware/**").permitAll()
+        );
     }
 
     @Bean

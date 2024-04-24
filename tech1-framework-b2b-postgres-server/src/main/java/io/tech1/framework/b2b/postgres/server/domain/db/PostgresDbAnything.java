@@ -2,14 +2,11 @@ package io.tech1.framework.b2b.postgres.server.domain.db;
 
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.domain.base.Username;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-
-import jakarta.persistence.*;
-import org.hibernate.id.uuid.UuidGenerator;
 
 import static io.tech1.framework.b2b.postgres.server.constants.TablesConstants.ANYTHING;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
@@ -24,8 +21,7 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @Table(name = ANYTHING)
 public class PostgresDbAnything {
     @Id
-    @GenericGenerator(name = "uuid2", type = UuidGenerator.class)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(length = 36, nullable = false, updatable = false)
     private String id;
 

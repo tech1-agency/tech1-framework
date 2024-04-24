@@ -31,7 +31,7 @@ class IncidentClientImplTest {
         }
 
         @Bean
-        IncidentClient incidentPublisher() {
+        IncidentClient incidentClient() {
             return new IncidentClientImpl(
                     this.incidentClientDefinition()
             );

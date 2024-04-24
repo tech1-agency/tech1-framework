@@ -5,23 +5,23 @@ import io.tech1.framework.emails.domain.EmailPlainAttachment;
 import io.tech1.framework.emails.services.EmailService;
 import io.tech1.framework.emails.utilities.EmailUtility;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import jakarta.activation.DataHandler;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.util.ByteArrayDataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import javax.activation.DataHandler;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import static javax.mail.Message.RecipientType.TO;
+import static jakarta.mail.Message.RecipientType.TO;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EmailServiceImpl implements EmailService {

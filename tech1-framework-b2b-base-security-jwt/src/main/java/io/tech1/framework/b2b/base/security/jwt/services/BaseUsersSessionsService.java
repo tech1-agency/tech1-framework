@@ -12,7 +12,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.sessions.SessionsExpiredTable;
 import io.tech1.framework.domain.base.Username;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 public interface BaseUsersSessionsService {

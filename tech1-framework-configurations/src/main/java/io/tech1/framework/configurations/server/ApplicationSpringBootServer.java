@@ -5,13 +5,12 @@ import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import io.tech1.framework.utilities.environment.base.BaseEnvironmentUtility;
 import io.tech1.framework.utilities.resources.actuator.BaseInfoResource;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-
-import javax.annotation.PostConstruct;
 
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

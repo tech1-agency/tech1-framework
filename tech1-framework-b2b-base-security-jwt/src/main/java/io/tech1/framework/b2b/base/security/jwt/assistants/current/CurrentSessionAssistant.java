@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUse
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface CurrentSessionAssistant {
     Username getCurrentUsername();

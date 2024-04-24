@@ -3,7 +3,7 @@ package io.tech1.framework.domain.utilities.http;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import lombok.experimental.UtilityClass;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;

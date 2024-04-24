@@ -28,7 +28,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static org.springframework.http.HttpMethod.*;
@@ -96,6 +96,7 @@ public class ApplicationBaseSecurityJwt {
         return this.abstractApplicationSecurityJwtConfigurer::configure;
     }
 
+    // TODO [VB] deprecated
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getFrameworkBasePathPrefix();

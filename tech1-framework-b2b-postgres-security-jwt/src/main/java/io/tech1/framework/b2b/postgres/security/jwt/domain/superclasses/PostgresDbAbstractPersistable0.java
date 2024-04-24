@@ -4,12 +4,13 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.domain.Persistable;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import static java.util.Objects.isNull;
 
 @MappedSuperclass
 public abstract class PostgresDbAbstractPersistable0 implements Persistable<String> {
+    // TODO [VB] deprecated
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")

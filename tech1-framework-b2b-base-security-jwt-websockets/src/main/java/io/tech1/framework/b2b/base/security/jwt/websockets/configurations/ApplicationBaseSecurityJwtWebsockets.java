@@ -4,6 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.CsrfInterc
 import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.SecurityHandshakeHandler;
 import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,6 @@ import org.springframework.security.config.annotation.web.messaging.MessageSecur
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-
-import javax.annotation.PostConstruct;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
@@ -31,6 +30,7 @@ import javax.annotation.PostConstruct;
 })
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+// TODO [VB] deprecated
 public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     // Handshakes
@@ -53,6 +53,7 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
                 .withSockJS();
     }
 
+    // TODO [VB] deprecated
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
         registry.anyMessage().authenticated();

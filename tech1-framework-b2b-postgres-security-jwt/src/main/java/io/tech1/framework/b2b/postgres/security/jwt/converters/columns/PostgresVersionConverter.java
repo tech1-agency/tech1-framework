@@ -2,9 +2,10 @@ package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
 
 import io.tech1.framework.domain.base.Version;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
+// TODO [YYL] never used
 @Converter
 public class PostgresVersionConverter implements AttributeConverter<Version, String> {
 

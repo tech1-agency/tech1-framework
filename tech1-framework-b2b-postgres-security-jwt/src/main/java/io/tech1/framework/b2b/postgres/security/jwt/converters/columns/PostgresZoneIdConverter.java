@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import java.time.ZoneId;
 
 import static java.util.Objects.nonNull;

@@ -16,7 +16,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;

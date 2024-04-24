@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.*;
+import org.hibernate.id.uuid.UuidGenerator;
 
 import static io.tech1.framework.b2b.postgres.server.constants.TablesConstants.ANYTHING;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
@@ -22,9 +23,8 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 @Entity
 @Table(name = ANYTHING)
 public class PostgresDbAnything {
-    // TODO [VB] deprecated
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GenericGenerator(name = "uuid2", type = UuidGenerator.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @Column(length = 36, nullable = false, updatable = false)
     private String id;

@@ -18,11 +18,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -96,28 +98,30 @@ public class ApplicationBaseSecurityJwt {
         return this.abstractApplicationSecurityJwtConfigurer::configure;
     }
 
-    // TODO [VB] deprecated
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getFrameworkBasePathPrefix();
-        http.cors()
-                .and()
-                    .csrf().disable()
-                    .addFilterBefore(
-                            this.jwtTokensFilter,
-                            UsernamePasswordAuthenticationFilter.class
-                    )
-                    .exceptionHandling()
-                    .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
-                    .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
-                .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(
+                        this.jwtTokensFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
+                                .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
 
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
                     .requestMatchers(POST, basePathPrefix + "/authentication/login").permitAll()
-                    .requestMatchers(POST, basePathPrefix +"/authentication/logout").permitAll()
+                    .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                     .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                     .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/registration/register1").denyAll()
@@ -131,7 +135,7 @@ public class ApplicationBaseSecurityJwt {
                         .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE)
                         .requestMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);
             } else {
-                authorizeHttpRequests.requestMatchers( basePathPrefix + "/invitationCode/**").denyAll();
+                authorizeHttpRequests.requestMatchers(basePathPrefix + "/invitationCode/**").denyAll();
             }
 
             authorizeHttpRequests

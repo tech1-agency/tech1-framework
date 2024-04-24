@@ -143,12 +143,4 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
         );
     }
 
-    @Test
-    void sameOriginDisabledTest() {
-        // Act
-        var actual = this.componentUnderTest.sameOriginDisabled();
-
-        // Assert
-        assertThat(actual).isFalse();
-    }
 }

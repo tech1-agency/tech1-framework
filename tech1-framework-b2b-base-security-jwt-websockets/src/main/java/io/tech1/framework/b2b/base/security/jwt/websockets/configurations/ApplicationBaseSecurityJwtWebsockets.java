@@ -33,7 +33,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  * </a>
  * <p>
  * <a href="https://github.com/jhipster/generator-jhipster/issues/20404">
- * Migrate to Spring Security 6's @EnableWebSocketSecurity
+ * Migrate to Spring Security 6's @EnableWebSocketSecurity (it is not possible to disable CSRF currently)
  * </a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling

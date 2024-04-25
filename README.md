@@ -18,3 +18,4 @@ Last deployed version: **1.16**
 
 ### Release Notes [Development v2.7.8]
 — Modification: updated Springboot to version 3.2.5 and all related dependencies
+— Deletion: possibility of using any string as JWT secret key. Generate a new HS256 key

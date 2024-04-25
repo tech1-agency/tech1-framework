@@ -57,6 +57,7 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
         http.authorizeHttpRequests(authorizeHttpRequests ->
                 authorizeHttpRequests
                         .requestMatchers("/hardware/**").permitAll()
+                        .anyRequest().authenticated()
         );
     }
 

@@ -145,7 +145,7 @@ public class ApplicationBaseSecurityJwt {
 
             authorizeHttpRequests.requestMatchers("/actuator/**").permitAll();
 
-            authorizeHttpRequests.anyRequest().authenticated();
+            // WARNING: anyRequest().authenticated() must be called the last in the project that uses tech1-framework
         });
 
         this.abstractApplicationSecurityJwtConfigurer.configure(http);

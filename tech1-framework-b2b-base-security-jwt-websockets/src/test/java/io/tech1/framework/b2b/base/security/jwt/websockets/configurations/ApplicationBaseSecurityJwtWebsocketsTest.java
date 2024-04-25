@@ -96,7 +96,7 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(24)
+                .hasSize(32)
                 .contains("registerStompEndpoints")
                 .contains("configureMessageBroker");
     }

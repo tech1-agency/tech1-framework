@@ -10,7 +10,6 @@ import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -63,9 +62,9 @@ class SecurityJwtTokenUtilsImplTest {
 
     private static Stream<Arguments> validateTest() {
         return Stream.of(
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo", true),
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.p9gNAWxL-vi81zy7ECfqqDnjQ7GfvhyDMJyKJ4iBQys", true),
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpYXQiOjE2NDE5MzE4MjYsImV4cCI6MTY0MTkzMTgzNn0.EhKtfHCgOGrJEGR0G8czSHf1T6MywDYIKYpxlxV8GxI", true), // expired jwt token
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.8vsV_RChHNOepRu452JlUTfS9qAo4K9qTROiop4WzUI", true),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.QKi36h-8SuFDT-vr6PUN7_avwOsNK0d5uwSOP96G-VQ", true),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpYXQiOjE2NDE5MzE4MjYsImV4cCI6MTY0MTkzMTgzNn0.xO49IBj2DKLvkUySWms1sK1B7IDzKH579nJgpbl2Mz0", true), // expired jwt token
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.p9gNAWxL-vi81zy7ECfqqDnjQ7GfvhyDMJyKJ4iBQyq1", false),
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.p9gNAWxL-vi81zy7ECfqqDnjQ7GfvhyDMJyKJ4iBQyq2", false)
         );
@@ -74,24 +73,24 @@ class SecurityJwtTokenUtilsImplTest {
     private static Stream<Arguments> isExpiredTest() {
         return Stream.of(
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo1", true),
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo", false),
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.p9gNAWxL-vi81zy7ECfqqDnjQ7GfvhyDMJyKJ4iBQys", false),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.8vsV_RChHNOepRu452JlUTfS9qAo4K9qTROiop4WzUI", false),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.QKi36h-8SuFDT-vr6PUN7_avwOsNK0d5uwSOP96G-VQ", false),
                 Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpYXQiOjE2NDE5MzE4MjYsImV4cCI6MTY0MTkzMTgzNn0.EhKtfHCgOGrJEGR0G8czSHf1T6MywDYIKYpxlxV8GxI", true)
         );
     }
 
     private static Stream<Arguments> getUsernameByClaimsTest() {
         return Stream.of(
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.RUiEg-2yMDjl5b-TOMwpuXfOGq5zTQiosO9IoteMDAo", Username.of("admin23")),
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.p9gNAWxL-vi81zy7ECfqqDnjQ7GfvhyDMJyKJ4iBQys", Username.of("user12")),
-                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpYXQiOjE2NDE5MzE4MjYsImV4cCI6MTY0MTkzMTgzNn0.EhKtfHCgOGrJEGR0G8czSHf1T6MywDYIKYpxlxV8GxI", Username.of("multiuser43")) // expired jwt token
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTY0MTkyNDM4OSwiZXhwIjo3OTUzMjcxNTg5fQ.8vsV_RChHNOepRu452JlUTfS9qAo4K9qTROiop4WzUI", Username.of("admin23")),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIiLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaWF0IjoxNjQxOTI0NDA5LCJleHAiOjc5NTMyNzE2MDl9.QKi36h-8SuFDT-vr6PUN7_avwOsNK0d5uwSOP96G-VQ", Username.of("user12")),
+                Arguments.of("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJpYXQiOjE2NDE5MzE4MjYsImV4cCI6MTY0MTkzMTgzNn0.xO49IBj2DKLvkUySWms1sK1B7IDzKH579nJgpbl2Mz0", Username.of("multiuser43")) // expired jwt token
         );
     }
 
     private static Stream<Arguments> versionsTests() {
         return Stream.of(
                 Arguments.of(
-                        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJ1c2VyIn1dLCJpYXQiOjE2NDIyMDUyNzQsImV4cCI6NDc5Nzg3ODg3NH0.eJejXwTEj9Noemfdggw5hsbA6W0ID71zkb5wELB6LIU",
+                        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJ1c2VyIn1dLCJpYXQiOjE2NDIyMDUyNzQsImV4cCI6NDc5Nzg3ODg3NH0.jQa_1ox0jj621g0256jlv4Ch9Ifrynjm1a76SFHvox8",
                         "15.01.2022 02:07:54",
                         "15.01.2122 02:07:54",
                         List.of(
@@ -99,7 +98,7 @@ class SecurityJwtTokenUtilsImplTest {
                         )
                 ),
                 Arguments.of(
-                        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyMjA1MTg4LCJleHAiOjQ3OTc4Nzg3ODh9.v8hqZe28EeZcODD84ycfl6JIUrPD6bgxFpxgn7PfLXk",
+                        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyMjA1MTg4LCJleHAiOjQ3OTc4Nzg3ODh9.pCkKoWBOT2u6bsr4iyESHmCEJaLBYZXU-unv1kqOtOc",
                         "15.01.2022 02:06:28",
                         "15.01.2122 02:06:28",
                         List.of(
@@ -195,7 +194,6 @@ class SecurityJwtTokenUtilsImplTest {
         assertThat(validatedClaims.expirationDate()).isBeforeOrEqualTo(expiration);
     }
 
-    @Disabled("Fix together with YYL")
     @ParameterizedTest
     @MethodSource("validateTest")
     void validateTest(String jwtToken, boolean expected) {
@@ -217,7 +215,6 @@ class SecurityJwtTokenUtilsImplTest {
         assertThat(refreshValidatedClaims.authorities()).isEmpty();
     }
 
-    @Disabled("Fix together with YYL")
     @ParameterizedTest
     @MethodSource("isExpiredTest")
     void isExpiredTest(String jwtToken, boolean expected) {
@@ -228,7 +225,6 @@ class SecurityJwtTokenUtilsImplTest {
         assertThat(validatedClaims.isExpired()).isEqualTo(expected);
     }
 
-    @Disabled("Fix together with YYL")
     @ParameterizedTest
     @MethodSource("getUsernameByClaimsTest")
     void getUsernameByClaimsTest(String jwtToken, Username expectedUsername) {
@@ -240,7 +236,6 @@ class SecurityJwtTokenUtilsImplTest {
         assertThat(validatedClaims.authorities()).isEmpty();
     }
 
-    @Disabled("Fix together with YYL")
     @ParameterizedTest
     @MethodSource("versionsTests")
     void getClaimsTest(String jwtToken, String expectedIssuedAt, String expectedExpiration, List<SimpleGrantedAuthority> authorities) throws ParseException {

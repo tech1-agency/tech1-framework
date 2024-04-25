@@ -124,7 +124,7 @@
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
             </dependency>
-            <!-- PostgreSQL Types + Hibernate Utils -->
+            <!-- PostgreSQL Types -->
             <dependency>
                 <groupId>io.hypersistence</groupId>
                 <artifactId>hypersistence-utils-hibernate-63</artifactId>

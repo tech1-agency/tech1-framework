@@ -39,6 +39,8 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
         jwtTokensConfigs.assertProperties(new PropertyId("securityJwtConfigs.jwtTokensConfigs"));
+        // WARNING: consider using Base64 encoded key in properties, and decode it here
+        // https://www.baeldung.com/spring-security-sign-jwt-token#1-using-key-instance
         this.secretKey = Keys.hmacShaKeyFor(jwtTokensConfigs.getSecretKey().getBytes());
     }
 

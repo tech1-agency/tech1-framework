@@ -63,7 +63,7 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
     }
 
     @Override
-    public void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
+    protected void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
         registry.anyMessage().authenticated();
     }
 

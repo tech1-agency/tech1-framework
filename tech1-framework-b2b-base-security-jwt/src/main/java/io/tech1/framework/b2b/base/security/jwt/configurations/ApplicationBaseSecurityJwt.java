@@ -11,6 +11,7 @@ import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.configurations.ApplicationUtilities;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +30,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import jakarta.annotation.PostConstruct;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static org.springframework.http.HttpMethod.*;
@@ -104,6 +103,8 @@ public class ApplicationBaseSecurityJwt {
 
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
                 .addFilterBefore(
                         this.jwtTokensFilter,
                         UsernamePasswordAuthenticationFilter.class
@@ -117,6 +118,9 @@ public class ApplicationBaseSecurityJwt {
                         sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
+
+        // WARNING: order is important, configurer must have possibility to override matchers below
+        this.abstractApplicationSecurityJwtConfigurer.configure(http);
 
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
@@ -144,11 +148,9 @@ public class ApplicationBaseSecurityJwt {
                     .requestMatchers(basePathPrefix + "/**").authenticated();
 
             authorizeHttpRequests.requestMatchers("/actuator/**").permitAll();
+
+            authorizeHttpRequests.anyRequest().authenticated();
         });
-
-        this.abstractApplicationSecurityJwtConfigurer.configure(http);
-
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests.anyRequest().authenticated());
 
         return http.build();
     }

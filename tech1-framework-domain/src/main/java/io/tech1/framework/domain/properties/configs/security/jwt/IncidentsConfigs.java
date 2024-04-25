@@ -8,7 +8,7 @@ import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.EnumMap;
 import java.util.Map;

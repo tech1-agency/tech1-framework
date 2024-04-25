@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.concurrent.Executor;
 
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;

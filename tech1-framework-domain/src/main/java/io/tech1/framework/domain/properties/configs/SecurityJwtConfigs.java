@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 

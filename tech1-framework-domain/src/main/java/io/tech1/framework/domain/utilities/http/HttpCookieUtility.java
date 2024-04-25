@@ -4,8 +4,8 @@ import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
 import lombok.experimental.UtilityClass;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;

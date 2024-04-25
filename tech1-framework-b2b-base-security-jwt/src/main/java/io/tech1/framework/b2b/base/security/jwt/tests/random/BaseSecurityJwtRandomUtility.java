@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.impl.DefaultClaims;
+import io.jsonwebtoken.Jwts;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
@@ -20,25 +20,25 @@ import static java.time.ZoneOffset.UTC;
 public class BaseSecurityJwtRandomUtility {
 
     public static Claims validClaims() {
-        var claims = new DefaultClaims();
-        claims.setSubject(Username.testsHardcoded().value());
+        var claims = Jwts.claims();
+        claims.subject(Username.testsHardcoded().value());
         var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
-        claims.setIssuedAt(getIssuedAt());
-        claims.setExpiration(expiration);
-        claims.put("authorities", getSimpleGrantedAuthorities("admin", "user"));
-        return claims;
+        claims.issuedAt(getIssuedAt());
+        claims.expiration(expiration);
+        claims.add("authorities", getSimpleGrantedAuthorities("admin", "user"));
+        return claims.build();
     }
 
     public static Claims expiredClaims() {
-        var claims = new DefaultClaims();
-        claims.setSubject(Username.testsHardcoded().value());
+        var claims = Jwts.claims();
+        claims.subject(Username.testsHardcoded().value());
         var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);
-        claims.setIssuedAt(issuedAt);
-        claims.setExpiration(expiration);
-        claims.put("authorities", getSimpleGrantedAuthorities("admin", "user"));
-        return claims;
+        claims.issuedAt(issuedAt);
+        claims.expiration(expiration);
+        claims.add("authorities", getSimpleGrantedAuthorities("admin", "user"));
+        return claims.build();
     }
 }

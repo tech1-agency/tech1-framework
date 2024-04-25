@@ -9,6 +9,7 @@ import io.tech1.framework.hardware.configurations.ApplicationHardwareMonitoring;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.hardware.monitoring.subscribers.HardwareMonitoringSubscriber;
 import io.tech1.framework.hardware.monitoring.subscribers.impl.BaseHardwareMonitoringSubscriber;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-
-import javax.annotation.PostConstruct;
 
 @Configuration
 @ComponentScan({
@@ -55,8 +54,10 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        var urlRegistry = http.authorizeRequests();
-        urlRegistry.antMatchers("/hardware/**").permitAll();
+        http.authorizeHttpRequests(authorizeHttpRequests ->
+                authorizeHttpRequests
+                        .requestMatchers("/hardware/**").permitAll()
+        );
     }
 
     @Bean

@@ -6,6 +6,7 @@ import io.tech1.framework.emails.services.impl.EmailServiceImpl;
 import io.tech1.framework.emails.utilities.EmailUtility;
 import io.tech1.framework.emails.utilities.impl.EmailUtilityImpl;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j

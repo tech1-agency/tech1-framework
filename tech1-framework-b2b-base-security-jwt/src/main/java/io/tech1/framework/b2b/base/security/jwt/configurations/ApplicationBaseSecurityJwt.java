@@ -11,6 +11,7 @@ import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.configurations.ApplicationUtilities;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,17 +19,17 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.annotation.PostConstruct;
 
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
 import static org.springframework.http.HttpMethod.*;
@@ -99,46 +100,58 @@ public class ApplicationBaseSecurityJwt {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getFrameworkBasePathPrefix();
-        http.cors()
-                .and()
-                    .csrf().disable()
-                    .addFilterBefore(
-                            this.jwtTokensFilter,
-                            UsernamePasswordAuthenticationFilter.class
-                    )
-                    .exceptionHandling()
-                    .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
-                    .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
-                .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        var urlRegistry = http.authorizeRequests();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/login").permitAll();
-        urlRegistry.antMatchers(POST, basePathPrefix +"/authentication/logout").permitAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll();
-        urlRegistry.antMatchers(GET, basePathPrefix + "/session/current").authenticated();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/registration/register1").denyAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/user/update1").denyAll();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/user/update2").authenticated();
-        urlRegistry.antMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
+        http.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .addFilterBefore(
+                        this.jwtTokensFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .authenticationEntryPoint(this.jwtAuthenticationEntryPointExceptionHandler)
+                                .accessDeniedHandler(this.jwtAccessDeniedExceptionHandler)
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
 
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
-            urlRegistry.antMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ);
-            urlRegistry.antMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE);
-            urlRegistry.antMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);
-        } else {
-            urlRegistry.antMatchers( basePathPrefix + "/invitationCode/**").denyAll();
-        }
-        urlRegistry.antMatchers(basePathPrefix + "/hardware/**").authenticated();
-        urlRegistry.antMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN);
-        urlRegistry.antMatchers(basePathPrefix + "/**").authenticated();
-
-        urlRegistry.antMatchers("/actuator/**").permitAll();
-
+        // WARNING: order is important, configurer must have possibility to override matchers below
         this.abstractApplicationSecurityJwtConfigurer.configure(http);
 
-        urlRegistry.anyRequest().authenticated();
+        http.authorizeHttpRequests(authorizeHttpRequests -> {
+            authorizeHttpRequests
+                    .requestMatchers(POST, basePathPrefix + "/authentication/login").permitAll()
+                    .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
+                    .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
+                    .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
+                    .requestMatchers(POST, basePathPrefix + "/registration/register1").denyAll()
+                    .requestMatchers(POST, basePathPrefix + "/user/update1").denyAll()
+                    .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
+                    .requestMatchers(POST, basePathPrefix + "/user/changePassword1").denyAll();
+
+            if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
+                authorizeHttpRequests
+                        .requestMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ)
+                        .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE)
+                        .requestMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);
+            } else {
+                authorizeHttpRequests.requestMatchers(basePathPrefix + "/invitationCode/**").denyAll();
+            }
+
+            authorizeHttpRequests
+                    .requestMatchers(basePathPrefix + "/hardware/**").authenticated()
+                    .requestMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN)
+                    .requestMatchers(basePathPrefix + "/**").authenticated();
+
+            authorizeHttpRequests.requestMatchers("/actuator/**").permitAll();
+
+            authorizeHttpRequests.anyRequest().authenticated();
+        });
+
         return http.build();
     }
 }

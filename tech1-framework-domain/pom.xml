@@ -32,11 +32,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-        </dependency>
         <!-- JSONs: Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -55,11 +50,6 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-        </dependency>
-        <!-- Tomcat: Cookie, CacheHttpRequests -->
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
         </dependency>
         <!-- JColor (console asserts) -->
         <dependency>

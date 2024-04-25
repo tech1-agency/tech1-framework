@@ -17,4 +17,5 @@ Last deployed version: **1.16**
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Release Notes [Development v2.7.8]
-— TBD
+— Modification: Spring Boot updated to version 3.2.5 (and all related dependencies to match Spring Boot BOM)
+— Modification: jjwt updated to 0.12.5 (you have to generate a new HS265 secret key and truncate sessions table)

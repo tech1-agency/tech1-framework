@@ -20,7 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @Configuration
 @ComponentScan({
@@ -63,8 +63,10 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        var urlRegistry = http.authorizeRequests();
-        urlRegistry.antMatchers("/hardware/**").permitAll();
+        http.authorizeHttpRequests(authorizeHttpRequests ->
+                authorizeHttpRequests
+                        .requestMatchers("/hardware/**").permitAll()
+        );
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 

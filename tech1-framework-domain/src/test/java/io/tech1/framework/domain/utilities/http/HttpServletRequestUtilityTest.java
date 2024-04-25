@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getBaseURL;

@@ -24,7 +24,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

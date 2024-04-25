@@ -3,7 +3,7 @@ package io.tech1.framework.domain.http.requests;
 import io.tech1.framework.domain.utilities.random.RandomUtility;
 import org.junit.jupiter.api.Test;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -18,7 +18,7 @@ class UserAgentHeaderTest {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getValue()).isEmpty();;
+        assertThat(actual.getValue()).isEmpty();
     }
 
     @Test

@@ -2,6 +2,7 @@ package io.tech1.framework.configurations.events;
 
 import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +11,6 @@ import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.support.TaskUtils;
-
-import javax.annotation.PostConstruct;
 
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;

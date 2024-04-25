@@ -24,6 +24,7 @@ import io.tech1.framework.domain.tuples.TupleToggle;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import io.tech1.framework.utilities.utils.UserMetadataUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +43,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -404,12 +404,12 @@ class AbstractBaseUsersSessionsServiceTest {
         var sessionExpiredUserSession = session(
                 Username.random(),
                 JwtAccessToken.random(),
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.aCeKIy8uvei_c_aXoHlVhQ1N8wmjfguXgi2fWMRYVp8")
+                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.KUkURlpCWsh0VJFC4xrCOxr_dXNusRRjdjFb88Wb4Rw")
         );
         var sessionAliveUserSession = session(
                 Username.random(),
                 JwtAccessToken.random(),
-                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9._BMUZR3wls5O1BYDm_4loYi3vn70GjE39Cpuqh-Z_bY")
+                new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9.06Ep_ri727dkMEVA3zptDb8tmFn1VJ1FIhjjbE-mxpw")
         );
         var usersSessions = List.of(sessionInvalidUserSession, sessionExpiredUserSession, sessionAliveUserSession);
         when(this.usersSessionsRepository.findByUsernameInAsAny(usernames)).thenReturn(usersSessions);

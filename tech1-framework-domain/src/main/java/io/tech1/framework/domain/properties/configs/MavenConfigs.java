@@ -6,7 +6,7 @@ import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

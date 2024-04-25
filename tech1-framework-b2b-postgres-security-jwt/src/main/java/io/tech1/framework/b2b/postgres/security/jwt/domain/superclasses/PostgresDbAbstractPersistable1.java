@@ -3,8 +3,8 @@ package io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
 

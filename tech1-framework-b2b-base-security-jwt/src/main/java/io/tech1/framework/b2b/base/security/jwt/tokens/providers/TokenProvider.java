@@ -9,8 +9,8 @@ import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface TokenProvider {
     void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response);

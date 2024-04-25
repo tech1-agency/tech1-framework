@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import java.util.Map;
 
 @Converter

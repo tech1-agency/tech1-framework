@@ -6,7 +6,7 @@ import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 

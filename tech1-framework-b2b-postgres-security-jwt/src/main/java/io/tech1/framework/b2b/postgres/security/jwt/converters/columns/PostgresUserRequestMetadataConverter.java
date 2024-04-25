@@ -7,7 +7,7 @@ import io.tech1.framework.domain.http.requests.UserAgentDetails;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import lombok.SneakyThrows;
 
-import javax.persistence.Converter;
+import jakarta.persistence.Converter;
 import java.util.HashMap;
 import java.util.Map;
 

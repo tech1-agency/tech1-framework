@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Service

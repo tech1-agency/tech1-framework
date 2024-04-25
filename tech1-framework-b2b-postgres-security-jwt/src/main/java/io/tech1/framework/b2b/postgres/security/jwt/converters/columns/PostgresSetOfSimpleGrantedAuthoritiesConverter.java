@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;

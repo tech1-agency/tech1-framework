@@ -68,23 +68,21 @@
         <!-- dependencies, scope == compile -->
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
         <version.dependency.browscap>1.4.0</version.dependency.browscap>
-        <version.dependency.common.codec>1.15</version.dependency.common.codec>
+        <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
         <version.dependency.feign>12.3</version.dependency.feign>
         <version.dependency.geoip2>4.0.1</version.dependency.geoip2>
-        <version.dependency.jackson>2.15.0</version.dependency.jackson>
-        <version.dependency.jakarta>2.3.3</version.dependency.jakarta>
+        <version.dependency.jackson>2.15.4</version.dependency.jackson>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
-        <version.dependency.jsonwebtoken>0.9.1</version.dependency.jsonwebtoken>
-        <version.dependency.liquibase>4.21.1</version.dependency.liquibase>
+        <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
+        <version.dependency.liquibase>4.24.0</version.dependency.liquibase>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
-        <version.dependency.postresql.hibernate.types>2.21.1</version.dependency.postresql.hibernate.types>
-        <version.dependency.springframework.boot>2.7.18</version.dependency.springframework.boot>
-        <version.dependency.tomcat.embed>9.0.74</version.dependency.tomcat.embed>
+        <version.dependency.postresql.hibernate.utils>3.7.4</version.dependency.postresql.hibernate.utils>
+        <version.dependency.springframework.boot>3.2.5</version.dependency.springframework.boot>
         <!-- dependencies, scope == test -->
         <version.dependency.assertj>3.24.2</version.dependency.assertj>
-        <version.dependency.jsonpath>2.8.0</version.dependency.jsonpath>
-        <version.dependency.junit>5.9.3</version.dependency.junit>
+        <version.dependency.jsonpath>2.9.0</version.dependency.jsonpath>
+        <version.dependency.junit>5.10.2</version.dependency.junit>
         <version.dependency.testcontainers>1.19.7</version.dependency.testcontainers>
         <!-- plugins -->
         <version.plugin.build.helper>3.4.0</version.plugin.build.helper>
@@ -126,23 +124,17 @@
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
             </dependency>
-            <!-- PostgreSQL -->
+            <!-- PostgreSQL Types -->
             <dependency>
-                <groupId>com.vladmihalcea</groupId>
-                <artifactId>hibernate-types-52</artifactId>
-                <version>${version.dependency.postresql.hibernate.types}</version>
+                <groupId>io.hypersistence</groupId>
+                <artifactId>hypersistence-utils-hibernate-63</artifactId>
+                <version>${version.dependency.postresql.hibernate.utils}</version>
             </dependency>
             <!-- Liquibase -->
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${version.dependency.liquibase}</version>
-            </dependency>
-            <!-- j8 -> j11 migration, @ObjectMapper related, API, javax.xml.bind module -->
-            <dependency>
-                <groupId>jakarta.xml.bind</groupId>
-                <artifactId>jakarta.xml.bind-api</artifactId>
-                <version>${version.dependency.jakarta}</version>
             </dependency>
             <!-- HTTP Client: Feign-->
             <dependency>
@@ -190,12 +182,6 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${version.dependency.common.codec}</version>
-            </dependency>
-            <!-- Tomcat: Cookie, CacheHttpRequests -->
-            <dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-core</artifactId>
-                <version>${version.dependency.tomcat.embed}</version>
             </dependency>
             <!-- JColor (console asserts) -->
             <dependency>
@@ -522,6 +508,8 @@
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
+                    <!-- https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention  -->
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
             <!-- Copy Dependency: Lombok (Sonar Purposes) -->

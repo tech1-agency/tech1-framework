@@ -96,7 +96,7 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(31)
+                .hasSize(32)
                 .contains("registerStompEndpoints")
                 .contains("configureMessageBroker");
     }
@@ -143,12 +143,4 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
         );
     }
 
-    @Test
-    void sameOriginDisabledTest() {
-        // Act
-        var actual = this.componentUnderTest.sameOriginDisabled();
-
-        // Assert
-        assertThat(actual).isFalse();
-    }
 }

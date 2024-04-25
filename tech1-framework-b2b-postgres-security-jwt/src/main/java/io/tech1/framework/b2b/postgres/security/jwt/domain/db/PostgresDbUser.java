@@ -11,7 +11,7 @@ import io.tech1.framework.domain.base.Username;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;

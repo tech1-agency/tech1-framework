@@ -8,19 +8,13 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
-import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
-import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
@@ -45,9 +39,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSocketMessageBroker
-@EnableWebSocketSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwtWebsockets implements WebSocketMessageBrokerConfigurer {
+public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     // Handshakes
     private final CsrfInterceptorHandshake csrfInterceptorHandshake;
@@ -69,10 +62,9 @@ public class ApplicationBaseSecurityJwtWebsockets implements WebSocketMessageBro
                 .withSockJS();
     }
 
-    @Bean
-    public AuthorizationManager<Message<?>> authorizationManager(MessageMatcherDelegatingAuthorizationManager.Builder messages) {
-        messages.anyMessage().authenticated();
-        return messages.build();
+    @Override
+    public void configureInbound(MessageSecurityMetadataSourceRegistry registry) {
+        registry.anyMessage().authenticated();
     }
 
     @Override
@@ -83,4 +75,13 @@ public class ApplicationBaseSecurityJwtWebsockets implements WebSocketMessageBro
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());
     }
 
+    /**
+     * Determines if a CSRF token is required for connecting. This protects against remote
+     * sites from connecting to the application and being able to read/write data over the
+     * connection. The default is false (the token is required).
+     */
+    @Override
+    protected boolean sameOriginDisabled() {
+        return false;
+    }
 }

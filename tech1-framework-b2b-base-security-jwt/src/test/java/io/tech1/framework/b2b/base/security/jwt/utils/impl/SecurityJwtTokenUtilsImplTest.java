@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
+import io.jsonwebtoken.Jwts;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
@@ -10,6 +11,8 @@ import io.tech1.framework.domain.properties.base.TimeAmount;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -41,6 +45,7 @@ import static java.util.Objects.nonNull;
 import static java.util.TimeZone.getTimeZone;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Slf4j
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -129,6 +134,16 @@ class SecurityJwtTokenUtilsImplTest {
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     private final SecurityJwtTokenUtils componentUnderTest;
+
+    @Disabled("Only for debugging purposes")
+    @Test
+    void generateJwtSecretKey() {
+        // Act
+        var encodedSecretKey = Base64.getEncoder().encodeToString(Jwts.SIG.HS256.key().build().getEncoded());
+
+        // Assert
+        LOGGER.info("key: {}", encodedSecretKey);
+    }
 
     @Test
     void createJwtAccessTokenTest() {

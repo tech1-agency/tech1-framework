@@ -40,7 +40,7 @@ tech1:
         REGISTER1: true
         REGISTER1_FAILURE: true
     jwtTokensConfigs:
-      secretKey: ENC(G/ikUUQcuS4+pbN4dj1gPlGwm/Ht2a+8)
+      secretKey: ENC(A5a6VT1rcBPWriVKS0P5qhOuGNZP4R/5Anm17/WMUlgWF9xgdw1Wo5CzvercEHpQoL+7Px2W1MI=)
       storageMethod: COOKIES
       accessToken:
         expiration:

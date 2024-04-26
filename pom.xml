@@ -89,7 +89,7 @@
         <version.plugin.compiler>3.11.0</version.plugin.compiler>
         <version.plugin.dependency>3.5.0</version.plugin.dependency>
         <version.plugin.failsafe>3.1.2</version.plugin.failsafe>
-        <version.plugin.git.commit>4.9.10</version.plugin.git.commit>
+        <version.plugin.git.commit>8.0.2</version.plugin.git.commit>
         <version.plugin.jacoco>0.8.9</version.plugin.jacoco>
         <version.plugin.javadoc>3.5.0</version.plugin.javadoc>
         <version.plugin.lombok>1.18.20.0</version.plugin.lombok>
@@ -420,8 +420,8 @@
                 </plugin>
                 <!-- git => `actuator/info` endpoint -->
                 <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
+                    <groupId>io.github.git-commit-id</groupId>
+                    <artifactId>git-commit-id-maven-plugin</artifactId>
                     <version>${version.plugin.git.commit}</version>
                     <executions>
                         <execution>

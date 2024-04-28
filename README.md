@@ -16,8 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.8.1]
-— Modification: JWT token configs secret key regeneration
-— Migration: git-commit-id 4.9.10 → 8.0.2
-— Addition: springdoc-openapi-starter-webmvc-ui 2.5.0
-— Addition: "springdocEnabled" → ServerConfigs
+### Release Notes [Development v2.8.2]
+— TBD  

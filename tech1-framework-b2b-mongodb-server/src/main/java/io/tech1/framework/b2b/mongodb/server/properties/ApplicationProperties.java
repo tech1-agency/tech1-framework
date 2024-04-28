@@ -9,7 +9,7 @@ import org.springframework.core.PriorityOrdered;
 
 @Slf4j
 @ConfigurationProperties(
-        prefix = "app",
+        prefix = "tech1-server",
         ignoreUnknownFields = false
 )
 @Data

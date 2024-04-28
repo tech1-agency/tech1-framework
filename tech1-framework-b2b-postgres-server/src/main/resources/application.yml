@@ -19,7 +19,7 @@ jasypt:
 # Swagger
 springdoc:
   swagger-ui:
-    tagsSorter: "alpha"
+    tags-sorter: "alpha"
 
 # Spring PostgreSQL
 spring:
@@ -34,67 +34,67 @@ spring:
 
 # Tech1 Framework
 tech1:
-  serverConfigs:
+  server-configs:
     name: tech1-framework-b2b-postgres-server
-  mavenConfigs:
-    groupId: @project.groupId@
-    artifactId: @project.artifactId@
+  maven-configs:
+    group-id: @project.groupId@
+    artifact-id: @project.artifactId@
     version: @project.version@
-  asyncConfigs:
-    threadNamePrefix: tps1-async
-  eventsConfigs:
-    threadNamePrefix: tps1-events
-  mvcConfigs:
+  async-configs:
+    thread-name-prefix: tps1-async
+  events-configs:
+    thread-name-prefix: tps1-events
+  mvc-configs:
     enabled: true
-    frameworkBasePathPrefix: /framework/security
-    corsConfigs:
-      pathPattern: /**
-      allowedMethods:
+    framework-base-path-prefix: /framework/security
+    cors-configs:
+      path-pattern: /**
+      allowed-methods:
         - DELETE
         - GET
         - POST
         - PUT
-      allowedHeaders:
+      allowed-headers:
         - Cache-Control
         - Content-Type
-      allowCredentials: true
-  hardwareMonitoringConfigs:
+      allow-credentials: true
+  hardware-monitoring-configs:
     enabled: true
-    thresholdsConfigs:
+    thresholds-configs:
       CPU: 80
       HEAP: 80
       SERVER: 85
       SWAP: 95
       VIRTUAL: 85
-  securityJwtConfigs:
-    authoritiesConfigs:
+  security-jwt-configs:
+    authorities-configs:
       authorities:
         - value: superadmin
         - value: user
         - value: admin
         - value: invitationCode:read
         - value: invitationCode:write
-      packageName: io.tech1.framework.b2b.postgres.server
-    cookiesConfigs:
-      jwtAccessTokenCookieCreationLatency:
+      package-name: io.tech1.framework.b2b.postgres.server
+    cookies-configs:
+      jwt-access-token-cookie-creation-latency:
         unit: SECONDS
         amount: 5
-    jwtTokensConfigs:
-      accessToken:
-        cookieKey: ajwt
+    jwt-tokens-configs:
+      access-token:
+        cookie-key: ajwt
       refreshToken:
-        cookieKey: rjwt
-    usersEmailsConfigs:
-      subjectPrefix: "[Tech1]"
-      authenticationLogin:
+        cookie-key: rjwt
+    users-emails-configs:
+      subject-prefix: "[Tech1]"
+      authentication-login:
         enabled: true
-      sessionRefreshed:
+      session-refreshed:
         enabled: true
 
-# App
-app:
-  serverConfigs:
-    targetAttribute1: "value1"
-    targetAttribute2: 10
-    targetAuthority: "USER"
+# Tech1 Server
+tech1-server:
+  server-configs:
+    target-attribute1: "value1"
+    target-attribute2: 10
+    target-authority: "USER"
 

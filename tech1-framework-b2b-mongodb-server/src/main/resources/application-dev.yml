@@ -4,33 +4,33 @@ logging:
 
 # Tech1 Framework
 tech1:
-  serverConfigs:
-    springdocEnabled: true
-    webclientURL: http://localhost:3000
-  utilitiesConfigs:
-    geoLocationsConfigs:
-      geoLiteCityDatabaseEnabled: false
-    geoCountryFlagsConfigs:
+  server-configs:
+    springdoc-enabled: true
+    webclient-url: http://localhost:3000
+  utilities-configs:
+    geo-locations-configs:
+      geo-lite-city-database-enabled: false
+    geo-country-flags-configs:
       enabled: false
-    userAgentConfigs:
+    user-agent-configs:
       enabled: false
-  incidentConfigs:
+  incident-configs:
     enabled: true
-    remoteServer:
-      baseURL: http://localhost:8973
+    remote-server:
+      base-url: http://localhost:8973
       credentials:
         username: admin
         password: admin
-  mvcConfigs:
-    corsConfigs:
-      allowedOrigins:
+  mvc-configs:
+    cors-configs:
+      allowed-origins:
         - http://localhost:8686
         - http://localhost:8787
-  securityJwtConfigs:
-    cookiesConfigs:
+  security-jwt-configs:
+    cookies-configs:
       domain: localhost
-    incidentsConfigs:
-      typesConfigs:
+    incidents-configs:
+      types-configs:
         AUTHENTICATION_LOGIN: true
         AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD: false
         AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD: true
@@ -40,40 +40,40 @@ tech1:
         SESSION_EXPIRED: false
         REGISTER1: true
         REGISTER1_FAILURE: true
-    jwtTokensConfigs:
-      secretKey: ENC(A5a6VT1rcBPWriVKS0P5qhOuGNZP4R/5Anm17/WMUlgWF9xgdw1Wo5CzvercEHpQoL+7Px2W1MI=)
-      storageMethod: COOKIES
-      accessToken:
+    jwt-tokens-configs:
+      secret-key: ENC(A5a6VT1rcBPWriVKS0P5qhOuGNZP4R/5Anm17/WMUlgWF9xgdw1Wo5CzvercEHpQoL+7Px2W1MI=)
+      storage-method: COOKIES
+      access-token:
         expiration:
           amount: 30
           unit: SECONDS # @java.time.temporal.ChronoUnit
-      refreshToken:
+      refresh-token:
         expiration:
           amount: 60
           unit: SECONDS # @java.time.temporal.ChronoUnit
-    loggingConfigs:
-      advancedRequestLoggingEnabled: false
-    sessionConfigs:
-      cleanSessionsByExpiredRefreshTokensCron:
+    logging-configs:
+      advanced-request-logging-enabled: false
+    session-configs:
+      clean-sessions-by-expired-refresh-tokens-cron:
         enabled: true
         expression: "*/30 * * * * *"
-        zoneId: "Europe/Kyiv"
-      enableSessionsMetadataRenewCron:
+        zone-id: "Europe/Kyiv"
+      enable-sessions-metadata-renew-cron:
         enabled: true
         expression: "*/30 * * * * *"
-        zoneId: "Europe/Kyiv"
-    essenceConfigs:
-      defaultUsers:
+        zone-id: "Europe/Kyiv"
+    essence-configs:
+      default-users:
         enabled: true
         users:
           - username: admin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
-            zoneId: "Europe/Kyiv"
-            passwordChangeRequired: false
+            zone-id: "Europe/Kyiv"
+            password-change-required: false
             authorities: [ "admin", "invitationCode:write" ]
-      invitationCodes:
+      invitation-codes:
         enabled: true
-  mongodbSecurityJwtConfigs:
+  mongodb-security-jwt-configs:
     mongodb:
       host: 127.0.0.1
       port: 27017

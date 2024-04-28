@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventRegistration1;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+// Swagger
+@Tag(name = "[tech1-framework] Registration API")
+// Spring
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource

@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.*;
@@ -40,6 +41,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(nullable = false)
     private Password password;
 
+    @Schema(type = "string")
     @Convert(converter = PostgresZoneIdConverter.class)
     @Column(name = "zone_id", nullable = false)
     private ZoneId zoneId;

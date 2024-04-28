@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseSuperAdminService;
+import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseSuperadminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tasks.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
-public class MongoBaseSuperAdminService extends AbstractBaseSuperAdminService {
+public class MongoBaseSuperadminService extends AbstractBaseSuperadminService {
 
     @Autowired
-    public MongoBaseSuperAdminService(
+    public MongoBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
             MongoInvitationCodesRepository invitationCodesRepository,

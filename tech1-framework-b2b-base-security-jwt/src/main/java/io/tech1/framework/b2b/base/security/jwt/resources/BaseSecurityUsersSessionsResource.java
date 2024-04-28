@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSessionsTable;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+// Swagger
+@Tag(name = "[tech1-framework] UsersSessions API")
+// Spring
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource

@@ -1,13 +1,14 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.constants.ZoneIdsConstants;
-
 import jakarta.validation.constraints.NotNull;
+
 import java.time.ZoneId;
 
 public record RequestUserUpdate1(
-        @NotNull ZoneId zoneId,
+        @Schema(type = "string") @NotNull ZoneId zoneId,
         @Email.ValidEmail Email email,
         String name
 ) {

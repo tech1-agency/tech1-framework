@@ -1,5 +1,6 @@
 package io.tech1.framework.hardware.monitoring.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringMetadata;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import static io.tech1.framework.domain.utilities.hardware.HardwareUtility.getHeapMemory;
 
+// Swagger
+@Tag(name = "[tech1-framework] Hardware API")
+// Spring
 @Slf4j
 @RestController
 @RequestMapping("/hardware/monitoring")

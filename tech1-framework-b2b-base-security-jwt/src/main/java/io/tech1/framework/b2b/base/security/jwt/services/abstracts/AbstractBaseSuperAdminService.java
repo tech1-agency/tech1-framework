@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperadminService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tasks.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseSuperAdminService implements BaseSuperAdminService {
+public abstract class AbstractBaseSuperadminService implements BaseSuperadminService {
 
     // Incidents
     protected final IncidentPublisher incidentPublisher;

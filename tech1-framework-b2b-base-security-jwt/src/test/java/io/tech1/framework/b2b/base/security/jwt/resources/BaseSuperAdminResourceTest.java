@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUse
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperadminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
@@ -30,25 +30,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
+class BaseSuperadminResourceTest extends AbstractResourcesRunner1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseSuperAdminService baseSuperAdminService;
+    private final BaseSuperadminService baseSuperadminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
 
     // Resource
-    private final BaseSuperAdminResource componentUnderTest;
+    private final BaseSuperadminResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.baseSuperAdminService,
+                this.baseSuperadminService,
                 this.baseUsersSessionsService,
                 this.tokensProvider
         );
@@ -58,7 +58,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.baseSuperAdminService,
+                this.baseSuperadminService,
                 this.baseUsersSessionsService,
                 this.tokensProvider
         );
@@ -67,7 +67,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
     @Test
     void getResetServerStatusTest() throws Exception {
         // Arrange
-        when(this.baseSuperAdminService.getResetServerStatus()).thenReturn(ResetServerStatus.random());
+        when(this.baseSuperadminService.getResetServerStatus()).thenReturn(ResetServerStatus.random());
 
         // Act
         this.mvc.perform(get("/superadmin/server/reset/status"))
@@ -79,7 +79,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.description").exists());
 
         // Assert
-        verify(this.baseSuperAdminService).getResetServerStatus();
+        verify(this.baseSuperadminService).getResetServerStatus();
     }
 
     @Test
@@ -94,14 +94,14 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentJwtUser();
-        verify(this.baseSuperAdminService).resetServerBy(user);
+        verify(this.baseSuperadminService).resetServerBy(user);
     }
 
     @Test
     void getUnusedInvitationCodesTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitationCode.class);
-        when(this.baseSuperAdminService.findUnused()).thenReturn(codes);
+        when(this.baseSuperadminService.findUnused()).thenReturn(codes);
 
         // Act
         this.mvc.perform(get("/superadmin/invitationCodes/unused"))
@@ -114,7 +114,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
                 .andExpect(jsonPath("$.[0].invited", notNullValue()));
 
         // Assert
-        verify(this.baseSuperAdminService).findUnused();
+        verify(this.baseSuperadminService).findUnused();
     }
 
     @Test
@@ -126,7 +126,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
         );
         var requestAccessToken = RequestAccessToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
-        when(this.baseSuperAdminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
+        when(this.baseSuperadminService.getSessions(requestAccessToken)).thenReturn(sessionsTable);
 
         // Act
         this.mvc.perform(get("/superadmin/sessions"))
@@ -156,7 +156,7 @@ class BaseSuperAdminResourceTest extends AbstractResourcesRunner1 {
 
         // Assert
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.baseSuperAdminService).getSessions(requestAccessToken);
+        verify(this.baseSuperadminService).getSessions(requestAccessToken);
     }
 
     @Test

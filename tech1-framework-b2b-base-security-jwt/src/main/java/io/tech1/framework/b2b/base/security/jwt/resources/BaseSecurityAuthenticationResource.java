@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDetailsService;
@@ -30,6 +31,9 @@ import static io.tech1.framework.domain.enums.Status.COMPLETED;
 import static io.tech1.framework.domain.enums.Status.STARTED;
 import static java.util.Objects.nonNull;
 
+// Swagger
+@Tag(name = "[tech1-framework] Authentication API")
+// Spring
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource

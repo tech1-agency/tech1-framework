@@ -94,7 +94,16 @@ public class ApplicationBaseSecurityJwt {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return this.abstractApplicationSecurityJwtConfigurer::configure;
+        return web -> {
+            if (this.applicationFrameworkProperties.getServerConfigs().isSpringdocEnabled()) {
+                web.ignoring().requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**"
+                );
+            }
+            this.abstractApplicationSecurityJwtConfigurer.configure(web);
+        };
     }
 
     @Bean

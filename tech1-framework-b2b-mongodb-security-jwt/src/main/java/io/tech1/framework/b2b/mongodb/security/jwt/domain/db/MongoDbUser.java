@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.domain.base.Email;
@@ -34,6 +35,7 @@ public class MongoDbUser {
     private String id;
     private Username username;
     private Password password;
+    @Schema(type = "string")
     private ZoneId zoneId;
     private Set<SimpleGrantedAuthority> authorities;
     private Email email;

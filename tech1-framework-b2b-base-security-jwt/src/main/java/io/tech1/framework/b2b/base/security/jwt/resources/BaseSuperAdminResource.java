@@ -1,12 +1,13 @@
 package io.tech1.framework.b2b.base.security.jwt.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperAdminService;
+import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperadminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
@@ -19,18 +20,21 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
+// Swagger
+@Tag(name = "[tech1-framework] Superadmin API")
+// Spring
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController
 @RequestMapping("/superadmin")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BaseSuperAdminResource {
+public class BaseSuperadminResource {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseSuperAdminService baseSuperAdminService;
+    private final BaseSuperadminService baseSuperadminService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Tokens
     private final TokensProvider tokensProvider;
@@ -41,13 +45,13 @@ public class BaseSuperAdminResource {
 
     @GetMapping("/server/reset/status")
     public ResetServerStatus getResetServerStatus() {
-        return this.baseSuperAdminService.getResetServerStatus();
+        return this.baseSuperadminService.getResetServerStatus();
     }
 
     @PostMapping("/server/reset")
     public void resetServer() {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
-        this.baseSuperAdminService.resetServerBy(user);
+        this.baseSuperadminService.resetServerBy(user);
     }
 
     // =================================================================================================================
@@ -56,7 +60,7 @@ public class BaseSuperAdminResource {
 
     @GetMapping("/invitationCodes/unused")
     public List<ResponseInvitationCode> getUnusedInvitationCodes() {
-        return this.baseSuperAdminService.findUnused();
+        return this.baseSuperadminService.findUnused();
     }
 
     // =================================================================================================================
@@ -66,7 +70,7 @@ public class BaseSuperAdminResource {
     @GetMapping("/sessions")
     public ResponseSuperadminSessionsTable getSessions(HttpServletRequest httpRequest) throws AccessTokenNotFoundException {
         var cookie = this.tokensProvider.readRequestAccessToken(httpRequest);
-        return this.baseSuperAdminService.getSessions(cookie);
+        return this.baseSuperadminService.getSessions(cookie);
     }
 
     @PostMapping("/sessions/{sessionId}/renew/manually")

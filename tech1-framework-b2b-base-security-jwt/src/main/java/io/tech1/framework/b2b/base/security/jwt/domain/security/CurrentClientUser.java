@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.tech1.framework.domain.base.AbstractAuthority;
 import io.tech1.framework.domain.base.Email;
 import io.tech1.framework.domain.base.Username;
@@ -23,6 +24,7 @@ public class CurrentClientUser {
     private final Username username;
     private final Email email;
     private final String name;
+    @Schema(type = "string")
     private final ZoneId zoneId;
     private final boolean passwordChangeRequired;
     private final Set<String> authorities;

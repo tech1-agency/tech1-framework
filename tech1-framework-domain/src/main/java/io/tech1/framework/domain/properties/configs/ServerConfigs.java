@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
@@ -17,15 +18,17 @@ import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStr
 public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final ServerName name;
+    @MandatoryProperty
+    private final boolean springdocEnabled;
     @NonMandatoryProperty
     private String webclientURL;
 
     public static ServerConfigs testsHardcoded() {
-        return new ServerConfigs(ServerName.testsHardcoded(), "http://127.0.0.1:3000");
+        return new ServerConfigs(ServerName.testsHardcoded(), true, "http://127.0.0.1:3000");
     }
 
     public static ServerConfigs random() {
-        return new ServerConfigs(ServerName.random(), randomString());
+        return new ServerConfigs(ServerName.random(), randomBoolean(), randomString());
     }
 
     @Override

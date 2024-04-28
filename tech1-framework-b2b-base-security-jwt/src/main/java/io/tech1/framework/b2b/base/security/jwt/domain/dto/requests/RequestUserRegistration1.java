@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 
@@ -14,7 +15,7 @@ public record RequestUserRegistration1(
         @Username.ValidUsername Username username,
         @Password.ValidPasswordCamelCaseLettersAndNumbers(min = 8, max = 20) Password password,
         @Password.ValidPasswordNotBlank Password confirmPassword,
-        @NotNull ZoneId zoneId,
+        @Schema(type = "string") @NotNull ZoneId zoneId,
         @NotBlank String invitationCode
 ) {
 

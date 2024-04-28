@@ -5,6 +5,7 @@ logging:
 # Tech1 Framework
 tech1:
   serverConfigs:
+    springdocEnabled: true
     webclientURL: http://localhost:3000
   utilitiesConfigs:
     geoLocationsConfigs:

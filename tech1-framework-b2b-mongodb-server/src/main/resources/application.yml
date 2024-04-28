@@ -16,6 +16,11 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
+# Swagger
+springdoc:
+  swagger-ui:
+    tagsSorter: "alpha"
+
 # Tech1 Framework
 tech1:
   serverConfigs:

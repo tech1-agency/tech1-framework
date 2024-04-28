@@ -1,5 +1,6 @@
 package io.tech1.framework.b2b.postgres.server.resources;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.server.services.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// Swagger
+@Tag(name = "[tech1-postgres-server] Users API")
+// Spring
 @Slf4j
 @RestController
 @RequestMapping("/users")

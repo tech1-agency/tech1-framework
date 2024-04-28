@@ -32,8 +32,8 @@ public class SessionsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${tech1.securityJwtConfigs.sessionConfigs.cleanSessionsByExpiredRefreshTokensCron.expression}",
-            zone = "${tech1.securityJwtConfigs.sessionConfigs.cleanSessionsByExpiredRefreshTokensCron.zoneId}"
+            cron = "${tech1.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.expression}",
+            zone = "${tech1.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.zone-id}"
     )
     public void cleanByExpiredRefreshTokens() {
         this.executeCron(
@@ -47,8 +47,8 @@ public class SessionsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${tech1.securityJwtConfigs.sessionConfigs.enableSessionsMetadataRenewCron.expression}",
-            zone = "${tech1.securityJwtConfigs.sessionConfigs.cleanSessionsByExpiredRefreshTokensCron.zoneId}"
+            cron = "${tech1.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.expression}",
+            zone = "${tech1.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.zone-id}"
     )
     public void enableSessionsMetadataRenew() {
         this.executeCron(

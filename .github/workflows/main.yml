@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
   MONGODB_REPO: tech1-io/tech1-framework-b2b-mongodb-server
   POSTGRES_REPO: tech1-io/tech1-framework-b2b-postgres-server
-  VERSION: '2.8.2-SNAPSHOT'
+  VERSION: '2.8.3-SNAPSHOT'
   DOCKER_REQUIRED: 'false'
 
 concurrency:

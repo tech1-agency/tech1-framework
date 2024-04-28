@@ -16,7 +16,5 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
-### Release Notes [Development v2.8.2]
-— Modification: ServerConfigs.springdocEnabled: boolean → Boolean  
-— Addition: RemoteServer.createFeignOnBasicAuthentication(T clazz)
-— Addition: RecipientsConfigs properties configs
+### Release Notes [Development v2.8.3]
+— TBD  

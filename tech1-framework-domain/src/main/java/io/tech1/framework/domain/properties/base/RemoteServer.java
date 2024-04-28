@@ -1,5 +1,10 @@
 package io.tech1.framework.domain.properties.base;
 
+import feign.Feign;
+import feign.auth.BasicAuthRequestInterceptor;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import lombok.AllArgsConstructor;
@@ -30,5 +35,19 @@ public class RemoteServer extends AbstractPropertyConfigs {
 
     public boolean containsCredentials(@NotNull UsernamePasswordCredentials credentials) {
         return this.credentials.equals(credentials);
+    }
+
+    public <T> T createFeignOnBasicAuthentication(Class<T> clazz) {
+        return Feign.builder()
+                .client(new OkHttpClient())
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .requestInterceptor(
+                        new BasicAuthRequestInterceptor(
+                                this.credentials.username().value(),
+                                this.credentials.password().value()
+                        )
+                )
+                .target(clazz, this.baseURL);
     }
 }

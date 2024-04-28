@@ -35,4 +35,8 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return true;
     }
+
+    public boolean isSpringdocEnabled() {
+        return this.springdocEnabled;
+    }
 }

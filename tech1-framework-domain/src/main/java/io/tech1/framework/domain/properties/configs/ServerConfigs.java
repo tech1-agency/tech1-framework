@@ -19,7 +19,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final ServerName name;
     @MandatoryProperty
-    private final boolean springdocEnabled;
+    private final Boolean springdocEnabled;
     @NonMandatoryProperty
     private String webclientURL;
 

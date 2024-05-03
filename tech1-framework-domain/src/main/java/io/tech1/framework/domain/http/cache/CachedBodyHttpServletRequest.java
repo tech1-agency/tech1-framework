@@ -1,14 +1,16 @@
 package io.tech1.framework.domain.http.cache;
 
-import org.springframework.util.StreamUtils;
-
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import org.springframework.util.StreamUtils;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static java.nio.charset.Charset.defaultCharset;
 
 public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
@@ -29,5 +31,9 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
     public BufferedReader getReader() {
         var byteArrayInputStream = new ByteArrayInputStream(this.cachedBody);
         return new BufferedReader(new InputStreamReader(byteArrayInputStream));
+    }
+
+    public final CachedPayload getCachedPayload() {
+        return new CachedPayload(new String(this.cachedBody, defaultCharset()));
     }
 }

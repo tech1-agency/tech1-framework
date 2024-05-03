@@ -3,13 +3,14 @@ package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import jakarta.servlet.http.HttpServletRequest;
+import static io.tech1.framework.b2b.base.security.jwt.utilities.HttpServletRequestUtility.isPOST;
 
 @Slf4j
 @Component
@@ -29,8 +30,10 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
     }
 
     @Override
-    public void cachePayload(CachedBodyHttpServletRequest cachedRequest, String payload) {
-        cachedRequest.setAttribute(CACHED_PAYLOAD_ATTRIBUTE, payload);
+    public void cachePayload(CachedBodyHttpServletRequest cachedRequest) {
+        if (this.isCachedEndpoint(cachedRequest)) {
+            cachedRequest.setAttribute(CACHED_PAYLOAD_ATTRIBUTE, cachedRequest.getCachedPayload().value());
+        }
     }
 
     @Override
@@ -40,20 +43,20 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
 
     @Override
     public boolean isAuthenticationLoginEndpoint(HttpServletRequest request) {
-        return this.isEndpoint(request, "POST", "/authentication/login");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/login");
     }
 
     @Override
     public boolean isAuthenticationRefreshTokenEndpoint(HttpServletRequest request) {
-        return this.isEndpoint(request, "POST", "/authentication/refreshToken");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/refreshToken");
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private boolean isEndpoint(HttpServletRequest request, String requestMethod, String requestMapping) {
+    private boolean isEndpoint(HttpServletRequest request, String requestMapping) {
         var frameworkBasePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getFrameworkBasePathPrefix();
         var requestURI = this.contextPath + frameworkBasePathPrefix + requestMapping;
-        return requestMethod.equals(request.getMethod()) && requestURI.equals(request.getRequestURI());
+        return requestURI.equals(request.getRequestURI());
     }
 }

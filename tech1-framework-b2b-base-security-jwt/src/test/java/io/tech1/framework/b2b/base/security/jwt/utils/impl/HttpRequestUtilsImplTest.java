@@ -2,6 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
+import io.tech1.framework.domain.http.cache.CachedPayload;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.utils.impl.HttpRequestUtilsImpl.CACHED_PAYLOAD_ATTRIBUTE;
@@ -92,16 +95,34 @@ class HttpRequestUtilsImplTest {
     }
 
     @Test
-    void cachePayloadTest() {
+    void cachePayloadNoCacheTest() throws IOException {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
-        var payload = randomString();
 
         // Act
-        this.componentUnderTest.cachePayload(cachedRequest, payload);
+        this.componentUnderTest.cachePayload(cachedRequest);
 
         // Assert
-        verify(cachedRequest).setAttribute(CACHED_PAYLOAD_ATTRIBUTE, payload);
+        verify(cachedRequest).getMethod();
+        verifyNoMoreInteractions(cachedRequest);
+    }
+
+    @Test
+    void cachePayloadTest() throws IOException {
+        // Arrange
+        var cachedRequest = mock(CachedBodyHttpServletRequest.class);
+        when(cachedRequest.getMethod()).thenReturn("POST");
+        when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.testsHardcoded());
+        when(cachedRequest.getRequestURI()).thenReturn("/api/framework/security/authentication/login");
+
+        // Act
+        this.componentUnderTest.cachePayload(cachedRequest);
+
+        // Assert
+        verify(cachedRequest).getMethod();
+        verify(cachedRequest).getRequestURI();
+        verify(cachedRequest).getCachedPayload();
+        verify(cachedRequest).setAttribute(CACHED_PAYLOAD_ATTRIBUTE, "{}");
         verifyNoMoreInteractions(cachedRequest);
     }
 

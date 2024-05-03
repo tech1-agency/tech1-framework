@@ -7,6 +7,10 @@ import io.tech1.framework.domain.http.cache.CachedBodyServletInputStream;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.LoggingConfigs;
 import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +23,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static org.mockito.Mockito.*;
@@ -83,25 +83,48 @@ class AdvancedRequestLoggingFilterTest {
     }
 
     @Test
+    void multipartRequestEndpointTest() throws ServletException, IOException {
+        // Arrange
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.random()));
+        var request = mock(HttpServletRequest.class);
+        var response = mock(HttpServletResponse.class);
+        var filterChain = mock(FilterChain.class);
+        when(request.getMethod()).thenReturn("POST");
+        when(request.getContentType()).thenReturn("multipart/form-data");
+
+        // Act
+        this.componentUnderTest.doFilterInternal(request, response, filterChain);
+
+        // Assert
+        verify(filterChain).doFilter(any(HttpServletRequest.class), eq(response));
+        verify(request).getContentType();
+        verify(request).getMethod();
+        verifyNoMoreInteractions(
+                request,
+                response,
+                filterChain
+        );
+    }
+
+    @Test
     void disabledLoggingCachedEndpointTest() throws ServletException, IOException {
         // Arrange
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.disabled()));
-        var httpServletRequest = mock(HttpServletRequest.class);
-        var httpServletResponse = mock(HttpServletResponse.class);
+        var request = mock(HttpServletRequest.class);
+        var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(this.httpRequestUtils.isCachedEndpoint(any())).thenReturn(true);
 
         // Act
-        this.componentUnderTest.doFilterInternal(httpServletRequest, httpServletResponse, filterChain);
+        this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.httpRequestUtils).isCachedEndpoint(any());
-        verify(this.httpRequestUtils).cachePayload(any(), anyString());
-        verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(httpServletResponse));
-        verify(httpServletRequest).getInputStream();
+        verify(this.httpRequestUtils).cachePayload(any());
+        verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(response));
+        verify(request).getContentType();
+        verify(request).getInputStream();
         verifyNoMoreInteractions(
-                httpServletRequest,
-                httpServletResponse,
+                request,
+                response,
                 filterChain
         );
     }
@@ -110,25 +133,25 @@ class AdvancedRequestLoggingFilterTest {
     void enabledLoggingEmptyPayloadTest() throws ServletException, IOException {
         // Arrange
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.enabled()));
-        var httpServletRequest = mock(HttpServletRequest.class);
-        var httpServletResponse = mock(HttpServletResponse.class);
+        var request = mock(HttpServletRequest.class);
+        var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(httpServletRequest.getInputStream()).thenReturn(new CachedBodyServletInputStream("".getBytes()));
-        when(this.httpRequestUtils.isCachedEndpoint(any())).thenReturn(false);
+        when(request.getInputStream()).thenReturn(new CachedBodyServletInputStream("".getBytes()));
 
         // Act
-        this.componentUnderTest.doFilterInternal(httpServletRequest, httpServletResponse, filterChain);
+        this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.httpRequestUtils).isCachedEndpoint(any());
+        verify(this.httpRequestUtils).cachePayload(any());
         verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
-        verify(httpServletRequest).getInputStream();
-        verify(httpServletRequest).getMethod();
-        verify(httpServletRequest).getServletPath();
-        verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(httpServletResponse));
+        verify(request).getContentType();
+        verify(request).getInputStream();
+        verify(request).getMethod();
+        verify(request).getServletPath();
+        verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(response));
         verifyNoMoreInteractions(
-                httpServletRequest,
-                httpServletResponse,
+                request,
+                response,
                 filterChain
         );
     }
@@ -137,25 +160,25 @@ class AdvancedRequestLoggingFilterTest {
     void enabledLoggingTest() throws ServletException, IOException {
         // Arrange
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(LoggingConfigs.enabled()));
-        var httpServletRequest = mock(HttpServletRequest.class);
-        var httpServletResponse = mock(HttpServletResponse.class);
+        var request = mock(HttpServletRequest.class);
+        var response = mock(HttpServletResponse.class);
         var filterChain = mock(FilterChain.class);
-        when(httpServletRequest.getInputStream()).thenReturn(new CachedBodyServletInputStream("{}".getBytes()));
-        when(this.httpRequestUtils.isCachedEndpoint(any())).thenReturn(false);
+        when(request.getInputStream()).thenReturn(new CachedBodyServletInputStream("{}".getBytes()));
 
         // Act
-        this.componentUnderTest.doFilterInternal(httpServletRequest, httpServletResponse, filterChain);
+        this.componentUnderTest.doFilterInternal(request, response, filterChain);
 
         // Assert
-        verify(this.httpRequestUtils).isCachedEndpoint(any());
+        verify(this.httpRequestUtils).cachePayload(any());
         verify(this.securityPrincipalUtils).getAuthenticatedUsernameOrUnexpected();
-        verify(httpServletRequest).getInputStream();
-        verify(httpServletRequest).getMethod();
-        verify(httpServletRequest).getServletPath();
-        verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(httpServletResponse));
+        verify(request).getContentType();
+        verify(request).getInputStream();
+        verify(request).getMethod();
+        verify(request).getServletPath();
+        verify(filterChain).doFilter(any(CachedBodyHttpServletRequest.class), eq(response));
         verifyNoMoreInteractions(
-                httpServletRequest,
-                httpServletResponse,
+                request,
+                response,
                 filterChain
         );
     }

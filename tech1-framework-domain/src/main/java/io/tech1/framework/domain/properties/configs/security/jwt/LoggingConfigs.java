@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
@@ -14,6 +16,10 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 public class LoggingConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Boolean advancedRequestLoggingEnabled;
+
+    public static LoggingConfigs random() {
+        return randomBoolean() ? enabled() : disabled();
+    }
 
     public static LoggingConfigs testsHardcoded() {
         return LoggingConfigs.enabled();

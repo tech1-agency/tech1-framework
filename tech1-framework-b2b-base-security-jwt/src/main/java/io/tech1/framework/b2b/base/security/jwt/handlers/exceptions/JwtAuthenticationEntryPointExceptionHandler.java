@@ -7,6 +7,8 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.domain.exceptions.ExceptionEntity;
 import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
@@ -41,8 +41,10 @@ public class JwtAuthenticationEntryPointExceptionHandler implements Authenticati
 
         // in case of another endpoint to cache - extract methods like: isLoginEndpoint or isLogoutEndpoint
         if (exception instanceof BadCredentialsException && this.httpRequestUtils.isCachedEndpoint(request)) {
-            var cachedPayload = this.httpRequestUtils.getCachedPayload(request);
-            var requestUserLogin = this.objectMapper.readValue(cachedPayload, RequestUserLogin.class);
+            var requestUserLogin = this.objectMapper.readValue(
+                    this.httpRequestUtils.getCachedPayload(request),
+                    RequestUserLogin.class
+            );
 
             this.securityJwtPublisher.publishAuthenticationLoginFailure(
                     new EventAuthenticationLoginFailure(

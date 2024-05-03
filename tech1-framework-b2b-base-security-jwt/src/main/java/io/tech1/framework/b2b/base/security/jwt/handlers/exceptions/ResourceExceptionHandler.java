@@ -14,6 +14,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
@@ -29,6 +30,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler({
             RegistrationException.class
     })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> registerException(RegistrationException ex) {
         var response = new ExceptionEntity(
                 ExceptionEntityType.ERROR,
@@ -41,6 +43,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler({
             MethodArgumentNotValidException.class
     })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -61,6 +64,7 @@ public class ResourceExceptionHandler {
             RefreshTokenDbNotFoundException.class,
             TokenUnauthorizedException.class
     })
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ExceptionEntity> unauthorizedExceptions(Exception ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.UNAUTHORIZED);
     }
@@ -68,6 +72,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler({
             AccessDeniedException.class
     })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ExceptionEntity> forbiddenExceptions(Exception ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.FORBIDDEN);
     }
@@ -75,6 +80,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler({
             IllegalArgumentException.class
     })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> internalServerError(Exception ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }

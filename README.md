@@ -16,5 +16,9 @@ Last deployed version: **1.16**
 `mvn failsafe:integration-test` runs only integration tests  
 `mvn clean verify` when you want to be sure, that whole project just works  
 
+### Swagger
+URL: http://{server}/api/swagger-ui/index.html
+
 ### Release Notes [Development v2.8.3]
 — Modification: skip multipart/form-data in AdvancedRequestLoggingFilter  
+— Modification: add ResponseStatus to ControllerAdvice (swagger)

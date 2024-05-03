@@ -19,6 +19,5 @@ Last deployed version: **1.16**
 ### Swagger
 URL: http://{server}/api/swagger-ui/index.html
 
-### Release Notes [Development v2.8.3]
-— Modification: skip multipart/form-data in AdvancedRequestLoggingFilter  
-— Modification: add ResponseStatus to ControllerAdvice (swagger)
+### Release Notes [Development v2.8.4]
+— TBD  

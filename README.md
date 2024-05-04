@@ -20,4 +20,4 @@ Last deployed version: **1.16**
 URL: http://{server}/api/swagger-ui/index.html
 
 ### Release Notes [Development v2.8.4]
-— TBD  
+— Migrate: ops b2b-****-server in docker  

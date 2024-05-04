@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  tech1:
+    image: ghcr.io/tech1-io/tech1-framework-b2b-mongodb-server:2.8.4-SNAPSHOT
+    restart: unless-stopped
+    container_name: tech1-framework-b2b-mongodb-server
+    networks:
+      - tech1-network
+    ports:
+      - "8484:8484"
+    environment:
+      - PORT=8484
+      - CONFIG_LOCATIONS=classpath:application.yml,file:/application-docker.yml
+      - JASYPT_PASSWORD=JJEPTECH1
+      - JVM_ARGUMENTS=-Xmx5g --add-opens=java.base/java.time=ALL-UNNAMED
+    volumes:
+      - ./application-docker.yml:/application-docker.yml
+      - ./GeoLite2-City.mmdb:/GeoLite2-City.mmdb
+
+networks:
+  tech1-network:
+    name: tech1-network
+    driver: bridge

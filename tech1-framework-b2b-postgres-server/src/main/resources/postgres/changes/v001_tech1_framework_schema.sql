@@ -18,8 +18,8 @@ CREATE TABLE "tech1_users_sessions" (
     "created_at" int8 NOT NULL,
     "updated_at" int8 NOT NULL,
     "username" varchar(255) NOT NULL,
-    "access_token" varchar(1024) NOT NULL,
-    "refresh_token" varchar(1024) NOT NULL,
+    "access_token" varchar(4096) NOT NULL,
+    "refresh_token" varchar(4096) NOT NULL,
     "metadata" varchar(65535) NOT NULL,
     "metadata_renew_cron" bool NOT NULL,
     "metadata_renew_manually" bool NOT NULL

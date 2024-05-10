@@ -39,11 +39,11 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     private Username username;
 
     @Convert(converter = PostgresJwtAccessTokenConverter.class)
-    @Column(name = "access_token", length = 1024, nullable = false)
+    @Column(name = "access_token", length = 4096, nullable = false)
     private JwtAccessToken accessToken;
 
     @Convert(converter = PostgresJwtRefreshTokenConverter.class)
-    @Column(name = "refresh_token", length = 1024, nullable = false)
+    @Column(name = "refresh_token", length = 4096, nullable = false)
     private JwtRefreshToken refreshToken;
 
     @Convert(converter = PostgresUserRequestMetadataConverter.class)

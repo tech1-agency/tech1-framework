@@ -15,8 +15,8 @@ CREATE TABLE "tech1_users" (
 CREATE TABLE "tech1_users_sessions" (
     "id" varchar(36) PRIMARY KEY,
     "username" varchar(255) NOT NULL,
-    "access_token" varchar(1024) NOT NULL,
-    "refresh_token" varchar(1024) NOT NULL,
+    "access_token" varchar(4096) NOT NULL,
+    "refresh_token" varchar(4096) NOT NULL,
     "metadata" varchar(65535) NOT NULL
 );
 

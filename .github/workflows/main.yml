@@ -33,7 +33,7 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: GitHub Packages
+      - name: Maven [github packages]
         run: |
           mvn clean install \
             -Ddeployment_github_username=${{ github.actor }} -Ddeployment_github_token=${{ secrets.GITHUB_TOKEN }} \

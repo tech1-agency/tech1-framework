@@ -45,7 +45,16 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.CONTAINER_MIN_VERSION_TO_KEEP }}
 
-      - name: Delete Packages [tech1-framework-b2b-mongodb-server]
+      - name: Delete Container Package Untagged Versions [tech1-framework-b2b-mongodb-server]
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'tech1-framework-b2b-mongodb-server'
+          package-type: 'container'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          delete-only-untagged-versions: true
+
+      - name: Delete Container Package [tech1-framework-b2b-mongodb-server]
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
@@ -53,7 +62,6 @@ jobs:
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.CONTAINER_MIN_VERSION_TO_KEEP }}
-          delete-only-untagged-versions: true
 
       - name: Tech1 mails@v2 outputs
         if: always()

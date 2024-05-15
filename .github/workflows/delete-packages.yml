@@ -33,6 +33,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: 2
 
+      - name: Delete Packages [tech1-framework-b2b-mongodb-server]
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'tech1-framework-b2b-mongodb-server'
+          package-type: 'container'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-versions-to-keep: 2
+
       - name: Tech1 mails@v2 outputs
         if: always()
         id: tech1_mails_v2

@@ -1,0 +1,47 @@
+name: delete-packages
+
+on:
+  schedule:
+    - cron: "30 3 * * SUN"
+  workflow_dispatch:
+
+env:
+  PACKAGE_OWNER: 'tech1-io'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      job_status: ${{ steps.tech1_mails_v2.outputs.job_status }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Delete Packages [tech1-framework-b2b-postgres-server]
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ env.PACKAGE_OWNER }}
+          package-name: 'tech1-framework-b2b-postgres-server'
+          package-type: 'container'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-versions-to-keep: 2
+
+      - name: Tech1 mails@v2 outputs
+        if: always()
+        id: tech1_mails_v2
+        run: echo "job_status=${{ job.status }}" >> $GITHUB_OUTPUT
+
+  mails:
+    if: always()
+    needs: [main]
+    uses: tech1-io/tech1-reusable-ops/.github/workflows/mails-v2.yml@main
+    secrets: inherit
+    with:
+      previous_job_status: ${{ needs.main.outputs.job_status }}

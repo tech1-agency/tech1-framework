@@ -7,6 +7,7 @@ on:
 
 env:
   PACKAGE_OWNER: 'tech1-io'
+  CONTAINER_MIN_VERSION_TO_KEEP: 2
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,6 +25,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+        # package-type: container
+
       - name: Delete Packages [tech1-framework-b2b-postgres-server]
         uses: actions/delete-package-versions@v5
         with:
@@ -31,7 +34,8 @@ jobs:
           package-name: 'tech1-framework-b2b-postgres-server'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
-          min-versions-to-keep: 2
+          min-versions-to-keep: ${{ env.CONTAINER_MIN_VERSION_TO_KEEP }}
+          delete-only-untagged-versions: true
 
       - name: Delete Packages [tech1-framework-b2b-mongodb-server]
         uses: actions/delete-package-versions@v5
@@ -40,7 +44,8 @@ jobs:
           package-name: 'tech1-framework-b2b-mongodb-server'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
-          min-versions-to-keep: 2
+          min-versions-to-keep: ${{ env.CONTAINER_MIN_VERSION_TO_KEEP }}
+          delete-only-untagged-versions: true
 
       - name: Tech1 mails@v2 outputs
         if: always()

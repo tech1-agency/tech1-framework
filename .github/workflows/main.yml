@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 env:
+  MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_MONGODB_SERVER_IMAGE: tech1-io/tech1-framework-b2b-mongodb-server
   DOCKER_POSTGRES_SERVER_IMAGE: tech1-io/tech1-framework-b2b-postgres-server
@@ -33,7 +34,12 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Maven [build]
+        if: env.MAVEN_DEPLOYMENT_ENABLED == 'false'
+        run: mvn clean install
+
       - name: Maven [github packages]
+        if: env.MAVEN_DEPLOYMENT_ENABLED == 'true'
         run: |
           mvn clean install \
             -Ddeployment_github_username=${{ github.actor }} -Ddeployment_github_token=${{ secrets.GITHUB_TOKEN }} \

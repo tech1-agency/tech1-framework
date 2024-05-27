@@ -1,4 +1,4 @@
-name: delete-packages
+name: keep-order
 
 on:
   schedule:
@@ -7,6 +7,7 @@ on:
 
 env:
   PACKAGE_OWNER: 'tech1-io'
+  RELEASES_AND_TAGS_TO_KEEP: 5
   CONTAINER_MIN_VERSION_TO_KEEP: 2
 
 concurrency:
@@ -17,7 +18,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     outputs:
       job_status: ${{ steps.tech1_mails_v2.outputs.job_status }}
@@ -25,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-        # package-type: container
+      # Delete packages - package-type: container
 
       - name: Delete Container Package Untagged Versions [tech1-framework-b2b-postgres-server]
         uses: actions/delete-package-versions@v5
@@ -62,6 +63,16 @@ jobs:
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.CONTAINER_MIN_VERSION_TO_KEEP }}
+
+      # Delete releases and tags
+
+      - name: Delete Releases and Tags
+        uses: dev-drprasad/delete-older-releases@v0.3.4
+        with:
+          keep_latest: ${{ env.RELEASES_AND_TAGS_TO_KEEP }}
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tech1 mails@v2 outputs
         if: always()

@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   tech1:
-    image: ghcr.io/tech1-io/tech1-framework-b2b-postgres-server:2.8.4-SNAPSHOT
+    image: ghcr.io/tech1-io/tech1-framework-b2b-postgres-server:2.8.4
     restart: unless-stopped
     container_name: tech1-framework-b2b-postgres-server
     networks:

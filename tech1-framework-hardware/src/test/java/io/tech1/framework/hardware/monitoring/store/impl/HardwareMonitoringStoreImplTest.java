@@ -10,8 +10,8 @@ import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.hardware.monitoring.HardwareName;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ class HardwareMonitoringStoreImplTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesContext.class
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

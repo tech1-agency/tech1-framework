@@ -1,6 +1,6 @@
 package io.tech1.framework.configurations.server;
 
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class ApplicationSpringBootServerTest {
     @Configuration
     @Import({
             ApplicationSpringBootServer.class,
-            ApplicationFrameworkPropertiesContext.class
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class
     })
     static class ContextConfiguration {
         @Bean

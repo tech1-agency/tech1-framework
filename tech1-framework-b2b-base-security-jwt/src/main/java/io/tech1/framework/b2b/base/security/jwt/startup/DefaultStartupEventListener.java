@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.startup;
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
 import io.tech1.framework.domain.enums.Status;
 import io.tech1.framework.domain.enums.Toggle;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

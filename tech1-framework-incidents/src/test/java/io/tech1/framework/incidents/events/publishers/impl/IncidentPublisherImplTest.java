@@ -4,7 +4,7 @@ import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

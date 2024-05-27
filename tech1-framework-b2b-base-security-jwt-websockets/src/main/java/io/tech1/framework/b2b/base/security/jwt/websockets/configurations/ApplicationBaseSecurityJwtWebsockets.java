@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.configurations;
 import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.CsrfInterceptorHandshake;
 import io.tech1.framework.b2b.base.security.jwt.websockets.handshakes.SecurityHandshakeHandler;
 import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

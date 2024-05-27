@@ -1,7 +1,7 @@
 package io.tech1.framework.configurations.mvc;
 
 import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

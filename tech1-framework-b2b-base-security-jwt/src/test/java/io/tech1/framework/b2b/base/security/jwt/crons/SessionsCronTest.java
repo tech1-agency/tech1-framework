@@ -7,7 +7,7 @@ import io.tech1.framework.domain.properties.base.Cron;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.domain.properties.configs.security.jwt.SessionConfigs;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

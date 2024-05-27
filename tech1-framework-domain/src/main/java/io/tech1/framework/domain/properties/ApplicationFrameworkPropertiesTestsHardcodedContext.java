@@ -1,12 +1,11 @@
-package io.tech1.framework.properties.tests.contexts;
+package io.tech1.framework.domain.properties;
 
 import io.tech1.framework.domain.properties.configs.*;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ApplicationFrameworkPropertiesContext {
+public class ApplicationFrameworkPropertiesTestsHardcodedContext {
 
     @Bean
     public ApplicationFrameworkProperties applicationFrameworkProperties() {

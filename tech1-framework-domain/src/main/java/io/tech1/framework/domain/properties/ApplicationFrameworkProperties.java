@@ -1,4 +1,4 @@
-package io.tech1.framework.properties;
+package io.tech1.framework.domain.properties;
 
 import io.tech1.framework.domain.properties.configs.*;
 import lombok.Data;

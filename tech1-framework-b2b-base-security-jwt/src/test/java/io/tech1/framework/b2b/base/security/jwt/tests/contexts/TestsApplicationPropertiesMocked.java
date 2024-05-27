@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.tests.contexts;
 
 import io.tech1.framework.domain.properties.configs.MvcConfigs;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

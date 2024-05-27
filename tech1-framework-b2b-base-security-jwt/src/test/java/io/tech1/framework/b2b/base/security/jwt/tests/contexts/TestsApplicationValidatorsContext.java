@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepo
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @Import({
-        ApplicationFrameworkPropertiesContext.class
+        ApplicationFrameworkPropertiesTestsHardcodedContext.class
 })
 public class TestsApplicationValidatorsContext {
 

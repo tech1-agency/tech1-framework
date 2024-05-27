@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.base.security.jwt.tests.runners;
 
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwtMvc;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationResourcesContext;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
         ApplicationBaseSecurityJwtMvc.class,
-        ApplicationFrameworkPropertiesContext.class,
+        ApplicationFrameworkPropertiesTestsHardcodedContext.class,
         TestsApplicationResourcesContext.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -4,7 +4,7 @@ import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.domain.EmailPlainAttachment;
 import io.tech1.framework.emails.services.EmailService;
 import io.tech1.framework.emails.utilities.EmailUtility;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeBodyPart;

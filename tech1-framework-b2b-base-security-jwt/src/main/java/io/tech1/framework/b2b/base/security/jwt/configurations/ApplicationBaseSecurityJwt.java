@@ -9,7 +9,7 @@ import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.configurations.ApplicationUtilities;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

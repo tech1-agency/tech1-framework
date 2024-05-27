@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server;
 
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

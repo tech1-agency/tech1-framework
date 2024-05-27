@@ -3,3 +3,4 @@
 — Migrate: ApplicationFrameworkProperties -> tech1-framework-domain
 — Addition: SpringBootActuatorInfo -> getGitOrDash()
 — Addition: SwaggerConstants -> ENDPOINTS  
+— Addition: SynchronizedValueFactory/UniqueValueFactory

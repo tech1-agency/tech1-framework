@@ -7,9 +7,10 @@ import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthentic
 import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
 import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
 import io.tech1.framework.domain.base.PropertyId;
+import io.tech1.framework.domain.constants.SwaggerConstants;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.configurations.ApplicationUtilities;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -96,11 +97,7 @@ public class ApplicationBaseSecurityJwt {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
             if (this.applicationFrameworkProperties.getServerConfigs().isSpringdocEnabled()) {
-                web.ignoring().requestMatchers(
-                        "/v3/api-docs/**",
-                        "/swagger-ui.html",
-                        "/swagger-ui/**"
-                );
+                web.ignoring().requestMatchers(SwaggerConstants.ENDPOINTS.toArray(new String[0]));
             }
             this.abstractApplicationSecurityJwtConfigurer.configure(web);
         };

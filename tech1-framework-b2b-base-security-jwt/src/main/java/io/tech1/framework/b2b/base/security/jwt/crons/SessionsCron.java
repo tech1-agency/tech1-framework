@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsServic
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.domain.crons.AbstractBaseCron;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

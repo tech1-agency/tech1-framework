@@ -1,7 +1,7 @@
 package io.tech1.framework.incidents.configurations;
 
 import io.tech1.framework.incidents.handlers.ErrorHandlerPublisher;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ class ApplicationEventsIncidentsTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesContext.class,
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
             ApplicationEventsIncidents.class
     })
     static class ContextConfiguration {

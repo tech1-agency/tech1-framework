@@ -7,7 +7,7 @@ import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

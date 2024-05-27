@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.domain.properties.base.DefaultUser;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

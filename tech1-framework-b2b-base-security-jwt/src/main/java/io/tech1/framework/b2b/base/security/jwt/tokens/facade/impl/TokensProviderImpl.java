@@ -10,7 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.tokens.providers.TokenHeadersPro
 import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

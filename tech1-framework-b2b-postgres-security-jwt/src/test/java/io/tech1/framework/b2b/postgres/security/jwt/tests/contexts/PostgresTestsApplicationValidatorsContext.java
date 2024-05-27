@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitat
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
         "io.tech1.framework.b2b.postgres.security.jwt.validators"
 })
 @Import({
-        ApplicationFrameworkPropertiesContext.class
+        ApplicationFrameworkPropertiesTestsHardcodedContext.class
 })
 public class PostgresTestsApplicationValidatorsContext {
 

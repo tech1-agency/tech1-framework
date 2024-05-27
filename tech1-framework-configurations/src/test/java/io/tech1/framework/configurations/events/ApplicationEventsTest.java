@@ -1,6 +1,6 @@
 package io.tech1.framework.configurations.events;
 
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class ApplicationEventsTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesContext.class,
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
             ApplicationEvents.class
     })
     static class ContextConfiguration {

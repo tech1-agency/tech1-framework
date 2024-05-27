@@ -1,6 +1,6 @@
-package io.tech1.framework.properties;
+package io.tech1.framework.domain.properties;
 
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +13,7 @@ class ApplicationFrameworkPropertiesTest {
     @Test
     void applicationFrameworkPropertiesTest() {
         // Arrange
-        var context = new ApplicationFrameworkPropertiesContext();
+        var context = new ApplicationFrameworkPropertiesTestsHardcodedContext();
         var applicationFrameworkProperties = context.applicationFrameworkProperties();
 
         // Act

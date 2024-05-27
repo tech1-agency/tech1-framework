@@ -5,7 +5,7 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.tech1.framework.domain.enums.Toggle;
 import io.tech1.framework.domain.geo.GeoLocation;
 import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.extern.slf4j.Slf4j;

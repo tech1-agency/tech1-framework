@@ -16,7 +16,7 @@ import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.domain.properties.configs.HardwareMonitoringConfigs;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -8,7 +8,7 @@ import feign.okhttp.OkHttpClient;
 import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinition;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

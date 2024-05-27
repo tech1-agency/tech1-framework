@@ -21,8 +21,8 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import io.tech1.framework.domain.tuples.TuplePresence;
 import io.tech1.framework.domain.tuples.TupleToggle;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.utilities.utils.UserMetadataUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -92,7 +92,7 @@ class AbstractBaseUsersSessionsServiceTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesContext.class
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

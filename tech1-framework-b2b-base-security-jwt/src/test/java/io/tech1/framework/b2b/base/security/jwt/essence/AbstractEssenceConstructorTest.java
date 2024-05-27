@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.tests.stubbers.AbstractMockServi
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.properties.base.DefaultUser;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

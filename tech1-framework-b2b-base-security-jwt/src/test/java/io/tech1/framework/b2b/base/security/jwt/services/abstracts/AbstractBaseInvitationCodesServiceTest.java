@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewIn
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ class AbstractBaseInvitationCodesServiceTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesContext.class
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

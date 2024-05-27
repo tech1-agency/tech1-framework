@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingT
 import io.tech1.framework.domain.properties.configs.MvcConfigs;
 import io.tech1.framework.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import io.tech1.framework.domain.properties.configs.mvc.CorsConfigs;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

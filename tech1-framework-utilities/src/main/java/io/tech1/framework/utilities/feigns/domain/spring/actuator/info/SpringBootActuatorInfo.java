@@ -71,4 +71,13 @@ public record SpringBootActuatorInfo(
             return Version.dash();
         }
     }
+
+    @JsonIgnore
+    public SpringBootActuatorInfoGit getGitOrDash() {
+        if (nonNull(this.git)) {
+            return this.git;
+        } else {
+            return SpringBootActuatorInfoGit.dash();
+        }
+    }
 }

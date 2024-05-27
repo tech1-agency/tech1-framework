@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.exceptions.tokens.*;
-import io.tech1.framework.properties.tests.contexts.ApplicationFrameworkPropertiesContext;
+import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +52,7 @@ class SecurityHandshakeHandlerTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesContext.class
+            ApplicationFrameworkPropertiesTestsHardcodedContext.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

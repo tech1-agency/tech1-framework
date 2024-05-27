@@ -5,7 +5,7 @@ import io.tech1.framework.emails.services.EmailService;
 import io.tech1.framework.emails.services.impl.EmailServiceImpl;
 import io.tech1.framework.emails.utilities.EmailUtility;
 import io.tech1.framework.emails.utilities.impl.EmailUtilityImpl;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

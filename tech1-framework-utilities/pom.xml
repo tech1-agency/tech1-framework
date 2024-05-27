@@ -17,7 +17,7 @@
         <!-- Tech1: Framework -->
         <dependency>
             <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-properties</artifactId>
+            <artifactId>tech1-framework-domain</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>

@@ -4,7 +4,7 @@ import io.tech1.framework.domain.properties.configs.AsyncConfigs;
 import io.tech1.framework.domain.properties.configs.EventsConfigs;
 import io.tech1.framework.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

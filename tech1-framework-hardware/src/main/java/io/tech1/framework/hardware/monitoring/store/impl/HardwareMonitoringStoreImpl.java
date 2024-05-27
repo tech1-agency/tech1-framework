@@ -4,7 +4,7 @@ import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringData
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;

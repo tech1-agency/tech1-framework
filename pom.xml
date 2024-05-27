@@ -44,7 +44,6 @@
         <!-- JARs -->
         <module>tech1-framework-domain</module>
         <module>tech1-framework-utilities</module>
-        <module>tech1-framework-properties</module>
         <module>tech1-framework-feign-clients</module>
         <module>tech1-framework-configurations</module>
         <module>tech1-framework-emails</module>

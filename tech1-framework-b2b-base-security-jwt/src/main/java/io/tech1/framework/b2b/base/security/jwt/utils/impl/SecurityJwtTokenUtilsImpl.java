@@ -11,7 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClai
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.domain.base.PropertyId;
 import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

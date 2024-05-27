@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
@@ -14,6 +15,12 @@ import static org.springframework.util.CollectionUtils.*;
 
 @UtilityClass
 public class CollectionUtility {
+
+    public <E> ConcurrentHashMap.KeySetView<E, Boolean> toConcurrentSet(Collection<E> list) {
+        ConcurrentHashMap.KeySetView<E, Boolean> set = ConcurrentHashMap.newKeySet();
+        set.addAll(list);
+        return set;
+    }
 
     public static <T> List<T> mutableSingletonList(T object) {
         List<T> list = new ArrayList<>(1);

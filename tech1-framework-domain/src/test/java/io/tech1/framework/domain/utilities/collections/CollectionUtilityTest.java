@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,6 +60,26 @@ class CollectionUtilityTest {
                 Arguments.of(List.of(new BigDecimal(-100), new BigDecimal(-1), new BigDecimal(-5)), new BigDecimal(-100)),
                 Arguments.of(List.of(new BigDecimal(4), new BigDecimal(9), new BigDecimal(18)), new BigDecimal(4))
         );
+    }
+
+    @Test
+    void toConcurrentSetTest() {
+        // Arrange
+        var collection = List.of(
+                BigDecimal.valueOf(38.43),
+                BigDecimal.valueOf(58.455555),
+                BigDecimal.valueOf(77.3392543),
+                BigDecimal.valueOf(8.99999999)
+        );
+
+        // Act
+        var actual = toConcurrentSet(collection);
+
+        // Assert
+        assertThat(actual)
+                .isNotNull()
+                .containsAll(collection)
+                .isExactlyInstanceOf(ConcurrentHashMap.KeySetView.class);
     }
 
     @Test

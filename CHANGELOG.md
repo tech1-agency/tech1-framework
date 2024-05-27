@@ -5,3 +5,4 @@
 — Addition: SwaggerConstants → ENDPOINTS  
 — Addition: SynchronizedValueFactory/UniqueValueFactory
 — Addition: CollectionUtility → toConcurrentSet()
+— Addition: ApplicationSwagger → tech1-framework-configurations

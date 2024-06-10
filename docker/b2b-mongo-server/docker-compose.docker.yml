@@ -1,24 +1,35 @@
-version: "3.8"
-
 services:
-  tech1:
+  t1f-b2b-mongodb-server:
     image: ghcr.io/tech1-io/tech1-framework-b2b-mongodb-server:2.8.4
     restart: unless-stopped
-    container_name: tech1-framework-b2b-mongodb-server
+    container_name: t1f-b2b-mongodb-server
     networks:
-      - tech1-network
+      - t1f-network
     ports:
-      - "8484:8484"
+      - "3002:3002"
     environment:
-      - PORT=8484
+      - PORT=3002
       - CONFIG_LOCATIONS=classpath:application.yml,file:/application-docker.yml
       - JASYPT_PASSWORD=JJEPTECH1
       - JVM_ARGUMENTS=-Xmx5g --add-opens=java.base/java.time=ALL-UNNAMED
     volumes:
       - ./application-docker.yml:/application-docker.yml
-      - ./GeoLite2-City.mmdb:/GeoLite2-City.mmdb
+
+  t1f-b2b-mongodb:
+    image: mongo:6.0.15
+    restart: always
+    container_name: t1f-b2b-mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - t1f-network
+    volumes:
+      - t1f-b2b-mongodb-data:/data/db
 
 networks:
-  tech1-network:
-    name: tech1-network
+  t1f-network:
+    name: t1f-network
     driver: bridge
+
+volumes:
+  t1f-b2b-mongodb-data:

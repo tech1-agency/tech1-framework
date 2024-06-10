@@ -82,6 +82,6 @@ tech1:
         enabled: true
   mongodb-security-jwt-configs:
     mongodb:
-      host: tech1-mongodb
+      host: t1f-b2b-mongodb
       port: 27017
       database: tech1_b2b_mongodb_server

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker exec -it tech1-framework-b2b-postgres-server /bin/sh
+docker exec -it t1f-b2b-mongodb-server /bin/sh

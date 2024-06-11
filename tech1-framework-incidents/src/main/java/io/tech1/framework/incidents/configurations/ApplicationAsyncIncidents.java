@@ -1,9 +1,10 @@
 package io.tech1.framework.incidents.configurations;
 
 import io.tech1.framework.domain.base.PropertyId;
+import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import jakarta.annotation.PostConstruct;
 import java.util.concurrent.Executor;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
@@ -38,11 +37,11 @@ public class ApplicationAsyncIncidents implements AsyncConfigurer {
 
     @Override
     public Executor getAsyncExecutor() {
-        var threadNamePrefix = this.applicationFrameworkProperties.getAsyncConfigs().getThreadNamePrefix();
+        var asyncConfigs = this.applicationFrameworkProperties.getAsyncConfigs();
         var taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(getHalfOfCores());
-        taskExecutor.setMaxPoolSize(getNumOfCores());
-        taskExecutor.setThreadNamePrefix(threadNamePrefix);
+        taskExecutor.setThreadNamePrefix(asyncConfigs.getThreadNamePrefix());
+        taskExecutor.setCorePoolSize(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
+        taskExecutor.setMaxPoolSize(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
         taskExecutor.setRejectedExecutionHandler(this.rejectedExecutionHandlerPublisher);
         taskExecutor.initialize();
         return taskExecutor;

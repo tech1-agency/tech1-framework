@@ -1,9 +1,9 @@
 package io.tech1.framework.incidents.configurations;
 
-import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
-import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
+import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
+import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -87,6 +87,9 @@ class ApplicationAsyncIncidentsTest {
 
     @Test
     void getAsyncExecutorTest() {
+        // Arrange
+        var asyncConfigs = this.applicationFrameworkProperties.getAsyncConfigs();
+
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();
 
@@ -94,8 +97,9 @@ class ApplicationAsyncIncidentsTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(ThreadPoolTaskExecutor.class);
         var threadPoolTaskExecutor = (ThreadPoolTaskExecutor) actual;
-        assertThat(threadPoolTaskExecutor.getCorePoolSize()).isEqualTo(getHalfOfCores());
-        assertThat(threadPoolTaskExecutor.getThreadNamePrefix()).isEqualTo(this.applicationFrameworkProperties.getAsyncConfigs().getThreadNamePrefix());
+        assertThat(threadPoolTaskExecutor.getThreadNamePrefix()).isEqualTo(asyncConfigs.getThreadNamePrefix());
+        assertThat(threadPoolTaskExecutor.getCorePoolSize()).isEqualTo(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
+        assertThat(threadPoolTaskExecutor.getMaxPoolSize()).isEqualTo(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
     }
 
     @Test

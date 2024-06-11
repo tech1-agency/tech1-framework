@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getHalfOfCores;
+import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -55,6 +55,9 @@ class ApplicationAsyncTest {
 
     @Test
     void getAsyncExecutorTest() {
+        // Arrange
+        var asyncConfigs = this.applicationFrameworkProperties.getAsyncConfigs();
+
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();
 
@@ -62,8 +65,9 @@ class ApplicationAsyncTest {
         assertThat(actual).isNotNull();
         assertThat(actual.getClass()).isEqualTo(ThreadPoolTaskExecutor.class);
         var threadPoolTaskExecutor = (ThreadPoolTaskExecutor) actual;
-        assertThat(threadPoolTaskExecutor.getCorePoolSize()).isEqualTo(getHalfOfCores());
-        assertThat(threadPoolTaskExecutor.getThreadNamePrefix()).isEqualTo(this.applicationFrameworkProperties.getAsyncConfigs().getThreadNamePrefix());
+        assertThat(threadPoolTaskExecutor.getThreadNamePrefix()).isEqualTo(asyncConfigs.getThreadNamePrefix());
+        assertThat(threadPoolTaskExecutor.getCorePoolSize()).isEqualTo(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));
+        assertThat(threadPoolTaskExecutor.getMaxPoolSize()).isEqualTo(getNumOfCores(asyncConfigs.asThreadsMaxPoolTuplePercentage()));
     }
 
     @Test

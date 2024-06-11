@@ -1,5 +1,6 @@
 package io.tech1.framework.domain.utilities.processors;
 
+import io.tech1.framework.domain.constants.BigDecimalConstants;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -47,18 +48,20 @@ class ProcessorsUtilityTest {
     @Test
     public void devTest() {
         // Arrange
-        var _88 = progressTuplePercentage(new BigDecimal("0.88"), BigDecimal.ONE);
-        var _875 = progressTuplePercentage(new BigDecimal("0.875"), BigDecimal.ONE);
-        var _87 = progressTuplePercentage(new BigDecimal("0.87"), BigDecimal.ONE);
-        var _75 = progressTuplePercentage(new BigDecimal("0.75"), BigDecimal.ONE);
-        var _25 = progressTuplePercentage(new BigDecimal("0.25"), BigDecimal.ONE);
-        var _20 = progressTuplePercentage(new BigDecimal("0.20"), BigDecimal.ONE);
-        var _15 = progressTuplePercentage(new BigDecimal("0.15"), BigDecimal.ONE);
-        var _125 = progressTuplePercentage(new BigDecimal("0.125"), BigDecimal.ONE);
-        var _124 = progressTuplePercentage(new BigDecimal("0.124"), BigDecimal.ONE);
+        var _100 = progressTuplePercentage(new BigDecimal("100"), BigDecimalConstants.ONE_HUNDRED);
+        var _88 = progressTuplePercentage(new BigDecimal("88"), BigDecimalConstants.ONE_HUNDRED);
+        var _875 = progressTuplePercentage(new BigDecimal("87.5"), BigDecimalConstants.ONE_HUNDRED);
+        var _87 = progressTuplePercentage(new BigDecimal("87"), BigDecimalConstants.ONE_HUNDRED);
+        var _75 = progressTuplePercentage(new BigDecimal("75"), BigDecimalConstants.ONE_HUNDRED);
+        var _25 = progressTuplePercentage(new BigDecimal("25"), BigDecimalConstants.ONE_HUNDRED);
+        var _20 = progressTuplePercentage(new BigDecimal("20"), BigDecimalConstants.ONE_HUNDRED);
+        var _15 = progressTuplePercentage(new BigDecimal("15"), BigDecimalConstants.ONE_HUNDRED);
+        var _125 = progressTuplePercentage(new BigDecimal("12.5"), BigDecimalConstants.ONE_HUNDRED);
+        var _124 = progressTuplePercentage(new BigDecimal("12.4"), BigDecimalConstants.ONE_HUNDRED);
 
         // Act
-        System.out.println("numOfCores [_100]: " + getNumOfCores());
+        System.out.println("numOfCores [100%]: " + getNumOfCores());
+        System.out.println("numOfCores [_100]: " + getNumOfCores(_100));
         System.out.println("numOfCores [_88]: " + getNumOfCores(_88));
         System.out.println("numOfCores [_875]: " + getNumOfCores(_875));
         System.out.println("numOfCores [_87]: " + getNumOfCores(_87));

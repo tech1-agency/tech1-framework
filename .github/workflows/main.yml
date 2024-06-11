@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
 
 env:
-  MAVEN_DEPLOYMENT_ENABLED: 'true'
+  MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_MONGODB_SERVER_IMAGE: tech1-io/tech1-framework-b2b-mongodb-server
   DOCKER_POSTGRES_SERVER_IMAGE: tech1-io/tech1-framework-b2b-postgres-server
-  DOCKER_VERSION: '2.8.5'
-  DOCKER_PUSH_ENABLED: 'true'
+  DOCKER_VERSION: '2.8.6-SNAPSHOT'
+  DOCKER_PUSH_ENABLED: 'false'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

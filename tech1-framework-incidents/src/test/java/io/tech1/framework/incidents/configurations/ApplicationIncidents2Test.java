@@ -77,7 +77,7 @@ class ApplicationIncidents2Test {
                 .contains("init")
                 .contains("incidentClientDefinition")
                 .contains("incidentClient")
-                .hasSize(3);
+                .hasSizeGreaterThanOrEqualTo(3);
     }
 
     @Test

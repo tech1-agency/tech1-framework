@@ -31,8 +31,12 @@ tech1:
     version: @project.version@
   async-configs:
     thread-name-prefix: tps1-async
+    threadsCorePoolPercentage: 25
+    threadsMaxPoolPercentage: 50
   events-configs:
     thread-name-prefix: tps1-events
+    threadsCorePoolPercentage: 75
+    threadsMaxPoolPercentage: 100
   mvc-configs:
     enabled: true
     framework-base-path-prefix: /framework/security

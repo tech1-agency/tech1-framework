@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
 import lombok.EqualsAndHashCode;

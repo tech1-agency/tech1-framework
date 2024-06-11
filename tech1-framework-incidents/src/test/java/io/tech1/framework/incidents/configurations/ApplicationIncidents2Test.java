@@ -3,7 +3,7 @@ package io.tech1.framework.incidents.configurations;
 import io.tech1.framework.domain.properties.configs.AsyncConfigs;
 import io.tech1.framework.domain.properties.configs.EventsConfigs;
 import io.tech1.framework.domain.properties.configs.IncidentConfigs;
-import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
+import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
 import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -68,13 +68,16 @@ class ApplicationIncidents2Test {
     @Test
     void beansTests() {
         // Act
-        var methods = Stream.of(this.componentUnderTest.getClass().getMethods())
+        var methods = Stream.of(this.componentUnderTest.getClass().getDeclaredMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).contains("incidentClientDefinition");
-        assertThat(methods).hasSize(11);
+        assertThat(methods)
+                .contains("init")
+                .contains("incidentClientDefinition")
+                .contains("incidentClient")
+                .hasSize(3);
     }
 
     @Test
@@ -86,7 +89,7 @@ class ApplicationIncidents2Test {
         var incidentClientDefinition = this.componentUnderTest.incidentClientDefinition();
 
         // Assert
-        assertThat(incidentClientDefinition.getClass()).isEqualTo(IncidentClientSlf4j.class);
+        assertThat(incidentClientDefinition.getClass()).isEqualTo(IncidentClientDefinitionSlf4j.class);
         verify(this.applicationFrameworkProperties).getIncidentConfigs();
     }
 }

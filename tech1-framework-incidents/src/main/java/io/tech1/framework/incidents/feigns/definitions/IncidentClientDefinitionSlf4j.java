@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 @Slf4j
-public class IncidentClientSlf4j implements IncidentClientDefinition {
+public class IncidentClientDefinitionSlf4j implements IncidentClientDefinition {
 
     @Override
     public void registerIncident(@NotNull Incident incident) {

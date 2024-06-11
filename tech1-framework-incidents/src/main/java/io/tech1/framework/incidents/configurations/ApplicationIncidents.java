@@ -6,9 +6,11 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinition;
-import io.tech1.framework.incidents.feigns.definitions.IncidentClientSlf4j;
 import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.incidents.feigns.clients.IncidentClient;
+import io.tech1.framework.incidents.feigns.clients.impl.IncidentClientImpl;
+import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinition;
+import io.tech1.framework.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +21,10 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.incidents"
+        "io.tech1.framework.incidents.configurations",
+        "io.tech1.framework.incidents.events",
+        "io.tech1.framework.incidents.handlers"
+//        "io.tech1.framework.incidents"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -34,11 +39,10 @@ public class ApplicationIncidents {
     }
 
     @Bean
-    public IncidentClientDefinition incidentClientDefinition() {
+    IncidentClientDefinition incidentClientDefinition() {
         var incidentConfigs = this.applicationFrameworkProperties.getIncidentConfigs();
         if (incidentConfigs.isEnabled()) {
             var incidentServer = incidentConfigs.getRemoteServer();
-            var incidentServerBaseURL = incidentServer.getBaseURL();
             return Feign.builder()
                     .client(new OkHttpClient())
                     .encoder(new JacksonEncoder())
@@ -49,9 +53,14 @@ public class ApplicationIncidents {
                                     incidentServer.getCredentials().password().value()
                             )
                     )
-                    .target(IncidentClientDefinition.class, incidentServerBaseURL);
+                    .target(IncidentClientDefinition.class, incidentServer.getBaseURL());
         } else {
-            return new IncidentClientSlf4j();
+            return new IncidentClientDefinitionSlf4j();
         }
+    }
+
+    @Bean
+    IncidentClient incidentClient() {
+        return new IncidentClientImpl(this.incidentClientDefinition());
     }
 }

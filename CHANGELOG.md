@@ -1,2 +1,2 @@
 ### Changelog [v2.8.6]
-— TBD  
+— Modification: AsyncConfigs, EventsConfigs as***()

@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
+import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
@@ -38,10 +39,10 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     }
 
     public TuplePercentage asThreadsCorePoolTuplePercentage() {
-        return new TuplePercentage(this.threadsCorePoolPercentage, ONE_HUNDRED);
+        return progressTuplePercentage(this.threadsCorePoolPercentage, ONE_HUNDRED);
     }
 
     public TuplePercentage asThreadsMaxPoolTuplePercentage() {
-        return new TuplePercentage(this.threadsMaxPoolPercentage, ONE_HUNDRED);
+        return progressTuplePercentage(this.threadsMaxPoolPercentage, ONE_HUNDRED);
     }
 }

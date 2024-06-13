@@ -12,7 +12,7 @@ env:
   DOCKER_MONGODB_SERVER_IMAGE: tech1-io/tech1-framework-b2b-mongodb-server
   DOCKER_POSTGRES_SERVER_IMAGE: tech1-io/tech1-framework-b2b-postgres-server
   DOCKER_VERSION: '2.8.7-SNAPSHOT'
-  DOCKER_PUSH_ENABLED: 'false'
+  DOCKER_PUSH_ENABLED: 'true'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

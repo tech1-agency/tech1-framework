@@ -63,11 +63,11 @@ tech1:
       access-token:
         expiration:
           amount: 30
-          unit: SECONDS # @java.time.temporal.ChronoUnit
+          unit: MINUTES # @java.time.temporal.ChronoUnit
       refresh-token:
         expiration:
           amount: 60
-          unit: SECONDS # @java.time.temporal.ChronoUnit
+          unit: MINUTES # @java.time.temporal.ChronoUnit
     logging-configs:
       advanced-request-logging-enabled: false
     session-configs:

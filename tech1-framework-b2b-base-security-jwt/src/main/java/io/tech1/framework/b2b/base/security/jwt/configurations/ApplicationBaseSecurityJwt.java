@@ -149,6 +149,7 @@ public class ApplicationBaseSecurityJwt {
             }
 
             authorizeHttpRequests
+                    .requestMatchers(basePathPrefix + "/test-data/**").authenticated()
                     .requestMatchers(basePathPrefix + "/hardware/**").authenticated()
                     .requestMatchers(basePathPrefix + "/superadmin/**").hasAuthority(SUPERADMIN)
                     .requestMatchers(basePathPrefix + "/**").authenticated();

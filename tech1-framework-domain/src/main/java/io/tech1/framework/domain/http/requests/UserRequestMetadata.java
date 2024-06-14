@@ -76,6 +76,13 @@ public class UserRequestMetadata {
         return randomBoolean() ? valid() : invalid();
     }
 
+    public static UserRequestMetadata testData() {
+        return UserRequestMetadata.processed(
+                GeoLocation.testData(),
+                UserAgentDetails.testData()
+        );
+    }
+
     public Tuple3<String, String, String> getWhereTuple3() {
         if (this.status.isCompleted()) {
             return new Tuple3<>(this.geoLocation.getIpAddr(), this.geoLocation.getCountryFlag(), this.geoLocation.getWhere());

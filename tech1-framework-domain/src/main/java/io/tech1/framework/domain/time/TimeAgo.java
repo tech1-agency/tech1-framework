@@ -3,6 +3,7 @@ package io.tech1.framework.domain.time;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.domain.utilities.time.TimestampUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -55,6 +56,10 @@ public class TimeAgo {
 
     public static TimeAgo of(long timestamp) {
         return new TimeAgo(timestamp);
+    }
+
+    public static TimeAgo justNow() {
+        return new TimeAgo(TimestampUtility.getCurrentTimestamp());
     }
 
     @Override

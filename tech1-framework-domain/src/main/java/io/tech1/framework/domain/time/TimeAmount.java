@@ -1,21 +1,32 @@
 package io.tech1.framework.domain.time;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.time.temporal.ChronoUnit;
+import java.util.Set;
+
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
+import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 
 public record TimeAmount(long amount, ChronoUnit unit) {
 
     public static TimeAmount testsHardcoded() {
         return new TimeAmount(30L, ChronoUnit.SECONDS);
+    }
+
+    public static TimeAmount random() {
+        return new TimeAmount(
+                randomIntegerGreaterThanZeroByBounds(15, 30),
+                randomElement(Set.of(ChronoUnit.SECONDS, ChronoUnit.MINUTES, ChronoUnit.HOURS, ChronoUnit.DAYS))
+        );
     }
 
     public static TimeAmount forever() {

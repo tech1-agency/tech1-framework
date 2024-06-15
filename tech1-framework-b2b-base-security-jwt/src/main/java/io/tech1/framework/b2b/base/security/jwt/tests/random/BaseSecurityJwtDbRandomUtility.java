@@ -21,7 +21,7 @@ public class BaseSecurityJwtDbRandomUtility {
     // InvitationCodes
     // =================================================================================================================
     public static ResponseInvitationCode getInvitationCode(Username owner) {
-        return new ResponseInvitationCode(
+        return ResponseInvitationCode.of(
                 InvitationCodeId.random(),
                 owner,
                 "admin",
@@ -31,7 +31,7 @@ public class BaseSecurityJwtDbRandomUtility {
     }
 
     public static ResponseInvitationCode getInvitationCode(Username owner, Username invited) {
-        return new ResponseInvitationCode(
+        return ResponseInvitationCode.of(
                 InvitationCodeId.random(),
                 owner,
                 "admin",

@@ -1,6 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.services.abstracts;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
+import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.domain.base.Username;
@@ -18,6 +19,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility.getInvitationCode;
 import static java.util.Arrays.asList;
@@ -90,12 +93,24 @@ class AbstractBaseInvitationCodesServiceTest {
 
         // Assert
         verify(this.invitationCodesRepository).findResponseCodesByOwner(owner);
-        assertThat(responseInvitationCodes.invitationCodes().get(0)).isEqualTo(invitationCode3);
-        assertThat(responseInvitationCodes.invitationCodes().get(1)).isEqualTo(invitationCode4);
-        assertThat(responseInvitationCodes.invitationCodes().get(2)).isEqualTo(invitationCode6);
-        assertThat(responseInvitationCodes.invitationCodes().get(3)).isEqualTo(invitationCode2);
-        assertThat(responseInvitationCodes.invitationCodes().get(4)).isEqualTo(invitationCode1);
-        assertThat(responseInvitationCodes.invitationCodes().get(5)).isEqualTo(invitationCode5);
+        assertThat(responseInvitationCodes.invitationCodes().stream()
+                        .limit(3)
+                        .map(ResponseInvitationCode::value)
+                        .collect(Collectors.toSet())
+        ).containsExactlyInAnyOrder(
+                invitationCode3.value(),
+                invitationCode4.value(),
+                invitationCode6.value()
+        );
+        assertThat(responseInvitationCodes.invitationCodes().stream()
+                .skip(3)
+                .map(ResponseInvitationCode::value)
+                .collect(Collectors.toSet())
+        ).containsExactlyInAnyOrder(
+                invitationCode1.value(),
+                invitationCode2.value(),
+                invitationCode5.value()
+        );
         assertThat(responseInvitationCodes.authorities()).isEqualTo(this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
     }
 

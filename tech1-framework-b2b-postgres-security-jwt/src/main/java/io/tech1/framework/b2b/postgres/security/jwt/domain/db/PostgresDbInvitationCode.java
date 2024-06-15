@@ -79,7 +79,7 @@ public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
     @JsonIgnore
     @Transient
     public ResponseInvitationCode responseInvitationCode() {
-        return new ResponseInvitationCode(
+        return ResponseInvitationCode.of(
                 this.invitationCodeId(),
                 this.owner,
                 getResponseInvitationCodeAuthoritiesAsField(this.authorities),

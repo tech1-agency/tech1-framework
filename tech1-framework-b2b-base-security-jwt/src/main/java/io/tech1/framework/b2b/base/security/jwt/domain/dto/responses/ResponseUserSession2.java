@@ -17,6 +17,7 @@ public record ResponseUserSession2(
         String activity,
         TimeAgo when,
         TupleExceptionDetails exception,
+        String country,
         String ipAddr,
         String countryFlag,
         String where,
@@ -37,6 +38,7 @@ public record ResponseUserSession2(
 
         var whereTuple3 = metadata.getWhereTuple3();
         var whatTuple2 = metadata.getWhatTuple2();
+        var country = metadata.getGeoLocation().getCountry();
 
         return new ResponseUserSession2(
                 id,
@@ -45,6 +47,7 @@ public record ResponseUserSession2(
                 activity,
                 new TimeAgo(updatedAt),
                 metadata.getException(),
+                country,
                 whereTuple3.a(),
                 whereTuple3.b(),
                 whereTuple3.c(),

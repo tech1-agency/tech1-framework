@@ -5,7 +5,7 @@
     "country" : "Ukraine",
     "countryCode" : "UA",
     "countryFlag" : "🇺🇦",
-    "where" : "Ukraine, Lviv"
+    "where" : "🇺🇦 Ukraine, Lviv"
   },
   "userAgentDetails" : {
     "browser" : "Chrome",
@@ -17,7 +17,7 @@
   "whereTuple3" : {
     "a" : "127.0.0.1",
     "b" : "🇺🇦",
-    "c" : "Ukraine, Lviv"
+    "c" : "🇺🇦 Ukraine, Lviv"
   },
   "whatTuple2" : {
     "a" : "Chrome",

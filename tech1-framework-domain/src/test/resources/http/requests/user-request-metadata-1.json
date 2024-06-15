@@ -5,7 +5,7 @@
     "country" : "[?]",
     "countryCode" : "[?]",
     "countryFlag" : "🏴‍",
-    "where" : "[?], [?]"
+    "where" : "🏴‍ [?], [?]"
   },
   "userAgentDetails" : {
     "browser" : "[?]",

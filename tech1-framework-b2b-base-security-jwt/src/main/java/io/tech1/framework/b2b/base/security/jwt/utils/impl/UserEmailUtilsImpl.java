@@ -64,7 +64,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         variables.put("year", now(UTC).getYear());
         variables.put("username", username.value());
         variables.put("accessMethod", accountAccessMethod.getValue());
-        variables.put("where", geoLocation.getCountryFlag() + " " + geoLocation.getWhere());
+        variables.put("where", geoLocation.getWhere());
         variables.put("what", userAgentDetails.getWhat());
         variables.put("ipAddress", geoLocation.getIpAddr());
         variables.put("webclientURL", this.applicationFrameworkProperties.getServerConfigs().getWebclientURL());

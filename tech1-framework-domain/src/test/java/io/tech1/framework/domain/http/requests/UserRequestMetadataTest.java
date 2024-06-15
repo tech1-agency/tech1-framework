@@ -68,7 +68,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Ukraine");
         assertThat(actual.getGeoLocation().getCity()).isEqualTo("Lviv");
         assertThat(actual.getGeoLocation().getExceptionDetails()).isEmpty();
-        assertThat(actual.getGeoLocation().getWhere()).isEqualTo("Ukraine, Lviv");
+        assertThat(actual.getGeoLocation().getWhere()).isEqualTo("🇺🇦 Ukraine, Lviv");
         assertThat(actual.getUserAgentDetails().getBrowser()).isEqualTo("Chrome");
         assertThat(actual.getUserAgentDetails().getPlatform()).isEqualTo("macOS");
         assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Desktop");
@@ -79,7 +79,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getWhereTuple3().a()).isNotNull();
         assertThat(actual.getWhereTuple3().a().split("\\.")).hasSize(4);
         assertThat(actual.getWhereTuple3().b()).isEqualTo("🇺🇦");
-        assertThat(actual.getWhereTuple3().c()).isEqualTo("Ukraine, Lviv");
+        assertThat(actual.getWhereTuple3().c()).isEqualTo("🇺🇦 Ukraine, Lviv");
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
@@ -94,7 +94,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getGeoLocation().getCountry()).isEqualTo("Unknown");
         assertThat(actual.getGeoLocation().getCity()).isEqualTo("Unknown");
         assertThat(actual.getGeoLocation().getExceptionDetails()).isEqualTo("Location is unknown");
-        assertThat(actual.getGeoLocation().getWhere()).isEqualTo("Unknown, Unknown");
+        assertThat(actual.getGeoLocation().getWhere()).isEqualTo("🏴‍ Unknown, Unknown");
         assertThat(actual.getUserAgentDetails().getBrowser()).isEqualTo("Unknown");
         assertThat(actual.getUserAgentDetails().getPlatform()).isEqualTo("Unknown");
         assertThat(actual.getUserAgentDetails().getDeviceType()).isEqualTo("Unknown");
@@ -105,7 +105,7 @@ class UserRequestMetadataTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getWhereTuple3().a()).isNotNull();
         assertThat(actual.getWhereTuple3().a().split("\\.")).hasSize(4);
         assertThat(actual.getWhereTuple3().b()).isEqualTo("🏴‍");
-        assertThat(actual.getWhereTuple3().c()).isEqualTo("Unknown, Unknown");
+        assertThat(actual.getWhereTuple3().c()).isEqualTo("🏴‍ Unknown, Unknown");
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)

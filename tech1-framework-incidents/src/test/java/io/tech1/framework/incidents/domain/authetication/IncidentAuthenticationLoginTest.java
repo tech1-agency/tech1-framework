@@ -37,10 +37,10 @@ class IncidentAuthenticationLoginTest {
                 .containsEntry("incidentType", "Authentication Login")
                 .containsEntry("username", username)
                 .containsEntry("browser", "[?]")
-                .containsEntry("countryFlag", UNKNOWN)
+                .containsEntry("countryFlag", "🏴‍")
                 .containsEntry("ipAddress", "8.8.8.8")
                 .containsEntry("what", "[?], [?] on [?]")
-                .containsEntry("where", "Unknown, Unknown")
+                .containsEntry("where", "🏴‍ Unknown, Unknown")
                 .containsEntry("exception", "exception1");
     }
 

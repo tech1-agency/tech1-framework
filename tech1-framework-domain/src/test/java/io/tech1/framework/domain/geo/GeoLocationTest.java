@@ -29,16 +29,16 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
 
     private static Stream<Arguments> getWhereTest() {
         return Stream.of(
-                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "Ukraine, Lviv"),
-                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", ""), "Ukraine"),
-                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", " "), "Ukraine"),
-                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "    "), "Ukraine"),
-                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", null), "Ukraine"),
-                Arguments.of(processed(localhost(), null, "UA", "🇺🇦", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "", "UA", "🇺🇦", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "", "UA", "🇺🇦", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "  ", "UA", "🇺🇦", "Lviv"), "Unknown"),
-                Arguments.of(processed(localhost(), "     ", "UA", "🇺🇦", "Lviv"), "Unknown")
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "Lviv"), "🇺🇦 Ukraine, Lviv"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", ""), "🇺🇦 Ukraine"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", " "), "🇺🇦 Ukraine"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", "    "), "🇺🇦 Ukraine"),
+                Arguments.of(processed(localhost(), "Ukraine", "UA", "🇺🇦", null), "🇺🇦 Ukraine"),
+                Arguments.of(processed(localhost(), null, "UA", "🇺🇦", "Lviv"), "🇺🇦 Unknown"),
+                Arguments.of(processed(localhost(), "", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
+                Arguments.of(processed(localhost(), "", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
+                Arguments.of(processed(localhost(), "  ", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown"),
+                Arguments.of(processed(localhost(), "     ", "UA", "🇺🇦", "Lviv"), "🏴‍ Unknown")
         );
     }
 
@@ -80,7 +80,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getCountryFlag()).isEqualTo("🇺🇦");
         assertThat(actual.getCity()).isEqualTo("Lviv");
         assertThat(actual.getExceptionDetails()).isEmpty();
-        assertThat(actual.getWhere()).isEqualTo("Ukraine, Lviv");
+        assertThat(actual.getWhere()).isEqualTo("🇺🇦 Ukraine, Lviv");
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)
@@ -94,7 +94,7 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         assertThat(actual.getCountry()).isEqualTo(UNKNOWN);
         assertThat(actual.getCity()).isEqualTo(UNKNOWN);
         assertThat(actual.getExceptionDetails()).isEqualTo("Location is unknown");
-        assertThat(actual.getWhere()).isEqualTo("Unknown, Unknown");
+        assertThat(actual.getWhere()).isEqualTo("🏴‍ Unknown, Unknown");
     }
 
     @RepeatedTest(SMALL_ITERATIONS_COUNT)

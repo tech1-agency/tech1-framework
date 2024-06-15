@@ -40,6 +40,6 @@ class IncidentSessionExpiredTest {
                 .containsEntry("countryFlag", UK)
                 .containsEntry("ipAddress", "2.2.2.2")
                 .containsEntry("what", "Mozilla, MacOS on Desktop")
-                .containsEntry("where", "UK, London");
+                .containsEntry("where", "🇬🇧 UK, London");
     }
 }

@@ -152,13 +152,14 @@ public class GeoLocation {
     public String getWhere() {
         var countryPresent = hasLength(this.country);
         var cityPresent = hasLength(this.city);
+        var countryFlagPrefix = hasLength(this.countryFlag) ? this.countryFlag + " " : StringConstants.EMPTY;
         if (countryPresent && !cityPresent) {
-            return this.country;
+            return countryFlagPrefix + this.country;
         }
         if (countryPresent) {
-            return this.country + ", " + this.city;
+            return countryFlagPrefix + this.country + ", " + this.city;
         }
-        return StringConstants.UNKNOWN;
+        return TestsFlagsConstants.UNKNOWN + " " + StringConstants.UNKNOWN;
     }
 
     // =================================================================================================================

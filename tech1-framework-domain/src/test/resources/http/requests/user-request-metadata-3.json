@@ -5,7 +5,7 @@
     "country" : "Unknown",
     "countryCode" : "Unknown",
     "countryFlag" : "🏴‍",
-    "where" : "Unknown, Unknown"
+    "where" : "🏴‍ Unknown, Unknown"
   },
   "userAgentDetails" : {
     "browser" : "Unknown",
@@ -17,7 +17,7 @@
   "whereTuple3" : {
     "a" : "127.0.0.1",
     "b" : "🏴‍",
-    "c" : "Unknown, Unknown"
+    "c" : "🏴‍ Unknown, Unknown"
   },
   "whatTuple2" : {
     "a" : "Unknown",

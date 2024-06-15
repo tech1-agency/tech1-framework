@@ -34,6 +34,6 @@ class IncidentAuthenticationLoginFailureUsernamePasswordTest {
                 .containsEntry("countryFlag", UKRAINE)
                 .containsEntry("ipAddress", "127.0.0.1")
                 .containsEntry("what", "Chrome, macOS on Desktop")
-                .containsEntry("where", "Ukraine, Lviv");
+                .containsEntry("where", "🇺🇦 Ukraine, Lviv");
     }
 }

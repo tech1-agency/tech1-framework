@@ -77,11 +77,11 @@ class ResponseUserSessionsTableTest {
         // Assert
         assertThat(actual.sessions()).hasSize(3);
         assertThat(actual.sessions().get(0).current()).isTrue();
-        assertThat(actual.sessions().get(0).where()).isEqualTo("USA, New York");
+        assertThat(actual.sessions().get(0).where()).isEqualTo("🇺🇸 USA, New York");
         assertThat(actual.sessions().get(1).current()).isFalse();
-        assertThat(actual.sessions().get(1).where()).isEqualTo("UK, Liverpool");
+        assertThat(actual.sessions().get(1).where()).isEqualTo("🇬🇧 UK, Liverpool");
         assertThat(actual.sessions().get(2).current()).isFalse();
-        assertThat(actual.sessions().get(2).where()).isEqualTo("UK, London");
+        assertThat(actual.sessions().get(2).where()).isEqualTo("🇬🇧 UK, London");
         assertThat(actual.anyPresent()).isTrue();
         assertThat(actual.anyProblem()).isTrue();
     }

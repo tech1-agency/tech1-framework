@@ -61,5 +61,15 @@
             <groupId>com.diogonunes</groupId>
             <artifactId>JColor</artifactId>
         </dependency>
+        <!-- Browser Capabilities -->
+        <dependency>
+            <groupId>com.blueconic</groupId>
+            <artifactId>browscap-java</artifactId>
+        </dependency>
+        <!-- GeoIP2 -->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+        </dependency>
     </dependencies>
 </project>

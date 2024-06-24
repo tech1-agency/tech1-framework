@@ -13,7 +13,7 @@ import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationL
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.utilities.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

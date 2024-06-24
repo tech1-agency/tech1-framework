@@ -2,9 +2,9 @@ package io.tech1.framework.configurations.server;
 
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.utilities.environment.EnvironmentUtility;
-import io.tech1.framework.utilities.environment.base.BaseEnvironmentUtility;
-import io.tech1.framework.utilities.resources.actuator.BaseInfoResource;
+import io.tech1.framework.foundation.utilities.environment.EnvironmentUtility;
+import io.tech1.framework.foundation.utilities.environment.base.BaseEnvironmentUtility;
+import io.tech1.framework.foundation.utilities.resources.actuator.BaseInfoResource;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

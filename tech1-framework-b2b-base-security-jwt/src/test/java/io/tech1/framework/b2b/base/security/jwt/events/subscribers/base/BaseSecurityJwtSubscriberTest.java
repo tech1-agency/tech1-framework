@@ -18,7 +18,7 @@ import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationL
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.utilities.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

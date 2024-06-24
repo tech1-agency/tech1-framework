@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.tests.contexts;
 
 import io.tech1.framework.b2b.mongodb.server.services.UsersService;
-import io.tech1.framework.utilities.environment.EnvironmentUtility;
+import io.tech1.framework.foundation.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

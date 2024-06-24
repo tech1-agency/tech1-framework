@@ -1,18 +1,18 @@
 package io.tech1.framework.hardware.monitoring.store.impl;
 
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.domain.base.Version.unknown;
-import static io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint.zeroUsage;
+import static io.tech1.framework.foundation.domain.base.Version.unknown;
+import static io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint.zeroUsage;
 
 @Slf4j
 @Component

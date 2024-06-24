@@ -1,8 +1,8 @@
 package io.tech1.framework.utilities.browsers.impl;
 
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.collections;
 
-import io.tech1.framework.domain.tests.constants.TestsJunitConstants;
-import io.tech1.framework.domain.tests.enums.EnumUnderTests;
+import io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants;
+import io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static io.tech1.framework.foundation.utilities.collections.CollectionUtility.*;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;

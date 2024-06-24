@@ -1,9 +1,9 @@
 package io.tech1.framework.hardware.monitoring.resources;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapoint;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringMetadata;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import io.tech1.framework.hardware.monitoring.publishers.HardwareMonitoringPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

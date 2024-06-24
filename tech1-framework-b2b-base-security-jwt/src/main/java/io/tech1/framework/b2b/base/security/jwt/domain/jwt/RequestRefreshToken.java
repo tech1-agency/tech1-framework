@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record RequestRefreshToken(String value) {

@@ -13,7 +13,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @UtilityClass

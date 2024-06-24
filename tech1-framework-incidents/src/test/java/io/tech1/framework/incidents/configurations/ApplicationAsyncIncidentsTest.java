@@ -1,7 +1,7 @@
 package io.tech1.framework.incidents.configurations;
 
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;

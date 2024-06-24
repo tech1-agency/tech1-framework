@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

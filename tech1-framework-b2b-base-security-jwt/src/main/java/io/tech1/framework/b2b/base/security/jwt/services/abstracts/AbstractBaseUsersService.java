@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserU
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersService;
-import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Password;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

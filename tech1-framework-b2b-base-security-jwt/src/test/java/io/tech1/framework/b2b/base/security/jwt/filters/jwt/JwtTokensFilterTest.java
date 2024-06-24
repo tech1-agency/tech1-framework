@@ -9,8 +9,8 @@ import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDen
 import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,9 +2,9 @@ package io.tech1.framework.utilities.geo.facades.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.domain.enums.Toggle;
-import io.tech1.framework.domain.geo.GeoCountryFlag;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.enums.Toggle;
+import io.tech1.framework.foundation.domain.geo.GeoCountryFlag;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.enums.Status.FAILURE;
-import static io.tech1.framework.domain.enums.Status.SUCCESS;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.foundation.domain.enums.Status.FAILURE;
+import static io.tech1.framework.foundation.domain.enums.Status.SUCCESS;
 import static java.util.Objects.isNull;
 
 @Slf4j

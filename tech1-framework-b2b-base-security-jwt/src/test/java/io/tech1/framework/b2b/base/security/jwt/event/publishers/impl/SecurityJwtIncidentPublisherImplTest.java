@@ -2,15 +2,15 @@ package io.tech1.framework.b2b.base.security.jwt.event.publishers.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.impl.SecurityJwtIncidentPublisherImpl;
-import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.IncidentsConfigs;
+import io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
+import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import io.tech1.framework.incidents.domain.authetication.*;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
+import static io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType.*;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 

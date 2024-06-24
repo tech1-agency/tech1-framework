@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserL
 import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLoginFailure;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
-import io.tech1.framework.domain.exceptions.ExceptionEntity;
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.exceptions.ExceptionEntity;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

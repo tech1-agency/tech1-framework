@@ -2,7 +2,7 @@ package io.tech1.framework.utilities.feigns.clients;
 
 import feign.Request;
 import feign.RetryableException;
-import io.tech1.framework.domain.base.ServerName;
+import io.tech1.framework.foundation.domain.base.ServerName;
 import io.tech1.framework.utilities.feigns.definitions.SpringBootClientFeign;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;

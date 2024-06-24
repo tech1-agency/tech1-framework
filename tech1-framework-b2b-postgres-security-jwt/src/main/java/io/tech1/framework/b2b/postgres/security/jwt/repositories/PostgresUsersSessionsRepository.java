@@ -9,8 +9,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.*;
-import static io.tech1.framework.domain.tuples.TuplePresence.present;
+import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, UsersSessionsRepository {

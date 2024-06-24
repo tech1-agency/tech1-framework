@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.codec.binary.Hex.encodeHexString;
 

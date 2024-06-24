@@ -13,9 +13,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND;
-import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
+import static io.tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static io.tech1.framework.foundation.domain.constants.ZoneIdsConstants.POLAND;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.*;
 import static java.time.Month.DECEMBER;
 import static java.time.ZoneOffset.UTC;

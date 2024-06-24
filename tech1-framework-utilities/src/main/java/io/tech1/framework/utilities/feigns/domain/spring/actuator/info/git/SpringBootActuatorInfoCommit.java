@@ -2,7 +2,7 @@ package io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static io.tech1.framework.domain.constants.StringConstants.DASH;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.DASH;
 
 public record SpringBootActuatorInfoCommit(
         @JsonProperty("id") String id,

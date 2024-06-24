@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.configurations;
 
 import io.tech1.framework.b2b.base.security.jwt.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.b2b.base.security.jwt.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

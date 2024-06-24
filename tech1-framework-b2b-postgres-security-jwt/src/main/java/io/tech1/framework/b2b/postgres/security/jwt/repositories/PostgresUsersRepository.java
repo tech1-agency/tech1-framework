@@ -7,10 +7,10 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.projections.PostgresDbUserProjection1;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.domain.tuples.TuplePresence.present;
+import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 

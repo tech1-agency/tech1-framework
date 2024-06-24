@@ -11,10 +11,10 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsReposi
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.cryptography;
 
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
 
 import static java.util.Base64.getEncoder;

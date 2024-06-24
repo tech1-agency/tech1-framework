@@ -1,6 +1,6 @@
 package io.tech1.framework.emails.utilities;
 
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import jakarta.mail.MessagingException;

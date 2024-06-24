@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.http;
 
-import io.tech1.framework.domain.constants.StringConstants;
-import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
+import io.tech1.framework.foundation.domain.constants.StringConstants;
+import io.tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import lombok.experimental.UtilityClass;
 
 import jakarta.servlet.http.Cookie;

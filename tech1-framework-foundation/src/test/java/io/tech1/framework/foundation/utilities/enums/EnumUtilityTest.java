@@ -1,8 +1,8 @@
 package io.tech1.framework.foundation.utilities.enums;
 
-import io.tech1.framework.domain.tests.enums.EnumNoValuesUnderTests;
-import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
-import io.tech1.framework.domain.tests.enums.EnumUnderTests;
+import io.tech1.framework.foundation.domain.tests.enums.EnumNoValuesUnderTests;
+import io.tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests;
+import io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests.ONE_VALUE;
-import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
+import static io.tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests.ONE_VALUE;
+import static io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests.*;
 import static io.tech1.framework.foundation.utilities.enums.EnumUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

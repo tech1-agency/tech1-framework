@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.numbers;
 
-import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.tuples.TupleRange;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.tuples.TupleRange;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.BigDecimalConstants.*;
+import static io.tech1.framework.foundation.domain.constants.BigDecimalConstants.*;
 import static io.tech1.framework.foundation.utilities.numbers.BigDecimalUtility.*;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBigDecimalGreaterThanZero;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBigDecimalLessThanZero;

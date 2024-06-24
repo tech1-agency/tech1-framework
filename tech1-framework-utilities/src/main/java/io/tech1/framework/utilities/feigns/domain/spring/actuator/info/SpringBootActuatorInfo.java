@@ -2,13 +2,13 @@ package io.tech1.framework.utilities.feigns.domain.spring.actuator.info;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.tech1.framework.domain.base.Version;
-import io.tech1.framework.domain.maven.MavenDetails;
+import io.tech1.framework.foundation.domain.base.Version;
+import io.tech1.framework.foundation.domain.maven.MavenDetails;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
 
 import java.util.ArrayList;
 
-import static io.tech1.framework.domain.constants.StringConstants.DASH;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.DASH;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 

@@ -1,7 +1,6 @@
 package io.tech1.framework.foundation.utilities.collections;
 
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.foundation.utilities.collections.CollectorUtility;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

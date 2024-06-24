@@ -1,8 +1,8 @@
 package io.tech1.framework.foundation.utilities.enums;
 
-import io.tech1.framework.domain.tests.enums.EnumValue1;
-import io.tech1.framework.domain.tests.enums.EnumValue2;
-import io.tech1.framework.domain.tests.enums.EnumValue3;
+import io.tech1.framework.foundation.domain.tests.enums.EnumValue1;
+import io.tech1.framework.foundation.domain.tests.enums.EnumValue2;
+import io.tech1.framework.foundation.domain.tests.enums.EnumValue3;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.enums.EnumValue2.UNKNOWN;
+import static io.tech1.framework.foundation.domain.tests.enums.EnumValue2.UNKNOWN;
 import static io.tech1.framework.foundation.utilities.enums.EnumCreatorUtility.*;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;

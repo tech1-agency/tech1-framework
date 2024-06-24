@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.constants.StringConstants.EMPTY;
-import static io.tech1.framework.domain.constants.StringConstants.SEMICOLON;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.SEMICOLON;
 import static java.util.stream.Collectors.joining;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasLength;

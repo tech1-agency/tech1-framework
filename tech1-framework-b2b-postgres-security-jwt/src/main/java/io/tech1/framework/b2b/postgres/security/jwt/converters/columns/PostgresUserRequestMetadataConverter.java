@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.enums.Status;
-import io.tech1.framework.domain.geo.GeoLocation;
-import io.tech1.framework.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.enums.Status;
+import io.tech1.framework.foundation.domain.geo.GeoLocation;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.SneakyThrows;
 
 import jakarta.persistence.Converter;

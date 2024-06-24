@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.domain.constants.LogsConstants.SERVER_OFFLINE;
+import static io.tech1.framework.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 
 @Slf4j
 @Component

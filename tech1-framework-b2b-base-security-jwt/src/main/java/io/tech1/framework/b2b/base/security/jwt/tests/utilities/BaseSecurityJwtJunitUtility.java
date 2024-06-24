@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.tests.utilities;
 
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;

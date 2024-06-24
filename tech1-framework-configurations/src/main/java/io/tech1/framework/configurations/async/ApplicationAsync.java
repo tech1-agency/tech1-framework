@@ -1,7 +1,7 @@
 package io.tech1.framework.configurations.async;
 
-import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;

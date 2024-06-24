@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.security;
 
 import io.tech1.framework.b2b.base.security.jwt.tests.domain.enums.TestAuthority;
-import io.tech1.framework.domain.base.AbstractAuthority;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.constants.DomainConstants;
-import io.tech1.framework.domain.constants.ZoneIdsConstants;
-import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
+import io.tech1.framework.foundation.domain.base.AbstractAuthority;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.constants.DomainConstants;
+import io.tech1.framework.foundation.domain.constants.ZoneIdsConstants;
+import io.tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
+import static io.tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
 import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;

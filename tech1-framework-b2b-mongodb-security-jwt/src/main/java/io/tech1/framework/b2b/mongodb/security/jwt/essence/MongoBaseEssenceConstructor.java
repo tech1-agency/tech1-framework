@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCo
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.domain.properties.base.DefaultUser;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

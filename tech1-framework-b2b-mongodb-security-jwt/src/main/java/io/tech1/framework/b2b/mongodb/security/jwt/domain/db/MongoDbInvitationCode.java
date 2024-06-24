@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;

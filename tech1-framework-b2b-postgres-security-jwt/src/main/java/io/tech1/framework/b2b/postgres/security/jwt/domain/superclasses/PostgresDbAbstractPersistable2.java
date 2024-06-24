@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses;
 
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

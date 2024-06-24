@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.http;
 
-import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;

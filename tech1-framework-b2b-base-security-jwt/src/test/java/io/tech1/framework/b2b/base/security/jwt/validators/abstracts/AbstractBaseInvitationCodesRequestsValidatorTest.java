@@ -7,9 +7,9 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepo
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.TuplePresence;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;

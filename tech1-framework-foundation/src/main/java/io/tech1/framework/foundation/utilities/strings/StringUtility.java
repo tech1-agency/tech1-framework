@@ -3,7 +3,7 @@ package io.tech1.framework.foundation.utilities.strings;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.UNDEFINED;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 

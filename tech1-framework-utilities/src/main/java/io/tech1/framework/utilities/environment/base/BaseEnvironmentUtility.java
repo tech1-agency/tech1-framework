@@ -1,6 +1,6 @@
 package io.tech1.framework.utilities.environment.base;
 
-import io.tech1.framework.domain.constants.StringConstants;
+import io.tech1.framework.foundation.domain.constants.StringConstants;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Component

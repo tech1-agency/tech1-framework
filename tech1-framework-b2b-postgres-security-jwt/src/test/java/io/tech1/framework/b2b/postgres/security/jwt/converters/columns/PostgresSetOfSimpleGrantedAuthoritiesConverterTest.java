@@ -17,8 +17,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.domain.base.AbstractAuthority.INVITATION_CODE_READ;
-import static io.tech1.framework.domain.base.AbstractAuthority.INVITATION_CODE_WRITE;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_READ;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_WRITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
 
-import io.tech1.framework.domain.base.Version;
+import io.tech1.framework.foundation.domain.base.Version;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

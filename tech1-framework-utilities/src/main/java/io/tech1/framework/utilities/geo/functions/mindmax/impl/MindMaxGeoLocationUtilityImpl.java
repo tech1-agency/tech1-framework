@@ -2,10 +2,10 @@ package io.tech1.framework.utilities.geo.functions.mindmax.impl;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import io.tech1.framework.domain.enums.Toggle;
-import io.tech1.framework.domain.geo.GeoLocation;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.enums.Toggle;
+import io.tech1.framework.foundation.domain.geo.GeoLocation;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static io.tech1.framework.domain.enums.Status.FAILURE;
-import static io.tech1.framework.domain.enums.Status.SUCCESS;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.foundation.domain.enums.Status.FAILURE;
+import static io.tech1.framework.foundation.domain.enums.Status.SUCCESS;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j

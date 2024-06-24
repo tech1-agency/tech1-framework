@@ -2,10 +2,10 @@ package io.tech1.framework.b2b.base.security.jwt.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.constants.ZoneIdsConstants;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 
 public record JwtUser(

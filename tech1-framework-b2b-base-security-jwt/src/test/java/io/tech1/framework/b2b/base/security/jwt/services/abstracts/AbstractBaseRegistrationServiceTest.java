@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserR
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

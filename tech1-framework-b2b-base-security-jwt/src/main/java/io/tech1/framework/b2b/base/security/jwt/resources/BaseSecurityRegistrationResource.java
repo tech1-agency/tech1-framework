@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
-import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
+import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -10,7 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsReposi
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tasks.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.b2b.base.security.jwt.tests.stubbers.AbstractMockService;
-import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
+import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;

@@ -4,10 +4,10 @@ import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstruct
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.stubbers.AbstractMockService;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.properties.base.DefaultUser;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
+import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

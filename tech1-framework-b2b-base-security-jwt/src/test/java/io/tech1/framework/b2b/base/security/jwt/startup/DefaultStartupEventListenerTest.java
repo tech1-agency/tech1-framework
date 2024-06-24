@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.base.security.jwt.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
-import io.tech1.framework.domain.properties.base.Authority;
-import io.tech1.framework.domain.properties.base.DefaultUsers;
-import io.tech1.framework.domain.properties.base.InvitationCodes;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.AuthoritiesConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.EssenceConfigs;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.base.Authority;
+import io.tech1.framework.foundation.domain.properties.base.DefaultUsers;
+import io.tech1.framework.foundation.domain.properties.base.InvitationCodes;
+import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
+import io.tech1.framework.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

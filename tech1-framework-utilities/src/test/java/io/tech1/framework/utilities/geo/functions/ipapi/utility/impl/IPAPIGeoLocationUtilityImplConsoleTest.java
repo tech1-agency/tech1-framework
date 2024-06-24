@@ -1,9 +1,9 @@
 package io.tech1.framework.utilities.geo.functions.ipapi.utility.impl;
 
-import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.facades.impl.GeoCountryFlagUtilityImpl;
 import io.tech1.framework.utilities.geo.functions.ipapi.configurations.IPAPIConfiguration;

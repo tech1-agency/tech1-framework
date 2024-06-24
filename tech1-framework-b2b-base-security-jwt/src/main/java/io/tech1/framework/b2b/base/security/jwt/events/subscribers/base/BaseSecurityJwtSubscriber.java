@@ -7,8 +7,8 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
-import io.tech1.framework.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
+import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j

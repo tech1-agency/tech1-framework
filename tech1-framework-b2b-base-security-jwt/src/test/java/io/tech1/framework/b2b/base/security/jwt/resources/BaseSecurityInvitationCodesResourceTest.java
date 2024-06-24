@@ -9,8 +9,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.b2b.base.security.jwt.services.BaseInvitationCodesService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseInvitationCodesRequestsValidator;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

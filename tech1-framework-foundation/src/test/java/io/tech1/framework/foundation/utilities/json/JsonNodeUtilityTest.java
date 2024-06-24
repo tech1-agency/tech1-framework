@@ -2,7 +2,7 @@ package io.tech1.framework.foundation.utilities.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import io.tech1.framework.domain.constants.BigDecimalConstants;
+import io.tech1.framework.foundation.domain.constants.BigDecimalConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

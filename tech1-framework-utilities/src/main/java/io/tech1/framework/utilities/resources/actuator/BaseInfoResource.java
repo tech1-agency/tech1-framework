@@ -1,6 +1,6 @@
 package io.tech1.framework.utilities.resources.actuator;
 
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

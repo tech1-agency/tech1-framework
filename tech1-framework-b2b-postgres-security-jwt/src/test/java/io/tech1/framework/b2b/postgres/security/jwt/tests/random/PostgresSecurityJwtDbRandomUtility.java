@@ -4,17 +4,17 @@ import io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRa
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.constants.DomainConstants;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.constants.DomainConstants;
 import lombok.experimental.UtilityClass;
 
 import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPERADMIN;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static org.springframework.util.StringUtils.capitalize;
 

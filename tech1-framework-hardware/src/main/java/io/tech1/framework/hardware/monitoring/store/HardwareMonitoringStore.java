@@ -1,7 +1,7 @@
 package io.tech1.framework.hardware.monitoring.store;
 
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringWidget;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 
 public interface HardwareMonitoringStore {
     HardwareMonitoringWidget getHardwareMonitoringWidget();

@@ -4,10 +4,10 @@ import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
-import io.tech1.framework.domain.enums.Toggle;
-import io.tech1.framework.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.enums.Toggle;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static io.tech1.framework.domain.enums.Status.FAILURE;
-import static io.tech1.framework.domain.enums.Status.SUCCESS;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.foundation.domain.enums.Status.FAILURE;
+import static io.tech1.framework.foundation.domain.enums.Status.SUCCESS;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j

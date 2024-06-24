@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.StringConstants.COMMA_COLLECTORS;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 
 @UtilityClass
 public class EnumUtility {

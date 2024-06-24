@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.events.subscribers.impl;
 
-import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
+import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.INCIDENT;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.INCIDENT;
 
 @Slf4j
 @Service

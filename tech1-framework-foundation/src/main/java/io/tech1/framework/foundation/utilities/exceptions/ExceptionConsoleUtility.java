@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.exceptions;
 
-import io.tech1.framework.domain.asserts.ConsoleAsserts;
-import io.tech1.framework.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.asserts.ConsoleAsserts;
+import io.tech1.framework.foundation.domain.base.PropertyId;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

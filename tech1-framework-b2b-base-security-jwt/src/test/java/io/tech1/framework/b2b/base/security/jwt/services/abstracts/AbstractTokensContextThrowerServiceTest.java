@@ -8,8 +8,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClai
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.tokens.*;
-import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

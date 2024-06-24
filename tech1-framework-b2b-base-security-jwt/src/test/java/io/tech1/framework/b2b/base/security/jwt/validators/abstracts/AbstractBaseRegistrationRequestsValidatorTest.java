@@ -11,7 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationValidatorsContext;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
-import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
+import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.RequiredArgsConstructor;

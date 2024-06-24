@@ -2,9 +2,9 @@ package io.tech1.framework.foundation.utilities.random;
 
 import feign.FeignException;
 import feign.Request;
-import io.tech1.framework.domain.constants.BigDecimalConstants;
-import io.tech1.framework.domain.constants.StringConstants;
-import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
+import io.tech1.framework.foundation.domain.constants.BigDecimalConstants;
+import io.tech1.framework.foundation.domain.constants.StringConstants;
+import io.tech1.framework.foundation.domain.exceptions.random.IllegalEnumException;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;

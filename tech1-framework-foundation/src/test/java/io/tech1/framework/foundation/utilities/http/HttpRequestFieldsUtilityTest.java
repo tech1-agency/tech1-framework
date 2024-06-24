@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.http;
 
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.constants.DomainConstants;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.constants.DomainConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

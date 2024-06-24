@@ -1,8 +1,8 @@
 package io.tech1.framework.incidents.domain.session;
 
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.incidents.domain.AbstractIncident;
 import io.tech1.framework.incidents.domain.Incident;
 

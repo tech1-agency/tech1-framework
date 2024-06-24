@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewIn
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

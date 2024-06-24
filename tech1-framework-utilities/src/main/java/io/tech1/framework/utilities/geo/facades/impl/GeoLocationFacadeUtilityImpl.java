@@ -1,8 +1,8 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
-import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
-import io.tech1.framework.domain.geo.GeoLocation;
-import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import io.tech1.framework.foundation.domain.geo.GeoLocation;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import io.tech1.framework.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
 import io.tech1.framework.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;

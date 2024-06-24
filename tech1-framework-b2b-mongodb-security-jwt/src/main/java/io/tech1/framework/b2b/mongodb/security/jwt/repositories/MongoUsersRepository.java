@@ -6,10 +6,10 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.domain.tuples.TuplePresence.present;
+import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 

@@ -1,8 +1,8 @@
 package io.tech1.framework.utilities.utils.impl;
 
-import io.tech1.framework.domain.enums.Status;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.enums.Status;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.utilities.geo.facades.GeoLocationFacadeUtility;
 import io.tech1.framework.utilities.utils.UserMetadataUtils;

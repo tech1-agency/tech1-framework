@@ -1,14 +1,14 @@
 package io.tech1.framework.foundation.utilities.processors;
 
-import io.tech1.framework.domain.constants.BigDecimalConstants;
+import io.tech1.framework.foundation.domain.constants.BigDecimalConstants;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static io.tech1.framework.foundation.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static io.tech1.framework.foundation.utilities.processors.ProcessorsUtility.getHalfOfCores;
 import static io.tech1.framework.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -11,7 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseSuperadminService;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
-import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
+import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -3,18 +3,18 @@ package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.geo.GeoLocation;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.geo.GeoLocation;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UK;
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.USA;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants.UK;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants.USA;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;

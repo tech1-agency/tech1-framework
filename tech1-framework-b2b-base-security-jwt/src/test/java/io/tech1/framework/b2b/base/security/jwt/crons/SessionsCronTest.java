@@ -2,12 +2,12 @@ package io.tech1.framework.b2b.base.security.jwt.crons;
 
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.properties.base.Cron;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.domain.properties.configs.security.jwt.SessionConfigs;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.properties.base.Cron;
+import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.foundation.domain.properties.configs.security.jwt.SessionConfigs;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

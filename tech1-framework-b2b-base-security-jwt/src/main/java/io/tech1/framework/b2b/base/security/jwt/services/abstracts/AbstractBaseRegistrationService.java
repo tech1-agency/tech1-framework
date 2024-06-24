@@ -5,7 +5,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserR
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
-import io.tech1.framework.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Password;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

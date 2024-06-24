@@ -1,7 +1,7 @@
 package io.tech1.framework.utilities.spring.actuator.health;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
+import io.tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +11,7 @@ import org.springframework.boot.actuate.health.Status;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
+import static io.tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringBootActuatorHealthTest extends AbstractFolderSerializationRunner {

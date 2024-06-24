@@ -1,10 +1,10 @@
 package io.tech1.framework.foundation.utilities.random;
 
-import io.tech1.framework.domain.tests.classes.*;
+import io.tech1.framework.foundation.domain.tests.classes.*;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.*;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.one;
 import static org.assertj.core.api.Assertions.assertThat;

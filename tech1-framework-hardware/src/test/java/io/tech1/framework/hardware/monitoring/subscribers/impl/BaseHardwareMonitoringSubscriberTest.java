@@ -1,6 +1,6 @@
 package io.tech1.framework.hardware.monitoring.subscribers.impl;
 
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.hardware.monitoring.subscribers.HardwareMonitoringSubscriber;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,9 @@
 package io.tech1.framework.incidents.domain.authetication;
 
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UKRAINE;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {

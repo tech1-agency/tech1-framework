@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.processors;
 
-import io.tech1.framework.domain.constants.BigDecimalConstants;
-import io.tech1.framework.domain.tuples.TuplePercentage;
+import io.tech1.framework.foundation.domain.constants.BigDecimalConstants;
+import io.tech1.framework.foundation.domain.tuples.TuplePercentage;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;

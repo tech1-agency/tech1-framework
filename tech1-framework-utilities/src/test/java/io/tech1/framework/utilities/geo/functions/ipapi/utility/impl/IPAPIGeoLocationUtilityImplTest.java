@@ -1,7 +1,7 @@
 package io.tech1.framework.utilities.geo.functions.ipapi.utility.impl;
 
-import io.tech1.framework.domain.exceptions.geo.GeoLocationNotFoundException;
-import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.utilities.geo.functions.ipapi.domain.IPAPIResponse;
 import io.tech1.framework.utilities.geo.functions.ipapi.feign.IPAPIFeign;
@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UKRAINE;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants.UKRAINE;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomFeignException;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

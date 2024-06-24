@@ -1,15 +1,15 @@
 package io.tech1.framework.utilities.feigns.clients;
 
 import feign.RetryableException;
-import io.tech1.framework.domain.base.ServerName;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.base.ServerName;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
 import io.tech1.framework.utilities.feigns.definitions.SpringBootClientFeign;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import static io.tech1.framework.domain.constants.LogsConstants.SERVER_OFFLINE;
+import static io.tech1.framework.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 import static java.util.Objects.nonNull;
 
 @Slf4j

@@ -4,9 +4,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 
 import jakarta.servlet.http.HttpServletRequest;

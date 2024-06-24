@@ -1,11 +1,11 @@
 package io.tech1.framework.incidents.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.properties.base.SecurityJwtIncidentType;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -18,10 +18,10 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static io.tech1.framework.domain.constants.StringConstants.COMMA_COLLECTORS;
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.UNKNOWN;
 import static io.tech1.framework.foundation.utilities.exceptions.TraceUtility.getTrace;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.incidents.domain.IncidentAttributes.Keys.*;

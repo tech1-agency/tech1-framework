@@ -2,14 +2,14 @@ package io.tech1.framework.utilities.geo.facades.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
+import io.tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
+import static io.tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
 
 @Slf4j
 class GeoCountryFlagUtilityConsoleTest extends AbstractFolderSerializationRunner {

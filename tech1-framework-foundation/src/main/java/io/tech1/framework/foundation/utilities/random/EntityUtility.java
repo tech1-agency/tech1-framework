@@ -1,14 +1,14 @@
 package io.tech1.framework.foundation.utilities.random;
 
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.geo.GeoLocation;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThreshold;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringThresholds;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.geo.GeoLocation;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringThreshold;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentDetails;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.foundation.utilities.collections.CollectionUtility;
 import lombok.experimental.UtilityClass;
 

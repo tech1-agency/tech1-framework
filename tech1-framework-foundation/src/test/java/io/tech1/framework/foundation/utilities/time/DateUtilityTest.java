@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
-import static io.tech1.framework.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
+import static io.tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static io.tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.foundation.utilities.time.DateUtility.getAbsDifferenceByTimeUnit;
 import static java.time.LocalDateTime.of;

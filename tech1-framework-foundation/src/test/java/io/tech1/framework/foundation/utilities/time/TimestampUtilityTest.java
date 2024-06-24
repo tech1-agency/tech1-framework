@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.time;
 
-import io.tech1.framework.domain.time.TimeAmount;
+import io.tech1.framework.foundation.domain.time.TimeAmount;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -8,10 +8,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.POLAND;
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static io.tech1.framework.foundation.domain.constants.ZoneIdsConstants.POLAND;
+import static io.tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.*;
 import static java.time.ZoneOffset.UTC;

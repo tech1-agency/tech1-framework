@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.exceptions;
 
-import io.tech1.framework.domain.exceptions.ThrowableTrace;
+import io.tech1.framework.foundation.domain.exceptions.ThrowableTrace;
 import lombok.experimental.UtilityClass;
 
 import java.io.PrintWriter;

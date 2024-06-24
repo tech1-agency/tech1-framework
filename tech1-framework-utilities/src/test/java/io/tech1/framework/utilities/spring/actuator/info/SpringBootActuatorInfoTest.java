@@ -1,8 +1,8 @@
 package io.tech1.framework.utilities.spring.actuator.info;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.base.Version;
-import io.tech1.framework.domain.tests.runners.AbstractFolderSerializationRunner;
+import io.tech1.framework.foundation.domain.base.Version;
+import io.tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
 import io.tech1.framework.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
 import lombok.SneakyThrows;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
+import static io.tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {

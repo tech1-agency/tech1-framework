@@ -2,14 +2,14 @@ package io.tech1.framework.b2b.base.security.jwt.events.publishers.base;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.events.*;
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.domain.pubsub.AbstractEventPublisher;
+import io.tech1.framework.foundation.domain.pubsub.AbstractEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @Component

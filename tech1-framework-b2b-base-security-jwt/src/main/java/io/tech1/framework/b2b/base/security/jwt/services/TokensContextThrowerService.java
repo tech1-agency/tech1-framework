@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.domain.exceptions.tokens.*;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
 
 public interface TokensContextThrowerService {
     JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws AccessTokenInvalidException;

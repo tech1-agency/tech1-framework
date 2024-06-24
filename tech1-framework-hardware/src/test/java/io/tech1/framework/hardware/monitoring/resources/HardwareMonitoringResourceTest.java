@@ -1,10 +1,10 @@
 package io.tech1.framework.hardware.monitoring.resources;
 
-import io.tech1.framework.domain.base.Version;
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import io.tech1.framework.domain.hardware.memories.CpuMemory;
-import io.tech1.framework.domain.hardware.memories.SystemMemories;
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringMetadata;
+import io.tech1.framework.foundation.domain.base.Version;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.hardware.memories.CpuMemory;
+import io.tech1.framework.foundation.domain.hardware.memories.SystemMemories;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
 import io.tech1.framework.hardware.monitoring.publishers.HardwareMonitoringPublisher;
 import io.tech1.framework.hardware.tests.runners.ApplicationResourceRunner;
 import lombok.RequiredArgsConstructor;

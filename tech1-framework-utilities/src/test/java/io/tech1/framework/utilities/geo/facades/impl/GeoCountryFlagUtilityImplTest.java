@@ -1,8 +1,8 @@
 package io.tech1.framework.utilities.geo.facades.impl;
 
-import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,8 +20,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
-import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.UNDEFINED;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.UNKNOWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

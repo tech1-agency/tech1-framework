@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
-import static io.tech1.framework.domain.constants.StringConstants.COMMA_COLLECTORS;
+import static io.tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.CollectionUtils.*;

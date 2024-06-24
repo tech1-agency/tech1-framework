@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.http;
 
-import io.tech1.framework.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
 import lombok.experimental.UtilityClass;
 
 import jakarta.servlet.http.HttpServletRequest;

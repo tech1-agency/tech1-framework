@@ -3,11 +3,11 @@ package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.time.TimeAgo;
-import io.tech1.framework.domain.time.TimeAmount;
-import io.tech1.framework.domain.tuples.TupleExceptionDetails;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.time.TimeAgo;
+import io.tech1.framework.foundation.domain.time.TimeAmount;
+import io.tech1.framework.foundation.domain.tuples.TupleExceptionDetails;
 import io.tech1.framework.foundation.utilities.time.TimestampUtility;
 
 public record ResponseUserSession2(

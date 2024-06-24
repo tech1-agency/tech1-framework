@@ -11,7 +11,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsServic
 import io.tech1.framework.b2b.base.security.jwt.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersSessionsRequestsValidator;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;

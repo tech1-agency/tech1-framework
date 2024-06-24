@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.domain.system;
 
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.incidents.domain.AbstractIncident;
 import io.tech1.framework.incidents.domain.Incident;
 

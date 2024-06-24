@@ -1,6 +1,6 @@
 package io.tech1.framework.hardware.monitoring.publishers.impl;
 
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.hardware.monitoring.publishers.HardwareMonitoringPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

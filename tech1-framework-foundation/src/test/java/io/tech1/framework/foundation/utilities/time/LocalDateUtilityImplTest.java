@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.constants.ZoneIdsConstants.UKRAINE;
+import static io.tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static io.tech1.framework.foundation.utilities.time.LocalDateUtility.*;
 import static java.time.Month.*;

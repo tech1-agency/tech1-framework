@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.properties.base.TimeAmount;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;

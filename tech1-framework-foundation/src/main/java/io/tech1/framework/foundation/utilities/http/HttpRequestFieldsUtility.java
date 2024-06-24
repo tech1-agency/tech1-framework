@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.http;
 
-import io.tech1.framework.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Email;
 import lombok.experimental.UtilityClass;
 
 import java.util.regex.Pattern;

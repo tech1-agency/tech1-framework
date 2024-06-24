@@ -1,11 +1,11 @@
 package io.tech1.framework.foundation.utilities.random;
 
 import feign.Request;
-import io.tech1.framework.domain.constants.BigDecimalConstants;
-import io.tech1.framework.domain.constants.BigIntegerConstants;
-import io.tech1.framework.domain.exceptions.random.IllegalEnumException;
-import io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests;
-import io.tech1.framework.domain.tests.enums.EnumUnderTests;
+import io.tech1.framework.foundation.domain.constants.BigDecimalConstants;
+import io.tech1.framework.foundation.domain.constants.BigIntegerConstants;
+import io.tech1.framework.foundation.domain.exceptions.random.IllegalEnumException;
+import io.tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests;
+import io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -25,9 +25,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static io.tech1.framework.domain.tests.enums.EnumUnderTests.*;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests.*;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.getAvailableZoneIds;
@@ -659,7 +659,7 @@ class RandomUtilityTest {
         // Assert
         assertThat(throwable1).isInstanceOf(IllegalEnumException.class);
         assertThat(throwable2).isInstanceOf(IllegalEnumException.class);
-        var message = "Please check enum: class io.tech1.framework.domain.tests.enums.EnumOneValueUnderTests";
+        var message = "Please check enum: class io.tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }
@@ -723,7 +723,7 @@ class RandomUtilityTest {
         // Assert
         assertThat(throwable1).isInstanceOf(IllegalEnumException.class);
         assertThat(throwable2).isInstanceOf(IllegalEnumException.class);
-        var message = "Please check enum: class io.tech1.framework.domain.tests.enums.EnumUnderTests";
+        var message = "Please check enum: class io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }

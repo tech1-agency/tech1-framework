@@ -1,7 +1,7 @@
 package io.tech1.framework.foundation.utilities.time;
 
-import io.tech1.framework.domain.time.TimeAmount;
-import io.tech1.framework.domain.tuples.TupleRange;
+import io.tech1.framework.foundation.domain.time.TimeAmount;
+import io.tech1.framework.foundation.domain.tuples.TupleRange;
 import lombok.experimental.UtilityClass;
 
 import java.time.Instant;

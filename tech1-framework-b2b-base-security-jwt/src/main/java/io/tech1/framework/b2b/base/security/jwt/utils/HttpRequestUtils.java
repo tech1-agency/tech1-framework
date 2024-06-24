@@ -1,9 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.utils;
 
-import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
+import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.io.IOException;
 
 public interface HttpRequestUtils {
     boolean isCachedEndpoint(HttpServletRequest request);

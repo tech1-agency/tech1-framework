@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.postgres.security.jwt.configurations;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

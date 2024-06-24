@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

@@ -1,6 +1,6 @@
 package io.tech1.framework.foundation.utilities.enums;
 
-import io.tech1.framework.domain.enums.EnumValue;
+import io.tech1.framework.foundation.domain.enums.EnumValue;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;

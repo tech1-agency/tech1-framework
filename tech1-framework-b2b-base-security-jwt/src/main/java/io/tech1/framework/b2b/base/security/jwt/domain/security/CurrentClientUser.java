@@ -2,9 +2,9 @@ package io.tech1.framework.b2b.base.security.jwt.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.domain.base.AbstractAuthority;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.AbstractAuthority;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

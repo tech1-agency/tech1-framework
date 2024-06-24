@@ -6,8 +6,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInv
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.tuples.TuplePresence.present;
+import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
 @Repository

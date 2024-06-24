@@ -2,9 +2,9 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.tempate.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.websockets.domain.events.WebsocketEvent;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingTemplate;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

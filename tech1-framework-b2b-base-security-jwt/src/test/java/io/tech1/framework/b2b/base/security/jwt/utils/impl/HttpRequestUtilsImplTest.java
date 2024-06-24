@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
-import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.domain.http.cache.CachedPayload;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import io.tech1.framework.foundation.domain.http.cache.CachedPayload;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

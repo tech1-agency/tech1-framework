@@ -1,13 +1,13 @@
 package io.tech1.framework.foundation.utilities.numbers;
 
-import io.tech1.framework.domain.tuples.TupleRange;
+import io.tech1.framework.foundation.domain.tuples.TupleRange;
 import io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
+import static io.tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.foundation.domain.constants.BigDecimalConstants.ONE_HUNDRED;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
 

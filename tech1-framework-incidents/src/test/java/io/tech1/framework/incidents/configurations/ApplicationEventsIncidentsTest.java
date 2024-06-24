@@ -1,7 +1,7 @@
 package io.tech1.framework.incidents.configurations;
 
 import io.tech1.framework.incidents.handlers.ErrorHandlerPublisher;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,12 +1,12 @@
 package io.tech1.framework.foundation.utilities.reflections;
 
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.properties.base.SchedulerConfiguration;
-import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.reflections.ReflectionProperty;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.properties.base.SchedulerConfiguration;
+import io.tech1.framework.foundation.domain.properties.base.TimeAmount;
+import io.tech1.framework.foundation.domain.reflections.ReflectionProperty;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Field;

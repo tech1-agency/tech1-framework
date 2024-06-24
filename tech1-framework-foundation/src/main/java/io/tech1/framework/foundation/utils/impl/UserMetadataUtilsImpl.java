@@ -1,9 +1,9 @@
-package io.tech1.framework.foundation.utilities.utils.impl;
+package io.tech1.framework.foundation.utils.impl;
 
 import io.tech1.framework.foundation.domain.http.requests.IPAddress;
 import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.foundation.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.foundation.utilities.browsers.UserAgentDetailsUtility;
 import io.tech1.framework.foundation.utilities.geo.facades.GeoLocationFacadeUtility;
 import lombok.RequiredArgsConstructor;

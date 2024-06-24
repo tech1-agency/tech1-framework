@@ -23,7 +23,7 @@ import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import io.tech1.framework.foundation.domain.tuples.TupleToggle;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import io.tech1.framework.foundation.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

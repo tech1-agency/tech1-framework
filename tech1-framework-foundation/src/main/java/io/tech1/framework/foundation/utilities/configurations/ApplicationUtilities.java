@@ -15,7 +15,7 @@ import jakarta.annotation.PostConstruct;
         "io.tech1.framework.foundation.utilities.browsers",
         "io.tech1.framework.foundation.utilities.geo",
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.foundation.utilities.utils"
+        "io.tech1.framework.foundation.utils"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

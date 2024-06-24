@@ -19,7 +19,7 @@ import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.foundation.domain.tuples.Tuple3;
 import io.tech1.framework.foundation.domain.tuples.TupleToggle;
-import io.tech1.framework.foundation.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;

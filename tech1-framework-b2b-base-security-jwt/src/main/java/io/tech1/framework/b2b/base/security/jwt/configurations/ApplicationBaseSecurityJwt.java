@@ -11,7 +11,7 @@ import io.tech1.framework.foundation.domain.constants.SwaggerConstants;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
-import io.tech1.framework.foundation.utilities.configurations.ApplicationUtilities;
+import io.tech1.framework.foundation.configurations.ApplicationUserMetadata;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ import static org.springframework.http.HttpMethod.*;
 })
 @EnableWebSecurity
 @Import({
-        ApplicationUtilities.class,
+        ApplicationUserMetadata.class,
         ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
         ApplicationBaseSecurityJwtMvc.class,

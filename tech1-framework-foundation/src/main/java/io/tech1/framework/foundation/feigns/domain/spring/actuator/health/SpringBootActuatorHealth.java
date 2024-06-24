@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.health;
+package io.tech1.framework.foundation.feigns.domain.spring.actuator.health;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.boot.actuate.health.Status;

@@ -2,7 +2,7 @@ package io.tech1.framework.foundation.utilities.spring.actuator.health;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
-import io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
+import io.tech1.framework.foundation.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

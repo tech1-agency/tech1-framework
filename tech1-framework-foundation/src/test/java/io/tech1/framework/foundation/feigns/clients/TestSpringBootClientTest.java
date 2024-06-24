@@ -1,11 +1,11 @@
-package io.tech1.framework.foundation.utilities.feigns.clients;
+package io.tech1.framework.foundation.feigns.clients;
 
 import feign.Request;
 import feign.RetryableException;
 import io.tech1.framework.foundation.domain.base.ServerName;
-import io.tech1.framework.foundation.utilities.feigns.definitions.SpringBootClientFeign;
-import io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
-import io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
+import io.tech1.framework.foundation.feigns.definitions.SpringBootClientFeign;
+import io.tech1.framework.foundation.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
+import io.tech1.framework.foundation.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

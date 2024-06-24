@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.info.git;
+package io.tech1.framework.foundation.feigns.domain.spring.actuator.info.git;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

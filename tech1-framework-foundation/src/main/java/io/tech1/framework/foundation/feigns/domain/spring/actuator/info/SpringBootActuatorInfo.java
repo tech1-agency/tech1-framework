@@ -1,10 +1,10 @@
-package io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.info;
+package io.tech1.framework.foundation.feigns.domain.spring.actuator.info;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.tech1.framework.foundation.domain.base.Version;
 import io.tech1.framework.foundation.domain.maven.MavenDetails;
-import io.tech1.framework.foundation.utilities.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
+import io.tech1.framework.foundation.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
 
 import java.util.ArrayList;
 

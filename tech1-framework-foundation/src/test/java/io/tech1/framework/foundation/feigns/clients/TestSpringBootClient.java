@@ -1,7 +1,7 @@
-package io.tech1.framework.foundation.utilities.feigns.clients;
+package io.tech1.framework.foundation.feigns.clients;
 
 import io.tech1.framework.foundation.domain.base.ServerName;
-import io.tech1.framework.foundation.utilities.feigns.definitions.SpringBootClientFeign;
+import io.tech1.framework.foundation.feigns.definitions.SpringBootClientFeign;
 
 class TestSpringBootClient extends BaseSpringBootClient {
 

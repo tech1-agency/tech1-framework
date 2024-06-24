@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.configurations;
 
 import io.tech1.framework.b2b.base.security.jwt.annotations.AbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.configurations.mvc.ApplicationMVC;
+import io.tech1.framework.foundation.configurations.mvc.ApplicationMVC;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.utilities.resources.actuator;
+package io.tech1.framework.foundation.resources.actuator;
 
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.utilities.environment.EnvironmentUtility;

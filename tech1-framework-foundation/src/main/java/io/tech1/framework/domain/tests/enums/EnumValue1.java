@@ -3,7 +3,7 @@ package io.tech1.framework.domain.tests.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.tech1.framework.domain.enums.EnumValue;
-import io.tech1.framework.domain.utilities.enums.EnumCreatorUtility;
+import io.tech1.framework.foundation.utilities.enums.EnumCreatorUtility;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

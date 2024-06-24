@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record UserSessionId(@NotNull String value) {
 

@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)

@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static io.tech1.framework.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

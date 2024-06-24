@@ -20,7 +20,7 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWO
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static io.tech1.framework.domain.enums.Status.FAILURE;
 import static io.tech1.framework.domain.enums.Status.SUCCESS;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
 @Component

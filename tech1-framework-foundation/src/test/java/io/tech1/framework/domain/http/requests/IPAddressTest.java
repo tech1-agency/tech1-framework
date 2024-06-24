@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomIPv4;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IPAddressTest {

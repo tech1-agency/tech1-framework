@@ -3,8 +3,8 @@ package io.tech1.framework.domain.tuples;
 import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
-import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.divideOrZero;
-import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
+import static io.tech1.framework.foundation.utilities.numbers.RoundingUtility.divideOrZero;
+import static io.tech1.framework.foundation.utilities.numbers.RoundingUtility.scale;
 import static java.math.BigDecimal.ZERO;
 
 public record TuplePercentage(

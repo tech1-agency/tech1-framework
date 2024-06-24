@@ -8,7 +8,7 @@ import io.tech1.framework.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.domain.time.TimeAgo;
 import io.tech1.framework.domain.time.TimeAmount;
 import io.tech1.framework.domain.tuples.TupleExceptionDetails;
-import io.tech1.framework.domain.utilities.time.TimestampUtility;
+import io.tech1.framework.foundation.utilities.time.TimestampUtility;
 
 public record ResponseUserSession2(
         UserSessionId id,

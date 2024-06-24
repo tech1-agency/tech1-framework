@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -23,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

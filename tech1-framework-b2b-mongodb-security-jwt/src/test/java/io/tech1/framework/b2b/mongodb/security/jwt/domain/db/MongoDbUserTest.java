@@ -7,9 +7,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
+import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MongoDbUserTest {

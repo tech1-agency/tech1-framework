@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

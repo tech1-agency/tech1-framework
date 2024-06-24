@@ -2,7 +2,7 @@ package io.tech1.framework.domain.properties.configs.mvc;
 
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,8 +10,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.Set;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

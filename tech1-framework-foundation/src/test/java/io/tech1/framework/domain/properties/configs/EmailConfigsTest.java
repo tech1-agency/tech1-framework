@@ -5,8 +5,8 @@ import io.tech1.framework.domain.base.Password;
 import io.tech1.framework.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIntegerGreaterThanZero;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZero;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailConfigsTest {

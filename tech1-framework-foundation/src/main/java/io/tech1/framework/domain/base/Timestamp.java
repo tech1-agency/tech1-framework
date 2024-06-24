@@ -12,7 +12,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZero;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static java.util.Objects.nonNull;
 
 public record Timestamp(long value) {

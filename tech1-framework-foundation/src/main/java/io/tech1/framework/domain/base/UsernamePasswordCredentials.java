@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.base;
 
-import io.tech1.framework.domain.utilities.strings.MaskUtility;
+import io.tech1.framework.foundation.utilities.strings.MaskUtility;
 
 public record UsernamePasswordCredentials(
         Username username,

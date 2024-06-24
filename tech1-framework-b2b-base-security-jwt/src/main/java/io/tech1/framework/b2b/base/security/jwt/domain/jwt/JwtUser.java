@@ -15,7 +15,7 @@ import java.util.*;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 
 public record JwtUser(
         UserId id,

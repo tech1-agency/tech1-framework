@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.asserts.Asserts.*;
 import static io.tech1.framework.domain.constants.BigDecimalConstants.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;

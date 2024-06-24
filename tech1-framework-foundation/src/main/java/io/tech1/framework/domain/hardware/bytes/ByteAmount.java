@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 // JSON
 // NOT used in serialization/deserialization

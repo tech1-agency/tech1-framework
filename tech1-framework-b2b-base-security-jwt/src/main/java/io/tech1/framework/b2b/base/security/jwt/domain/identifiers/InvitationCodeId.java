@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record InvitationCodeId(@NotNull String value) {
 

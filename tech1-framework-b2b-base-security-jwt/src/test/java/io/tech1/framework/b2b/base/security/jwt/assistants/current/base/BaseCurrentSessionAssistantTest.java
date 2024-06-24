@@ -33,7 +33,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Set;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

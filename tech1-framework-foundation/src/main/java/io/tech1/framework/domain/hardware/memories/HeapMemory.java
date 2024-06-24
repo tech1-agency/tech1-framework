@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 
 // Lombok
 @Getter

@@ -6,7 +6,7 @@ import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import io.tech1.framework.domain.properties.configs.security.jwt.JwtTokensConfigs;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.foundation.utilities.random.RandomUtility;
 import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;

@@ -32,10 +32,10 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {

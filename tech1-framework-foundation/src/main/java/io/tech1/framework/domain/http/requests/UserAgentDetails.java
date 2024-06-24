@@ -9,8 +9,8 @@ import java.util.List;
 
 import static io.tech1.framework.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomElement;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static java.util.Objects.nonNull;
 
 // Lombok

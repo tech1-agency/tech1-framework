@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static io.tech1.framework.domain.utilities.hardware.HardwareUtility.getHeapMemory;
+import static io.tech1.framework.foundation.utilities.hardware.HardwareUtility.getHeapMemory;
 
 // Swagger
 @Tag(name = "[tech1-framework] Hardware API")

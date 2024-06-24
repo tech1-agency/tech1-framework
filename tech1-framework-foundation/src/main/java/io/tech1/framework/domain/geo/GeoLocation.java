@@ -5,7 +5,7 @@ import io.tech1.framework.domain.constants.StringConstants;
 import io.tech1.framework.domain.http.requests.IPAddress;
 import io.tech1.framework.domain.tests.constants.TestsFlagsConstants;
 import io.tech1.framework.domain.tuples.Tuple5;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.foundation.utilities.random.RandomUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,8 +13,8 @@ import lombok.ToString;
 import java.util.List;
 
 import static io.tech1.framework.domain.http.requests.IPAddress.localhost;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.nonNull;
 
 // Lombok

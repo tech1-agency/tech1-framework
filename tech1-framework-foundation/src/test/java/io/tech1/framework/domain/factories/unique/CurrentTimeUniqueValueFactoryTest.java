@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.factories.unique;
 
-import io.tech1.framework.domain.utilities.concurrent.SleepUtility;
-import io.tech1.framework.domain.utilities.time.TimestampUtility;
+import io.tech1.framework.foundation.utilities.concurrent.SleepUtility;
+import io.tech1.framework.foundation.utilities.time.TimestampUtility;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

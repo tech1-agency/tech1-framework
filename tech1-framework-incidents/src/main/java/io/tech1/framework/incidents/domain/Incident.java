@@ -22,8 +22,8 @@ import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWO
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static io.tech1.framework.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static io.tech1.framework.domain.constants.StringConstants.UNKNOWN;
-import static io.tech1.framework.domain.utilities.exceptions.TraceUtility.getTrace;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.exceptions.TraceUtility.getTrace;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.incidents.domain.IncidentAttributes.Keys.*;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;

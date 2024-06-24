@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.hardware.monitoring.HardwareName.CPU;
 import static io.tech1.framework.domain.hardware.monitoring.HardwareName.HEAP;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HardwareMonitoringDatapointTableRowTest {

@@ -10,8 +10,8 @@ import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
 

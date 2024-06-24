@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @Getter
 @Setter

@@ -1,6 +1,6 @@
 package io.tech1.framework.domain.http.requests;
 
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.foundation.utilities.random.RandomUtility;
 import org.junit.jupiter.api.Test;
 
 import jakarta.servlet.http.HttpServletRequest;

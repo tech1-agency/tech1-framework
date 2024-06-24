@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.properties.base;
 
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

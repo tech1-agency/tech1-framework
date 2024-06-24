@@ -1,11 +1,10 @@
 package io.tech1.framework.domain.properties;
 
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getGetters;
+import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ApplicationFrameworkPropertiesTest {

@@ -47,10 +47,10 @@ import java.util.function.Function;
 import static io.tech1.framework.domain.http.requests.UserRequestMetadata.processed;
 import static io.tech1.framework.domain.tuples.TuplePresence.absent;
 import static io.tech1.framework.domain.tuples.TuplePresence.present;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

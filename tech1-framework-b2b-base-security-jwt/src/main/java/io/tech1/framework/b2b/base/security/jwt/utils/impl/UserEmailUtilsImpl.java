@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
-import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
+import static io.tech1.framework.foundation.utilities.time.LocalDateUtility.now;
 import static java.time.ZoneOffset.UTC;
 
 @Component

@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.util.Objects.isNull;
 
 // Lombok

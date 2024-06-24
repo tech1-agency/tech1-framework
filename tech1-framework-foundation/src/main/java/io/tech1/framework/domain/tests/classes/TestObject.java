@@ -3,7 +3,7 @@ package io.tech1.framework.domain.tests.classes;
 import io.tech1.framework.domain.base.ObjectId;
 import io.tech1.framework.domain.plurals.Plurable;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record TestObject(
         ObjectId id,

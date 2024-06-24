@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.constants.BigDecimalConstants.ONE_HUNDRED;
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

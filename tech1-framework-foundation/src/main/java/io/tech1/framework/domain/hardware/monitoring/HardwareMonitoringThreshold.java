@@ -2,7 +2,7 @@ package io.tech1.framework.domain.hardware.monitoring;
 
 import java.math.BigDecimal;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBigDecimalGreaterThanZeroByBounds;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBigDecimalGreaterThanZeroByBounds;
 
 public record HardwareMonitoringThreshold(
         BigDecimal value

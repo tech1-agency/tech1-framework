@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomIPv4;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

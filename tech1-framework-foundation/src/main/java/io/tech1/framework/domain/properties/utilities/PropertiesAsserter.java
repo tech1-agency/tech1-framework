@@ -10,7 +10,7 @@ import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
 import io.tech1.framework.domain.properties.base.AbstractTogglePropertyConfigs;
 import io.tech1.framework.domain.properties.configs.AbstractPropertiesConfigs;
 import io.tech1.framework.domain.reflections.ReflectionProperty;
-import io.tech1.framework.domain.utilities.enums.EnumUtility;
+import io.tech1.framework.foundation.utilities.enums.EnumUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,10 +30,10 @@ import java.util.stream.Stream;
 import static io.tech1.framework.domain.asserts.Asserts.assertTrueOrThrow;
 import static io.tech1.framework.domain.asserts.ConsoleAsserts.*;
 import static io.tech1.framework.domain.comparators.ReflectionsComparators.PROPERTIES_ASSERTION_COMPARATOR;
-import static io.tech1.framework.domain.utilities.collections.CollectionUtility.baseJoiningRaw;
-import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoining;
-import static io.tech1.framework.domain.utilities.enums.EnumUtility.baseJoiningWildcard;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
+import static io.tech1.framework.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static io.tech1.framework.foundation.utilities.enums.EnumUtility.baseJoining;
+import static io.tech1.framework.foundation.utilities.enums.EnumUtility.baseJoiningWildcard;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @Slf4j

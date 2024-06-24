@@ -8,8 +8,8 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 
-import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBigDecimalByBounds;
+import static io.tech1.framework.foundation.utilities.numbers.RoundingUtility.scale;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBigDecimalByBounds;
 
 // Lombok
 @Getter

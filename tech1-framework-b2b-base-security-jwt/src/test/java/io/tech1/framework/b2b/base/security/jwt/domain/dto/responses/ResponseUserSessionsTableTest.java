@@ -15,8 +15,8 @@ import java.util.List;
 
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UK;
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.USA;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResponseUserSessionsTableTest {

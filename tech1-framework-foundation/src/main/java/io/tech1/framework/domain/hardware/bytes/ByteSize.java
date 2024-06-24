@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 
 import static io.tech1.framework.domain.constants.BytesConstants.*;
 import static io.tech1.framework.domain.hardware.bytes.ByteUnit.*;
-import static io.tech1.framework.domain.utilities.numbers.RoundingUtility.scale;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static io.tech1.framework.foundation.utilities.numbers.RoundingUtility.scale;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 
 // Lombok
 @Getter

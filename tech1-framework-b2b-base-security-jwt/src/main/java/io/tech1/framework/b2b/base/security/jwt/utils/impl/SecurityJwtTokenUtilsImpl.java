@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
-import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
+import static io.tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
 @Component

@@ -6,7 +6,7 @@ import lombok.Setter;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @Getter
 @Setter

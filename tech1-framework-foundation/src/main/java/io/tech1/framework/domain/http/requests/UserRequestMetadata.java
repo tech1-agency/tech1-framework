@@ -14,9 +14,9 @@ import lombok.ToString;
 
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.exception;
 import static io.tech1.framework.domain.tuples.TupleExceptionDetails.ok;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.pleaseWait;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.strings.StringUtility.hasLength;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.pleaseWait;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.strings.StringUtility.hasLength;
 
 // JSON
 @JsonPropertyOrder({

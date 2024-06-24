@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static java.util.Objects.nonNull;
 
 // Lombok

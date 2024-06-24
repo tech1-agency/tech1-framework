@@ -16,8 +16,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import static io.tech1.framework.domain.asserts.Asserts.assertFalseOrThrow;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX;
 import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomEnum;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 

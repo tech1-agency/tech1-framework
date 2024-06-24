@@ -12,8 +12,8 @@ import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Fai
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

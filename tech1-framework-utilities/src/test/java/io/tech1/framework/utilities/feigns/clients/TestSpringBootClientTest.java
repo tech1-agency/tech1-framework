@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Map;
 
 import static feign.Request.HttpMethod.GET;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

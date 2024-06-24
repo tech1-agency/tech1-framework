@@ -3,13 +3,12 @@ package io.tech1.framework.domain.properties.base;
 import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.MandatoryToggleProperty;
-import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

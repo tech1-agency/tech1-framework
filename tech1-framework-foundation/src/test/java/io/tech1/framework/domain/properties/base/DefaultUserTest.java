@@ -3,7 +3,7 @@ package io.tech1.framework.domain.properties.base;
 import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
 import org.junit.jupiter.api.Test;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultUserTest {

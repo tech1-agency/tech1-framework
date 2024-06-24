@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 
 @Slf4j
 @Component

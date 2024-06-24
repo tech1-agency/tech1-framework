@@ -14,7 +14,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
 import static java.lang.Boolean.TRUE;
 
 // Lombok (property-based)

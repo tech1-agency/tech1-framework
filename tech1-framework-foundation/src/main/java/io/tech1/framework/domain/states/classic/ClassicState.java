@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import java.util.Comparator;
 import java.util.Set;
 
-import static io.tech1.framework.domain.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
+import static io.tech1.framework.foundation.utilities.enums.EnumCreatorUtility.findEnumByValueIgnoreCaseOrThrow;
 
 @AllArgsConstructor
 public enum ClassicState implements EnumValue<String> {

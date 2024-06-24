@@ -13,7 +13,7 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)

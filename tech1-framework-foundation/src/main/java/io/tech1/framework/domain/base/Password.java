@@ -15,8 +15,8 @@ import java.lang.annotation.Target;
 
 import static io.tech1.framework.domain.constants.StringConstants.DASH;
 import static io.tech1.framework.domain.constants.StringConstants.HYPHEN;
-import static io.tech1.framework.domain.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;

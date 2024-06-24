@@ -19,9 +19,9 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomZoneId;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.setPrivateField;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
+import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CurrentClientUserTest extends AbstractFolderSerializationRunner {

@@ -7,8 +7,8 @@ import lombok.ToString;
 import java.time.ZoneId;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 // Lombok

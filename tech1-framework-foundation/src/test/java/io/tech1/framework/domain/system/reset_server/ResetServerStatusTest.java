@@ -9,7 +9,7 @@ import static io.tech1.framework.domain.system.reset_server.ResetServerState.RES
 import static io.tech1.framework.domain.tests.io.TestsIOUtils.readFile;
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
-import static io.tech1.framework.domain.utilities.reflections.ReflectionUtility.getGetters;
+import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResetServerStatusTest extends AbstractFolderSerializationRunner {

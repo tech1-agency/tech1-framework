@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.time.temporal.ChronoUnit;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomChronoUnit;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomChronoUnit;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 import static java.time.temporal.ChronoUnit.HOURS;
 
 // Lombok (property-based)

@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.util.List;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok

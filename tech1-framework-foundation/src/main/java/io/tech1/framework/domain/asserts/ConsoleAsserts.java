@@ -8,10 +8,9 @@ import lombok.experimental.UtilityClass;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static com.diogonunes.jcolor.Attribute.GREEN_TEXT;
 import static com.diogonunes.jcolor.Attribute.RED_TEXT;
-import static io.tech1.framework.domain.utilities.collections.CollectionUtility.baseJoiningRaw;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
+import static io.tech1.framework.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
 import static java.util.Objects.isNull;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 

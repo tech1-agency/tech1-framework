@@ -6,7 +6,7 @@ import io.tech1.framework.domain.base.Username;
 import io.tech1.framework.domain.constants.ZoneIdsConstants;
 import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
 import io.tech1.framework.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.domain.utilities.random.RandomUtility;
+import io.tech1.framework.foundation.utilities.random.RandomUtility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +15,8 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.time.ZoneId;
 import java.util.Set;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringsAsSet;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 import static java.util.Objects.nonNull;
 
 // Lombok (property-based)

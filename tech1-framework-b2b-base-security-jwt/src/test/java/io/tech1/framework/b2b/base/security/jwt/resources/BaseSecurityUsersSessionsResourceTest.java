@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.list345;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.*;

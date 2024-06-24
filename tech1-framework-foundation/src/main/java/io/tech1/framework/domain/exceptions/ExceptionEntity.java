@@ -1,7 +1,7 @@
 package io.tech1.framework.domain.exceptions;
 
 import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.utilities.strings.StringUtility;
+import io.tech1.framework.foundation.utilities.strings.StringUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.springframework.util.StringUtils.capitalize;
 
 // Lombok

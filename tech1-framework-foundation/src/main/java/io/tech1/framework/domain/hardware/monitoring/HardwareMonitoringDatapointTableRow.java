@@ -8,9 +8,9 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static io.tech1.framework.domain.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.foundation.utilities.numbers.BigDecimalUtility.isFirstValueGreater;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok

@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static io.tech1.framework.domain.utilities.http.HttpCookieUtility.*;
-import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
+import static io.tech1.framework.foundation.utilities.http.HttpCookieUtility.*;
+import static io.tech1.framework.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 
 @Slf4j
 @Service

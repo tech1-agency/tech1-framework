@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
 
-import static io.tech1.framework.domain.utilities.numbers.BigDecimalUtility.*;
+import static io.tech1.framework.foundation.utilities.numbers.BigDecimalUtility.*;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;

@@ -11,9 +11,9 @@ import java.time.ZoneId;
 
 import static io.tech1.framework.domain.tuples.TuplePercentage.progressTuplePercentage;
 import static io.tech1.framework.domain.tuples.TuplePercentage.zero;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.convertTimestamp;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @Getter

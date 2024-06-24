@@ -2,7 +2,7 @@ package io.tech1.framework.domain.http.requests;
 
 import org.jetbrains.annotations.NotNull;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomIPv4;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomIPv4;
 import static java.util.Objects.nonNull;
 
 public record IPAddress(@NotNull String value) {

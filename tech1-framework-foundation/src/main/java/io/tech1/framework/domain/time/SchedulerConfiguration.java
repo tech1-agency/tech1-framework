@@ -2,7 +2,7 @@ package io.tech1.framework.domain.time;
 
 import java.util.concurrent.TimeUnit;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 import static java.util.concurrent.TimeUnit.*;
 
 public record SchedulerConfiguration(

@@ -9,8 +9,8 @@ import io.tech1.framework.domain.properties.base.SpringServer;
 import io.tech1.framework.domain.properties.configs.*;
 import io.tech1.framework.domain.properties.configs.security.jwt.IncidentsConfigs;
 import io.tech1.framework.domain.tests.classes.NotUsedPropertiesConfigs;
-import io.tech1.framework.domain.utilities.collections.CollectorUtility;
-import io.tech1.framework.domain.utilities.enums.EnumUtility;
+import io.tech1.framework.foundation.utilities.collections.CollectorUtility;
+import io.tech1.framework.foundation.utilities.enums.EnumUtility;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static io.tech1.framework.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomBoolean;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
 import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;

@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static io.tech1.framework.domain.tests.constants.TestsFlagsConstants.UKRAINE;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomFeignException;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomFeignException;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;

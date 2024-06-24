@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.tech1.framework.domain.exceptions.ExceptionEntityType.ERROR;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ExceptionEntityTest extends AbstractObjectMapperRunner {

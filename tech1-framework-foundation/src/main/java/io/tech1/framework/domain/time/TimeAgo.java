@@ -3,14 +3,14 @@ package io.tech1.framework.domain.time;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.tech1.framework.domain.tuples.Tuple2;
-import io.tech1.framework.domain.utilities.time.TimestampUtility;
+import io.tech1.framework.foundation.utilities.time.TimestampUtility;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
 
-import static io.tech1.framework.domain.utilities.strings.StringUtility.isNullOrBlank;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.strings.StringUtility.isNullOrBlank;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.util.concurrent.TimeUnit.*;
 
 // Lombok

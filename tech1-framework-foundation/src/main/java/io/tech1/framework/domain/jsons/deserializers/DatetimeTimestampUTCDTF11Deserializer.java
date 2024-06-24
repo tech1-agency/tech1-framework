@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 
 import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
-import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
-import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.parse;
+import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
+import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.parse;
 import static java.time.ZoneOffset.UTC;
 
 public class DatetimeTimestampUTCDTF11Deserializer extends JsonDeserializer<Long> {

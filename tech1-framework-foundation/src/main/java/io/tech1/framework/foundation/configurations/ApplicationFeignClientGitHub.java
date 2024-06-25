@@ -1,10 +1,10 @@
-package io.tech1.framework.foundation.feigns.clients.openai.configurations;
+package io.tech1.framework.foundation.configurations;
 
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
-import io.tech1.framework.foundation.feigns.clients.openai.definions.OpenaiDefinition;
+import io.tech1.framework.foundation.feigns.clients.github.definitions.GithubDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.foundation.feigns.clients.openai"
+        "io.tech1.framework.foundation.feigns.clients.github"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationFeignClientOpenai {
+public class ApplicationFeignClientGitHub {
 
     @Bean
-    OpenaiDefinition openaiDefinition() {
+    GithubDefinition githubClient() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(OpenaiDefinition.class, "https://api.openai.com");
+                .target(GithubDefinition.class, "https://api.github.com");
     }
 }

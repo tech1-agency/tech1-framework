@@ -7,9 +7,7 @@ import io.tech1.framework.foundation.domain.geo.GeoCountryFlag;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,7 +24,6 @@ import static io.tech1.framework.foundation.domain.enums.Status.SUCCESS;
 import static java.util.Objects.isNull;
 
 @Slf4j
-@Component
 public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     private static final String COUNTRIES_FLAGS_JSON = "geo-countries-flags.json";
 
@@ -36,7 +33,6 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    @Autowired
     public GeoCountryFlagUtilityImpl(
             ResourceLoader resourceLoader,
             ApplicationFrameworkProperties applicationFrameworkProperties

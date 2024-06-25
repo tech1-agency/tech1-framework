@@ -10,8 +10,6 @@ import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.utilities.browsers.UserAgentDetailsUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +21,6 @@ import static io.tech1.framework.foundation.domain.enums.Status.SUCCESS;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
-@Component
 public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
 
     private final UserAgentParser userAgentParser;
@@ -33,7 +30,6 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    @Autowired
     public UserAgentDetailsUtilityImpl(ApplicationFrameworkProperties applicationFrameworkProperties) {
         this.applicationFrameworkProperties = applicationFrameworkProperties;
         UserAgentParser userAgentParserOrNull;

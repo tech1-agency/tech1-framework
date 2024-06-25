@@ -3,15 +3,12 @@ package io.tech1.framework.foundation.utilities.geo.functions.ipapi.utility.impl
 import io.tech1.framework.foundation.domain.exceptions.geo.GeoLocationNotFoundException;
 import io.tech1.framework.foundation.domain.geo.GeoLocation;
 import io.tech1.framework.foundation.domain.http.requests.IPAddress;
-import io.tech1.framework.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
 import io.tech1.framework.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import io.tech1.framework.foundation.utilities.geo.functions.ipapi.feign.IPAPIFeign;
+import io.tech1.framework.foundation.utilities.geo.functions.ipapi.utility.IPAPIGeoLocationUtility;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class IPAPIGeoLocationUtilityImpl implements IPAPIGeoLocationUtility {
 
     // Feign

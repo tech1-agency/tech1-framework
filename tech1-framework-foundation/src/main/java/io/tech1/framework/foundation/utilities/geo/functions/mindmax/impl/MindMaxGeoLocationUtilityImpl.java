@@ -6,12 +6,10 @@ import io.tech1.framework.foundation.domain.enums.Toggle;
 import io.tech1.framework.foundation.domain.geo.GeoLocation;
 import io.tech1.framework.foundation.domain.http.requests.IPAddress;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import io.tech1.framework.foundation.utilities.geo.facades.GeoCountryFlagUtility;
+import io.tech1.framework.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -23,7 +21,6 @@ import static io.tech1.framework.foundation.domain.enums.Status.SUCCESS;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
-@Component
 public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility {
     private static final String GEO_DATABASE_NAME = "GeoLite2-City.mmdb";
 
@@ -34,7 +31,6 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
-    @Autowired
     public MindMaxGeoLocationUtilityImpl(
             ResourceLoader resourceLoader,
             GeoCountryFlagUtility geoCountryFlagUtility,

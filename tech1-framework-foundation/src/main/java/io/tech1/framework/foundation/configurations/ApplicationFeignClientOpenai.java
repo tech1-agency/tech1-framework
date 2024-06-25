@@ -4,21 +4,17 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
+import io.tech1.framework.foundation.feigns.clients.openai.clients.OpenaiClient;
+import io.tech1.framework.foundation.feigns.clients.openai.clients.impl.OpenaiClientImpl;
 import io.tech1.framework.foundation.feigns.clients.openai.definions.OpenaiDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-@ComponentScan({
-        // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.foundation.feigns.clients.openai"
-        // -------------------------------------------------------------------------------------------------------------
-})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationFeignClientOpenai {
 
@@ -29,5 +25,10 @@ public class ApplicationFeignClientOpenai {
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .target(OpenaiDefinition.class, "https://api.openai.com");
+    }
+
+    @Bean
+    OpenaiClient openaiClient(OpenaiDefinition definition) {
+        return new OpenaiClientImpl(definition);
     }
 }

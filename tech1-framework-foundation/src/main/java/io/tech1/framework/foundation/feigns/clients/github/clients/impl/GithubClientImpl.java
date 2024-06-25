@@ -8,12 +8,10 @@ import io.tech1.framework.foundation.feigns.clients.github.domain.responses.Gith
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import static io.tech1.framework.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GithubClientImpl implements GithubClient {
 

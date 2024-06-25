@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MAVEN_NEW_VERSION_DEFAULT="3.0.0-SNAPSHOT"
+MAVEN_NEW_VERSION_DEFAULT="4.0.0-SNAPSHOT"
 
 read -p "Provide new maven version or press enter for defined version '$MAVEN_NEW_VERSION_DEFAULT': " MAVEN_NEW_VERSION_USER_INPUT
 

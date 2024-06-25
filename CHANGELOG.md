@@ -4,3 +4,4 @@
 — Addition: add flag prefix in GeoLocation/UserRequestMetadata → "where": truncate "tech1_users_sessions" database
 — Addition: add sorted countries in ResponseUserSessionsTable
 — Addition: /invitationCodes → add "Unused"/"Used"
+— Modification: "tech1-framework-foundation" module merge

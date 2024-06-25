@@ -7,7 +7,7 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgresDbAbstractPersistable0;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -15,7 +15,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 // Lombok
 @NoArgsConstructor

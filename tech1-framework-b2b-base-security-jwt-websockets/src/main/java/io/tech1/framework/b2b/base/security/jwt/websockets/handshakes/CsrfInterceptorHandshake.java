@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
-import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

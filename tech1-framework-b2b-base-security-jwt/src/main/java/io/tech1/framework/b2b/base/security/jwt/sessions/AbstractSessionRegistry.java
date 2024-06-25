@@ -13,7 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
 import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

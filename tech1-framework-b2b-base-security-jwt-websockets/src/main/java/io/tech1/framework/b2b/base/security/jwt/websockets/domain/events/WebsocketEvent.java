@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.domain.events;
 
-import io.tech1.framework.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import io.tech1.framework.domain.system.reset_server.ResetServerStatus;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
+import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,8 +9,8 @@ import lombok.ToString;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.tech1.framework.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static io.tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 // Lombok
 @Getter

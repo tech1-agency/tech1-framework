@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tech1.framework.domain.exceptions.ExceptionEntity;
+import io.tech1.framework.foundation.domain.exceptions.ExceptionEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

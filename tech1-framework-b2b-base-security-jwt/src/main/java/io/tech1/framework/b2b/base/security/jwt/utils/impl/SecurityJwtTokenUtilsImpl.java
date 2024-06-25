@@ -9,9 +9,9 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenCreationParams;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.domain.properties.base.TimeAmount;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.properties.base.TimeAmount;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
-import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
+import static io.tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
 @Component

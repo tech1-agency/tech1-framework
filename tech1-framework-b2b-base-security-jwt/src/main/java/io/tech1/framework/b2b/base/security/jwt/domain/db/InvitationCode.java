@@ -1,14 +1,14 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.db;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPERADMIN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record InvitationCode(
         InvitationCodeId id,

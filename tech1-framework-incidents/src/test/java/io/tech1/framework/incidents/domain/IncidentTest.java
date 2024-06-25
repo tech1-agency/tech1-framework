@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomMethod;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomMethod;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentTest {

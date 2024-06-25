@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server;
 
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import static io.tech1.framework.domain.constants.LogsConstants.SERVER_CONTAINER_1;
-import static io.tech1.framework.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.foundation.domain.constants.LogsConstants.SERVER_CONTAINER_1;
+import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
 @SpringBootApplication(

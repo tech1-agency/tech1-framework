@@ -4,11 +4,11 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserC
 import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseUsersValidator;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

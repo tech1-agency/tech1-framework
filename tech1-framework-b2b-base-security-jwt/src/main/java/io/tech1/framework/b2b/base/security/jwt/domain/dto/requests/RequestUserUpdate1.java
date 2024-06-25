@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.constants.ZoneIdsConstants;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.ZoneId;

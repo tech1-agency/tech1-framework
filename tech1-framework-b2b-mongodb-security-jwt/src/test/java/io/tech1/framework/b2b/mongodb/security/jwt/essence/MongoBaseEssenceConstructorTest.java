@@ -3,9 +3,9 @@ package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
-import io.tech1.framework.domain.properties.base.DefaultUser;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.*;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

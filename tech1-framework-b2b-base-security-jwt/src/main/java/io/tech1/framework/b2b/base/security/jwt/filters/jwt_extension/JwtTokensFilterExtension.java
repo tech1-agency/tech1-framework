@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.filters.jwt_extension;
 
-import io.tech1.framework.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import org.jetbrains.annotations.NotNull;
 
 import jakarta.servlet.http.HttpServletRequest;

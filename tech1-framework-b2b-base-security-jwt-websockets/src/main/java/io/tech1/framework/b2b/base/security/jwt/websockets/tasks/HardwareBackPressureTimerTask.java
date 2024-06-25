@@ -2,11 +2,11 @@ package io.tech1.framework.b2b.base.security.jwt.websockets.tasks;
 
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingTemplate;
-import io.tech1.framework.domain.concurrent.AbstractInfiniteTimerTask;
-import io.tech1.framework.domain.time.SchedulerConfiguration;
+import io.tech1.framework.foundation.domain.concurrent.AbstractInfiniteTimerTask;
+import io.tech1.framework.foundation.domain.time.SchedulerConfiguration;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

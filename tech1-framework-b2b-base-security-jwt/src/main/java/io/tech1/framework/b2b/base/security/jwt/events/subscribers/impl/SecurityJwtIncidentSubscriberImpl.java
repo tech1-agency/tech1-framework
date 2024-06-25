@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.events.subscribers.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtIncidentSubscriber;
-import io.tech1.framework.domain.pubsub.AbstractEventSubscriber;
+import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.incidents.domain.authetication.*;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.*;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @Service

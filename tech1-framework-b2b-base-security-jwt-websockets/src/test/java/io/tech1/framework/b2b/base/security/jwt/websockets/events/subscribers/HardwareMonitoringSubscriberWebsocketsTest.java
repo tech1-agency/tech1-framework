@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.events.subscribers;
 
 import io.tech1.framework.b2b.base.security.jwt.websockets.tasks.HardwareBackPressureTimerTask;
-import io.tech1.framework.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;

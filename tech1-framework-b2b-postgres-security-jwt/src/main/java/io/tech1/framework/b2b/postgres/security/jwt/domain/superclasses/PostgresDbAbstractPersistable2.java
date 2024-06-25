@@ -1,14 +1,14 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses;
 
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
 
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @Getter
 @Setter

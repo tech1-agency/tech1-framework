@@ -12,8 +12,8 @@ import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJ
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUserRequestMetadataConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgresDbAbstractPersistable1;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.*;
 
 import jakarta.persistence.*;

@@ -1,11 +1,11 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.responses;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 
 import java.util.Comparator;
 
-import static io.tech1.framework.domain.constants.StringConstants.EMPTY;
+import static io.tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 

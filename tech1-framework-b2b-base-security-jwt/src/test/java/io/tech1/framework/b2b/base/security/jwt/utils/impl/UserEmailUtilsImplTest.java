@@ -2,11 +2,11 @@ package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.utilities.time.LocalDateTimeUtility;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -22,12 +22,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.time.ZoneOffset;
 
-import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
-import static io.tech1.framework.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomEnum;
-import static io.tech1.framework.domain.utilities.time.LocalDateTimeUtility.getTimestamp;
-import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.domain.constants.DatetimeConstants.DTF11;
+import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomEnum;
+import static io.tech1.framework.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
+import static io.tech1.framework.foundation.utilities.time.LocalDateUtility.now;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
 

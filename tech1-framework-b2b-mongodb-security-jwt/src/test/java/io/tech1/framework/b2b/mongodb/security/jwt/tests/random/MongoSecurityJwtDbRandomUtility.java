@@ -4,18 +4,18 @@ import io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRa
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.constants.DomainConstants;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.constants.DomainConstants;
 import lombok.experimental.UtilityClass;
 
 import java.util.Map;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.base.AbstractAuthority.SUPERADMIN;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.*;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static org.springframework.util.StringUtils.capitalize;
 
 @UtilityClass

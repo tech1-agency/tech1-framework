@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.server.properties.server;
 
 import io.tech1.framework.b2b.mongodb.server.domain.enums.UserAuthority;
-import io.tech1.framework.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.domain.properties.base.AbstractPropertyConfigs;
+import io.tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
+import io.tech1.framework.foundation.domain.properties.base.AbstractPropertyConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -4,11 +4,11 @@ import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static io.tech1.framework.domain.utilities.http.HttpCookieUtility.*;
-import static io.tech1.framework.domain.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
+import static io.tech1.framework.foundation.utilities.http.HttpCookieUtility.*;
+import static io.tech1.framework.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 
 @Slf4j
 @Service

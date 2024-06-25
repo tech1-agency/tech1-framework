@@ -1,16 +1,16 @@
 package io.tech1.framework.b2b.base.security.jwt.startup;
 
 import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
-import io.tech1.framework.domain.enums.Status;
-import io.tech1.framework.domain.enums.Toggle;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.enums.Status;
+import io.tech1.framework.foundation.domain.enums.Toggle;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j

@@ -1,7 +1,7 @@
 package io.tech1.framework.incidents.configurations;
 
-import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.incidents.handlers.ErrorHandlerPublisher;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static io.tech1.framework.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

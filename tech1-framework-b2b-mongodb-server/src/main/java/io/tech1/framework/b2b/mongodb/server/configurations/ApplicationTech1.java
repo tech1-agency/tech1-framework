@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.configurations.AbstractApplicati
 import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.b2b.mongodb.security.jwt.configurations.ApplicationMongo;
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
-import io.tech1.framework.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.hardware.configurations.ApplicationHardwareMonitoring;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.hardware.monitoring.subscribers.HardwareMonitoringSubscriber;

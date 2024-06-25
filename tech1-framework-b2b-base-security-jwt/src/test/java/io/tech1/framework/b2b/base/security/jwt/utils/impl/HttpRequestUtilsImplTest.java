@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
-import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.domain.http.cache.CachedPayload;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import io.tech1.framework.foundation.domain.http.cache.CachedPayload;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.b2b.base.security.jwt.utils.impl.HttpRequestUtilsImpl.CACHED_PAYLOAD_ATTRIBUTE;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

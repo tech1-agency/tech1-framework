@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
-import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

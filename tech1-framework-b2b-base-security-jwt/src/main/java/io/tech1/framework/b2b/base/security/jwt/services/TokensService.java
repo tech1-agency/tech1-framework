@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseRef
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.domain.exceptions.tokens.*;
 
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

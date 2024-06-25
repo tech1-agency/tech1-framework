@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.handlers.exceptions;
 
 import io.tech1.framework.b2b.base.security.jwt.tests.contexts.TestsApplicationHandlersContext;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.domain.exceptions.cookies.CookieNotFoundException;
-import io.tech1.framework.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
+import io.tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +22,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.exceptions.ExceptionEntityType.ERROR;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.domain.exceptions.ExceptionEntityType.ERROR;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

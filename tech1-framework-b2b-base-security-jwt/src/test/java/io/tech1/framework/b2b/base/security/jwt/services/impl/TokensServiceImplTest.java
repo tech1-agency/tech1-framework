@@ -9,8 +9,8 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.tokens.*;
-import io.tech1.framework.domain.tuples.Tuple2;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +28,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.randomPersistedSession;
 import static io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtRandomUtility.validClaims;
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

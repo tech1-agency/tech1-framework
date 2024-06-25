@@ -5,8 +5,8 @@ import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUse
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.base.security.jwt.domain.security.CurrentClientUser;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 

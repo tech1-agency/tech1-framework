@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.events.publishers.impl;
 
-import io.tech1.framework.domain.pubsub.AbstractEventPublisher;
+import io.tech1.framework.foundation.domain.pubsub.AbstractEventPublisher;
 import io.tech1.framework.incidents.domain.Incident;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerCompleted;
 import io.tech1.framework.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.INCIDENT;
-import static io.tech1.framework.domain.constants.FrameworkLogsConstants.INCIDENT_SYSTEM_RESET_SERVER;
-import static io.tech1.framework.domain.enums.Status.COMPLETED;
-import static io.tech1.framework.domain.enums.Status.STARTED;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.INCIDENT;
+import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.INCIDENT_SYSTEM_RESET_SERVER;
+import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.foundation.domain.enums.Status.STARTED;
 
 @Slf4j
 @Service

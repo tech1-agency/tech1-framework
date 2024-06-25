@@ -6,13 +6,13 @@ import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCod
 import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
 import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.experimental.UtilityClass;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
 public class BaseSecurityJwtDbRandomUtility {

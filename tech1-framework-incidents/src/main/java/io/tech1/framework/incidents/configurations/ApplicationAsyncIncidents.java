@@ -1,7 +1,7 @@
 package io.tech1.framework.incidents.configurations;
 
-import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import jakarta.annotation.PostConstruct;
@@ -16,7 +16,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static io.tech1.framework.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
 @EnableAsync

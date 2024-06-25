@@ -2,9 +2,9 @@ package io.tech1.framework.b2b.base.security.jwt.utils.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.domain.enums.AccountAccessMethod;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.tech1.framework.domain.constants.DatetimeConstants.DTF11;
-import static io.tech1.framework.domain.utilities.time.LocalDateUtility.now;
+import static io.tech1.framework.foundation.domain.constants.DatetimeConstants.DTF11;
+import static io.tech1.framework.foundation.utilities.time.LocalDateUtility.now;
 import static java.time.ZoneOffset.UTC;
 
 @Component

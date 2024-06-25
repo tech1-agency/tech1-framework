@@ -4,14 +4,14 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDe
 import io.tech1.framework.b2b.base.security.jwt.filters.jwt.JwtTokensFilter;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
-import io.tech1.framework.configurations.jasypt.ApplicationJasypt;
-import io.tech1.framework.configurations.server.ApplicationSpringBootServer;
-import io.tech1.framework.domain.base.PropertyId;
-import io.tech1.framework.domain.constants.SwaggerConstants;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.configurations.ApplicationJasypt;
+import io.tech1.framework.foundation.configurations.ApplicationSpringBootServer;
+import io.tech1.framework.foundation.domain.base.PropertyId;
+import io.tech1.framework.foundation.domain.constants.SwaggerConstants;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.emails.configurations.ApplicationEmails;
 import io.tech1.framework.incidents.configurations.ApplicationIncidents;
-import io.tech1.framework.utilities.configurations.ApplicationUtilities;
+import io.tech1.framework.foundation.configurations.ApplicationUserMetadata;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
@@ -50,7 +50,7 @@ import static org.springframework.http.HttpMethod.*;
 })
 @EnableWebSecurity
 @Import({
-        ApplicationUtilities.class,
+        ApplicationUserMetadata.class,
         ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
         ApplicationBaseSecurityJwtMvc.class,

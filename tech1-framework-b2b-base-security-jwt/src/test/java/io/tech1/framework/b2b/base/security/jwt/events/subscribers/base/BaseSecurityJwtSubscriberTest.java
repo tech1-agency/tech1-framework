@@ -8,17 +8,17 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtInc
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtSubscriber;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.domain.http.requests.IPAddress;
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.domain.utilities.random.EntityUtility.entity;
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

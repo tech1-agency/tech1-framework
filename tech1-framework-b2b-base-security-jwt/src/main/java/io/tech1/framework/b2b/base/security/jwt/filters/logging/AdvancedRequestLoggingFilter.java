@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.filters.logging;
 
 import io.tech1.framework.b2b.base.security.jwt.utils.HttpRequestUtils;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityPrincipalUtils;
-import io.tech1.framework.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -5,13 +5,13 @@ import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionAuthent
 import io.tech1.framework.b2b.base.security.jwt.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.UserEmailUtils;
-import io.tech1.framework.domain.base.Email;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.properties.configs.SecurityJwtConfigs;
+import io.tech1.framework.foundation.domain.base.Email;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.emails.domain.EmailHTML;
 import io.tech1.framework.emails.services.EmailService;
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Map;
 
-import static io.tech1.framework.domain.utilities.random.RandomUtility.randomString;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

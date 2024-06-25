@@ -3,14 +3,14 @@ package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.Set;
 
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbRandomUtility.*;
-import static io.tech1.framework.domain.base.AbstractAuthority.*;
+import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
 
 @UtilityClass
 public class PostgresSecurityJwtDbDummies {

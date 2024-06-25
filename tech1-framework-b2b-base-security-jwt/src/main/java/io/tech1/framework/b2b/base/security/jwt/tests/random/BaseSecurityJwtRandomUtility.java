@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.base.security.jwt.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.properties.base.TimeAmount;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
@@ -12,8 +12,8 @@ import java.util.Date;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.domain.utilities.time.DateUtility.convertLocalDateTime;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.time.ZoneOffset.UTC;
 
 @UtilityClass

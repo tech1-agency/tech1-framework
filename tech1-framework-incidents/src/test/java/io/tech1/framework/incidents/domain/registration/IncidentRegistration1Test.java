@@ -1,6 +1,6 @@
 package io.tech1.framework.incidents.domain.registration;
 
-import io.tech1.framework.domain.base.Username;
+import io.tech1.framework.foundation.domain.base.Username;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

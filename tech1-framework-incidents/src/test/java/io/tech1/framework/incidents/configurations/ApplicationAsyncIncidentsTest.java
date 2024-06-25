@@ -1,7 +1,7 @@
 package io.tech1.framework.incidents.configurations;
 
-import io.tech1.framework.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import io.tech1.framework.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.domain.utilities.processors.ProcessorsUtility.getNumOfCores;
+import static io.tech1.framework.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

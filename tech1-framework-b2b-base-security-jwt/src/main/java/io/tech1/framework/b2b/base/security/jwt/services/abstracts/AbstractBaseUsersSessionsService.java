@@ -14,12 +14,12 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.base.Username;
-import io.tech1.framework.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.domain.tuples.Tuple3;
-import io.tech1.framework.domain.tuples.TupleToggle;
-import io.tech1.framework.utilities.utils.UserMetadataUtils;
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.tuples.Tuple3;
+import io.tech1.framework.foundation.domain.tuples.TupleToggle;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -32,10 +32,10 @@ import java.util.Set;
 
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
-import static io.tech1.framework.domain.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static io.tech1.framework.domain.utilities.http.HttpServletRequestUtility.getClientIpAddr;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static io.tech1.framework.domain.utilities.time.TimestampUtility.isPast;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.foundation.utilities.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {

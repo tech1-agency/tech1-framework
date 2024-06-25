@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.base.security.jwt.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.domain.base.Password;
-import io.tech1.framework.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import io.tech1.framework.foundation.domain.base.Password;
+import io.tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 

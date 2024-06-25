@@ -13,7 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.domain.exceptions.tokens.*;
+import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
-import static io.tech1.framework.domain.enums.Status.COMPLETED;
-import static io.tech1.framework.domain.enums.Status.STARTED;
+import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
+import static io.tech1.framework.foundation.domain.enums.Status.STARTED;
 import static java.util.Objects.nonNull;
 
 // Swagger

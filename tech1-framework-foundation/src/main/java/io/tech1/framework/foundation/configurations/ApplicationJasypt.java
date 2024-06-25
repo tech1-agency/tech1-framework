@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.configurations.jasypt;
+package io.tech1.framework.foundation.configurations;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.context.annotation.Configuration;

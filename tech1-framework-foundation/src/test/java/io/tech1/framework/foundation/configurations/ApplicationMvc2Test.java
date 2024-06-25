@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.configurations.mvc;
+package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.properties.configs.MvcConfigs;
 import io.tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;
@@ -19,13 +19,14 @@ import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationMvc3Test {
+class ApplicationMvc2Test {
 
     @Configuration
     static class ContextConfiguration {
@@ -34,17 +35,16 @@ class ApplicationMvc3Test {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
             var mvcConfigs = new MvcConfigs(
                     true,
-                    "/framework/security",
+                    randomString(),
                     new CorsConfigs(
                             "/api/**",
-                            new String[] { "http://localhost:8080", "http://localhost:8081" },
-                            new String[] { "GET", "POST" },
-                            new String[] { "Access-Control-Allow-Origin" },
-                            true,
+                            null,
+                            null,
+                            null,
+                            false,
                             null
                     )
             );
-            mvcConfigs.getCorsConfigs().setExposedHeaders(new String[] { "Content-Type" });
             when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(mvcConfigs);
             return applicationFrameworkProperties;
         }
@@ -84,11 +84,7 @@ class ApplicationMvc3Test {
 
         // Assert
         verify(corsRegistry).addMapping("/api/**");
-        verify(corsRegistration).allowedOrigins("http://localhost:8080", "http://localhost:8081");
-        verify(corsRegistration).allowedMethods("GET", "POST" );
-        verify(corsRegistration).allowedHeaders("Access-Control-Allow-Origin");
-        verify(corsRegistration).exposedHeaders("Content-Type");
-        verify(corsRegistration).allowCredentials(true);
+        verify(corsRegistration).allowCredentials(false);
         verifyNoMoreInteractions(
                 corsRegistry,
                 corsRegistration

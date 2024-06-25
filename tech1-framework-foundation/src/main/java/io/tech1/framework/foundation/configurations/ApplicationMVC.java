@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.configurations.mvc;
+package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;

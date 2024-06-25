@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.configurations.mvc;
+package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.properties.configs.MvcConfigs;
 import io.tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;

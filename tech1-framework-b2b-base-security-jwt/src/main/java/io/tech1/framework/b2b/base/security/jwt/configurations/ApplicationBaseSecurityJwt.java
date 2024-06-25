@@ -4,8 +4,8 @@ import io.tech1.framework.b2b.base.security.jwt.assistants.userdetails.JwtUserDe
 import io.tech1.framework.b2b.base.security.jwt.filters.jwt.JwtTokensFilter;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.b2b.base.security.jwt.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
-import io.tech1.framework.foundation.configurations.jasypt.ApplicationJasypt;
-import io.tech1.framework.foundation.configurations.server.ApplicationSpringBootServer;
+import io.tech1.framework.foundation.configurations.ApplicationJasypt;
+import io.tech1.framework.foundation.configurations.ApplicationSpringBootServer;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.constants.SwaggerConstants;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;

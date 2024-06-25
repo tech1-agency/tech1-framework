@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.configurations.events;
+package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;

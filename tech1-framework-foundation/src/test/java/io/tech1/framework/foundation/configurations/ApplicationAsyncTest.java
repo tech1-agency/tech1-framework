@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.configurations.async;
+package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;

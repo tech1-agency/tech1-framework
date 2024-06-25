@@ -31,6 +31,8 @@ import org.springframework.core.io.ResourceLoader;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationUserMetadata {
 
+    // Resources
+    private final ResourceLoader resourceLoader;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -57,42 +59,42 @@ public class ApplicationUserMetadata {
     }
 
     @Bean
-    GeoCountryFlagUtility geoCountryFlagUtility(ResourceLoader resourceLoader) {
+    GeoCountryFlagUtility geoCountryFlagUtility() {
         return new GeoCountryFlagUtilityImpl(
-                resourceLoader,
+                this.resourceLoader,
                 this.applicationFrameworkProperties
         );
     }
 
     @Bean
-    IPAPIGeoLocationUtility ipapiGeoLocationUtility(ResourceLoader resourceLoader) {
+    IPAPIGeoLocationUtility ipapiGeoLocationUtility() {
         return new IPAPIGeoLocationUtilityImpl(
                 this.ipapiFeign(),
-                this.geoCountryFlagUtility(resourceLoader)
+                this.geoCountryFlagUtility()
         );
     }
 
     @Bean
-    MindMaxGeoLocationUtility mindMaxGeoLocationUtility(ResourceLoader resourceLoader) {
+    MindMaxGeoLocationUtility mindMaxGeoLocationUtility() {
         return new MindMaxGeoLocationUtilityImpl(
-                resourceLoader,
-                this.geoCountryFlagUtility(resourceLoader),
+                this.resourceLoader,
+                this.geoCountryFlagUtility(),
                 this.applicationFrameworkProperties
         );
     }
 
     @Bean
-    GeoLocationFacadeUtility geoLocationFacadeUtility(ResourceLoader resourceLoader) {
+    GeoLocationFacadeUtility geoLocationFacadeUtility() {
         return new GeoLocationFacadeUtilityImpl(
-                this.ipapiGeoLocationUtility(resourceLoader),
-                this.mindMaxGeoLocationUtility(resourceLoader)
+                this.ipapiGeoLocationUtility(),
+                this.mindMaxGeoLocationUtility()
         );
     }
 
     @Bean
-    UserMetadataUtils userMetadataUtils(ResourceLoader resourceLoader) {
+    UserMetadataUtils userMetadataUtils() {
         return new UserMetadataUtilsImpl(
-                this.geoLocationFacadeUtility(resourceLoader),
+                this.geoLocationFacadeUtility(),
                 this.userAgentDetailsUtility()
         );
     }

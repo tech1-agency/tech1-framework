@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </parent>
 
     <artifactId>tech1-framework-b2b-mongodb-server</artifactId>

@@ -46,12 +46,12 @@ class ApplicationEmails2Test {
 
         // Assert
         assertThat(methods)
-                .contains("loggingEmailService")
                 .contains("javaMailSender")
                 .contains("springTemplateEngine")
                 .contains("htmlTemplateResolver")
                 .contains("emailUtility")
                 .contains("emailService")
+                .contains("emailServiceSlf4j")
                 .hasSize(20);
     }
 

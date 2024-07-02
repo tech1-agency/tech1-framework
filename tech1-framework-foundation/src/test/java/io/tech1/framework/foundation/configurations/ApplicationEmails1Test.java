@@ -50,12 +50,12 @@ class ApplicationEmails1Test {
 
         // Assert
         assertThat(methods)
-                .contains("loggingEmailService")
                 .contains("javaMailSender")
                 .contains("springTemplateEngine")
                 .contains("htmlTemplateResolver")
                 .contains("emailUtility")
                 .contains("emailService")
+                .contains("emailServiceSlf4j")
                 .hasSize(20);
     }
 
@@ -92,6 +92,6 @@ class ApplicationEmails1Test {
         // Act + Assert
         assertThatThrownBy(this.componentUnderTest::emailServiceSlf4j)
                 .isInstanceOf(NoSuchBeanDefinitionException.class)
-                .hasMessage("No bean named 'loggingEmailService' available");
+                .hasMessage("No bean named 'emailServiceSlf4j' available");
     }
 }

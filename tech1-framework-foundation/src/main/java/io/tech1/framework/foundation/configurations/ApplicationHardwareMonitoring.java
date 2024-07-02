@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationHardwareMonitoring {
 
-    // Publisher
+    // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

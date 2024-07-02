@@ -4,10 +4,8 @@ import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublish
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ErrorHandler;
 
-@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ErrorHandlerPublisher implements ErrorHandler {
 

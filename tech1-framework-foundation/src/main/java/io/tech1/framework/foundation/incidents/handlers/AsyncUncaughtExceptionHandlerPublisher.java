@@ -6,12 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AsyncUncaughtExceptionHandlerPublisher implements AsyncUncaughtExceptionHandler {
 

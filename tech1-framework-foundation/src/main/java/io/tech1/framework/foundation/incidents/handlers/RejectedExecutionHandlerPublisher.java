@@ -3,13 +3,11 @@ package io.tech1.framework.foundation.incidents.handlers;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
-@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RejectedExecutionHandlerPublisher implements RejectedExecutionHandler {
 

@@ -21,9 +21,8 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.incidents.configurations",
-        "io.tech1.framework.incidents.events",
-        "io.tech1.framework.incidents.handlers"
+        "io.tech1.framework.foundation.incidents.events",
+        "io.tech1.framework.foundation.incidents.handlers"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

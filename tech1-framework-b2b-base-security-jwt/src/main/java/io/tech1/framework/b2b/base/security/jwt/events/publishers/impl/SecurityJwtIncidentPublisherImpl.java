@@ -2,11 +2,11 @@ package io.tech1.framework.b2b.base.security.jwt.events.publishers.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.foundation.domain.pubsub.AbstractEventPublisher;
-import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.foundation.incidents.domain.authetication.*;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

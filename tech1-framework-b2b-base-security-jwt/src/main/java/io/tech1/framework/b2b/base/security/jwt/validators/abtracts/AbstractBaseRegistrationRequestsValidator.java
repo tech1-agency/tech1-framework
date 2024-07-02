@@ -8,7 +8,7 @@ import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepo
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

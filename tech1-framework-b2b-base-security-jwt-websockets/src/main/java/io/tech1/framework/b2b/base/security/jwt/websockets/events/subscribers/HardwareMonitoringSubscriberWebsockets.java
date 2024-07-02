@@ -4,7 +4,7 @@ import io.tech1.framework.b2b.base.security.jwt.websockets.tasks.HardwareBackPre
 import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
 import io.tech1.framework.hardware.monitoring.subscribers.impl.BaseHardwareMonitoringSubscriber;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
+import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

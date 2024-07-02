@@ -9,7 +9,7 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.services.BaseRegistrationService;
 import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationRequestsValidator;
 import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

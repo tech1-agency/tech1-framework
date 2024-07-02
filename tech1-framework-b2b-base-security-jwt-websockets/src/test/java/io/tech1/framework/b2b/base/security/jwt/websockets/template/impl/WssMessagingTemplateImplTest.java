@@ -6,7 +6,7 @@ import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.impl.WssMessa
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import io.tech1.framework.foundation.domain.properties.configs.security.jwt.websockets.*;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
+import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

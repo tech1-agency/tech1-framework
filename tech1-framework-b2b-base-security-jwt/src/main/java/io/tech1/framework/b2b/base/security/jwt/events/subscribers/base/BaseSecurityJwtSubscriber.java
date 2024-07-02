@@ -9,10 +9,10 @@ import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsServic
 import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
 import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
 import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogin;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
+import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -5,11 +5,11 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.impl.SecurityJ
 import io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
 import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
 import io.tech1.framework.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
-import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.foundation.incidents.domain.authetication.*;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

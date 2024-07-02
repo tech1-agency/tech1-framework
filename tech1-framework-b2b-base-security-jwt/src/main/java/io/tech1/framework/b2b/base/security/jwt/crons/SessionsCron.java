@@ -3,7 +3,7 @@ package io.tech1.framework.b2b.base.security.jwt.crons;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.foundation.domain.crons.AbstractBaseCron;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
+import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

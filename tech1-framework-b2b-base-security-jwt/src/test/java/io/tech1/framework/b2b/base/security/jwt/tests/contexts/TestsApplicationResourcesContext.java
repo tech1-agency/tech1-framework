@@ -10,7 +10,7 @@ import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
 import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.base.security.jwt.validators.*;
-import io.tech1.framework.incidents.events.publishers.IncidentPublisher;
+import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.utilities.environment.EnvironmentUtility;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

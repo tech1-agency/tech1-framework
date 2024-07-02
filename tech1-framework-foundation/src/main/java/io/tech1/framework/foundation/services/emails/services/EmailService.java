@@ -7,17 +7,13 @@ import org.springframework.scheduling.annotation.Async;
 import java.util.List;
 import java.util.Set;
 
+@Async
 public interface EmailService {
-    @Async
     void sendPlain(String[] to, String subject, String message);
-    @Async
     void sendPlain(List<String> to, String subject, String message);
-    @Async
     void sendPlain(Set<String> to, String subject, String message);
 
-    @Async
     void sendPlainAttachment(EmailPlainAttachment emailPlainAttachment);
 
-    @Async
     void sendHTML(EmailHTML emailHTML);
 }

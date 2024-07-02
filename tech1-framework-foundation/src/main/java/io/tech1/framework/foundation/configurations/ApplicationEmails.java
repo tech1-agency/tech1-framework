@@ -3,6 +3,7 @@ package io.tech1.framework.foundation.configurations;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.services.emails.services.EmailService;
 import io.tech1.framework.foundation.services.emails.services.impl.EmailServiceImpl;
+import io.tech1.framework.foundation.services.emails.services.impl.LoggingEmailService;
 import io.tech1.framework.foundation.services.emails.utilities.EmailUtility;
 import io.tech1.framework.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
@@ -10,6 +11,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,6 +36,7 @@ public class ApplicationEmails {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
     public JavaMailSender javaMailSender() {
         var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
 
@@ -54,13 +57,15 @@ public class ApplicationEmails {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
     public SpringTemplateEngine springTemplateEngine() {
         var templateEngine = new SpringTemplateEngine();
-        templateEngine.addTemplateResolver(htmlTemplateResolver());
+        templateEngine.addTemplateResolver(this.htmlTemplateResolver());
         return templateEngine;
     }
 
     @Bean
+    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
     public SpringResourceTemplateResolver htmlTemplateResolver() {
         var emailTemplateResolver = new SpringResourceTemplateResolver();
         emailTemplateResolver.setPrefix("classpath:/email-templates/");
@@ -71,6 +76,7 @@ public class ApplicationEmails {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
     public EmailUtility emailUtility() {
         return new EmailUtilityImpl(
                 this.javaMailSender()
@@ -78,6 +84,7 @@ public class ApplicationEmails {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
     public EmailService emailService() {
         return new EmailServiceImpl(
                 this.javaMailSender(),
@@ -85,5 +92,11 @@ public class ApplicationEmails {
                 this.emailUtility(),
                 this.applicationFrameworkProperties
         );
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "false", matchIfMissing = true)
+    public EmailService loggingEmailService() {
+        return new LoggingEmailService();
     }
 }

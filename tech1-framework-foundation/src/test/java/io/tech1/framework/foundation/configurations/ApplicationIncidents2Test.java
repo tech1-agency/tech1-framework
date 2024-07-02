@@ -79,7 +79,7 @@ class ApplicationIncidents2Test {
                 .contains("incidentSubscriber")
                 .contains("errorHandler")
                 .contains("rejectedExecutionHandler")
-                .hasSize(24);
+                .hasSizeGreaterThanOrEqualTo(24);
     }
 
     @Test

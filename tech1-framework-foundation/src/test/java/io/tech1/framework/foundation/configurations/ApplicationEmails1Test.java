@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         properties = "tech1.emailConfigs.enabled=true"
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationEmailsTest {
+class ApplicationEmails1Test {
 
     @Configuration
     @Import({
@@ -46,12 +46,13 @@ class ApplicationEmailsTest {
 
         // Assert
         assertThat(methods)
-                .hasSize(20)
+                .contains("loggingEmailService")
                 .contains("javaMailSender")
                 .contains("springTemplateEngine")
                 .contains("htmlTemplateResolver")
                 .contains("emailUtility")
-                .contains("emailService");
+                .contains("emailService")
+                .hasSize(20);
     }
 
     @Test

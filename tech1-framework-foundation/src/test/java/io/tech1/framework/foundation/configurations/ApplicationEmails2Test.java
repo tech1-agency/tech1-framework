@@ -1,7 +1,8 @@
 package io.tech1.framework.foundation.configurations;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.services.emails.services.EmailService;
+import io.tech1.framework.foundation.services.emails.services.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,5 +61,23 @@ class ApplicationEmails2Test {
         assertThatThrownBy(this.componentUnderTest::javaMailSender)
                 .isInstanceOf(NoSuchBeanDefinitionException.class)
                 .hasMessage("No bean named 'javaMailSender' available");
+    }
+
+    @Test
+    void emailServiceTest() {
+        // Act + Assert
+        assertThatThrownBy(this.componentUnderTest::emailService)
+                .isInstanceOf(NoSuchBeanDefinitionException.class)
+                .hasMessage("No bean named 'emailService' available");
+    }
+
+    @Test
+    void loggingEmailServiceTest() {
+        // Act
+        var incidentClientDefinition = this.componentUnderTest.loggingEmailService();
+
+        // Assert
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(EmailService.class);
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(EmailServiceImpl.class);
     }
 }

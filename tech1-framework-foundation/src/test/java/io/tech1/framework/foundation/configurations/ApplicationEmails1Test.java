@@ -2,8 +2,11 @@ package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.services.emails.services.EmailService;
+import io.tech1.framework.foundation.services.emails.services.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
@@ -71,5 +75,23 @@ class ApplicationEmails1Test {
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.smtp.auth", "true");
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.smtp.starttls.enable", "true");
         assertThat(javaMailSender.getJavaMailProperties()).containsEntry("mail.debug", "false");
+    }
+
+    @Test
+    void emailServiceTest() {
+        // Act
+        var incidentClientDefinition = this.componentUnderTest.emailService();
+
+        // Assert
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(EmailService.class);
+        assertThat(incidentClientDefinition.getClass()).isEqualTo(EmailServiceImpl.class);
+    }
+
+    @Test
+    void loggingEmailServiceTest() {
+        // Act + Assert
+        assertThatThrownBy(this.componentUnderTest::loggingEmailService)
+                .isInstanceOf(NoSuchBeanDefinitionException.class)
+                .hasMessage("No bean named 'loggingEmailService' available");
     }
 }

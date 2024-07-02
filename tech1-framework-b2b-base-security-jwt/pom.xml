@@ -23,12 +23,6 @@
         </dependency>
         <dependency>
             <groupId>io.tech1.framework</groupId>
-            <artifactId>tech1-framework-hardware</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tech1.framework</groupId>
             <artifactId>tech1-framework-emails</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

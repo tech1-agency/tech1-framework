@@ -1,15 +1,15 @@
 package io.tech1.framework.foundation.configurations;
 
-import io.tech1.framework.foundation.domain.properties.configs.AsyncConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.EventsConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.IncidentConfigs;
-import io.tech1.framework.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.configs.IncidentConfigs;
+import io.tech1.framework.foundation.incidents.feigns.definitions.IncidentClientDefinition;
+import io.tech1.framework.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -38,10 +39,7 @@ class ApplicationIncidents2Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(AsyncConfigs.testsHardcoded());
-            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(EventsConfigs.testsHardcoded());
-            var incidentConfigs = IncidentConfigs.disabled();
-            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(incidentConfigs);
+            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.disabled());
             return applicationFrameworkProperties;
         }
     }
@@ -74,22 +72,31 @@ class ApplicationIncidents2Test {
 
         // Assert
         assertThat(methods)
-                .contains("init")
+                .contains("asyncUncaughtExceptionHandler")
                 .contains("incidentClientDefinition")
                 .contains("incidentClient")
-                .hasSizeGreaterThanOrEqualTo(3);
+                .contains("incidentPublisher")
+                .contains("incidentSubscriber")
+                .contains("errorHandler")
+                .contains("rejectedExecutionHandler")
+                .hasSize(24);
     }
 
     @Test
     void incidentClientDefinitionTest() {
-        // Arrange
-        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.disabled());
+        // Act + Assert
+        assertThatThrownBy(this.componentUnderTest::incidentClientDefinition)
+                .isInstanceOf(NoSuchBeanDefinitionException.class)
+                .hasMessage("No bean named 'incidentClientDefinition' available");
+    }
 
+    @Test
+    void incidentClientDefinitionSlf4jTest() {
         // Act
-        var incidentClientDefinition = this.componentUnderTest.incidentClientDefinition();
+        var incidentClientDefinition = this.componentUnderTest.incidentClientDefinitionSlf4j();
 
         // Assert
+        assertThat(incidentClientDefinition.getClass()).isNotEqualTo(IncidentClientDefinition.class);
         assertThat(incidentClientDefinition.getClass()).isEqualTo(IncidentClientDefinitionSlf4j.class);
-        verify(this.applicationFrameworkProperties).getIncidentConfigs();
     }
 }

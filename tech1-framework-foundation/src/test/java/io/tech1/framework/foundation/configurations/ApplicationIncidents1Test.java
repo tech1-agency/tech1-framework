@@ -1,33 +1,33 @@
 package io.tech1.framework.foundation.configurations;
 
-import io.tech1.framework.foundation.domain.properties.configs.AsyncConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.EventsConfigs;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.configs.IncidentConfigs;
 import io.tech1.framework.foundation.incidents.feigns.definitions.IncidentClientDefinition;
 import io.tech1.framework.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-@ExtendWith({ SpringExtension.class })
-@ContextConfiguration(loader= AnnotationConfigContextLoader.class)
+@SuppressWarnings("SpringBootApplicationProperties")
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.NONE,
+        properties = "tech1.incident-configs.enabled=true"
+)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class ApplicationIncidents1Test {
 
@@ -39,8 +39,6 @@ class ApplicationIncidents1Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            when(applicationFrameworkProperties.getAsyncConfigs()).thenReturn(AsyncConfigs.testsHardcoded());
-            when(applicationFrameworkProperties.getEventsConfigs()).thenReturn(EventsConfigs.testsHardcoded());
             when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.testsHardcoded());
             return applicationFrameworkProperties;
         }
@@ -74,23 +72,31 @@ class ApplicationIncidents1Test {
 
         // Assert
         assertThat(methods)
-                .contains("init")
+                .contains("asyncUncaughtExceptionHandler")
                 .contains("incidentClientDefinition")
                 .contains("incidentClient")
-                .hasSizeGreaterThanOrEqualTo(3);
+                .contains("incidentPublisher")
+                .contains("incidentSubscriber")
+                .contains("errorHandler")
+                .contains("rejectedExecutionHandler")
+                .hasSize(24);
     }
 
     @Test
     void incidentClientDefinitionTest() {
-        // Arrange
-        when(this.applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.testsHardcoded());
-
         // Act
         var incidentClientDefinition = this.componentUnderTest.incidentClientDefinition();
 
         // Assert
         assertThat(incidentClientDefinition.getClass()).isNotEqualTo(IncidentClientDefinition.class);
         assertThat(incidentClientDefinition.getClass()).isNotEqualTo(IncidentClientDefinitionSlf4j.class);
-        verify(this.applicationFrameworkProperties).getIncidentConfigs();
+    }
+
+    @Test
+    void incidentClientDefinitionSlf4jTest() {
+        // Act + Assert
+        assertThatThrownBy(this.componentUnderTest::incidentClientDefinitionSlf4j)
+                .isInstanceOf(NoSuchBeanDefinitionException.class)
+                .hasMessage("No bean named 'incidentClientDefinitionSlf4j' available");
     }
 }

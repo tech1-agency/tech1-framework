@@ -22,6 +22,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,29 +45,31 @@ public class ApplicationIncidents {
     }
 
     @Bean
+    @ConditionalOnProperty(value = "tech1.incident-configs.enabled", havingValue = "true")
     IncidentClientDefinition incidentClientDefinition() {
-        var incidentConfigs = this.applicationFrameworkProperties.getIncidentConfigs();
-        if (incidentConfigs.isEnabled()) {
-            var incidentServer = incidentConfigs.getRemoteServer();
-            return Feign.builder()
-                    .client(new OkHttpClient())
-                    .encoder(new JacksonEncoder())
-                    .decoder(new JacksonDecoder())
-                    .requestInterceptor(
-                            new BasicAuthRequestInterceptor(
-                                    incidentServer.getCredentials().username().value(),
-                                    incidentServer.getCredentials().password().value()
-                            )
-                    )
-                    .target(IncidentClientDefinition.class, incidentServer.getBaseURL());
-        } else {
-            return new IncidentClientDefinitionSlf4j();
-        }
+        var incidentServer = this.applicationFrameworkProperties.getIncidentConfigs().getRemoteServer();
+        return Feign.builder()
+                .client(new OkHttpClient())
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .requestInterceptor(
+                        new BasicAuthRequestInterceptor(
+                                incidentServer.getCredentials().username().value(),
+                                incidentServer.getCredentials().password().value()
+                        )
+                )
+                .target(IncidentClientDefinition.class, incidentServer.getBaseURL());
     }
 
     @Bean
-    IncidentClient incidentClient() {
-        return new IncidentClientImpl(this.incidentClientDefinition());
+    @ConditionalOnProperty(value = "tech1.incident-configs.enabled", havingValue = "false", matchIfMissing = true)
+    IncidentClientDefinition incidentClientDefinitionSlf4j() {
+        return new IncidentClientDefinitionSlf4j();
+    }
+
+    @Bean
+    IncidentClient incidentClient(IncidentClientDefinition incidentClientDefinition) {
+        return new IncidentClientImpl(incidentClientDefinition);
     }
 
     @Bean
@@ -77,9 +80,9 @@ public class ApplicationIncidents {
     }
 
     @Bean
-    IncidentSubscriber incidentSubscriber() {
+    IncidentSubscriber incidentSubscriber(IncidentClient incidentClient) {
         return new IncidentSubscriberImpl(
-                this.incidentClient()
+                incidentClient
         );
     }
 

@@ -3,7 +3,7 @@ package io.tech1.framework.foundation.configurations;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.services.emails.services.EmailService;
 import io.tech1.framework.foundation.services.emails.services.impl.EmailServiceImpl;
-import io.tech1.framework.foundation.services.emails.services.impl.LoggingEmailService;
+import io.tech1.framework.foundation.services.emails.services.impl.EmailServiceSlf4j;
 import io.tech1.framework.foundation.services.emails.utilities.EmailUtility;
 import io.tech1.framework.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
@@ -96,7 +96,7 @@ public class ApplicationEmails {
 
     @Bean
     @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "false", matchIfMissing = true)
-    public EmailService loggingEmailService() {
-        return new LoggingEmailService();
+    public EmailService emailServiceSlf4j() {
+        return new EmailServiceSlf4j();
     }
 }

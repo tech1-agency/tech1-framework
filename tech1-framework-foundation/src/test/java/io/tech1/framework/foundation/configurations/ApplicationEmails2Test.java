@@ -72,9 +72,9 @@ class ApplicationEmails2Test {
     }
 
     @Test
-    void loggingEmailServiceTest() {
+    void emailServiceSlf4jTest() {
         // Act
-        var incidentClientDefinition = this.componentUnderTest.loggingEmailService();
+        var incidentClientDefinition = this.componentUnderTest.emailServiceSlf4j();
 
         // Assert
         assertThat(incidentClientDefinition.getClass()).isNotEqualTo(EmailService.class);

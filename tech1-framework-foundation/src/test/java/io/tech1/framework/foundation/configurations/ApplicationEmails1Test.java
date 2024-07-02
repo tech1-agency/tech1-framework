@@ -88,9 +88,9 @@ class ApplicationEmails1Test {
     }
 
     @Test
-    void loggingEmailServiceTest() {
+    void emailServiceSlf4jTest() {
         // Act + Assert
-        assertThatThrownBy(this.componentUnderTest::loggingEmailService)
+        assertThatThrownBy(this.componentUnderTest::emailServiceSlf4j)
                 .isInstanceOf(NoSuchBeanDefinitionException.class)
                 .hasMessage("No bean named 'loggingEmailService' available");
     }

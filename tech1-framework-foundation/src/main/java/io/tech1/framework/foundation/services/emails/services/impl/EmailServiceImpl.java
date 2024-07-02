@@ -1,9 +1,9 @@
-package io.tech1.framework.emails.services.impl;
+package io.tech1.framework.foundation.services.emails.services.impl;
 
-import io.tech1.framework.emails.domain.EmailHTML;
-import io.tech1.framework.emails.domain.EmailPlainAttachment;
-import io.tech1.framework.emails.services.EmailService;
-import io.tech1.framework.emails.utilities.EmailUtility;
+import io.tech1.framework.foundation.services.emails.domain.EmailHTML;
+import io.tech1.framework.foundation.services.emails.domain.EmailPlainAttachment;
+import io.tech1.framework.foundation.services.emails.services.EmailService;
+import io.tech1.framework.foundation.services.emails.utilities.EmailUtility;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;

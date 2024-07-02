@@ -1,10 +1,10 @@
-package io.tech1.framework.emails.configurations;
+package io.tech1.framework.foundation.configurations;
 
 import io.tech1.framework.foundation.domain.base.PropertyId;
-import io.tech1.framework.emails.services.EmailService;
-import io.tech1.framework.emails.services.impl.EmailServiceImpl;
-import io.tech1.framework.emails.utilities.EmailUtility;
-import io.tech1.framework.emails.utilities.impl.EmailUtilityImpl;
+import io.tech1.framework.foundation.services.emails.services.EmailService;
+import io.tech1.framework.foundation.services.emails.services.impl.EmailServiceImpl;
+import io.tech1.framework.foundation.services.emails.utilities.EmailUtility;
+import io.tech1.framework.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

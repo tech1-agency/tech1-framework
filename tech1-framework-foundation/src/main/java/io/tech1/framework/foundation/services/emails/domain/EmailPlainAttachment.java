@@ -1,4 +1,4 @@
-package io.tech1.framework.emails.domain;
+package io.tech1.framework.foundation.services.emails.domain;
 
 import java.util.Set;
 

@@ -43,7 +43,6 @@
     <modules>
         <!-- JARs -->
         <module>tech1-framework-foundation</module>
-        <module>tech1-framework-emails</module>
         <module>tech1-framework-b2b-base-security-jwt</module>
         <module>tech1-framework-b2b-base-security-jwt-websockets</module>
         <module>tech1-framework-b2b-mongodb-security-jwt</module>

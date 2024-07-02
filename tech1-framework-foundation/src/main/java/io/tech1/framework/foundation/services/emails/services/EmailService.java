@@ -1,7 +1,7 @@
-package io.tech1.framework.emails.services;
+package io.tech1.framework.foundation.services.emails.services;
 
-import io.tech1.framework.emails.domain.EmailHTML;
-import io.tech1.framework.emails.domain.EmailPlainAttachment;
+import io.tech1.framework.foundation.services.emails.domain.EmailHTML;
+import io.tech1.framework.foundation.services.emails.domain.EmailPlainAttachment;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;

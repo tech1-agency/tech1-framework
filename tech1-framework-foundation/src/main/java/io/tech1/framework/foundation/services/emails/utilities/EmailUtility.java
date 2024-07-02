@@ -1,4 +1,4 @@
-package io.tech1.framework.emails.utilities;
+package io.tech1.framework.foundation.services.emails.utilities;
 
 import io.tech1.framework.foundation.domain.tuples.Tuple2;
 import org.springframework.mail.javamail.MimeMessageHelper;

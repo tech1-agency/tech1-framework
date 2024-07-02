@@ -1,7 +1,7 @@
-package io.tech1.framework.emails.utilities.impl;
+package io.tech1.framework.foundation.services.emails.utilities.impl;
 
 import io.tech1.framework.foundation.domain.tuples.Tuple2;
-import io.tech1.framework.emails.utilities.EmailUtility;
+import io.tech1.framework.foundation.services.emails.utilities.EmailUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

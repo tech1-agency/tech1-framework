@@ -9,7 +9,7 @@ import io.tech1.framework.foundation.configurations.ApplicationSpringBootServer;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.constants.SwaggerConstants;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.emails.configurations.ApplicationEmails;
+import io.tech1.framework.foundation.configurations.ApplicationEmails;
 import io.tech1.framework.foundation.configurations.ApplicationIncidents;
 import io.tech1.framework.foundation.configurations.ApplicationUserMetadata;
 import jakarta.annotation.PostConstruct;

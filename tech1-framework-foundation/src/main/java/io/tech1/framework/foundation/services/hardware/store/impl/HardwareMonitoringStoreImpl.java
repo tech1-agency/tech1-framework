@@ -3,19 +3,15 @@ package io.tech1.framework.foundation.services.hardware.store.impl;
 import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import static io.tech1.framework.foundation.domain.base.Version.unknown;
 import static io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint.zeroUsage;
 
-@Slf4j
-@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
 

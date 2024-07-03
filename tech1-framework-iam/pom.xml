@@ -11,7 +11,7 @@
         <version>3.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tech1-framework-b2b-base-security-jwt</artifactId>
+    <artifactId>tech1-framework-iam</artifactId>
 
     <dependencies>
         <!-- Tech1: Framework -->

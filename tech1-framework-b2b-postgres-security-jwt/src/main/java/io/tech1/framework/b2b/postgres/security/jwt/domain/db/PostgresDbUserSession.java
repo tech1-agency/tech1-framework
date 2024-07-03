@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.iam.domain.db.UserSession;
+import io.tech1.framework.iam.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.iam.domain.identifiers.UserSessionId;
+import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
+import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJwtAccessTokenConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresJwtRefreshTokenConverter;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUserRequestMetadataConverter;
@@ -18,8 +18,8 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
+import static io.tech1.framework.iam.domain.db.UserSession.ofNotPersisted;
+import static io.tech1.framework.iam.domain.db.UserSession.ofPersisted;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok

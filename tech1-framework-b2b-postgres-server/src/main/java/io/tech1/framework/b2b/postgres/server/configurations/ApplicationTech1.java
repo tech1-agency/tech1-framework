@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.server.configurations;
 
-import io.tech1.framework.b2b.base.security.jwt.configurations.AbstractApplicationSecurityJwtConfigurer;
-import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwt;
+import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
+import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.b2b.postgres.security.jwt.configurations.ApplicationPostgres;
 import io.tech1.framework.b2b.postgres.server.properties.ApplicationProperties;
 import io.tech1.framework.foundation.domain.base.PropertyId;

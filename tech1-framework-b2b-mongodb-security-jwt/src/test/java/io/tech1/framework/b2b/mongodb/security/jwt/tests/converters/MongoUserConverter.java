@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
+import static io.tech1.framework.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 
 @UtilityClass
 public class MongoUserConverter {

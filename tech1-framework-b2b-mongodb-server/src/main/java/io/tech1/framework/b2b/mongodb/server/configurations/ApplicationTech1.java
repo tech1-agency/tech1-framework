@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.configurations;
 
-import io.tech1.framework.b2b.base.security.jwt.configurations.AbstractApplicationSecurityJwtConfigurer;
-import io.tech1.framework.b2b.base.security.jwt.configurations.ApplicationBaseSecurityJwt;
+import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
+import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.b2b.mongodb.security.jwt.configurations.ApplicationMongo;
 import io.tech1.framework.b2b.mongodb.server.properties.ApplicationProperties;
 import io.tech1.framework.foundation.domain.base.PropertyId;

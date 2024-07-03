@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.essence;
 
-import io.tech1.framework.b2b.base.security.jwt.essense.AbstractEssenceConstructor;
+import io.tech1.framework.iam.essense.AbstractEssenceConstructor;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 @Slf4j
 @Service

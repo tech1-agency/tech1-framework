@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.iam.domain.identifiers.UserId;
+import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.foundation.domain.base.Email;
 import io.tech1.framework.foundation.domain.base.Password;
 import io.tech1.framework.foundation.domain.base.Username;

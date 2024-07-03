@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseInvitationCodesService;
+import io.tech1.framework.iam.services.abstracts.AbstractBaseInvitationCodesService;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;

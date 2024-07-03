@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.converters.columns;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
+import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -2,8 +2,8 @@ package io.tech1.framework.b2b.postgres.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
+import io.tech1.framework.iam.domain.identifiers.UserId;
+import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.*;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.superclasses.PostgresDbAbstractPersistable0;
 import io.tech1.framework.foundation.domain.base.Email;

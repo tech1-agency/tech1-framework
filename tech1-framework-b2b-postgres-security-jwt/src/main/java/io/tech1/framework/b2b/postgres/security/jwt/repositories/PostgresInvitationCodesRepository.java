@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseInvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.b2b.base.security.jwt.repositories.InvitationCodesRepository;
+import io.tech1.framework.iam.domain.db.InvitationCode;
+import io.tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
+import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
+import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
-import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
+import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 

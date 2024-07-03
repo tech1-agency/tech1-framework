@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.random;
 
-import io.tech1.framework.b2b.base.security.jwt.tests.random.BaseSecurityJwtDbRandomUtility;
+import io.tech1.framework.iam.tests.random.BaseSecurityJwtDbRandomUtility;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbInvitationCode;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Map;
 import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static org.springframework.util.StringUtils.capitalize;

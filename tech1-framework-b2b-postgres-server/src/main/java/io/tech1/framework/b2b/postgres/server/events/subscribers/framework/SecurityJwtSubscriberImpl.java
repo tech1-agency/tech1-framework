@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.postgres.server.events.subscribers.framework;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.events.EventAuthenticationLogin;
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
-import io.tech1.framework.b2b.base.security.jwt.events.subscribers.base.BaseSecurityJwtSubscriber;
-import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
-import io.tech1.framework.b2b.base.security.jwt.services.UsersEmailsService;
+import io.tech1.framework.iam.domain.events.EventAuthenticationLogin;
+import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
+import io.tech1.framework.iam.events.subscribers.base.BaseSecurityJwtSubscriber;
+import io.tech1.framework.iam.services.BaseUsersSessionsService;
+import io.tech1.framework.iam.services.UsersEmailsService;
 import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

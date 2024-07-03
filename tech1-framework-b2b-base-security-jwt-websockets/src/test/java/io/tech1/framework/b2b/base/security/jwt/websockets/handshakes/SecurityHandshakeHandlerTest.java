@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.handshakes;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.services.TokensService;
-import io.tech1.framework.b2b.base.security.jwt.tokens.facade.TokensProvider;
+import io.tech1.framework.iam.domain.jwt.JwtUser;
+import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
+import io.tech1.framework.iam.domain.jwt.RequestRefreshToken;
+import io.tech1.framework.iam.services.TokensService;
+import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;

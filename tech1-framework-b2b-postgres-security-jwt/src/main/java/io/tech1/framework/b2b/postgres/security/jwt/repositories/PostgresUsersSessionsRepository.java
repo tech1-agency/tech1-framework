@@ -1,13 +1,13 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseSuperadminSessionsTable;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
+import io.tech1.framework.iam.domain.db.UserSession;
+import io.tech1.framework.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
+import io.tech1.framework.iam.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.iam.domain.identifiers.UserSessionId;
+import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
+import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
+import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.iam.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUserSession;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.base.security.jwt.comparators.SecurityJwtComparators.*;
+import static io.tech1.framework.iam.comparators.SecurityJwtComparators.*;
 import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 
 @SuppressWarnings("JpaQlInspection")

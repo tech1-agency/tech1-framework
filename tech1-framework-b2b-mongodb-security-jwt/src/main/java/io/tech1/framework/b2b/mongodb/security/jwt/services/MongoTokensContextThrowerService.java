@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractTokensContextThrowerService;
-import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.iam.services.abstracts.AbstractTokensContextThrowerService;
+import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.mongodb.security.jwt.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersSessionsRepository;
 import lombok.extern.slf4j.Slf4j;

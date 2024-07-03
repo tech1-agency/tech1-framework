@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.postgres.security.jwt.services;
 
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.services.abstracts.AbstractBaseUsersSessionsService;
-import io.tech1.framework.b2b.base.security.jwt.utils.SecurityJwtTokenUtils;
+import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.iam.services.abstracts.AbstractBaseUsersSessionsService;
+import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;
 import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.extern.slf4j.Slf4j;

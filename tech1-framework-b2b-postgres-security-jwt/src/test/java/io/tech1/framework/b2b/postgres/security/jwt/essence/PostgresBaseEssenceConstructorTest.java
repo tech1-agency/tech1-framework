@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.security.jwt.essence;
 
-import io.tech1.framework.b2b.base.security.jwt.essense.EssenceConstructor;
+import io.tech1.framework.iam.essense.EssenceConstructor;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.foundation.domain.properties.base.DefaultUser;

@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.base.security.jwt.websockets.tasks;
 
-import io.tech1.framework.b2b.base.security.jwt.sessions.SessionRegistry;
+import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.b2b.base.security.jwt.websockets.tempate.WssMessagingTemplate;
 import io.tech1.framework.foundation.domain.concurrent.AbstractInfiniteTimerTask;
 import io.tech1.framework.foundation.domain.time.SchedulerConfiguration;

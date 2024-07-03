@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.security.jwt.tests.contexts;
 
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
+import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresInvitationCodesRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
 import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersSessionsRepository;

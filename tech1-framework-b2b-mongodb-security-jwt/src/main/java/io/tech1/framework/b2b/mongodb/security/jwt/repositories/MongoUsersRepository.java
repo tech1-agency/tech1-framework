@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser;
-import io.tech1.framework.b2b.base.security.jwt.repositories.UsersRepository;
+import io.tech1.framework.iam.domain.db.InvitationCode;
+import io.tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.iam.domain.identifiers.UserId;
+import io.tech1.framework.iam.domain.jwt.JwtUser;
+import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
 import io.tech1.framework.foundation.domain.base.Email;
 import io.tech1.framework.foundation.domain.base.Password;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.b2b.base.security.jwt.constants.SecurityJwtConstants.SUPERADMIN;
+import static io.tech1.framework.iam.constants.SecurityJwtConstants.SUPERADMIN;
 import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;

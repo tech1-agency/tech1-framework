@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.postgres.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.InvitationCode;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.requests.RequestUserRegistration1;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserId;
+import io.tech1.framework.iam.domain.db.InvitationCode;
+import io.tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
+import io.tech1.framework.iam.domain.identifiers.UserId;
 import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
 import io.tech1.framework.b2b.postgres.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.foundation.domain.base.Email;
@@ -23,8 +23,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtUser.randomSuperadmin;
-import static io.tech1.framework.b2b.base.security.jwt.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
+import static io.tech1.framework.iam.domain.jwt.JwtUser.randomSuperadmin;
+import static io.tech1.framework.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.converters.PostgresUserConverter.toUsernamesAsStrings1;
 import static io.tech1.framework.b2b.postgres.security.jwt.tests.random.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;

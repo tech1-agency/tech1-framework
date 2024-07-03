@@ -1,12 +1,12 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.domain.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.dto.responses.ResponseUserSession2;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.iam.domain.db.UserSession;
+import io.tech1.framework.iam.domain.dto.responses.ResponseUserSession2;
+import io.tech1.framework.iam.domain.identifiers.UserSessionId;
+import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
+import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.*;
@@ -14,8 +14,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofNotPersisted;
-import static io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession.ofPersisted;
+import static io.tech1.framework.iam.domain.db.UserSession.ofNotPersisted;
+import static io.tech1.framework.iam.domain.db.UserSession.ofPersisted;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static java.util.Objects.isNull;
 

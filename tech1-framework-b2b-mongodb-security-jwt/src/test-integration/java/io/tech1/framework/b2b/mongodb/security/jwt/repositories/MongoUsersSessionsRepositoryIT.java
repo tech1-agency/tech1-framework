@@ -1,10 +1,10 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.b2b.base.security.jwt.domain.db.UserSession;
-import io.tech1.framework.b2b.base.security.jwt.domain.identifiers.UserSessionId;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.b2b.base.security.jwt.domain.jwt.RequestAccessToken;
+import io.tech1.framework.iam.domain.db.UserSession;
+import io.tech1.framework.iam.domain.identifiers.UserSessionId;
+import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
+import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
+import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUserSession;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.foundation.domain.base.Username;
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.b2b.base.security.jwt.domain.jwt.JwtAccessToken.accessTokens;
+import static io.tech1.framework.iam.domain.jwt.JwtAccessToken.accessTokens;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toAccessTokensAsStrings2;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserConverter.toUsernamesAsStrings2;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.converters.MongoUserSessionConverter.toMetadataRenewCron;

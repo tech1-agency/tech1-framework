@@ -1,8 +1,8 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.validators;
 
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtIncidentPublisher;
-import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
+import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
+import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
+import io.tech1.framework.iam.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import lombok.extern.slf4j.Slf4j;

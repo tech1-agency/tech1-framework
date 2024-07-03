@@ -36,7 +36,7 @@ public class ApplicationEmails {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "tech1.email-configs.enabled", havingValue = "true")
     public JavaMailSender javaMailSender() {
         var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
 
@@ -57,7 +57,7 @@ public class ApplicationEmails {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "tech1.email-configs.enabled", havingValue = "true")
     public SpringTemplateEngine springTemplateEngine() {
         var templateEngine = new SpringTemplateEngine();
         templateEngine.addTemplateResolver(this.htmlTemplateResolver());
@@ -65,7 +65,7 @@ public class ApplicationEmails {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "tech1.email-configs.enabled", havingValue = "true")
     public SpringResourceTemplateResolver htmlTemplateResolver() {
         var emailTemplateResolver = new SpringResourceTemplateResolver();
         emailTemplateResolver.setPrefix("classpath:/email-templates/");
@@ -76,7 +76,7 @@ public class ApplicationEmails {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "tech1.email-configs.enabled", havingValue = "true")
     public EmailUtility emailUtility() {
         return new EmailUtilityImpl(
                 this.javaMailSender()
@@ -84,7 +84,7 @@ public class ApplicationEmails {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "tech1.email-configs.enabled", havingValue = "true")
     public EmailService emailService() {
         return new EmailServiceImpl(
                 this.javaMailSender(),
@@ -95,7 +95,7 @@ public class ApplicationEmails {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.emailConfigs.enabled", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(value = "tech1.email-configs.enabled", havingValue = "false", matchIfMissing = true)
     public EmailService emailServiceSlf4j() {
         return new EmailServiceSlf4j();
     }

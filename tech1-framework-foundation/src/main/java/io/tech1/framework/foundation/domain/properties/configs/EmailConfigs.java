@@ -3,7 +3,7 @@ package io.tech1.framework.foundation.domain.properties.configs;
 import io.tech1.framework.foundation.domain.base.Password;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
-import io.tech1.framework.foundation.domain.properties.annotations.NonMandatoryProperty;
+import io.tech1.framework.foundation.domain.properties.annotations.MandatoryToggleProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,15 +16,15 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryProperty
     private final boolean enabled;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private String host;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private Integer port;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private String from;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private Username username;
-    @NonMandatoryProperty
+    @MandatoryToggleProperty
     private Password password;
 
     public static EmailConfigs testsHardcoded() {

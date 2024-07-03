@@ -1,6 +1,6 @@
 services:
   t1f-b2b-mongodb-server:
-    image: ghcr.io/tech1-io/tech1-framework-b2b-mongodb-server:3.0.0
+    image: ghcr.io/tech1-io/tech1-framework-b2b-mongodb-server:3.0.1
     restart: unless-stopped
     container_name: t1f-b2b-mongodb-server
     networks:

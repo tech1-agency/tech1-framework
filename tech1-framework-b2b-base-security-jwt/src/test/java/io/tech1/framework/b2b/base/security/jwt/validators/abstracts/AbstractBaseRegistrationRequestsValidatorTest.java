@@ -13,7 +13,7 @@ import io.tech1.framework.b2b.base.security.jwt.validators.BaseRegistrationReque
 import io.tech1.framework.b2b.base.security.jwt.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
 import io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -15,7 +15,7 @@ import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoun
 import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
 import io.tech1.framework.foundation.domain.properties.configs.HardwareMonitoringConfigs;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
-import io.tech1.framework.hardware.monitoring.store.HardwareMonitoringStore;
+import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

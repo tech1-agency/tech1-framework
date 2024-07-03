@@ -2,12 +2,12 @@ package io.tech1.framework.b2b.base.security.jwt.events.subscribers.impl;
 
 import io.tech1.framework.b2b.base.security.jwt.events.subscribers.SecurityJwtIncidentSubscriber;
 import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
-import io.tech1.framework.incidents.domain.authetication.*;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.incidents.feigns.clients.IncidentClient;
+import io.tech1.framework.foundation.incidents.domain.authetication.*;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import io.tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

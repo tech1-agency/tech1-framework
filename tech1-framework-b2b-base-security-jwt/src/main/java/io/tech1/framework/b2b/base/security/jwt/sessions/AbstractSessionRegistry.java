@@ -14,9 +14,9 @@ import io.tech1.framework.b2b.base.security.jwt.events.publishers.SecurityJwtPub
 import io.tech1.framework.b2b.base.security.jwt.repositories.UsersSessionsRepository;
 import io.tech1.framework.b2b.base.security.jwt.services.BaseUsersSessionsService;
 import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import io.tech1.framework.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import io.tech1.framework.incidents.domain.session.IncidentSessionExpired;
+import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

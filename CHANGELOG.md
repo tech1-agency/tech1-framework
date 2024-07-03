@@ -1,2 +1,2 @@
 ### Changelog [v3.0.1]
-— TBD
+— Migrated emails, hardware, incidents into tech1-framework-foundation

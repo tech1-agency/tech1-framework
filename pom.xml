@@ -44,7 +44,6 @@
         <!-- JARs -->
         <module>tech1-framework-foundation</module>
         <module>tech1-framework-iam</module>
-        <module>tech1-framework-b2b-base-security-jwt-websockets</module>
         <module>tech1-framework-b2b-mongodb-security-jwt</module>
         <module>tech1-framework-b2b-postgres-security-jwt</module>
         <!-- Servers -->

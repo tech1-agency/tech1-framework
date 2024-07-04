@@ -22,9 +22,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.base.security.jwt.filters.jwt_extension",
+        "io.tech1.framework.iam.filters.jwt_extension",
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.base.security.jwt.assistants.current",
+        "io.tech1.framework.iam.assistants.current",
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.b2b.mongodb.security.jwt.essence"
         // -------------------------------------------------------------------------------------------------------------

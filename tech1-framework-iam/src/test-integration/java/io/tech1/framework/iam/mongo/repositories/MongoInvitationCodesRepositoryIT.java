@@ -1,51 +1,49 @@
-package io.tech1.framework.iam.postgres.repositories;
+package io.tech1.framework.iam.mongo.repositories;
 
-import io.tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
-import io.tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import io.tech1.framework.iam.configurations.ApplicationMongoRepositories;
+import io.tech1.framework.iam.domain.mongo.MongoDbInvitationCode;
+import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
-import io.tech1.framework.iam.configurations.ApplicationPostgresRepositories;
 import io.tech1.framework.iam.domain.db.InvitationCode;
 import io.tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.iam.domain.postgres.db.PostgresDbInvitationCode;
-import io.tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import io.tech1.framework.iam.mongo.configs.MongoBeforeAllCallback;
+import io.tech1.framework.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
+import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
+import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
-import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
-import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        PostgresBeforeAllCallback.class
+        MongoBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ApplicationPostgresRepositories.class
+                ApplicationMongoRepositories.class
         }
 )
-@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresInvitationCodesRepositoryIT extends TestsApplicationPostgresRepositoriesRunner {
+class MongoInvitationCodesRepositoryIT extends TestsApplicationMongoRepositoriesRunner {
 
-    private final PostgresInvitationCodesRepository invitationCodesRepository;
+    private final MongoInvitationCodesRepository invitationCodesRepository;
 
     @Override
-    public JpaRepository<PostgresDbInvitationCode, String> getJpaRepository() {
+    public MongoRepository<MongoDbInvitationCode, String> getMongoRepository() {
         return this.invitationCodesRepository;
     }
 

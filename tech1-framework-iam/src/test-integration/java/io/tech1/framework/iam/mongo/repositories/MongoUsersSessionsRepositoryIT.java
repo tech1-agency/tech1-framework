@@ -1,56 +1,54 @@
-package io.tech1.framework.iam.postgres.repositories;
+package io.tech1.framework.iam.mongo.repositories;
 
-import io.tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
-import io.tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import io.tech1.framework.iam.configurations.ApplicationMongoRepositories;
+import io.tech1.framework.iam.domain.mongo.MongoDbUserSession;
+import io.tech1.framework.iam.repositories.mongo.MongoUsersSessionsRepository;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
-import io.tech1.framework.iam.configurations.ApplicationPostgresRepositories;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.identifiers.UserSessionId;
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
-import io.tech1.framework.iam.domain.postgres.db.PostgresDbUserSession;
-import io.tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import io.tech1.framework.iam.mongo.configs.MongoBeforeAllCallback;
+import io.tech1.framework.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.iam.tests.converters.mongo.MongoUserConverter.toAccessTokensAsStrings2;
+import static io.tech1.framework.iam.tests.converters.mongo.MongoUserConverter.toUsernamesAsStrings2;
+import static io.tech1.framework.iam.tests.converters.mongo.MongoUserSessionConverter.toMetadataRenewCron;
+import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
+import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyUserSessionsData2;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.iam.domain.jwt.JwtAccessToken.accessTokens;
-import static io.tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toAccessTokensAsStrings2;
-import static io.tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings2;
-import static io.tech1.framework.iam.tests.converters.postgres.PostgresUserSessionConverter.toMetadataRenewCron;
-import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUserSessionsData1;
-import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUserSessionsData2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        PostgresBeforeAllCallback.class
+        MongoBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ApplicationPostgresRepositories.class
+                ApplicationMongoRepositories.class
         }
 )
-@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresRepositoriesRunner {
+class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRunner {
 
-    private final PostgresUsersSessionsRepository usersSessionsRepository;
+    private final MongoUsersSessionsRepository usersSessionsRepository;
 
     @Override
-    public JpaRepository<PostgresDbUserSession, String> getJpaRepository() {
+    public MongoRepository<MongoDbUserSession, String> getMongoRepository() {
         return this.usersSessionsRepository;
     }
 
@@ -59,7 +57,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
         // Arrange
         var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
 
-        var notExistentSessionId = entity(UserSessionId.class);
+        var notExistentSessionId = UserSessionId.random();
 
         var savedSession = saved.get(0);
         var existentSessionId = savedSession.userSessionId();

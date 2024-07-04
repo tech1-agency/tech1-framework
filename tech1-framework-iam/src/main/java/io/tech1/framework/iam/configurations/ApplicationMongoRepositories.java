@@ -1,0 +1,79 @@
+package io.tech1.framework.iam.configurations;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
+import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
+import io.tech1.framework.iam.repositories.mongo.MongoUsersSessionsRepository;
+import io.tech1.framework.iam.repositories.mongo.Tech1MongoRepositories;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+@Configuration
+@EntityScan({
+        "io.tech1.framework.iam.domain.mongo"
+})
+@EnableMongoRepositories(
+        basePackages = "io.tech1.framework.iam.repositories",
+        mongoTemplateRef = "tech1MongoTemplate"
+)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class ApplicationMongoRepositories {
+
+    // Properties
+    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+
+    @Bean
+    public Tech1MongoRepositories tech1MongoRepositories(
+            MongoInvitationCodesRepository mongoInvitationCodesRepository,
+            MongoUsersRepository mongoUsersRepository,
+            MongoUsersSessionsRepository userSessionRepository
+    ) {
+        return new Tech1MongoRepositories(
+                mongoInvitationCodesRepository,
+                mongoUsersRepository,
+                userSessionRepository
+        );
+    }
+
+    @Bean
+    public MongoClient tech1MongoClient() {
+        var mongodb = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().getMongodb();
+        var connectionString = new ConnectionString(mongodb.connectionString());
+        var mongoClientSettings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
+                .build();
+        return MongoClients.create(mongoClientSettings);
+    }
+
+    @Bean
+    public MongoDatabaseFactory tech1MongoDatabaseFactory() {
+        return new SimpleMongoClientDatabaseFactory(
+                this.tech1MongoClient(),
+                this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().getMongodb().getDatabase()
+        );
+    }
+
+    @Bean
+    public MongoTemplate tech1MongoTemplate() {
+        var dbRefResolver = new DefaultDbRefResolver(this.tech1MongoDatabaseFactory());
+        var mongoConverter = new MappingMongoConverter(dbRefResolver, new MongoMappingContext());
+        return new MongoTemplate(
+                this.tech1MongoDatabaseFactory(),
+                mongoConverter
+        );
+    }
+}

@@ -1,58 +1,56 @@
-package io.tech1.framework.iam.postgres.repositories;
+package io.tech1.framework.iam.mongo.repositories;
 
-import io.tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
-import io.tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import io.tech1.framework.iam.configurations.ApplicationMongoRepositories;
+import io.tech1.framework.iam.domain.mongo.MongoDbUser;
+import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
 import io.tech1.framework.foundation.domain.base.Email;
 import io.tech1.framework.foundation.domain.base.Password;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.constants.DomainConstants;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
-import io.tech1.framework.iam.configurations.ApplicationPostgresRepositories;
 import io.tech1.framework.iam.domain.db.InvitationCode;
 import io.tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.iam.domain.identifiers.UserId;
-import io.tech1.framework.iam.domain.postgres.db.PostgresDbUser;
-import io.tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
+import io.tech1.framework.iam.domain.jwt.JwtUser;
+import io.tech1.framework.iam.mongo.configs.MongoBeforeAllCallback;
+import io.tech1.framework.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Set;
 
+import static io.tech1.framework.iam.tests.converters.mongo.MongoUserConverter.toUsernamesAsStrings1;
+import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
-import static io.tech1.framework.iam.domain.jwt.JwtUser.randomSuperadmin;
-import static io.tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings1;
-import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
-        PostgresBeforeAllCallback.class
+        MongoBeforeAllCallback.class
 })
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ApplicationPostgresRepositories.class
+                ApplicationMongoRepositories.class
         }
 )
-@AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunner {
+class MongoUsersRepositoryIT extends TestsApplicationMongoRepositoriesRunner {
 
-    private final PostgresUsersRepository usersRepository;
+    private final MongoUsersRepository usersRepository;
 
     @Override
-    public JpaRepository<PostgresDbUser, String> getJpaRepository() {
+    public MongoRepository<MongoDbUser, String> getMongoRepository() {
         return this.usersRepository;
     }
 
@@ -167,7 +165,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunn
         assertThat(this.usersRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var userId1 = this.usersRepository.saveAs(randomSuperadmin());
+        var userId1 = this.usersRepository.saveAs(JwtUser.randomSuperadmin());
         assertThat(this.usersRepository.count()).isEqualTo(7);
         assertThat(userId1).isNotNull();
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();

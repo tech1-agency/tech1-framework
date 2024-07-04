@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.mongodb.server.services.impl;
 
-import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbUser;
-import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
+import io.tech1.framework.iam.domain.mongo.MongoDbUser;
+import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
 import io.tech1.framework.b2b.mongodb.server.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

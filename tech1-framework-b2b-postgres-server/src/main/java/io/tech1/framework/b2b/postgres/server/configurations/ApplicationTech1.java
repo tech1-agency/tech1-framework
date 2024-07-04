@@ -2,7 +2,7 @@ package io.tech1.framework.b2b.postgres.server.configurations;
 
 import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
 import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwt;
-import io.tech1.framework.b2b.postgres.security.jwt.configurations.ApplicationPostgres;
+import io.tech1.framework.iam.configurations.ApplicationPostgres;
 import io.tech1.framework.b2b.postgres.server.properties.ApplicationProperties;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.configurations.ApplicationHardwareMonitoring;
@@ -11,12 +11,10 @@ import io.tech1.framework.foundation.services.hardware.subscribers.HardwareMonit
 import io.tech1.framework.foundation.services.hardware.subscribers.impl.BaseHardwareMonitoringSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
@@ -29,19 +27,13 @@ import jakarta.annotation.PostConstruct;
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.iam.assistants.current",
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.b2b.postgres.security.jwt.essence"
+        "io.tech1.framework.iam.essence"
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({
         ApplicationHardwareMonitoring.class,
         ApplicationBaseSecurityJwt.class,
         ApplicationPostgres.class
-})
-@EntityScan({
-        "io.tech1.framework.b2b.postgres.server.domain.db"
-})
-@EnableJpaRepositories({
-        "io.tech1.framework.b2b.postgres.server.repositories"
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigurer {

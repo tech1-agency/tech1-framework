@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.essence;
 
-import io.tech1.framework.iam.essense.EssenceConstructor;
+import io.tech1.framework.iam.essence.EssenceConstructor;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoInvitationCodesRepository;
 import io.tech1.framework.b2b.mongodb.security.jwt.repositories.MongoUsersRepository;
 import io.tech1.framework.foundation.domain.properties.base.DefaultUser;

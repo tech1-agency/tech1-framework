@@ -1,7 +1,7 @@
 package io.tech1.framework.b2b.postgres.server.services.impl;
 
-import io.tech1.framework.b2b.postgres.security.jwt.domain.db.PostgresDbUser;
-import io.tech1.framework.b2b.postgres.security.jwt.repositories.PostgresUsersRepository;
+import io.tech1.framework.iam.domain.postgres.db.PostgresDbUser;
+import io.tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
 import io.tech1.framework.b2b.postgres.server.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

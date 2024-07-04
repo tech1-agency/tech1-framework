@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.server.startup;
 
-import io.tech1.framework.iam.essense.AbstractEssenceConstructor;
+import io.tech1.framework.iam.essence.AbstractEssenceConstructor;
 import io.tech1.framework.iam.startup.DefaultStartupEventListener;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;

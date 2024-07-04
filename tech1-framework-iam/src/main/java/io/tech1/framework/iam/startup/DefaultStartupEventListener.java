@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.startup;
 
-import io.tech1.framework.iam.essense.AbstractEssenceConstructor;
+import io.tech1.framework.iam.essence.AbstractEssenceConstructor;
 import io.tech1.framework.foundation.domain.enums.Status;
 import io.tech1.framework.foundation.domain.enums.Toggle;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;

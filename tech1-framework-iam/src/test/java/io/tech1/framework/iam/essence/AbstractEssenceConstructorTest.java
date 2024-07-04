@@ -1,7 +1,6 @@
 package io.tech1.framework.iam.essence;
 
 import io.tech1.framework.iam.tests.stubbers.AbstractMockService;
-import io.tech1.framework.iam.essense.AbstractEssenceConstructor;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.foundation.domain.base.Username;

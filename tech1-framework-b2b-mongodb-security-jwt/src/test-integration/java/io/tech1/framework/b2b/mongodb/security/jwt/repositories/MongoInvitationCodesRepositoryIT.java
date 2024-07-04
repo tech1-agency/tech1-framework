@@ -1,29 +1,32 @@
 package io.tech1.framework.b2b.mongodb.security.jwt.repositories;
 
-import io.tech1.framework.iam.domain.db.InvitationCode;
-import io.tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.b2b.mongodb.security.jwt.domain.db.MongoDbInvitationCode;
 import io.tech1.framework.b2b.mongodb.security.jwt.tests.TestsApplicationRepositoriesRunner;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import io.tech1.framework.iam.domain.db.InvitationCode;
+import io.tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
-import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.b2b.mongodb.security.jwt.tests.random.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
+import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -34,7 +37,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
                 MongoInvitationCodesRepository.class
         }
 )
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {
+        DataSourceAutoConfiguration.class,
+        DataSourceTransactionManagerAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class
+})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MongoInvitationCodesRepositoryIT extends TestsApplicationRepositoriesRunner {
 

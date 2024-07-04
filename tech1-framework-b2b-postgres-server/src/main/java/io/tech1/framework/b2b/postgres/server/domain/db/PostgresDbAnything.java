@@ -1,6 +1,6 @@
 package io.tech1.framework.b2b.postgres.server.domain.db;
 
-import io.tech1.framework.b2b.postgres.security.jwt.converters.columns.PostgresUsernameConverter;
+import io.tech1.framework.iam.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.foundation.domain.base.Username;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;

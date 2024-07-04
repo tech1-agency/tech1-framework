@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.startup;
 
-import io.tech1.framework.iam.essense.AbstractEssenceConstructor;
+import io.tech1.framework.iam.essence.AbstractEssenceConstructor;
 import io.tech1.framework.foundation.domain.properties.base.Authority;
 import io.tech1.framework.foundation.domain.properties.base.DefaultUsers;
 import io.tech1.framework.foundation.domain.properties.base.InvitationCodes;
@@ -8,8 +8,6 @@ import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfig
 import io.tech1.framework.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import io.tech1.framework.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.iam.startup.BaseStartupEventListener;
-import io.tech1.framework.iam.startup.DefaultStartupEventListener;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

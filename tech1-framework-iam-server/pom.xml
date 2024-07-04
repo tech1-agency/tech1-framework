@@ -11,7 +11,7 @@
         <version>3.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tech1-framework-b2b-postgres-server</artifactId>
+    <artifactId>tech1-framework-iam-server</artifactId>
 
     <dependencies>
         <!-- Tech1: Framework -->

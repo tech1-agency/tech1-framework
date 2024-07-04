@@ -46,7 +46,7 @@
         <module>tech1-framework-iam</module>
         <!-- Servers -->
         <module>tech1-framework-b2b-mongodb-server</module>
-        <module>tech1-framework-b2b-postgres-server</module>
+        <module>tech1-framework-iam-server</module>
     </modules>
 
     <properties>

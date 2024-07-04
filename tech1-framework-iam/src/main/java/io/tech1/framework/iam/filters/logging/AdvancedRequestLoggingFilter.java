@@ -1,10 +1,9 @@
 package io.tech1.framework.iam.filters.logging;
 
-import io.tech1.framework.iam.utils.HttpRequestUtils;
-import io.tech1.framework.iam.utils.SecurityPrincipalUtils;
 import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.iam.utilities.HttpServletRequestUtility;
+import io.tech1.framework.iam.utils.HttpRequestUtils;
+import io.tech1.framework.iam.utils.SecurityPrincipalUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
+import static io.tech1.framework.iam.utilities.HttpServletRequestUtility.isMultipartRequest;
 
 @Slf4j
 @Component
@@ -35,7 +36,7 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
             @NotNull HttpServletResponse response,
             @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
-        if (HttpServletRequestUtility.isMultipartRequest(request)) {
+        if (isMultipartRequest(request)) {
             filterChain.doFilter(request, response);
         } else {
             var cachedRequest = new CachedBodyHttpServletRequest(request);

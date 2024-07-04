@@ -1,5 +1,11 @@
 package io.tech1.framework.iam.services.abstracts;
 
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.tuples.Tuple3;
+import io.tech1.framework.foundation.domain.tuples.TupleToggle;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.iam.domain.events.EventSessionUserRequestMetadataRenew;
@@ -14,17 +20,11 @@ import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.repositories.UsersSessionsRepository;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.foundation.domain.tuples.Tuple3;
-import io.tech1.framework.foundation.domain.tuples.TupleToggle;
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +34,8 @@ import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessa
 import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.isPast;
+import static io.tech1.framework.iam.domain.db.UserSession.ofNotPersisted;
+import static io.tech1.framework.iam.domain.db.UserSession.ofPersisted;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {
@@ -63,7 +65,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
         var metadata = UserRequestMetadata.processing(clientIpAddr);
         var session = userSessionTP.value();
         if (userSessionTP.present()) {
-            session = UserSession.ofPersisted(
+            session = ofPersisted(
                     session.id(),
                     session.createdAt(),
                     session.updatedAt(),
@@ -75,7 +77,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
                     session.metadataRenewManually()
             );
         } else {
-            session = UserSession.ofNotPersisted(username, accessToken, refreshToken, metadata);
+            session = ofNotPersisted(username, accessToken, refreshToken, metadata);
         }
         session = this.usersSessionsRepository.saveAs(session);
         this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
@@ -94,7 +96,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public void refresh(JwtUser user, UserSession oldSession, JwtAccessToken newAccessToken, JwtRefreshToken newRefreshToken, HttpServletRequest httpServletRequest) {
         var username = user.username();
-        var newSession = this.usersSessionsRepository.saveAs(UserSession.ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
+        var newSession = this.usersSessionsRepository.saveAs(ofNotPersisted(username, newAccessToken, newRefreshToken, oldSession.metadata()));
         this.usersSessionsRepository.delete(oldSession.id());
         this.securityJwtPublisher.publishSessionUserRequestMetadataAdd(
                 new EventSessionUserRequestMetadataAdd(
@@ -122,7 +124,7 @@ public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessi
     @Override
     public UserSession saveUserRequestMetadata(FunctionSessionUserRequestMetadataSave saveFunction) {
         var session = saveFunction.session();
-        var sessionProcessedMetadata = UserSession.ofPersisted(
+        var sessionProcessedMetadata = ofPersisted(
                 session.id(),
                 session.createdAt(),
                 getCurrentTimestamp(),

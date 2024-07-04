@@ -1,15 +1,16 @@
 package io.tech1.framework.iam.utils.impl;
 
-import io.tech1.framework.iam.utils.HttpRequestUtils;
 import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.iam.utilities.HttpServletRequestUtility;
+import io.tech1.framework.iam.utils.HttpRequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import static io.tech1.framework.iam.utilities.HttpServletRequestUtility.isPOST;
 
 @Slf4j
 @Component
@@ -42,12 +43,12 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
 
     @Override
     public boolean isAuthenticationLoginEndpoint(HttpServletRequest request) {
-        return HttpServletRequestUtility.isPOST(request) && this.isEndpoint(request, "/authentication/login");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/login");
     }
 
     @Override
     public boolean isAuthenticationRefreshTokenEndpoint(HttpServletRequest request) {
-        return HttpServletRequestUtility.isPOST(request) && this.isEndpoint(request, "/authentication/refreshToken");
+        return isPOST(request) && this.isEndpoint(request, "/authentication/refreshToken");
     }
 
     // =================================================================================================================

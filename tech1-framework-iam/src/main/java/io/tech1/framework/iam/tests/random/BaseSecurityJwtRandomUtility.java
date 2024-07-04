@@ -4,13 +4,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.properties.base.TimeAmount;
-import io.tech1.framework.iam.domain.jwt.JwtTokenValidatedClaims;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import static io.tech1.framework.iam.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -24,7 +24,7 @@ public class BaseSecurityJwtRandomUtility {
         claims.subject(Username.testsHardcoded().value());
         var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
-        claims.issuedAt(JwtTokenValidatedClaims.getIssuedAt());
+        claims.issuedAt(getIssuedAt());
         claims.expiration(expiration);
         claims.add("authorities", getSimpleGrantedAuthorities("admin", "user"));
         return claims.build();

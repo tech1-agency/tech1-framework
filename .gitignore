@@ -19,10 +19,10 @@ logs/
 .scannerwork
 
 # GEO database: java
-tech1-framework-b2b-mongodb-server/src/main/resources/GeoLite2-City.mmdb
-tech1-framework-b2b-postgres-server/src/main/resources/GeoLite2-City.mmdb
+tech1-framework-iam-server/src/main/resources/GeoLite2-City.mmdb
 
 # GEO database: docker
+docker/GeoLite2-City.mmdb
 docker/b2b-mongo-server/GeoLite2-City.mmdb
 docker/b2b-postgres-server/GeoLite2-City.mmdb
 

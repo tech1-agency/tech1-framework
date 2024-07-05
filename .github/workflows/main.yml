@@ -36,8 +36,7 @@ jobs:
 
       - name: Maven [build]
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'false'
-#        run: mvn clean install
-        run: mvn clean install -DskipTests
+        run: mvn clean install
 
       - name: Maven [github packages]
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'true'

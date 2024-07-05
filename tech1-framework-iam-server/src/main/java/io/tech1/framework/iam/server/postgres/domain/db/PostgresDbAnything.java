@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.server.postgres.domain.db;
 
-import io.tech1.framework.iam.converters.columns.PostgresUsernameConverter;
+import io.tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.iam.server.postgres.constants.TablesConstants;
 import jakarta.persistence.*;

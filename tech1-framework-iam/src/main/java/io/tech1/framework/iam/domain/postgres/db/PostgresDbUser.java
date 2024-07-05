@@ -2,6 +2,7 @@ package io.tech1.framework.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.tech1.framework.foundation.domain.converters.columns.*;
 import io.tech1.framework.iam.converters.columns.*;
 import io.tech1.framework.iam.domain.identifiers.UserId;
 import io.tech1.framework.iam.domain.jwt.JwtUser;

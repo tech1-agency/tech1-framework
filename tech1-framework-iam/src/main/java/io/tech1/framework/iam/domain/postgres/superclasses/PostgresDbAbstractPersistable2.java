@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.domain.postgres.superclasses;
 
-import io.tech1.framework.iam.converters.columns.PostgresUsernameConverter;
+import io.tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.foundation.domain.base.Username;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

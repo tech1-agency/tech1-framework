@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.converters.columns;
+package io.tech1.framework.foundation.domain.converters.columns;
 
 import io.tech1.framework.foundation.domain.base.Password;
 

@@ -10,7 +10,7 @@ import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.converters.columns.PostgresJwtAccessTokenConverter;
 import io.tech1.framework.iam.converters.columns.PostgresJwtRefreshTokenConverter;
 import io.tech1.framework.iam.converters.columns.PostgresUserRequestMetadataConverter;
-import io.tech1.framework.iam.converters.columns.PostgresUsernameConverter;
+import io.tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable1;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;

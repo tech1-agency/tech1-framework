@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.converters.columns;
+package io.tech1.framework.foundation.domain.converters.columns;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

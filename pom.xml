@@ -57,6 +57,7 @@
         <!-- iam module, mongo integration tests -->
         <argLine>--add-opens java.base/java.time=ALL-UNNAMED</argLine>
         <!-- dependencies, scope == compile -->
+        <version.dependency.jakarta.persistence>3.1.0</version.dependency.jakarta.persistence>
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
         <version.dependency.browscap>1.4.0</version.dependency.browscap>
         <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
@@ -121,6 +122,18 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
+            </dependency>
+            <!-- Postgres Converters (matches version in Spring Data JPA) -->
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${version.dependency.jakarta.persistence}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- PostgreSQL Types -->
             <dependency>

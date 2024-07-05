@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.converters.columns;
+package io.tech1.framework.foundation.domain.converters.columns;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

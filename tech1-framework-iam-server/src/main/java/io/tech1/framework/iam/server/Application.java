@@ -1,6 +1,5 @@
 package io.tech1.framework.iam.server;
 
-import io.tech1.framework.iam.server.properties.ApplicationProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +12,6 @@ import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
 @Slf4j
 @SpringBootApplication
 @EnableConfigurationProperties({
-        ApplicationProperties.class,
         ApplicationFrameworkProperties.class
 })
 public class Application {

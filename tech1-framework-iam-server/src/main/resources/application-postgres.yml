@@ -1,0 +1,18 @@
+# Spring PostgreSQL
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: none
+  liquibase:
+    change-log: classpath:postgres/changelog.yml
+
+# Tech1 Framework
+tech1:
+  server-configs:
+    name: tech1-framework-b2b-postgres-server
+  security-jwt-configs:
+    authorities-configs:
+      package-name: io.tech1.framework.iam.server.postgres

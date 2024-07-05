@@ -1,15 +1,12 @@
 package io.tech1.framework.iam.essence;
 
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
 import io.tech1.framework.iam.domain.mongo.MongoDbInvitationCode;
 import io.tech1.framework.iam.domain.mongo.MongoDbUser;
 import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
-import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
@@ -17,16 +14,12 @@ import java.util.stream.IntStream;
 
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-@Slf4j
-@Service
 public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
     protected final MongoInvitationCodesRepository mongoInvitationCodesRepository;
     protected final MongoUsersRepository mongoUsersRepository;
 
-    @Autowired
     public MongoBaseEssenceConstructor(
             MongoInvitationCodesRepository invitationCodesRepository,
             MongoUsersRepository usersRepository,

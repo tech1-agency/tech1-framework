@@ -1,0 +1,8 @@
+# Spring PostgreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tech1_b2b_postgres_server
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true

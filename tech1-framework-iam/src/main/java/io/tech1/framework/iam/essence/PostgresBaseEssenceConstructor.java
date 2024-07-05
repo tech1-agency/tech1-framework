@@ -1,15 +1,12 @@
 package io.tech1.framework.iam.essence;
 
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbInvitationCode;
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbUser;
 import io.tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
-import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
@@ -17,15 +14,12 @@ import java.util.stream.IntStream;
 
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
-@Slf4j
-@Service
 public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
     protected final PostgresInvitationCodesRepository postgresInvitationCodesRepository;
     protected final PostgresUsersRepository postgresUsersRepository;
 
-    @Autowired
     public PostgresBaseEssenceConstructor(
             PostgresInvitationCodesRepository invitationCodesRepository,
             PostgresUsersRepository usersRepository,

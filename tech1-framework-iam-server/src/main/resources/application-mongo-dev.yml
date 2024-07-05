@@ -1,0 +1,7 @@
+# Tech1 Framework
+tech1:
+  mongodb-security-jwt-configs:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: tech1_b2b_mongodb_server

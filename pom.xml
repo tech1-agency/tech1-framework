@@ -45,7 +45,6 @@
         <module>tech1-framework-foundation</module>
         <module>tech1-framework-iam</module>
         <!-- Servers -->
-        <module>tech1-framework-b2b-mongodb-server</module>
         <module>tech1-framework-iam-server</module>
     </modules>
 

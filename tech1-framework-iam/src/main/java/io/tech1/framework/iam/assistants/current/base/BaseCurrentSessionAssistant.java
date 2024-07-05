@@ -1,5 +1,9 @@
 package io.tech1.framework.iam.assistants.current.base;
 
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.iam.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -11,23 +15,16 @@ import io.tech1.framework.iam.repositories.UsersSessionsRepository;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import io.tech1.framework.iam.utils.SecurityPrincipalUtils;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {

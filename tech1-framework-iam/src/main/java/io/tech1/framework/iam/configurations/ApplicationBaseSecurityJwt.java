@@ -1,17 +1,13 @@
 package io.tech1.framework.iam.configurations;
 
-import io.tech1.framework.iam.filters.jwt.JwtTokensFilter;
-import io.tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
-import io.tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
-import io.tech1.framework.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
-import io.tech1.framework.foundation.configurations.ApplicationJasypt;
-import io.tech1.framework.foundation.configurations.ApplicationSpringBootServer;
+import io.tech1.framework.foundation.configurations.*;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.constants.SwaggerConstants;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.configurations.ApplicationEmails;
-import io.tech1.framework.foundation.configurations.ApplicationIncidents;
-import io.tech1.framework.foundation.configurations.ApplicationUserMetadata;
+import io.tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
+import io.tech1.framework.iam.filters.jwt.JwtTokensFilter;
+import io.tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
+import io.tech1.framework.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +34,15 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
+        "io.tech1.framework.iam.assistants.current",
         "io.tech1.framework.iam.crons",
         "io.tech1.framework.iam.events",
         "io.tech1.framework.iam.handlers.exceptions",
         "io.tech1.framework.iam.resources",
-        "io.tech1.framework.iam.services",
+        "io.tech1.framework.iam.services.impl",
         "io.tech1.framework.iam.tokens",
         "io.tech1.framework.iam.utils",
-        "io.tech1.framework.iam.validators"
+        "io.tech1.framework.iam.validators.base"
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity

@@ -4,10 +4,12 @@ import io.tech1.framework.foundation.domain.http.requests.IPAddress;
 import lombok.experimental.UtilityClass;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.jetbrains.annotations.NotNull;
 
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static io.tech1.framework.foundation.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @UtilityClass
 public class HttpServletRequestUtility {
@@ -48,5 +50,18 @@ public class HttpServletRequestUtility {
             ip = request.getRemoteAddr();
         }
         return new IPAddress(ip);
+    }
+
+    public static boolean isPOST(@NotNull HttpServletRequest request) {
+        return "POST".equalsIgnoreCase(request.getMethod());
+    }
+
+    public static boolean isPUT(@NotNull HttpServletRequest request) {
+        return "PUT".equalsIgnoreCase(request.getMethod());
+    }
+
+    public static boolean isMultipartRequest(@NotNull HttpServletRequest request) {
+        var contentType = request.getContentType();
+        return nonNull(contentType) && contentType.startsWith("multipart/") && (isPOST(request) || isPUT(request));
     }
 }

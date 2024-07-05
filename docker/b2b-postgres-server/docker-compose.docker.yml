@@ -1,6 +1,6 @@
 services:
   t1f-b2b-postgres-server:
-    image: ghcr.io/tech1-io/tech1-framework-b2b-postgres-server:3.0.1
+    image: ghcr.io/tech1-io/tech1-framework-iam-server:3.0.2
     restart: unless-stopped
     container_name: t1f-b2b-postgres-server
     networks:
@@ -14,7 +14,8 @@ services:
       - t1f-b2b-postgres
     environment:
       - PORT=3002
-      - CONFIG_LOCATIONS=classpath:application.yml,file:/application-docker.yml
+      - SPRING_BOOT_PROFILE=postgres
+      - CONFIG_LOCATIONS=classpath:application.yml,classpath:application-dev.yml,classpath:application-postgres.yml,file:/application-docker.yml
       - JASYPT_PASSWORD=JJEPTECH1
       - JVM_ARGUMENTS=-Xmx5g --add-opens=java.base/java.time=ALL-UNNAMED
     volumes:

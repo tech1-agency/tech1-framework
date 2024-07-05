@@ -43,13 +43,9 @@
     <modules>
         <!-- JARs -->
         <module>tech1-framework-foundation</module>
-        <module>tech1-framework-b2b-base-security-jwt</module>
-        <module>tech1-framework-b2b-base-security-jwt-websockets</module>
-        <module>tech1-framework-b2b-mongodb-security-jwt</module>
-        <module>tech1-framework-b2b-postgres-security-jwt</module>
+        <module>tech1-framework-iam</module>
         <!-- Servers -->
-        <module>tech1-framework-b2b-mongodb-server</module>
-        <module>tech1-framework-b2b-postgres-server</module>
+        <module>tech1-framework-iam-server</module>
     </modules>
 
     <properties>
@@ -58,7 +54,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.delombok.output>${project.build.directory}/delombok</project.delombok.output>
+        <!-- iam module, mongo integration tests -->
+        <argLine>--add-opens java.base/java.time=ALL-UNNAMED</argLine>
         <!-- dependencies, scope == compile -->
+        <version.dependency.jakarta.persistence>3.1.0</version.dependency.jakarta.persistence>
         <version.dependency.apache.collections>4.4</version.dependency.apache.collections>
         <version.dependency.browscap>1.4.0</version.dependency.browscap>
         <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
@@ -123,6 +122,18 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${version.dependency.jsonwebtoken}</version>
+            </dependency>
+            <!-- Postgres Converters (matches version in Spring Data JPA) -->
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${version.dependency.jakarta.persistence}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- PostgreSQL Types -->
             <dependency>

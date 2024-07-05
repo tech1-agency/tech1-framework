@@ -7,6 +7,8 @@ import io.tech1.framework.foundation.services.hardware.publishers.impl.HardwareM
 import io.tech1.framework.foundation.services.hardware.resources.HardwareMonitoringResource;
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.foundation.services.hardware.store.impl.HardwareMonitoringStoreImpl;
+import io.tech1.framework.foundation.services.hardware.subscribers.HardwareMonitoringSubscriber;
+import io.tech1.framework.foundation.services.hardware.subscribers.impl.BaseHardwareMonitoringSubscriber;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,13 @@ public class ApplicationHardwareMonitoring {
     HardwareMonitoringPublisher hardwareMonitoringPublisher() {
         return new HardwareMonitoringPublisherImpl(
                 this.applicationEventPublisher
+        );
+    }
+
+    @Bean
+    HardwareMonitoringSubscriber hardwareMonitoringSubscriber() {
+        return new BaseHardwareMonitoringSubscriber(
+                this.hardwareMonitoringStore()
         );
     }
 

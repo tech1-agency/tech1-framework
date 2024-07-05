@@ -1,0 +1,36 @@
+services:
+  t1f-iam-server:
+    image: ghcr.io/tech1-io/tech1-framework-iam-server:3.0.2-SNAPSHOT
+    restart: unless-stopped
+    container_name: t1f-iam-server
+    networks:
+      - t1f-network
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - SPRING_BOOT_PROFILE=mongodb
+      - CONFIG_LOCATIONS=classpath:application.yml,classpath:application-dev.yml,classpath:application-mongo.yml,file:/application-docker-mongodb.yml
+      - JASYPT_PASSWORD=JJEPTECH1
+      - JVM_ARGUMENTS=-Xmx5g --add-opens=java.base/java.time=ALL-UNNAMED
+    volumes:
+      - ./application-docker-mongodb.yml:/application-docker-mongodb.yml
+
+  t1f-iam-mongodb:
+    image: mongo:6.0.15
+    restart: always
+    container_name: t1f-iam-mongodb
+    ports:
+      - "3004:27017"
+    networks:
+      - t1f-network
+    volumes:
+      - t1f-iam-mongodb-data:/data/db
+
+networks:
+  t1f-network:
+    name: t1f-network
+    driver: bridge
+
+volumes:
+  t1f-iam-mongodb-data:

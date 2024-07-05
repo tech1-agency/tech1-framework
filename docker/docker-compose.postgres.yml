@@ -2,7 +2,7 @@ services:
   t1f-iam-server:
     image: ghcr.io/tech1-io/tech1-framework-iam-server:3.0.2-SNAPSHOT
     restart: unless-stopped
-    container_name: t1f-b2b-postgres-server
+    container_name: t1f-iam-server
     networks:
       - t1f-network
     ports:

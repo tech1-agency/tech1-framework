@@ -44,7 +44,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
 @Configuration
 @Import({
-        ApplicationBaseSecurityJwt.class,
+        ApplicationBaseSecurityJwt.class
 })
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

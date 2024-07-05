@@ -12,4 +12,4 @@ spring:
 # Tech1 Framework
 tech1:
   server-configs:
-    name: tech1-framework-b2b-postgres-server
+    name: tech1-framework-iam-server-postgres

@@ -1,14 +1,5 @@
 package io.tech1.framework.iam.events.subscribers.base;
 
-import io.tech1.framework.iam.domain.db.UserSession;
-import io.tech1.framework.iam.domain.events.*;
-import io.tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import io.tech1.framework.iam.domain.functions.FunctionSessionRefreshedEmail;
-import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
-import io.tech1.framework.iam.events.subscribers.SecurityJwtSubscriber;
-import io.tech1.framework.iam.events.subscribers.base.BaseSecurityJwtSubscriber;
-import io.tech1.framework.iam.services.BaseUsersSessionsService;
-import io.tech1.framework.iam.services.UsersEmailsService;
 import io.tech1.framework.foundation.domain.base.Email;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
@@ -20,6 +11,14 @@ import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuth
 import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import io.tech1.framework.iam.domain.db.UserSession;
+import io.tech1.framework.iam.domain.events.*;
+import io.tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
+import io.tech1.framework.iam.domain.functions.FunctionSessionRefreshedEmail;
+import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
+import io.tech1.framework.iam.events.subscribers.SecurityJwtSubscriber;
+import io.tech1.framework.iam.services.BaseUsersSessionsService;
+import io.tech1.framework.iam.services.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

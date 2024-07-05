@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.mongo.repositories;
 
 import io.tech1.framework.iam.configurations.ApplicationMongoRepositories;
-import io.tech1.framework.iam.domain.mongo.MongoDbUserSession;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersSessionsRepository;
+import io.tech1.framework.iam.domain.mongodb.MongoDbUserSession;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import io.tech1.framework.iam.domain.db.UserSession;
@@ -22,11 +22,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.iam.tests.converters.mongo.MongoUserConverter.toAccessTokensAsStrings2;
-import static io.tech1.framework.iam.tests.converters.mongo.MongoUserConverter.toUsernamesAsStrings2;
-import static io.tech1.framework.iam.tests.converters.mongo.MongoUserSessionConverter.toMetadataRenewCron;
-import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
-import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyUserSessionsData2;
+import static io.tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toAccessTokensAsStrings2;
+import static io.tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings2;
+import static io.tech1.framework.iam.tests.converters.mongodb.MongoUserSessionConverter.toMetadataRenewCron;
+import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
+import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyUserSessionsData2;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.iam.domain.jwt.JwtAccessToken.accessTokens;

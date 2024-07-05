@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.mongo.repositories;
 
 import io.tech1.framework.iam.configurations.ApplicationMongoRepositories;
-import io.tech1.framework.iam.domain.mongo.MongoDbInvitationCode;
-import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
+import io.tech1.framework.iam.domain.mongodb.MongoDbInvitationCode;
+import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.tuples.TuplePresence;
 import io.tech1.framework.iam.domain.db.InvitationCode;
@@ -18,8 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
-import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
+import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
+import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;

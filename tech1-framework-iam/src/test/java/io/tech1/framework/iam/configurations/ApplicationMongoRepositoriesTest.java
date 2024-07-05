@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.configurations;
 
-import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersSessionsRepository;
+import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;

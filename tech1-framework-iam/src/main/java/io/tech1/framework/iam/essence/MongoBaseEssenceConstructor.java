@@ -2,10 +2,10 @@ package io.tech1.framework.iam.essence;
 
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
-import io.tech1.framework.iam.domain.mongo.MongoDbInvitationCode;
-import io.tech1.framework.iam.domain.mongo.MongoDbUser;
-import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
+import io.tech1.framework.iam.domain.mongodb.MongoDbInvitationCode;
+import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
+import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;

@@ -6,10 +6,10 @@ import io.tech1.framework.iam.assistants.userdetails.MongoUserDetailsAssistant;
 import io.tech1.framework.iam.essence.MongoBaseEssenceConstructor;
 import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
-import io.tech1.framework.iam.repositories.mongo.MongoInvitationCodesRepository;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersSessionsRepository;
-import io.tech1.framework.iam.services.mongo.MongoBaseUsersSessionsService;
+import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import io.tech1.framework.iam.services.mongodb.MongoBaseUsersSessionsService;
 import io.tech1.framework.iam.sessions.MongoSessionRegistry;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +24,8 @@ import org.springframework.context.annotation.Import;
         ApplicationMongoRepositories.class
 })
 @ComponentScan({
-        "io.tech1.framework.iam.services.mongo",
-        "io.tech1.framework.iam.validators.mongo",
+        "io.tech1.framework.iam.services.mongodb",
+        "io.tech1.framework.iam.validators.mongodb",
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationMongo {

@@ -1,13 +1,12 @@
 package io.tech1.framework.iam.events.subscribers.impl;
 
-import io.tech1.framework.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import io.tech1.framework.foundation.incidents.domain.authetication.*;
 import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
-import io.tech1.framework.iam.events.subscribers.impl.SecurityJwtIncidentSubscriberImpl;
+import io.tech1.framework.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

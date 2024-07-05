@@ -1,10 +1,9 @@
 package io.tech1.framework.iam.server.mongodb.resources;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.tech1.framework.iam.domain.mongo.MongoDbUser;
+import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
 import io.tech1.framework.iam.server.mongodb.services.UsersService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.mongo.repositories;
 
 import io.tech1.framework.iam.configurations.ApplicationMongoRepositories;
-import io.tech1.framework.iam.domain.mongo.MongoDbUser;
-import io.tech1.framework.iam.repositories.mongo.MongoUsersRepository;
+import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
+import io.tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
 import io.tech1.framework.foundation.domain.base.Email;
 import io.tech1.framework.foundation.domain.base.Password;
 import io.tech1.framework.foundation.domain.base.Username;
@@ -25,8 +25,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.iam.tests.converters.mongo.MongoUserConverter.toUsernamesAsStrings1;
-import static io.tech1.framework.iam.tests.random.mongo.MongoSecurityJwtDbDummies.dummyUsersData1;
+import static io.tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings1;
+import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyUsersData1;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;

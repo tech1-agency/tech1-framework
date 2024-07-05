@@ -2,6 +2,3 @@
 tech1:
   server-configs:
     name: tech1-framework-b2b-mongodb-server
-  security-jwt-configs:
-    authorities-configs:
-      package-name: io.tech1.framework.iam.server.mongodb

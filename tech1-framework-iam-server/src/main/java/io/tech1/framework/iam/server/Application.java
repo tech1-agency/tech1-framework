@@ -1,8 +1,6 @@
 package io.tech1.framework.iam.server;
 
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.iam.server.configurations.ApplicationMongoServer;
-import io.tech1.framework.iam.server.configurations.ApplicationPostgresServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,9 +10,9 @@ import static io.tech1.framework.foundation.domain.constants.LogsConstants.SERVE
 import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
-@SpringBootApplication(scanBasePackageClasses = {
-        ApplicationMongoServer.class,
-        ApplicationPostgresServer.class
+@SpringBootApplication(scanBasePackages = {
+        "io.tech1.framework.iam.server.base",
+        "io.tech1.framework.iam.server.configurations"
 })
 @EnableConfigurationProperties({
         ApplicationFrameworkProperties.class

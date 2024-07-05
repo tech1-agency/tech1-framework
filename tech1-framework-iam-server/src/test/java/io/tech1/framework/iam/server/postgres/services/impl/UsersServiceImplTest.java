@@ -2,8 +2,7 @@ package io.tech1.framework.iam.server.postgres.services.impl;
 
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbUser;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
-import io.tech1.framework.iam.server.postgres.services.UsersService;
-import io.tech1.framework.iam.server.postgres.services.impl.UsersServiceImpl;
+import io.tech1.framework.iam.server.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,8 +61,9 @@ class UsersServiceImplTest {
     @Test
     void findAll() {
         // Act
-        var expected = list345(PostgresDbUser.class);
-        when(this.postgresUsersRepository.findAll()).thenReturn(expected);
+        var postgresDbUsers = list345(PostgresDbUser.class);
+        var expected = postgresDbUsers.stream().map(PostgresDbUser::asJwtUser).toList();
+        when(this.postgresUsersRepository.findAll()).thenReturn(postgresDbUsers);
 
         // Act
         var actual = this.componentUnderTest.findAll();

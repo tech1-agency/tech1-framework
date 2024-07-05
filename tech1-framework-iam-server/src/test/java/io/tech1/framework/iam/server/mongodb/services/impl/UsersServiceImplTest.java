@@ -2,7 +2,7 @@ package io.tech1.framework.iam.server.mongodb.services.impl;
 
 import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
 import io.tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
-import io.tech1.framework.iam.server.mongodb.services.UsersService;
+import io.tech1.framework.iam.server.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,8 +61,9 @@ class UsersServiceImplTest {
     @Test
     void findAll() {
         // Act
-        var expected = list345(MongoDbUser.class);
-        when(this.usersRepository.findAll()).thenReturn(expected);
+        var mongoDbUsers = list345(MongoDbUser.class);
+        var expected = mongoDbUsers.stream().map(MongoDbUser::asJwtUser).toList();
+        when(this.usersRepository.findAll()).thenReturn(mongoDbUsers);
 
         // Act
         var actual = this.componentUnderTest.findAll();

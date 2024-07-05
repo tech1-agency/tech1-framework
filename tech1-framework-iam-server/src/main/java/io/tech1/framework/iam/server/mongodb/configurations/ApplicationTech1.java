@@ -4,7 +4,7 @@ import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
 import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.iam.configurations.ApplicationMongo;
-import io.tech1.framework.iam.server.mongodb.properties.ApplicationProperties;
+import io.tech1.framework.iam.server.base.properties.ApplicationProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,7 @@ import io.tech1.framework.foundation.domain.base.Username;
 import java.util.Comparator;
 
 import static io.tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
+import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 
@@ -33,6 +34,26 @@ public record ResponseInvitationCode(
                 value,
                 nonNull(invited) ? invited.value() : EMPTY,
                 nonNull(invited) ? "Used" : "Unused"
+        );
+    }
+
+    public static ResponseInvitationCode random(Username owner) {
+        return ResponseInvitationCode.of(
+                InvitationCodeId.random(),
+                owner,
+                "admin",
+                randomStringLetterOrNumbersOnly(40),
+                null
+        );
+    }
+
+    public static ResponseInvitationCode random(Username owner, Username invited) {
+        return ResponseInvitationCode.of(
+                InvitationCodeId.random(),
+                owner,
+                "admin",
+                randomStringLetterOrNumbersOnly(40),
+                invited
         );
     }
 }

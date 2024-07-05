@@ -7,7 +7,6 @@ import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import io.tech1.framework.iam.services.abstracts.AbstractBaseInvitationCodesService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.iam.tests.random.BaseSecurityJwtDbRandomUtility.getInvitationCode;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -79,12 +77,12 @@ class AbstractBaseInvitationCodesServiceTest {
         // Arrange
         var owner = Username.random();
 
-        var invitationCode1 = getInvitationCode(owner, Username.of("user2"));
-        var invitationCode2 = getInvitationCode(owner, Username.of("user1"));
-        var invitationCode3 = getInvitationCode(owner);
-        var invitationCode4 = getInvitationCode(owner);
-        var invitationCode5 = getInvitationCode(owner, Username.of("user5"));
-        var invitationCode6 = getInvitationCode(owner);
+        var invitationCode1 = ResponseInvitationCode.random(owner, Username.of("user2"));
+        var invitationCode2 = ResponseInvitationCode.random(owner, Username.of("user1"));
+        var invitationCode3 = ResponseInvitationCode.random(owner);
+        var invitationCode4 = ResponseInvitationCode.random(owner);
+        var invitationCode5 = ResponseInvitationCode.random(owner, Username.of("user5"));
+        var invitationCode6 = ResponseInvitationCode.random(owner);
 
         var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
         when(this.invitationCodesRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);

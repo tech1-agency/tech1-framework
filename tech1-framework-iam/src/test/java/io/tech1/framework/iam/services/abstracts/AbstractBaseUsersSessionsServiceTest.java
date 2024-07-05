@@ -1,5 +1,16 @@
 package io.tech1.framework.iam.services.abstracts;
 
+import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.enums.Status;
+import io.tech1.framework.foundation.domain.http.requests.IPAddress;
+import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants;
+import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import io.tech1.framework.foundation.domain.tuples.TupleToggle;
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.iam.domain.events.EventSessionUserRequestMetadataRenew;
@@ -11,20 +22,8 @@ import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.repositories.UsersSessionsRepository;
-import io.tech1.framework.iam.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.iam.utils.impl.SecurityJwtTokenUtilsImpl;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.enums.Status;
-import io.tech1.framework.foundation.domain.http.requests.IPAddress;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
-import io.tech1.framework.foundation.domain.tuples.TupleToggle;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -49,8 +48,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.iam.domain.db.UserSession.randomPersistedSession;
-import static io.tech1.framework.iam.tests.random.BaseSecurityJwtDbRandomUtility.session;
 import static io.tech1.framework.foundation.domain.constants.StringConstants.UNDEFINED;
 import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
@@ -59,6 +56,7 @@ import static io.tech1.framework.foundation.utilities.random.EntityUtility.entit
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomIPv4;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static io.tech1.framework.iam.domain.db.UserSession.randomPersistedSession;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
@@ -195,7 +193,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var username = user.username();
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
-        var userSession = session(username, accessToken, refreshToken);
+        var userSession = UserSession.random(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(userSession));
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
 
@@ -242,7 +240,7 @@ class AbstractBaseUsersSessionsServiceTest {
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(TuplePresence.absent());
-        var userSession = session(username, accessToken, refreshToken);
+        var userSession = UserSession.random(username, accessToken, refreshToken);
         when(this.usersSessionsRepository.saveAs(any(UserSession.class))).thenReturn(userSession);
 
         // Act
@@ -397,17 +395,17 @@ class AbstractBaseUsersSessionsServiceTest {
     void getExpiredSessionsTest() {
         // Arrange
         var usernames = new HashSet<>(Set.of(Username.testsHardcoded()));
-        var sessionInvalidUserSession = session(
+        var sessionInvalidUserSession = UserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),
                 new JwtRefreshToken("<invalid>")
         );
-        var sessionExpiredUserSession = session(
+        var sessionExpiredUserSession = UserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0NTk3LCJleHAiOjE2NDI3NzQ2Mjd9.KUkURlpCWsh0VJFC4xrCOxr_dXNusRRjdjFb88Wb4Rw")
         );
-        var sessionAliveUserSession = session(
+        var sessionAliveUserSession = UserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),
                 new JwtRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtdWx0aXVzZXI0MyIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9LHsiYXV0aG9yaXR5IjoidXNlciJ9XSwiaWF0IjoxNjQyNzc0Nzc4LCJleHAiOjQ3OTg0NDgzNzh9.06Ep_ri727dkMEVA3zptDb8tmFn1VJ1FIhjjbE-mxpw")

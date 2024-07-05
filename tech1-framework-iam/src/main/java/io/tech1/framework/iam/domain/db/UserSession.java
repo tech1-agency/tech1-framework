@@ -6,6 +6,7 @@ import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 
+import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
 import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
@@ -80,6 +81,36 @@ public record UserSession(
                 false,
                 false
         );
+    }
+
+    public static UserSession random(Username owner, JwtAccessToken accessToken, JwtRefreshToken refreshToken) {
+        return UserSession.ofPersisted(
+                UserSessionId.random(),
+                getCurrentTimestamp(),
+                getCurrentTimestamp(),
+                owner,
+                accessToken,
+                refreshToken,
+                UserRequestMetadata.random(),
+                false,
+                false
+        );
+    }
+
+    public static UserSession random(String owner, String accessToken, String refreshToken) {
+        return random(
+                Username.of(owner),
+                JwtAccessToken.of(accessToken),
+                JwtRefreshToken.of(refreshToken)
+        );
+    }
+
+    public static UserSession random(Username owner, String accessToken) {
+        return random(owner.value(), accessToken, entity(JwtRefreshToken.class).value());
+    }
+
+    public static UserSession random(String owner) {
+        return random(Username.of(owner), entity(JwtAccessToken.class).value());
     }
 
     public boolean isRenewRequired() {

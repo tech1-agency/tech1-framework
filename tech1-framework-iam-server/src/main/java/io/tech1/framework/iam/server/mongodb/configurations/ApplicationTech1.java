@@ -1,10 +1,6 @@
 package io.tech1.framework.iam.server.mongodb.configurations;
 
-import io.tech1.framework.foundation.configurations.ApplicationHardwareMonitoring;
 import io.tech1.framework.foundation.domain.base.PropertyId;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.foundation.services.hardware.subscribers.HardwareMonitoringSubscriber;
-import io.tech1.framework.foundation.services.hardware.subscribers.impl.BaseHardwareMonitoringSubscriber;
 import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
 import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwt;
 import io.tech1.framework.iam.configurations.ApplicationMongo;
@@ -17,7 +13,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -31,7 +26,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({
-        ApplicationHardwareMonitoring.class,
         ApplicationBaseSecurityJwt.class,
         ApplicationMongo.class
 })
@@ -46,8 +40,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigurer {
 
-    // Store
-    private final HardwareMonitoringStore hardwareMonitoringStore;
     // Properties
     private final ApplicationProperties applicationProperties;
 
@@ -69,10 +61,4 @@ public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigure
         );
     }
 
-    @Bean
-    HardwareMonitoringSubscriber hardwareMonitoringSubscriber() {
-        return new BaseHardwareMonitoringSubscriber(
-                this.hardwareMonitoringStore
-        );
-    }
 }

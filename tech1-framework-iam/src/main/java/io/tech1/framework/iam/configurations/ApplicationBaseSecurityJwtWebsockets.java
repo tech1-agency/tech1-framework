@@ -1,6 +1,5 @@
 package io.tech1.framework.iam.configurations;
 
-import io.tech1.framework.foundation.configurations.ApplicationHardwareMonitoring;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
@@ -45,7 +45,6 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @Configuration
 @Import({
         ApplicationBaseSecurityJwt.class,
-        ApplicationHardwareMonitoring.class
 })
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -85,6 +84,7 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
         );
     }
 
+    @Primary
     @Bean
     HardwareMonitoringSubscriberWebsockets hardwareMonitoringSubscriberWebsockets(
             HardwareMonitoringStore hardwareMonitoringStore,

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
+import static io.tech1.framework.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;

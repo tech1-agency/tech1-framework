@@ -18,12 +18,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import static io.tech1.framework.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;

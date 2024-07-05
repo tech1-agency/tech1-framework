@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static io.tech1.framework.iam.comparators.SecurityJwtSorts.INVITATION_CODES_UNUSED;
+import static io.tech1.framework.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
 import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
 import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;

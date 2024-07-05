@@ -10,6 +10,10 @@ import io.tech1.framework.foundation.domain.time.TimeAmount;
 import io.tech1.framework.foundation.domain.tuples.TupleExceptionDetails;
 import io.tech1.framework.foundation.utilities.time.TimestampUtility;
 
+import java.util.Comparator;
+
+import static java.util.Comparator.comparing;
+
 public record ResponseUserSession2(
         UserSessionId id,
         Username who,
@@ -24,6 +28,16 @@ public record ResponseUserSession2(
         String browser,
         String what
 ) {
+
+    public static final Comparator<ResponseUserSession2> USERS_SESSIONS = comparing(ResponseUserSession2::current).reversed()
+            .thenComparing(ResponseUserSession2::where);
+
+    public static final Comparator<ResponseUserSession2> ACTIVE_SESSIONS_AS_SUPERADMIN = comparing(ResponseUserSession2::current).reversed()
+            .thenComparing((ResponseUserSession2 session) -> session.who().value())
+            .thenComparing(ResponseUserSession2::where);
+
+    public static final Comparator<ResponseUserSession2> INACTIVE_SESSIONS_AS_SUPERADMIN = comparing((ResponseUserSession2 session) -> session.who().value())
+            .thenComparing(ResponseUserSession2::where);
 
     public static ResponseUserSession2 of(
             UserSessionId id,

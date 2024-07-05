@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
-import static io.tech1.framework.iam.comparators.SecurityJwtComparators.*;
+import static io.tech1.framework.iam.domain.dto.responses.ResponseUserSession2.*;
 
 @SuppressWarnings("JpaQlInspection")
 public interface PostgresUsersSessionsRepository extends JpaRepository<PostgresDbUserSession, String>, UsersSessionsRepository {

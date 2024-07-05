@@ -12,7 +12,9 @@ public class MongoBeforeAllCallback implements BeforeAllCallback {
     }
 
     private void setProperties(MongoContainerV506 container) {
-        System.setProperty("spring.data.mongodb.uri", container.getReplicaSetUrl());
+        System.setProperty("tech1.mongodbSecurityJwtConfigs.mongodb.host", container.getHost());
+        System.setProperty("tech1.mongodbSecurityJwtConfigs.mongodb.port", String.valueOf(container.getFirstMappedPort()));
+        System.setProperty("tech1.mongodbSecurityJwtConfigs.mongodb.database", "test");
     }
 
 }

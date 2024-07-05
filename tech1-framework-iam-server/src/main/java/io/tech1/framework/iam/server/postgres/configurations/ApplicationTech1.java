@@ -8,9 +8,6 @@ import io.tech1.framework.iam.server.postgres.properties.ApplicationProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +27,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 })
 @EnableConfigurationProperties({
         ApplicationProperties.class
-})
-@EnableAutoConfiguration(exclude = {
-        MongoAutoConfiguration.class,
-        MongoDataAutoConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationTech1 implements AbstractApplicationSecurityJwtConfigurer {

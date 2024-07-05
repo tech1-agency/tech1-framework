@@ -16,12 +16,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({
-        ApplicationPostgresRepositories.class
-})
 @ComponentScan({
         "io.tech1.framework.iam.services.postgres",
         "io.tech1.framework.iam.validators.postgres",
+})
+@Import({
+        ApplicationPostgresRepositories.class
 })
 public class ApplicationPostgres {
 

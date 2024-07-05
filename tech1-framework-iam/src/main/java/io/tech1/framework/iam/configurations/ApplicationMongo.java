@@ -20,12 +20,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({
-        ApplicationMongoRepositories.class
-})
 @ComponentScan({
         "io.tech1.framework.iam.services.mongodb",
         "io.tech1.framework.iam.validators.mongodb",
+})
+@Import({
+        ApplicationMongoRepositories.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationMongo {

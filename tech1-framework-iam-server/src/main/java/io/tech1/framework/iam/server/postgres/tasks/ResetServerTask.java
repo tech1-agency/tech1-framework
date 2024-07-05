@@ -6,11 +6,9 @@ import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.tasks.AbstractSuperAdminResetServerTask;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Getter
-@Profile("postgres")
 @Component
 public class ResetServerTask extends AbstractSuperAdminResetServerTask {
 

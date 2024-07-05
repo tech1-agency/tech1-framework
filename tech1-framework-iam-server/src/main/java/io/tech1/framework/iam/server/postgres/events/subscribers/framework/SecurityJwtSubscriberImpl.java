@@ -1,18 +1,16 @@
 package io.tech1.framework.iam.server.postgres.events.subscribers.framework;
 
+import io.tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.iam.events.subscribers.base.BaseSecurityJwtSubscriber;
-import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.services.UsersEmailsService;
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import io.tech1.framework.iam.services.postgres.PostgresBaseUsersSessionsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Profile("postgres")
 @Component
 public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
 
@@ -20,7 +18,7 @@ public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
     public SecurityJwtSubscriberImpl(
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
             UsersEmailsService usersEmailsService,
-            BaseUsersSessionsService baseUsersSessionsService,
+            PostgresBaseUsersSessionsService baseUsersSessionsService,
             UserMetadataUtils userMetadataUtils
     ) {
         super(

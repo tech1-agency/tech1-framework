@@ -5,7 +5,6 @@ import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
 import io.tech1.framework.iam.server.mongodb.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +14,6 @@ import java.util.List;
 // Swagger
 @Tag(name = "[tech1-mongodb-server] Users API")
 // Spring
-@Profile("mongodb")
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

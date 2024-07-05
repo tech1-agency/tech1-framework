@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PostgresServerConfigs extends AbstractPropertyConfigs {
+public class ServerConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String targetAttribute1;
     @MandatoryProperty

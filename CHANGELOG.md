@@ -1,2 +1,3 @@
 ### Changelog [v3.0.2]
-— TBD
+— Modification: iam and iam-server modules
+— Modification: GitHub action iam-server

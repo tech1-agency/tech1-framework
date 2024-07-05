@@ -9,10 +9,9 @@ on:
 env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_MONGODB_SERVER_IMAGE: tech1-io/tech1-framework-b2b-mongodb-server
-  DOCKER_POSTGRES_SERVER_IMAGE: tech1-io/tech1-framework-b2b-postgres-server
+  DOCKER_IAM_SERVER_IMAGE: tech1-io/tech1-framework-iam-server
   DOCKER_VERSION: '3.0.2-SNAPSHOT'
-  DOCKER_PUSH_ENABLED: 'false'
+  DOCKER_PUSH_ENABLED: 'true'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -50,19 +49,12 @@ jobs:
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: docker login ${{ env.DOCKER_REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker [mongodb]
+      - name: Docker [iam-server]
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: |
-          cd tech1-framework-b2b-mongodb-server
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_MONGODB_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
-          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_MONGODB_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
-
-      - name: Docker [postgres]
-        if: env.DOCKER_PUSH_ENABLED == 'true'
-        run: |
-          cd tech1-framework-b2b-postgres-server
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_POSTGRES_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
-          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_POSTGRES_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
+          cd tech1-framework-iam-server
+          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
+          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 
       - name: Tech1 mails@v2 outputs
         if: always()

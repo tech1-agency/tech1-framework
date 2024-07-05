@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.iam.utilities.HttpServletRequestUtility.isPOST;
+import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 
 @Slf4j
 @Component

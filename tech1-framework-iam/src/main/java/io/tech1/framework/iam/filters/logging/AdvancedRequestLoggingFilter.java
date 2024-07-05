@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static io.tech1.framework.iam.utilities.HttpServletRequestUtility.isMultipartRequest;
+import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isMultipartRequest;
 
 @Slf4j
 @Component

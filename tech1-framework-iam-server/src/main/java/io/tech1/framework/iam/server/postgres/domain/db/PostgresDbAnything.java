@@ -1,8 +1,7 @@
 package io.tech1.framework.iam.server.postgres.domain.db;
 
-import io.tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.iam.server.postgres.constants.TablesConstants;
+import io.tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static io.tech1.framework.iam.server.postgres.constants.TablesConstants.ANYTHING;
 
 // Lombok
 @NoArgsConstructor
@@ -18,7 +18,7 @@ import static io.tech1.framework.foundation.utilities.random.RandomUtility.rando
 @ToString
 // JPA
 @Entity
-@Table(name = TablesConstants.ANYTHING)
+@Table(name = ANYTHING)
 public class PostgresDbAnything {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

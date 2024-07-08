@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.services.impl;
+package io.tech1.framework.iam.services.base;
 
 import io.tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.iam.domain.dto.responses.ResponseRefreshTokens;
@@ -6,7 +6,6 @@ import io.tech1.framework.iam.domain.jwt.*;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.services.TokensContextThrowerService;
 import io.tech1.framework.iam.services.TokensService;
-import io.tech1.framework.iam.services.impl.TokensServiceImpl;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
@@ -37,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TokensServiceImplTest {
+class BaseTokensServiceTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -74,7 +73,7 @@ class TokensServiceImplTest {
 
         @Bean
         TokensService tokenService() {
-            return new TokensServiceImpl(
+            return new BaseTokensService(
                     this.jwtUserDetailsAssistant(),
                     this.sessionRegistry(),
                     this.tokenContextThrowerService(),

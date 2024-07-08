@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.services.impl;
+package io.tech1.framework.iam.services.base;
 
 import io.tech1.framework.iam.domain.enums.AccountAccessMethod;
 import io.tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
@@ -23,7 +23,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UsersEmailsServiceImpl implements UsersEmailsService {
+public class BaseUsersEmailsService implements UsersEmailsService {
 
     // Services
     private final EmailService emailService;

@@ -34,12 +34,11 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.iam.assistants.current",
         "io.tech1.framework.iam.crons",
         "io.tech1.framework.iam.events",
         "io.tech1.framework.iam.handlers.exceptions",
         "io.tech1.framework.iam.resources",
-        "io.tech1.framework.iam.services.impl",
+        "io.tech1.framework.iam.services.base",
         "io.tech1.framework.iam.tokens",
         "io.tech1.framework.iam.utils",
         "io.tech1.framework.iam.validators.base"

@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.iam.filters.jwt_extension",
+        "io.tech1.framework.iam.assistants.current.base"
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({

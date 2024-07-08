@@ -2,6 +2,7 @@
 
 PREFIX="[NextSnapshot]"
 GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
+CHANGELOG_PATH="CHANGELOG.md"
 
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"

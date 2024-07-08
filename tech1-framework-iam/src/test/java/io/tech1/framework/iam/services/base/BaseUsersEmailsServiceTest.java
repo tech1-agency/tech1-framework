@@ -1,10 +1,9 @@
-package io.tech1.framework.iam.services.impl;
+package io.tech1.framework.iam.services.base;
 
 import io.tech1.framework.iam.domain.enums.AccountAccessMethod;
 import io.tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import io.tech1.framework.iam.domain.functions.FunctionSessionRefreshedEmail;
 import io.tech1.framework.iam.services.UsersEmailsService;
-import io.tech1.framework.iam.services.impl.UsersEmailsServiceImpl;
 import io.tech1.framework.iam.utils.UserEmailUtils;
 import io.tech1.framework.foundation.domain.base.Email;
 import io.tech1.framework.foundation.domain.base.Username;
@@ -35,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UsersEmailsServiceImplTest {
+class BaseUsersEmailsServiceTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -57,7 +56,7 @@ class UsersEmailsServiceImplTest {
 
         @Bean
         public UsersEmailsService userEmailService() {
-            return new UsersEmailsServiceImpl(
+            return new BaseUsersEmailsService(
                     this.emailService(),
                     this.userEmailUtility(),
                     this.applicationFrameworkProperties()

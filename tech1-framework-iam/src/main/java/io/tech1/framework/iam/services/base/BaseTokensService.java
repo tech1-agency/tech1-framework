@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.services.impl;
+package io.tech1.framework.iam.services.base;
 
 import io.tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
 import io.tech1.framework.iam.domain.dto.responses.ResponseRefreshTokens;
@@ -20,11 +20,10 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokensServiceImpl implements TokensService {
+public class BaseTokensService implements TokensService {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;

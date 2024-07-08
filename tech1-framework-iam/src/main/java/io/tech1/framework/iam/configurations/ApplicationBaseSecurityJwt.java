@@ -34,7 +34,6 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.iam.assistants.current",
         "io.tech1.framework.iam.crons",
         "io.tech1.framework.iam.events",
         "io.tech1.framework.iam.handlers.exceptions",

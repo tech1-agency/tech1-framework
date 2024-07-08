@@ -4,11 +4,14 @@ import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMon
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.foundation.services.hardware.subscribers.impl.BaseHardwareMonitoringSubscriber;
+import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
 import io.tech1.framework.iam.tasks.HardwareBackPressureTimerTask;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Primary
+@ConditionalOnBean(ApplicationBaseSecurityJwtWebsockets.class)
 @Component
 public class HardwareMonitoringSubscriberWebsockets extends BaseHardwareMonitoringSubscriber {
 

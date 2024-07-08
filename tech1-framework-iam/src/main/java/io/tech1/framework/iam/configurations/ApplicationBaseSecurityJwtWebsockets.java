@@ -2,25 +2,14 @@ package io.tech1.framework.iam.configurations;
 
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.iam.events.subscribers.websockets.HardwareMonitoringSubscriberWebsockets;
 import io.tech1.framework.iam.handshakes.CsrfInterceptorHandshake;
 import io.tech1.framework.iam.handshakes.SecurityHandshakeHandler;
-import io.tech1.framework.iam.services.TokensService;
-import io.tech1.framework.iam.sessions.SessionRegistry;
-import io.tech1.framework.iam.tasks.HardwareBackPressureTimerTask;
-import io.tech1.framework.iam.template.WssMessagingTemplate;
-import io.tech1.framework.iam.template.impl.WssMessagingTemplateImpl;
-import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
@@ -45,6 +34,12 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @Configuration
 @Import({
         ApplicationBaseSecurityJwt.class
+})
+@ComponentScan({
+        "io.tech1.framework.iam.events.subscribers.websockets",
+        "io.tech1.framework.iam.handshakes",
+        "io.tech1.framework.iam.tasks",
+        "io.tech1.framework.iam.template",
 })
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -96,66 +91,4 @@ public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSoc
         return false;
     }
 
-    // =================================================================================================================
-    // @Beans
-    // =================================================================================================================
-    @Bean
-    CsrfInterceptorHandshake csrfInterceptorHandshake(
-            TokensProvider tokensProvider
-    ) {
-        return new CsrfInterceptorHandshake(tokensProvider);
-    }
-
-    @Bean
-    HardwareBackPressureTimerTask hardwareBackPressureTimerTask(
-            SessionRegistry sessionRegistry,
-            WssMessagingTemplate wssMessagingTemplate,
-            HardwareMonitoringStore hardwareMonitoringStore,
-            IncidentPublisher incidentPublisher
-    ) {
-        return new HardwareBackPressureTimerTask(
-                sessionRegistry,
-                wssMessagingTemplate,
-                hardwareMonitoringStore,
-                incidentPublisher,
-                this.applicationFrameworkProperties
-        );
-    }
-
-    @Primary
-    @Bean
-    HardwareMonitoringSubscriberWebsockets hardwareMonitoringSubscriberWebsockets(
-            HardwareMonitoringStore hardwareMonitoringStore,
-            HardwareBackPressureTimerTask hardwareBackPressureTimerTask,
-            IncidentPublisher incidentPublisher
-    ) {
-        return new HardwareMonitoringSubscriberWebsockets(
-                hardwareMonitoringStore,
-                hardwareBackPressureTimerTask,
-                incidentPublisher
-        );
-    }
-
-    @Bean
-    SecurityHandshakeHandler securityHandshakeHandler(
-            TokensService tokensService,
-            TokensProvider tokensProvider
-    ) {
-        return new SecurityHandshakeHandler(
-                tokensService,
-                tokensProvider
-        );
-    }
-
-    @Bean
-    WssMessagingTemplate wssMessagingTemplate(
-            SimpMessagingTemplate simpMessagingTemplate,
-            IncidentPublisher incidentPublisher
-    ) {
-        return new WssMessagingTemplateImpl(
-                simpMessagingTemplate,
-                incidentPublisher,
-                this.applicationFrameworkProperties
-        );
-    }
 }

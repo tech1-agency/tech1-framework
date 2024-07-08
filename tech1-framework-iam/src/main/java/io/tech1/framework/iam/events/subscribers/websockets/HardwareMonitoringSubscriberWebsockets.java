@@ -5,7 +5,11 @@ import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublish
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.foundation.services.hardware.subscribers.impl.BaseHardwareMonitoringSubscriber;
 import io.tech1.framework.iam.tasks.HardwareBackPressureTimerTask;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
+@Primary
+@Component
 public class HardwareMonitoringSubscriberWebsockets extends BaseHardwareMonitoringSubscriber {
 
     // TimerTasks

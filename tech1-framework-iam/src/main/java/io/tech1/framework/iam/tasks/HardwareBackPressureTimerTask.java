@@ -7,11 +7,13 @@ import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublish
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.template.WssMessagingTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
 import static io.tech1.framework.iam.domain.events.WebsocketEvent.hardwareMonitoring;
 
+@Component
 public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
 
     // Sessions

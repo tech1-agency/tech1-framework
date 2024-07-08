@@ -45,7 +45,7 @@ echo "==========================================================================
 echo "================================================================================================================="
 echo "$PREFIX CHANGELOG started"
 
-NEXT_RELEASE_CHANGELOG_VERSION="v$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER.$PATCH_VERSION_NUMBER"
+NEXT_RELEASE_CHANGELOG_VERSION="[v$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER.$PATCH_VERSION_NUMBER]"
 echo -e "### Changelog $NEXT_RELEASE_CHANGELOG_VERSION\n— TBD" > "$CHANGELOG_PATH"
 
 echo "$PREFIX CHANGELOG has been completed"

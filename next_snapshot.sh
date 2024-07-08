@@ -3,6 +3,8 @@
 PREFIX="[NextSnapshot]"
 GITHUB_ACTION_MAIN_WORKFLOW=".github/workflows/main.yml"
 CHANGELOG_PATH="CHANGELOG.md"
+DOCKER_COMPOSE_MONGODB_PATH="docker/docker-compose.mongodb.yml"
+DOCKER_COMPOSE_POSTGRES_PATH="docker/docker-compose.postgres.yml"
 
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"
@@ -50,5 +52,16 @@ echo "$PREFIX CHANGELOG started"
 echo -e "### Changelog $NEXT_RELEASE_CHANGELOG_VERSION\n— TBD" > "$CHANGELOG_PATH"
 
 echo "$PREFIX CHANGELOG has been completed"
+echo "================================================================================================================="
+
+echo "================================================================================================================="
+echo "$PREFIX docker-compose started"
+
+CURRENT_RELEASE_IMAGE="    image: ghcr.io\/tech1-io\/tech1-framework-iam-server:$CURRENT_RELEASE_CHANGELOG_VERSION"
+
+sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_MONGODB_PATH"
+sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_POSTGRES_PATH"
+
+echo "$PREFIX docker-compose has been completed"
 echo "================================================================================================================="
 

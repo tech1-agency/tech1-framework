@@ -34,7 +34,6 @@ import static java.util.Objects.nonNull;
 // Swagger
 @Tag(name = "[tech1-framework] Authentication API")
 // Spring
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController

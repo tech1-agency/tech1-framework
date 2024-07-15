@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 METHOD=maven
-PORT=9002
+PORT=3002
 SPRING_BOOT_PROFILE=mongodb
 SPRING_BOOT_CONFIG_LOCATION=classpath:application.yml,classpath:application-dev.yml,classpath:application-mongo.yml,classpath:application-mongo-dev.yml
 JASYPT_PASSWORD=JJEPTECH1

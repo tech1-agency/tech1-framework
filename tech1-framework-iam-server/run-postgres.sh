@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 METHOD=maven
-PORT=9001
+PORT=3002
 SPRING_BOOT_PROFILE=postgres
 SPRING_BOOT_CONFIG_LOCATION=classpath:application.yml,classpath:application-dev.yml,classpath:application-postgres.yml,classpath:application-postgres-dev.yml
 JASYPT_PASSWORD=JJEPTECH1

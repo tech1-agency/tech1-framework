@@ -1,2 +1,2 @@
 ### Changelog [v3.0.4]
-— TBD
+— Modification: hardware monitoring store, CircularFifoQueue -> Deque

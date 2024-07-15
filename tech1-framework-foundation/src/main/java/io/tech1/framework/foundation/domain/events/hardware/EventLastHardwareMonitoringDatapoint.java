@@ -13,4 +13,11 @@ public record EventLastHardwareMonitoringDatapoint(
                 HardwareMonitoringDatapoint.random()
         );
     }
+
+    public static EventLastHardwareMonitoringDatapoint unknownVersionZeroUsage() {
+        return new EventLastHardwareMonitoringDatapoint(
+                Version.unknown(),
+                HardwareMonitoringDatapoint.zeroUsage()
+        );
+    }
 }

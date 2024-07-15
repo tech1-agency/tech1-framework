@@ -3,6 +3,7 @@ package io.tech1.framework.iam.server.configurations;
 import io.tech1.framework.foundation.domain.base.PropertyId;
 import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
 import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwt;
+import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
 import io.tech1.framework.iam.server.base.properties.ApplicationProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({
-        ApplicationBaseSecurityJwt.class
+        ApplicationBaseSecurityJwtWebsockets.class
 })
 @EnableConfigurationProperties({
         ApplicationProperties.class

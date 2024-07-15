@@ -1,14 +1,17 @@
-package io.tech1.framework.foundation.services.hardware.subscribers.impl;
+package io.tech1.framework.foundation.services.hardware.subscribers.base;
 
 import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.foundation.services.hardware.subscribers.HardwareMonitoringSubscriber;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-@AllArgsConstructor
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseHardwareMonitoringSubscriber extends AbstractEventSubscriber implements HardwareMonitoringSubscriber {
 
     private final HardwareMonitoringStore hardwareMonitoringStore;

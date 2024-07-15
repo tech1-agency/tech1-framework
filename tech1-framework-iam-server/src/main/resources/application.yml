@@ -81,6 +81,23 @@ tech1:
         enabled: true
       session-refreshed:
         enabled: true
+  security-jwt-websockets-configs:
+    csrf-configs:
+      header-name: "t-csrf-header"
+      parameter-name: "_csrf"
+      token-key: "t-csrf-token"
+    stomp-configs:
+      endpoint: /t1f-iam-server-websockets
+    broker-configs:
+      application-destination-prefix: /app
+      simple-destination: /queue
+      user-destination-prefix: /user
+    template-configs:
+      enabled: true
+    features-configs:
+      hardware-configs:
+        enabled: true
+        user-destination: "/account"
 
 # Tech1 Server
 tech1-server:

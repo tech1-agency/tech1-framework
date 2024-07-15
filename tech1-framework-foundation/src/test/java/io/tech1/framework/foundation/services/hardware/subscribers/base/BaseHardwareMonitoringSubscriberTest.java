@@ -1,4 +1,4 @@
-package io.tech1.framework.foundation.services.hardware.subscribers.impl;
+package io.tech1.framework.foundation.services.hardware.subscribers.base;
 
 import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;

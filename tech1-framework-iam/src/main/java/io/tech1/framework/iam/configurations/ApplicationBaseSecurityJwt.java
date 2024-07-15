@@ -35,7 +35,10 @@ import static org.springframework.http.HttpMethod.*;
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
         "io.tech1.framework.iam.crons",
-        "io.tech1.framework.iam.events",
+        "io.tech1.framework.iam.events.publishers.base",
+        "io.tech1.framework.iam.events.publishers.impl",
+        "io.tech1.framework.iam.events.subscribers.base",
+        "io.tech1.framework.iam.events.subscribers.impl",
         "io.tech1.framework.iam.handlers.exceptions",
         "io.tech1.framework.iam.resources",
         "io.tech1.framework.iam.services.base",

@@ -74,7 +74,6 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
     }
 
     public boolean isAnyProblemOrFirstDatapoint() {
-        return this.hardwareMonitoringStore.getHardwareMonitoringWidget().datapoint().isAnyProblem() ||
-                this.hardwareMonitoringStore.containsOneElement();
+        return this.hardwareMonitoringStore.containsOneElement() || this.hardwareMonitoringStore.getHardwareMonitoringWidget().datapoint().isAnyProblem();
     }
 }

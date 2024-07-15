@@ -3,15 +3,12 @@ package io.tech1.framework.iam.events.subscribers.websockets;
 import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.foundation.services.hardware.subscribers.impl.BaseHardwareMonitoringSubscriber;
-import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
+import io.tech1.framework.foundation.services.hardware.subscribers.base.BaseHardwareMonitoringSubscriber;
 import io.tech1.framework.iam.tasks.HardwareBackPressureTimerTask;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.context.annotation.Primary;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Primary
-@ConditionalOnBean(ApplicationBaseSecurityJwtWebsockets.class)
+@Slf4j
 @Component
 public class HardwareMonitoringSubscriberWebsockets extends BaseHardwareMonitoringSubscriber {
 

@@ -6,6 +6,7 @@ import io.tech1.framework.iam.handshakes.CsrfInterceptorHandshake;
 import io.tech1.framework.iam.handshakes.SecurityHandshakeHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
  * </a>
  */
 // idea - reconnect flow: https://stackoverflow.com/questions/53244720/spring-websocket-stomp-exception-handling
+@Slf4j
 @Configuration
 @Import({
         ApplicationBaseSecurityJwt.class

@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
 
 env:
-  MAVEN_DEPLOYMENT_ENABLED: 'false'
+  MAVEN_DEPLOYMENT_ENABLED: 'true'
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IAM_SERVER_IMAGE: tech1-io/tech1-framework-iam-server
-  DOCKER_VERSION: '3.0.4-SNAPSHOT'
-  DOCKER_PUSH_ENABLED: 'false'
+  DOCKER_VERSION: '3.0.4'
+  DOCKER_PUSH_ENABLED: 'true'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

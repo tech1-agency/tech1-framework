@@ -1,2 +1,2 @@
 ### Changelog [v3.0.5]
-— TBD
+— Addition (?): SystemResource on iam-server (/system/csrf)

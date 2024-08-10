@@ -1,6 +1,7 @@
 package io.tech1.framework.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import io.tech1.framework.iam.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.iam.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -8,19 +9,16 @@ import io.tech1.framework.iam.domain.identifiers.UserSessionId;
 import io.tech1.framework.iam.domain.security.CurrentClientUser;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
-import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 // Swagger
 @Tag(name = "[tech1-framework] UsersSessions API")
 // Spring
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController

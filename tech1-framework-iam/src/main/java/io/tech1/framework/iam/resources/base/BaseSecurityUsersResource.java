@@ -8,18 +8,16 @@ import io.tech1.framework.iam.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.iam.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.iam.services.BaseUsersService;
 import io.tech1.framework.iam.validators.BaseUsersValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-
 // Swagger
 @Tag(name = "[tech1-framework] Users API")
 // Spring
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController

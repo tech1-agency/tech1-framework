@@ -8,18 +8,16 @@ import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.iam.services.BaseInvitationCodesService;
 import io.tech1.framework.iam.validators.BaseInvitationCodesRequestsValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-
 // Swagger
 @Tag(name = "[tech1-framework] InvitationCodes API")
 // Spring
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @AbstractFrameworkBaseSecurityResource
 @RestController

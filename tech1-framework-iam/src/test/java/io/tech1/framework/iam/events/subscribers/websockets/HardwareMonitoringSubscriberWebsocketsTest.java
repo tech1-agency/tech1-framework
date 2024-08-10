@@ -3,7 +3,7 @@ package io.tech1.framework.iam.events.subscribers.websockets;
 import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.iam.tasks.HardwareBackPressureTimerTask;
+import io.tech1.framework.iam.tasks.hardware.HardwareBackPressureTimerTask;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

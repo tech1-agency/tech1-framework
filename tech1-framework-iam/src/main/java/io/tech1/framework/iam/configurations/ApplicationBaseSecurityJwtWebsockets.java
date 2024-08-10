@@ -40,7 +40,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @ComponentScan({
         "io.tech1.framework.iam.events.subscribers.websockets",
         "io.tech1.framework.iam.handshakes",
-        "io.tech1.framework.iam.tasks",
+        "io.tech1.framework.iam.resources.websockets",
+        "io.tech1.framework.iam.tasks.hardware",
         "io.tech1.framework.iam.template",
 })
 @EnableWebSocketMessageBroker

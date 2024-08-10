@@ -1,10 +1,9 @@
-package io.tech1.framework.iam.server.base.tasks;
+package io.tech1.framework.iam.tasks.superadmin;
 
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
-import io.tech1.framework.iam.tasks.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.iam.template.WssMessagingTemplate;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,7 @@ import static io.tech1.framework.iam.domain.events.WebsocketEvent.resetServerPro
 @Slf4j
 @Getter
 @Component
-public class ResetServerTask extends AbstractSuperAdminResetServerTask {
+public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
 
     // Wss
     private final WssMessagingTemplate wssMessagingTemplate;
@@ -27,7 +26,7 @@ public class ResetServerTask extends AbstractSuperAdminResetServerTask {
     private final ResetServerStatus status = new ResetServerStatus(3);
 
     @Autowired
-    public ResetServerTask(
+    public TestDataResetServerTask(
             IncidentPublisher incidentPublisher,
             WssMessagingTemplate wssMessagingTemplate
     ) {
@@ -43,9 +42,9 @@ public class ResetServerTask extends AbstractSuperAdminResetServerTask {
         try {
             this.status.reset();
 
-            this.computeAndSendResetServerProgress(username, "[Server] Stage #1");
-            this.computeAndSendResetServerProgress(username, "[Server] Stage #2");
-            this.computeAndSendResetServerProgress(username, "[Server] Stage #3");
+            this.computeAndSendResetServerProgress(username, "[Server] Test Data Stage #1");
+            this.computeAndSendResetServerProgress(username, "[Server] Test Data Stage #2");
+            this.computeAndSendResetServerProgress(username, "[Server] Test Data Stage #3");
 
             this.status.complete(initiator.zoneId());
             this.wssMessagingTemplate.sendEventToUser(username, "/account", resetServerProgress(this.status));

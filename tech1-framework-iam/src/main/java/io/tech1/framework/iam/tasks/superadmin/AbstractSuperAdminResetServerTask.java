@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.tasks;
+package io.tech1.framework.iam.tasks.superadmin;
 
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;

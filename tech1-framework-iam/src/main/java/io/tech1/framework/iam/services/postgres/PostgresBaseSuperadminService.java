@@ -2,7 +2,7 @@ package io.tech1.framework.iam.services.postgres;
 
 import io.tech1.framework.iam.services.abstracts.AbstractBaseSuperadminService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
-import io.tech1.framework.iam.tasks.AbstractSuperAdminResetServerTask;
+import io.tech1.framework.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;

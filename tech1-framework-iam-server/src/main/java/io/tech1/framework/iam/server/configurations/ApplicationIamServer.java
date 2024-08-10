@@ -20,8 +20,9 @@ import static org.springframework.http.HttpMethod.GET;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
+        "io.tech1.framework.iam.assistants.current.base",
         "io.tech1.framework.iam.filters.jwt_extension",
-        "io.tech1.framework.iam.assistants.current.base"
+        "io.tech1.framework.iam.tasks.superadmin"
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({

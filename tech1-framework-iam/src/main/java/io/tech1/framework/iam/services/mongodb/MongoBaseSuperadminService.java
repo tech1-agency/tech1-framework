@@ -2,7 +2,7 @@ package io.tech1.framework.iam.services.mongodb;
 
 import io.tech1.framework.iam.services.abstracts.AbstractBaseSuperadminService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
-import io.tech1.framework.iam.tasks.AbstractSuperAdminResetServerTask;
+import io.tech1.framework.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;
 import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;

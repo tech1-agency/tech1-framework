@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.tasks;
+package io.tech1.framework.iam.tasks.hardware;
 
 import io.tech1.framework.foundation.domain.concurrent.AbstractInfiniteTimerTask;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;

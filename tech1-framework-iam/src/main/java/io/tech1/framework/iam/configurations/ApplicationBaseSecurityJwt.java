@@ -130,7 +130,7 @@ public class ApplicationBaseSecurityJwt {
 
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
-                    .requestMatchers(POST, basePathPrefix + "/authentication/login").permitAll()
+                    .requestMatchers(POST, basePathPrefix + "/authentication/login").anonymous()
                     .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                     .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                     .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()

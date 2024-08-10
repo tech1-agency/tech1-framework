@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static io.tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 // Lombok

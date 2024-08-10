@@ -1,6 +1,2 @@
-### Changelog [v3.0.5]
-— Addition: SystemResource on iam-server (/system/csrf) based on WebSockets @Configuration
-— Addition: ResetServerTask on iam-server (/system/reset-server) including TestDataResetServerTask
-— Addition: /login -> permitAll(), /register1 -> anonymous()
-— Addition: WssMessagingTemplate.sendResetServerStatus() + configs (double-check application.yml)
-— Addition: WssMessagingTemplate.sendHardwareMonitoring() + configs (double-check application.yml)
+### Changelog [v3.0.6]
+— TBD

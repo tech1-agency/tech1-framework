@@ -2,6 +2,7 @@ package io.tech1.framework.iam.template.impl;
 
 import io.tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.iam.domain.events.WebsocketEvent;
 import io.tech1.framework.iam.template.WssMessagingTemplate;
@@ -10,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
+
+import static io.tech1.framework.iam.domain.events.WebsocketEvent.resetServerProgress;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -29,6 +34,15 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
                 destination,
                 event
         );
+    }
+
+    @Override
+    public void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
+        var resetServerConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getResetServerConfigs();
+        if (!resetServerConfigs.isEnabled()) {
+            return;
+        }
+        usernames.forEach(username -> this.sendObjectToUser(username, resetServerConfigs.getUserDestination(), resetServerProgress(status)));
     }
 
     // =================================================================================================================

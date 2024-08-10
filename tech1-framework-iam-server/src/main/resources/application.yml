@@ -87,17 +87,20 @@ tech1:
       parameter-name: "_csrf"
       token-key: "t-csrf-token"
     stomp-configs:
-      endpoint: /t1f-iam-server-websockets
+      endpoint: "/t1f-iam-server-websockets"
     broker-configs:
-      application-destination-prefix: /app
-      simple-destination: /queue
-      user-destination-prefix: /user
+      application-destination-prefix: "/app"
+      simple-destination: "/queue"
+      user-destination-prefix: "/user"
     template-configs:
       enabled: true
     features-configs:
       hardware-configs:
         enabled: true
-        user-destination: "/account"
+        user-destination: "/accounts"
+      reset-server-configs:
+        enabled: true
+        user-destination: "/accounts"
 
 # Tech1 Server
 tech1-server:

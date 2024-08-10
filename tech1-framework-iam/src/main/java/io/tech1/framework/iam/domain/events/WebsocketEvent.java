@@ -5,12 +5,10 @@ import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatu
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 // Lombok
 @Getter
@@ -27,10 +25,7 @@ public class WebsocketEvent {
         this.attributes = new HashMap<>(attributes);
     }
 
-    public static WebsocketEvent hardwareMonitoring(
-            HardwareMonitoringDatapointTableView datapoint
-    ) {
-        assertNonNullOrThrow(datapoint, invalidAttribute("WebsocketEvent.hardwareMonitoring.datapoint"));
+    public static WebsocketEvent hardwareMonitoring(@NotNull HardwareMonitoringDatapointTableView datapoint) {
         return new WebsocketEvent(
                 Map.of(
                         WebsocketEventsAttributes.Keys.TYPE, WebsocketEventsAttributes.Values.TYPE_HARDWARE_MONITORING,
@@ -39,10 +34,7 @@ public class WebsocketEvent {
         );
     }
 
-    public static WebsocketEvent resetServerProgress(
-            ResetServerStatus status
-    ) {
-        assertNonNullOrThrow(status, invalidAttribute("WebsocketEvent.resetServerProgress.status"));
+    public static WebsocketEvent resetServerProgress(@NotNull ResetServerStatus status) {
         return new WebsocketEvent(
                 Map.of(
                         WebsocketEventsAttributes.Keys.TYPE, WebsocketEventsAttributes.Values.TYPE_RESET_SERVER_PROGRESS,

@@ -3,6 +3,7 @@ package io.tech1.framework.foundation.domain.hardware.monitoring;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -19,10 +20,7 @@ public class HardwareMonitoringDatapointTableView {
     private final boolean anyPresent;
     private final boolean anyProblem;
 
-    public HardwareMonitoringDatapointTableView(
-            List<HardwareMonitoringDatapointTableRow> rows
-    ) {
-        assertNonNullOrThrow(rows, invalidAttribute("HardwareMonitoringDatapointTableView.rows"));
+    public HardwareMonitoringDatapointTableView(@NotNull List<HardwareMonitoringDatapointTableRow> rows) {
         this.rows = rows;
         this.anyPresent = !isEmpty(this.rows);
         this.anyProblem = rows.stream().anyMatch(HardwareMonitoringDatapointTableRow::isThresholdReached);

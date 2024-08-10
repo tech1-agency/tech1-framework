@@ -14,15 +14,19 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private WebsocketsFeatureHardwareConfigs hardwareConfigs;
+    @NonMandatoryProperty
+    private WebsocketsFeatureHardwareConfigs resetServerConfigs;
 
     public static WebsocketsFeaturesConfigs testsHardcoded() {
         return new WebsocketsFeaturesConfigs(
+                WebsocketsFeatureHardwareConfigs.testsHardcoded(),
                 WebsocketsFeatureHardwareConfigs.testsHardcoded()
         );
     }
 
     public static WebsocketsFeaturesConfigs random() {
         return new WebsocketsFeaturesConfigs(
+                WebsocketsFeatureHardwareConfigs.random(),
                 WebsocketsFeatureHardwareConfigs.random()
         );
     }

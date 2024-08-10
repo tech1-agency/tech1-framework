@@ -22,7 +22,7 @@ public class WebsocketsFeatureHardwareConfigs extends AbstractTogglePropertyConf
     private String userDestination;
 
     public static WebsocketsFeatureHardwareConfigs testsHardcoded() {
-        return new WebsocketsFeatureHardwareConfigs(true, "/account");
+        return new WebsocketsFeatureHardwareConfigs(true, "/accounts");
     }
 
     public static WebsocketsFeatureHardwareConfigs random() {

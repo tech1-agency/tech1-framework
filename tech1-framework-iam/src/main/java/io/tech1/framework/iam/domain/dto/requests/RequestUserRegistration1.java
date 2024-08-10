@@ -3,13 +3,14 @@ package io.tech1.framework.iam.domain.dto.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.tech1.framework.foundation.domain.base.Password;
 import io.tech1.framework.foundation.domain.base.Username;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.ZoneId;
 
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
+import static io.tech1.framework.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
 
 public record RequestUserRegistration1(
         @Username.ValidUsername Username username,
@@ -31,5 +32,15 @@ public record RequestUserRegistration1(
 
     public void assertPasswordsOrThrow() {
         this.password.assertEqualsOrThrow(this.confirmPassword);
+    }
+
+    public RequestUserRegistration1 createReworkedUkraineZoneId() {
+        return new RequestUserRegistration1(
+                this.username,
+                this.password,
+                this.confirmPassword,
+                reworkUkraineZoneId(this.zoneId),
+                this.invitationCode
+        );
     }
 }

@@ -38,6 +38,7 @@ public class BaseSecurityRegistrationResource {
     @PostMapping("/register1")
     @ResponseStatus(HttpStatus.OK)
     public void register1(@RequestBody @Valid RequestUserRegistration1 request) throws RegistrationException {
+        request = request.createReworkedUkraineZoneId();
         this.baseRegistrationRequestsValidator.validateRegistrationRequest1(request);
         this.baseRegistrationService.register1(request);
         this.securityJwtPublisher.publishRegistration1(new EventRegistration1(request));

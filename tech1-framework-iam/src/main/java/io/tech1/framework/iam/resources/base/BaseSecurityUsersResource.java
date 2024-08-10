@@ -35,6 +35,7 @@ public class BaseSecurityUsersResource {
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)
     public void update1(@RequestBody @Valid RequestUserUpdate1 request) {
+        request = request.createReworkedUkraineZoneId();
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersValidator.validateUserUpdateRequest1(user.username(), request);
         this.baseUsersService.updateUser1(user, request);
@@ -43,6 +44,7 @@ public class BaseSecurityUsersResource {
     @PostMapping("/update2")
     @ResponseStatus(HttpStatus.OK)
     public void update1(@RequestBody @Valid RequestUserUpdate2 request) {
+        request = request.createReworkedUkraineZoneId();
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersService.updateUser2(user, request);
     }

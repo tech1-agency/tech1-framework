@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.ZoneId;
 
+import static io.tech1.framework.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
+
 public record RequestUserUpdate1(
         @Schema(type = "string") @NotNull ZoneId zoneId,
         @Email.ValidEmail Email email,
@@ -18,6 +20,14 @@ public record RequestUserUpdate1(
                 ZoneIdsConstants.UKRAINE,
                 Email.testsHardcoded(),
                 "Tech1 Ops"
+        );
+    }
+
+    public RequestUserUpdate1 createReworkedUkraineZoneId() {
+        return new RequestUserUpdate1(
+                reworkUkraineZoneId(this.zoneId),
+                this.email,
+                this.name
         );
     }
 }

@@ -134,7 +134,7 @@ public class ApplicationBaseSecurityJwt {
                     .requestMatchers(POST, basePathPrefix + "/authentication/logout").permitAll()
                     .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                     .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
-                    .requestMatchers(POST, basePathPrefix + "/registration/register1").authenticated()
+                    .requestMatchers(POST, basePathPrefix + "/registration/register1").anonymous()
                     .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated();

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-import static io.tech1.framework.iam.domain.events.WebsocketEvent.hardwareMonitoring;
-
 @Component
 public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
 
@@ -24,8 +22,6 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
     private final HardwareMonitoringStore hardwareMonitoringStore;
     // Publishers
     private final IncidentPublisher incidentPublisher;
-    // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
     // 60L seconds -> consider add to user settings but on 25.11.2022 no reason to add
     public HardwareBackPressureTimerTask(
@@ -42,9 +38,8 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
         this.wssMessagingTemplate = wssMessagingTemplate;
         this.hardwareMonitoringStore = hardwareMonitoringStore;
         this.incidentPublisher = incidentPublisher;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
 
-        var hardwareConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
+        var hardwareConfigs = applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
         boolean hardwareConfigsEnabled = hardwareConfigs.isEnabled();
         if (hardwareConfigsEnabled) {
             this.start();
@@ -61,16 +56,8 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
     }
 
     public void send() {
-        var hardwareConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
-        if (hardwareConfigs.isEnabled()) {
-            var usernames = this.sessionRegistry.getActiveSessionsUsernames();
-            var userDestination = hardwareConfigs.getUserDestination();
-            usernames.forEach(username -> this.wssMessagingTemplate.sendEventToUser(
-                    username,
-                    userDestination,
-                    hardwareMonitoring(this.hardwareMonitoringStore.getHardwareMonitoringWidget().datapoint())
-            ));
-        }
+        var usernames = this.sessionRegistry.getActiveSessionsUsernames();
+        this.wssMessagingTemplate.sendHardwareMonitoring(usernames, this.hardwareMonitoringStore.getHardwareMonitoringWidget().datapoint());
     }
 
     public boolean isAnyProblemOrFirstDatapoint() {

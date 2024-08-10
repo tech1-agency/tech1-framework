@@ -1,6 +1,7 @@
 package io.tech1.framework.iam.template.impl;
 
 import io.tech1.framework.foundation.domain.base.Username;
+import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
 import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static io.tech1.framework.iam.domain.events.WebsocketEvent.hardwareMonitoring;
 import static io.tech1.framework.iam.domain.events.WebsocketEvent.resetServerProgress;
 
 @Component
@@ -34,6 +36,15 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
                 destination,
                 event
         );
+    }
+
+    @Override
+    public void sendHardwareMonitoring(Set<Username> usernames, HardwareMonitoringDatapointTableView tableView) {
+        var hardwareConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
+        if (!hardwareConfigs.isEnabled()) {
+            return;
+        }
+        usernames.forEach(username -> this.sendObjectToUser(username, hardwareConfigs.getUserDestination(), hardwareMonitoring(tableView)));
     }
 
     @Override

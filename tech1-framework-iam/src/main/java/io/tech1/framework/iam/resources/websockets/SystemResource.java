@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.server.base.resources;
+package io.tech1.framework.iam.resources.websockets;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // Swagger
-@Tag(name = "[tech1-server (?)] System API")
+@Tag(name = "[tech1-framework] System API")
 // Spring
 @RestController
 @RequestMapping("/system")

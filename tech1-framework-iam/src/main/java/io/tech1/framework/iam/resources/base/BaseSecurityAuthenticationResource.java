@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.resources;
+package io.tech1.framework.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.tech1.framework.iam.annotations.AbstractFrameworkBaseSecurityResource;

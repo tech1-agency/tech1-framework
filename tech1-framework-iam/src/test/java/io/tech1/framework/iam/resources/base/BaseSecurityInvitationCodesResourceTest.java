@@ -1,5 +1,5 @@
 
-package io.tech1.framework.iam.resources;
+package io.tech1.framework.iam.resources.base;
 
 import io.tech1.framework.iam.tests.runners.AbstractResourcesRunner1;
 import io.tech1.framework.iam.assistants.current.CurrentSessionAssistant;

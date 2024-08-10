@@ -1,4 +1,4 @@
-package io.tech1.framework.iam.resources;
+package io.tech1.framework.iam.resources.base;
 
 import io.jsonwebtoken.Claims;
 import io.tech1.framework.iam.tests.runners.AbstractResourcesRunner1;

@@ -8,6 +8,7 @@ import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
+// WARNING: @Order by default uses Ordered.LOWEST_PRECEDENCE
 @Slf4j
+@Order
 @ControllerAdvice
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ResourceExceptionHandler {
@@ -97,5 +100,19 @@ public class ResourceExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> internalServerError(Exception ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({
+            Exception.class
+    })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionEntity> generalException(Exception ex) {
+        LOGGER.error("Unexpected error occurred", ex);
+        var response = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                contactDevelopmentTeam("An unexpected error occurred"),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

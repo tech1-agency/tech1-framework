@@ -8,7 +8,6 @@ import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order
 @ControllerAdvice
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ResourceExceptionHandler {

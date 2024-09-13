@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
+// WARNING: @Order by default uses Ordered.LOWEST_PRECEDENCE
 @Slf4j
 @Order
 @ControllerAdvice

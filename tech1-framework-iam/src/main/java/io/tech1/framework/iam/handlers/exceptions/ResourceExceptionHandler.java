@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
-@ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@ControllerAdvice
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ResourceExceptionHandler {
 

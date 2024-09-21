@@ -34,9 +34,9 @@ public class NumbersUtility {
         }
         // N >= 1M
         if (isFirstValueGreaterOrEqual(positiveNumber, MILLION)) {
-            return scale(divide(number, MILLION), 2).toString() + "M";
+            return scale(divide(number, MILLION), 2) + "M";
         }
         // N >= 1K
-        return scale(divide(number, THOUSAND), 2).toString() + "K";
+        return scale(divide(number, THOUSAND), 2) + "K";
     }
 }

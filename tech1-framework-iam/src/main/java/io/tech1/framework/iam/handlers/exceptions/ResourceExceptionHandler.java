@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.unexpectedErrorOccurred;
+import static java.util.Objects.isNull;
 
 // WARNING: @Order by default uses Ordered.LOWEST_PRECEDENCE
 @Slf4j
@@ -107,12 +109,21 @@ public class ResourceExceptionHandler {
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> generalException(Exception ex) {
-        LOGGER.error("Unexpected error occurred", ex);
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
-                contactDevelopmentTeam("An unexpected error occurred"),
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (isNull(ex) || isNull(ex.getMessage())) {
+            var response = new ExceptionEntity(
+                    ExceptionEntityType.ERROR,
+                    unexpectedErrorOccurred(),
+                    unexpectedErrorOccurred()
+            );
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            LOGGER.error("Unexpected error occurred", ex);
+            var response = new ExceptionEntity(
+                    ExceptionEntityType.ERROR,
+                    unexpectedErrorOccurred(),
+                    ex.getMessage()
+            );
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -33,6 +33,15 @@ class ExceptionsMessagesUtilityTest {
     }
 
     @Test
+    void unexpectedErrorOccurredTest() {
+        // Act
+        var actual = unexpectedErrorOccurred();
+
+        // Assert
+        assertThat(actual).isEqualTo("An unexpected error occurred. Please contact development team");
+    }
+
+    @Test
     void notImplementedYetTest() {
         // Act
         var actual = notImplementedYet();

@@ -15,6 +15,10 @@ public class ExceptionsMessagesUtility {
         return "%s. Please contact development team".formatted(prefix);
     }
 
+    public static String unexpectedErrorOccurred() {
+        return contactDevelopmentTeam("An unexpected error occurred");
+    }
+
     public static String notImplementedYet() {
         return contactDevelopmentTeam("Not implemented yet");
     }

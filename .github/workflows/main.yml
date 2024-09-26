@@ -9,7 +9,7 @@ on:
 env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IAM_SERVER_IMAGE: tech1-io/tech1-framework-iam-server
+  DOCKER_IAM_SERVER_IMAGE: tech1-agency/tech1-framework-iam-server
   DOCKER_VERSION: '3.0.10-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
@@ -64,7 +64,7 @@ jobs:
   mails:
     if: always()
     needs: [main]
-    uses: tech1-io/tech1-ops/.github/workflows/actions-gmail-v3.yml@main
+    uses: tech1-agency/tech1-ops/.github/workflows/actions-gmail-v4.yml@main
     secrets: inherit
     with:
       to: ${{ vars.EMAILS_ADMINS }}

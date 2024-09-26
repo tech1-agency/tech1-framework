@@ -57,7 +57,7 @@ echo "==========================================================================
 echo "================================================================================================================="
 echo "$PREFIX docker-compose started"
 
-CURRENT_RELEASE_IMAGE="    image: ghcr.io\/tech1-io\/tech1-framework-iam-server:$CURRENT_RELEASE_CHANGELOG_VERSION"
+CURRENT_RELEASE_IMAGE="    image: ghcr.io\/tech1-agency\/tech1-framework-iam-server:$CURRENT_RELEASE_CHANGELOG_VERSION"
 
 sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_MONGODB_PATH"
 sed -i '' '3s/.*/'"$CURRENT_RELEASE_IMAGE"'/' "$DOCKER_COMPOSE_POSTGRES_PATH"

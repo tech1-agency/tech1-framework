@@ -12,11 +12,11 @@
 
     <name>${project.artifactId}</name>
     <description>Tech1 Framework</description>
-    <url>https://github.com/tech1-io/tech1-framework</url>
+    <url>https://github.com/tech1-agency/tech1-framework</url>
     <inceptionYear>2022</inceptionYear>
     <organization>
         <name>Tech1</name>
-        <url>https://github.com/tech1-io</url>
+        <url>https://github.com/tech1-agency</url>
     </organization>
     <licenses>
         <license>
@@ -35,9 +35,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/tech1-io/tech1-framework.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/tech1-io/tech1-framework.git</developerConnection>
-        <url>https://github.com/tech1-io/tech1-framework</url>
+        <connection>scm:git:ssh://git@github.com/tech1-agency/tech1-framework.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/tech1-agency/tech1-framework.git</developerConnection>
+        <url>https://github.com/tech1-agency/tech1-framework</url>
     </scm>
 
     <modules>
@@ -357,7 +357,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/tech1-io/tech1-framework/packages</url>
+                    <url>https://maven.pkg.github.com/tech1-agency/tech1-framework/packages</url>
                 </repository>
             </distributionManagement>
         </profile>

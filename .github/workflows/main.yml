@@ -51,7 +51,7 @@ jobs:
 
       - name: Maven [github packages]
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'true'
-        run: mvn clean deploy -Pgithub
+        run: mvn clean -DskipTests -Dmaven.test.skip deploy -Pgithub
 
       - name: Docker login
         if: env.DOCKER_PUSH_ENABLED == 'true'

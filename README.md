@@ -8,6 +8,6 @@ Tech1 Framework — B2B Java17 Spring-based bootstrapping-framework
 `mvn clean verify` when you want to be sure, that whole project just works  
 
 ### Swagger
-URL-dev: http://localhost:3002/api/swagger-ui/index.html
+URL-dev: http://localhost:3002/api/swagger-ui/index.html  
 URL-prod: http://{server}/api/swagger-ui/index.html
 

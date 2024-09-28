@@ -1,3 +1,4 @@
+#file: noinspection UndefinedAction
 name: main
 
 on:
@@ -34,16 +35,23 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Maven [settings]
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{
+                "id": "github-tech1",
+                "username": "${{ vars.USERNAME_MAVEN_PACKAGES }}",
+                "password": "${{ secrets.TOKEN_MAVEN_PACKAGES }}"
+            }]
+
       - name: Maven [build]
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'false'
         run: mvn clean install
 
       - name: Maven [github packages]
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'true'
-        run: |
-          mvn clean install \
-            -Ddeployment_github_username=${{ github.actor }} -Ddeployment_github_token=${{ secrets.GITHUB_TOKEN }} \
-            -s github-tech1/m2-settings.xml deploy -Pgithub-tech1
+        run: mvn clean deploy -Pgithub-tech1
 
       - name: Docker login
         if: env.DOCKER_PUSH_ENABLED == 'true'

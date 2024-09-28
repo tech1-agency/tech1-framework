@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.tech1.framework</groupId>
+    <groupId>tech1.framework</groupId>
     <artifactId>tech1-framework</artifactId>
     <packaging>pom</packaging>
     <version>3.0.10-SNAPSHOT</version>

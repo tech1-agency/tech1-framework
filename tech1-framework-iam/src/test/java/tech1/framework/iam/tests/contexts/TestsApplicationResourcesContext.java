@@ -1,30 +1,28 @@
 package tech1.framework.iam.tests.contexts;
 
-import tech1.framework.iam.assistants.current.CurrentSessionAssistant;
-import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
-import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
-import tech1.framework.iam.events.publishers.SecurityJwtPublisher;
-import tech1.framework.iam.handlers.exceptions.ResourceExceptionHandler;
-import io.tech1.framework.iam.services.*;
-import tech1.framework.iam.services.*;
-import tech1.framework.iam.sessions.SessionRegistry;
-import tech1.framework.iam.tokens.facade.TokensProvider;
-import tech1.framework.iam.utils.SecurityJwtTokenUtils;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.utilities.environment.EnvironmentUtility;
-import io.tech1.framework.iam.validators.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.utilities.environment.EnvironmentUtility;
+import tech1.framework.iam.assistants.current.CurrentSessionAssistant;
+import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
+import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
+import tech1.framework.iam.events.publishers.SecurityJwtPublisher;
+import tech1.framework.iam.handlers.exceptions.ResourceExceptionHandler;
+import tech1.framework.iam.services.*;
+import tech1.framework.iam.sessions.SessionRegistry;
+import tech1.framework.iam.tokens.facade.TokensProvider;
+import tech1.framework.iam.utils.SecurityJwtTokenUtils;
 import tech1.framework.iam.validators.*;
 
 import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "io.tech1.framework.iam.resources",
+        "tech1.framework.iam.resources",
 })
 @EnableWebMvc
 public class TestsApplicationResourcesContext {

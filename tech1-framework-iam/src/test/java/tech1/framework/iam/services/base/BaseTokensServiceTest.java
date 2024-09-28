@@ -1,17 +1,7 @@
 package tech1.framework.iam.services.base;
 
-import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
-import tech1.framework.iam.domain.dto.responses.ResponseRefreshTokens;
-import io.tech1.framework.iam.domain.jwt.*;
-import tech1.framework.iam.domain.jwt.*;
-import tech1.framework.iam.services.BaseUsersSessionsService;
-import tech1.framework.iam.services.TokensContextThrowerService;
-import tech1.framework.iam.services.TokensService;
-import tech1.framework.iam.sessions.SessionRegistry;
-import tech1.framework.iam.tokens.facade.TokensProvider;
-import tech1.framework.iam.utils.SecurityJwtTokenUtils;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
-import tech1.framework.foundation.domain.tuples.Tuple2;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,16 +13,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+import tech1.framework.foundation.domain.tuples.Tuple2;
+import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
+import tech1.framework.iam.domain.dto.responses.ResponseRefreshTokens;
+import tech1.framework.iam.domain.jwt.*;
+import tech1.framework.iam.services.BaseUsersSessionsService;
+import tech1.framework.iam.services.TokensContextThrowerService;
+import tech1.framework.iam.services.TokensService;
+import tech1.framework.iam.sessions.SessionRegistry;
+import tech1.framework.iam.tokens.facade.TokensProvider;
+import tech1.framework.iam.utils.SecurityJwtTokenUtils;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import static tech1.framework.iam.domain.db.UserSession.randomPersistedSession;
-import static tech1.framework.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.iam.domain.db.UserSession.randomPersistedSession;
+import static tech1.framework.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

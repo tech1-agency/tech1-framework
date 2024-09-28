@@ -1,22 +1,22 @@
 package tech1.framework.iam.tests.contexts;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
 import tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "io.tech1.framework.iam.validators.postgres"
+        "tech1.framework.iam.validators.postgres"
 })
 @Import({
         ApplicationFrameworkPropertiesTestsHardcodedContext.class

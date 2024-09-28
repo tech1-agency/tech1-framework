@@ -1,5 +1,16 @@
 package tech1.framework.iam.events.subscribers.base;
 
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import tech1.framework.foundation.domain.base.Email;
 import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
@@ -12,7 +23,6 @@ import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthent
 import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import tech1.framework.foundation.utils.UserMetadataUtils;
 import tech1.framework.iam.domain.db.UserSession;
-import io.tech1.framework.iam.domain.events.*;
 import tech1.framework.iam.domain.events.*;
 import tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import tech1.framework.iam.domain.functions.FunctionSessionRefreshedEmail;
@@ -20,21 +30,10 @@ import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import tech1.framework.iam.events.subscribers.SecurityJwtSubscriber;
 import tech1.framework.iam.services.BaseUsersSessionsService;
 import tech1.framework.iam.services.UsersEmailsService;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

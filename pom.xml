@@ -352,10 +352,10 @@
 
     <profiles>
         <profile>
-            <id>release-github</id>
+            <id>github-tech1</id>
             <distributionManagement>
                 <repository>
-                    <id>github</id>
+                    <id>github-tech1-framework</id>
                     <name>GitHub Packages</name>
                     <url>https://maven.pkg.github.com/tech1-agency/tech1-framework/packages</url>
                 </repository>

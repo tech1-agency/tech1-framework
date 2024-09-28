@@ -11,7 +11,7 @@ import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.services.BaseSuperadminService;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
-import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.list345;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;

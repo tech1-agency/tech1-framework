@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.essence;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
 import io.tech1.framework.iam.domain.mongodb.MongoDbInvitationCode;
 import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
 import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;

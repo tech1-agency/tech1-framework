@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.services.mongodb;
 
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import io.tech1.framework.iam.services.abstracts.AbstractBaseUsersSessionsService;

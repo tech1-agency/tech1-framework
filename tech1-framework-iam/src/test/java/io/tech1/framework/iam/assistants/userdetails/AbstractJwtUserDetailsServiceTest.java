@@ -1,8 +1,7 @@
 package io.tech1.framework.iam.assistants.userdetails;
 
-import io.tech1.framework.iam.assistants.userdetails.AbstractJwtUserDetailsService;
 import io.tech1.framework.iam.repositories.UsersRepository;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

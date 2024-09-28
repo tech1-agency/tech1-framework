@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.handshakes;
 
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.domain.jwt.RequestRefreshToken;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;

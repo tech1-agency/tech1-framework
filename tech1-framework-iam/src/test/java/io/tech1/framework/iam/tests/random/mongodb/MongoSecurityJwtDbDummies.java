@@ -3,14 +3,13 @@ package io.tech1.framework.iam.tests.random.mongodb;
 import io.tech1.framework.iam.domain.mongodb.MongoDbInvitationCode;
 import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
 import io.tech1.framework.iam.domain.mongodb.MongoDbUserSession;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.Set;
 
 import static io.tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbRandomUtility.*;
-import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
 
 @UtilityClass
 public class MongoSecurityJwtDbDummies {

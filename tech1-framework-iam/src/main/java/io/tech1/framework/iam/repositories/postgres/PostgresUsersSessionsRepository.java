@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.repositories.postgres;
 
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.iam.domain.dto.responses.ResponseUserSession2;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
+import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static io.tech1.framework.iam.domain.dto.responses.ResponseUserSession2.*;
 
 @SuppressWarnings("JpaQlInspection")

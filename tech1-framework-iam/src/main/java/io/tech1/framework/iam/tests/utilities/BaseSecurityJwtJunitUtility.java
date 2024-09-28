@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.tests.utilities;
 
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.domain.postgres.projections;
 
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 
 public interface PostgresDbUserProjection1 {
     String getUsername();

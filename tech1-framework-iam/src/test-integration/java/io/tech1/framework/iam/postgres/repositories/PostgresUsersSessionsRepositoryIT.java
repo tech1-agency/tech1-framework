@@ -2,8 +2,8 @@ package io.tech1.framework.iam.postgres.repositories;
 
 import io.tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
 import io.tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 import io.tech1.framework.iam.configurations.ApplicationPostgresRepositories;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.identifiers.UserSessionId;
@@ -23,8 +23,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static io.tech1.framework.iam.domain.jwt.JwtAccessToken.accessTokens;
 import static io.tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toAccessTokensAsStrings2;
 import static io.tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings2;

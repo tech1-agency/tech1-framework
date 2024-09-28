@@ -6,7 +6,7 @@ import io.tech1.framework.iam.domain.dto.requests.RequestUserUpdate2;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.services.BaseUsersService;
-import io.tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Password;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

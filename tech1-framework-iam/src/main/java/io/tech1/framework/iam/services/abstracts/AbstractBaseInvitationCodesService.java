@@ -6,8 +6,8 @@ import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCodes;
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.iam.services.BaseInvitationCodesService;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

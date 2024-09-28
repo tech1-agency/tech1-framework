@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.constants;
 
-import io.tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

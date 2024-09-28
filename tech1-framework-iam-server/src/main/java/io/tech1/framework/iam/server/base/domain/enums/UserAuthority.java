@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.server.base.domain.enums;
 
-import io.tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
 
 public enum UserAuthority implements AbstractAuthority {
     USER("user"),

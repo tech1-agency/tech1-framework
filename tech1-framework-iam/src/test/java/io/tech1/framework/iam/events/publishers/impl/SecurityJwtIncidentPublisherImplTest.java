@@ -1,14 +1,14 @@
 package io.tech1.framework.iam.events.publishers.impl;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
-import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
-import io.tech1.framework.foundation.incidents.domain.authetication.*;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import tech1.framework.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
+import tech1.framework.foundation.incidents.domain.authetication.*;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -27,8 +27,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType.*;
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

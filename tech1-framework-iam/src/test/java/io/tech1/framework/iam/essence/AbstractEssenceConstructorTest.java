@@ -3,10 +3,10 @@ package io.tech1.framework.iam.essence;
 import io.tech1.framework.iam.tests.stubbers.AbstractMockService;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.iam.repositories.UsersRepository;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
-import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 

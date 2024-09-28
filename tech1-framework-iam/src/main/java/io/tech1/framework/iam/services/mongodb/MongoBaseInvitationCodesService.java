@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.services.mongodb;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import io.tech1.framework.iam.services.abstracts.AbstractBaseInvitationCodesService;
 import org.springframework.beans.factory.annotation.Autowired;

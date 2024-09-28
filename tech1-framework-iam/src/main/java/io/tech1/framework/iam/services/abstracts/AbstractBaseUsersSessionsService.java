@@ -1,11 +1,11 @@
 package io.tech1.framework.iam.services.abstracts;
 
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.foundation.domain.tuples.Tuple3;
-import io.tech1.framework.foundation.domain.tuples.TupleToggle;
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.tuples.Tuple3;
+import tech1.framework.foundation.domain.tuples.TupleToggle;
+import tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import io.tech1.framework.iam.domain.events.EventSessionUserRequestMetadataRenew;
@@ -30,10 +30,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
-import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static io.tech1.framework.foundation.utilities.time.TimestampUtility.isPast;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.isPast;
 import static io.tech1.framework.iam.domain.db.UserSession.ofNotPersisted;
 import static io.tech1.framework.iam.domain.db.UserSession.ofPersisted;
 

@@ -1,9 +1,9 @@
 package io.tech1.framework.iam.filters.jwt_extension;
 
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import org.jetbrains.annotations.NotNull;
 
 import jakarta.servlet.http.HttpServletRequest;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 public interface JwtTokensFilterExtension {
     void doFilter(@NotNull HttpServletRequest request) throws AccessTokenNotFoundException,

@@ -1,9 +1,9 @@
 package io.tech1.framework.iam.events.subscribers.websockets;
 
-import io.tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.foundation.services.hardware.subscribers.base.BaseHardwareMonitoringSubscriber;
+import tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import tech1.framework.foundation.services.hardware.subscribers.base.BaseHardwareMonitoringSubscriber;
 import io.tech1.framework.iam.tasks.hardware.HardwareBackPressureTimerTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -7,10 +7,10 @@ import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbUser;
 import io.tech1.framework.iam.domain.postgres.projections.PostgresDbUserProjection1;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.iam.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")

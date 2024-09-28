@@ -1,6 +1,5 @@
 package io.tech1.framework.iam.converters.columns;
 
-import io.tech1.framework.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,8 +17,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.tech1.framework.iam.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_READ;
-import static io.tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_WRITE;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_READ;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_WRITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })

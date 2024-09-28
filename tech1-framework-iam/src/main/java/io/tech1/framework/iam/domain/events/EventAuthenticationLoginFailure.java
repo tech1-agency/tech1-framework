@@ -1,9 +1,9 @@
 package io.tech1.framework.iam.domain.events;
 
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.http.requests.IPAddress;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.IPAddress;
+import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 
 public record EventAuthenticationLoginFailure(
         Username username,

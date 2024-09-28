@@ -13,10 +13,10 @@ import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.repositories.UsersSessionsRepository;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

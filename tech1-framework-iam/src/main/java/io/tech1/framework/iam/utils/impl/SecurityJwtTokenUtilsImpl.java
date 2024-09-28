@@ -4,9 +4,9 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import io.tech1.framework.foundation.domain.base.PropertyId;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.base.TimeAmount;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.TimeAmount;
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.iam.domain.jwt.JwtTokenCreationParams;
@@ -20,7 +20,7 @@ import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static io.tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static io.tech1.framework.iam.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 
 @Slf4j

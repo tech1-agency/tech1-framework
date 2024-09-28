@@ -2,7 +2,7 @@ package io.tech1.framework.iam.tests.runners;
 
 import io.tech1.framework.iam.tests.contexts.TestsApplicationResourcesContext;
 import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwtMvc;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

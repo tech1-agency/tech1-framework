@@ -1,10 +1,10 @@
 package io.tech1.framework.iam.template.impl;
 
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.iam.domain.events.WebsocketEvent;
 import io.tech1.framework.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;

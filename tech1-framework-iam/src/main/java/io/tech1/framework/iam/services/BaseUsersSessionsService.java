@@ -10,7 +10,7 @@ import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.domain.sessions.SessionsExpiredTable;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Set;

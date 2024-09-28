@@ -1,11 +1,11 @@
 package io.tech1.framework.iam.events.subscribers.impl;
 
-import io.tech1.framework.foundation.incidents.domain.authetication.*;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
+import tech1.framework.foundation.incidents.domain.authetication.*;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
 import io.tech1.framework.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

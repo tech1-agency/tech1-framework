@@ -1,12 +1,12 @@
 package io.tech1.framework.iam.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.foundation.domain.constants.ZoneIdsConstants;
+import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.ZoneId;
 
-import static io.tech1.framework.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
+import static tech1.framework.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
 
 public record RequestUserUpdate2(
         @Schema(type = "string") @NotNull ZoneId zoneId,

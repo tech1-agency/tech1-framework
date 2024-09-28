@@ -1,9 +1,9 @@
 package io.tech1.framework.iam.assistants.current.base;
 
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.iam.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.dto.responses.ResponseUserSessionsTable;

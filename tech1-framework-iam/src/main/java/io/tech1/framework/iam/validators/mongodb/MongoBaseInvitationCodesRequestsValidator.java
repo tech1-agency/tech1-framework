@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.validators.mongodb;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import io.tech1.framework.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import org.springframework.stereotype.Component;

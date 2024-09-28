@@ -3,7 +3,7 @@ package io.tech1.framework.iam.configurations;
 import io.tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

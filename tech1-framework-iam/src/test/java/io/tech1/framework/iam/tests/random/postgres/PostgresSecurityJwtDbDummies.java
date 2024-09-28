@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.tests.random.postgres;
 
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbInvitationCode;
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbUser;
 import io.tech1.framework.iam.domain.postgres.db.PostgresDbUserSession;
@@ -9,7 +9,6 @@ import lombok.experimental.UtilityClass;
 import java.util.List;
 import java.util.Set;
 
-import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static io.tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbRandomUtility.*;
 
 @UtilityClass

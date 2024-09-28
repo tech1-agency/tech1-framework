@@ -13,8 +13,7 @@ import java.util.stream.Stream;
 
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.foundation.domain.base.AbstractAuthority.*;
-import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.TWICE;
+import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.TWICE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringAuthoritiesUtilityTest {

@@ -2,9 +2,9 @@ package io.tech1.framework.iam.essence;
 
 import io.tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
-import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

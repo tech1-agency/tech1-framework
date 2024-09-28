@@ -2,9 +2,9 @@ package io.tech1.framework.iam.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.foundation.domain.base.AbstractAuthority;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static java.util.Objects.nonNull;
 
 // Lombok

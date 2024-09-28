@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.domain.dto.requests;
 
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
 
 public record RequestUserLogin(
         @Username.ValidUsername Username username,

@@ -1,15 +1,15 @@
 package io.tech1.framework.iam.domain.mongodb;
 
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
+import static tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MongoDbUserTest {

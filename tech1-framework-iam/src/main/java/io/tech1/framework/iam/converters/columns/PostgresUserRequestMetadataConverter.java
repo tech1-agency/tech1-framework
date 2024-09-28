@@ -1,10 +1,10 @@
 package io.tech1.framework.iam.converters.columns;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.foundation.domain.enums.Status;
-import io.tech1.framework.foundation.domain.geo.GeoLocation;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentDetails;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.enums.Status;
+import tech1.framework.foundation.domain.geo.GeoLocation;
+import tech1.framework.foundation.domain.http.requests.UserAgentDetails;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.SneakyThrows;
 
 import jakarta.persistence.Converter;

@@ -1,16 +1,16 @@
 package io.tech1.framework.iam.events.subscribers.base;
 
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
-import io.tech1.framework.foundation.domain.http.requests.IPAddress;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
-import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
-import io.tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
+import tech1.framework.foundation.domain.http.requests.IPAddress;
+import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.events.*;
 import io.tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
@@ -31,7 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

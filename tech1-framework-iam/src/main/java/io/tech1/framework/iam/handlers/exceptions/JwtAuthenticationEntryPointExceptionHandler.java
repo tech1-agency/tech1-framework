@@ -5,8 +5,8 @@ import io.tech1.framework.iam.domain.dto.requests.RequestUserLogin;
 import io.tech1.framework.iam.domain.events.EventAuthenticationLoginFailure;
 import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.utils.HttpRequestUtils;
-import io.tech1.framework.foundation.domain.exceptions.ExceptionEntity;
-import io.tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
+import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 
 @Slf4j
 @Component

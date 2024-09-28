@@ -6,7 +6,6 @@ import io.tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandle
 import io.tech1.framework.iam.services.TokensService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +21,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+
 import java.io.IOException;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

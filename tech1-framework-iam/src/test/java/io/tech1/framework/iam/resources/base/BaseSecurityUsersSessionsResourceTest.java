@@ -11,7 +11,7 @@ import io.tech1.framework.iam.domain.security.CurrentClientUser;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import io.tech1.framework.iam.validators.BaseUsersSessionsRequestsValidator;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.list345;
+import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.*;

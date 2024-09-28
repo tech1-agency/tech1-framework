@@ -7,9 +7,9 @@ import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.validators.BaseUsersValidator;
 import io.tech1.framework.iam.validators.abtracts.AbstractBaseUsersValidator;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,10 +28,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;

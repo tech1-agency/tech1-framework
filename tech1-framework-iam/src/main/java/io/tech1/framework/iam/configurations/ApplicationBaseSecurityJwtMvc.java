@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.configurations;
 
 import io.tech1.framework.iam.annotations.AbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.foundation.configurations.ApplicationMVC;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.configurations.ApplicationMVC;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;

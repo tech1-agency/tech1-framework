@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.tests.domain.enums;
 
-import io.tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
 
 public enum TestAuthority implements AbstractAuthority {
     USER("user"),

@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.handshakes;
 
-import io.tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

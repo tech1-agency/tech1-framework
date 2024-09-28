@@ -10,10 +10,10 @@ import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.iam.repositories.UsersSessionsRepository;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;
-import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import io.tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import io.tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +28,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Set;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.list345;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

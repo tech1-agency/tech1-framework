@@ -1,12 +1,12 @@
 package io.tech1.framework.iam.domain.dto.responses;
 
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 
 import java.util.Comparator;
 
-import static io.tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 

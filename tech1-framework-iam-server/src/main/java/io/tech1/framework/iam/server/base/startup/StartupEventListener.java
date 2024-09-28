@@ -1,15 +1,15 @@
 package io.tech1.framework.iam.server.base.startup;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.iam.essence.AbstractEssenceConstructor;
 import io.tech1.framework.iam.startup.DefaultStartupEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static io.tech1.framework.foundation.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER_1;
-import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
+import static tech1.framework.foundation.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER_1;
+import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
 @Service

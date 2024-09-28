@@ -2,9 +2,9 @@ package io.tech1.framework.iam.crons;
 
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
-import io.tech1.framework.foundation.domain.crons.AbstractBaseCron;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.crons.AbstractBaseCron;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

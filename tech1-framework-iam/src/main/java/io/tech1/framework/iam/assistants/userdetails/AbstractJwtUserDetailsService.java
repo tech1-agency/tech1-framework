@@ -2,7 +2,7 @@ package io.tech1.framework.iam.assistants.userdetails;
 
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.repositories.UsersRepository;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

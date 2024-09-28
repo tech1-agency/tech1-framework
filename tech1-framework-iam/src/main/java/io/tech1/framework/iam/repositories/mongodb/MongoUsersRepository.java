@@ -6,10 +6,10 @@ import io.tech1.framework.iam.domain.identifiers.UserId;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.domain.mongodb.MongoDbUser;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,8 +20,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.tech1.framework.iam.constants.SecurityJwtConstants.SUPERADMIN;
-import static io.tech1.framework.foundation.domain.tuples.TuplePresence.present;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, UsersRepository {

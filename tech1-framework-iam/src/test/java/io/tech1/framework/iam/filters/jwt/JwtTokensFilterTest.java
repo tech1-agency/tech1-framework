@@ -4,14 +4,12 @@ import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.domain.jwt.RequestRefreshToken;
 import io.tech1.framework.iam.domain.sessions.Session;
-import io.tech1.framework.iam.filters.jwt.JwtTokensFilter;
 import io.tech1.framework.iam.filters.jwt_extension.JwtTokensFilterExtension;
 import io.tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import io.tech1.framework.iam.services.TokensService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,10 +31,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

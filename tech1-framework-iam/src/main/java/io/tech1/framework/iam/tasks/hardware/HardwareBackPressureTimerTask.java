@@ -1,10 +1,10 @@
 package io.tech1.framework.iam.tasks.hardware;
 
-import io.tech1.framework.foundation.domain.concurrent.AbstractInfiniteTimerTask;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.time.SchedulerConfiguration;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import tech1.framework.foundation.domain.concurrent.AbstractInfiniteTimerTask;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.time.SchedulerConfiguration;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.template.WssMessagingTemplate;
 import org.springframework.stereotype.Component;

@@ -1,14 +1,14 @@
 package io.tech1.framework.iam.tasks.superadmin;
 
 import io.tech1.framework.iam.domain.jwt.JwtUser;
-import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
-import static io.tech1.framework.foundation.domain.enums.Status.COMPLETED;
-import static io.tech1.framework.foundation.domain.enums.Status.STARTED;
+import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
+import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
+import static tech1.framework.foundation.domain.enums.Status.STARTED;
 
 @Slf4j
 @AllArgsConstructor

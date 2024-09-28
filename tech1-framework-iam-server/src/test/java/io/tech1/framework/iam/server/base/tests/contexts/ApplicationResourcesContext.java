@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.server.base.tests.contexts;
 
-import io.tech1.framework.foundation.utilities.environment.EnvironmentUtility;
+import tech1.framework.foundation.utilities.environment.EnvironmentUtility;
 import io.tech1.framework.iam.server.base.services.UsersService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

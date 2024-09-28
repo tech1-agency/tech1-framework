@@ -7,8 +7,8 @@ import io.tech1.framework.iam.domain.identifiers.UserSessionId;
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;

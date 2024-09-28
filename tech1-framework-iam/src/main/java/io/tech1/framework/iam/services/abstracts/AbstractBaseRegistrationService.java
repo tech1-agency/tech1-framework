@@ -5,7 +5,7 @@ import io.tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.services.BaseRegistrationService;
-import io.tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Password;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

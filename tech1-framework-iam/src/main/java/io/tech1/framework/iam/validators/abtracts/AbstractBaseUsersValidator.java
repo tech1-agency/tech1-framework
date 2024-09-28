@@ -4,11 +4,11 @@ import io.tech1.framework.iam.domain.dto.requests.RequestUserChangePasswordBasic
 import io.tech1.framework.iam.domain.dto.requests.RequestUserUpdate1;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.validators.BaseUsersValidator;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

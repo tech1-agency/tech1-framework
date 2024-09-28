@@ -2,8 +2,8 @@ package io.tech1.framework.iam.configurations;
 
 import io.tech1.framework.iam.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.iam.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -9,8 +9,8 @@ import io.tech1.framework.iam.services.TokensService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
-import io.tech1.framework.foundation.domain.tuples.Tuple2;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+import tech1.framework.foundation.domain.tuples.Tuple2;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +28,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import static io.tech1.framework.iam.domain.db.UserSession.randomPersistedSession;
 import static io.tech1.framework.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

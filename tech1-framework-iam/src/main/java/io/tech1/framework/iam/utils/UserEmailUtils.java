@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.utils;
 
 import io.tech1.framework.iam.domain.enums.AccountAccessMethod;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.Map;
 

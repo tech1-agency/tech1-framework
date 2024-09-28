@@ -1,15 +1,15 @@
 package io.tech1.framework.iam.domain.db;
 
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static io.tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record InvitationCode(
         InvitationCodeId id,

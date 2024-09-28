@@ -1,10 +1,9 @@
 package io.tech1.framework.iam.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.constants.ZoneIdsConstants;
-import io.tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
-import io.tech1.framework.iam.domain.dto.requests.RequestUserUpdate1;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
+import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 

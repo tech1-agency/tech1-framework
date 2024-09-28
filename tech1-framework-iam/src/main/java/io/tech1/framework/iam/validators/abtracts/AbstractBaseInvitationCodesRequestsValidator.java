@@ -3,17 +3,17 @@ package io.tech1.framework.iam.validators.abtracts;
 import io.tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.validators.BaseInvitationCodesRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 
-import static io.tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static io.tech1.framework.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static tech1.framework.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {

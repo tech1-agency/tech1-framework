@@ -1,9 +1,9 @@
 package io.tech1.framework.iam.configurations;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.configs.MvcConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.configs.MvcConfigs;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
+import tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;
 import io.tech1.framework.iam.handshakes.CsrfInterceptorHandshake;
 import io.tech1.framework.iam.handshakes.SecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;

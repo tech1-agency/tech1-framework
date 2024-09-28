@@ -5,7 +5,7 @@ import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.domain.sessions.Session;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.Set;

@@ -2,7 +2,7 @@ package io.tech1.framework.iam.validators.postgres;
 
 import io.tech1.framework.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import io.tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

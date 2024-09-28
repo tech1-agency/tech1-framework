@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.configurations;
 
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import io.tech1.framework.iam.essence.PostgresBaseEssenceConstructor;
 import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;

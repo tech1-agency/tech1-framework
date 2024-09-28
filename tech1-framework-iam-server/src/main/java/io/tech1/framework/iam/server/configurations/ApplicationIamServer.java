@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.server.configurations;
 
-import io.tech1.framework.foundation.domain.base.PropertyId;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
 import io.tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
 import io.tech1.framework.iam.server.base.properties.ApplicationProperties;

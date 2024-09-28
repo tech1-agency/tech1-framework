@@ -1,19 +1,17 @@
 package io.tech1.framework.iam.events.subscribers.impl;
 
 import io.tech1.framework.iam.events.subscribers.SecurityJwtIncidentSubscriber;
-import io.tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
-import io.tech1.framework.foundation.incidents.domain.authetication.*;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import io.tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import io.tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
+import tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
+import tech1.framework.foundation.incidents.domain.authetication.*;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static io.tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @Service

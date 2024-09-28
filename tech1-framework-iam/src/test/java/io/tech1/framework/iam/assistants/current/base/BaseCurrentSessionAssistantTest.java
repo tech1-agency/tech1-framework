@@ -1,7 +1,6 @@
 package io.tech1.framework.iam.assistants.current.base;
 
 import io.tech1.framework.iam.assistants.current.CurrentSessionAssistant;
-import io.tech1.framework.iam.assistants.current.base.BaseCurrentSessionAssistant;
 import io.tech1.framework.iam.domain.db.UserSession;
 import io.tech1.framework.iam.domain.dto.responses.ResponseUserSessionsTable;
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
@@ -11,13 +10,13 @@ import io.tech1.framework.iam.repositories.UsersSessionsRepository;
 import io.tech1.framework.iam.sessions.SessionRegistry;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import io.tech1.framework.iam.utils.SecurityPrincipalUtils;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import io.tech1.framework.foundation.domain.properties.configs.HardwareMonitoringConfigs;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
-import io.tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
+import tech1.framework.foundation.domain.properties.configs.HardwareMonitoringConfigs;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Set;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

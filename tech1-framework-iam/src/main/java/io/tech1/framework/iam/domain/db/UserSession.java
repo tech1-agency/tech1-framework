@@ -3,12 +3,12 @@ package io.tech1.framework.iam.domain.db;
 import io.tech1.framework.iam.domain.identifiers.UserSessionId;
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
-import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 public record UserSession(
         boolean persisted,

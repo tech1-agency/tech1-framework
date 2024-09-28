@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.domain.dto.requests;
 
-import io.tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Password;
 
 public record RequestUserChangePasswordBasic(
         @Password.ValidPasswordCamelCaseLettersAndNumbers(min = 8, max = 20) Password newPassword,

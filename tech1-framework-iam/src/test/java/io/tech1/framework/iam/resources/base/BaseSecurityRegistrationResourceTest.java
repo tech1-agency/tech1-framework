@@ -7,7 +7,7 @@ import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.services.BaseRegistrationService;
 import io.tech1.framework.iam.validators.BaseRegistrationRequestsValidator;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

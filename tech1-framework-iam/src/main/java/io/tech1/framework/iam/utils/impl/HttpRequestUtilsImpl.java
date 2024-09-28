@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.utils.impl;
 
-import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.utils.HttpRequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isPOST;
+import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 
 @Slf4j
 @Component

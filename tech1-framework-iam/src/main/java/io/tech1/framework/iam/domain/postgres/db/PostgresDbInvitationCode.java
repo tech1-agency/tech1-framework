@@ -5,9 +5,9 @@ import io.tech1.framework.iam.domain.db.InvitationCode;
 import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
-import io.tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
+import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import io.tech1.framework.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -15,7 +15,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 import static io.tech1.framework.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 // Lombok
 @NoArgsConstructor

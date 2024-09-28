@@ -1,12 +1,12 @@
 package io.tech1.framework.iam.domain.security;
 
 import io.tech1.framework.iam.tests.domain.enums.TestAuthority;
-import io.tech1.framework.foundation.domain.base.AbstractAuthority;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.constants.DomainConstants;
-import io.tech1.framework.foundation.domain.constants.ZoneIdsConstants;
-import io.tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.constants.DomainConstants;
+import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
+import tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,11 +17,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static io.tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static io.tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
+import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
+import static tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
+import static tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CurrentClientUserTest extends AbstractFolderSerializationRunner {

@@ -4,10 +4,10 @@ import io.tech1.framework.iam.domain.db.InvitationCode;
 import io.tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
 import io.tech1.framework.iam.domain.identifiers.UserId;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UsersRepository {

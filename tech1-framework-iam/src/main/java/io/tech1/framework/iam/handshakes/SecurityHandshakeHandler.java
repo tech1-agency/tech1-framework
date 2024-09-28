@@ -1,6 +1,5 @@
 package io.tech1.framework.iam.handshakes;
 
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import io.tech1.framework.iam.services.TokensService;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 import java.security.Principal;
 import java.util.Map;

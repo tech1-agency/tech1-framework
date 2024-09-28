@@ -2,18 +2,19 @@ package io.tech1.framework.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.tech1.framework.foundation.domain.converters.columns.*;
 import io.tech1.framework.iam.converters.columns.*;
 import io.tech1.framework.iam.domain.identifiers.UserId;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
-import io.tech1.framework.foundation.domain.base.Email;
-import io.tech1.framework.foundation.domain.base.Password;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import jakarta.persistence.*;
+import tech1.framework.foundation.domain.converters.columns.*;
+
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;

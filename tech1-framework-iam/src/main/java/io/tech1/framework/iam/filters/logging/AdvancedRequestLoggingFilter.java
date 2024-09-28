@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.filters.logging;
 
-import io.tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.utils.HttpRequestUtils;
 import io.tech1.framework.iam.utils.SecurityPrincipalUtils;
 import jakarta.servlet.FilterChain;
@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static io.tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isMultipartRequest;
+import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isMultipartRequest;
 
 @Slf4j
 @Component

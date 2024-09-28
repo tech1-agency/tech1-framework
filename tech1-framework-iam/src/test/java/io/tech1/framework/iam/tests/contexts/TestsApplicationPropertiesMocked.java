@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.tests.contexts;
 
-import io.tech1.framework.foundation.domain.properties.configs.MvcConfigs;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.configs.MvcConfigs;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,8 +1,8 @@
 package io.tech1.framework.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import io.tech1.framework.iam.annotations.AbstractFrameworkBaseSecurityResource;
 import io.tech1.framework.iam.assistants.current.CurrentSessionAssistant;
 import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;

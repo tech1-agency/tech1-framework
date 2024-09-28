@@ -1,14 +1,13 @@
 package io.tech1.framework.iam.crons;
 
-import io.tech1.framework.iam.crons.SessionsCron;
 import io.tech1.framework.iam.services.BaseUsersSessionsService;
 import io.tech1.framework.iam.sessions.SessionRegistry;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.properties.base.Cron;
-import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.security.jwt.SessionConfigs;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.base.Cron;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import tech1.framework.foundation.domain.properties.configs.security.jwt.SessionConfigs;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.random.EntityUtility.set345;
+import static tech1.framework.foundation.utilities.random.EntityUtility.set345;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })

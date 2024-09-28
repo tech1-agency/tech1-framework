@@ -4,7 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
 import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;

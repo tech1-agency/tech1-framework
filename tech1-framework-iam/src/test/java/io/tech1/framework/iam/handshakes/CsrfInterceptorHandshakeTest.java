@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.handshakes;
 
-import io.tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import io.tech1.framework.foundation.utilities.random.EntityUtility;
+import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import tech1.framework.foundation.utilities.random.EntityUtility;
 import io.tech1.framework.iam.tokens.facade.TokensProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

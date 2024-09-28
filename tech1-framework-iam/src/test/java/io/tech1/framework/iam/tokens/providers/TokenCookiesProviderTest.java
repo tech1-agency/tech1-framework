@@ -2,12 +2,11 @@ package io.tech1.framework.iam.tokens.providers;
 
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import io.tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import io.tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import io.tech1.framework.iam.tokens.providers.TokenCookiesProvider;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;

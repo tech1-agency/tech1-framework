@@ -2,11 +2,11 @@ package io.tech1.framework.iam.template.impl;
 
 import io.tech1.framework.iam.domain.events.WebsocketEvent;
 import io.tech1.framework.iam.template.WssMessagingTemplate;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import io.tech1.framework.foundation.domain.properties.configs.security.jwt.websockets.*;
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
+import tech1.framework.foundation.domain.properties.configs.security.jwt.websockets.*;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static io.tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })

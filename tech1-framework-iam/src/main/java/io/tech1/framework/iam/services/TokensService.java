@@ -5,9 +5,9 @@ import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
 import io.tech1.framework.iam.domain.jwt.RequestRefreshToken;
 
-import io.tech1.framework.foundation.domain.exceptions.tokens.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 public interface TokensService {
     JwtUser getJwtUserByAccessTokenOrThrow(

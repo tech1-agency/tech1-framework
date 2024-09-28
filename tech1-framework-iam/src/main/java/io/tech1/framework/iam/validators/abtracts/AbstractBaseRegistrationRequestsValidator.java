@@ -7,13 +7,13 @@ import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
 import io.tech1.framework.iam.repositories.UsersRepository;
 import io.tech1.framework.iam.validators.BaseRegistrationRequestsValidator;
-import io.tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import io.tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
-import static io.tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

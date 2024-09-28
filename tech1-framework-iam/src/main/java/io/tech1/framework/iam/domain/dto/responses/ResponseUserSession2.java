@@ -3,12 +3,12 @@ package io.tech1.framework.iam.domain.dto.responses;
 import io.tech1.framework.iam.domain.identifiers.UserSessionId;
 import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import io.tech1.framework.foundation.domain.time.TimeAgo;
-import io.tech1.framework.foundation.domain.time.TimeAmount;
-import io.tech1.framework.foundation.domain.tuples.TupleExceptionDetails;
-import io.tech1.framework.foundation.utilities.time.TimestampUtility;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.time.TimeAgo;
+import tech1.framework.foundation.domain.time.TimeAmount;
+import tech1.framework.foundation.domain.tuples.TupleExceptionDetails;
+import tech1.framework.foundation.utilities.time.TimestampUtility;
 
 import java.util.Comparator;
 

@@ -4,9 +4,9 @@ import io.tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams
 import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import io.tech1.framework.iam.repositories.InvitationCodesRepository;
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import io.tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

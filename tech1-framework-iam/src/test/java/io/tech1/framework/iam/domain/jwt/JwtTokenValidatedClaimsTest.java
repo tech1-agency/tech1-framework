@@ -1,17 +1,14 @@
 package io.tech1.framework.iam.domain.jwt;
 
-import io.tech1.framework.foundation.domain.base.Username;
-import io.tech1.framework.iam.domain.jwt.JwtAccessToken;
-import io.tech1.framework.iam.domain.jwt.JwtRefreshToken;
-import io.tech1.framework.iam.domain.jwt.JwtTokenValidatedClaims;
+import tech1.framework.foundation.domain.base.Username;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
 import static io.tech1.framework.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
-import static io.tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static io.tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JwtTokenValidatedClaimsTest {

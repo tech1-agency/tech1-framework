@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.services.mongodb;
 
-import io.tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import io.tech1.framework.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import io.tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import io.tech1.framework.iam.services.abstracts.AbstractBaseSuperadminService;

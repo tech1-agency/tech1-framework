@@ -4,7 +4,7 @@ import io.tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
 import io.tech1.framework.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import io.tech1.framework.iam.domain.jwt.JwtUser;
 import io.tech1.framework.iam.domain.jwt.RequestAccessToken;
-import io.tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;

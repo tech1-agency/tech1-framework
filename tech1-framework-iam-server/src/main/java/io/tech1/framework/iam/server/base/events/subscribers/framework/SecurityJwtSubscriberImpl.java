@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.server.base.events.subscribers.framework;
 
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import tech1.framework.foundation.utils.UserMetadataUtils;
 import io.tech1.framework.iam.domain.events.EventAuthenticationLogin;
 import io.tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import io.tech1.framework.iam.events.subscribers.base.BaseSecurityJwtSubscriber;

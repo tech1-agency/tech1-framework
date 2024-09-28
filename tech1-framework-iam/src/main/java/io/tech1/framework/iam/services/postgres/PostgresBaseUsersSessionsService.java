@@ -4,7 +4,7 @@ import io.tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import io.tech1.framework.iam.services.abstracts.AbstractBaseUsersSessionsService;
 import io.tech1.framework.iam.utils.SecurityJwtTokenUtils;
 import io.tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import io.tech1.framework.foundation.utils.UserMetadataUtils;
+import tech1.framework.foundation.utils.UserMetadataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

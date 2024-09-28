@@ -1,6 +1,6 @@
 package io.tech1.framework.iam.essence;
 
-import io.tech1.framework.foundation.domain.properties.base.DefaultUser;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;

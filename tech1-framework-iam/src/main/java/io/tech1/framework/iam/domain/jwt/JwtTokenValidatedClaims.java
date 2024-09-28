@@ -1,7 +1,7 @@
 package io.tech1.framework.iam.domain.jwt;
 
 import io.jsonwebtoken.Claims;
-import io.tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.base.Username;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.*;

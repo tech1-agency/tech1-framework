@@ -1,5 +1,6 @@
 package tech1.framework.iam.tests.random.mongodb;
 
+import lombok.experimental.UtilityClass;
 import tech1.framework.foundation.domain.base.Email;
 import tech1.framework.foundation.domain.base.Password;
 import tech1.framework.foundation.domain.base.Username;
@@ -8,14 +9,14 @@ import tech1.framework.iam.domain.db.UserSession;
 import tech1.framework.iam.domain.mongodb.MongoDbInvitationCode;
 import tech1.framework.iam.domain.mongodb.MongoDbUser;
 import tech1.framework.iam.domain.mongodb.MongoDbUserSession;
-import lombok.experimental.UtilityClass;
 
 import java.util.Map;
 import java.util.Set;
 
-import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
-import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.springframework.util.StringUtils.capitalize;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static tech1.framework.foundation.utilities.random.RandomUtility.*;
+import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 @UtilityClass
 public class MongoSecurityJwtDbRandomUtility {

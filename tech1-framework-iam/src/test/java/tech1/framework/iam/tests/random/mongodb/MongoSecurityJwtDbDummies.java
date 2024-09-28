@@ -1,14 +1,15 @@
 package tech1.framework.iam.tests.random.mongodb;
 
+import lombok.experimental.UtilityClass;
+import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.iam.domain.mongodb.MongoDbInvitationCode;
 import tech1.framework.iam.domain.mongodb.MongoDbUser;
 import tech1.framework.iam.domain.mongodb.MongoDbUserSession;
-import tech1.framework.foundation.domain.base.Username;
-import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.Set;
 
+import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbRandomUtility.*;
 
 @UtilityClass

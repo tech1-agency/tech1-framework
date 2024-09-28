@@ -29,6 +29,7 @@ import tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import tech1.framework.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 
 import static org.springframework.http.HttpMethod.*;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 
 @Configuration
 @ComponentScan({

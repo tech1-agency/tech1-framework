@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 import java.util.List;
 import java.util.Set;
 
+import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbRandomUtility.*;
 
 @UtilityClass

@@ -2,11 +2,11 @@ package tech1.framework.iam.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import tech1.framework.foundation.domain.base.AbstractAuthority;
 import tech1.framework.foundation.domain.base.Email;
 import tech1.framework.foundation.domain.base.Username;
-import lombok.Data;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static tech1.framework.foundation.utilities.random.RandomUtility.*;
 
 // Lombok
 @Data

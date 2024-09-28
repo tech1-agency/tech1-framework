@@ -1,5 +1,12 @@
 package tech1.framework.iam.sessions;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import tech1.framework.iam.domain.dto.responses.ResponseUserSessionsTable;
 import tech1.framework.iam.domain.events.EventAuthenticationLogin;
 import tech1.framework.iam.domain.events.EventAuthenticationLogout;
@@ -13,17 +20,12 @@ import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import tech1.framework.iam.repositories.UsersSessionsRepository;
 import tech1.framework.iam.services.BaseUsersSessionsService;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

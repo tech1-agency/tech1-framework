@@ -2,9 +2,9 @@ package tech1.framework.foundation.utilities.exceptions;
 
 import org.junit.jupiter.api.RepeatedTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static tech1.framework.foundation.utilities.exceptions.TraceUtility.getTrace;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TraceUtilityTest {
 
@@ -21,6 +21,6 @@ class TraceUtilityTest {
         assertThat(actual.value()).isNotNull();
         assertThat(actual.value().length()).isGreaterThan(10000);
         assertThat(actual.value()).startsWith("java.lang.NullPointerException: Tech1");
-        assertThat(actual.value()).contains("at io.tech1.framework.foundation.utilities.exceptions.TraceUtilityTest.getTraceTest(TraceUtilityTest.java:14)");
+        assertThat(actual.value()).contains("at tech1.framework.foundation.utilities.exceptions.TraceUtilityTest.getTraceTest(TraceUtilityTest.java:14)");
     }
 }

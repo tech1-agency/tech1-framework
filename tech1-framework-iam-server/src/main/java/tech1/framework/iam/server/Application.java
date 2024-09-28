@@ -1,18 +1,18 @@
 package tech1.framework.iam.server;
 
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
 import static tech1.framework.foundation.domain.constants.LogsConstants.SERVER_CONTAINER_1;
 import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = {
-        "io.tech1.framework.iam.server.base",
-        "io.tech1.framework.iam.server.configurations"
+        "tech1.framework.iam.server.base",
+        "tech1.framework.iam.server.configurations"
 })
 @EnableConfigurationProperties({
         ApplicationFrameworkProperties.class

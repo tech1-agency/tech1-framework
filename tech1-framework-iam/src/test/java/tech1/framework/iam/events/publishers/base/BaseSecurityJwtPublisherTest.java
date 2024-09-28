@@ -1,8 +1,5 @@
 package tech1.framework.iam.events.publishers.base;
 
-import io.tech1.framework.iam.domain.events.*;
-import tech1.framework.iam.domain.events.*;
-import tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +13,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.iam.domain.events.*;
+import tech1.framework.iam.events.publishers.SecurityJwtPublisher;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

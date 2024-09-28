@@ -1,5 +1,8 @@
 package tech1.framework.iam.events.subscribers.base;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
 import tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
 import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
@@ -7,7 +10,6 @@ import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthent
 import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import tech1.framework.foundation.utils.UserMetadataUtils;
-import io.tech1.framework.iam.domain.events.*;
 import tech1.framework.iam.domain.events.*;
 import tech1.framework.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import tech1.framework.iam.domain.functions.FunctionSessionRefreshedEmail;
@@ -15,11 +17,9 @@ import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
 import tech1.framework.iam.events.subscribers.SecurityJwtSubscriber;
 import tech1.framework.iam.services.BaseUsersSessionsService;
 import tech1.framework.iam.services.UsersEmailsService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
+
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implements SecurityJwtSubscriber {

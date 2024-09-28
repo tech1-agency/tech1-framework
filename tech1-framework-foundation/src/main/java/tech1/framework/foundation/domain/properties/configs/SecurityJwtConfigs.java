@@ -1,11 +1,5 @@
 package tech1.framework.foundation.domain.properties.configs;
 
-import tech1.framework.foundation.domain.base.AbstractAuthority;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
-import tech1.framework.foundation.domain.properties.base.Checkbox;
-import tech1.framework.foundation.domain.asserts.Asserts;
-import io.tech1.framework.foundation.domain.properties.configs.security.jwt.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +8,11 @@ import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AssignableTypeFilter;
+import tech1.framework.foundation.domain.asserts.Asserts;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
+import tech1.framework.foundation.domain.properties.base.Checkbox;
 import tech1.framework.foundation.domain.properties.configs.security.jwt.*;
 
 import java.util.HashSet;

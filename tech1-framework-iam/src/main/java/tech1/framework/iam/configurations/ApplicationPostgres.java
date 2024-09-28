@@ -1,5 +1,9 @@
 package tech1.framework.iam.configurations;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import tech1.framework.iam.essence.PostgresBaseEssenceConstructor;
@@ -10,15 +14,11 @@ import tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
 import tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import tech1.framework.iam.services.postgres.PostgresBaseUsersSessionsService;
 import tech1.framework.iam.sessions.PostgresSessionRegistry;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan({
-        "io.tech1.framework.iam.services.postgres",
-        "io.tech1.framework.iam.validators.postgres",
+        "tech1.framework.iam.services.postgres",
+        "tech1.framework.iam.validators.postgres",
 })
 @Import({
         ApplicationPostgresRepositories.class

@@ -1,6 +1,5 @@
 package tech1.framework.foundation.domain.properties;
 
-import io.tech1.framework.foundation.domain.properties.configs.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;

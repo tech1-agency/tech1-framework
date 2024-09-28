@@ -1,9 +1,5 @@
 package tech1.framework.iam.configurations;
 
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.iam.handshakes.CsrfInterceptorHandshake;
-import tech1.framework.iam.handshakes.SecurityHandshakeHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +12,10 @@ import org.springframework.security.config.annotation.web.messaging.MessageSecur
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.iam.handshakes.CsrfInterceptorHandshake;
+import tech1.framework.iam.handshakes.SecurityHandshakeHandler;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
@@ -38,11 +38,11 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
         ApplicationBaseSecurityJwt.class
 })
 @ComponentScan({
-        "io.tech1.framework.iam.events.subscribers.websockets",
-        "io.tech1.framework.iam.handshakes",
-        "io.tech1.framework.iam.resources.websockets",
-        "io.tech1.framework.iam.tasks.hardware",
-        "io.tech1.framework.iam.template",
+        "tech1.framework.iam.events.subscribers.websockets",
+        "tech1.framework.iam.handshakes",
+        "tech1.framework.iam.resources.websockets",
+        "tech1.framework.iam.tasks.hardware",
+        "tech1.framework.iam.template",
 })
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

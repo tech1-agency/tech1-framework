@@ -1,15 +1,14 @@
 package tech1.framework.foundation.utilities.random;
 
-import io.tech1.framework.foundation.domain.tests.classes.*;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import tech1.framework.foundation.domain.tests.classes.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static tech1.framework.foundation.utilities.random.EntityUtility.*;
 import static tech1.framework.foundation.utilities.random.RandomUtility.one;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 class EntityUtilityTest {
 

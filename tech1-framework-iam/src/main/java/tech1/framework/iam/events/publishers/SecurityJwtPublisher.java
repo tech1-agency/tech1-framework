@@ -1,6 +1,5 @@
 package tech1.framework.iam.events.publishers;
 
-import io.tech1.framework.iam.domain.events.*;
 import tech1.framework.iam.domain.events.*;
 
 public interface SecurityJwtPublisher {

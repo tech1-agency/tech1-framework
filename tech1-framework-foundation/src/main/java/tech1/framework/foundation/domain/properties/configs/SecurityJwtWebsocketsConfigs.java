@@ -1,12 +1,11 @@
 package tech1.framework.foundation.domain.properties.configs;
 
-import tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
-import tech1.framework.foundation.domain.properties.annotations.NonMandatoryProperty;
-import io.tech1.framework.foundation.domain.properties.configs.security.jwt.websockets.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
+import tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
+import tech1.framework.foundation.domain.properties.annotations.NonMandatoryProperty;
 import tech1.framework.foundation.domain.properties.configs.security.jwt.websockets.*;
 
 // Lombok (property-based)

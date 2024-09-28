@@ -1,13 +1,5 @@
 package tech1.framework.iam.configurations;
 
-import tech1.framework.foundation.configurations.*;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.constants.SwaggerConstants;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
-import tech1.framework.iam.filters.jwt.JwtTokensFilter;
-import tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
-import tech1.framework.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +19,31 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tech1.framework.foundation.configurations.*;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.constants.SwaggerConstants;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
+import tech1.framework.iam.filters.jwt.JwtTokensFilter;
+import tech1.framework.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
+import tech1.framework.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.iam.crons",
-        "io.tech1.framework.iam.events.publishers.base",
-        "io.tech1.framework.iam.events.publishers.impl",
-        "io.tech1.framework.iam.events.subscribers.base",
-        "io.tech1.framework.iam.events.subscribers.impl",
-        "io.tech1.framework.iam.handlers.exceptions",
-        "io.tech1.framework.iam.resources.base",
-        "io.tech1.framework.iam.services.base",
-        "io.tech1.framework.iam.tokens",
-        "io.tech1.framework.iam.utils",
-        "io.tech1.framework.iam.validators.base"
+        "tech1.framework.iam.crons",
+        "tech1.framework.iam.events.publishers.base",
+        "tech1.framework.iam.events.publishers.impl",
+        "tech1.framework.iam.events.subscribers.base",
+        "tech1.framework.iam.events.subscribers.impl",
+        "tech1.framework.iam.handlers.exceptions",
+        "tech1.framework.iam.resources.base",
+        "tech1.framework.iam.services.base",
+        "tech1.framework.iam.tokens",
+        "tech1.framework.iam.utils",
+        "tech1.framework.iam.validators.base"
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity

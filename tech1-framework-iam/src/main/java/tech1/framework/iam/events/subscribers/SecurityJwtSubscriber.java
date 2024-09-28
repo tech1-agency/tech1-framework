@@ -1,6 +1,5 @@
 package tech1.framework.iam.events.subscribers;
 
-import io.tech1.framework.iam.domain.events.*;
 import org.springframework.context.event.EventListener;
 import tech1.framework.iam.domain.events.*;
 

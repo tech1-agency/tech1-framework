@@ -1,14 +1,14 @@
 package tech1.framework.foundation.domain.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ThrowableTraceTest extends AbstractSerializationDeserializationRunner {
-    private static final ThrowableTrace TRACE = new ThrowableTrace("java.lang.NullPointerException: Tech1 at io.tech1.framework.domain.exceptions.ThrowableTraceTest.main(ThrowableTraceTest.java:20)");
+    private static final ThrowableTrace TRACE = new ThrowableTrace("java.lang.NullPointerException: Tech1 at tech1.framework.domain.exceptions.ThrowableTraceTest.main(ThrowableTraceTest.java:20)");
 
     @Override
     protected String getFolder() {

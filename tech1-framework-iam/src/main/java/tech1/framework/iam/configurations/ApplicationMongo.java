@@ -1,5 +1,12 @@
 package tech1.framework.iam.configurations;
 
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import tech1.framework.foundation.domain.base.PropertyId;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.iam.assistants.userdetails.MongoUserDetailsAssistant;
@@ -11,18 +18,11 @@ import tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
 import tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import tech1.framework.iam.services.mongodb.MongoBaseUsersSessionsService;
 import tech1.framework.iam.sessions.MongoSessionRegistry;
-import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan({
-        "io.tech1.framework.iam.services.mongodb",
-        "io.tech1.framework.iam.validators.mongodb",
+        "tech1.framework.iam.services.mongodb",
+        "tech1.framework.iam.validators.mongodb",
 })
 @Import({
         ApplicationMongoRepositories.class

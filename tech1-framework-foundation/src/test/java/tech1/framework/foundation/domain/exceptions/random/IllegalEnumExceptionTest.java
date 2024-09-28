@@ -1,7 +1,7 @@
 package tech1.framework.foundation.domain.exceptions.random;
 
-import tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 import org.junit.jupiter.api.Test;
+import tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,6 +16,6 @@ class IllegalEnumExceptionTest {
         var actual = new IllegalEnumException(clazz);
 
         // Assert
-        assertThat(actual.getMessage()).isEqualTo("Please check enum: class io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests");
+        assertThat(actual.getMessage()).isEqualTo("Please check enum: class tech1.framework.foundation.domain.tests.enums.EnumUnderTests");
     }
 }

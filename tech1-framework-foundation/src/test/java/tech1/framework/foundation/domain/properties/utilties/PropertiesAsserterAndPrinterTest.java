@@ -1,28 +1,27 @@
 package tech1.framework.foundation.domain.properties.utilties;
 
+import org.junit.jupiter.api.Test;
 import tech1.framework.foundation.domain.base.PropertyId;
 import tech1.framework.foundation.domain.hardware.monitoring.HardwareName;
 import tech1.framework.foundation.domain.properties.base.ScheduledJob;
 import tech1.framework.foundation.domain.properties.base.SchedulerConfiguration;
 import tech1.framework.foundation.domain.properties.base.SpringLogging;
 import tech1.framework.foundation.domain.properties.base.SpringServer;
-import io.tech1.framework.foundation.domain.properties.configs.*;
 import tech1.framework.foundation.domain.properties.configs.*;
 import tech1.framework.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import tech1.framework.foundation.domain.tests.classes.NotUsedPropertiesConfigs;
 import tech1.framework.foundation.utilities.collections.CollectorUtility;
 import tech1.framework.foundation.utilities.enums.EnumUtility;
-import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType.*;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
 import static java.math.BigDecimal.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType.*;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
 
 class PropertiesAsserterAndPrinterTest {
 

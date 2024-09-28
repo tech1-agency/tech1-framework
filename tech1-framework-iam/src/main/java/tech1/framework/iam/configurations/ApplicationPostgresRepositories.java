@@ -1,9 +1,5 @@
 package tech1.framework.iam.configurations;
 
-import tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
-import tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
-import tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import tech1.framework.iam.repositories.postgres.Tech1PostgresRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -14,13 +10,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
+import tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import tech1.framework.iam.repositories.postgres.Tech1PostgresRepositories;
 
 @Configuration
 @EntityScan({
-        "io.tech1.framework.iam.domain.postgres"
+        "tech1.framework.iam.domain.postgres"
 })
 @EnableJpaRepositories({
-        "io.tech1.framework.iam.repositories.postgres"
+        "tech1.framework.iam.repositories.postgres"
 })
 @EnableTransactionManagement
 @EnableAutoConfiguration(exclude = {

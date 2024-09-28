@@ -1,6 +1,5 @@
 package tech1.framework.foundation.domain.properties;
 
-import io.tech1.framework.foundation.domain.properties.configs.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech1.framework.foundation.domain.properties.configs.*;

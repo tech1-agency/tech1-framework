@@ -1,10 +1,5 @@
 package tech1.framework.iam.server.configurations;
 
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
-import tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
-import tech1.framework.iam.server.base.properties.ApplicationProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +9,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
+import tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
+import tech1.framework.iam.server.base.properties.ApplicationProperties;
 
 import static org.springframework.http.HttpMethod.GET;
 
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "io.tech1.framework.iam.assistants.current.base",
-        "io.tech1.framework.iam.filters.jwt_extension",
-        "io.tech1.framework.iam.tasks.superadmin"
+        "tech1.framework.iam.assistants.current.base",
+        "tech1.framework.iam.filters.jwt_extension",
+        "tech1.framework.iam.tasks.superadmin"
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({

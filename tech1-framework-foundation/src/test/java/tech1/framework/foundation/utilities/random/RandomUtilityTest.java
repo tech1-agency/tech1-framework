@@ -1,17 +1,17 @@
 package tech1.framework.foundation.utilities.random;
 
 import feign.Request;
-import tech1.framework.foundation.domain.constants.BigDecimalConstants;
-import tech1.framework.foundation.domain.constants.BigIntegerConstants;
-import tech1.framework.foundation.domain.exceptions.random.IllegalEnumException;
-import tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests;
-import tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import tech1.framework.foundation.domain.constants.BigDecimalConstants;
+import tech1.framework.foundation.domain.constants.BigIntegerConstants;
+import tech1.framework.foundation.domain.exceptions.random.IllegalEnumException;
+import tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests;
+import tech1.framework.foundation.domain.tests.enums.EnumUnderTests;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -25,15 +25,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
-import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
-import static tech1.framework.foundation.domain.tests.enums.EnumUnderTests.*;
-import static tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
+import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
+import static tech1.framework.foundation.domain.tests.enums.EnumUnderTests.*;
+import static tech1.framework.foundation.utilities.random.RandomUtility.*;
 
 @Slf4j
 class RandomUtilityTest {
@@ -659,7 +659,7 @@ class RandomUtilityTest {
         // Assert
         assertThat(throwable1).isInstanceOf(IllegalEnumException.class);
         assertThat(throwable2).isInstanceOf(IllegalEnumException.class);
-        var message = "Please check enum: class io.tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests";
+        var message = "Please check enum: class tech1.framework.foundation.domain.tests.enums.EnumOneValueUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }
@@ -723,7 +723,7 @@ class RandomUtilityTest {
         // Assert
         assertThat(throwable1).isInstanceOf(IllegalEnumException.class);
         assertThat(throwable2).isInstanceOf(IllegalEnumException.class);
-        var message = "Please check enum: class io.tech1.framework.foundation.domain.tests.enums.EnumUnderTests";
+        var message = "Please check enum: class tech1.framework.foundation.domain.tests.enums.EnumUnderTests";
         assertThat(throwable1.getMessage()).isEqualTo(message);
         assertThat(throwable2.getMessage()).isEqualTo(message);
     }

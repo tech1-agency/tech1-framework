@@ -40,7 +40,7 @@ jobs:
         with:
           servers: |
             [{
-                "id": "github-tech1",
+                "id": "github-tech1-framework",
                 "username": "${{ vars.USERNAME_MAVEN_PACKAGES }}",
                 "password": "${{ secrets.TOKEN_MAVEN_PACKAGES }}"
             }]
@@ -51,7 +51,7 @@ jobs:
 
       - name: Maven [github packages]
         if: env.MAVEN_DEPLOYMENT_ENABLED == 'true'
-        run: mvn clean deploy -Pgithub-tech1
+        run: mvn clean deploy -Pgithub
 
       - name: Docker login
         if: env.DOCKER_PUSH_ENABLED == 'true'

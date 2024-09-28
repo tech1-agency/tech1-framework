@@ -352,7 +352,7 @@
 
     <profiles>
         <profile>
-            <id>github-tech1</id>
+            <id>github</id>
             <distributionManagement>
                 <repository>
                     <id>github-tech1-framework</id>

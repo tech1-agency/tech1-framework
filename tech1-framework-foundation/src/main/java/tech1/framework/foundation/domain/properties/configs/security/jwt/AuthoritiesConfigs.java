@@ -27,7 +27,7 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
 
     public static AuthoritiesConfigs testsHardcoded() {
         return new AuthoritiesConfigs(
-                "io.tech1",
+                "tech1",
                 Set.of(
                         new Authority(AbstractAuthority.SUPERADMIN),
                         new Authority("admin"),

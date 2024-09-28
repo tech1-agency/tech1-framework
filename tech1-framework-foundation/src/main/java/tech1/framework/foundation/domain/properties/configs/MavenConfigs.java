@@ -21,7 +21,7 @@ public class MavenConfigs extends AbstractPropertiesConfigs {
     private final Version version;
 
     public static MavenConfigs testsHardcoded() {
-        return new MavenConfigs("io.tech1.framework", "tech1-framework", Version.testsHardcoded());
+        return new MavenConfigs("tech1.framework", "tech1-framework", Version.testsHardcoded());
     }
 
     @Override

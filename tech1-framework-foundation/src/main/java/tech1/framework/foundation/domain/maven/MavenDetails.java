@@ -18,6 +18,6 @@ public record MavenDetails(
     }
 
     public static MavenDetails testsHardcoded() {
-        return new MavenDetails("io.tech1.framework", "tech1-server", Version.testsHardcoded());
+        return new MavenDetails("tech1.framework", "tech1-server", Version.testsHardcoded());
     }
 }

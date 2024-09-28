@@ -94,7 +94,7 @@ class DefaultStartupEventListenerTest {
         // Arrange
         SecurityJwtConfigs securityJwtConfigs = new SecurityJwtConfigs(
                 new AuthoritiesConfigs(
-                        "io.tech1",
+                        "tech1",
                         Set.of(
                                 new Authority("admin"),
                                 new Authority("user")

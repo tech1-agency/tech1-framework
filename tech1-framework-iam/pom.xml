@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.tech1.framework</groupId>
+        <groupId>tech1.framework</groupId>
         <artifactId>tech1-framework</artifactId>
         <version>3.0.10-SNAPSHOT</version>
     </parent>
@@ -16,7 +16,7 @@
     <dependencies>
         <!-- Tech1: Framework -->
         <dependency>
-            <groupId>io.tech1.framework</groupId>
+            <groupId>tech1.framework</groupId>
             <artifactId>tech1-framework-foundation</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

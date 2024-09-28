@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.tech1.framework</groupId>
+    <groupId>tech1.framework</groupId>
     <artifactId>tech1-framework</artifactId>
     <packaging>pom</packaging>
     <version>3.0.10-SNAPSHOT</version>
@@ -352,10 +352,10 @@
 
     <profiles>
         <profile>
-            <id>release-github</id>
+            <id>github-tech1</id>
             <distributionManagement>
                 <repository>
-                    <id>github</id>
+                    <id>github-tech1-framework</id>
                     <name>GitHub Packages</name>
                     <url>https://maven.pkg.github.com/tech1-agency/tech1-framework/packages</url>
                 </repository>

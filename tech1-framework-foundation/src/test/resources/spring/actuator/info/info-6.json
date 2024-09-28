@@ -8,7 +8,7 @@
   },
   "activeProfile": "dev",
   "maven": {
-    "groupId": "io.tech1.framework",
+    "groupId": "tech1.framework",
     "artifactId": "tech1-server",
     "version": "v1.61803398875"
   }

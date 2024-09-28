@@ -10,7 +10,7 @@
         </layout>
     </appender>
 
-    <logger name="io.tech1.framework.domain" level="debug" />
+    <logger name="tech1.framework.domain" level="debug" />
     <logger name="ch.qos.logback" level="warn" />
     <logger name="com.ulisesbocchio" level="warn" />
     <logger name="org.apache" level="error" />

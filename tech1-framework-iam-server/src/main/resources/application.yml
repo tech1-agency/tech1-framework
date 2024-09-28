@@ -1,3 +1,4 @@
+#file: noinspection SpringBootApplicationYaml
 # Server
 server:
   servlet:
@@ -65,7 +66,7 @@ tech1:
         - value: admin
         - value: invitationCode:read
         - value: invitationCode:write
-      package-name: io.tech1.framework.iam.server.base.domain.enums
+      package-name: tech1.framework.iam.server.base.domain.enums
     cookies-configs:
       jwt-access-token-cookie-creation-latency:
         unit: SECONDS

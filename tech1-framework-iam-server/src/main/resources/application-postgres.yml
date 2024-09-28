@@ -1,3 +1,4 @@
+#file: noinspection SpringBootApplicationYaml
 # Spring PostgreSQL
 spring:
   jpa:

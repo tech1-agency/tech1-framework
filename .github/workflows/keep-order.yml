@@ -66,4 +66,4 @@ jobs:
           subject: "${{ job.status }}: ${{ github.repository }} » ${{ github.ref_name }}, ${{ github.workflow }} # ${{ github.run_number }}"
           from: ${{ vars.SMTP_GMAIL_FROM }}
           html_body: "<b>Actions</b>: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          to: ${{ vars.EMAILS_ADMINS }}, ${{ vars.EMAILS_TEAM_BOOTSTRAP }}
+          to: ${{ vars.EMAILS_ADMINS }}

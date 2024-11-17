@@ -68,6 +68,18 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
         this.metadataRenewManually = false;
     }
 
+    public static PostgresDbUserSession random(String owner) {
+        return new PostgresDbUserSession(UserSession.random(owner));
+    }
+
+    public static PostgresDbUserSession random(Username owner, String accessToken) {
+        return new PostgresDbUserSession(UserSession.random(owner, accessToken));
+    }
+
+    public static PostgresDbUserSession random(String owner, String accessToken, String refreshToken) {
+        return new PostgresDbUserSession(UserSession.random(owner, accessToken, refreshToken));
+    }
+
     @JsonIgnore
     @Transient
     public UserSessionId userSessionId() {

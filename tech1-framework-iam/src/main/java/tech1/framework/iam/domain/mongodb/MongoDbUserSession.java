@@ -56,6 +56,18 @@ public class MongoDbUserSession {
         this.metadataRenewManually = false;
     }
 
+    public static MongoDbUserSession random(String owner) {
+        return new MongoDbUserSession(UserSession.random(owner));
+    }
+
+    public static MongoDbUserSession random(Username owner, String accessToken) {
+        return new MongoDbUserSession(UserSession.random(owner, accessToken));
+    }
+
+    public static MongoDbUserSession random(String owner, String accessToken, String refreshToken) {
+        return new MongoDbUserSession(UserSession.random(owner, accessToken, refreshToken));
+    }
+
     @JsonIgnore
     @Transient
     public UserSessionId userSessionId() {

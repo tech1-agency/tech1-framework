@@ -1,21 +1,22 @@
 package tech1.framework.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
+import tech1.framework.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import tech1.framework.iam.domain.db.InvitationCode;
 import tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
 import tech1.framework.iam.domain.identifiers.InvitationCodeId;
-import tech1.framework.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
-import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import tech1.framework.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
-import tech1.framework.foundation.domain.base.Username;
-import lombok.*;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import jakarta.persistence.*;
 import java.util.Set;
 
-import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor
@@ -56,6 +57,22 @@ public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
         this.authorities = invitationCode.authorities();
         this.value = invitationCode.value();
         this.invited = invitationCode.invited();
+    }
+
+    public static PostgresDbInvitationCode admin(String owner) {
+        return new PostgresDbInvitationCode(Username.of(owner), getSimpleGrantedAuthorities("admin"));
+    }
+
+    public static PostgresDbInvitationCode admin(String owner, String value) {
+        var invitationCode = admin(owner);
+        invitationCode.setValue(value);
+        return invitationCode;
+    }
+
+    public static PostgresDbInvitationCode admin(String owner, String value, String invited) {
+        var invitationCode = admin(owner, value);
+        invitationCode.setInvited(Username.of(invited));
+        return invitationCode;
     }
 
     @JsonIgnore

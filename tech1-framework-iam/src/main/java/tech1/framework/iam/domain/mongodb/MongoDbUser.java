@@ -2,16 +2,17 @@ package tech1.framework.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech1.framework.iam.domain.identifiers.UserId;
-import tech1.framework.iam.domain.jwt.JwtUser;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.constants.JbsConstants;
+import tech1.framework.iam.domain.identifiers.UserId;
+import tech1.framework.iam.domain.jwt.JwtUser;
 
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -19,6 +20,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
+import static org.springframework.util.StringUtils.capitalize;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static tech1.framework.foundation.utilities.random.RandomUtility.*;
+import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor
@@ -62,6 +67,37 @@ public class MongoDbUser {
         this.name = user.name();
         this.passwordChangeRequired = user.passwordChangeRequired();
         this.attributes = user.attributes();
+    }
+
+    public static MongoDbUser random(String username, String authority) {
+        return random(username, Set.of(authority));
+    }
+
+    public static MongoDbUser random(String username, Set<String> authorities) {
+        var user = new MongoDbUser(
+                Username.of(username),
+                Password.random(),
+                randomZoneId(),
+                getSimpleGrantedAuthorities(authorities),
+                randomBoolean()
+        );
+        user.setEmail(Email.of(username + "@" + JbsConstants.Domains.HARDCODED));
+        user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
+        user.setAttributes(
+                Map.of(
+                        randomString(), randomString(),
+                        randomString(), randomLong()
+                )
+        );
+        return user;
+    }
+
+    public static MongoDbUser randomSuperadmin(String username) {
+        return random(username, SUPERADMIN);
+    }
+
+    public static MongoDbUser randomAdmin(String username) {
+        return random(username, "admin");
     }
 
     @JsonIgnore

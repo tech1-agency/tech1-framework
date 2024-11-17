@@ -1,20 +1,21 @@
 package tech1.framework.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import tech1.framework.iam.domain.db.InvitationCode;
-import tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
-import tech1.framework.iam.domain.identifiers.InvitationCodeId;
-import tech1.framework.foundation.domain.base.Username;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.iam.domain.db.InvitationCode;
+import tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
+import tech1.framework.iam.domain.identifiers.InvitationCodeId;
 
 import java.util.Set;
 
-import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor
@@ -46,6 +47,22 @@ public class MongoDbInvitationCode {
         this.authorities = invitationCode.authorities();
         this.value = invitationCode.value();
         this.invited = invitationCode.invited();
+    }
+
+    public static MongoDbInvitationCode admin(String owner) {
+        return new MongoDbInvitationCode(Username.of(owner), getSimpleGrantedAuthorities("admin"));
+    }
+
+    public static MongoDbInvitationCode admin(String owner, String value) {
+        var invitationCode = admin(owner);
+        invitationCode.setValue(value);
+        return invitationCode;
+    }
+
+    public static MongoDbInvitationCode admin(String owner, String value, String invited) {
+        var invitationCode = admin(owner, value);
+        invitationCode.setInvited(Username.of(invited));
+        return invitationCode;
     }
 
     @JsonIgnore

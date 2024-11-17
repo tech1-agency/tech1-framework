@@ -1,15 +1,5 @@
 package tech1.framework.iam.postgres.repositories;
 
-import tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
-import tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
-import tech1.framework.iam.configurations.ApplicationPostgresRepositories;
-import tech1.framework.iam.domain.db.InvitationCode;
-import tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import tech1.framework.iam.domain.identifiers.InvitationCodeId;
-import tech1.framework.iam.domain.postgres.db.PostgresDbInvitationCode;
-import tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,16 +8,24 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.iam.configurations.ApplicationPostgresRepositories;
+import tech1.framework.iam.domain.db.InvitationCode;
+import tech1.framework.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import tech1.framework.iam.domain.identifiers.InvitationCodeId;
+import tech1.framework.iam.domain.postgres.db.PostgresDbInvitationCode;
+import tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
+import tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import tech1.framework.iam.repositories.postgres.PostgresInvitationCodesRepository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static tech1.framework.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyInvitationCodesData1;
-import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
         PostgresBeforeAllCallback.class
@@ -58,7 +56,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationPostgresReposi
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(PostgresDbInvitationCode.dummies1());
 
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         var notExistentInvitationCode = randomStringLetterOrNumbersOnly(InvitationCode.DEFAULT_INVITATION_CODE_LENGTH);
@@ -91,7 +89,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationPostgresReposi
     @Test
     void findUnusedAndSortingTests() {
         // Arrange
-        this.invitationCodesRepository.saveAll(dummyInvitationCodesData2());
+        this.invitationCodesRepository.saveAll(PostgresDbInvitationCode.dummies2());
 
         // Act
         var count = this.invitationCodesRepository.count();
@@ -114,7 +112,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationPostgresReposi
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(PostgresDbInvitationCode.dummies1());
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         var existentInvitationCodeId = saved.get(0).invitationCodeId();
 
@@ -141,7 +139,7 @@ class PostgresInvitationCodesRepositoryIT extends TestsApplicationPostgresReposi
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(PostgresDbInvitationCode.dummies1());
         var request = RequestNewInvitationCodeParams.random();
 
         // Act-Assert-0

@@ -12,6 +12,7 @@ import tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
 import tech1.framework.iam.domain.identifiers.InvitationCodeId;
 import tech1.framework.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 
+import java.util.List;
 import java.util.Set;
 
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
@@ -73,6 +74,45 @@ public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
         var invitationCode = admin(owner, value);
         invitationCode.setInvited(Username.of(invited));
         return invitationCode;
+    }
+
+    public static List<PostgresDbInvitationCode> dummies1() {
+        var invitationCode1 = PostgresDbInvitationCode.admin("user1");
+        var invitationCode2 = PostgresDbInvitationCode.admin("user1");
+        var invitationCode3 = PostgresDbInvitationCode.admin("user2");
+        var invitationCode4 = PostgresDbInvitationCode.admin("user2");
+        var invitationCode5 = PostgresDbInvitationCode.admin("user2");
+        var invitationCode6 = PostgresDbInvitationCode.admin("user3");
+
+        invitationCode4.setInvited(Username.of("superadmin"));
+
+        return List.of(
+                invitationCode1,
+                invitationCode2,
+                invitationCode3,
+                invitationCode4,
+                invitationCode5,
+                invitationCode6
+        );
+    }
+
+    public static List<PostgresDbInvitationCode> dummies2() {
+        var invitationCode1 = PostgresDbInvitationCode.admin("owner22", "value22");
+        var invitationCode2 = PostgresDbInvitationCode.admin("owner22", "abc");
+        var invitationCode3 = PostgresDbInvitationCode.admin("owner22", "value44");
+        var invitationCode4 = PostgresDbInvitationCode.admin("owner11", "value222");
+        var invitationCode5 = PostgresDbInvitationCode.admin("owner11", "value111");
+        var invitationCode6 = PostgresDbInvitationCode.admin("owner33", "value123", "invited1");
+        var invitationCode7 = PostgresDbInvitationCode.admin("owner34", "value234", "invited2");
+        return List.of(
+                invitationCode1,
+                invitationCode2,
+                invitationCode3,
+                invitationCode4,
+                invitationCode5,
+                invitationCode6,
+                invitationCode7
+        );
     }
 
     @JsonIgnore

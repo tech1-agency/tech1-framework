@@ -19,8 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static tech1.framework.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyInvitationCodesData1;
-import static tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyInvitationCodesData2;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
@@ -56,7 +54,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationMongoRepositories
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(MongoDbInvitationCode.dummies1());
 
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         var notExistentInvitationCode = randomStringLetterOrNumbersOnly(InvitationCode.DEFAULT_INVITATION_CODE_LENGTH);
@@ -89,7 +87,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationMongoRepositories
     @Test
     void findUnusedAndSortingTests() {
         // Arrange
-        this.invitationCodesRepository.saveAll(dummyInvitationCodesData2());
+        this.invitationCodesRepository.saveAll(MongoDbInvitationCode.dummies2());
 
         // Act
         var count = this.invitationCodesRepository.count();
@@ -112,7 +110,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationMongoRepositories
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(MongoDbInvitationCode.dummies1());
         var notExistentInvitationCodeId = entity(InvitationCodeId.class);
         var existentInvitationCodeId = saved.get(0).invitationCodeId();
 
@@ -139,7 +137,7 @@ class MongoInvitationCodesRepositoryIT extends TestsApplicationMongoRepositories
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(dummyInvitationCodesData1());
+        var saved = this.invitationCodesRepository.saveAll(MongoDbInvitationCode.dummies1());
         var request = RequestNewInvitationCodeParams.random();
 
         // Act-Assert-0

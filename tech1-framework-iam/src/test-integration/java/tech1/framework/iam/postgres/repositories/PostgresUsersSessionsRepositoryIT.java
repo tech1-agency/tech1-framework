@@ -1,7 +1,12 @@
 package tech1.framework.iam.postgres.repositories;
 
-import tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
-import tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.tuples.TuplePresence;
 import tech1.framework.iam.configurations.ApplicationPostgresRepositories;
@@ -11,28 +16,21 @@ import tech1.framework.iam.domain.jwt.JwtAccessToken;
 import tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import tech1.framework.iam.domain.jwt.RequestAccessToken;
 import tech1.framework.iam.domain.postgres.db.PostgresDbUserSession;
+import tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
+import tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
 import tech1.framework.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.iam.domain.jwt.JwtAccessToken.accessTokens;
 import static tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toAccessTokensAsStrings2;
 import static tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings2;
 import static tech1.framework.iam.tests.converters.postgres.PostgresUserSessionConverter.toMetadataRenewCron;
-import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUserSessionsData1;
-import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUserSessionsData2;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
         PostgresBeforeAllCallback.class
@@ -57,7 +55,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         var notExistentSessionId = entity(UserSessionId.class);
 
@@ -112,7 +110,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void enableMetadataRenewCronTest() {
         // Arrange
-        var saved1 = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved1 = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         // Assert-0
         assertThat(toMetadataRenewCron(saved1))
@@ -131,7 +129,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void enableMetadataRenewManuallyTest() {
         // Arrange
-        var saved1 = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved1 = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         // Assert-0
         assertThat(toMetadataRenewCron(saved1))
@@ -161,7 +159,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         var existentSessionId = saved.get(0).userSessionId();
         var existentSessionsIds = Set.of(saved.get(1).userSessionId(), saved.get(5).userSessionId());
@@ -186,7 +184,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void deleteByUsernameExceptAccessTokenTest() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData2());
+        this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -202,7 +200,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void deleteExceptAccessTokenTest() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData2());
+        this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -220,7 +218,7 @@ class PostgresUsersSessionsRepositoryIT extends TestsApplicationPostgresReposito
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(PostgresDbUserSession.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);

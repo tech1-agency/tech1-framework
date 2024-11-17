@@ -16,12 +16,13 @@ import tech1.framework.iam.domain.jwt.JwtUser;
 
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.capitalize;
-import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.foundation.utilities.random.RandomUtility.*;
 import static tech1.framework.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
@@ -98,6 +99,17 @@ public class MongoDbUser {
 
     public static MongoDbUser randomAdmin(String username) {
         return random(username, "admin");
+    }
+
+    public static List<MongoDbUser> dummies1() {
+        return List.of(
+                MongoDbUser.randomSuperadmin("sa1"),
+                MongoDbUser.randomSuperadmin("sa2"),
+                MongoDbUser.randomAdmin("admin1"),
+                MongoDbUser.random("user1", Set.of("user", INVITATION_CODE_WRITE)),
+                MongoDbUser.random("user2", Set.of("user", INVITATION_CODE_READ)),
+                MongoDbUser.random("sa3", Set.of(INVITATION_CODE_READ, SUPERADMIN, INVITATION_CODE_WRITE))
+        );
     }
 
     @JsonIgnore

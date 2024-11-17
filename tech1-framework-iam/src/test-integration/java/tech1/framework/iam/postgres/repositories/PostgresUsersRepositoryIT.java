@@ -33,7 +33,6 @@ import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.iam.domain.jwt.JwtUser.randomSuperadmin;
 import static tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings1;
-import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static tech1.framework.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 
 @ExtendWith({
@@ -59,7 +58,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunn
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersRepository.saveAll(dummyUsersData1());
+        var saved = this.usersRepository.saveAll(PostgresDbUser.dummies1());
 
         var notExistentUserId = entity(UserId.class);
 
@@ -138,7 +137,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunn
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.usersRepository.saveAll(dummyUsersData1());
+        this.usersRepository.saveAll(PostgresDbUser.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);
@@ -157,7 +156,7 @@ class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunn
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersRepository.saveAll(dummyUsersData1());
+        var saved = this.usersRepository.saveAll(PostgresDbUser.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);

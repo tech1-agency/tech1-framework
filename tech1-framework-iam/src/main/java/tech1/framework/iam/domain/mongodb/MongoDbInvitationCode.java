@@ -11,6 +11,7 @@ import tech1.framework.iam.domain.db.InvitationCode;
 import tech1.framework.iam.domain.dto.responses.ResponseInvitationCode;
 import tech1.framework.iam.domain.identifiers.InvitationCodeId;
 
+import java.util.List;
 import java.util.Set;
 
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
@@ -63,6 +64,45 @@ public class MongoDbInvitationCode {
         var invitationCode = admin(owner, value);
         invitationCode.setInvited(Username.of(invited));
         return invitationCode;
+    }
+
+    public static List<MongoDbInvitationCode> dummies1() {
+        var invitationCode1 = MongoDbInvitationCode.admin("user1");
+        var invitationCode2 = MongoDbInvitationCode.admin("user1");
+        var invitationCode3 = MongoDbInvitationCode.admin("user2");
+        var invitationCode4 = MongoDbInvitationCode.admin("user2");
+        var invitationCode5 = MongoDbInvitationCode.admin("user2");
+        var invitationCode6 = MongoDbInvitationCode.admin("user3");
+
+        invitationCode4.setInvited(Username.of("superadmin"));
+
+        return List.of(
+                invitationCode1,
+                invitationCode2,
+                invitationCode3,
+                invitationCode4,
+                invitationCode5,
+                invitationCode6
+        );
+    }
+
+    public static List<MongoDbInvitationCode> dummies2() {
+        var invitationCode1 = MongoDbInvitationCode.admin("owner22", "value22");
+        var invitationCode2 = MongoDbInvitationCode.admin("owner22", "abc");
+        var invitationCode3 = MongoDbInvitationCode.admin("owner22", "value44");
+        var invitationCode4 = MongoDbInvitationCode.admin("owner11", "value222");
+        var invitationCode5 = MongoDbInvitationCode.admin("owner11", "value111");
+        var invitationCode6 = MongoDbInvitationCode.admin("owner33", "value123", "invited1");
+        var invitationCode7 = MongoDbInvitationCode.admin("owner34", "value234", "invited2");
+        return List.of(
+                invitationCode1,
+                invitationCode2,
+                invitationCode3,
+                invitationCode4,
+                invitationCode5,
+                invitationCode6,
+                invitationCode7
+        );
     }
 
     @JsonIgnore

@@ -32,7 +32,6 @@ import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessages
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings1;
-import static tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyUsersData1;
 import static tech1.framework.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 
 @ExtendWith({
@@ -57,7 +56,7 @@ class MongoUsersRepositoryIT extends TestsApplicationMongoRepositoriesRunner {
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersRepository.saveAll(dummyUsersData1());
+        var saved = this.usersRepository.saveAll(MongoDbUser.dummies1());
 
         var notExistentUserId = entity(UserId.class);
 
@@ -136,7 +135,7 @@ class MongoUsersRepositoryIT extends TestsApplicationMongoRepositoriesRunner {
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        this.usersRepository.saveAll(dummyUsersData1());
+        this.usersRepository.saveAll(MongoDbUser.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);
@@ -155,7 +154,7 @@ class MongoUsersRepositoryIT extends TestsApplicationMongoRepositoriesRunner {
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersRepository.saveAll(dummyUsersData1());
+        var saved = this.usersRepository.saveAll(MongoDbUser.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersRepository.count()).isEqualTo(6);

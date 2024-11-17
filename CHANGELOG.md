@@ -2,3 +2,4 @@
 — Addition: introduce JbcConstants
 — Addition: start on hardcoded() instead of testsHardcoded() 
 — Deletion: BytesConstants, DomainConstants
+— Modification: dummies** method migrated dedicated tables

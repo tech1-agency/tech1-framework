@@ -1,23 +1,25 @@
 package tech1.framework.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import tech1.framework.iam.domain.db.UserSession;
 import tech1.framework.iam.domain.dto.responses.ResponseUserSession2;
 import tech1.framework.iam.domain.identifiers.UserSessionId;
 import tech1.framework.iam.domain.jwt.JwtAccessToken;
 import tech1.framework.iam.domain.jwt.JwtRefreshToken;
 import tech1.framework.iam.domain.jwt.RequestAccessToken;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
+import static java.util.Objects.isNull;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static tech1.framework.iam.domain.db.UserSession.ofNotPersisted;
 import static tech1.framework.iam.domain.db.UserSession.ofPersisted;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static java.util.Objects.isNull;
 
 // Lombok
 @NoArgsConstructor
@@ -66,6 +68,33 @@ public class MongoDbUserSession {
 
     public static MongoDbUserSession random(String owner, String accessToken, String refreshToken) {
         return new MongoDbUserSession(UserSession.random(owner, accessToken, refreshToken));
+    }
+
+    public static List<MongoDbUserSession> dummies1() {
+        var session1 = MongoDbUserSession.random(Username.testsHardcoded().value(), "awt1", "rwt1");
+        var session2 = MongoDbUserSession.random(Username.testsHardcoded().value(), "awt2", "rwt2");
+        var session3 = MongoDbUserSession.random(Username.testsHardcoded().value(), "awt3", "rwt3");
+        var session4 = MongoDbUserSession.random(Username.testsHardcoded().value(), "awt4", "rwt4");
+        var session5 = MongoDbUserSession.random("user1", "atoken11", "rtoken11");
+        var session6 = MongoDbUserSession.random("user1", "atoken12", "rtoken12");
+        var session7 = MongoDbUserSession.random("sa", "atoken", "rtoken");
+        return List.of(
+                session1,
+                session2,
+                session3,
+                session4,
+                session5,
+                session6,
+                session7
+        );
+    }
+
+    public static List<MongoDbUserSession> dummies2() {
+        var session1 = MongoDbUserSession.random(Username.testsHardcoded(), "token1");
+        var session2 = MongoDbUserSession.random(Username.testsHardcoded(), "token2");
+        var session3 = MongoDbUserSession.random(Username.testsHardcoded(), "token3");
+        var session4 = MongoDbUserSession.random(Username.of("admin"), "token4");
+        return List.of(session1, session2, session3, session4);
     }
 
     @JsonIgnore

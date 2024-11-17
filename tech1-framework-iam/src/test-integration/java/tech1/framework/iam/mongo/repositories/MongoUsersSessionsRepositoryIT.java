@@ -1,37 +1,35 @@
 package tech1.framework.iam.mongo.repositories;
 
-import tech1.framework.iam.configurations.ApplicationMongoRepositories;
-import tech1.framework.iam.domain.mongodb.MongoDbUserSession;
-import tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
-import tech1.framework.iam.domain.db.UserSession;
-import tech1.framework.iam.domain.identifiers.UserSessionId;
-import tech1.framework.iam.domain.jwt.JwtAccessToken;
-import tech1.framework.iam.domain.jwt.JwtRefreshToken;
-import tech1.framework.iam.domain.jwt.RequestAccessToken;
-import tech1.framework.iam.mongo.configs.MongoBeforeAllCallback;
-import tech1.framework.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.iam.configurations.ApplicationMongoRepositories;
+import tech1.framework.iam.domain.db.UserSession;
+import tech1.framework.iam.domain.identifiers.UserSessionId;
+import tech1.framework.iam.domain.jwt.JwtAccessToken;
+import tech1.framework.iam.domain.jwt.JwtRefreshToken;
+import tech1.framework.iam.domain.jwt.RequestAccessToken;
+import tech1.framework.iam.domain.mongodb.MongoDbUserSession;
+import tech1.framework.iam.mongo.configs.MongoBeforeAllCallback;
+import tech1.framework.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
+import tech1.framework.iam.repositories.mongodb.MongoUsersSessionsRepository;
 
 import java.util.List;
 import java.util.Set;
 
-import static tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toAccessTokensAsStrings2;
-import static tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings2;
-import static tech1.framework.iam.tests.converters.mongodb.MongoUserSessionConverter.toMetadataRenewCron;
-import static tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyUserSessionsData1;
-import static tech1.framework.iam.tests.random.mongodb.MongoSecurityJwtDbDummies.dummyUserSessionsData2;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.iam.domain.jwt.JwtAccessToken.accessTokens;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
+import static tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toAccessTokensAsStrings2;
+import static tech1.framework.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings2;
+import static tech1.framework.iam.tests.converters.mongodb.MongoUserSessionConverter.toMetadataRenewCron;
 
 @ExtendWith({
         MongoBeforeAllCallback.class
@@ -55,7 +53,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
 
         var notExistentSessionId = UserSessionId.random();
 
@@ -110,7 +108,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void enableMetadataRenewCronTest() {
         // Arrange
-        var saved1 = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved1 = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
 
         // Assert-0
         assertThat(toMetadataRenewCron(saved1))
@@ -129,7 +127,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void enableMetadataRenewManuallyTest() {
         // Arrange
-        var saved1 = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved1 = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
 
         // Assert-0
         assertThat(toMetadataRenewCron(saved1))
@@ -159,7 +157,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
 
         var existentSessionId = saved.get(0).userSessionId();
         var existentSessionsIds = Set.of(saved.get(1).userSessionId(), saved.get(5).userSessionId());
@@ -184,7 +182,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void deleteByUsernameExceptAccessTokenTest() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData2());
+        this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -200,7 +198,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void deleteExceptAccessTokenTest() {
         // Arrange
-        this.usersSessionsRepository.saveAll(dummyUserSessionsData2());
+        this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies2());
 
         // Act
         var count1 = this.usersSessionsRepository.count();
@@ -218,7 +216,7 @@ class MongoUsersSessionsRepositoryIT extends TestsApplicationMongoRepositoriesRu
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.usersSessionsRepository.saveAll(dummyUserSessionsData1());
+        var saved = this.usersSessionsRepository.saveAll(MongoDbUserSession.dummies1());
 
         // Act-Assert-0
         assertThat(this.usersSessionsRepository.count()).isEqualTo(7);

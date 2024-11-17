@@ -18,6 +18,8 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import static tech1.framework.iam.domain.db.UserSession.ofNotPersisted;
 import static tech1.framework.iam.domain.db.UserSession.ofPersisted;
 
@@ -78,6 +80,33 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
 
     public static PostgresDbUserSession random(String owner, String accessToken, String refreshToken) {
         return new PostgresDbUserSession(UserSession.random(owner, accessToken, refreshToken));
+    }
+
+    public static List<PostgresDbUserSession> dummies1() {
+        var session1 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt1", "rwt1");
+        var session2 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt2", "rwt2");
+        var session3 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt3", "rwt3");
+        var session4 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt4", "rwt4");
+        var session5 = PostgresDbUserSession.random("user1", "atoken11", "rtoken11");
+        var session6 = PostgresDbUserSession.random("user1", "atoken12", "rtoken12");
+        var session7 = PostgresDbUserSession.random("sa", "atoken", "rtoken");
+        return List.of(
+                session1,
+                session2,
+                session3,
+                session4,
+                session5,
+                session6,
+                session7
+        );
+    }
+
+    public static List<PostgresDbUserSession> dummies2() {
+        var session1 = PostgresDbUserSession.random(Username.testsHardcoded(), "token1");
+        var session2 = PostgresDbUserSession.random(Username.testsHardcoded(), "token2");
+        var session3 = PostgresDbUserSession.random(Username.testsHardcoded(), "token3");
+        var session4 = PostgresDbUserSession.random(Username.of("admin"), "token4");
+        return List.of(session1, session2, session3, session4);
     }
 
     @JsonIgnore

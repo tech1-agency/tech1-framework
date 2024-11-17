@@ -2,12 +2,12 @@ package tech1.framework.foundation.domain.hardware.memories;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import tech1.framework.foundation.domain.constants.BytesConstants;
-import tech1.framework.foundation.domain.hardware.bytes.ByteSize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import tech1.framework.foundation.domain.hardware.bytes.ByteSize;
 
+import static tech1.framework.foundation.domain.constants.JbsConstants.MemoryUnits.BYTES_IN_MEGABYTE;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 
 // Lombok
@@ -45,10 +45,10 @@ public class HeapMemory {
 
     public static HeapMemory random() {
         return new HeapMemory(
-                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE,
-                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE,
-                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE,
-                randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE
+                randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
+                randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
+                randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
+                randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE
         );
     }
 

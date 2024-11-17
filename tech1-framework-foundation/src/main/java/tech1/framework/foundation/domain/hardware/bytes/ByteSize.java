@@ -2,7 +2,6 @@ package tech1.framework.foundation.domain.hardware.bytes;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import tech1.framework.foundation.domain.constants.BytesConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -12,6 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static tech1.framework.foundation.domain.constants.JbsConstants.MemoryUnits.*;
 import static tech1.framework.foundation.domain.hardware.bytes.ByteUnit.*;
 import static tech1.framework.foundation.utilities.numbers.RoundingUtility.scale;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
@@ -42,19 +42,19 @@ public final class ByteSize {
     }
 
     public static ByteSize kilobyte() {
-        return new ByteSize(BytesConstants.BYTES_IN_KILOBYTE);
+        return new ByteSize(BYTES_IN_KILOBYTE);
     }
 
     public static ByteSize megabyte() {
-        return new ByteSize(BytesConstants.BYTES_IN_MEGABYTE);
+        return new ByteSize(BYTES_IN_MEGABYTE);
     }
 
     public static ByteSize gigabyte() {
-        return new ByteSize(BytesConstants.BYTES_IN_GIGABYTE);
+        return new ByteSize(BYTES_IN_GIGABYTE);
     }
 
     public static ByteSize random() {
-        return new ByteSize(randomLongGreaterThanZeroByBounds(10, 500) * BytesConstants.BYTES_IN_MEGABYTE);
+        return new ByteSize(randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE);
     }
 
     public BigDecimal getBy(ByteUnit unit) {
@@ -69,17 +69,17 @@ public final class ByteSize {
     // PRIVATE METHODS
     // =================================================================================================================
     private BigDecimal getKilobytes(int scale) {
-        var kb = BigDecimal.valueOf((double) this.bytes / BytesConstants.BYTES_IN_KILOBYTE);
+        var kb = BigDecimal.valueOf((double) this.bytes / BYTES_IN_KILOBYTE);
         return scale(kb, scale);
     }
 
     private BigDecimal getMegabytes(int scale) {
-        var mb = BigDecimal.valueOf((double) this.bytes / BytesConstants.BYTES_IN_MEGABYTE);
+        var mb = BigDecimal.valueOf((double) this.bytes / BYTES_IN_MEGABYTE);
         return scale(mb, scale);
     }
 
     private BigDecimal getGigabytes(int scale) {
-        var gb = BigDecimal.valueOf((double) this.bytes / BytesConstants.BYTES_IN_GIGABYTE);
+        var gb = BigDecimal.valueOf((double) this.bytes / BYTES_IN_GIGABYTE);
         return scale(gb, scale);
     }
 }

@@ -1,6 +1,6 @@
 services:
   t1f-iam-server:
-    image: ghcr.io/tech1-agency/tech1-framework-iam-server:3.0.10
+    image: ghcr.io/tech1-agency/tech1-framework-iam-server:3.0.11
     restart: unless-stopped
     container_name: t1f-iam-server
     networks:

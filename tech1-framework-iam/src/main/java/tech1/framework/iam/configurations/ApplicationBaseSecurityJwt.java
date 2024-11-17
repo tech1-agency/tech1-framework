@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tech1.framework.foundation.configurations.*;
 import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.constants.SwaggerConstants;
+import tech1.framework.foundation.domain.constants.JbsConstants;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.iam.assistants.userdetails.JwtUserDetailsService;
 import tech1.framework.iam.filters.jwt.JwtTokensFilter;
@@ -97,7 +97,7 @@ public class ApplicationBaseSecurityJwt {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
             if (this.applicationFrameworkProperties.getServerConfigs().isSpringdocEnabled()) {
-                web.ignoring().requestMatchers(SwaggerConstants.ENDPOINTS.toArray(new String[0]));
+                web.ignoring().requestMatchers(JbsConstants.Swagger.ENDPOINTS.toArray(new String[0]));
             }
             this.abstractApplicationSecurityJwtConfigurer.configure(web);
         };

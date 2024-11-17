@@ -3,6 +3,8 @@ package tech1.framework.foundation.domain.constants;
 import com.diogonunes.jcolor.AnsiFormat;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+
 import static com.diogonunes.jcolor.Attribute.*;
 import static com.diogonunes.jcolor.Attribute.BOLD;
 
@@ -30,5 +32,13 @@ public class JbsConstants {
         public static final String ACCOUNT = "ACCOUNT";
         public static final String SUM = "SUM";
         public static final String TOTAL = "TOTAL";
+    }
+
+    public static class Swagger {
+        public static final List<String> ENDPOINTS = List.of(
+                "/v3/api-docs/**",
+                "/swagger-ui.html",
+                "/swagger-ui/**"
+        );
     }
 }

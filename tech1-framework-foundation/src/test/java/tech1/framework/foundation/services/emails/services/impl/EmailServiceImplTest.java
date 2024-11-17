@@ -1,14 +1,5 @@
 package tech1.framework.foundation.services.emails.services.impl;
 
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.constants.DomainConstants;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.configs.EmailConfigs;
-import tech1.framework.foundation.domain.tuples.Tuple2;
-import tech1.framework.foundation.services.emails.domain.EmailHTML;
-import tech1.framework.foundation.services.emails.domain.EmailPlainAttachment;
-import tech1.framework.foundation.services.emails.services.EmailService;
-import tech1.framework.foundation.services.emails.utilities.EmailUtility;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
@@ -30,6 +21,15 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.constants.JbsConstants;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.configs.EmailConfigs;
+import tech1.framework.foundation.domain.tuples.Tuple2;
+import tech1.framework.foundation.services.emails.domain.EmailHTML;
+import tech1.framework.foundation.services.emails.domain.EmailPlainAttachment;
+import tech1.framework.foundation.services.emails.services.EmailService;
+import tech1.framework.foundation.services.emails.utilities.EmailUtility;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -37,11 +37,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static jakarta.mail.Message.RecipientType.TO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -246,8 +246,8 @@ class EmailServiceImplTest {
         // Arrange
         var emailPlainAttachment = new EmailPlainAttachment(
                 Set.of(
-                        "test1@" + DomainConstants.TECH1,
-                        "test2@" + DomainConstants.TECH1
+                        "test1@" + JbsConstants.Domains.HARDCODED,
+                        "test2@" + JbsConstants.Domains.HARDCODED
                 ),
                 "subject1",
                 "message1",
@@ -268,8 +268,8 @@ class EmailServiceImplTest {
         verify(this.javaMailSender).createMimeMessage();
         verify(mimeMessage).setFrom(from);
         verify(mimeMessage).setSubject("subject1");
-        verify(mimeMessage).addRecipients(TO, "test1@" + DomainConstants.TECH1);
-        verify(mimeMessage).addRecipients(TO, "test2@" + DomainConstants.TECH1);
+        verify(mimeMessage).addRecipients(TO, "test1@" + JbsConstants.Domains.HARDCODED);
+        verify(mimeMessage).addRecipients(TO, "test2@" + JbsConstants.Domains.HARDCODED);
         var mimeMultipartAC = ArgumentCaptor.forClass(MimeMultipart.class);
         verify(mimeMessage).setContent(mimeMultipartAC.capture());
         var multipart = mimeMultipartAC.getValue();
@@ -324,7 +324,7 @@ class EmailServiceImplTest {
         );
         var emailHTML = new EmailHTML(
                 Set.of(
-                        "tests@" + DomainConstants.TECH1
+                        "tests@" + JbsConstants.Domains.HARDCODED
                 ),
                 "subject1",
                 "template1",
@@ -341,7 +341,7 @@ class EmailServiceImplTest {
 
         // Assert
         verify(mimeMessageHelper).setFrom(from);
-        verify(mimeMessageHelper).setTo(new String[] { "tests@" + DomainConstants.TECH1 });
+        verify(mimeMessageHelper).setTo(new String[] { "tests@" + JbsConstants.Domains.HARDCODED });
         verify(mimeMessageHelper).setSubject("subject1");
         var html = """
                 <!DOCTYPE html>

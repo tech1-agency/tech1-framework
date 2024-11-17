@@ -1,6 +1,7 @@
 package tech1.framework.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import tech1.framework.foundation.domain.constants.JbsConstants;
 import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -48,9 +49,8 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
     @Test
     void randomTest() {
         // Arrange
-        var domain = "@tech1.io";
         var randomLength = 32;
-        var domainLength = 9;
+        var domainLength = 14;
         var expected = randomLength + domainLength;
 
         // Act
@@ -58,6 +58,6 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
 
         // Assert
         assertThat(actual.value()).hasSize(expected);
-        assertThat(actual.value().substring(randomLength)).isEqualTo(domain);
+        assertThat(actual.value().substring(randomLength)).isEqualTo("@" + JbsConstants.Domains.HARDCODED);
     }
 }

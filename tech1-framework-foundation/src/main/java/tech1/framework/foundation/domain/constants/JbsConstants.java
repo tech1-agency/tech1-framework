@@ -9,6 +9,10 @@ import static com.diogonunes.jcolor.Attribute.BOLD;
 @UtilityClass
 public class JbsConstants {
 
+    public static class Domains {
+        public static final String HARDCODED = "yyluchkiv.com";
+    }
+
     public static class JColor {
         public static final AnsiFormat BLACK_BOLD_TEXT = new AnsiFormat(BLACK_TEXT(), BOLD());
         public static final AnsiFormat BLUE_BOLD_TEXT = new AnsiFormat(BLUE_TEXT(), BOLD());

@@ -33,6 +33,10 @@ public record Username(@NotNull String value) {
         return of("ops");
     }
 
+    public static Username hardcoded() {
+        return of("jbs");
+    }
+
     public static Username random() {
         return of(randomString());
     }

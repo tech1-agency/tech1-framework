@@ -2,23 +2,23 @@ package tech1.framework.foundation.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import tech1.framework.foundation.domain.constants.DomainConstants;
-import tech1.framework.foundation.domain.constants.StringConstants;
-import tech1.framework.foundation.utilities.http.HttpRequestFieldsUtility;
-import org.jetbrains.annotations.NotNull;
-
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import org.jetbrains.annotations.NotNull;
+import tech1.framework.foundation.domain.constants.JbsConstants;
+import tech1.framework.foundation.domain.constants.StringConstants;
+import tech1.framework.foundation.utilities.http.HttpRequestFieldsUtility;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.hasLength;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record Email(@NotNull String value) {
 
@@ -28,15 +28,15 @@ public record Email(@NotNull String value) {
     }
 
     public static Email random() {
-        return of(randomString() + "@" + DomainConstants.TECH1);
+        return of(randomString() + "@" + JbsConstants.Domains.HARDCODED);
     }
 
     public static Email unknown() {
-        return of(StringConstants.UNKNOWN + "@" + DomainConstants.TECH1);
+        return of(StringConstants.UNKNOWN + "@" + JbsConstants.Domains.HARDCODED);
     }
 
     public static Email testsHardcoded() {
-        return of("tests@" + DomainConstants.TECH1);
+        return of("tests@" + JbsConstants.Domains.HARDCODED);
     }
 
     @JsonValue

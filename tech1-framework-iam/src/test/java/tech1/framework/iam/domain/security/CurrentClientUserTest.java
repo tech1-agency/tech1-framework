@@ -1,28 +1,28 @@
 package tech1.framework.iam.domain.security;
 
-import tech1.framework.iam.tests.domain.enums.TestAuthority;
-import tech1.framework.foundation.domain.base.AbstractAuthority;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.DomainConstants;
-import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
-import tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.base.AbstractAuthority;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.constants.JbsConstants;
+import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
+import tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import tech1.framework.iam.tests.domain.enums.TestAuthority;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
 import static tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
 import static tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 
@@ -64,7 +64,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 Username.of("tech1"),
-                Email.of("tech1@" + DomainConstants.TECH1),
+                Email.of("tech1@" + JbsConstants.Domains.HARDCODED),
                 "Tech1",
                 ZoneIdsConstants.UKRAINE,
                 false,

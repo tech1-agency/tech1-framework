@@ -1,18 +1,5 @@
 package tech1.framework.iam.postgres.repositories;
 
-import tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
-import tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.DomainConstants;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
-import tech1.framework.iam.configurations.ApplicationPostgresRepositories;
-import tech1.framework.iam.domain.db.InvitationCode;
-import tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
-import tech1.framework.iam.domain.identifiers.UserId;
-import tech1.framework.iam.domain.postgres.db.PostgresDbUser;
-import tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,10 +8,26 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.constants.JbsConstants;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.iam.configurations.ApplicationPostgresRepositories;
+import tech1.framework.iam.domain.db.InvitationCode;
+import tech1.framework.iam.domain.dto.requests.RequestUserRegistration1;
+import tech1.framework.iam.domain.identifiers.UserId;
+import tech1.framework.iam.domain.postgres.db.PostgresDbUser;
+import tech1.framework.iam.postgres.configs.PostgresBeforeAllCallback;
+import tech1.framework.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import tech1.framework.iam.repositories.postgres.PostgresUsersRepository;
 
 import java.util.List;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
@@ -32,9 +35,6 @@ import static tech1.framework.iam.domain.jwt.JwtUser.randomSuperadmin;
 import static tech1.framework.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings1;
 import static tech1.framework.iam.tests.random.postgres.PostgresSecurityJwtDbDummies.dummyUsersData1;
 import static tech1.framework.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
         PostgresBeforeAllCallback.class
@@ -79,11 +79,11 @@ class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunn
                 .hasMessageStartingWith(entityNotFound("Username", "sa777"));
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + DomainConstants.TECH1))).isNotNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + DomainConstants.TECH1))).isNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + DomainConstants.TECH1))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + DomainConstants.TECH1))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + DomainConstants.TECH1))).isNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + JbsConstants.Domains.HARDCODED))).isNotNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + JbsConstants.Domains.HARDCODED))).isNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + JbsConstants.Domains.HARDCODED))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + JbsConstants.Domains.HARDCODED))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + JbsConstants.Domains.HARDCODED))).isNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa1"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa4"))).isNull();

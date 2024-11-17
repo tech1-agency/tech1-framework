@@ -13,7 +13,7 @@ class RequestUserUpdate1Test extends AbstractSerializationDeserializationRunner 
     private static final RequestUserUpdate1 REQUEST = new RequestUserUpdate1(
             ZoneIdsConstants.UKRAINE,
             Email.testsHardcoded(),
-            "Tech1 Tests"
+            "Hardcoded Tests"
     );
 
     @Override

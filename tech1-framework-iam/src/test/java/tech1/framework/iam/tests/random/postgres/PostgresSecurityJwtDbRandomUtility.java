@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 import tech1.framework.foundation.domain.base.Email;
 import tech1.framework.foundation.domain.base.Password;
 import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.DomainConstants;
+import tech1.framework.foundation.domain.constants.JbsConstants;
 import tech1.framework.iam.domain.db.UserSession;
 import tech1.framework.iam.domain.postgres.db.PostgresDbInvitationCode;
 import tech1.framework.iam.domain.postgres.db.PostgresDbUser;
@@ -67,7 +67,7 @@ public class PostgresSecurityJwtDbRandomUtility {
                 getSimpleGrantedAuthorities(authorities),
                 randomBoolean()
         );
-        user.setEmail(Email.of(username + "@" + DomainConstants.TECH1));
+        user.setEmail(Email.of(username + "@" + JbsConstants.Domains.HARDCODED));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
         user.setAttributes(
                 Map.of(

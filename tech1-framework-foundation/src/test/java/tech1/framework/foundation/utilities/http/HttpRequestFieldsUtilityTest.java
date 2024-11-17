@@ -1,16 +1,16 @@
 package tech1.framework.foundation.utilities.http;
 
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.constants.DomainConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.constants.JbsConstants;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
 import static tech1.framework.foundation.utilities.http.HttpRequestFieldsUtility.isEmail;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpRequestFieldsUtilityTest {
 
@@ -31,7 +31,7 @@ class HttpRequestFieldsUtilityTest {
                 Arguments.of("info", false),
                 Arguments.of("info@", false),
                 Arguments.of("info@tech1", false),
-                Arguments.of("info@" + DomainConstants.TECH1, true),
+                Arguments.of("info@" + JbsConstants.Domains.HARDCODED, true),
                 Arguments.of("petro.petrenko@gmail.com", true),
                 Arguments.of("john78@proton.com", true)
         );

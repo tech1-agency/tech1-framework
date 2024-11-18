@@ -26,11 +26,11 @@ import tech1.framework.foundation.domain.exceptions.tokens.*;
 import tech1.framework.foundation.domain.tuples.Tuple2;
 
 import static jbst.iam.domain.db.UserSession.randomPersistedSession;
-import static jbst.iam.tests.random.ClaimsRandomUtility.validClaims;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static tech1.framework.foundation.utilities.random.RandomUtility.validClaims;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

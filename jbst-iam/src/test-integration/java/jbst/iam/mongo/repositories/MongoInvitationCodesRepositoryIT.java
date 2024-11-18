@@ -19,7 +19,7 @@ import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.tuples.TuplePresence;
 
 import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;

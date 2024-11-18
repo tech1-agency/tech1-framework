@@ -13,9 +13,9 @@ import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 import java.time.ZoneId;
 import java.util.*;
 
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.foundation.utilities.random.RandomUtility.*;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 public record JwtUser(
         UserId id,
@@ -134,6 +134,7 @@ public record JwtUser(
         );
     }
 
+    @SuppressWarnings("unused")
     public boolean hasAllAuthorities(Set<SimpleGrantedAuthority> authorities) {
         return this.authorities.containsAll(authorities);
     }

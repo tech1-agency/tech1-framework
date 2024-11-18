@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 

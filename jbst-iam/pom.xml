@@ -14,22 +14,12 @@
     <artifactId>jbst-iam</artifactId>
 
     <dependencies>
-        <!-- Tech1: Framework -->
+        <!-- jbst -->
         <dependency>
             <groupId>jbst</groupId>
             <artifactId>jbst-foundation</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
-        </dependency>
-        <!-- Spring Boot: Security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <!-- JWT Security -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
         </dependency>
         <!-- Spring Boot: Data Stores (SQL/NoSQL) -->
         <dependency>

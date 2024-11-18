@@ -14,7 +14,7 @@
     <artifactId>jbst-iam-server</artifactId>
 
     <dependencies>
-        <!-- Tech1: Framework -->
+        <!-- jbst -->
         <dependency>
             <groupId>jbst</groupId>
             <artifactId>jbst-iam</artifactId>

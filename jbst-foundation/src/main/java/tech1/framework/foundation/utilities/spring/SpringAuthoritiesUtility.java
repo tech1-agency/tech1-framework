@@ -1,4 +1,4 @@
-package jbst.iam.utilities;
+package tech1.framework.foundation.utilities.spring;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

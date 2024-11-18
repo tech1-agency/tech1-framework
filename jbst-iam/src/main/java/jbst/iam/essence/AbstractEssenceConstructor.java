@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;

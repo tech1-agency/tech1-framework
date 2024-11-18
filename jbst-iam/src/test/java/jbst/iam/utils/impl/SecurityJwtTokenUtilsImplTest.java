@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.*;
 import static java.util.Objects.nonNull;
 import static java.util.TimeZone.getTimeZone;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
 import static tech1.framework.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;

@@ -15,9 +15,9 @@ import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConv
 import java.util.List;
 import java.util.Set;
 
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor

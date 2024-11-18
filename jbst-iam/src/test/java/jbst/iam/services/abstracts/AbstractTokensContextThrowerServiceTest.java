@@ -29,12 +29,12 @@ import java.util.stream.Stream;
 
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.valid;
-import static jbst.iam.tests.random.ClaimsRandomUtility.expiredClaims;
-import static jbst.iam.tests.random.ClaimsRandomUtility.validClaims;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.expiredClaims;
+import static tech1.framework.foundation.utilities.random.RandomUtility.validClaims;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

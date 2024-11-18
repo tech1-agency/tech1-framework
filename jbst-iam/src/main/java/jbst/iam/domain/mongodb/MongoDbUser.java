@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.springframework.util.StringUtils.capitalize;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.foundation.utilities.random.RandomUtility.*;

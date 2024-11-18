@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 

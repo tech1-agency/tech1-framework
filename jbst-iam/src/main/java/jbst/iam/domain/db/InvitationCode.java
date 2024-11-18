@@ -7,7 +7,7 @@ import tech1.framework.foundation.domain.base.Username;
 
 import java.util.Set;
 
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 

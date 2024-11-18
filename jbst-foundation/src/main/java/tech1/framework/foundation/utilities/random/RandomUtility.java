@@ -2,10 +2,14 @@ package tech1.framework.foundation.utilities.random;
 
 import feign.FeignException;
 import feign.Request;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import lombok.experimental.UtilityClass;
+import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.constants.BigDecimalConstants;
 import tech1.framework.foundation.domain.constants.StringConstants;
 import tech1.framework.foundation.domain.exceptions.random.IllegalEnumException;
-import lombok.experimental.UtilityClass;
+import tech1.framework.foundation.domain.properties.base.TimeAmount;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -26,6 +30,10 @@ import java.util.stream.Stream;
 import static java.lang.Math.abs;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.systemDefault;
+import static java.time.ZoneOffset.UTC;
+import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
 public class RandomUtility {
@@ -365,5 +373,28 @@ public class RandomUtility {
                 new byte[] {},
                 new HashMap<>()
         );
+    }
+
+    public static Claims validClaims() {
+        var claims = Jwts.claims();
+        claims.subject(Username.testsHardcoded().value());
+        var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
+        var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
+        claims.issuedAt(new Date());
+        claims.expiration(expiration);
+        claims.add("authorities", getSimpleGrantedAuthorities("admin", "user"));
+        return claims.build();
+    }
+
+    public static Claims expiredClaims() {
+        var claims = Jwts.claims();
+        claims.subject(Username.testsHardcoded().value());
+        var currentTimestamp = getCurrentTimestamp();
+        var issuedAt = new Date(currentTimestamp);
+        var expiration = new Date(currentTimestamp - 1000);
+        claims.issuedAt(issuedAt);
+        claims.expiration(expiration);
+        claims.add("authorities", getSimpleGrantedAuthorities("admin", "user"));
+        return claims.build();
     }
 }

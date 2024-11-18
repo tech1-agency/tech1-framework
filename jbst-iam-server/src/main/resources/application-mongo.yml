@@ -2,4 +2,4 @@
 # jbst
 jbst:
   server-configs:
-    name: tech1-framework-iam-server-mongodb
+    name: jbst-server-mongodb

@@ -33,7 +33,7 @@
 
     <scm>
         <connection>scm:git:ssh://git@github.com/tech1-agency/jbst.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/tech1-agency/jbstgit</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/tech1-agency/jbst.git</developerConnection>
         <url>https://github.com/tech1-agency/jbst</url>
     </scm>
 

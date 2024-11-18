@@ -1,6 +1,10 @@
 package jbst.iam.utils.impl;
 
 import io.jsonwebtoken.Jwts;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.JwtTokenCreationParams;
@@ -22,10 +26,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
-import jbst.foundation.domain.properties.base.TimeAmount;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,12 +38,12 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.*;
 import static java.util.Objects.nonNull;
 import static java.util.TimeZone.getTimeZone;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static org.assertj.core.api.Assertions.assertThat;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @ExtendWith({ SpringExtension.class })

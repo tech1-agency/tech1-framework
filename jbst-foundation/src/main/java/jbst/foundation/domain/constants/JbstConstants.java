@@ -3,6 +3,7 @@ package jbst.foundation.domain.constants;
 import com.diogonunes.jcolor.AnsiFormat;
 import lombok.experimental.UtilityClass;
 
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.diogonunes.jcolor.Attribute.*;
@@ -41,5 +42,16 @@ public class JbstConstants {
                 "/swagger-ui.html",
                 "/swagger-ui/**"
         );
+    }
+
+    public static class ZoneIds {
+        // Poland
+        public static final ZoneId POLAND = ZoneId.of("Poland");
+
+        // Ukraine, Kyiv
+        // Daylight Saving Time; EEST: Eastern European Summer Time; UTC+3
+        // Standard Time; EET: Eastern European Time; UTC+2
+        // WARNING: https://github.com/eggert/tz/commit/e13e9c531fc48a04fb8d064acccc9f8ae68d5544
+        public static final ZoneId UKRAINE = ZoneId.of("Europe/Kyiv");
     }
 }

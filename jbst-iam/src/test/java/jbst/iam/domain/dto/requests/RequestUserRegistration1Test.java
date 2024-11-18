@@ -1,13 +1,13 @@
 package jbst.iam.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserRegistration1Test extends AbstractSerializationDeserializationRunner {
@@ -15,7 +15,7 @@ class RequestUserRegistration1Test extends AbstractSerializationDeserializationR
             Username.hardcoded(),
             Password.of("password123"),
             Password.of("password123"),
-            ZoneIdsConstants.UKRAINE,
+            UKRAINE,
             "TJ5veLJvqi78AARpiDVXQ9u0q9rbo3zpE6LtbWBH"
     );
 

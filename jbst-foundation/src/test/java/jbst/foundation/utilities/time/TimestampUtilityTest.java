@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.time;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.TimeAmount;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,8 +11,6 @@ import java.util.stream.Stream;
 
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.*;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.POLAND;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
@@ -125,7 +124,7 @@ class TimestampUtilityTest {
     @ParameterizedTest
     void getStartOfMonthTimestampTest(long timestamp, long expected) {
         // Act
-        var actual = getStartOfMonthTimestamp(timestamp, UKRAINE);
+        var actual = getStartOfMonthTimestamp(timestamp, JbstConstants.ZoneIds.UKRAINE);
 
         // Assert
         assertThat(actual).isEqualTo(expected);
@@ -135,8 +134,8 @@ class TimestampUtilityTest {
     void getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE);
-        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND);
+        var timestampUkraine = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
+        var timestampPoland = getCurrentMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
 
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
@@ -148,8 +147,8 @@ class TimestampUtilityTest {
     void getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestampUTC();
-        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE);
-        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(POLAND);
+        var timestampUkraine = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE);
+        var timestampPoland = getPreviousMonthAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND);
 
         // Assert
         assertThat(timestampUTC).isGreaterThan(timestampPoland);
@@ -161,8 +160,8 @@ class TimestampUtilityTest {
     void getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampTest() {
         // Act
         var timestampUTC = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestampUTC(4);
-        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(UKRAINE, 3);
-        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(POLAND, 3);
+        var timestampUkraine = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.UKRAINE, 3);
+        var timestampPoland = getNMonthAgoAtStartOfMonthAndAtStartOfDayTimestamp(JbstConstants.ZoneIds.POLAND, 3);
 
         // Assert
         assertThat(timestampUTC)
@@ -170,8 +169,8 @@ class TimestampUtilityTest {
                 .isLessThan(timestampUkraine);
         assertThat(timestampPoland).isGreaterThan(timestampUkraine);
         var localDateTimeUTC = convertTimestamp(timestampUTC, UTC);
-        var localDateTimeUkraine = convertTimestamp(timestampUkraine, UKRAINE);
-        var localDateTimePoland = convertTimestamp(timestampPoland, POLAND);
+        var localDateTimeUkraine = convertTimestamp(timestampUkraine, JbstConstants.ZoneIds.UKRAINE);
+        var localDateTimePoland = convertTimestamp(timestampPoland, JbstConstants.ZoneIds.POLAND);
         assertThat(localDateTimeUTC.toString()).endsWith("00:00");
         assertThat(localDateTimeUkraine.toString()).endsWith("00:00");
         assertThat(localDateTimePoland.toString()).endsWith("00:00");

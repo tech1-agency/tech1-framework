@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.time;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,8 +20,7 @@ import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static java.util.TimeZone.getTimeZone;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.POLAND;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -162,7 +162,7 @@ class LocalDateTimeUtilityImplTest {
     @Test
     void nowByTimezoneIncludingDaylightSavingTimeTest() {
         // Act
-        var actual1 = nowByTimezone(getTimeZone(POLAND));
+        var actual1 = nowByTimezone(getTimeZone(JbstConstants.ZoneIds.POLAND));
         var actual2 = nowByTimezone(getTimeZone(UKRAINE));
 
         // Assert
@@ -174,7 +174,7 @@ class LocalDateTimeUtilityImplTest {
     @Test
     void nowByZoneIdIncludingDaylightSavingTimeTest() {
         // Act
-        var actual1 = nowByZoneId(POLAND);
+        var actual1 = nowByZoneId(JbstConstants.ZoneIds.POLAND);
         var actual2 = nowByZoneId(UKRAINE);
 
         // Assert

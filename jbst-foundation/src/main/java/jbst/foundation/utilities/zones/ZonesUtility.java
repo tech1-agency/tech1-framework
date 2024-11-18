@@ -1,6 +1,6 @@
 package jbst.foundation.utilities.zones;
 
-import jbst.foundation.domain.constants.ZoneIdsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ public class ZonesUtility {
 
     public static ZoneId reworkUkraineZoneId(@NotNull ZoneId zoneId) {
         if ("Europe/Kiev".equals(zoneId.getId())) {
-            return ZoneIdsConstants.UKRAINE;
+            return JbstConstants.ZoneIds.UKRAINE;
         }
         return zoneId;
     }

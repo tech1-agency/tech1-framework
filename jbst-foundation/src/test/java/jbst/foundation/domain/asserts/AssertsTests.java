@@ -2,7 +2,6 @@ package jbst.foundation.domain.asserts;
 
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.BigDecimalConstants;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,6 +14,7 @@ import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -128,7 +128,7 @@ class AssertsTests {
                 Arguments.of("", randomString()),
                 Arguments.of("Europe/Kiev1", randomString()),
                 Arguments.of("Europe/Kiev2", randomString()),
-                Arguments.of(ZoneIdsConstants.UKRAINE.getId(), null)
+                Arguments.of(UKRAINE.getId(), null)
         );
     }
 

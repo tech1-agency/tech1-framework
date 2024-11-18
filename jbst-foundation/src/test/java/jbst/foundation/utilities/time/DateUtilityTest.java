@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static java.time.LocalDateTime.of;
 import static java.time.Month.DECEMBER;
 import static java.util.TimeZone.getTimeZone;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static jbst.foundation.utilities.time.DateUtility.getAbsDifferenceByTimeUnit;

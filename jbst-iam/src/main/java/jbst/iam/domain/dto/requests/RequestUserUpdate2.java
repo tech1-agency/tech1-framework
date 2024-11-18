@@ -2,10 +2,10 @@ package jbst.iam.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 
 import java.time.ZoneId;
 
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
 
 public record RequestUserUpdate2(
@@ -15,7 +15,7 @@ public record RequestUserUpdate2(
 
     public static RequestUserUpdate2 hardcoded() {
         return new RequestUserUpdate2(
-                ZoneIdsConstants.UKRAINE,
+                UKRAINE,
                 "jbst"
         );
     }

@@ -1,17 +1,17 @@
 package jbst.iam.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
-import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserUpdate2Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserUpdate2 REQUEST = new RequestUserUpdate2(
-            ZoneIdsConstants.UKRAINE,
-            "Tech1 Tests"
+            UKRAINE,
+            "jbst"
     );
 
     @Override

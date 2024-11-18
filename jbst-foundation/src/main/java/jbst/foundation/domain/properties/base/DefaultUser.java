@@ -3,7 +3,6 @@ package jbst.foundation.domain.properties.base;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -16,6 +15,7 @@ import java.time.ZoneId;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
 
@@ -41,7 +41,7 @@ public class DefaultUser extends AbstractPropertyConfigs {
         return new DefaultUser(
                 Username.hardcoded(),
                 Password.hardcoded(),
-                ZoneIdsConstants.UKRAINE,
+                UKRAINE,
                 Email.hardcoded().value(),
                 false,
                 Set.of("user", "admin")

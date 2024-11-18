@@ -1,6 +1,6 @@
 package jbst.foundation.domain.system.reset_server;
 
-import jbst.foundation.domain.constants.ZoneIdsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.TuplePercentage;
@@ -56,7 +56,7 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
         assertThat(this.writeValueAsString(status)).isEqualTo(TestsIOUtils.readFile(this.getFolder(), "reset-server-status-3.json"));
 
         // Act-4
-        status.complete(ZoneIdsConstants.UKRAINE);
+        status.complete(JbstConstants.ZoneIds.UKRAINE);
 
         // Assert-4
         assertThat(status.getState()).isEqualTo(ResetServerState.READY);

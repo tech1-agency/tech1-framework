@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
@@ -8,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
+
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -21,8 +22,8 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
 
     public static SessionConfigs hardcoded() {
         return new SessionConfigs(
-                Cron.enabled("*/30 * * * * *", ZoneIdsConstants.UKRAINE.getId()),
-                Cron.enabled("*/15 * * * * *", ZoneIdsConstants.UKRAINE.getId())
+                Cron.enabled("*/30 * * * * *", UKRAINE.getId()),
+                Cron.enabled("*/15 * * * * *", UKRAINE.getId())
         );
     }
 

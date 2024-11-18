@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.iam.domain.identifiers.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +13,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import static jbst.foundation.domain.base.AbstractAuthority.*;
+import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.*;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
@@ -75,7 +75,7 @@ public record JwtUser(
                 UserId.hardcoded(),
                 Username.hardcoded(),
                 Password.hardcoded(),
-                ZoneIdsConstants.UKRAINE,
+                UKRAINE,
                 authorities,
                 Email.hardcoded(),
                 "",

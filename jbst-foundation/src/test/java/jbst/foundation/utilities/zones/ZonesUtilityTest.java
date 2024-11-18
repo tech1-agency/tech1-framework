@@ -1,6 +1,6 @@
 package jbst.foundation.utilities.zones;
 
-import jbst.foundation.domain.constants.ZoneIdsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,9 +14,9 @@ class ZonesUtilityTest {
 
     private static Stream<Arguments> getBasicAuthenticationHeaderTest() {
         return Stream.of(
-                Arguments.of(ZoneId.of("Europe/Kiev"), ZoneIdsConstants.UKRAINE),
-                Arguments.of(ZoneId.of("Europe/Kiev"), ZoneIdsConstants.UKRAINE),
-                Arguments.of(ZoneId.of("Poland"), ZoneIdsConstants.POLAND)
+                Arguments.of(ZoneId.of("Europe/Kiev"), JbstConstants.ZoneIds.UKRAINE),
+                Arguments.of(ZoneId.of("Europe/Kiev"), JbstConstants.ZoneIds.UKRAINE),
+                Arguments.of(ZoneId.of("Poland"), JbstConstants.ZoneIds.POLAND)
         );
     }
 

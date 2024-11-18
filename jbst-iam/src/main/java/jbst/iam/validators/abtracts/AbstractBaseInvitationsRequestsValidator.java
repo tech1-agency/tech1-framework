@@ -3,7 +3,7 @@ package jbst.iam.validators.abtracts;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
+import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,7 +16,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {
+public abstract class AbstractBaseInvitationsRequestsValidator implements BaseInvitationsRequestsValidator {
 
     // Repositories
     protected final InvitationCodesRepository invitationCodesRepository;
@@ -24,7 +24,7 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
     protected final JbstProperties jbstProperties;
 
     @Override
-    public void validateCreateNewInvitationCode(RequestNewInvitationParams request) {
+    public void validateCreateNewInvitation(RequestNewInvitationParams request) {
         var availableAuthorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         assertTrueOrThrow(
                 availableAuthorities.containsAll(request.authorities()),

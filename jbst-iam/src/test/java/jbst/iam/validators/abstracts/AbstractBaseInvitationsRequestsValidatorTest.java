@@ -8,8 +8,8 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
-import jbst.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
+import jbst.iam.validators.BaseInvitationsRequestsValidator;
+import jbst.iam.validators.abtracts.AbstractBaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,9 +40,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class AbstractBaseInvitationCodesRequestsValidatorTest {
+class AbstractBaseInvitationsRequestsValidatorTest {
 
-    private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
+    private static Stream<Arguments> validateCreateNewInvitationTest() {
         return Stream.of(
                 Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "invitationCode:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
                 Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
@@ -61,8 +61,8 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator() {
-            return new AbstractBaseInvitationCodesRequestsValidator(
+        BaseInvitationsRequestsValidator baseInvitationCodesRequestsValidator() {
+            return new AbstractBaseInvitationsRequestsValidator(
                     this.invitationCodesRepository,
                     this.jbstProperties
             ) {};
@@ -71,13 +71,13 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     private final InvitationCodesRepository invitationCodesRepository;
 
-    private final BaseInvitationCodesRequestsValidator componentUnderTest;
+    private final BaseInvitationsRequestsValidator componentUnderTest;
 
     @ParameterizedTest
-    @MethodSource("validateCreateNewInvitationCodeTest")
-    void validateCreateNewInvitationCodeTest(RequestNewInvitationParams request, String exceptionMessage) {
+    @MethodSource("validateCreateNewInvitationTest")
+    void validateCreateNewInvitationTest(RequestNewInvitationParams request, String exceptionMessage) {
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitationCode(request));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitation(request));
 
         // Assert
         if (nonNull(exceptionMessage)) {

@@ -6,9 +6,9 @@ import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.services.BaseInvitationCodesService;
+import jbst.iam.services.BaseInvitationsService;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
+import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,9 +32,9 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseInvitationCodesService baseInvitationCodesService;
+    private final BaseInvitationsService baseInvitationsService;
     // Validators
-    private final BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator;
+    private final BaseInvitationsRequestsValidator baseInvitationsRequestsValidator;
     // Properties
     private final JbstProperties jbstProperties;
 
@@ -46,7 +46,7 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
                 this.currentSessionAssistant,
-                this.baseInvitationCodesService
+                this.baseInvitationsService
         );
     }
 
@@ -54,7 +54,7 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.currentSessionAssistant,
-                this.baseInvitationCodesService
+                this.baseInvitationsService
         );
     }
 
@@ -64,19 +64,19 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
         var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
-        var invitationCodes = list345(ResponseInvitation.class);
-        var responseInvitationCodes = new ResponseInvitations(authorities, invitationCodes);
-        when(this.baseInvitationCodesService.findByOwner(owner)).thenReturn(responseInvitationCodes);
+        var invitations = list345(ResponseInvitation.class);
+        var responseInvitationCodes = new ResponseInvitations(authorities, invitations);
+        when(this.baseInvitationsService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
         this.mvc.perform(get("/invitations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authorities", hasSize(5)))
-                .andExpect(jsonPath("$.invitationCodes", hasSize(invitationCodes.size())));
+                .andExpect(jsonPath("$.invitations", hasSize(invitations.size())));
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationCodesService).findByOwner(owner);
+        verify(this.baseInvitationsService).findByOwner(owner);
     }
 
     @Test
@@ -95,8 +95,8 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationCodesRequestsValidator).validateCreateNewInvitationCode(request);
-        verify(this.baseInvitationCodesService).save(Username.hardcoded(), request);
+        verify(this.baseInvitationsRequestsValidator).validateCreateNewInvitation(request);
+        verify(this.baseInvitationsService).save(Username.hardcoded(), request);
     }
 
     @Test
@@ -112,7 +112,7 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationCodesRequestsValidator).validateDeleteById(username, invitationCodeId);
-        verify(this.baseInvitationCodesService).deleteById(invitationCodeId);
+        verify(this.baseInvitationsRequestsValidator).validateDeleteById(username, invitationCodeId);
+        verify(this.baseInvitationsService).deleteById(invitationCodeId);
     }
 }

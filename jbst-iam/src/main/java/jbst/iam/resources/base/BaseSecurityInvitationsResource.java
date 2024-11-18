@@ -7,8 +7,8 @@ import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.services.BaseInvitationCodesService;
-import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
+import jbst.iam.services.BaseInvitationsService;
+import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,31 +28,31 @@ public class BaseSecurityInvitationsResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
-    private final BaseInvitationCodesService baseInvitationCodesService;
+    private final BaseInvitationsService baseInvitationsService;
     // Validators
-    private final BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator;
+    private final BaseInvitationsRequestsValidator baseInvitationsRequestsValidator;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseInvitations findAll() {
         var owner = this.currentSessionAssistant.getCurrentUsername();
-        return this.baseInvitationCodesService.findByOwner(owner);
+        return this.baseInvitationsService.findByOwner(owner);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void save(@RequestBody @Valid RequestNewInvitationParams request) {
-        this.baseInvitationCodesRequestsValidator.validateCreateNewInvitationCode(request);
+        this.baseInvitationsRequestsValidator.validateCreateNewInvitation(request);
         var owner = this.currentSessionAssistant.getCurrentUsername();
-        this.baseInvitationCodesService.save(owner, request);
+        this.baseInvitationsService.save(owner, request);
     }
 
     @DeleteMapping("/{invitationId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable InvitationId invitationId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseInvitationCodesRequestsValidator.validateDeleteById(username, invitationId);
-        this.baseInvitationCodesService.deleteById(invitationId);
+        this.baseInvitationsRequestsValidator.validateDeleteById(username, invitationId);
+        this.baseInvitationsService.deleteById(invitationId);
     }
 }
 

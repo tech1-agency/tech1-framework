@@ -5,7 +5,7 @@ import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.foundation.domain.base.Username;
 
-public interface BaseInvitationCodesService {
+public interface BaseInvitationsService {
     ResponseInvitations findByOwner(Username owner);
     void save(Username owner, RequestNewInvitationParams request);
     void deleteById(InvitationId invitationId);

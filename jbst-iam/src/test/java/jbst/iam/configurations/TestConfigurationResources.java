@@ -57,8 +57,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseInvitationCodesService invitationCodeService() {
-        return mock(BaseInvitationCodesService.class);
+    BaseInvitationsService invitationCodeService() {
+        return mock(BaseInvitationsService.class);
     }
 
     @Bean
@@ -142,8 +142,8 @@ public class TestConfigurationResources {
     }
 
     @Bean
-    BaseInvitationCodesRequestsValidator invitationCodeRequestsValidator() {
-        return mock(BaseInvitationCodesRequestsValidator.class);
+    BaseInvitationsRequestsValidator invitationCodeRequestsValidator() {
+        return mock(BaseInvitationsRequestsValidator.class);
     }
 
     @Bean

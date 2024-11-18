@@ -5,14 +5,14 @@ import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.services.BaseInvitationCodesService;
+import jbst.iam.services.BaseInvitationsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseInvitationCodesService implements BaseInvitationCodesService {
+public abstract class AbstractBaseInvitationsService implements BaseInvitationsService {
 
     // Repositories
     protected final InvitationCodesRepository invitationCodesRepository;

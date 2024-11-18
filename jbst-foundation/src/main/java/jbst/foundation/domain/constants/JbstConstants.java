@@ -72,6 +72,7 @@ public class JbstConstants {
         public static final String PATH_DELIMITER = "/";
     }
 
+    @SuppressWarnings("unused")
     public class Logs {
         // =================================================================================================================
         // Prefixes
@@ -80,8 +81,22 @@ public class JbstConstants {
         public static final String PREFIX_OPEN = "[jbst, ";
         public static final String PREFIX_PROPERTIES = PREFIX_OPEN + "properties]";
         public static final String PREFIX_UTILITIES = PREFIX_OPEN + "utilities]";
+        public static final String PREFIX_EVENTS = PREFIX_OPEN + "events]";
         public static final String PREFIX_INCIDENTS = PREFIX_OPEN + "incidents]";
-        public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = PREFIX_OPEN + "B2B SecurityJWT]";
+
+        // =================================================================================================================
+        // Events
+        // =================================================================================================================
+        public static final String EVENTS_AUTHENTICATION_LOGIN = PREFIX_EVENTS + " `{}` - /login. Username: `{}`";
+        public static final String EVENTS_AUTHENTICATION_LOGIN_FAILURE = PREFIX_EVENTS + " `{}` - login failure. Username: `{}`";
+        public static final String EVENTS_AUTHENTICATION_LOGOUT = PREFIX_EVENTS + " `{}`- /logout. Username: `{}`";
+        public static final String EVENTS_REGISTER1 = PREFIX_EVENTS + " `{}`- /register1. Username: `{}`";
+        public static final String EVENTS_REGISTER1_FAILURE = PREFIX_EVENTS + " `{}`- /register1 failure. Username: `{}`";
+        public static final String EVENTS_SESSION_REFRESHED = PREFIX_EVENTS + " `{}`- /refreshToken. Username: `{}`";
+        public static final String EVENTS_SESSION_EXPIRED = PREFIX_EVENTS + " `{}`- session expired. Username: `{}`";
+        public static final String EVENTS_SESSION_ADD_USER_REQUEST_METADATA = PREFIX_EVENTS + " `{}`- Session add user request metadata. Username: `{}`";
+        public static final String EVENTS_SESSION_RENEW_USER_REQUEST_METADATA = PREFIX_EVENTS + " `{}`- Session renew user request metadata. Username: `{}`. Session: `{}`";
+
 
         // =================================================================================================================
         // Incidents
@@ -101,6 +116,15 @@ public class JbstConstants {
         // Tasks
         // =================================================================================================================
         public static final String TASK_RESET_SERVER = PREFIX_OPEN + "tasks] Reset Server Initiator: `{}`. Status: `{}`";
+
+        // =================================================================================================================
+        // Server
+        // =================================================================================================================
+        public static final String SERVER_OFFLINE = PREFIX + " `{}` is probably offline. Exception: `{}`";
+        public static final String SERVER_CONTAINER_1 = PREFIX + " `{}` container configuration. Version: `{}`. Status: `{}`";
+        public static final String SERVER_CONTAINER_2 = PREFIX + " `{}` container configuration. Status: `{}`";
+        public static final String SERVER_STARTUP_LISTENER_1 = PREFIX + " `{}` startup listener configuration. Version: `{}`. Status: `{}`";
+        public static final String SERVER_STARTUP_LISTENER_2 = PREFIX + " `{}` startup listener configuration. Status: `{}`";
     }
 
     public static class MemoryUnits {

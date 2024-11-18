@@ -1,12 +1,12 @@
 package jbst.iam.server;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.properties.JbstProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import jbst.foundation.domain.properties.JbstProperties;
 
-import static jbst.foundation.domain.constants.LogsConstants.SERVER_CONTAINER_1;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
@@ -25,6 +25,6 @@ public class Application {
         var applicationFrameworkProperties = applicationContext.getBean(JbstProperties.class);
         var serverConfigs = applicationFrameworkProperties.getServerConfigs();
         var mavenDetails = applicationFrameworkProperties.getMavenConfigs().asMavenDetails();
-        LOGGER.info(SERVER_CONTAINER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
+        LOGGER.info(JbstConstants.Logs.SERVER_CONTAINER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
     }
 }

@@ -2,6 +2,7 @@ package jbst.foundation.feigns.clients;
 
 import feign.RetryableException;
 import jbst.foundation.domain.base.ServerName;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.feigns.definitions.SpringBootClientFeign;
 import jbst.foundation.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
@@ -10,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 
 @Slf4j
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
         try {
             return this.springBootClientFeign.info();
         } catch (RetryableException ex) {
-            LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
+            LOGGER.error(JbstConstants.Logs.SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return SpringBootActuatorInfo.offline();
         }
     }
@@ -44,7 +44,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
         try {
             return this.springBootClientFeign.health();
         } catch (RetryableException ex) {
-            LOGGER.error(SERVER_OFFLINE, this.getServerName(), ex.getMessage());
+            LOGGER.error(JbstConstants.Logs.SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return SpringBootActuatorHealth.offline();
         }
     }

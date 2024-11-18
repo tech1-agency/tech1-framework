@@ -1,6 +1,7 @@
 package jbst.foundation.feigns.clients.github.clients.impl;
 
 import feign.RetryableException;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.feigns.clients.github.clients.GithubClient;
 import jbst.foundation.feigns.clients.github.definitions.GithubDefinition;
 import jbst.foundation.feigns.clients.github.domain.requests.GithubRepoContentsRequest;
@@ -8,8 +9,6 @@ import jbst.foundation.feigns.clients.github.domain.responses.GithubRepoContents
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static jbst.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -28,7 +27,7 @@ public class GithubClientImpl implements GithubClient {
                     request.content()
             );
         } catch (RetryableException ex) {
-            LOGGER.warn(SERVER_OFFLINE, "GitHub", ex.getMessage());
+            LOGGER.warn(JbstConstants.Logs.SERVER_OFFLINE, "GitHub", ex.getMessage());
             throw new IllegalArgumentException(ex);
         }
     }

@@ -127,9 +127,9 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 PostgresDbUser.randomSuperadmin("sa1"),
                 PostgresDbUser.randomSuperadmin("sa2"),
                 PostgresDbUser.randomAdmin("admin1"),
-                PostgresDbUser.random("user1", Set.of("user", INVITATION_CODE_WRITE)),
-                PostgresDbUser.random("user2", Set.of("user", INVITATION_CODE_READ)),
-                PostgresDbUser.random("sa3", Set.of(INVITATION_CODE_READ, SUPERADMIN, INVITATION_CODE_WRITE))
+                PostgresDbUser.random("user1", Set.of("user", INVITATIONS_WRITE)),
+                PostgresDbUser.random("user2", Set.of("user", INVITATIONS_READ)),
+                PostgresDbUser.random("sa3", Set.of(INVITATIONS_READ, SUPERADMIN, INVITATIONS_WRITE))
         );
     }
 

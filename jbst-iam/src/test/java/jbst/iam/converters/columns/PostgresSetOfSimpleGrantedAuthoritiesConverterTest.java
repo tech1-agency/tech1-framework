@@ -18,8 +18,8 @@ import java.util.stream.Stream;
 
 import static jbst.iam.constants.SecurityJwtConstants.SUPERADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static jbst.foundation.domain.base.AbstractAuthority.INVITATION_CODE_READ;
-import static jbst.foundation.domain.base.AbstractAuthority.INVITATION_CODE_WRITE;
+import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_READ;
+import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_WRITE;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -31,7 +31,7 @@ class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
                 Arguments.of(null, ""),
                 Arguments.of(Set.of(), ""),
                 Arguments.of(Set.of(SUPERADMIN), "superadmin"),
-                Arguments.of(Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)), "invitations:read;invitations:write")
+                Arguments.of(Set.of(new SimpleGrantedAuthority(INVITATIONS_READ), new SimpleGrantedAuthority(INVITATIONS_WRITE)), "invitations:read;invitations:write")
         );
     }
 
@@ -40,7 +40,7 @@ class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
                 Arguments.of(null, Set.of()),
                 Arguments.of("", Set.of()),
                 Arguments.of("superadmin", Set.of(SUPERADMIN)),
-                Arguments.of("invitations:read;invitations:write", Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)))
+                Arguments.of("invitations:read;invitations:write", Set.of(new SimpleGrantedAuthority(INVITATIONS_READ), new SimpleGrantedAuthority(INVITATIONS_WRITE)))
         );
     }
 

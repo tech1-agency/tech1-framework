@@ -44,10 +44,10 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, "invitationCode:send")), "Authorities must contains: [admin, invitations:read, invitations:write, user]"),
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, user]"),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATIONS_READ, "invitationCode:send")), "Authorities must contains: [admin, invitations:read, invitations:write, user]"),
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, user]"),
                 Arguments.of(new RequestNewInvitationCodeParams(Set.of()), null),
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATION_CODE_READ, INVITATION_CODE_WRITE)), null)
+                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)
         );
     }
 

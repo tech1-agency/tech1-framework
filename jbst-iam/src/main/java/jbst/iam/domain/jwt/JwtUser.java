@@ -97,7 +97,7 @@ public record JwtUser(
                 Password.random(),
                 randomZoneId(),
                 Set.of(
-                        new SimpleGrantedAuthority(randomElement(List.of(SUPERADMIN, INVITATION_CODE_READ, INVITATION_CODE_WRITE)))
+                        new SimpleGrantedAuthority(randomElement(List.of(SUPERADMIN, INVITATIONS_READ, INVITATIONS_WRITE)))
                 ),
                 Email.random(),
                 randomString(),

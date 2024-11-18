@@ -32,8 +32,8 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
                         new Authority(AbstractAuthority.SUPERADMIN),
                         new Authority("admin"),
                         new Authority("user"),
-                        new Authority(AbstractAuthority.INVITATION_CODE_READ),
-                        new Authority(AbstractAuthority.INVITATION_CODE_WRITE)
+                        new Authority(AbstractAuthority.INVITATIONS_READ),
+                        new Authority(AbstractAuthority.INVITATIONS_WRITE)
                 )
         );
     }

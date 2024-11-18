@@ -5,8 +5,8 @@ import jbst.foundation.domain.base.AbstractAuthority;
 public enum TestAuthority implements AbstractAuthority {
     USER("user"),
     ADMIN("admin"),
-    INVITATIONS_READ("invitations:read"),
-    INVITATIONS_WRITE("invitations:write");
+    TESTS_INVITATIONS_READ("invitations:read"),
+    TESTS_INVITATIONS_WRITE("invitations:write");
 
     private final String value;
 

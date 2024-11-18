@@ -23,9 +23,9 @@ class SpringAuthoritiesUtilityTest {
                 Arguments.of(null, "—"),
                 Arguments.of(Set.of(), "—"),
                 Arguments.of(Set.of(
-                        new SimpleGrantedAuthority(INVITATION_CODE_READ),
+                        new SimpleGrantedAuthority(INVITATIONS_READ),
                         new SimpleGrantedAuthority(SUPERADMIN),
-                        new SimpleGrantedAuthority(INVITATION_CODE_WRITE)),
+                        new SimpleGrantedAuthority(INVITATIONS_WRITE)),
                         "invitations:read, invitations:write, superadmin"
                 )
         );
@@ -37,8 +37,8 @@ class SpringAuthoritiesUtilityTest {
         var actual = getSimpleGrantedAuthorities(
                 List.of(
                         SUPERADMIN,
-                        INVITATION_CODE_WRITE,
-                        INVITATION_CODE_READ
+                        INVITATIONS_WRITE,
+                        INVITATIONS_READ
                 )
         );
 
@@ -53,8 +53,8 @@ class SpringAuthoritiesUtilityTest {
         var actual = getSimpleGrantedAuthorities(
                 Set.of(
                         SUPERADMIN,
-                        INVITATION_CODE_WRITE,
-                        INVITATION_CODE_READ
+                        INVITATIONS_WRITE,
+                        INVITATIONS_READ
                 )
         );
 

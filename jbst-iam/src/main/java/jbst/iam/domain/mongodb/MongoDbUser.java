@@ -106,9 +106,9 @@ public class MongoDbUser {
                 MongoDbUser.randomSuperadmin("sa1"),
                 MongoDbUser.randomSuperadmin("sa2"),
                 MongoDbUser.randomAdmin("admin1"),
-                MongoDbUser.random("user1", Set.of("user", INVITATION_CODE_WRITE)),
-                MongoDbUser.random("user2", Set.of("user", INVITATION_CODE_READ)),
-                MongoDbUser.random("sa3", Set.of(INVITATION_CODE_READ, SUPERADMIN, INVITATION_CODE_WRITE))
+                MongoDbUser.random("user1", Set.of("user", INVITATIONS_WRITE)),
+                MongoDbUser.random("user2", Set.of("user", INVITATIONS_READ)),
+                MongoDbUser.random("sa3", Set.of(INVITATIONS_READ, SUPERADMIN, INVITATIONS_WRITE))
         );
     }
 

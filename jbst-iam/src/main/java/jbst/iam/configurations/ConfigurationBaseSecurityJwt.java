@@ -61,6 +61,7 @@ import static org.springframework.http.HttpMethod.*;
 public class ConfigurationBaseSecurityJwt {
 
     // Assistants
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final JwtUserDetailsService jwtUserDetailsService;
     // Passwords
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -70,6 +71,7 @@ public class ConfigurationBaseSecurityJwt {
     private final JwtAuthenticationEntryPointExceptionHandler jwtAuthenticationEntryPointExceptionHandler;
     private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
     // Configurer
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final AbstractJbstSecurityJwtConfigurer abstractJbstSecurityJwtConfigurer;
     // Properties
     private final JbstProperties jbstProperties;
@@ -139,9 +141,9 @@ public class ConfigurationBaseSecurityJwt {
 
             if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
                 authorizeHttpRequests
-                        .requestMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ)
-                        .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE)
-                        .requestMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATION_CODE_WRITE);
+                        .requestMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATIONS_READ)
+                        .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATIONS_WRITE)
+                        .requestMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATIONS_WRITE);
             } else {
                 authorizeHttpRequests.requestMatchers(basePathPrefix + "/invitationCode/**").denyAll();
             }

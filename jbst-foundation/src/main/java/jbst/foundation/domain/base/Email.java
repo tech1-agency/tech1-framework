@@ -27,16 +27,16 @@ public record Email(@NotNull String value) {
         return new Email(value);
     }
 
+    public static Email hardcoded() {
+        return of("tests@" + JbstConstants.Domains.HARDCODED);
+    }
+
     public static Email random() {
         return of(randomString() + "@" + JbstConstants.Domains.HARDCODED);
     }
 
     public static Email unknown() {
         return of(StringConstants.UNKNOWN + "@" + JbstConstants.Domains.HARDCODED);
-    }
-
-    public static Email testsHardcoded() {
-        return of("tests@" + JbstConstants.Domains.HARDCODED);
     }
 
     @JsonValue

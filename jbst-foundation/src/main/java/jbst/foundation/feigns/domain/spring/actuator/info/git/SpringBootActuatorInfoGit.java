@@ -9,17 +9,17 @@ public record SpringBootActuatorInfoGit(
         @JsonProperty("branch") String branch
 ) {
 
+    public static SpringBootActuatorInfoGit hardcoded() {
+        return new SpringBootActuatorInfoGit(
+                SpringBootActuatorInfoCommit.hardcoded(),
+                "dev"
+        );
+    }
+
     public static SpringBootActuatorInfoGit dash() {
         return new SpringBootActuatorInfoGit(
                 SpringBootActuatorInfoCommit.dash(),
                 DASH
-        );
-    }
-
-    public static SpringBootActuatorInfoGit testsHardcoded() {
-        return new SpringBootActuatorInfoGit(
-                SpringBootActuatorInfoCommit.testsHardcoded(),
-                "dev"
         );
     }
 }

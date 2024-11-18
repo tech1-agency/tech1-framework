@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailTest extends AbstractSerializationDeserializationRunner {
-    private static final Email EMAIL = Email.testsHardcoded();
+    private static final Email EMAIL = Email.hardcoded();
 
     @Override
     protected String getFileName() {

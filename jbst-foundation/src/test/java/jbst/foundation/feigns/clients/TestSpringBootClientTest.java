@@ -109,7 +109,7 @@ class TestSpringBootClientTest {
     @Test
     void aliveTest() {
         // Arrange
-        when(this.springBootClientFeign.info()).thenReturn(SpringBootActuatorInfo.testsHardcoded());
+        when(this.springBootClientFeign.info()).thenReturn(SpringBootActuatorInfo.hardcoded());
 
         // Act
         var alive = this.componentUnderTest.isAlive();

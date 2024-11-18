@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RequestUserUpdate1Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserUpdate1 REQUEST = new RequestUserUpdate1(
             ZoneIdsConstants.UKRAINE,
-            Email.testsHardcoded(),
+            Email.hardcoded(),
             "Hardcoded Tests"
     );
 

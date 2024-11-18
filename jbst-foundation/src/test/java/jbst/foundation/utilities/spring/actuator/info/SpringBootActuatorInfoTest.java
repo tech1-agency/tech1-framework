@@ -77,7 +77,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
                         "info-5.json"
                 ),
                 Arguments.of(
-                        SpringBootActuatorInfo.testsHardcoded(),
+                        SpringBootActuatorInfo.hardcoded(),
                         "dev",
                         false,
                         Version.hardcoded(),

@@ -23,7 +23,7 @@ class IncidentAuthenticationLoginFailureUsernamePasswordTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login Failure Username/Password");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(8)
                 .containsOnlyKeys("incidentType", "username", "password", "browser", "countryFlag", "ipAddress", "what", "where")

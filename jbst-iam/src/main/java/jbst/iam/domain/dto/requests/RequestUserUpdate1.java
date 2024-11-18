@@ -18,7 +18,7 @@ public record RequestUserUpdate1(
     public static RequestUserUpdate1 testsHardcoded() {
         return new RequestUserUpdate1(
                 ZoneIdsConstants.UKRAINE,
-                Email.testsHardcoded(),
+                Email.hardcoded(),
                 "Tech1 Ops"
         );
     }

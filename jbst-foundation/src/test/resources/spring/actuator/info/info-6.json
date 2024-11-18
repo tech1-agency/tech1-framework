@@ -8,8 +8,8 @@
   },
   "activeProfile": "dev",
   "maven": {
-    "groupId": "tech1.framework",
-    "artifactId": "tech1-server",
-    "version": "v1.61803398875"
+    "groupId": "jbst",
+    "artifactId": "jbst",
+    "version": "v1.1"
   }
 }

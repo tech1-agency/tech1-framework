@@ -42,7 +42,7 @@ public class DefaultUser extends AbstractPropertyConfigs {
                 Username.hardcoded(),
                 Password.hardcoded(),
                 ZoneIdsConstants.UKRAINE,
-                Email.testsHardcoded().value(),
+                Email.hardcoded().value(),
                 false,
                 Set.of("user", "admin")
         );

@@ -25,6 +25,15 @@ public record SpringBootActuatorInfo(
         @JsonInclude(JsonInclude.Include.NON_NULL) MavenDetails maven
 ) {
 
+    public static SpringBootActuatorInfo hardcoded() {
+        return new SpringBootActuatorInfo(
+                SpringBootActuatorInfoGit.hardcoded(),
+                null,
+                "dev",
+                MavenDetails.hardcoded()
+        );
+    }
+
     public static SpringBootActuatorInfo dash() {
         return new SpringBootActuatorInfo(
                 SpringBootActuatorInfoGit.dash(),
@@ -36,15 +45,6 @@ public record SpringBootActuatorInfo(
 
     public static SpringBootActuatorInfo offline() {
         return dash();
-    }
-
-    public static SpringBootActuatorInfo testsHardcoded() {
-        return new SpringBootActuatorInfo(
-                SpringBootActuatorInfoGit.testsHardcoded(),
-                null,
-                "dev",
-                MavenDetails.testsHardcoded()
-        );
     }
 
     @JsonIgnore

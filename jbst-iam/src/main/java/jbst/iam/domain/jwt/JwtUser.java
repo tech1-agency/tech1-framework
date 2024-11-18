@@ -112,7 +112,7 @@ public record JwtUser(
                 Password.hardcoded(),
                 ZoneIdsConstants.UKRAINE,
                 authorities,
-                Email.testsHardcoded(),
+                Email.hardcoded(),
                 "",
                 false,
                 new HashMap<>()

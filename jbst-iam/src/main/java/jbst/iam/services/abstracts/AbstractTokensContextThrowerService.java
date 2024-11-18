@@ -9,11 +9,11 @@ import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.TokensContextThrowerService;
 import jbst.iam.utils.SecurityJwtTokenUtils;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
-import tech1.framework.foundation.domain.tuples.Tuple2;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+import tech1.framework.foundation.domain.tuples.Tuple2;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTokensContextThrowerService implements TokensContextThrowerService {

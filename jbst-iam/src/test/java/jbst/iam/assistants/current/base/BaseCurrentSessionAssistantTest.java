@@ -1,5 +1,6 @@
 package jbst.iam.assistants.current.base;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -10,13 +11,6 @@ import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityPrincipalUtils;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import tech1.framework.foundation.domain.properties.configs.HardwareMonitoringConfigs;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,14 +22,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
-import jakarta.servlet.http.HttpServletRequest;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.configs.HardwareMonitoringConfigs;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.Set;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

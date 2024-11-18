@@ -1,5 +1,6 @@
 package jbst.iam.domain.security;
 
+import jbst.iam.tests.domain.enums.TestAuthority;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +12,6 @@ import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.constants.JbsConstants;
 import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 import tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
-import jbst.iam.tests.domain.enums.TestAuthority;
 
 import java.util.Map;
 import java.util.Set;

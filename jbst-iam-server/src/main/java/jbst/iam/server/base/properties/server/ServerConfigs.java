@@ -1,12 +1,12 @@
 package jbst.iam.server.base.properties.server;
 
-import tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
-import tech1.framework.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.iam.server.base.domain.enums.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
+import tech1.framework.foundation.domain.properties.annotations.MandatoryProperty;
+import tech1.framework.foundation.domain.properties.base.AbstractPropertyConfigs;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

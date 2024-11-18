@@ -1,14 +1,9 @@
 package jbst.iam.tokens.providers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import tech1.framework.foundation.domain.properties.configs.security.jwt.JwtTokensConfigs;
-import tech1.framework.foundation.utilities.random.RandomUtility;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,14 +14,18 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.properties.configs.security.jwt.JwtTokensConfigs;
+import tech1.framework.foundation.utilities.random.RandomUtility;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

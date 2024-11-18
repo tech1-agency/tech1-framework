@@ -1,9 +1,6 @@
 package jbst.iam.assistants.current.base;
 
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -15,10 +12,13 @@ import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityPrincipalUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.HashMap;
 import java.util.Set;

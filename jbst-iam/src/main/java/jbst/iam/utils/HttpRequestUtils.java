@@ -1,7 +1,7 @@
 package jbst.iam.utils;
 
-import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 
 public interface HttpRequestUtils {
     boolean isCachedEndpoint(HttpServletRequest request);

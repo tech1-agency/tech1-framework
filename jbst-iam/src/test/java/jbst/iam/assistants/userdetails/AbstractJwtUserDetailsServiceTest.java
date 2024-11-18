@@ -1,7 +1,6 @@
 package jbst.iam.assistants.userdetails;
 
 import jbst.iam.repositories.UsersRepository;
-import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Username;
 
 import static org.mockito.Mockito.*;
 

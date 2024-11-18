@@ -1,12 +1,8 @@
 package jbst.iam.essence;
 
-import jbst.iam.tests.stubbers.AbstractMockService;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.properties.base.DefaultUser;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.iam.tests.stubbers.AbstractMockService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,14 +17,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

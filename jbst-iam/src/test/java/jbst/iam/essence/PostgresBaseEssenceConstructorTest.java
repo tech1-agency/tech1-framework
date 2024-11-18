@@ -1,5 +1,7 @@
 package jbst.iam.essence;
 
+import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +19,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import tech1.framework.foundation.domain.properties.base.DefaultUser;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
 
 import java.util.List;
 

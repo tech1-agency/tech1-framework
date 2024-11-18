@@ -1,10 +1,10 @@
 package jbst.iam.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
 
 import java.time.ZoneId;
 

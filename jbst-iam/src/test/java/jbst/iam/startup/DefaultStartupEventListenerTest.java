@@ -1,13 +1,6 @@
 package jbst.iam.startup;
 
 import jbst.iam.essence.AbstractEssenceConstructor;
-import tech1.framework.foundation.domain.properties.base.Authority;
-import tech1.framework.foundation.domain.properties.base.DefaultUsers;
-import tech1.framework.foundation.domain.properties.base.InvitationCodes;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import tech1.framework.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
-import tech1.framework.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +14,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.Authority;
+import tech1.framework.foundation.domain.properties.base.DefaultUsers;
+import tech1.framework.foundation.domain.properties.base.InvitationCodes;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import tech1.framework.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
+import tech1.framework.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 
 import java.util.ArrayList;
 import java.util.Set;

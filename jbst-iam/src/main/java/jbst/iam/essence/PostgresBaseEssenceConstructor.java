@@ -1,12 +1,12 @@
 package jbst.iam.essence;
 
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.DefaultUser;
 import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
 import java.util.Set;

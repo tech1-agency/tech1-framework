@@ -1,5 +1,14 @@
 package jbst.iam.mongo.repositories;
 
+import jbst.iam.configurations.ApplicationMongoRepositories;
+import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.identifiers.UserId;
+import jbst.iam.domain.jwt.JwtUser;
+import jbst.iam.domain.mongodb.MongoDbUser;
+import jbst.iam.mongo.configs.MongoBeforeAllCallback;
+import jbst.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
+import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,27 +21,18 @@ import tech1.framework.foundation.domain.base.Password;
 import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.constants.JbsConstants;
 import tech1.framework.foundation.domain.tuples.TuplePresence;
-import jbst.iam.configurations.ApplicationMongoRepositories;
-import jbst.iam.domain.db.InvitationCode;
-import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.domain.identifiers.UserId;
-import jbst.iam.domain.jwt.JwtUser;
-import jbst.iam.domain.mongodb.MongoDbUser;
-import jbst.iam.mongo.configs.MongoBeforeAllCallback;
-import jbst.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
 
 import java.util.List;
 import java.util.Set;
 
+import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings1;
+import static jbst.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
-import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings1;
-import static jbst.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 
 @ExtendWith({
         MongoBeforeAllCallback.class

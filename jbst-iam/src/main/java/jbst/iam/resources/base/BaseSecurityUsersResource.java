@@ -1,6 +1,7 @@
 package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
@@ -8,7 +9,6 @@ import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.validators.BaseUsersValidator;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

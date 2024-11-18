@@ -1,5 +1,7 @@
 package jbst.iam.essence;
 
+import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +19,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import tech1.framework.foundation.domain.properties.base.DefaultUser;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
 
 import java.util.List;
 

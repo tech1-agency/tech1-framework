@@ -1,15 +1,13 @@
 package jbst.iam.mongo.repositories;
 
 import jbst.iam.configurations.ApplicationMongoRepositories;
-import jbst.iam.domain.mongodb.MongoDbInvitationCode;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.mongodb.MongoDbInvitationCode;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
+import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,14 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 
 import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 @ExtendWith({
         MongoBeforeAllCallback.class

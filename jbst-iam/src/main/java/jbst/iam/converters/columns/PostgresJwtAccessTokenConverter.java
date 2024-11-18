@@ -1,9 +1,8 @@
 package jbst.iam.converters.columns;
 
-import jbst.iam.domain.jwt.JwtAccessToken;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import jbst.iam.domain.jwt.JwtAccessToken;
 
 import static java.util.Objects.nonNull;
 

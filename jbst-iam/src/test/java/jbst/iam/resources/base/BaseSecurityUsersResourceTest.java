@@ -1,12 +1,12 @@
 package jbst.iam.resources.base;
 
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
+import jbst.iam.tests.runners.AbstractResourcesRunner1;
 import jbst.iam.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

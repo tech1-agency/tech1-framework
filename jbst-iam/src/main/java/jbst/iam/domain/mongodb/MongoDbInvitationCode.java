@@ -1,22 +1,22 @@
 package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.identifiers.InvitationCodeId;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import tech1.framework.foundation.domain.base.Username;
-import jbst.iam.domain.db.InvitationCode;
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
-import jbst.iam.domain.identifiers.InvitationCodeId;
 
 import java.util.List;
 import java.util.Set;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 // Lombok
 @NoArgsConstructor

@@ -2,8 +2,6 @@ package jbst.iam.configurations;
 
 import jbst.iam.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
 import jbst.iam.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 
 import java.lang.reflect.Method;
 import java.util.function.Predicate;

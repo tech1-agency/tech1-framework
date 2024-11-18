@@ -6,10 +6,10 @@ import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.services.BaseInvitationCodesService;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesService implements BaseInvitationCodesService {

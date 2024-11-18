@@ -1,14 +1,12 @@
 package jbst.iam.handlers.exceptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.utils.HttpRequestUtils;
-import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
-import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
+import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
 
 import java.io.IOException;
 

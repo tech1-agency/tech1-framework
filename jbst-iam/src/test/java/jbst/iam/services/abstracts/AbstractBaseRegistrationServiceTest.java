@@ -5,8 +5,6 @@ import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.services.BaseRegistrationService;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +18,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

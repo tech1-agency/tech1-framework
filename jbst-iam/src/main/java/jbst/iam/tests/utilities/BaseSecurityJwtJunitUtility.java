@@ -1,7 +1,7 @@
 package jbst.iam.tests.utilities;
 
-import tech1.framework.foundation.domain.base.Username;
 import lombok.experimental.UtilityClass;
+import tech1.framework.foundation.domain.base.Username;
 
 import java.util.List;
 import java.util.Set;

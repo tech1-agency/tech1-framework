@@ -1,6 +1,5 @@
 package jbst.iam.mongo.configs;
 
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -10,6 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
 @EnableAutoConfiguration(exclude = {
         DataSourceAutoConfiguration.class,

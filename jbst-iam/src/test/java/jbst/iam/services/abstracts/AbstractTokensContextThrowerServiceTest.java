@@ -8,8 +8,6 @@ import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.utils.SecurityJwtTokenUtils;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +22,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.exceptions.tokens.*;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 
 import java.util.stream.Stream;
 
@@ -31,10 +31,10 @@ import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.valid;
 import static jbst.iam.tests.random.BaseSecurityJwtRandomUtility.expiredClaims;
 import static jbst.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

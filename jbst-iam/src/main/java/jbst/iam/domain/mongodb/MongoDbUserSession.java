@@ -1,25 +1,25 @@
 package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.List;
 
 import static java.util.Objects.isNull;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 import static jbst.iam.domain.db.UserSession.ofNotPersisted;
 import static jbst.iam.domain.db.UserSession.ofPersisted;
+import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 // Lombok
 @NoArgsConstructor

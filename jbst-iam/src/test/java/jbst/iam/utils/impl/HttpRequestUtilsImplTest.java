@@ -1,10 +1,7 @@
 package jbst.iam.utils.impl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.utils.HttpRequestUtils;
-import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import tech1.framework.foundation.domain.http.cache.CachedPayload;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,16 +16,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
-import jakarta.servlet.http.HttpServletRequest;
+import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import tech1.framework.foundation.domain.http.cache.CachedPayload;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 
 import java.io.IOException;
 import java.util.stream.Stream;
 
 import static jbst.iam.utils.impl.HttpRequestUtilsImpl.CACHED_PAYLOAD_ATTRIBUTE;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @TestPropertySource(properties = {

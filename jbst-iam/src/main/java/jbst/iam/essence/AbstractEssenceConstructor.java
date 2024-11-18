@@ -2,10 +2,10 @@ package jbst.iam.essence;
 
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
 import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;

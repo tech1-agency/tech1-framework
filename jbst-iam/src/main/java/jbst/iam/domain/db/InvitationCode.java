@@ -1,9 +1,9 @@
 package jbst.iam.domain.db;
 
 import jbst.iam.domain.identifiers.InvitationCodeId;
-import tech1.framework.foundation.domain.base.Username;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.base.Username;
 
 import java.util.Set;
 

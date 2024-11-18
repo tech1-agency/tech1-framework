@@ -1,5 +1,8 @@
 package jbst.iam.filters.jwt;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.jwt.RequestRefreshToken;
@@ -9,7 +12,6 @@ import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
-import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,18 +29,15 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 import java.util.stream.Stream;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

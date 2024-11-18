@@ -1,10 +1,9 @@
 package jbst.iam.domain.postgres.superclasses;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 
 import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 

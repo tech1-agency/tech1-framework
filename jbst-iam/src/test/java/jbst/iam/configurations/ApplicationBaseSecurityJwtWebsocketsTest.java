@@ -1,9 +1,5 @@
 package jbst.iam.configurations;
 
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.configs.MvcConfigs;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;
 import jbst.iam.handshakes.CsrfInterceptorHandshake;
 import jbst.iam.handshakes.SecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +15,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.StompWebSocketEndpointRegistration;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.configs.MvcConfigs;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
+import tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;

@@ -1,12 +1,5 @@
 package jbst.iam.sessions;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.domain.events.EventAuthenticationLogin;
 import jbst.iam.domain.events.EventAuthenticationLogout;
@@ -20,6 +13,13 @@ import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.BaseUsersSessionsService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

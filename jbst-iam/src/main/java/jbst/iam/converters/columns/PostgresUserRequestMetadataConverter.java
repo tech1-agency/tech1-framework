@@ -1,13 +1,13 @@
 package jbst.iam.converters.columns;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import jakarta.persistence.Converter;
+import lombok.SneakyThrows;
 import tech1.framework.foundation.domain.enums.Status;
 import tech1.framework.foundation.domain.geo.GeoLocation;
 import tech1.framework.foundation.domain.http.requests.UserAgentDetails;
 import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import lombok.SneakyThrows;
 
-import jakarta.persistence.Converter;
 import java.util.HashMap;
 import java.util.Map;
 

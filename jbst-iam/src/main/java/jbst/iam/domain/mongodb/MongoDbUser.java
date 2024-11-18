@@ -2,6 +2,8 @@ package jbst.iam.domain.mongodb;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jbst.iam.domain.identifiers.UserId;
+import jbst.iam.domain.jwt.JwtUser;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -11,8 +13,6 @@ import tech1.framework.foundation.domain.base.Email;
 import tech1.framework.foundation.domain.base.Password;
 import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.constants.JbsConstants;
-import jbst.iam.domain.identifiers.UserId;
-import jbst.iam.domain.jwt.JwtUser;
 
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -21,10 +21,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
+import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.springframework.util.StringUtils.capitalize;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.foundation.utilities.random.RandomUtility.*;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor

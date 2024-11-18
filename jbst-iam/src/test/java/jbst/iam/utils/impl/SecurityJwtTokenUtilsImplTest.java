@@ -6,10 +6,6 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.JwtTokenCreationParams;
 import jbst.iam.tests.domain.enums.TestAuthority;
 import jbst.iam.utils.SecurityJwtTokenUtils;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.properties.base.TimeAmount;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -26,6 +22,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.properties.base.TimeAmount;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,15 +35,15 @@ import java.util.Base64;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static java.time.temporal.ChronoUnit.*;
+import static java.util.Objects.nonNull;
+import static java.util.TimeZone.getTimeZone;
 import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
 import static tech1.framework.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
 import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
-import static java.time.temporal.ChronoUnit.*;
-import static java.util.Objects.nonNull;
-import static java.util.TimeZone.getTimeZone;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @ExtendWith({ SpringExtension.class })

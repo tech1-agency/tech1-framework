@@ -1,19 +1,19 @@
 package jbst.iam.converters.columns;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
-import static tech1.framework.foundation.domain.constants.StringConstants.SEMICOLON;
 import static java.util.stream.Collectors.joining;
+import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasLength;
+import static tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
+import static tech1.framework.foundation.domain.constants.StringConstants.SEMICOLON;
 
 @Converter
 public class PostgresSetOfSimpleGrantedAuthoritiesConverter implements AttributeConverter<Set<SimpleGrantedAuthority>, String> {

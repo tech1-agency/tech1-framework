@@ -1,6 +1,6 @@
 package jbst.iam.resources.base;
 
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
@@ -9,9 +9,9 @@ import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.services.BaseUsersSessionsService;
+import jbst.iam.tests.runners.AbstractResourcesRunner1;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.validators.BaseUsersSessionsRequestsValidator;
-import tech1.framework.foundation.domain.base.Username;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -19,17 +19,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import tech1.framework.foundation.domain.base.Username;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {

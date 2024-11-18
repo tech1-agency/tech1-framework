@@ -1,5 +1,6 @@
 package jbst.iam.events.publishers.impl;
 
+import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,6 @@ import tech1.framework.foundation.incidents.domain.registration.IncidentRegistra
 import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

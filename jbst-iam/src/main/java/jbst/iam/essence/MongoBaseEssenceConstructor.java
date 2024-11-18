@@ -1,12 +1,12 @@
 package jbst.iam.essence;
 
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.DefaultUser;
 import jbst.iam.domain.mongodb.MongoDbInvitationCode;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
 import java.util.Set;

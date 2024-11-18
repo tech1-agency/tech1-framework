@@ -1,5 +1,6 @@
 package jbst.iam.services;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
@@ -12,7 +13,6 @@ import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.sessions.SessionsExpiredTable;
 import tech1.framework.foundation.domain.base.Username;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 public interface BaseUsersSessionsService {

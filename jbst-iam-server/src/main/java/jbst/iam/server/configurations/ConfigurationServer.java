@@ -1,6 +1,9 @@
 package jbst.iam.server.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
+import jbst.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
+import jbst.iam.server.base.properties.ApplicationProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,18 +14,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import tech1.framework.foundation.domain.base.PropertyId;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
-import jbst.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
-import jbst.iam.server.base.properties.ApplicationProperties;
 
 import static org.springframework.http.HttpMethod.GET;
 
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "tech1.framework.iam.assistants.current.base",
-        "tech1.framework.iam.filters.jwt_extension",
-        "tech1.framework.iam.tasks.superadmin"
+        "jbst.iam.assistants.current.base",
+        "jbst.iam.filters.jwt_extension",
+        "jbst.iam.tasks.superadmin"
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({

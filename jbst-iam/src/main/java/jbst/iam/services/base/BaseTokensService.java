@@ -1,5 +1,7 @@
 package jbst.iam.services.base;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.jwt.JwtUser;
@@ -15,9 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 @Slf4j

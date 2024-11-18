@@ -1,12 +1,13 @@
 package jbst.iam.domain.postgres.superclasses;
 
-import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
-import tech1.framework.foundation.domain.base.Username;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import jakarta.persistence.*;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 
 import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 

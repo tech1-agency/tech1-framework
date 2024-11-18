@@ -2,13 +2,12 @@ package jbst.iam.handlers.exceptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jbst.iam.tests.contexts.TestsApplicationHandlersContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
+import jbst.iam.tests.contexts.TestsApplicationHandlersContext;
 import jbst.iam.utils.HttpRequestUtils;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.IPAddress;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,18 +22,19 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Password;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.IPAddress;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static tech1.framework.foundation.domain.exceptions.ExceptionEntityType.ERROR;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.domain.exceptions.ExceptionEntityType.ERROR;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

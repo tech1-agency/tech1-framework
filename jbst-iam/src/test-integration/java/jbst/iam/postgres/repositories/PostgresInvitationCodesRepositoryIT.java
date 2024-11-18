@@ -1,5 +1,13 @@
 package jbst.iam.postgres.repositories;
 
+import jbst.iam.configurations.ApplicationPostgresRepositories;
+import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
+import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
+import jbst.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,22 +18,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.tuples.TuplePresence;
-import jbst.iam.configurations.ApplicationPostgresRepositories;
-import jbst.iam.domain.db.InvitationCode;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.identifiers.InvitationCodeId;
-import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
-import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 
+import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
+import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 @ExtendWith({
         PostgresBeforeAllCallback.class

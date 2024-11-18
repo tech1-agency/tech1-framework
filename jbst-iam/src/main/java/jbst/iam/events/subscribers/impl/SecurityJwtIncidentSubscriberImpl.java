@@ -1,5 +1,6 @@
 package jbst.iam.events.subscribers.impl;
 
+import jbst.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import tech1.framework.foundation.incidents.domain.registration.IncidentRegistra
 import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
-import jbst.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 
 import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
 

@@ -1,19 +1,19 @@
 package jbst.iam.resources.base;
 
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration1;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.services.BaseRegistrationService;
+import jbst.iam.tests.runners.AbstractResourcesRunner1;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

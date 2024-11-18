@@ -5,13 +5,6 @@ import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import tech1.framework.foundation.services.emails.domain.EmailHTML;
-import tech1.framework.foundation.services.emails.services.EmailService;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,12 +17,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Email;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
+import tech1.framework.foundation.services.emails.domain.EmailHTML;
+import tech1.framework.foundation.services.emails.services.EmailService;
 
 import java.util.Map;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

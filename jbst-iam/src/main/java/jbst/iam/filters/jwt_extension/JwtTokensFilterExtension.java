@@ -1,8 +1,7 @@
 package jbst.iam.filters.jwt_extension;
 
-import org.jetbrains.annotations.NotNull;
-
 import jakarta.servlet.http.HttpServletRequest;
+import org.jetbrains.annotations.NotNull;
 import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 public interface JwtTokensFilterExtension {

@@ -1,6 +1,5 @@
 package jbst.iam.handshakes;
 
-import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.iam.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 
 import java.util.Map;
 

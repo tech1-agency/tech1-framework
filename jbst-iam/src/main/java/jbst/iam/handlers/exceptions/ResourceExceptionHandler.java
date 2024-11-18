@@ -1,9 +1,5 @@
 package jbst.iam.handlers.exceptions;
 
-import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
-import tech1.framework.foundation.domain.exceptions.ExceptionEntityType;
-import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +12,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
+import tech1.framework.foundation.domain.exceptions.ExceptionEntityType;
+import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
+import tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import tech1.framework.foundation.domain.exceptions.tokens.*;
 
+import static java.util.Objects.isNull;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.unexpectedErrorOccurred;
-import static java.util.Objects.isNull;
 
 // WARNING: @Order by default uses Ordered.LOWEST_PRECEDENCE
 @Slf4j

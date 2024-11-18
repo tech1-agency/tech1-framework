@@ -1,11 +1,5 @@
 package jbst.iam.events.subscribers.impl;
 
-import tech1.framework.foundation.incidents.domain.authetication.*;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
 import jbst.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -18,9 +12,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.incidents.domain.authetication.*;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

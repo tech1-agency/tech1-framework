@@ -17,9 +17,9 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static jbst.iam.constants.SecurityJwtConstants.SUPERADMIN;
+import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_READ;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.INVITATION_CODE_WRITE;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

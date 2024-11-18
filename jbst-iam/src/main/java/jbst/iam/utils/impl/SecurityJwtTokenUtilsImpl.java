@@ -4,9 +4,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.TimeAmount;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.JwtTokenCreationParams;
@@ -15,13 +12,16 @@ import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tech1.framework.foundation.domain.base.PropertyId;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.base.TimeAmount;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
+import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
 @Component

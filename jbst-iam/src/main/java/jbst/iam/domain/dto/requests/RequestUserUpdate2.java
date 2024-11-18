@@ -1,8 +1,8 @@
 package jbst.iam.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 import jakarta.validation.constraints.NotNull;
+import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 
 import java.time.ZoneId;
 

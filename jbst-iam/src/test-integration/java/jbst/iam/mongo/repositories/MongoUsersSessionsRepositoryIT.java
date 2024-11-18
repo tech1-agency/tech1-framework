@@ -1,13 +1,5 @@
 package jbst.iam.mongo.repositories;
 
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.ApplicationMongoRepositories;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.identifiers.UserSessionId;
@@ -18,18 +10,26 @@ import jbst.iam.domain.mongodb.MongoDbUserSession;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsApplicationMongoRepositoriesRunner;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 import static jbst.iam.domain.jwt.JwtAccessToken.accessTokens;
 import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toAccessTokensAsStrings2;
 import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings2;
 import static jbst.iam.tests.converters.mongodb.MongoUserSessionConverter.toMetadataRenewCron;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
+import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
 
 @ExtendWith({
         MongoBeforeAllCallback.class

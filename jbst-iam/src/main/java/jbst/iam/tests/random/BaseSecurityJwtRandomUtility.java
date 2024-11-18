@@ -2,19 +2,19 @@ package jbst.iam.tests.random;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.experimental.UtilityClass;
 import tech1.framework.foundation.domain.base.Username;
 import tech1.framework.foundation.domain.properties.base.TimeAmount;
-import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import static java.time.ZoneOffset.UTC;
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.getIssuedAt;
 import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
 import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static java.time.ZoneOffset.UTC;
 
 @UtilityClass
 public class BaseSecurityJwtRandomUtility {

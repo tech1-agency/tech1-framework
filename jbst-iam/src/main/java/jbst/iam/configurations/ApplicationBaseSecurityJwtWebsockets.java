@@ -1,6 +1,8 @@
 package jbst.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.iam.handshakes.CsrfInterceptorHandshake;
+import jbst.iam.handshakes.SecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import tech1.framework.foundation.domain.base.PropertyId;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.iam.handshakes.CsrfInterceptorHandshake;
-import jbst.iam.handshakes.SecurityHandshakeHandler;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>

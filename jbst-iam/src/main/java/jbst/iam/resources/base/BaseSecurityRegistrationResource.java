@@ -1,8 +1,7 @@
 package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
+import jakarta.validation.Valid;
 import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration1;
@@ -10,12 +9,13 @@ import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.services.BaseRegistrationService;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 
 // Swagger
 @Tag(name = "[tech1-framework] Registration API")

@@ -1,8 +1,8 @@
 package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
+import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

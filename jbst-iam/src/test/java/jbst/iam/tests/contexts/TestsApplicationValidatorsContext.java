@@ -5,11 +5,11 @@ import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersSessionsRepository;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 
 import static org.mockito.Mockito.mock;
 

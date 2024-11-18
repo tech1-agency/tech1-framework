@@ -1,11 +1,11 @@
 package jbst.iam.server.configurations;
 
+import jbst.iam.server.base.services.UsersService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import tech1.framework.foundation.utilities.environment.EnvironmentUtility;
-import jbst.iam.server.base.services.UsersService;
 
 import static org.mockito.Mockito.mock;
 

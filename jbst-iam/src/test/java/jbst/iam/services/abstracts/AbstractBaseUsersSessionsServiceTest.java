@@ -1,16 +1,6 @@
 package jbst.iam.services.abstracts;
 
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.enums.Status;
-import tech1.framework.foundation.domain.http.requests.IPAddress;
-import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
-import tech1.framework.foundation.domain.tuples.TupleToggle;
-import tech1.framework.foundation.utils.UserMetadataUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
@@ -24,7 +14,6 @@ import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import jbst.iam.utils.impl.SecurityJwtTokenUtilsImpl;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,12 +31,27 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.enums.Status;
+import tech1.framework.foundation.domain.http.requests.IPAddress;
+import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants;
+import tech1.framework.foundation.domain.tuples.TuplePresence;
+import tech1.framework.foundation.domain.tuples.TupleToggle;
+import tech1.framework.foundation.utils.UserMetadataUtils;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static jbst.iam.domain.db.UserSession.randomPersistedSession;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.mockito.Mockito.*;
 import static tech1.framework.foundation.domain.constants.StringConstants.UNDEFINED;
 import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
@@ -56,10 +60,6 @@ import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomIPv4;
 import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static jbst.iam.domain.db.UserSession.randomPersistedSession;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

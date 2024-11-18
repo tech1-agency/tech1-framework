@@ -1,22 +1,21 @@
 package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jbst.iam.converters.columns.PostgresJwtAccessTokenConverter;
+import jbst.iam.converters.columns.PostgresJwtRefreshTokenConverter;
+import jbst.iam.converters.columns.PostgresUserRequestMetadataConverter;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
-import jbst.iam.converters.columns.PostgresJwtAccessTokenConverter;
-import jbst.iam.converters.columns.PostgresJwtRefreshTokenConverter;
-import jbst.iam.converters.columns.PostgresUserRequestMetadataConverter;
-import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable1;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 import lombok.*;
-
-import jakarta.persistence.*;
+import tech1.framework.foundation.domain.base.Username;
+import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
+import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.List;
 

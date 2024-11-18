@@ -1,9 +1,9 @@
 package jbst.iam.domain.dto.requests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 
 import java.util.Set;
 

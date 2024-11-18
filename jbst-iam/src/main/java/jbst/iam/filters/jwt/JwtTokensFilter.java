@@ -1,5 +1,9 @@
 package jbst.iam.filters.jwt;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.domain.sessions.Session;
 import jbst.iam.filters.jwt_extension.JwtTokensFilterExtension;
 import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
@@ -16,11 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 import java.io.IOException;

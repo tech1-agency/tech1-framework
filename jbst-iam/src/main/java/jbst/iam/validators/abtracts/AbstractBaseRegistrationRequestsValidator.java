@@ -7,14 +7,14 @@ import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
-import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
+import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 
+import static java.util.Objects.nonNull;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
 import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
-import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseRegistrationRequestsValidator implements BaseRegistrationRequestsValidator {

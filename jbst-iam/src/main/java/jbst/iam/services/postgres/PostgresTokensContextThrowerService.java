@@ -1,9 +1,9 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.services.abstracts.AbstractTokensContextThrowerService;
-import jbst.iam.utils.SecurityJwtTokenUtils;
 import jbst.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.iam.services.abstracts.AbstractTokensContextThrowerService;
+import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

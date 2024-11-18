@@ -1,21 +1,21 @@
 package jbst.iam.utilities;
 
+import jbst.iam.constants.SecurityJwtConstants;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.iam.constants.SecurityJwtConstants;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static jbst.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.TWICE;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
-import static jbst.iam.utilities.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 class SpringAuthoritiesUtilityTest {
 

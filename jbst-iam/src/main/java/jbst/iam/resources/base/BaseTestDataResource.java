@@ -1,7 +1,7 @@
 package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // Swagger
-@Tag(name = "[tech1-framework] Test Data API")
+@Tag(name = "[jbst] Test Data API")
 // Spring
 @Slf4j
-@AbstractFrameworkBaseSecurityResource
+@AbstractJbstBaseSecurityResource
 @RestController
 @RequestMapping("/test-data")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

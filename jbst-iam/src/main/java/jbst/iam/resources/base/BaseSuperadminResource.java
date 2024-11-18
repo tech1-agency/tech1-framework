@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
@@ -21,10 +21,10 @@ import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
 import java.util.List;
 
 // Swagger
-@Tag(name = "[tech1-framework] Superadmin API")
+@Tag(name = "[jbst] Superadmin API")
 // Spring
 @Slf4j
-@AbstractFrameworkBaseSecurityResource
+@AbstractJbstBaseSecurityResource
 @RestController
 @RequestMapping("/superadmin")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

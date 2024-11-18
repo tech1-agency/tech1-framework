@@ -18,6 +18,7 @@ public record InvitationCodeId(@NotNull String value) {
         return new InvitationCodeId(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static InvitationCodeId unknown() {
         return of(UNKNOWN);
     }

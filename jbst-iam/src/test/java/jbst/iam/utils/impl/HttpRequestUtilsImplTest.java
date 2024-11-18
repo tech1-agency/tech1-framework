@@ -21,7 +21,6 @@ import tech1.framework.foundation.domain.http.cache.CachedPayload;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 import static jbst.iam.utils.impl.HttpRequestUtilsImpl.CACHED_PAYLOAD_ATTRIBUTE;
@@ -94,7 +93,7 @@ class HttpRequestUtilsImplTest {
     }
 
     @Test
-    void cachePayloadNoCacheTest() throws IOException {
+    void cachePayloadNoCacheTest() {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
 
@@ -107,7 +106,7 @@ class HttpRequestUtilsImplTest {
     }
 
     @Test
-    void cachePayloadTest() throws IOException {
+    void cachePayloadTest() {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");

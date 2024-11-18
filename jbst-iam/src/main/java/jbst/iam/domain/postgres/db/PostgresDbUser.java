@@ -133,6 +133,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
         );
     }
 
+    @SuppressWarnings("unused")
     @JsonIgnore
     public Map<String, Object> getNotNullAttributes() {
         return nonNull(this.attributes) ? this.attributes : new HashMap<>();

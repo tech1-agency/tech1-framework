@@ -74,6 +74,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
+    @SuppressWarnings("SameParameterValue")
     private String getServerOrFrameworkTemplateName(String serverTemplateName, String frameworkTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : frameworkTemplateName;

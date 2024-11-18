@@ -23,6 +23,7 @@ public record UserSessionId(@NotNull String value) {
         return new UserSessionId(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static UserSessionId unknown() {
         return of(UNKNOWN);
     }

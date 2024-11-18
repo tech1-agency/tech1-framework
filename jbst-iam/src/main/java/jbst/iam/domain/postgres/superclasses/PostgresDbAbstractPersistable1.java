@@ -25,6 +25,7 @@ public abstract class PostgresDbAbstractPersistable1 extends PostgresDbAbstractP
         this.updatedAt = currentTimestamp;
     }
 
+    @SuppressWarnings("unused")
     protected void updated() {
         this.updatedAt = getCurrentTimestamp();
     }

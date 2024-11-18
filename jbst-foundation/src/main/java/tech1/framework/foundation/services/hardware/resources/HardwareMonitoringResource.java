@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import static tech1.framework.foundation.utilities.hardware.HardwareUtility.getHeapMemory;
 
 // Swagger
-@Tag(name = "[tech1-framework] Hardware API")
+@Tag(name = "[jbst] Hardware API")
 // Spring
 @Slf4j
 @RestController

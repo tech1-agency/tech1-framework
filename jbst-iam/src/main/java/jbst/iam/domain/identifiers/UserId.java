@@ -18,6 +18,7 @@ public record UserId(@NotNull String value) {
         return new UserId(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static UserId unknown() {
         return of(UNKNOWN);
     }

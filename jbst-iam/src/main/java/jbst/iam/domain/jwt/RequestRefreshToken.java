@@ -8,6 +8,7 @@ public record RequestRefreshToken(String value) {
         return new RequestRefreshToken(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static RequestRefreshToken unknown() {
         return new RequestRefreshToken(UNKNOWN);
     }

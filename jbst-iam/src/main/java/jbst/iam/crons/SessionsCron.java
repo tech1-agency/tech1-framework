@@ -11,7 +11,6 @@ import tech1.framework.foundation.domain.crons.AbstractBaseCron;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

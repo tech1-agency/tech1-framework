@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public enum AccountAccessMethod {
     USERNAME_PASSWORD("username/password"),
     SECURITY_TOKEN("security token");
 
-    @Getter
     private final String value;
 }

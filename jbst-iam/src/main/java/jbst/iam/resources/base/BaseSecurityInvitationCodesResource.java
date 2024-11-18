@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
@@ -16,10 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 // Swagger
-@Tag(name = "[tech1-framework] InvitationCodes API")
+@Tag(name = "[jbst] InvitationCodes API")
 // Spring
 @Slf4j
-@AbstractFrameworkBaseSecurityResource
+@AbstractJbstBaseSecurityResource
 @RestController
 @RequestMapping("/invitationCodes")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

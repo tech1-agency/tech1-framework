@@ -8,6 +8,7 @@ public record RequestAccessToken(String value) {
         return new RequestAccessToken(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static RequestAccessToken unknown() {
         return new RequestAccessToken(UNKNOWN);
     }

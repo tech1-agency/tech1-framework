@@ -173,6 +173,7 @@ class TokenCookiesProviderTest {
         // Act
         if (rest) {
             var requestAccessToken = this.componentUnderTest.readRequestAccessToken(request);
+            assertThat(requestAccessToken).isNotNull();
         }
         if (websocket) {
             this.componentUnderTest.readRequestAccessTokenOnWebsocketHandshake(request);

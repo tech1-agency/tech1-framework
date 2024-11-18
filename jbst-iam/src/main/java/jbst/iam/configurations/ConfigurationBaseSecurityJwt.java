@@ -33,7 +33,6 @@ import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 
 @Configuration
 @ComponentScan({
-        // -------------------------------------------------------------------------------------------------------------
         "jbst.iam.crons",
         "jbst.iam.events.publishers.base",
         "jbst.iam.events.publishers.impl",
@@ -45,7 +44,6 @@ import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
         "jbst.iam.tokens",
         "jbst.iam.utils",
         "jbst.iam.validators.base"
-        // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity
 @Import({

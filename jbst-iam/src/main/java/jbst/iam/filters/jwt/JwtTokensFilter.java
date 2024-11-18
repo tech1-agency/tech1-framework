@@ -24,7 +24,6 @@ import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 import java.io.IOException;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

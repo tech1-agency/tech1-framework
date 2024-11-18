@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration1;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
@@ -18,10 +18,10 @@ import tech1.framework.foundation.domain.exceptions.authentication.RegistrationE
 import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
 
 // Swagger
-@Tag(name = "[tech1-framework] Registration API")
+@Tag(name = "[jbst] Registration API")
 // Spring
 @Slf4j
-@AbstractFrameworkBaseSecurityResource
+@AbstractJbstBaseSecurityResource
 @RestController
 @RequestMapping("/registration")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import jbst.iam.annotations.AbstractFrameworkBaseSecurityResource;
+import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.requests.RequestUserLogin;
@@ -31,10 +31,10 @@ import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
 import static tech1.framework.foundation.domain.enums.Status.STARTED;
 
 // Swagger
-@Tag(name = "[tech1-framework] Authentication API")
+@Tag(name = "[jbst] Authentication API")
 // Spring
 @Slf4j
-@AbstractFrameworkBaseSecurityResource
+@AbstractJbstBaseSecurityResource
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

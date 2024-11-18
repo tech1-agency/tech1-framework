@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ConfigurationBaseSecurityJwtWebsocketsTest {
+class TestConfigurationBaseSecurityJwtWebsockets {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))

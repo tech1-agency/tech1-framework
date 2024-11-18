@@ -30,6 +30,7 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
+    @SuppressWarnings({"LoggingSimilarMessage", "StringConcatenationArgumentToLogCall"})
     @Override
     protected void doFilterInternal(
             @NotNull HttpServletRequest request,

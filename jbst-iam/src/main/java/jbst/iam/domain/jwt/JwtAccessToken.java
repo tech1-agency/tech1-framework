@@ -22,6 +22,7 @@ public record JwtAccessToken(@NotNull String value) {
         return new JwtAccessToken(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static JwtAccessToken unknown() {
         return of(UNKNOWN);
     }

@@ -22,6 +22,7 @@ public record JwtRefreshToken(@NotNull String value) {
         return new JwtRefreshToken(randomString());
     }
 
+    @SuppressWarnings("unused")
     public static JwtRefreshToken unknown() {
         return of(UNKNOWN);
     }
@@ -30,6 +31,7 @@ public record JwtRefreshToken(@NotNull String value) {
         return of("B7C50972C873270CD7B2");
     }
 
+    @SuppressWarnings("unused")
     public static Set<JwtRefreshToken> refreshTokens(String... tokens) {
         return Stream.of(tokens).map(JwtRefreshToken::new).collect(Collectors.toSet());
     }

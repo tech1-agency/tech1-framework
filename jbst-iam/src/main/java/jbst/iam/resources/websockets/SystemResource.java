@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // Swagger
-@Tag(name = "[tech1-framework] System API")
+@Tag(name = "[jbst] System API")
 // Spring
 @RestController
 @RequestMapping("/system")

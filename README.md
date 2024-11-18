@@ -1,5 +1,5 @@
-# tech1-framework
-Tech1 Framework — B2B Java17 Spring-based bootstrapping-framework 
+# jbst
+jbst — java17 bootstrapping tools
 
 ### Tests
 `mvn test` executes only unit tests  
@@ -9,5 +9,5 @@ Tech1 Framework — B2B Java17 Spring-based bootstrapping-framework
 
 ### Swagger
 URL-dev: http://localhost:3002/api/swagger-ui/index.html  
-URL-prod: http://{server}/api/swagger-ui/index.html
+URL-prod: http://{server:port}/api/swagger-ui/index.html
 

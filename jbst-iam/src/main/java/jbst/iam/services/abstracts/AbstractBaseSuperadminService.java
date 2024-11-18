@@ -4,7 +4,7 @@ import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.services.BaseSuperadminService;
 import jbst.iam.sessions.SessionRegistry;
@@ -26,7 +26,7 @@ public abstract class AbstractBaseSuperadminService implements BaseSuperadminSer
     // Sessions
     protected final SessionRegistry sessionRegistry;
     // Repositories
-    protected final InvitationCodesRepository invitationCodesRepository;
+    protected final InvitationsRepository invitationsRepository;
     protected final UsersSessionsRepository usersSessionsRepository;
     // Tasks
     protected final AbstractSuperAdminResetServerTask resetServerTask;
@@ -53,7 +53,7 @@ public abstract class AbstractBaseSuperadminService implements BaseSuperadminSer
     // =================================================================================================================
     @Override
     public List<ResponseInvitation> findUnused() {
-        return this.invitationCodesRepository.findUnused();
+        return this.invitationsRepository.findUnused();
     }
 
     // =================================================================================================================

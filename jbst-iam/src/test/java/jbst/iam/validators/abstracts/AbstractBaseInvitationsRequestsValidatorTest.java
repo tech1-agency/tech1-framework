@@ -7,7 +7,7 @@ import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationsRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "invitationCode:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
+                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "invitation:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
                 Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
                 Arguments.of(new RequestNewInvitationParams(Set.of()), null),
                 Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)
@@ -57,19 +57,19 @@ class AbstractBaseInvitationsRequestsValidatorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final InvitationCodesRepository invitationCodesRepository;
+        private final InvitationsRepository invitationsRepository;
         private final JbstProperties jbstProperties;
 
         @Bean
         BaseInvitationsRequestsValidator baseInvitationCodesRequestsValidator() {
             return new AbstractBaseInvitationsRequestsValidator(
-                    this.invitationCodesRepository,
+                    this.invitationsRepository,
                     this.jbstProperties
             ) {};
         }
     }
 
-    private final InvitationCodesRepository invitationCodesRepository;
+    private final InvitationsRepository invitationsRepository;
 
     private final BaseInvitationsRequestsValidator componentUnderTest;
 
@@ -94,7 +94,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         // Arrange
         var username = Username.random();
         var invitationCodeId = InvitationId.random();
-        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.absent());
+        when(this.invitationsRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.absent());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
@@ -103,38 +103,38 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(entityNotFound("Invitation code", invitationCodeId.value()));
-        verify(this.invitationCodesRepository).isPresent(invitationCodeId);
+        verify(this.invitationsRepository).isPresent(invitationCodeId);
     }
 
     @Test
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var username = Username.random();
-        var invitationCodeId = InvitationId.random();
-        var invitationCode = Invitation.random();
-        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(invitationCode));
+        var invitationId = InvitationId.random();
+        var invitation = Invitation.random();
+        when(this.invitationsRepository.isPresent(invitationId)).thenReturn(TuplePresence.present(invitation));
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationId));
 
         // Assert
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage(entityAccessDenied("Invitation code", invitationCodeId.value()));
-        verify(this.invitationCodesRepository).isPresent(invitationCodeId);
+                .hasMessage(entityAccessDenied("Invitation code", invitationId.value()));
+        verify(this.invitationsRepository).isPresent(invitationId);
     }
 
     @Test
     void validateDeleteByIdOkTest() {
         // Arrange
-        var invitationCodeId = InvitationId.random();
-        var invitationCode = Invitation.random();
-        when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(invitationCode));
+        var invitationId = InvitationId.random();
+        var invitation = Invitation.random();
+        when(this.invitationsRepository.isPresent(invitationId)).thenReturn(TuplePresence.present(invitation));
 
         // Act
-        this.componentUnderTest.validateDeleteById(invitationCode.owner(), invitationCodeId);
+        this.componentUnderTest.validateDeleteById(invitation.owner(), invitationId);
 
         // Assert
-        verify(this.invitationCodesRepository).isPresent(invitationCodeId);
+        verify(this.invitationsRepository).isPresent(invitationId);
     }
 }

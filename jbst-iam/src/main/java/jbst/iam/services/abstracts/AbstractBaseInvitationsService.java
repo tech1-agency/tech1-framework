@@ -4,7 +4,7 @@ import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.services.BaseInvitationsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,13 +15,13 @@ import jbst.foundation.domain.properties.JbstProperties;
 public abstract class AbstractBaseInvitationsService implements BaseInvitationsService {
 
     // Repositories
-    protected final InvitationCodesRepository invitationCodesRepository;
+    protected final InvitationsRepository invitationsRepository;
     // Properties
     protected final JbstProperties jbstProperties;
 
     @Override
     public ResponseInvitations findByOwner(Username owner) {
-        var invitationCodes = this.invitationCodesRepository.findResponseCodesByOwner(owner);
+        var invitationCodes = this.invitationsRepository.findResponseCodesByOwner(owner);
         invitationCodes.sort(ResponseInvitation.INVITATION);
         return new ResponseInvitations(
                 this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
@@ -31,11 +31,11 @@ public abstract class AbstractBaseInvitationsService implements BaseInvitationsS
 
     @Override
     public void save(Username owner, RequestNewInvitationParams request) {
-        this.invitationCodesRepository.saveAs(owner, request);
+        this.invitationsRepository.saveAs(owner, request);
     }
 
     @Override
     public void deleteById(InvitationId invitationId) {
-        this.invitationCodesRepository.delete(invitationId);
+        this.invitationsRepository.delete(invitationId);
     }
 }

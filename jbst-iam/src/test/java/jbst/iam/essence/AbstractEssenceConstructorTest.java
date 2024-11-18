@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.tests.stubbers.AbstractMockService;
 import org.junit.jupiter.api.AfterEach;
@@ -57,8 +57,8 @@ class AbstractEssenceConstructorTest {
         }
 
         @Bean
-        InvitationCodesRepository invitationCodesRepository() {
-            return mock(InvitationCodesRepository.class);
+        InvitationsRepository invitationCodesRepository() {
+            return mock(InvitationsRepository.class);
         }
 
         @Bean
@@ -93,7 +93,7 @@ class AbstractEssenceConstructorTest {
     }
 
     // Repositories
-    private final InvitationCodesRepository invitationCodesRepository;
+    private final InvitationsRepository invitationsRepository;
     private final UsersRepository usersRepository;
     // Properties
     private final JbstProperties jbstProperties;
@@ -104,13 +104,13 @@ class AbstractEssenceConstructorTest {
 
     @Autowired
     AbstractEssenceConstructorTest(
-            InvitationCodesRepository invitationCodesRepository,
+            InvitationsRepository invitationsRepository,
             UsersRepository usersRepository,
             JbstProperties jbstProperties,
             AbstractMockService abstractMockService,
             @Qualifier("abstractEssenceConstructor") AbstractEssenceConstructor componentUnderTest
     ) {
-        this.invitationCodesRepository = invitationCodesRepository;
+        this.invitationsRepository = invitationsRepository;
         this.usersRepository = usersRepository;
         this.jbstProperties = jbstProperties;
         this.abstractMockService = abstractMockService;
@@ -120,7 +120,7 @@ class AbstractEssenceConstructorTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository,
                 this.jbstProperties,
                 this.abstractMockService
@@ -130,7 +130,7 @@ class AbstractEssenceConstructorTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository,
                 this.jbstProperties,
                 this.abstractMockService
@@ -161,14 +161,14 @@ class AbstractEssenceConstructorTest {
         // Arrange
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         var username = Username.of("admin12");
-        when(this.invitationCodesRepository.countByOwner(username)).thenReturn(count);
+        when(this.invitationsRepository.countByOwner(username)).thenReturn(count);
 
         // Act
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.invitationCodesRepository).countByOwner(username);
+        verify(this.invitationsRepository).countByOwner(username);
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();
         }

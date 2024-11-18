@@ -2,7 +2,7 @@ package jbst.iam.essence;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 public abstract class AbstractEssenceConstructor implements EssenceConstructor {
 
     // Repositories
-    protected final InvitationCodesRepository invitationCodesRepository;
+    protected final InvitationsRepository invitationsRepository;
     protected final UsersRepository usersRepository;
     // Properties
     protected final JbstProperties jbstProperties;
@@ -47,7 +47,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
-            if (this.invitationCodesRepository.countByOwner(username) == 0L) {
+            if (this.invitationsRepository.countByOwner(username) == 0L) {
                 LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. No invitation codes in database. Username: `{}`", username);
                 this.saveInvitationCodes(defaultUser, authorities);
             } else {

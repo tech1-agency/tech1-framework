@@ -68,7 +68,7 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.invitationsRepository.isPresent(existentInvitationId)).isEqualTo(TuplePresence.present(savedInvitation.invitationCode()));
+        assertThat(this.invitationsRepository.isPresent(existentInvitationId)).isEqualTo(TuplePresence.present(savedInvitation.invitation()));
         assertThat(this.invitationsRepository.isPresent(notExistentInvitationId)).isEqualTo(TuplePresence.absent());
         assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user1"))).hasSize(2);
         assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user2"))).hasSize(3);
@@ -144,7 +144,7 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationsRepository.saveAs(randomElement(saved).invitationCode());
+        this.invitationsRepository.saveAs(randomElement(saved).invitation());
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2

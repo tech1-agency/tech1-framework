@@ -55,15 +55,15 @@ public class MongoDbInvitation {
     }
 
     public static MongoDbInvitation admin(String owner, String value) {
-        var invitationCode = admin(owner);
-        invitationCode.setValue(value);
-        return invitationCode;
+        var invitation = admin(owner);
+        invitation.setValue(value);
+        return invitation;
     }
 
     public static MongoDbInvitation admin(String owner, String value, String invited) {
-        var invitationCode = admin(owner, value);
-        invitationCode.setInvited(Username.of(invited));
-        return invitationCode;
+        var invitation = admin(owner, value);
+        invitation.setInvited(Username.of(invited));
+        return invitation;
     }
 
     public static List<MongoDbInvitation> dummies1() {
@@ -113,7 +113,7 @@ public class MongoDbInvitation {
 
     @JsonIgnore
     @Transient
-    public Invitation invitationCode() {
+    public Invitation invitation() {
         return new Invitation(
                 this.invitationId(),
                 this.owner,

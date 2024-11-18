@@ -5,7 +5,7 @@ import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;
@@ -53,8 +53,8 @@ class AbstractBaseSuperadminServiceTest {
         }
 
         @Bean
-        InvitationCodesRepository invitationCodesRepository() {
-            return mock(InvitationCodesRepository.class);
+        InvitationsRepository invitationCodesRepository() {
+            return mock(InvitationsRepository.class);
         }
 
         @Bean
@@ -101,7 +101,7 @@ class AbstractBaseSuperadminServiceTest {
     // Sessions
     private final SessionRegistry sessionRegistry;
     // Repositories
-    private final InvitationCodesRepository invitationCodesRepository;
+    private final InvitationsRepository invitationsRepository;
     private final UsersSessionsRepository usersSessionsRepository;
     // Mocks
     private final AbstractMockService abstractMockService;
@@ -113,7 +113,7 @@ class AbstractBaseSuperadminServiceTest {
         reset(
                 this.incidentPublisher,
                 this.sessionRegistry,
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersSessionsRepository,
                 this.abstractMockService
         );
@@ -124,7 +124,7 @@ class AbstractBaseSuperadminServiceTest {
         verifyNoMoreInteractions(
                 this.incidentPublisher,
                 this.sessionRegistry,
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersSessionsRepository,
                 this.abstractMockService
         );
@@ -157,13 +157,13 @@ class AbstractBaseSuperadminServiceTest {
     void findUnusedTest() {
         // Arrange
         var invitationCodes = list345(ResponseInvitation.class);
-        when(this.invitationCodesRepository.findUnused()).thenReturn(invitationCodes);
+        when(this.invitationsRepository.findUnused()).thenReturn(invitationCodes);
 
         // Act
         var unused = this.componentUnderTest.findUnused();
 
         // Assert
-        verify(this.invitationCodesRepository).findUnused();
+        verify(this.invitationsRepository).findUnused();
         assertThat(unused).isEqualTo(invitationCodes);
     }
 

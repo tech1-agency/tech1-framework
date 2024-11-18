@@ -61,7 +61,7 @@ class StringUtilityTest {
                 Arguments.of("", ""),
                 Arguments.of("abc", "Abc"),
                 Arguments.of("abcDefGht", "Abc def ght"),
-                Arguments.of("invitationCode", "Invitation code"),
+                Arguments.of("invitation", "Invitation"),
                 Arguments.of("invitationCodeRequest", "Invitation code request"),
                 Arguments.of("invitationCodeRequestLong", "Invitation code request long"),
                 Arguments.of("invitationCodeRequestLongLongLong", "Invitation code request long long long")

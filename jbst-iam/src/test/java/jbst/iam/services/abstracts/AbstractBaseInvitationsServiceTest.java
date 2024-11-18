@@ -3,7 +3,7 @@ package jbst.iam.services.abstracts;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +40,8 @@ class AbstractBaseInvitationsServiceTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        InvitationCodesRepository invitationCodesRepository() {
-            return mock(InvitationCodesRepository.class);
+        InvitationsRepository invitationCodesRepository() {
+            return mock(InvitationsRepository.class);
         }
 
         @Bean
@@ -53,7 +53,7 @@ class AbstractBaseInvitationsServiceTest {
         }
     }
 
-    private final InvitationCodesRepository invitationCodesRepository;
+    private final InvitationsRepository invitationsRepository;
     private final JbstProperties jbstProperties;
 
     private final AbstractBaseInvitationsService componentUnderTest;
@@ -61,14 +61,14 @@ class AbstractBaseInvitationsServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodesRepository
+                this.invitationsRepository
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodesRepository
+                this.invitationsRepository
         );
     }
 
@@ -85,13 +85,13 @@ class AbstractBaseInvitationsServiceTest {
         var invitationCode6 = ResponseInvitation.random(owner);
 
         var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
-        when(this.invitationCodesRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);
+        when(this.invitationsRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);
 
         // Act
         var responseInvitationCodes = this.componentUnderTest.findByOwner(owner);
 
         // Assert
-        verify(this.invitationCodesRepository).findResponseCodesByOwner(owner);
+        verify(this.invitationsRepository).findResponseCodesByOwner(owner);
         assertThat(responseInvitationCodes.invitations().stream()
                         .limit(3)
                         .map(ResponseInvitation::value)
@@ -123,7 +123,7 @@ class AbstractBaseInvitationsServiceTest {
         this.componentUnderTest.save(username, request);
 
         // Assert
-        verify(this.invitationCodesRepository).saveAs(username, request);
+        verify(this.invitationsRepository).saveAs(username, request);
     }
 
     @Test
@@ -135,6 +135,6 @@ class AbstractBaseInvitationsServiceTest {
         this.componentUnderTest.deleteById(invitationCodeId);
 
         // Assert
-        verify(this.invitationCodesRepository).delete(invitationCodeId);
+        verify(this.invitationsRepository).delete(invitationCodeId);
     }
 }

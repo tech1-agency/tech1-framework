@@ -4,19 +4,19 @@ import jbst.foundation.domain.base.Username;
 
 public record EventRegistration1Failure(
         Username username,
-        String invitationCode,
-        Username invitationCodeOwner,
+        String invitation,
+        Username invitationOwner,
         String exception
 ) {
     public static EventRegistration1Failure of(
             Username username,
-            String invitationCode,
+            String invitation,
             String exception
     ) {
         return new EventRegistration1Failure(
                 username,
-                invitationCode,
-                Username.of("—"),
+                invitation,
+                Username.dash(),
                 exception
         );
     }

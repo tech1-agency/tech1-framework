@@ -9,20 +9,20 @@ import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 
 public record IncidentRegistration1Failure(
         Username username,
-        String invitationCode,
-        Username invitationCodeOwner,
+        String invitation,
+        Username invitationOwner,
         String exception
 ) implements AbstractIncident {
 
     public static IncidentRegistration1Failure of(
             Username username,
-            String invitationCode,
+            String invitation,
             String exception
     ) {
         return new IncidentRegistration1Failure(
                 username,
-                invitationCode,
-                Username.of("—"),
+                invitation,
+                Username.dash(),
                 exception
         );
     }
@@ -34,8 +34,8 @@ public record IncidentRegistration1Failure(
                 this.username
         );
         incident.add(EXCEPTION, this.exception);
-        incident.add(INVITATION_CODE, this.invitationCode);
-        incident.add(INVITATION_CODE_OWNER, this.invitationCodeOwner);
+        incident.add(INVITATION, this.invitation);
+        incident.add(INVITATION_OWNER, this.invitationOwner);
         return incident;
     }
 }

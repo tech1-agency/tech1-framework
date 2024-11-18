@@ -4,7 +4,7 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -19,13 +19,13 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
-public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvitation, String>, InvitationCodesRepository {
+public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvitation, String>, InvitationsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
     default TuplePresence<Invitation> isPresent(InvitationId invitationId) {
         return this.findById(invitationId.value())
-                .map(entity -> present(entity.invitationCode()))
+                .map(entity -> present(entity.invitation()))
                 .orElseGet(TuplePresence::absent);
     }
 
@@ -36,8 +36,8 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
     }
 
     default Invitation findByValueAsAny(String value) {
-        var invitationCode = this.findByValue(value);
-        return nonNull(invitationCode) ? invitationCode.invitationCode() : null;
+        var invitation = this.findByValue(value);
+        return nonNull(invitation) ? invitation.invitation() : null;
     }
 
     default List<ResponseInvitation> findUnused() {
@@ -58,11 +58,11 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
     }
 
     default InvitationId saveAs(Username owner, RequestNewInvitationParams request) {
-        var invitationCode = new MongoDbInvitation(
+        var invitation = new MongoDbInvitation(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())
         );
-        var entity = this.save(invitationCode);
+        var entity = this.save(invitation);
         return entity.invitationId();
     }
 

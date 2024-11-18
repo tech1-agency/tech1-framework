@@ -2,7 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.services.BaseRegistrationService;
 import lombok.AccessLevel;
@@ -14,23 +14,23 @@ import jbst.foundation.domain.base.Password;
 public abstract class AbstractBaseRegistrationService implements BaseRegistrationService {
 
     // Repository
-    private final InvitationCodesRepository invitationCodesRepository;
+    private final InvitationsRepository invitationsRepository;
     private final UsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void register1(RequestUserRegistration1 requestUserRegistration1) {
-        var invitationCode = this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode());
+        var invitation = this.invitationsRepository.findByValueAsAny(requestUserRegistration1.invitation());
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value());
-        invitationCode = new Invitation(
-                invitationCode.id(),
-                invitationCode.owner(),
-                invitationCode.authorities(),
-                invitationCode.value(),
+        invitation = new Invitation(
+                invitation.id(),
+                invitation.owner(),
+                invitation.authorities(),
+                invitation.value(),
                 requestUserRegistration1.username()
         );
-        this.usersRepository.saveAs(requestUserRegistration1, Password.of(hashPassword), invitationCode);
-        this.invitationCodesRepository.saveAs(invitationCode);
+        this.usersRepository.saveAs(requestUserRegistration1, Password.of(hashPassword), invitation);
+        this.invitationsRepository.saveAs(invitation);
     }
 }

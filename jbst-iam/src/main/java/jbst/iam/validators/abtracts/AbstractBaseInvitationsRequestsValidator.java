@@ -2,7 +2,7 @@ package jbst.iam.validators.abtracts;
 
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.validators.BaseInvitationsRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.ent
 public abstract class AbstractBaseInvitationsRequestsValidator implements BaseInvitationsRequestsValidator {
 
     // Repositories
-    protected final InvitationCodesRepository invitationCodesRepository;
+    protected final InvitationsRepository invitationsRepository;
     // Properties
     protected final JbstProperties jbstProperties;
 
@@ -34,7 +34,7 @@ public abstract class AbstractBaseInvitationsRequestsValidator implements BaseIn
 
     @Override
     public void validateDeleteById(Username username, InvitationId invitationId) {
-        var tuplePresence = this.invitationCodesRepository.isPresent(invitationId);
+        var tuplePresence = this.invitationsRepository.isPresent(invitationId);
         if (!tuplePresence.present()) {
             throw new IllegalArgumentException(entityNotFound("Invitation code", invitationId.value()));
         }

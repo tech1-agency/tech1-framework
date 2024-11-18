@@ -4,7 +4,7 @@ import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -22,13 +22,13 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("JpaQlInspection")
-public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationCodesRepository {
+public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbInvitation, String>, InvitationsRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
     default TuplePresence<Invitation> isPresent(InvitationId invitationId) {
         return this.findById(invitationId.value())
-                .map(entity -> present(entity.invitationCode()))
+                .map(entity -> present(entity.invitation()))
                 .orElseGet(TuplePresence::absent);
     }
 
@@ -39,8 +39,8 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
     }
 
     default Invitation findByValueAsAny(String value) {
-        var invitationCode = this.findByValue(value);
-        return nonNull(invitationCode) ? invitationCode.invitationCode() : null;
+        var invitation = this.findByValue(value);
+        return nonNull(invitation) ? invitation.invitation() : null;
     }
 
     default List<ResponseInvitation> findUnused() {
@@ -64,11 +64,11 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
     }
 
     default InvitationId saveAs(Username owner, RequestNewInvitationParams request) {
-        var invitationCode = new PostgresDbInvitation(
+        var invitation = new PostgresDbInvitation(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())
         );
-        var entity = this.save(invitationCode);
+        var entity = this.save(invitation);
         return entity.invitationId();
     }
 

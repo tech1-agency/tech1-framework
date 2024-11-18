@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class IncidentAttributes {
 
+    @SuppressWarnings("unused")
     @UtilityClass
     public static class Keys {
         public static final String TYPE = "incidentType";
@@ -20,8 +21,8 @@ public class IncidentAttributes {
         public static final String METHOD = "method";
         public static final String PARAMS = "params";
 
-        public static final String INVITATION_CODE = "invitationCode";
-        public static final String INVITATION_CODE_OWNER = "invitationCodeOwner";
+        public static final String INVITATION = "invitation";
+        public static final String INVITATION_OWNER = "invitationOwner";
 
         public static final String BROWSER = "browser";
         public static final String COUNTRY = "country";

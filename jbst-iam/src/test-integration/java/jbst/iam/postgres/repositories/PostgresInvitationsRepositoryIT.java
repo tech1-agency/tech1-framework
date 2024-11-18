@@ -70,7 +70,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId)).isEqualTo(TuplePresence.present(savedInvitationCode.invitationCode()));
+        assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId)).isEqualTo(TuplePresence.present(savedInvitationCode.invitation()));
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId)).isEqualTo(TuplePresence.absent());
         assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user1"))).hasSize(2);
         assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user2"))).hasSize(3);
@@ -146,7 +146,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodesRepository.saveAs(randomElement(saved).invitationCode());
+        this.invitationCodesRepository.saveAs(randomElement(saved).invitation());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
 
         // Act-Assert-2

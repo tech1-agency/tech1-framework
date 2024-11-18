@@ -2,7 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.repositories.InvitationCodesRepository;
+import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.services.BaseRegistrationService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +34,8 @@ class AbstractBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        InvitationCodesRepository invitationCodeRepository() {
-            return mock(InvitationCodesRepository.class);
+        InvitationsRepository invitationCodeRepository() {
+            return mock(InvitationsRepository.class);
         }
 
         @Bean
@@ -58,7 +58,7 @@ class AbstractBaseRegistrationServiceTest {
         }
     }
 
-    private final InvitationCodesRepository invitationCodesRepository;
+    private final InvitationsRepository invitationsRepository;
     private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -67,7 +67,7 @@ class AbstractBaseRegistrationServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository,
                 this.bCryptPasswordEncoder
         );
@@ -76,7 +76,7 @@ class AbstractBaseRegistrationServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository,
                 this.bCryptPasswordEncoder
         );
@@ -92,8 +92,8 @@ class AbstractBaseRegistrationServiceTest {
                 randomZoneId(),
                 randomString()
         );
-        var invitationCode = entity(Invitation.class);
-        when(this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode())).thenReturn(invitationCode);
+        var invitation = entity(Invitation.class);
+        when(this.invitationsRepository.findByValueAsAny(requestUserRegistration1.invitation())).thenReturn(invitation);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
         var invitationCodeAC1 = ArgumentCaptor.forClass(Invitation.class);
@@ -103,11 +103,11 @@ class AbstractBaseRegistrationServiceTest {
         this.componentUnderTest.register1(requestUserRegistration1);
 
         // Assert
-        verify(this.invitationCodesRepository).findByValueAsAny(requestUserRegistration1.invitationCode());
+        verify(this.invitationsRepository).findByValueAsAny(requestUserRegistration1.invitation());
         verify(this.bCryptPasswordEncoder).encode(requestUserRegistration1.password().value());
         verify(this.usersRepository).saveAs(eq(requestUserRegistration1), eq(Password.of(hashPassword)), invitationCodeAC1.capture());
         assertThat(invitationCodeAC1.getValue().invited()).isEqualTo(requestUserRegistration1.username());
-        verify(this.invitationCodesRepository).saveAs(invitationCodeAC2.capture());
+        verify(this.invitationsRepository).saveAs(invitationCodeAC2.capture());
         assertThat(invitationCodeAC2.getValue().invited()).isEqualTo(requestUserRegistration1.username());
     }
 }

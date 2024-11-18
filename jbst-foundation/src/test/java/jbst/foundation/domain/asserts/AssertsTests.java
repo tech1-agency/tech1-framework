@@ -1,7 +1,6 @@
 package jbst.foundation.domain.asserts;
 
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.constants.BigDecimalConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,6 +13,7 @@ import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.*;
 import static jbst.foundation.domain.constants.JbstConstants.ZoneIds.UKRAINE;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -102,10 +102,10 @@ class AssertsTests {
 
     private static Stream<Arguments> assertBigDecimalsBetweenArgs() {
         return Stream.of(
-                Arguments.of(BigDecimalConstants.MINUS_ONE, ZERO, BigDecimalConstants.TWO, true, true),
-                Arguments.of(BigDecimalConstants.MINUS_ONE, BigDecimalConstants.MINUS_ONE, BigDecimalConstants.TWO, false, true),
-                Arguments.of(BigDecimalConstants.MINUS_ONE, BigDecimalConstants.TWO, BigDecimalConstants.TWO, false, true),
-                Arguments.of(BigDecimalConstants.MINUS_ONE, BigDecimalConstants.ONE_HUNDRED, BigDecimalConstants.TWO, false, false)
+                Arguments.of(MINUS_ONE, ZERO, TWO, true, true),
+                Arguments.of(MINUS_ONE, MINUS_ONE, TWO, false, true),
+                Arguments.of(MINUS_ONE, TWO, TWO, false, true),
+                Arguments.of(MINUS_ONE, ONE_HUNDRED, TWO, false, false)
         );
     }
 

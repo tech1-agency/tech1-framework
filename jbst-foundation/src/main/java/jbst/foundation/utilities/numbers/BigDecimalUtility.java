@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.numbers;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.TupleRange;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import lombok.experimental.UtilityClass;
@@ -9,7 +10,6 @@ import java.math.BigDecimal;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.domain.constants.BigDecimalConstants.ONE_HUNDRED;
 
 @UtilityClass
 public class BigDecimalUtility {
@@ -71,7 +71,7 @@ public class BigDecimalUtility {
     }
 
     public static boolean isOneHundred(BigDecimal number) {
-        return areValuesEquals(number, ONE_HUNDRED);
+        return areValuesEquals(number, JbstConstants.BigDecimals.ONE_HUNDRED);
     }
 
     public static boolean isPositive(BigDecimal number) {

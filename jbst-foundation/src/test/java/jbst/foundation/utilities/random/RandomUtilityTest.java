@@ -1,7 +1,6 @@
 package jbst.foundation.utilities.random;
 
 import feign.Request;
-import jbst.foundation.domain.constants.BigDecimalConstants;
 import jbst.foundation.domain.constants.BigIntegerConstants;
 import jbst.foundation.domain.exceptions.random.IllegalEnumException;
 import jbst.foundation.domain.tests.enums.EnumOneValueUnderTests;
@@ -28,6 +27,7 @@ import java.util.stream.Stream;
 import static java.math.BigDecimal.ONE;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Arrays.asList;
+import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.MINUS_ONE;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.enums.EnumUnderTests.*;
@@ -246,8 +246,8 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE))
-                .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(BigDecimalConstants.MINUS_ONE));
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE))
+                .isLessThanOrEqualTo(BigDecimal.valueOf(lowerBound).multiply(MINUS_ONE));
     }
 
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
@@ -261,7 +261,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(BigDecimalConstants.MINUS_ONE))
+                .isGreaterThanOrEqualTo(BigDecimal.valueOf(upperBound).multiply(MINUS_ONE))
                 .isLessThanOrEqualTo(BigDecimal.valueOf(upperBound));
     }
 

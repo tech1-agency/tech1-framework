@@ -2,7 +2,6 @@ package jbst.foundation.utilities.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import jbst.foundation.domain.constants.BigDecimalConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.ONE_HUNDRED;
 import static jbst.foundation.utilities.json.JsonNodeUtility.getJsonNodeFieldValueAsBigDecimalOrZero;
 import static jbst.foundation.utilities.json.JsonNodeUtility.getJsonNodeValueAsBigDecimalOrZero;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -63,7 +63,6 @@ class JsonNodeUtilityTest {
     @Test
     void getJsonNodeFieldValueAsBigDecimalOrZeroJsonTest() {
         // Arrange
-        var expected = BigDecimalConstants.ONE_HUNDRED;
         var fieldName = randomString();
         var jsonNode = mock(JsonNode.class);
         when(jsonNode.get(fieldName)).thenReturn(TextNode.valueOf("100"));
@@ -72,6 +71,6 @@ class JsonNodeUtilityTest {
         var actual = getJsonNodeFieldValueAsBigDecimalOrZero(jsonNode, fieldName);
 
         // Assert
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(ONE_HUNDRED);
     }
 }

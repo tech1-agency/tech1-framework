@@ -1,6 +1,6 @@
 package jbst.foundation.utilities.processors;
 
-import jbst.foundation.domain.constants.BigDecimalConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.experimental.UtilityClass;
 
@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 public class ProcessorsUtility {
     public static int getNumOfCores(TuplePercentage tuplePercentage) {
         return BigDecimal.valueOf(getNumOfCores()).multiply(tuplePercentage.percentage()).divide(
-                BigDecimalConstants.ONE_HUNDRED,
+                JbstConstants.BigDecimals.ONE_HUNDRED,
                 0,
                 RoundingMode.DOWN
         ).intValue();

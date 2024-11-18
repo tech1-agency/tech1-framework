@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static java.math.BigDecimal.ZERO;
-import static jbst.foundation.domain.constants.BigDecimalConstants.*;
+import static jbst.foundation.domain.constants.JbstConstants.BigDecimals.*;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
 import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalGreaterThanZero;
 import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalLessThanZero;

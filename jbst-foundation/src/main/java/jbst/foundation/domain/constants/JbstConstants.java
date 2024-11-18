@@ -3,6 +3,7 @@ package jbst.foundation.domain.constants;
 import com.diogonunes.jcolor.AnsiFormat;
 import lombok.experimental.UtilityClass;
 
+import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -10,6 +11,12 @@ import static com.diogonunes.jcolor.Attribute.*;
 
 @UtilityClass
 public class JbstConstants {
+
+    public class BigDecimals {
+        public static final BigDecimal MINUS_ONE = BigDecimal.valueOf(-1);
+        public static final BigDecimal TWO = BigDecimal.valueOf(2L);
+        public static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
+    }
 
     public static class Domains {
         public static final String HARDCODED = "yyluchkiv.com";

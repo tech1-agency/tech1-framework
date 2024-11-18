@@ -83,6 +83,6 @@ jbst:
         enabled: true
   mongodb-security-jwt-configs:
     mongodb:
-      host: t1f-iam-mongodb
+      host: jbst-mongodb
       port: 27017
       database: jbst_dev

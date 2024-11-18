@@ -37,7 +37,6 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             JbstProperties jbstProperties
     ) {
         this.jbstProperties = jbstProperties;
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var geoCountryFlagsConfigs = this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
         LOGGER.info("{} Geo country flags {} json — {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
         if (geoCountryFlagsConfigs.isEnabled()) {
@@ -70,7 +69,6 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             this.mappedByCountryName = new HashMap<>();
             this.mappedByCountryCode = new HashMap<>();
         }
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 
     @Override

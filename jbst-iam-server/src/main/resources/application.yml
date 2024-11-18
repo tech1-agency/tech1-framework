@@ -88,7 +88,7 @@ jbst:
       parameter-name: "_csrf"
       token-key: "t-csrf-token"
     stomp-configs:
-      endpoint: "/t1f-iam-server-websockets"
+      endpoint: "/jbst-server-websockets"
     broker-configs:
       application-destination-prefix: "/app"
       simple-destination: "/queue"

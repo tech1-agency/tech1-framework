@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker exec -it t1f-iam-server /bin/sh
+docker exec -it jbst-server /bin/sh

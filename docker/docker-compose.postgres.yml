@@ -1,17 +1,17 @@
 services:
-  t1f-iam-server:
+  jbst-server:
     image: ghcr.io/tech1-agency/jbst-iam-server:1.0-SNAPSHOT
     restart: unless-stopped
-    container_name: t1f-iam-server
+    container_name: jbst-server
     networks:
-      - t1f-network
+      - jbst-network
     ports:
       - "3002:3002"
     depends_on:
-      t1f-iam-postgres:
+      jbst-postgres:
         condition: service_healthy
     links:
-      - t1f-iam-postgres
+      - jbst-postgres
     environment:
       - PORT=3002
       - SPRING_BOOT_PROFILE=postgres
@@ -21,18 +21,18 @@ services:
     volumes:
       - ./application-docker-postgres.yml:/application-docker-postgres.yml
 
-  t1f-iam-postgres:
+  jbst-postgres:
     image: postgres:14.3
     restart: always
-    container_name: t1f-iam-postgres
+    container_name: jbst-postgres
     ports:
       - "3004:5432"
     networks:
-      - t1f-network
+      - jbst-network
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - t1f-iam-postgres-data:/var/lib/postgresql/data
+      - jbst-postgres-data:/var/lib/postgresql/data
       - ./init-postgres-database.sh:/docker-entrypoint-initdb.d/init-database.sh
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -41,9 +41,9 @@ services:
       retries: 5
 
 networks:
-  t1f-network:
-    name: t1f-network
+  jbst-network:
+    name: jbst-network
     driver: bridge
 
 volumes:
-  t1f-iam-postgres-data:
+  jbst-postgres-data:

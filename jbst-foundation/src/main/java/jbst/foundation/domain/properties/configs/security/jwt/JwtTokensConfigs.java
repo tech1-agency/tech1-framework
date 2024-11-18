@@ -60,7 +60,6 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
 
     @Override
     public void assertProperties(PropertyId propertyId) {
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         super.assertProperties(propertyId);
         if (this.storageMethod.isCookies()) {
             Asserts.assertFalseOrThrow(
@@ -87,6 +86,5 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
                 this.accessToken.getKey(this.storageMethod),
                 this.refreshToken.getKey(this.storageMethod)
         );
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 }

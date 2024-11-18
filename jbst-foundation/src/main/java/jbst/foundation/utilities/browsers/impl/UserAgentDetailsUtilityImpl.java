@@ -35,7 +35,6 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var userAgentConfigs = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs();
         LOGGER.info("{} User agent — {}", PREFIX_UTILITIES, Toggle.of(userAgentConfigs.isEnabled()));
         if (userAgentConfigs.isEnabled()) {
@@ -59,7 +58,6 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
             configuredFlag = false;
             exceptionMessageOrNull = contactDevelopmentTeam("User agent configuration failure");
         }
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         this.userAgentParser = userAgentParserOrNull;
         this.configured = configuredFlag;
         this.exceptionMessage = exceptionMessageOrNull;

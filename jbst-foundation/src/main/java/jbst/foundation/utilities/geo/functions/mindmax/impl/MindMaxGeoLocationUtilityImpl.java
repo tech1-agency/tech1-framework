@@ -2,7 +2,6 @@ package jbst.foundation.utilities.geo.functions.mindmax.impl;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
@@ -38,7 +37,6 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     ) {
         this.geoCountryFlagUtility = geoCountryFlagUtility;
         this.jbstProperties = jbstProperties;
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var geoLocationsConfigs = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs();
         LOGGER.info("{} Geo location {} database — {}", PREFIX_UTILITIES, GEO_DATABASE_NAME, Toggle.of(geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()));
         if (geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()) {
@@ -55,7 +53,6 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
         } else {
             this.databaseReader = null;
         }
-        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 
     @Override

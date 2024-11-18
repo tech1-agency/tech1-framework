@@ -76,12 +76,12 @@ public class JbstConstants {
         // Prefixes
         // =================================================================================================================
         public static final String PREFIX = "[jbst, ";
-        public static final String FRAMEWORK_PROPERTIES_PREFIX = PREFIX + "Properties]";
-        public static final String FRAMEWORK_UTILITIES_PREFIX = PREFIX + "Utilities]";
-        public static final String FRAMEWORK_INCIDENT_PREFIX = PREFIX + "Incident]";
+        public static final String PREFIX_PROPERTIES = PREFIX + "properties]";
+        public static final String PREFIX_UTILITIES = PREFIX + "utilities]";
+        public static final String PREFIX_INCIDENTS = PREFIX + "incidents]";
         public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = PREFIX + "B2B SecurityJWT]";
-        public static final String FRAMEWORK_SESSION_REGISTRY_PREFIX = PREFIX + "SessionRegistry]";
-        public static final String FRAMEWORK_SERVER = PREFIX + "Server]";
+        public static final String PREFIX_SESSION_REGISTRY = PREFIX + "session-registry]";
+        public static final String PREFIX_SERVER = PREFIX + "server]";
     }
 
     public static class MemoryUnits {

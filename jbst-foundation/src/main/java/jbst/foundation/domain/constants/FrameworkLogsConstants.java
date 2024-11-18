@@ -10,16 +10,16 @@ public class FrameworkLogsConstants {
     // =================================================================================================================
     // Incidents
     // =================================================================================================================
-    public static final String INCIDENT_FEATURE_DISABLED = FRAMEWORK_INCIDENT_PREFIX + " `{}` feature is " + Toggle.DISABLED.getLowerCase();
-    public static final String INCIDENT = FRAMEWORK_INCIDENT_PREFIX + " `{}`. incident type: `{}`";
-    public static final String INCIDENT_AUTHENTICATION_LOGIN = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /login. Username: `{}`";
-    public static final String INCIDENT_AUTHENTICATION_LOGIN_FAILURE = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /login failure. Username: `{}`";
-    public static final String INCIDENT_AUTHENTICATION_LOGOUT = FRAMEWORK_INCIDENT_PREFIX + " `{}` - :/logout. Username: `{}`";
-    public static final String INCIDENT_REGISTER1 = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /register1. Username: `{}`";
-    public static final String INCIDENT_REGISTER1_FAILURE = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /register1 failure. Username: `{}`";
-    public static final String INCIDENT_SESSION_REFRESHED = FRAMEWORK_INCIDENT_PREFIX + " `{}` - /refreshToken. Username: `{}`";
-    public static final String INCIDENT_SESSION_EXPIRED = FRAMEWORK_INCIDENT_PREFIX + " `{}` - session expired. Username: `{}`";
-    public static final String INCIDENT_SYSTEM_RESET_SERVER = FRAMEWORK_INCIDENT_PREFIX + " `{}` - system reset server. Username: `{}`. Status: `{}`";
+    public static final String INCIDENT_FEATURE_DISABLED = PREFIX_INCIDENTS + " `{}` feature is " + Toggle.DISABLED.getLowerCase();
+    public static final String INCIDENT = PREFIX_INCIDENTS + " `{}`. incident type: `{}`";
+    public static final String INCIDENT_AUTHENTICATION_LOGIN = PREFIX_INCIDENTS + " `{}` - /login. Username: `{}`";
+    public static final String INCIDENT_AUTHENTICATION_LOGIN_FAILURE = PREFIX_INCIDENTS + " `{}` - /login failure. Username: `{}`";
+    public static final String INCIDENT_AUTHENTICATION_LOGOUT = PREFIX_INCIDENTS + " `{}` - :/logout. Username: `{}`";
+    public static final String INCIDENT_REGISTER1 = PREFIX_INCIDENTS + " `{}` - /register1. Username: `{}`";
+    public static final String INCIDENT_REGISTER1_FAILURE = PREFIX_INCIDENTS + " `{}` - /register1 failure. Username: `{}`";
+    public static final String INCIDENT_SESSION_REFRESHED = PREFIX_INCIDENTS + " `{}` - /refreshToken. Username: `{}`";
+    public static final String INCIDENT_SESSION_EXPIRED = PREFIX_INCIDENTS + " `{}` - session expired. Username: `{}`";
+    public static final String INCIDENT_SYSTEM_RESET_SERVER = PREFIX_INCIDENTS + " `{}` - system reset server. Username: `{}`. Status: `{}`";
 
     // =================================================================================================================
     // SecurityJWT
@@ -37,13 +37,13 @@ public class FrameworkLogsConstants {
     // =================================================================================================================
     // SessionRegistry
     // =================================================================================================================
-    public static final String SESSION_REGISTRY_REGISTER_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - register session";
-    public static final String SESSION_REGISTRY_RENEW_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - renew session";
-    public static final String SESSION_REGISTRY_REMOVE_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - remove session";
-    public static final String SESSION_REGISTRY_EXPIRE_SESSION = FRAMEWORK_SESSION_REGISTRY_PREFIX + " Username `{}` - expire session";
+    public static final String SESSION_REGISTRY_REGISTER_SESSION = PREFIX_SESSION_REGISTRY + " Username `{}` - register session";
+    public static final String SESSION_REGISTRY_RENEW_SESSION = PREFIX_SESSION_REGISTRY + " Username `{}` - renew session";
+    public static final String SESSION_REGISTRY_REMOVE_SESSION = PREFIX_SESSION_REGISTRY + " Username `{}` - remove session";
+    public static final String SESSION_REGISTRY_EXPIRE_SESSION = PREFIX_SESSION_REGISTRY + " Username `{}` - expire session";
 
     // =================================================================================================================
     // Server
     // =================================================================================================================
-    public static final String SERVER_RESET_SERVER_TASK = FRAMEWORK_SERVER + " Reset Server Initiator: `{}`. Status: `{}`";
+    public static final String SERVER_RESET_SERVER_TASK = PREFIX_SERVER + " Reset Server Initiator: `{}`. Status: `{}`";
 }

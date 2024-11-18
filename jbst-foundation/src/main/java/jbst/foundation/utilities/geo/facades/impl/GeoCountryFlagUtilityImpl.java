@@ -18,6 +18,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_UTILITIES;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
@@ -38,7 +39,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
         this.jbstProperties = jbstProperties;
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var geoCountryFlagsConfigs = this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
-        LOGGER.info("{} Geo country flags {} json — {}", JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
+        LOGGER.info("{} Geo country flags {} json — {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
         if (geoCountryFlagsConfigs.isEnabled()) {
             try {
                 var resource = resourceLoader.getResource("classpath:" + COUNTRIES_FLAGS_JSON);
@@ -59,9 +60,9 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
                                         Function.identity()
                                 )
                         );
-                LOGGER.info("{} Geo country flags {} json configuration status: {}", JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, SUCCESS);
+                LOGGER.info("{} Geo country flags {} json configuration status: {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, SUCCESS);
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error("%s Geo country flags %s json configuration status: %s".formatted(JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, FAILURE));
+                LOGGER.error("{} Geo country flags {} json configuration status: {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, FAILURE);
                 LOGGER.error("Please verify `{}` is present in classpath", COUNTRIES_FLAGS_JSON);
                 throw new IllegalArgumentException(ex.getMessage());
             }

@@ -125,7 +125,7 @@ public class Incident {
 
     public void print() {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
-        LOGGER.info(JbstConstants.Logs.FRAMEWORK_INCIDENT_PREFIX + " IncidentType: `{}`", this.getType());
+        LOGGER.info(JbstConstants.Logs.PREFIX_INCIDENTS + " IncidentType: `{}`", this.getType());
         this.attributes.entrySet().stream()
                 .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
                 .forEach(entry -> LOGGER.info(entry.getKey() + " — " + entry.getValue()));

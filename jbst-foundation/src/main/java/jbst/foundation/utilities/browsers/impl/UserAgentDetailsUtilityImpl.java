@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.List;
 
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_UTILITIES;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
@@ -36,7 +37,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         String exceptionMessageOrNull;
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var userAgentConfigs = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs();
-        LOGGER.info("{} User agent — {}", JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, Toggle.of(userAgentConfigs.isEnabled()));
+        LOGGER.info("{} User agent — {}", PREFIX_UTILITIES, Toggle.of(userAgentConfigs.isEnabled()));
         if (userAgentConfigs.isEnabled()) {
             try {
                 userAgentParserOrNull = new UserAgentService().loadParser(
@@ -48,9 +49,9 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
                 );
                 configuredFlag = true;
                 exceptionMessageOrNull = null;
-                LOGGER.info("{} User agent configuration status: {}", JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, SUCCESS);
+                LOGGER.info("{} User agent configuration status: {}", PREFIX_UTILITIES, SUCCESS);
             } catch (ParseException | IOException ex) {
-                LOGGER.error("%s User agent configuration status: %s".formatted(JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, FAILURE));
+                LOGGER.error("{} User agent configuration status: {}", PREFIX_UTILITIES, FAILURE);
                 throw new IllegalArgumentException(ex);
             }
         } else {

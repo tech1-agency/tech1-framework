@@ -66,7 +66,7 @@ jbst:
         - value: admin
         - value: invitationCode:read
         - value: invitationCode:write
-      package-name: tech1.framework.iam.server.base.domain.enums
+      package-name: jbst.iam.server.base.domain.enums
     cookies-configs:
       jwt-access-token-cookie-creation-latency:
         unit: SECONDS

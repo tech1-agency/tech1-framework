@@ -5,4 +5,4 @@ jbst:
     mongodb:
       host: 127.0.0.1
       port: 27017
-      database: tech1_iam_server
+      database: jbst_dev

@@ -9,10 +9,10 @@ JVM_ARGUMENTS="-Xms512m -Xmx2g --add-opens=java.base/java.time=ALL-UNNAMED --add
 
 echo "================================================================================================================="
 echo "PostgreSQL init [Started]"
-echo "Create database 'tech1_iam_server' if not exist"
+echo "Create database 'jbst_dev' if not exist"
 echo "================================================================================================================="
 
-docker run --rm --network tech1-network jbergknoff/postgresql-client postgresql://postgres:postgres@tech1-postgres:5432/postgres -c "CREATE DATABASE tech1_iam_server"
+docker run --rm --network jbst-network jbergknoff/postgresql-client postgresql://postgres:postgres@jbst-postgres:5432/postgres -c "CREATE DATABASE jbst_dev"
 
 echo "================================================================================================================="
 echo "PostgreSQL init [Completed]"

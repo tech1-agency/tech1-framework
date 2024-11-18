@@ -5,7 +5,7 @@ logging:
 # Spring PostgreSQL
 spring:
   datasource:
-    url: jdbc:postgresql://t1f-iam-postgres:5432/tech1_iam_server
+    url: jdbc:postgresql://t1f-iam-postgres:5432/jbst_dev
     username: postgres
     password: postgres
   jpa:

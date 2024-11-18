@@ -51,7 +51,7 @@ class EmailServiceImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -88,7 +88,7 @@ class EmailServiceImplTest {
                     this.javaMailSender(),
                     this.springTemplateEngine(),
                     this.emailUtility(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

@@ -4,6 +4,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
 import jbst.iam.utils.HttpRequestUtils;
 import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +22,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ class AdvancedRequestLoggingFilterTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -55,7 +55,7 @@ class AdvancedRequestLoggingFilterTest {
             return new AdvancedRequestLoggingFilter(
                     this.httpRequestUtility(),
                     this.securityPrincipalUtility(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

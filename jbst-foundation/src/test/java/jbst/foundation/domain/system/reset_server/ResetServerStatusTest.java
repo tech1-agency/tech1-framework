@@ -67,14 +67,14 @@ class ResetServerStatusTest extends AbstractFolderSerializationRunner {
         assertThat(status.isStarted()).isFalse();
 
         // Act-5
-        status.setFailureDescription(new NullPointerException("Tech1 NPE"));
+        status.setFailureDescription(new NullPointerException("jbst NPE"));
 
         // Assert-5
         assertThat(status.getState()).isEqualTo(ResetServerState.READY);
         assertThat(status.getStage()).isEqualTo(9);
         assertThat(status.getStagesCount()).isEqualTo(9);
         assertThat(status.getPercentage()).isEqualTo(TuplePercentage.progressTuplePercentage(9, 9));
-        assertThat(status.getDescription()).isEqualTo("Tech1 NPE. Please contact development team");
+        assertThat(status.getDescription()).isEqualTo("jbst NPE. Please contact development team");
         assertThat(status.isStarted()).isFalse();
         assertThat(this.writeValueAsString(status)).isEqualTo(TestsIOUtils.readFile(this.getFolder(), "reset-server-status-4.json"));
     }

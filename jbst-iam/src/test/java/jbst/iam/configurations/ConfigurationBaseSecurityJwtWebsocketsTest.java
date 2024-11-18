@@ -1,5 +1,9 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.configs.MvcConfigs;
+import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
+import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 import jbst.iam.handshakes.CsrfInterceptorHandshake;
 import jbst.iam.handshakes.SecurityHandshakeHandler;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +19,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.StompWebSocketEndpointRegistration;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.MvcConfigs;
-import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
@@ -37,7 +37,7 @@ class ConfigurationBaseSecurityJwtWebsocketsTest {
     static class ContextConfiguration {
 
         @Bean
-        public JbstProperties applicationFrameworkProperties() {
+        public JbstProperties jbstProperties() {
             var properties = new JbstProperties();
             properties.setMvcConfigs(
                     new MvcConfigs(
@@ -72,7 +72,7 @@ class ConfigurationBaseSecurityJwtWebsocketsTest {
             return new ConfigurationBaseSecurityJwtWebsockets(
                     this.csrfInterceptorHandshake(),
                     this.securityHandshakeHandler(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
 

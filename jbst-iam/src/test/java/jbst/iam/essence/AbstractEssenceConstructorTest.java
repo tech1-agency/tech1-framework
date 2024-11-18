@@ -1,5 +1,9 @@
 package jbst.iam.essence;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.tests.stubbers.AbstractMockService;
@@ -17,18 +21,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZero;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -45,14 +45,14 @@ class AbstractEssenceConstructorTest {
     static class ContextConfiguration {
 
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
         @Bean
         AbstractEssenceConstructor essenceConstructor() {
             var essenceConstructor = mock(AbstractEssenceConstructor.class);
-            setField(essenceConstructor, "applicationFrameworkProperties", this.applicationFrameworkProperties());
+            setField(essenceConstructor, "jbstProperties", this.jbstProperties());
             return essenceConstructor;
         }
 
@@ -76,7 +76,7 @@ class AbstractEssenceConstructorTest {
             return new AbstractEssenceConstructor(
                     this.invitationCodesRepository(),
                     this.usersRepository(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             ) {
                 @Override
                 public long saveDefaultUsers(List<DefaultUser> defaultUsers) {

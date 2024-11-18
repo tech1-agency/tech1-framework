@@ -1,5 +1,11 @@
 package jbst.iam.crons;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.Cron;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.sessions.SessionRegistry;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +22,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.Cron;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.stream.Stream;
 
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.set345;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -59,7 +59,7 @@ class SessionsCronTest {
         }
 
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -69,7 +69,7 @@ class SessionsCronTest {
                     this.sessionRegistry(),
                     this.baseUsersSessionsService(),
                     this.incidentPublisher(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

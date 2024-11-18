@@ -1,5 +1,12 @@
 package jbst.iam.startup;
 
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.Authority;
+import jbst.foundation.domain.properties.base.DefaultUsers;
+import jbst.foundation.domain.properties.base.InvitationCodes;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 import jbst.iam.essence.AbstractEssenceConstructor;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -14,13 +21,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.Authority;
-import jbst.foundation.domain.properties.base.DefaultUsers;
-import jbst.foundation.domain.properties.base.InvitationCodes;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
-import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -47,14 +47,14 @@ class DefaultStartupEventListenerTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
         @Bean
         AbstractEssenceConstructor essenceConstructor() {
             var essenceConstructor = mock(AbstractEssenceConstructor.class);
-            setField(essenceConstructor, "applicationFrameworkProperties", this.applicationFrameworkProperties());
+            setField(essenceConstructor, "jbstProperties", this.jbstProperties());
             return essenceConstructor;
         }
 
@@ -62,7 +62,7 @@ class DefaultStartupEventListenerTest {
         BaseStartupEventListener baseStartupEventListener() {
             return new DefaultStartupEventListener(
                     this.essenceConstructor(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

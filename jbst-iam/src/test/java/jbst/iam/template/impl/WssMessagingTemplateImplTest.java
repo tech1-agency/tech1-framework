@@ -1,6 +1,10 @@
 package jbst.iam.template.impl;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.websockets.*;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.domain.events.WebsocketEvent;
 import jbst.iam.template.WssMessagingTemplate;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +24,11 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.stream.Stream;
 
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -46,7 +46,7 @@ class WssMessagingTemplateImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -65,7 +65,7 @@ class WssMessagingTemplateImplTest {
             return new WssMessagingTemplateImpl(
                     this.simpMessagingTemplate(),
                     this.serverIncidentPublisher(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

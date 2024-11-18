@@ -1,9 +1,9 @@
 package jbst.iam.configurations;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,9 +12,9 @@ import static org.mockito.Mockito.when;
 public class TestConfigurationPropertiesMocked {
 
     @Bean
-    JbstProperties applicationFrameworkProperties() {
-        var applicationFrameworkProperties = mock(JbstProperties.class);
-        when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(MvcConfigs.hardcoded());
-        return applicationFrameworkProperties;
+    JbstProperties jbstProperties() {
+        var jbstProperties = mock(JbstProperties.class);
+        when(jbstProperties.getMvcConfigs()).thenReturn(MvcConfigs.hardcoded());
+        return jbstProperties;
     }
 }

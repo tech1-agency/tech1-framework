@@ -77,7 +77,7 @@ jbst:
       refreshToken:
         cookie-key: rjwt
     users-emails-configs:
-      subject-prefix: "[Tech1]"
+      subject-prefix: "[jbst]"
       authentication-login:
         enabled: true
       session-refreshed:

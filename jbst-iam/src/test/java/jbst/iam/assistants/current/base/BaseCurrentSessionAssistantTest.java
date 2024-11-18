@@ -1,6 +1,13 @@
 package jbst.iam.assistants.current.base;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.configs.HardwareMonitoringConfigs;
+import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
@@ -22,19 +29,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.HardwareMonitoringConfigs;
-import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.Set;
 
+import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -69,7 +69,7 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -81,7 +81,7 @@ class BaseCurrentSessionAssistantTest {
                     this.hardwareMonitoringStore(),
                     this.cookieProvider(),
                     this.securityPrincipalUtility(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

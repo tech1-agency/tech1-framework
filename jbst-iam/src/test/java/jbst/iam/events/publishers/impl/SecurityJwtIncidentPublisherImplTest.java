@@ -45,7 +45,7 @@ class SecurityJwtIncidentPublisherImplTest {
         }
 
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -53,7 +53,7 @@ class SecurityJwtIncidentPublisherImplTest {
         SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
             return new SecurityJwtIncidentPublisherImpl(
                     this.applicationEventPublisher(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

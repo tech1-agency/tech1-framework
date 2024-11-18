@@ -22,9 +22,9 @@ public class Application {
     public static void main(String[] args) {
         var springApplication = new SpringApplication(Application.class);
         var applicationContext = springApplication.run(args);
-        var applicationFrameworkProperties = applicationContext.getBean(JbstProperties.class);
-        var serverConfigs = applicationFrameworkProperties.getServerConfigs();
-        var mavenDetails = applicationFrameworkProperties.getMavenConfigs().asMavenDetails();
+        var jbstProperties = applicationContext.getBean(JbstProperties.class);
+        var serverConfigs = jbstProperties.getServerConfigs();
+        var mavenDetails = jbstProperties.getMavenConfigs().asMavenDetails();
         LOGGER.info(JbstConstants.Logs.SERVER_CONTAINER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
     }
 }

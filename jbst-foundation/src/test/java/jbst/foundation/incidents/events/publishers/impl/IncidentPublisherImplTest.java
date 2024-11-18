@@ -35,7 +35,7 @@ class IncidentPublisherImplTest {
         }
 
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 

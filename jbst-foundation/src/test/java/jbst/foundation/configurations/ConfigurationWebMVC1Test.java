@@ -29,8 +29,8 @@ class ConfigurationWebMVC1Test {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        JbstProperties applicationFrameworkProperties() {
-            var applicationFrameworkProperties = mock(JbstProperties.class);
+        JbstProperties jbstProperties() {
+            var jbstProperties = mock(JbstProperties.class);
             var mvcConfigs = new MvcConfigs(
                     false,
                     "/jbst/security",
@@ -43,14 +43,14 @@ class ConfigurationWebMVC1Test {
                             null
                     )
             );
-            when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(mvcConfigs);
-            return applicationFrameworkProperties;
+            when(jbstProperties.getMvcConfigs()).thenReturn(mvcConfigs);
+            return jbstProperties;
         }
 
         @Bean
         ConfigurationWebMVC applicationMVC() {
             return new ConfigurationWebMVC(
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

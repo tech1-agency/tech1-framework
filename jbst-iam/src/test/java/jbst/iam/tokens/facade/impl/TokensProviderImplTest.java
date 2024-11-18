@@ -2,6 +2,14 @@ package jbst.iam.tokens.facade.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.base.JwtToken;
+import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
+import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
@@ -22,21 +30,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.JwtToken;
-import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
-import jbst.foundation.domain.properties.base.TimeAmount;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 
 import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -53,7 +53,7 @@ class TokensProviderImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -72,7 +72,7 @@ class TokensProviderImplTest {
             return new TokensProviderImpl(
                     this.tokensCookiesProvider(),
                     this.tokensHeadersProvider(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

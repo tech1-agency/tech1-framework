@@ -124,7 +124,7 @@ class AbstractSessionRegistryTest {
         );
     }
 
-    private Session authenticateTech1(JwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
+    private Session authenticateHardcoded(JwtAccessToken accessToken) throws NoSuchFieldException, IllegalAccessException {
         var session = new Session(Username.hardcoded(), accessToken, JwtRefreshToken.random());
         var sessions = ConcurrentHashMap.newKeySet();
         sessions.add(session);
@@ -250,7 +250,7 @@ class AbstractSessionRegistryTest {
     void logoutDbUserSessionPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var accessToken = JwtAccessToken.random();
-        this.authenticateTech1(accessToken);
+        this.authenticateHardcoded(accessToken);
         var dbUserSession = entity(UserSession.class);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(present(dbUserSession));
 
@@ -274,7 +274,7 @@ class AbstractSessionRegistryTest {
     void logoutDbUserSessionNotPresentTest() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         var accessToken = JwtAccessToken.random();
-        var session = this.authenticateTech1(accessToken);
+        var session = this.authenticateHardcoded(accessToken);
         when(this.usersSessionsRepository.isPresent(accessToken)).thenReturn(absent());
 
         // Act

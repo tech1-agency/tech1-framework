@@ -1,5 +1,12 @@
 package jbst.iam.services.base;
 
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.services.emails.domain.EmailHTML;
+import jbst.foundation.services.emails.services.EmailService;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
@@ -17,19 +24,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
-import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.foundation.services.emails.services.EmailService;
 
 import java.util.Map;
 
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -50,7 +50,7 @@ class BaseUsersEmailsServiceTest {
         }
 
         @Bean
-        JbstProperties applicationFrameworkProperties() {
+        JbstProperties jbstProperties() {
             return mock(JbstProperties.class);
         }
 
@@ -59,7 +59,7 @@ class BaseUsersEmailsServiceTest {
             return new BaseUsersEmailsService(
                     this.emailService(),
                     this.userEmailUtility(),
-                    this.applicationFrameworkProperties()
+                    this.jbstProperties()
             );
         }
     }

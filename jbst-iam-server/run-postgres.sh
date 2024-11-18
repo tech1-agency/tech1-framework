@@ -4,7 +4,7 @@ METHOD=maven
 PORT=3002
 SPRING_BOOT_PROFILE=postgres
 SPRING_BOOT_CONFIG_LOCATION=classpath:application.yml,classpath:application-dev.yml,classpath:application-postgres.yml,classpath:application-postgres-dev.yml
-JASYPT_PASSWORD=JJEPTECH1
+JASYPT_PASSWORD=JJJJBSTGH
 JVM_ARGUMENTS="-Xms512m -Xmx2g --add-opens=java.base/java.time=ALL-UNNAMED --add-opens=java.base/java.math=ALL-UNNAMED"
 
 echo "================================================================================================================="

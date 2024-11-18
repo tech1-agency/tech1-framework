@@ -36,8 +36,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
         try {
             super.onStartup();
             var serverConfigs = this.jbstProperties.getServerConfigs();
-            var mavenDetails = this.jbstProperties.getMavenConfigs().asMavenDetails();
-            LOGGER.info(JbstConstants.Logs.SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
+            LOGGER.info(JbstConstants.Logs.getServerStartup(COMPLETED), serverConfigs.getName());
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultStartupEventListener implements BaseStartupEventListener {
-    private static final String STARTUP_MESSAGE = JbstConstants.Logs.PREFIX + " Default startup event listener. Status: `{}`";
+    private static final String STARTUP_MESSAGE = JbstConstants.Logs.PREFIX + " Default startup event listener. Status: {}";
 
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
@@ -24,7 +24,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
     @Override
     public void onStartup() {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
-        LOGGER.info(STARTUP_MESSAGE, Status.STARTED);
+        LOGGER.info(STARTUP_MESSAGE, Status.STARTED.formatAnsi());
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
         LOGGER.info("{} Essence defaultUsers — {}", JbstConstants.Logs.PREFIX, Toggle.of(defaultUsers.isEnabled()));
@@ -38,7 +38,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
             this.essenceConstructor.addDefaultUsersInvitationCodes();
         }
 
-        LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
+        LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED.formatAnsi());
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 }

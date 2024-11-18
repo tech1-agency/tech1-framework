@@ -1,6 +1,7 @@
 package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
+import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.enums.Toggle;
 import lombok.experimental.UtilityClass;
 
@@ -121,10 +122,14 @@ public class JbstConstants {
         // Server
         // =================================================================================================================
         public static final String SERVER_OFFLINE = PREFIX + " `{}` is probably offline. Exception: `{}`";
-        public static final String SERVER_CONTAINER_1 = PREFIX + " `{}` container configuration. Version: `{}`. Status: `{}`";
-        public static final String SERVER_CONTAINER_2 = PREFIX + " `{}` container configuration. Status: `{}`";
-        public static final String SERVER_STARTUP_LISTENER_1 = PREFIX + " `{}` startup listener configuration. Version: `{}`. Status: `{}`";
-        public static final String SERVER_STARTUP_LISTENER_2 = PREFIX + " `{}` startup listener configuration. Status: `{}`";
+
+        public static String getServerContainer(Status status) {
+            return PREFIX + " " + JColor.BLACK_BOLD_TEXT.format("{}") + " container configuration. Status: " + status.formatAnsi();
+        }
+
+        public static String getServerStartup(Status status) {
+            return PREFIX + " " + JColor.BLACK_BOLD_TEXT.format("{}") + " startup listener configuration. Status: " + status.formatAnsi();
+        }
     }
 
     public static class MemoryUnits {

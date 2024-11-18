@@ -24,7 +24,6 @@ public class Application {
         var applicationContext = springApplication.run(args);
         var jbstProperties = applicationContext.getBean(JbstProperties.class);
         var serverConfigs = jbstProperties.getServerConfigs();
-        var mavenDetails = jbstProperties.getMavenConfigs().asMavenDetails();
-        LOGGER.info(JbstConstants.Logs.SERVER_CONTAINER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
+        LOGGER.info(JbstConstants.Logs.getServerContainer(COMPLETED), serverConfigs.getName());
     }
 }

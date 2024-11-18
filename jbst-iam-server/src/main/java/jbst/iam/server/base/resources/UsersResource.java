@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 // Swagger
-@Tag(name = "[jbs-iam-server] Users API")
+@Tag(name = "[jbst] Users API")
 // Spring
 @RestController
 @RequestMapping("/users")

@@ -11,7 +11,7 @@ services:
       - PORT=3002
       - SPRING_BOOT_PROFILE=mongodb
       - CONFIG_LOCATIONS=classpath:application.yml,classpath:application-dev.yml,classpath:application-mongo.yml,file:/application-docker-mongodb.yml
-      - JASYPT_PASSWORD=JJEPTECH1
+      - JASYPT_PASSWORD=JJJJBSTGH
       - JVM_ARGUMENTS=-Xmx5g --add-opens=java.base/java.time=ALL-UNNAMED
     volumes:
       - ./application-docker-mongodb.yml:/application-docker-mongodb.yml

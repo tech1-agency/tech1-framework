@@ -1,7 +1,12 @@
 package jbst.foundation.domain.enums;
 
+import com.diogonunes.jcolor.AnsiFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.Map;
 
 // Lombok
 @AllArgsConstructor
@@ -24,6 +29,19 @@ public enum Status {
     PROGRESS_75("Progress, 75%"),
     PROGRESS_80("Progress, 80%");
 
+    private static final Map<Status, AnsiFormat> MAPPINGS = Map.of(
+            // Major
+            STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT,
+            COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT,
+            // Loading
+            FAILURE, JbstConstants.JColor.RED_BOLD_TEXT,
+            SUCCESS, JbstConstants.JColor.GREEN_BOLD_TEXT
+    );
+
+    public static AnsiFormat getAnsiFormat(Status status) {
+        return MAPPINGS.getOrDefault(status, JbstConstants.JColor.BLACK_BOLD_TEXT);
+    }
+
     private final String value;
 
     @Override
@@ -37,5 +55,10 @@ public enum Status {
 
     public boolean isCompleted() {
         return COMPLETED.equals(this);
+    }
+
+    @JsonIgnore
+    public String formatAnsi() {
+        return getAnsiFormat(this).format(this.getValue());
     }
 }

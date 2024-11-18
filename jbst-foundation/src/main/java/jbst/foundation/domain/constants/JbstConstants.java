@@ -71,6 +71,19 @@ public class JbstConstants {
         public static final String PATH_DELIMITER = "/";
     }
 
+    public class Logs {
+        // =================================================================================================================
+        // Prefixes
+        // =================================================================================================================
+        public static final String PREFIX = "[jbst, ";
+        public static final String FRAMEWORK_PROPERTIES_PREFIX = PREFIX + "Properties]";
+        public static final String FRAMEWORK_UTILITIES_PREFIX = PREFIX + "Utilities]";
+        public static final String FRAMEWORK_INCIDENT_PREFIX = PREFIX + "Incident]";
+        public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = PREFIX + "B2B SecurityJWT]";
+        public static final String FRAMEWORK_SESSION_REGISTRY_PREFIX = PREFIX + "SessionRegistry]";
+        public static final String FRAMEWORK_SERVER = PREFIX + "Server]";
+    }
+
     public static class MemoryUnits {
         public static final long BYTES_IN_KILOBYTE = 1024L;
         public static final long BYTES_IN_MEGABYTE = 1048576L;

@@ -3,7 +3,6 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.constants.FrameworkLogsConstants;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JwtToken;
@@ -83,7 +82,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
         }
         LOGGER.info(
                 "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
-                FrameworkLogsConstants.FRAMEWORK_PROPERTIES_PREFIX,
+                JbstConstants.Logs.FRAMEWORK_PROPERTIES_PREFIX,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),
                 this.refreshToken.getKey(this.storageMethod)

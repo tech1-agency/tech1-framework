@@ -3,19 +3,10 @@ package jbst.foundation.domain.constants;
 import jbst.foundation.domain.enums.Toggle;
 import lombok.experimental.UtilityClass;
 
+import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
+
 @UtilityClass
 public class FrameworkLogsConstants {
-    // =================================================================================================================
-    // Prefixes
-    // =================================================================================================================
-    public static final String FRAMEWORK_PREFIX = "[Tech1 Framework, ";
-    public static final String FRAMEWORK_PROPERTIES_PREFIX = FRAMEWORK_PREFIX + "Properties]";
-    public static final String FRAMEWORK_UTILITIES_PREFIX = FRAMEWORK_PREFIX + "Utilities]";
-    public static final String FRAMEWORK_INCIDENT_PREFIX = FRAMEWORK_PREFIX + "Incident]";
-    public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = FRAMEWORK_PREFIX + "B2B SecurityJWT]";
-    public static final String FRAMEWORK_SESSION_REGISTRY_PREFIX = FRAMEWORK_PREFIX + "SessionRegistry]";
-    public static final String FRAMEWORK_SERVER = FRAMEWORK_PREFIX + "Server]";
-
     // =================================================================================================================
     // Incidents
     // =================================================================================================================

@@ -15,7 +15,6 @@ import org.springframework.core.io.ResourceLoader;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
@@ -40,15 +39,15 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
         this.jbstProperties = jbstProperties;
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var geoLocationsConfigs = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs();
-        LOGGER.info("{} Geo location {} database — {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, Toggle.of(geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()));
+        LOGGER.info("{} Geo location {} database — {}", JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, Toggle.of(geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()));
         if (geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()) {
             try {
                 var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-                LOGGER.info("{} Geo location {} database configuration status: {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
+                LOGGER.info("{} Geo location {} database configuration status: {}", JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, SUCCESS);
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error("%s Geo location %s database loading status: %s".formatted(FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
+                LOGGER.error("%s Geo location %s database loading status: %s".formatted(JbstConstants.Logs.FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, FAILURE));
                 LOGGER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
                 throw new IllegalArgumentException(ex.getMessage());
             }

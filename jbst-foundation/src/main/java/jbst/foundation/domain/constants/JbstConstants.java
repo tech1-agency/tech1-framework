@@ -1,6 +1,7 @@
 package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
+import jbst.foundation.domain.enums.Toggle;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -75,13 +76,26 @@ public class JbstConstants {
         // =================================================================================================================
         // Prefixes
         // =================================================================================================================
-        public static final String PREFIX = "[jbst, ";
-        public static final String PREFIX_PROPERTIES = PREFIX + "properties]";
-        public static final String PREFIX_UTILITIES = PREFIX + "utilities]";
-        public static final String PREFIX_INCIDENTS = PREFIX + "incidents]";
-        public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = PREFIX + "B2B SecurityJWT]";
-        public static final String PREFIX_SESSION_REGISTRY = PREFIX + "session-registry]";
-        public static final String PREFIX_SERVER = PREFIX + "server]";
+        public static final String PREFIX = "[jbst]";
+        public static final String PREFIX_OPEN = "[jbst, ";
+        public static final String PREFIX_PROPERTIES = PREFIX_OPEN + "properties]";
+        public static final String PREFIX_UTILITIES = PREFIX_OPEN + "utilities]";
+        public static final String PREFIX_INCIDENTS = PREFIX_OPEN + "incidents]";
+        public static final String FRAMEWORK_B2B_SECURITY_JWT_PREFIX = PREFIX_OPEN + "B2B SecurityJWT]";
+
+        // =================================================================================================================
+        // Incidents
+        // =================================================================================================================
+        public static final String INCIDENT_FEATURE_DISABLED = PREFIX_INCIDENTS + " `{}` feature is " + Toggle.DISABLED.getLowerCase();
+        public static final String INCIDENT = PREFIX_INCIDENTS + " `{}`. incident type: `{}`";
+        public static final String INCIDENT_AUTHENTICATION_LOGIN = PREFIX_INCIDENTS + " `{}` - /login. Username: `{}`";
+        public static final String INCIDENT_AUTHENTICATION_LOGIN_FAILURE = PREFIX_INCIDENTS + " `{}` - /login failure. Username: `{}`";
+        public static final String INCIDENT_AUTHENTICATION_LOGOUT = PREFIX_INCIDENTS + " `{}` - :/logout. Username: `{}`";
+        public static final String INCIDENT_REGISTER1 = PREFIX_INCIDENTS + " `{}` - /register1. Username: `{}`";
+        public static final String INCIDENT_REGISTER1_FAILURE = PREFIX_INCIDENTS + " `{}` - /register1 failure. Username: `{}`";
+        public static final String INCIDENT_SESSION_REFRESHED = PREFIX_INCIDENTS + " `{}` - /refreshToken. Username: `{}`";
+        public static final String INCIDENT_SESSION_EXPIRED = PREFIX_INCIDENTS + " `{}` - session expired. Username: `{}`";
+        public static final String INCIDENT_SYSTEM_RESET_SERVER = PREFIX_INCIDENTS + " `{}` - system reset server. Username: `{}`. Status: `{}`";
     }
 
     public static class MemoryUnits {

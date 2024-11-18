@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.*;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
 import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
 
 @Slf4j

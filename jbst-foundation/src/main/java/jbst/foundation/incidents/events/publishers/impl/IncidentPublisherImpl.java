@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.INCIDENT;
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.INCIDENT_SYSTEM_RESET_SERVER;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.INCIDENT;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.INCIDENT_SYSTEM_RESET_SERVER;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 

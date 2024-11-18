@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.*;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
 
 @Slf4j
 @Service

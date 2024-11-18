@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.INCIDENT;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.INCIDENT;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

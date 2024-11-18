@@ -90,7 +90,7 @@ class DefaultStartupEventListenerTest {
 
     @ParameterizedTest
     @MethodSource("onStartupTest")
-    void onStartupTest(boolean isDefaultUsersEnabled, boolean isInvitationCodesEnabled) {
+    void onStartupTest(boolean isDefaultUsersEnabled, boolean invitationsEnabled) {
         // Arrange
         SecurityJwtConfigs securityJwtConfigs = new SecurityJwtConfigs(
                 new AuthoritiesConfigs(
@@ -107,7 +107,7 @@ class DefaultStartupEventListenerTest {
                                 new ArrayList<>()
                         ),
                         new Invitations(
-                                isInvitationCodesEnabled
+                                invitationsEnabled
                         )
                 ),
                 null,
@@ -126,7 +126,7 @@ class DefaultStartupEventListenerTest {
         if (isDefaultUsersEnabled) {
             verify(this.essenceConstructor).addDefaultUsers();
         }
-        if (isInvitationCodesEnabled) {
+        if (invitationsEnabled) {
             verify(this.essenceConstructor).addDefaultUsersInvitations();
         }
         reset(

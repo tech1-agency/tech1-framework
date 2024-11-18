@@ -18,14 +18,14 @@ public class MongoBaseSuperadminService extends AbstractBaseSuperadminService {
     public MongoBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
-            MongoInvitationsRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationsRepository,
             MongoUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {
         super(
                 incidentPublisher,
                 sessionRegistry,
-                invitationCodesRepository,
+                invitationsRepository,
                 usersSessionsRepository,
                 abstractSuperAdminResetServerTask
         );

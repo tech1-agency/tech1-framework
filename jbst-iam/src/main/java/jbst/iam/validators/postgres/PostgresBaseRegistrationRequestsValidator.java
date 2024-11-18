@@ -17,13 +17,13 @@ public class PostgresBaseRegistrationRequestsValidator extends AbstractBaseRegis
     public PostgresBaseRegistrationRequestsValidator(
             SecurityJwtPublisher securityJwtPublisher,
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            PostgresInvitationsRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationsRepository,
             PostgresUsersRepository usersRepository
     ) {
         super(
                 securityJwtPublisher,
                 securityJwtIncidentPublisher,
-                invitationCodesRepository,
+                invitationsRepository,
                 usersRepository
         );
     }

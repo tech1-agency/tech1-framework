@@ -21,16 +21,16 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
     protected final PostgresUsersRepository postgresUsersRepository;
 
     public PostgresBaseEssenceConstructor(
-            PostgresInvitationsRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationsRepository,
             PostgresUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 usersRepository,
                 jbstProperties
         );
-        this.postgresInvitationsRepository = invitationCodesRepository;
+        this.postgresInvitationsRepository = invitationsRepository;
         this.postgresUsersRepository = usersRepository;
     }
 
@@ -55,8 +55,8 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
     }
 
     @Override
-    public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
-        var dbInvitationCodes = IntStream.range(0, 10)
+    public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
+        var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new PostgresDbInvitation(
                                 defaultUser.getUsername(),
@@ -64,6 +64,6 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                         )
                 )
                 .toList();
-        this.postgresInvitationsRepository.saveAll(dbInvitationCodes);
+        this.postgresInvitationsRepository.saveAll(invitations);
     }
 }

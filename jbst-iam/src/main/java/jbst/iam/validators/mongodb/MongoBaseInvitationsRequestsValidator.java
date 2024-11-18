@@ -9,11 +9,11 @@ import jbst.foundation.domain.properties.JbstProperties;
 public class MongoBaseInvitationsRequestsValidator extends AbstractBaseInvitationsRequestsValidator {
 
     public MongoBaseInvitationsRequestsValidator(
-            MongoInvitationsRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationsRepository,
             JbstProperties jbstProperties
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 jbstProperties
         );
     }

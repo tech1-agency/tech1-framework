@@ -32,9 +32,9 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
             this.essenceConstructor.addDefaultUsers();
         }
 
-        var invitationCodes = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
-        LOGGER.info("{} Essence feature 'invitations' — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitationCodes.isEnabled()));
-        if (invitationCodes.isEnabled()) {
+        var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
+        LOGGER.info("{} Essence feature 'invitations' — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitations.isEnabled()));
+        if (invitations.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitations();
         }
 

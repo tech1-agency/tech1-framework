@@ -54,11 +54,11 @@ public class BaseSuperadminResource {
     }
 
     // =================================================================================================================
-    // Invitation Codes
+    // Invitations
     // =================================================================================================================
 
     @GetMapping("/invitations/unused")
-    public List<ResponseInvitation> getUnusedInvitationCodes() {
+    public List<ResponseInvitation> getUnusedInvitations() {
         return this.baseSuperadminService.findUnused();
     }
 

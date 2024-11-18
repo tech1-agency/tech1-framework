@@ -16,12 +16,12 @@ public class PostgresBaseRegistrationService extends AbstractBaseRegistrationSer
 
     @Autowired
     public PostgresBaseRegistrationService(
-            PostgresInvitationsRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationsRepository,
             PostgresUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 usersRepository,
                 bCryptPasswordEncoder
         );

@@ -85,7 +85,7 @@ class AbstractEssenceConstructorTest {
                 }
 
                 @Override
-                public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
+                public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
                     abstractMockService().executeInheritedMethod();
                 }
             };

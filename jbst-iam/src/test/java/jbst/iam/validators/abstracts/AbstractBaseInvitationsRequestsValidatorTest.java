@@ -102,7 +102,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(entityNotFound("Invitation code", invitationId.value()));
+                .hasMessage(entityNotFound("Invitation", invitationId.value()));
         verify(this.invitationsRepository).isPresent(invitationId);
     }
 
@@ -120,7 +120,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         // Assert
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage(entityAccessDenied("Invitation code", invitationId.value()));
+                .hasMessage(entityAccessDenied("Invitation", invitationId.value()));
         verify(this.invitationsRepository).isPresent(invitationId);
     }
 

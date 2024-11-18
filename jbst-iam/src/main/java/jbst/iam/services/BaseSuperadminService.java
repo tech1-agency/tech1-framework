@@ -18,7 +18,7 @@ public interface BaseSuperadminService {
     void resetServerBy(JwtUser user);
 
     // =================================================================================================================
-    // Invitation Codes
+    // Invitations
     // =================================================================================================================
 
     List<ResponseInvitation> findUnused();

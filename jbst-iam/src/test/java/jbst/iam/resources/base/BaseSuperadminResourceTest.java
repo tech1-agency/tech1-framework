@@ -97,7 +97,7 @@ class BaseSuperadminResourceTest extends TestRunnerResources1 {
     }
 
     @Test
-    void getUnusedInvitationCodesTest() throws Exception {
+    void getUnusedInvitationsTest() throws Exception {
         // Arrange
         var codes = list345(ResponseInvitation.class);
         when(this.baseSuperadminService.findUnused()).thenReturn(codes);

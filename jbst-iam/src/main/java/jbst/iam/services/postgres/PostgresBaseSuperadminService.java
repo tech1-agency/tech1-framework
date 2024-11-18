@@ -18,14 +18,14 @@ public class PostgresBaseSuperadminService extends AbstractBaseSuperadminService
     public PostgresBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
-            PostgresInvitationsRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationsRepository,
             PostgresUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {
         super(
                 incidentPublisher,
                 sessionRegistry,
-                invitationCodesRepository,
+                invitationsRepository,
                 usersSessionsRepository,
                 abstractSuperAdminResetServerTask
         );

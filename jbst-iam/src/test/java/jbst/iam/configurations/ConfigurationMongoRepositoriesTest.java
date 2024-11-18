@@ -38,7 +38,7 @@ class ConfigurationMongoRepositoriesTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        MongoInvitationsRepository invitationCodeRepository() {
+        MongoInvitationsRepository invitationsRepository() {
             return mock(MongoInvitationsRepository.class);
         }
 

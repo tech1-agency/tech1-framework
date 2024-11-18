@@ -13,11 +13,11 @@ public class PostgresBaseInvitationsRequestsValidator extends AbstractBaseInvita
 
     @Autowired
     public PostgresBaseInvitationsRequestsValidator(
-            PostgresInvitationsRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationsRepository,
             JbstProperties jbstProperties
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 jbstProperties
         );
     }

@@ -15,13 +15,13 @@ public class MongoBaseRegistrationRequestsValidator extends AbstractBaseRegistra
     public MongoBaseRegistrationRequestsValidator(
             SecurityJwtPublisher securityJwtPublisher,
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            MongoInvitationsRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationsRepository,
             MongoUsersRepository usersRepository
     ) {
         super(
                 securityJwtPublisher,
                 securityJwtIncidentPublisher,
-                invitationCodesRepository,
+                invitationsRepository,
                 usersRepository
         );
     }

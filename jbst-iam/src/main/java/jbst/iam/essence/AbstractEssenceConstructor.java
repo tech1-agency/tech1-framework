@@ -48,10 +48,10 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. No invitation codes in database. Username: `{}`", username);
-                this.saveInvitationCodes(defaultUser, authorities);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. No invitations in database. Username: `{}`", username);
+                this.saveInvitations(defaultUser, authorities);
             } else {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. Invitation codes are already saved in database. Username: `{}`", username);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. Invitations are already saved in database. Username: `{}`", username);
             }
         });
     }

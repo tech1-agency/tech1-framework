@@ -53,7 +53,7 @@ class AbstractBaseSuperadminServiceTest {
         }
 
         @Bean
-        InvitationsRepository invitationCodesRepository() {
+        InvitationsRepository invitationsRepository() {
             return mock(InvitationsRepository.class);
         }
 
@@ -85,11 +85,11 @@ class AbstractBaseSuperadminServiceTest {
         }
 
         @Bean
-        AbstractBaseSuperadminService abstractBaseInvitationCodesService() {
+        AbstractBaseSuperadminService abstractBaseSuperadminService() {
             return new AbstractBaseSuperadminService(
                     this.incidentPublisher(),
                     this.sessionRegistry(),
-                    this.invitationCodesRepository(),
+                    this.invitationsRepository(),
                     this.usersSessionsRepository(),
                     this.abstractSuperAdminResetServerTask()
             ) {};
@@ -156,15 +156,15 @@ class AbstractBaseSuperadminServiceTest {
     @Test
     void findUnusedTest() {
         // Arrange
-        var invitationCodes = list345(ResponseInvitation.class);
-        when(this.invitationsRepository.findUnused()).thenReturn(invitationCodes);
+        var invitations = list345(ResponseInvitation.class);
+        when(this.invitationsRepository.findUnused()).thenReturn(invitations);
 
         // Act
         var unused = this.componentUnderTest.findUnused();
 
         // Assert
         verify(this.invitationsRepository).findUnused();
-        assertThat(unused).isEqualTo(invitationCodes);
+        assertThat(unused).isEqualTo(invitations);
     }
 
     @Test

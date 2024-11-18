@@ -29,7 +29,7 @@ class PostgresBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        PostgresInvitationsRepository invitationCodeRepository() {
+        PostgresInvitationsRepository invitationsRepository() {
             return mock(PostgresInvitationsRepository.class);
         }
 
@@ -46,14 +46,14 @@ class PostgresBaseRegistrationServiceTest {
         @Bean
         PostgresBaseRegistrationService registrationService() {
             return new PostgresBaseRegistrationService(
-                    this.invitationCodeRepository(),
+                    this.invitationsRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
             ) {};
         }
     }
 
-    private final PostgresInvitationsRepository invitationCodesRepository;
+    private final PostgresInvitationsRepository invitationsRepository;
     private final PostgresUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -62,7 +62,7 @@ class PostgresBaseRegistrationServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository,
                 this.bCryptPasswordEncoder
         );
@@ -71,7 +71,7 @@ class PostgresBaseRegistrationServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository,
                 this.bCryptPasswordEncoder
         );

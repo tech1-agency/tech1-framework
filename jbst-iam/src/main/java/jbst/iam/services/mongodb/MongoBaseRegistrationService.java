@@ -12,12 +12,12 @@ public class MongoBaseRegistrationService extends AbstractBaseRegistrationServic
 
     @Autowired
     public MongoBaseRegistrationService(
-            MongoInvitationsRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationsRepository,
             MongoUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 usersRepository,
                 bCryptPasswordEncoder
         );

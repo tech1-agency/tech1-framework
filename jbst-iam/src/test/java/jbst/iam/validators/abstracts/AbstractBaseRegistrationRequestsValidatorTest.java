@@ -117,7 +117,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     }
 
     @Test
-    void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
+    void validateRegistrationRequest1InvitationAlreadyUsedTest() {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         var invitation = Invitation.random();
@@ -128,7 +128,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Invitation code", invitation.value());
+        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Invitation", invitation.value());
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);
@@ -153,7 +153,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     }
 
     @Test
-    void validateRegistrationRequest1NoInvitationCodeTest() {
+    void validateRegistrationRequest1NoInvitationTest() {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         var username = request.username();
@@ -165,7 +165,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityNotFound("Invitation code", invitation);
+        var exception = ExceptionsMessagesUtility.entityNotFound("Invitation", invitation);
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);
@@ -188,7 +188,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     }
 
     @Test
-    void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
+    void validateRegistrationRequest1InvitationPresentTest() throws RegistrationException {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);

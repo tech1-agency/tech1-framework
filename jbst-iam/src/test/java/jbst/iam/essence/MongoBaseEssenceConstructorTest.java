@@ -59,7 +59,7 @@ class MongoBaseEssenceConstructorTest {
         }
     }
 
-    private final MongoInvitationsRepository invitationCodesRepository;
+    private final MongoInvitationsRepository invitationsRepository;
     private final MongoUsersRepository usersRepository;
 
     private final EssenceConstructor componentUnderTest;
@@ -67,7 +67,7 @@ class MongoBaseEssenceConstructorTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -75,7 +75,7 @@ class MongoBaseEssenceConstructorTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -99,17 +99,17 @@ class MongoBaseEssenceConstructorTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    void saveInvitationCodesTest() {
+    void saveInvitationsTest() {
         // Arrange
         var defaultUser = entity(DefaultUser.class);
         var authorities = set345(SimpleGrantedAuthority.class);
 
         // Act
-        this.componentUnderTest.saveInvitationCodes(defaultUser, authorities);
+        this.componentUnderTest.saveInvitations(defaultUser, authorities);
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);
-        verify(this.invitationCodesRepository).saveAll(userAC.capture());
+        verify(this.invitationsRepository).saveAll(userAC.capture());
         assertThat(userAC.getValue()).hasSize(10);
     }
 }

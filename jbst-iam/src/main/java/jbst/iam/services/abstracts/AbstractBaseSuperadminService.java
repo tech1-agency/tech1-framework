@@ -49,7 +49,7 @@ public abstract class AbstractBaseSuperadminService implements BaseSuperadminSer
     }
 
     // =================================================================================================================
-    // Invitation Codes
+    // Invitations
     // =================================================================================================================
     @Override
     public List<ResponseInvitation> findUnused() {

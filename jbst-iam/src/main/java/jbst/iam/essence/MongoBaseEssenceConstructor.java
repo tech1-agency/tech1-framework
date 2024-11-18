@@ -21,16 +21,16 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
     protected final MongoUsersRepository mongoUsersRepository;
 
     public MongoBaseEssenceConstructor(
-            MongoInvitationsRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationsRepository,
             MongoUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 usersRepository,
                 jbstProperties
         );
-        this.mongoInvitationsRepository = invitationCodesRepository;
+        this.mongoInvitationsRepository = invitationsRepository;
         this.mongoUsersRepository = usersRepository;
     }
 
@@ -55,8 +55,8 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
     }
 
     @Override
-    public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
-        var dbInvitationCodes = IntStream.range(0, 10)
+    public void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
+        var invitations = IntStream.range(0, 10)
                 .mapToObj(i ->
                         new MongoDbInvitation(
                                 defaultUser.getUsername(),
@@ -64,6 +64,6 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                         )
                 )
                 .toList();
-        this.mongoInvitationsRepository.saveAll(dbInvitationCodes);
+        this.mongoInvitationsRepository.saveAll(invitations);
     }
 }

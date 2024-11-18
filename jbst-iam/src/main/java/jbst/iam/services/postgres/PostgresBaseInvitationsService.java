@@ -13,11 +13,11 @@ public class PostgresBaseInvitationsService extends AbstractBaseInvitationsServi
 
     @Autowired
     public PostgresBaseInvitationsService(
-            PostgresInvitationsRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationsRepository,
             JbstProperties jbstProperties
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 jbstProperties
         );
     }

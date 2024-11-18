@@ -41,7 +41,7 @@ public class TestConfigurationValidators {
     // Repositories
     // =================================================================================================================
     @Bean
-    InvitationsRepository invitationCodeRepository() {
+    InvitationsRepository invitationsRepository() {
         return mock(InvitationsRepository.class);
     }
 

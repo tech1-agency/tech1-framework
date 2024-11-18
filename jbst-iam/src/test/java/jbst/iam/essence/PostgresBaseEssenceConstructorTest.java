@@ -105,7 +105,7 @@ class PostgresBaseEssenceConstructorTest {
         var authorities = set345(SimpleGrantedAuthority.class);
 
         // Act
-        this.componentUnderTest.saveInvitationCodes(defaultUser, authorities);
+        this.componentUnderTest.saveInvitations(defaultUser, authorities);
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);

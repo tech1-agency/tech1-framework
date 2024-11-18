@@ -65,8 +65,8 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitations = list345(ResponseInvitation.class);
-        var responseInvitationCodes = new ResponseInvitations(authorities, invitations);
-        when(this.baseInvitationsService.findByOwner(owner)).thenReturn(responseInvitationCodes);
+        var responseInvitations = new ResponseInvitations(authorities, invitations);
+        when(this.baseInvitationsService.findByOwner(owner)).thenReturn(responseInvitations);
 
         // Act
         this.mvc.perform(get("/invitations"))

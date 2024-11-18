@@ -11,11 +11,11 @@ public class MongoBaseInvitationsService extends AbstractBaseInvitationsService 
 
     @Autowired
     public MongoBaseInvitationsService(
-            MongoInvitationsRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationsRepository,
             JbstProperties jbstProperties
     ) {
         super(
-                invitationCodesRepository,
+                invitationsRepository,
                 jbstProperties
         );
     }

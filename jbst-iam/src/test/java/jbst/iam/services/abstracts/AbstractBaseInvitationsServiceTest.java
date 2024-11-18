@@ -40,14 +40,14 @@ class AbstractBaseInvitationsServiceTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        InvitationsRepository invitationCodesRepository() {
+        InvitationsRepository invitationsRepository() {
             return mock(InvitationsRepository.class);
         }
 
         @Bean
-        AbstractBaseInvitationsService abstractBaseInvitationCodesService() {
+        AbstractBaseInvitationsService abstractBaseInvitationsService() {
             return new AbstractBaseInvitationsService(
-                    this.invitationCodesRepository(),
+                    this.invitationsRepository(),
                     this.jbstProperties
             ) {};
         }
@@ -77,40 +77,40 @@ class AbstractBaseInvitationsServiceTest {
         // Arrange
         var owner = Username.random();
 
-        var invitationCode1 = ResponseInvitation.random(owner, Username.of("user2"));
-        var invitationCode2 = ResponseInvitation.random(owner, Username.of("user1"));
-        var invitationCode3 = ResponseInvitation.random(owner);
-        var invitationCode4 = ResponseInvitation.random(owner);
-        var invitationCode5 = ResponseInvitation.random(owner, Username.of("user5"));
-        var invitationCode6 = ResponseInvitation.random(owner);
+        var invitation1 = ResponseInvitation.random(owner, Username.of("user2"));
+        var invitation2 = ResponseInvitation.random(owner, Username.of("user1"));
+        var invitation3 = ResponseInvitation.random(owner);
+        var invitation4 = ResponseInvitation.random(owner);
+        var invitation5 = ResponseInvitation.random(owner, Username.of("user5"));
+        var invitation6 = ResponseInvitation.random(owner);
 
-        var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
-        when(this.invitationsRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);
+        var invitations = asList(invitation1, invitation2, invitation3, invitation4, invitation5, invitation6);
+        when(this.invitationsRepository.findResponseCodesByOwner(owner)).thenReturn(invitations);
 
         // Act
-        var responseInvitationCodes = this.componentUnderTest.findByOwner(owner);
+        var responseInvitations = this.componentUnderTest.findByOwner(owner);
 
         // Assert
         verify(this.invitationsRepository).findResponseCodesByOwner(owner);
-        assertThat(responseInvitationCodes.invitations().stream()
+        assertThat(responseInvitations.invitations().stream()
                         .limit(3)
                         .map(ResponseInvitation::value)
                         .collect(Collectors.toSet())
         ).containsExactlyInAnyOrder(
-                invitationCode3.value(),
-                invitationCode4.value(),
-                invitationCode6.value()
+                invitation3.value(),
+                invitation4.value(),
+                invitation6.value()
         );
-        assertThat(responseInvitationCodes.invitations().stream()
+        assertThat(responseInvitations.invitations().stream()
                 .skip(3)
                 .map(ResponseInvitation::value)
                 .collect(Collectors.toSet())
         ).containsExactlyInAnyOrder(
-                invitationCode1.value(),
-                invitationCode2.value(),
-                invitationCode5.value()
+                invitation1.value(),
+                invitation2.value(),
+                invitation5.value()
         );
-        assertThat(responseInvitationCodes.authorities()).isEqualTo(this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
+        assertThat(responseInvitations.authorities()).isEqualTo(this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
     }
 
     @Test

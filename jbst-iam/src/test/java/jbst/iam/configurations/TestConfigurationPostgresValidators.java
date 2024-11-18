@@ -45,7 +45,7 @@ public class TestConfigurationPostgresValidators {
     // Repositories
     // =================================================================================================================
     @Bean
-    PostgresInvitationsRepository invitationCodeRepository() {
+    PostgresInvitationsRepository invitationsRepository() {
         return mock(PostgresInvitationsRepository.class);
     }
 

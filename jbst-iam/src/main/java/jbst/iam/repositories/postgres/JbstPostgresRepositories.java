@@ -1,7 +1,7 @@
 package jbst.iam.repositories.postgres;
 
 public record JbstPostgresRepositories(
-        PostgresInvitationsRepository invitationCodeRepository,
+        PostgresInvitationsRepository invitationsRepository,
         PostgresUsersRepository userRepository,
         PostgresUsersSessionsRepository userSessionRepository
 ) {

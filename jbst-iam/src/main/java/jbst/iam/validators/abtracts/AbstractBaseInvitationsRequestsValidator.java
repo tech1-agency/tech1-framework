@@ -36,10 +36,10 @@ public abstract class AbstractBaseInvitationsRequestsValidator implements BaseIn
     public void validateDeleteById(Username username, InvitationId invitationId) {
         var tuplePresence = this.invitationsRepository.isPresent(invitationId);
         if (!tuplePresence.present()) {
-            throw new IllegalArgumentException(entityNotFound("Invitation code", invitationId.value()));
+            throw new IllegalArgumentException(entityNotFound("Invitation", invitationId.value()));
         }
         if (!username.equals(tuplePresence.value().owner())) {
-            throw new AccessDeniedException(entityAccessDenied("Invitation code", invitationId.value()));
+            throw new AccessDeniedException(entityAccessDenied("Invitation", invitationId.value()));
         }
     }
 }

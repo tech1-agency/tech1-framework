@@ -8,5 +8,5 @@ import java.util.Set;
 
 public interface EssenceConstructor {
     long saveDefaultUsers(List<DefaultUser> defaultUsers);
-    void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities);
+    void saveInvitations(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities);
 }

@@ -35,7 +35,7 @@ class ConfigurationPostgresRepositoriesTest {
     static class ContextConfiguration {
 
         @Bean
-        PostgresInvitationsRepository invitationCodeRepository() {
+        PostgresInvitationsRepository invitationsRepository() {
             return mock(PostgresInvitationsRepository.class);
         }
 
@@ -52,7 +52,7 @@ class ConfigurationPostgresRepositoriesTest {
         @Bean
         ConfigurationPostgresRepositories applicationPostgresRepositories() {
             return new ConfigurationPostgresRepositories(
-                    this.invitationCodeRepository(),
+                    this.invitationsRepository(),
                     this.usersRepository(),
                     this.usersSessionsRepository()
             );

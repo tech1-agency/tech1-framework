@@ -34,7 +34,7 @@ class AbstractBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        InvitationsRepository invitationCodeRepository() {
+        InvitationsRepository invitationsRepository() {
             return mock(InvitationsRepository.class);
         }
 
@@ -51,7 +51,7 @@ class AbstractBaseRegistrationServiceTest {
         @Bean
         AbstractBaseRegistrationService registrationService() {
             return new AbstractBaseRegistrationService(
-                    this.invitationCodeRepository(),
+                    this.invitationsRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
             ) {};
@@ -96,8 +96,8 @@ class AbstractBaseRegistrationServiceTest {
         when(this.invitationsRepository.findByValueAsAny(requestUserRegistration1.invitation())).thenReturn(invitation);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var invitationCodeAC1 = ArgumentCaptor.forClass(Invitation.class);
-        var invitationCodeAC2 = ArgumentCaptor.forClass(Invitation.class);
+        var invitationAC1 = ArgumentCaptor.forClass(Invitation.class);
+        var invitationAC2 = ArgumentCaptor.forClass(Invitation.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);
@@ -105,9 +105,9 @@ class AbstractBaseRegistrationServiceTest {
         // Assert
         verify(this.invitationsRepository).findByValueAsAny(requestUserRegistration1.invitation());
         verify(this.bCryptPasswordEncoder).encode(requestUserRegistration1.password().value());
-        verify(this.usersRepository).saveAs(eq(requestUserRegistration1), eq(Password.of(hashPassword)), invitationCodeAC1.capture());
-        assertThat(invitationCodeAC1.getValue().invited()).isEqualTo(requestUserRegistration1.username());
-        verify(this.invitationsRepository).saveAs(invitationCodeAC2.capture());
-        assertThat(invitationCodeAC2.getValue().invited()).isEqualTo(requestUserRegistration1.username());
+        verify(this.usersRepository).saveAs(eq(requestUserRegistration1), eq(Password.of(hashPassword)), invitationAC1.capture());
+        assertThat(invitationAC1.getValue().invited()).isEqualTo(requestUserRegistration1.username());
+        verify(this.invitationsRepository).saveAs(invitationAC2.capture());
+        assertThat(invitationAC2.getValue().invited()).isEqualTo(requestUserRegistration1.username());
     }
 }

@@ -21,11 +21,11 @@ public abstract class AbstractBaseInvitationsService implements BaseInvitationsS
 
     @Override
     public ResponseInvitations findByOwner(Username owner) {
-        var invitationCodes = this.invitationsRepository.findResponseCodesByOwner(owner);
-        invitationCodes.sort(ResponseInvitation.INVITATION);
+        var invitations = this.invitationsRepository.findResponseCodesByOwner(owner);
+        invitations.sort(ResponseInvitation.INVITATION);
         return new ResponseInvitations(
                 this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
-                invitationCodes
+                invitations
         );
     }
 

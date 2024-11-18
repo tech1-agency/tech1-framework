@@ -22,7 +22,7 @@ public class ClassicStateGroupedMappings {
     private final Map<ClassicState, Long> values;
     private final boolean empty;
 
-    public static ClassicStateGroupedMappings testsHardcoded() {
+    public static ClassicStateGroupedMappings hardcoded() {
         return new ClassicStateGroupedMappings(
                 List.of(
                         ClassicState.CREATED,

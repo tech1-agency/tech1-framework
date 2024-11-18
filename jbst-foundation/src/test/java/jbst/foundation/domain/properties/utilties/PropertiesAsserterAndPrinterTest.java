@@ -29,7 +29,7 @@ class PropertiesAsserterAndPrinterTest {
     void notUsedPropertiesConfigsTest() {
         // Arrange
         var notUsedPropertiesConfigs = new NotUsedPropertiesConfigs(
-                new ScheduledJob(true, SchedulerConfiguration.testsHardcoded()),
+                new ScheduledJob(true, SchedulerConfiguration.hardcoded()),
                 new SpringServer(8080),
                 new SpringLogging("logback-test.xml")
         );

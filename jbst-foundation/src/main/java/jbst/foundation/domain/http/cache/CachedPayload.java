@@ -13,12 +13,12 @@ public record CachedPayload(@NotNull String value) {
         return new CachedPayload(value);
     }
 
-    public static CachedPayload random() {
-        return of(randomString());
+    public static CachedPayload hardcoded() {
+        return of("{}");
     }
 
-    public static CachedPayload testsHardcoded() {
-        return of("{}");
+    public static CachedPayload random() {
+        return of(randomString());
     }
 
     @JsonValue

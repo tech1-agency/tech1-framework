@@ -26,7 +26,7 @@ public class TupleReadableAmount {
         return new TupleReadableAmount(scale(ZERO, scale));
     }
 
-    public static TupleReadableAmount testsHardcoded() {
+    public static TupleReadableAmount hardcoded() {
         return new TupleReadableAmount(new BigDecimal("125.555"));
     }
 

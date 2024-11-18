@@ -15,7 +15,7 @@ import static java.util.Objects.isNull;
 public class UserAgentHeader {
     private final String value;
 
-    public static UserAgentHeader testsHardcoded() {
+    public static UserAgentHeader hardcoded() {
         return new UserAgentHeader("Chrome, macOS on Desktop");
     }
 

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -15,7 +14,7 @@ public class SpringServer extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Integer port;
 
-    public static SpringServer testsHardcoded() {
+    public static SpringServer hardcoded() {
         return new SpringServer(8080);
     }
 

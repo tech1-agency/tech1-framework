@@ -9,7 +9,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -17,7 +16,7 @@ public class GeoCountryFlagsConfigs extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
 
-    public static GeoCountryFlagsConfigs testsHardcoded() {
+    public static GeoCountryFlagsConfigs hardcoded() {
         return new GeoCountryFlagsConfigs(true);
     }
 
@@ -26,7 +25,7 @@ public class GeoCountryFlagsConfigs extends AbstractTogglePropertyConfigs {
     }
 
     public static GeoCountryFlagsConfigs enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static GeoCountryFlagsConfigs disabled() {

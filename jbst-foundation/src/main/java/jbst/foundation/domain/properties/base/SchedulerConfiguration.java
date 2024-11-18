@@ -12,7 +12,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 import static jbst.foundation.utilities.random.RandomUtility.randomTimeUnit;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -24,7 +23,7 @@ public class SchedulerConfiguration extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final TimeUnit unit;
 
-    public static SchedulerConfiguration testsHardcoded() {
+    public static SchedulerConfiguration hardcoded() {
         return new SchedulerConfiguration(30L, 30L, SECONDS);
     }
 

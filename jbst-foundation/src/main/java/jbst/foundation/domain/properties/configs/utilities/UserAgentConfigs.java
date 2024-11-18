@@ -9,7 +9,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -17,7 +16,7 @@ public class UserAgentConfigs extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
 
-    public static UserAgentConfigs testsHardcoded() {
+    public static UserAgentConfigs hardcoded() {
         return new UserAgentConfigs(true);
     }
 
@@ -26,7 +25,7 @@ public class UserAgentConfigs extends AbstractTogglePropertyConfigs {
     }
 
     public static UserAgentConfigs enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static UserAgentConfigs disabled() {

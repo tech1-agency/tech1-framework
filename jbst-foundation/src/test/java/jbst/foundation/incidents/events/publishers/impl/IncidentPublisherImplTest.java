@@ -73,7 +73,7 @@ class IncidentPublisherImplTest {
     @Test
     void publishResetServerStartedTest() {
         // Arrange
-        var incident = IncidentSystemResetServerStarted.testsHardcoded();
+        var incident = IncidentSystemResetServerStarted.hardcoded();
 
         // Act
         this.componentUnderTest.publishResetServerStarted(incident);
@@ -85,7 +85,7 @@ class IncidentPublisherImplTest {
     @Test
     void publishResetServerCompletedTest() {
         // Arrange
-        var incident = IncidentSystemResetServerCompleted.testsHardcoded();
+        var incident = IncidentSystemResetServerCompleted.hardcoded();
 
         // Act
         this.componentUnderTest.publishResetServerCompleted(incident);

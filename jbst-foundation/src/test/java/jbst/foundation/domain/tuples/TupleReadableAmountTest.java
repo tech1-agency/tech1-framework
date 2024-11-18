@@ -16,7 +16,7 @@ class TupleReadableAmountTest extends AbstractFolderSerializationRunner {
     private static Stream<Arguments> serializationTest() {
         return Stream.of(
                 Arguments.of(TupleReadableAmount.zero(3), "tuple-readable-amount-1.json"),
-                Arguments.of(TupleReadableAmount.testsHardcoded(), "tuple-readable-amount-2.json"),
+                Arguments.of(TupleReadableAmount.hardcoded(), "tuple-readable-amount-2.json"),
                 Arguments.of(
                         new TupleReadableAmount(new BigDecimal("0.005"), false, true),
                         "tuple-readable-amount-3.json"

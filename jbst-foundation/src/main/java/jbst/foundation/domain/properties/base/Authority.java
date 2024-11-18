@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +15,7 @@ public class Authority extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String value;
 
-    public static Authority testsHardcoded() {
+    public static Authority hardcoded() {
         return new Authority("user");
     }
 

@@ -17,7 +17,7 @@ public class RecipientsConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final List<String> to;
 
-    public static RecipientsConfigs testsHardcoded() {
+    public static RecipientsConfigs hardcoded() {
         return new RecipientsConfigs(
                 List.of(
                         "test1@" + JbstConstants.Domains.HARDCODED,

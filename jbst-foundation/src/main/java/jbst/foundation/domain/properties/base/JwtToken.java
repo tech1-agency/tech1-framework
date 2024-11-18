@@ -27,7 +27,7 @@ public class JwtToken extends AbstractPropertyConfigs {
     @NonMandatoryProperty
     private String headerKey;
 
-    public static JwtToken testsHardcoded() {
+    public static JwtToken hardcoded() {
         return new JwtToken(new TimeAmount(12L, HOURS), "cookieJWT", null);
     }
 

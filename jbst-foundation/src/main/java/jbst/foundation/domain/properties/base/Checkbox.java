@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +15,7 @@ public class Checkbox extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
 
-    public static Checkbox testsHardcoded() {
+    public static Checkbox hardcoded() {
         return new Checkbox(true);
     }
 
@@ -25,7 +24,7 @@ public class Checkbox extends AbstractTogglePropertyConfigs {
     }
 
     public static Checkbox enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static Checkbox disabled() {

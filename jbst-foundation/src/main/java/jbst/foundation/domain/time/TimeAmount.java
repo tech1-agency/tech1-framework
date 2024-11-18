@@ -18,7 +18,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreate
 
 public record TimeAmount(long amount, ChronoUnit unit) {
 
-    public static TimeAmount testsHardcoded() {
+    public static TimeAmount hardcoded() {
         return new TimeAmount(30L, ChronoUnit.SECONDS);
     }
 

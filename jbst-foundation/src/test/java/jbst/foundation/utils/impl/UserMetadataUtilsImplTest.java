@@ -74,12 +74,12 @@ class UserMetadataUtilsImplTest {
         // Act
         var metadata = this.componentUnderTest.getUserRequestMetadataProcessed(
                 IPAddress.localhost(),
-                UserAgentHeader.testsHardcoded()
+                UserAgentHeader.hardcoded()
         );
 
         // Assert
         assertThat(metadata.getStatus()).isEqualTo(Status.COMPLETED);
         verify(this.geoLocationFacadeUtility).getGeoLocation(IPAddress.localhost());
-        verify(this.userAgentDetailsUtility).getUserAgentDetails(UserAgentHeader.testsHardcoded());
+        verify(this.userAgentDetailsUtility).getUserAgentDetails(UserAgentHeader.hardcoded());
     }
 }

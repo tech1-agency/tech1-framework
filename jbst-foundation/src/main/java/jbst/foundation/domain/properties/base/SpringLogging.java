@@ -16,7 +16,7 @@ public class SpringLogging extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String config;
 
-    public static SpringLogging testsHardcoded() {
+    public static SpringLogging hardcoded() {
         return new SpringLogging("logback-test.xml");
     }
 

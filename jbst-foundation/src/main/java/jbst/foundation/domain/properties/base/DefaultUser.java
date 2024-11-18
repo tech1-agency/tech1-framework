@@ -37,7 +37,7 @@ public class DefaultUser extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Set<String> authorities;
 
-    public static DefaultUser testsHardcoded() {
+    public static DefaultUser hardcoded() {
         return new DefaultUser(
                 Username.hardcoded(),
                 Password.hardcoded(),

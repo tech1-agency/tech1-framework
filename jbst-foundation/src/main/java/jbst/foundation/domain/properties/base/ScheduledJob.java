@@ -9,7 +9,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,8 +18,8 @@ public class ScheduledJob extends AbstractTogglePropertyConfigs {
     @MandatoryToggleProperty
     private SchedulerConfiguration configuration;
 
-    public static ScheduledJob testsHardcoded() {
-        return new ScheduledJob(true, SchedulerConfiguration.testsHardcoded());
+    public static ScheduledJob hardcoded() {
+        return new ScheduledJob(true, SchedulerConfiguration.hardcoded());
     }
 
     public static ScheduledJob random() {
@@ -28,7 +27,7 @@ public class ScheduledJob extends AbstractTogglePropertyConfigs {
     }
 
     public static ScheduledJob enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
 

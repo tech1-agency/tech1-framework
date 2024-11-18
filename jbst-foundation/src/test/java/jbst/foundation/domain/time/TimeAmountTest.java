@@ -14,7 +14,7 @@ import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeAmountTest extends AbstractSerializationDeserializationRunner {
-    private static final TimeAmount TIME_AMOUNT = TimeAmount.testsHardcoded();
+    private static final TimeAmount TIME_AMOUNT = TimeAmount.hardcoded();
 
     private static Stream<Arguments> toTest() {
         return Stream.of(

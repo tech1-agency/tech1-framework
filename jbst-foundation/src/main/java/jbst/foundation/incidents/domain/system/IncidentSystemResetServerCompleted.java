@@ -8,7 +8,7 @@ public record IncidentSystemResetServerCompleted(
         Username username
 ) implements AbstractIncident {
 
-    public static IncidentSystemResetServerCompleted testsHardcoded() {
+    public static IncidentSystemResetServerCompleted hardcoded() {
         return new IncidentSystemResetServerCompleted(
                 Username.hardcoded()
         );

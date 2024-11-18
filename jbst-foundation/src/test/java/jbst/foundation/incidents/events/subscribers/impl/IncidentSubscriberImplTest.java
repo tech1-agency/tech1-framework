@@ -63,7 +63,7 @@ class IncidentSubscriberImplTest {
     @Test
     void onEventIncidentSystemResetServerStartedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = IncidentSystemResetServerStarted.testsHardcoded();
+        var incidentSystemResetServerStarted = IncidentSystemResetServerStarted.hardcoded();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);
@@ -82,7 +82,7 @@ class IncidentSubscriberImplTest {
     @Test
     void onEventIncidentSystemResetServerCompletedTest() {
         // Arrange
-        var incidentSystemResetServerStarted = IncidentSystemResetServerCompleted.testsHardcoded();
+        var incidentSystemResetServerStarted = IncidentSystemResetServerCompleted.hardcoded();
 
         // Act
         this.componentUnderTest.onEvent(incidentSystemResetServerStarted);

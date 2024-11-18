@@ -15,7 +15,7 @@ public record IPAddress(@NotNull String value) {
         return new IPAddress("127.0.0.1");
     }
 
-    public static IPAddress testsHardcoded() {
+    public static IPAddress hardcoded() {
         return new IPAddress("8.8.8.8");
     }
 

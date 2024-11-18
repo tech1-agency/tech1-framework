@@ -12,7 +12,6 @@ import static java.time.temporal.ChronoUnit.HOURS;
 import static jbst.foundation.utilities.random.RandomUtility.randomChronoUnit;
 import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,7 +21,7 @@ public class TimeAmount extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final ChronoUnit unit;
 
-    public static TimeAmount testsHardcoded() {
+    public static TimeAmount hardcoded() {
         return new TimeAmount(12L, HOURS);
     }
 

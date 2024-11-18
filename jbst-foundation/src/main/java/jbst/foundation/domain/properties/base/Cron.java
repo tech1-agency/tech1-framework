@@ -10,7 +10,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
-// Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,7 +21,7 @@ public class Cron extends AbstractTogglePropertyConfigs {
     @MandatoryToggleProperty
     private String zoneId;
 
-    public static Cron testsHardcoded() {
+    public static Cron hardcoded() {
         return new Cron(true, "*/30 * * * * *", ZoneIdsConstants.UKRAINE.getId());
     }
 
@@ -31,7 +30,7 @@ public class Cron extends AbstractTogglePropertyConfigs {
     }
 
     public static Cron enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static Cron disabled() {

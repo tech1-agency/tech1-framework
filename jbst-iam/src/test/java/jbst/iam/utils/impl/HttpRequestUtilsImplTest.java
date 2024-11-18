@@ -110,7 +110,7 @@ class HttpRequestUtilsImplTest {
         // Arrange
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");
-        when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.testsHardcoded());
+        when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.hardcoded());
         when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login");
 
         // Act

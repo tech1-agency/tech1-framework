@@ -7,6 +7,12 @@ public record SpringBootActuatorHealth(
         @JsonInclude(JsonInclude.Include.NON_NULL) Status status
 ) {
 
+    public static SpringBootActuatorHealth hardcoded() {
+        return new SpringBootActuatorHealth(
+                Status.UP
+        );
+    }
+
     public static SpringBootActuatorHealth unknown() {
         return new SpringBootActuatorHealth(
                 Status.UNKNOWN
@@ -15,11 +21,5 @@ public record SpringBootActuatorHealth(
 
     public static SpringBootActuatorHealth offline() {
         return unknown();
-    }
-
-    public static SpringBootActuatorHealth testsHardcoded() {
-        return new SpringBootActuatorHealth(
-                Status.UP
-        );
     }
 }

@@ -16,8 +16,8 @@ public record EventAuthenticationLoginFailure(
         return new EventAuthenticationLoginFailure(
                 Username.hardcoded(),
                 Password.hardcoded(),
-                IPAddress.testsHardcoded(),
-                UserAgentHeader.testsHardcoded()
+                IPAddress.hardcoded(),
+                UserAgentHeader.hardcoded()
         );
     }
 }

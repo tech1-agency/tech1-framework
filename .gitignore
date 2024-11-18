@@ -19,8 +19,7 @@ logs/
 .scannerwork
 
 # GEO database: java
-tech1-framework-iam-server/src/main/resources/GeoLite2-City.mmdb
+jbst-iam-server/src/main/resources/GeoLite2-City.mmdb
 
 # GEO database: docker
 docker/GeoLite2-City.mmdb
-

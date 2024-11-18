@@ -13,10 +13,10 @@ import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 /**
- * @param git            spring-based
- * @param activeProfiles spring-framework: String[]
- * @param activeProfile  tech1-framework: BaseInfoResource
- * @param maven  tech1-framework: BaseInfoResource
+ * @param git               spring-based
+ * @param activeProfiles    spring-framework: String[]
+ * @param activeProfile     jbst: BaseInfoResource
+ * @param maven             jbst: BaseInfoResource
  */
 public record SpringBootActuatorInfo(
         @JsonInclude(JsonInclude.Include.NON_NULL) SpringBootActuatorInfoGit git,

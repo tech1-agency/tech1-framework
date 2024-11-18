@@ -38,11 +38,11 @@ import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterO
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
 
-    private final MongoInvitationsRepository invitationCodesRepository;
+    private final MongoInvitationsRepository invitationsRepository;
 
     @Override
     public MongoRepository<MongoDbInvitation, String> getMongoRepository() {
-        return this.invitationCodesRepository;
+        return this.invitationsRepository;
     }
 
     @Test
@@ -54,54 +54,54 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
     @Test
     void readIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(MongoDbInvitation.dummies1());
+        var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
 
-        var notExistentInvitationCodeId = entity(InvitationId.class);
-        var notExistentInvitationCode = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
+        var notExistentInvitationId = entity(InvitationId.class);
+        var notExistentInvitation = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
 
-        var savedInvitationCode = saved.get(0);
-        var existentInvitationCodeId = savedInvitationCode.invitationCodeId();
-        var existentInvitationCode = savedInvitationCode.getValue();
+        var savedInvitation = saved.get(0);
+        var existentInvitationId = savedInvitation.invitationId();
+        var existentInvitation = savedInvitation.getValue();
 
         // Act
-        var count = this.invitationCodesRepository.count();
+        var count = this.invitationsRepository.count();
 
         // Assert
         assertThat(count).isEqualTo(6);
-        assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId)).isEqualTo(TuplePresence.present(savedInvitationCode.invitationCode()));
-        assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId)).isEqualTo(TuplePresence.absent());
-        assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user1"))).hasSize(2);
-        assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user2"))).hasSize(3);
-        assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user3"))).hasSize(1);
-        assertThat(this.invitationCodesRepository.findResponseCodesByOwner(Username.of("user5"))).isEmpty();
-        assertThat(this.invitationCodesRepository.findByValueAsAny(notExistentInvitationCode)).isNull();
-        assertThat(this.invitationCodesRepository.findByValueAsAny(existentInvitationCode)).isNotNull();
-        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
-        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
-        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
-        assertThat(this.invitationCodesRepository.countByOwner(Username.of("user5"))).isZero();
-        assertThat(this.invitationCodesRepository.findByInvitedIsNull()).hasSize(5);
-        assertThat(this.invitationCodesRepository.findByInvitedIsNotNull()).hasSize(1);
+        assertThat(this.invitationsRepository.isPresent(existentInvitationId)).isEqualTo(TuplePresence.present(savedInvitation.invitationCode()));
+        assertThat(this.invitationsRepository.isPresent(notExistentInvitationId)).isEqualTo(TuplePresence.absent());
+        assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user1"))).hasSize(2);
+        assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user2"))).hasSize(3);
+        assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user3"))).hasSize(1);
+        assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user5"))).isEmpty();
+        assertThat(this.invitationsRepository.findByValueAsAny(notExistentInvitation)).isNull();
+        assertThat(this.invitationsRepository.findByValueAsAny(existentInvitation)).isNotNull();
+        assertThat(this.invitationsRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
+        assertThat(this.invitationsRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
+        assertThat(this.invitationsRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
+        assertThat(this.invitationsRepository.countByOwner(Username.of("user5"))).isZero();
+        assertThat(this.invitationsRepository.findByInvitedIsNull()).hasSize(5);
+        assertThat(this.invitationsRepository.findByInvitedIsNotNull()).hasSize(1);
     }
 
     @Test
     void findUnusedAndSortingTests() {
         // Arrange
-        this.invitationCodesRepository.saveAll(MongoDbInvitation.dummies2());
+        this.invitationsRepository.saveAll(MongoDbInvitation.dummies2());
 
         // Act
-        var count = this.invitationCodesRepository.count();
+        var count = this.invitationsRepository.count();
 
         // Assert
         assertThat(count).isEqualTo(7);
-        var unused = this.invitationCodesRepository.findUnused();
+        var unused = this.invitationsRepository.findUnused();
         assertThat(unused).hasSize(5);
         assertThat(unused.get(0).value()).isEqualTo("value111");
         assertThat(unused.get(1).value()).isEqualTo("value222");
         assertThat(unused.get(2).value()).isEqualTo("abc");
         assertThat(unused.get(3).value()).isEqualTo("value22");
         assertThat(unused.get(4).value()).isEqualTo("value44");
-        var codes = this.invitationCodesRepository.findByInvitedIsNotNull(Sort.by("value").descending());
+        var codes = this.invitationsRepository.findByInvitedIsNotNull(Sort.by("value").descending());
         assertThat(codes).hasSize(2);
         assertThat(codes.get(0).getValue()).isEqualTo("value234");
         assertThat(codes.get(1).getValue()).isEqualTo("value123");
@@ -110,54 +110,54 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
     @Test
     void deletionIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(MongoDbInvitation.dummies1());
+        var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
         var notExistentInvitationCodeId = entity(InvitationId.class);
-        var existentInvitationCodeId = saved.get(0).invitationCodeId();
+        var existentInvitationCodeId = saved.get(0).invitationId();
 
         // Act-Assert-0
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+        assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodesRepository.delete(notExistentInvitationCodeId);
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+        this.invitationsRepository.delete(notExistentInvitationCodeId);
+        assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        this.invitationCodesRepository.delete(existentInvitationCodeId);
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(5);
+        this.invitationsRepository.delete(existentInvitationCodeId);
+        assertThat(this.invitationsRepository.count()).isEqualTo(5);
 
         // Act-Assert-1
-        this.invitationCodesRepository.deleteByInvitedIsNotNull();
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(4);
+        this.invitationsRepository.deleteByInvitedIsNotNull();
+        assertThat(this.invitationsRepository.count()).isEqualTo(4);
 
         // Act-Assert-2
-        this.invitationCodesRepository.deleteByInvitedIsNull();
-        assertThat(this.invitationCodesRepository.count()).isZero();
+        this.invitationsRepository.deleteByInvitedIsNull();
+        assertThat(this.invitationsRepository.count()).isZero();
     }
 
     @Test
     void saveIntegrationTests() {
         // Arrange
-        var saved = this.invitationCodesRepository.saveAll(MongoDbInvitation.dummies1());
+        var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
         var request = RequestNewInvitationParams.random();
 
         // Act-Assert-0
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+        assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationCodesRepository.saveAs(randomElement(saved).invitationCode());
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(6);
+        this.invitationsRepository.saveAs(randomElement(saved).invitationCode());
+        assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentInvitationCodeId = this.invitationCodesRepository.saveAs(Invitation.random());
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
+        var existentInvitationCodeId = this.invitationsRepository.saveAs(Invitation.random());
+        assertThat(this.invitationsRepository.count()).isEqualTo(7);
         var notExistentInvitationCodeId = entity(InvitationId.class);
-        assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();
-        assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
+        assertThat(this.invitationsRepository.isPresent(existentInvitationCodeId).present()).isTrue();
+        assertThat(this.invitationsRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
 
         // Act-Assert-3
-        this.invitationCodesRepository.saveAs(Username.hardcoded(), request);
-        assertThat(this.invitationCodesRepository.count()).isEqualTo(8);
-        var ownedInvitationCodes = this.invitationCodesRepository.findByOwner(Username.hardcoded());
+        this.invitationsRepository.saveAs(Username.hardcoded(), request);
+        assertThat(this.invitationsRepository.count()).isEqualTo(8);
+        var ownedInvitationCodes = this.invitationsRepository.findByOwner(Username.hardcoded());
         assertThat(ownedInvitationCodes).hasSize(1);
         var ownedInvitationCode = ownedInvitationCodes.get(0);
         assertThat(ownedInvitationCode.getOwner()).isEqualTo(Username.hardcoded());

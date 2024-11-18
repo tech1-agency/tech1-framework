@@ -3,7 +3,7 @@ package jbst.iam.startup;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
 import jbst.foundation.domain.properties.base.DefaultUsers;
-import jbst.foundation.domain.properties.base.InvitationCodes;
+import jbst.foundation.domain.properties.base.Invitations;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
@@ -106,7 +106,7 @@ class DefaultStartupEventListenerTest {
                                 isDefaultUsersEnabled,
                                 new ArrayList<>()
                         ),
-                        new InvitationCodes(
+                        new Invitations(
                                 isInvitationCodesEnabled
                         )
                 ),

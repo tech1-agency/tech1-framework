@@ -54,7 +54,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
 
     default InvitationId saveAs(Invitation invitation) {
         var entity = this.save(new MongoDbInvitation(invitation));
-        return entity.invitationCodeId();
+        return entity.invitationId();
     }
 
     default InvitationId saveAs(Username owner, RequestNewInvitationParams request) {
@@ -63,7 +63,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
                 getSimpleGrantedAuthorities(request.authorities())
         );
         var entity = this.save(invitationCode);
-        return entity.invitationCodeId();
+        return entity.invitationId();
     }
 
     // ================================================================================================================

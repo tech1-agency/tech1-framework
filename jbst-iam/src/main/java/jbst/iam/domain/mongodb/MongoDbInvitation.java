@@ -107,7 +107,7 @@ public class MongoDbInvitation {
 
     @JsonIgnore
     @Transient
-    public InvitationId invitationCodeId() {
+    public InvitationId invitationId() {
         return new InvitationId(this.id);
     }
 
@@ -115,7 +115,7 @@ public class MongoDbInvitation {
     @Transient
     public Invitation invitationCode() {
         return new Invitation(
-                this.invitationCodeId(),
+                this.invitationId(),
                 this.owner,
                 this.authorities,
                 this.value,
@@ -127,7 +127,7 @@ public class MongoDbInvitation {
     @Transient
     public ResponseInvitation responseInvitationCode() {
         return ResponseInvitation.of(
-                this.invitationCodeId(),
+                this.invitationId(),
                 this.owner,
                 getResponseInvitationCodeAuthoritiesAsField(this.authorities),
                 this.value,

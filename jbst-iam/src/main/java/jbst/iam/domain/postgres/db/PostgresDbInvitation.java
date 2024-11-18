@@ -117,7 +117,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public InvitationId invitationCodeId() {
+    public InvitationId invitationId() {
         return new InvitationId(this.id);
     }
 
@@ -125,7 +125,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     @Transient
     public Invitation invitationCode() {
         return new Invitation(
-                this.invitationCodeId(),
+                this.invitationId(),
                 this.owner,
                 this.authorities,
                 this.value,
@@ -137,7 +137,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     @Transient
     public ResponseInvitation responseInvitationCode() {
         return ResponseInvitation.of(
-                this.invitationCodeId(),
+                this.invitationId(),
                 this.owner,
                 getResponseInvitationCodeAuthoritiesAsField(this.authorities),
                 this.value,

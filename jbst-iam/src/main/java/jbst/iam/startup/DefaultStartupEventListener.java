@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultStartupEventListener implements BaseStartupEventListener {
-    private static final String STARTUP_MESSAGE = JbstConstants.Logs.PREFIX + " Default startup event listener. Status: {}";
+    private static final String STARTUP_MESSAGE = JbstConstants.Logs.PREFIX + " Startup event listener. Status: {}";
 
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
@@ -27,13 +27,13 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
         LOGGER.info(STARTUP_MESSAGE, Status.STARTED.formatAnsi());
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
-        LOGGER.info("{} Essence defaultUsers — {}", JbstConstants.Logs.PREFIX, Toggle.of(defaultUsers.isEnabled()));
+        LOGGER.info("{} Essence feature 'default-users' — {}", JbstConstants.Logs.PREFIX, Toggle.of(defaultUsers.isEnabled()));
         if (defaultUsers.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
         }
 
-        var invitationCodes = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes();
-        LOGGER.info("{} Essence invitations — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitationCodes.isEnabled()));
+        var invitationCodes = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
+        LOGGER.info("{} Essence feature 'invitations' — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitationCodes.isEnabled()));
         if (invitationCodes.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitationCodes();
         }

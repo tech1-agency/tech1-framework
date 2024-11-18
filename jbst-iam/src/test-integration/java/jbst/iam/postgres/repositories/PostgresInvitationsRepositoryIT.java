@@ -62,7 +62,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
         var notExistentInvitationCode = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
 
         var savedInvitationCode = saved.get(0);
-        var existentInvitationCodeId = savedInvitationCode.invitationCodeId();
+        var existentInvitationCodeId = savedInvitationCode.invitationId();
         var existentInvitationCode = savedInvitationCode.getValue();
 
         // Act
@@ -114,7 +114,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
         // Arrange
         var saved = this.invitationCodesRepository.saveAll(PostgresDbInvitation.dummies1());
         var notExistentInvitationCodeId = entity(InvitationId.class);
-        var existentInvitationCodeId = saved.get(0).invitationCodeId();
+        var existentInvitationCodeId = saved.get(0).invitationId();
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);

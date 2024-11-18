@@ -139,13 +139,13 @@ public class ConfigurationBaseSecurityJwt {
                     .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated();
 
-            if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
+            if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations().isEnabled()) {
                 authorizeHttpRequests
-                        .requestMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATIONS_READ)
-                        .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATIONS_WRITE)
-                        .requestMatchers(DELETE, basePathPrefix + "/invitationCode/{invitationCodeId}").hasAuthority(INVITATIONS_WRITE);
+                        .requestMatchers(GET, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_READ)
+                        .requestMatchers(POST, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_WRITE)
+                        .requestMatchers(DELETE, basePathPrefix + "/invitations/{invitationCodeId}").hasAuthority(INVITATIONS_WRITE);
             } else {
-                authorizeHttpRequests.requestMatchers(basePathPrefix + "/invitationCode/**").denyAll();
+                authorizeHttpRequests.requestMatchers(basePathPrefix + "/invitations/**").denyAll();
             }
 
             authorizeHttpRequests

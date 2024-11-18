@@ -48,7 +48,7 @@ class JwtTokensFilterTest {
         return Stream.of(
                 Arguments.of(new AccessTokenInvalidException()),
                 Arguments.of(new RefreshTokenInvalidException()),
-                Arguments.of(new AccessTokenDbNotFoundException(Username.testsHardcoded()))
+                Arguments.of(new AccessTokenDbNotFoundException(Username.hardcoded()))
         );
     }
 
@@ -157,7 +157,7 @@ class JwtTokensFilterTest {
         var requestRefreshToken = RequestRefreshToken.random();
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(requestAccessToken);
         when(this.tokensProvider.readRequestRefreshToken(any(HttpServletRequest.class))).thenReturn(requestRefreshToken);
-        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new AccessTokenExpiredException(Username.testsHardcoded()));
+        when(this.tokensService.getJwtUserByAccessTokenOrThrow(requestAccessToken, requestRefreshToken)).thenThrow(new AccessTokenExpiredException(Username.hardcoded()));
 
         // Act
         this.componentUnderTest.doFilterInternal(request, response, filterChain);

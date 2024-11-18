@@ -21,7 +21,7 @@ public class CsrfConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String tokenKey;
 
-    public static CsrfConfigs testsHardcoded() {
+    public static CsrfConfigs hardcoded() {
         return new CsrfConfigs("csrf-header", "_csrf", "csrf-token-key");
     }
 

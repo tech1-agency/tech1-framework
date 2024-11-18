@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsernameTest extends AbstractSerializationDeserializationRunner {
-    private static final Username USERNAME = Username.testsHardcoded();
+    private static final Username USERNAME = Username.hardcoded();
 
     @Override
     protected String getFileName() {

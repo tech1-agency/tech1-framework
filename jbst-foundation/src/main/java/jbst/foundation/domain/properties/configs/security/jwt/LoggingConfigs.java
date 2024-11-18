@@ -21,7 +21,7 @@ public class LoggingConfigs extends AbstractPropertyConfigs {
         return randomBoolean() ? enabled() : disabled();
     }
 
-    public static LoggingConfigs testsHardcoded() {
+    public static LoggingConfigs hardcoded() {
         return LoggingConfigs.enabled();
     }
 

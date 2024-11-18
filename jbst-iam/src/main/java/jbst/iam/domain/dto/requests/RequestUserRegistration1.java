@@ -23,8 +23,8 @@ public record RequestUserRegistration1(
     public static RequestUserRegistration1 testsHardcoded() {
         return new RequestUserRegistration1(
                 Username.of("registration11"),
-                Password.testsHardcoded(),
-                Password.testsHardcoded(),
+                Password.hardcoded(),
+                Password.hardcoded(),
                 randomZoneId(),
                 randomString()
         );

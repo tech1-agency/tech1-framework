@@ -193,14 +193,14 @@ class SecurityJwtTokenUtilsImplTest {
     @MethodSource("createJwtTokenTest")
     void createJwtTokenTest(TimeAmount timeAmount) {
         // Arrange
-        var creationParams = new JwtTokenCreationParams(Username.testsHardcoded(), getSimpleGrantedAuthorities("user"), randomZoneId());
+        var creationParams = new JwtTokenCreationParams(Username.hardcoded(), getSimpleGrantedAuthorities("user"), randomZoneId());
 
         // Act
         var jwtToken = this.componentUnderTest.createJwtToken(creationParams, timeAmount);
 
         // Assert
         var validatedClaims = this.componentUnderTest.validate(new JwtAccessToken(jwtToken));
-        assertThat(validatedClaims.username()).isEqualTo(Username.testsHardcoded());
+        assertThat(validatedClaims.username()).isEqualTo(Username.hardcoded());
         var zoneId = nonNull(creationParams.zoneId()) ? creationParams.zoneId() : ZoneId.systemDefault();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),

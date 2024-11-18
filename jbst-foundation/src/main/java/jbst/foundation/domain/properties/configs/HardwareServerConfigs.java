@@ -16,7 +16,7 @@ public class HardwareServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final String baseURL;
 
-    public static HardwareServerConfigs testsHardcoded() {
+    public static HardwareServerConfigs hardcoded() {
         return new HardwareServerConfigs(
                 "http://localhost:8484"
         );

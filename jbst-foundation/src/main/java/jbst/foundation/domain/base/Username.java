@@ -28,16 +28,16 @@ public record Username(@NotNull String value) {
         return new Username(value);
     }
 
+    public static Username hardcoded() {
+        return of("jbst");
+    }
+
     public static Username cron() {
         return of("cron");
     }
 
     public static Username ops() {
         return of("ops");
-    }
-
-    public static Username hardcoded() {
-        return of("jbs");
     }
 
     public static Username random() {
@@ -55,10 +55,6 @@ public record Username(@NotNull String value) {
     @SuppressWarnings("unused")
     public static Username hyphen() {
         return of(StringConstants.HYPHEN);
-    }
-
-    public static Username testsHardcoded() {
-        return of("tech1");
     }
 
     public static List<String> asStrings(Set<Username> usernames) {

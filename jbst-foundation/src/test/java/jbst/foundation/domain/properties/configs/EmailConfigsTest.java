@@ -59,7 +59,7 @@ class EmailConfigsTest {
         assertThat(emailConfigs.getHost()).isNotNull();
         assertThat(emailConfigs.getPort()).isEqualTo(587);
         assertThat(emailConfigs.getFrom()).isEqualTo(from);
-        assertThat(emailConfigs.getUsername()).isEqualTo(Username.testsHardcoded());
-        assertThat(emailConfigs.getPassword()).isEqualTo(Password.testsHardcoded());
+        assertThat(emailConfigs.getUsername()).isEqualTo(Username.hardcoded());
+        assertThat(emailConfigs.getPassword()).isEqualTo(Password.hardcoded());
     }
 }

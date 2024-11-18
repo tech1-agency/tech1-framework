@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
@@ -77,11 +77,11 @@ class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRu
                 .hasMessageStartingWith(entityNotFound("Username", "sa777"));
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + JbsConstants.Domains.HARDCODED))).isNotNull();
-        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + JbsConstants.Domains.HARDCODED))).isNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + JbsConstants.Domains.HARDCODED))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + JbsConstants.Domains.HARDCODED))).isNotNull();
-        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + JbsConstants.Domains.HARDCODED))).isNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + JbstConstants.Domains.HARDCODED))).isNotNull();
+        assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa999@" + JbstConstants.Domains.HARDCODED))).isNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + JbstConstants.Domains.HARDCODED))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + JbstConstants.Domains.HARDCODED))).isNotNull();
+        assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + JbstConstants.Domains.HARDCODED))).isNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa1"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa4"))).isNull();

@@ -99,7 +99,7 @@ class BaseUsersEmailsServiceTest {
                 null,
                 UserRequestMetadata.random()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
@@ -162,7 +162,7 @@ class BaseUsersEmailsServiceTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.userEmailUtils.getAuthenticationLoginTemplateName()).thenReturn("jbst-account-accessed");
         when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
@@ -210,7 +210,7 @@ class BaseUsersEmailsServiceTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.userEmailUtils.getSessionRefreshedTemplateName()).thenReturn("jbst-account-accessed");
         when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(

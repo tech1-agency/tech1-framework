@@ -80,7 +80,7 @@ class TestSpringBootClientTest {
         var serverName = this.componentUnderTest.getServerName();
 
         // Assert
-        assertThat(serverName).isEqualTo(ServerName.testsHardcoded());
+        assertThat(serverName).isEqualTo(ServerName.hardcoded());
     }
 
     @Test
@@ -149,7 +149,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).info();
-        assertThat(tuple2.a()).isEqualTo(ServerName.testsHardcoded());
+        assertThat(tuple2.a()).isEqualTo(ServerName.hardcoded());
         assertThat(tuple2.b()).isNull();
     }
 
@@ -183,7 +183,7 @@ class TestSpringBootClientTest {
 
         // Assert
         verify(this.springBootClientFeign).health();
-        assertThat(tuple2.a()).isEqualTo(ServerName.testsHardcoded());
+        assertThat(tuple2.a()).isEqualTo(ServerName.hardcoded());
         assertThat(tuple2.b()).isNull();
     }
 }

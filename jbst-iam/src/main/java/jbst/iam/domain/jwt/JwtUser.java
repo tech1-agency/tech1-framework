@@ -108,8 +108,8 @@ public record JwtUser(
     public static JwtUser testsHardcoded(Set<SimpleGrantedAuthority> authorities) {
         return new JwtUser(
                 UserId.testsHardcoded(),
-                Username.testsHardcoded(),
-                Password.testsHardcoded(),
+                Username.hardcoded(),
+                Password.hardcoded(),
                 ZoneIdsConstants.UKRAINE,
                 authorities,
                 Email.testsHardcoded(),

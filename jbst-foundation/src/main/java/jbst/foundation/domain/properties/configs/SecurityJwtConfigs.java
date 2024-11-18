@@ -45,16 +45,16 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final UsersEmailsConfigs usersEmailsConfigs;
 
-    public static SecurityJwtConfigs testsHardcoded() {
+    public static SecurityJwtConfigs hardcoded() {
         return new SecurityJwtConfigs(
-                AuthoritiesConfigs.testsHardcoded(),
-                CookiesConfigs.testsHardcoded(),
-                EssenceConfigs.testsHardcoded(),
-                IncidentsConfigs.testsHardcoded(),
-                JwtTokensConfigs.testsHardcoded(),
-                LoggingConfigs.testsHardcoded(),
-                SessionConfigs.testsHardcoded(),
-                UsersEmailsConfigs.testsHardcoded()
+                AuthoritiesConfigs.hardcoded(),
+                CookiesConfigs.hardcoded(),
+                EssenceConfigs.hardcoded(),
+                IncidentsConfigs.hardcoded(),
+                JwtTokensConfigs.hardcoded(),
+                LoggingConfigs.hardcoded(),
+                SessionConfigs.hardcoded(),
+                UsersEmailsConfigs.hardcoded()
         );
     }
 

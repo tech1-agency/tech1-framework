@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 
@@ -64,7 +64,7 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
         // Arrange
         var currentClientUser = new CurrentClientUser(
                 Username.of("tech1"),
-                Email.of("tech1@" + JbsConstants.Domains.HARDCODED),
+                Email.of("tech1@" + JbstConstants.Domains.HARDCODED),
                 "Tech1",
                 ZoneIdsConstants.UKRAINE,
                 false,

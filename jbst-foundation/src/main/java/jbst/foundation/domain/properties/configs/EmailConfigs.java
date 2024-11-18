@@ -27,14 +27,14 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryToggleProperty
     private Password password;
 
-    public static EmailConfigs testsHardcoded() {
+    public static EmailConfigs hardcoded() {
         return new EmailConfigs(
                 true,
                 "smtp.gmail.com",
                 587,
-                "Tech1",
-                Username.testsHardcoded(),
-                Password.testsHardcoded()
+                "jbst",
+                Username.hardcoded(),
+                Password.hardcoded()
         );
     }
 
@@ -43,7 +43,7 @@ public class EmailConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     public static EmailConfigs enabled(String from) {
-        return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.testsHardcoded(), Password.testsHardcoded());
+        return new EmailConfigs(true, "smtp.gmail.com", 587, from, Username.hardcoded(), Password.hardcoded());
     }
 
     @Override

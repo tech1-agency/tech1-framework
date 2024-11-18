@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserTriggerTest extends AbstractSerializationDeserializationRunner {
-    private static final UserTrigger USER_TRIGGER = new UserTrigger(Username.testsHardcoded());
+    private static final UserTrigger USER_TRIGGER = new UserTrigger(Username.hardcoded());
 
     @Override
     protected String getFileName() {

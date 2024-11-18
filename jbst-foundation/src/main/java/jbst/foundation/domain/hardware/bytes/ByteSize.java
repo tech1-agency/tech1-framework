@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static jbst.foundation.domain.constants.JbsConstants.MemoryUnits.*;
+import static jbst.foundation.domain.constants.JbstConstants.MemoryUnits.*;
 import static jbst.foundation.domain.hardware.bytes.ByteUnit.*;
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;

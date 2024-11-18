@@ -26,7 +26,7 @@ public class DefaultUsers extends AbstractTogglePropertyConfigs {
     @MandatoryToggleProperty
     private List<DefaultUser> users;
 
-    public static DefaultUsers testsHardcoded() {
+    public static DefaultUsers hardcoded() {
         return new DefaultUsers(
                 true,
                 List.of(
@@ -47,7 +47,7 @@ public class DefaultUsers extends AbstractTogglePropertyConfigs {
     }
 
     public static DefaultUsers enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static DefaultUsers disabled() {

@@ -24,8 +24,8 @@ public class EventsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final BigDecimal threadsMaxPoolPercentage;
 
-    public static EventsConfigs testsHardcoded() {
-        return new EventsConfigs("tech1-events", new BigDecimal("75"), BigDecimalConstants.ONE_HUNDRED);
+    public static EventsConfigs hardcoded() {
+        return new EventsConfigs("jbst-events", new BigDecimal("75"), BigDecimalConstants.ONE_HUNDRED);
     }
 
     public static EventsConfigs random() {

@@ -8,7 +8,7 @@ public record RequestUserLogin(
         @Password.ValidPasswordNotBlank Password password
 ) {
     public static RequestUserLogin testsHardcoded() {
-        return new RequestUserLogin(Username.testsHardcoded(), Password.testsHardcoded());
+        return new RequestUserLogin(Username.hardcoded(), Password.hardcoded());
     }
 
     public static RequestUserLogin random() {

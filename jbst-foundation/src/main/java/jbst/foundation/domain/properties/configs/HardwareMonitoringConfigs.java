@@ -26,7 +26,7 @@ public class HardwareMonitoringConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryMapProperty(propertyName = "thresholdsConfigs", keySetClass = HardwareName.class)
     private Map<HardwareName, BigDecimal> thresholdsConfigs;
 
-    public static HardwareMonitoringConfigs testsHardcoded() {
+    public static HardwareMonitoringConfigs hardcoded() {
         return new HardwareMonitoringConfigs(
                 true,
                 new EnumMap<>(

@@ -25,18 +25,20 @@ public class RemoteServer extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final UsernamePasswordCredentials credentials;
 
-    public static RemoteServer testsHardcoded() {
-        return new RemoteServer("localhost", UsernamePasswordCredentials.testsHardcoded());
+    public static RemoteServer hardcoded() {
+        return new RemoteServer("localhost", UsernamePasswordCredentials.hardcoded());
     }
 
     public static RemoteServer random() {
-        return new RemoteServer(randomIPv4(), UsernamePasswordCredentials.testsHardcoded());
+        return new RemoteServer(randomIPv4(), UsernamePasswordCredentials.hardcoded());
     }
 
+    @SuppressWarnings("unused")
     public boolean containsCredentials(@NotNull UsernamePasswordCredentials credentials) {
         return this.credentials.equals(credentials);
     }
 
+    @SuppressWarnings("unused")
     public <T> T createFeignOnBasicAuthentication(Class<T> clazz) {
         return Feign.builder()
                 .client(new OkHttpClient())

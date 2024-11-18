@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserLoginTest extends AbstractSerializationDeserializationRunner {
     private static final RequestUserLogin REQUEST = new RequestUserLogin(
-            Username.testsHardcoded(),
+            Username.hardcoded(),
             Password.of("password123")
     );
 

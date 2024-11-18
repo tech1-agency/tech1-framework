@@ -26,6 +26,10 @@ public record Password(@NotNull String value) {
         return new Password(value);
     }
 
+    public static Password hardcoded() {
+        return of("PasswordTH/jbst");
+    }
+
     public static Password random() {
         return of(randomString());
     }
@@ -37,10 +41,6 @@ public record Password(@NotNull String value) {
     @SuppressWarnings("unused")
     public static Password hyphen() {
         return of(StringConstants.HYPHEN);
-    }
-
-    public static Password testsHardcoded() {
-        return of("PasswordTH/Tech1");
     }
 
     public void assertEqualsOrThrow(Password password) {

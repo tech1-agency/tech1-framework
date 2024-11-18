@@ -1,7 +1,7 @@
 package jbst.foundation.utilities.http;
 
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,7 +31,7 @@ class HttpRequestFieldsUtilityTest {
                 Arguments.of("info", false),
                 Arguments.of("info@", false),
                 Arguments.of("info@tech1", false),
-                Arguments.of("info@" + JbsConstants.Domains.HARDCODED, true),
+                Arguments.of("info@" + JbstConstants.Domains.HARDCODED, true),
                 Arguments.of("petro.petrenko@gmail.com", true),
                 Arguments.of("john78@proton.com", true)
         );

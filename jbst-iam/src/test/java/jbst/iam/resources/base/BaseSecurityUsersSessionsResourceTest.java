@@ -127,7 +127,7 @@ class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
     @Test
     void renewManuallyTest() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
 
         // Act
         this.mvc.perform(
@@ -137,14 +137,14 @@ class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsService).assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded());
+        verify(this.baseUsersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.testsHardcoded());
         verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewManually(UserSessionId.testsHardcoded());
     }
 
     @Test
     void deleteByIdTest() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
 
         // Act
         this.mvc.perform(delete("/sessions/" + UserSessionId.testsHardcoded()))
@@ -152,14 +152,14 @@ class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseUsersSessionsService).assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded());
+        verify(this.baseUsersSessionsService).assertAccess(Username.hardcoded(), UserSessionId.testsHardcoded());
         verify(this.baseUsersSessionsService).deleteById(UserSessionId.testsHardcoded());
     }
 
     @Test
     void deleteAllExceptCurrent() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
         when(this.tokensProvider.readRequestAccessToken(any(HttpServletRequest.class))).thenReturn(RequestAccessToken.testsHardcoded());
 
         // Act
@@ -169,6 +169,6 @@ class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.tokensProvider).readRequestAccessToken(any(HttpServletRequest.class));
-        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(Username.testsHardcoded(), RequestAccessToken.testsHardcoded());
+        verify(this.baseUsersSessionsService).deleteAllExceptCurrent(Username.hardcoded(), RequestAccessToken.testsHardcoded());
     }
 }

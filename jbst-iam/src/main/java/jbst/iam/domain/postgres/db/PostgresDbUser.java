@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.columns.*;
 import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.identifiers.UserId;
@@ -99,7 +99,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 getSimpleGrantedAuthorities(authorities),
                 randomBoolean()
         );
-        user.setEmail(Email.of(username + "@" + JbsConstants.Domains.HARDCODED));
+        user.setEmail(Email.of(username + "@" + JbstConstants.Domains.HARDCODED));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
         user.setAttributes(
                 Map.of(

@@ -25,6 +25,10 @@ public record ServerName(@NotNull String value) {
         return new ServerName(value);
     }
 
+    public static ServerName hardcoded() {
+        return of("jbst-server");
+    }
+
     public static ServerName random() {
         return of(randomString());
     }
@@ -36,10 +40,6 @@ public record ServerName(@NotNull String value) {
     @SuppressWarnings("unused")
     public static ServerName hyphen() {
         return of(StringConstants.HYPHEN);
-    }
-
-    public static ServerName testsHardcoded() {
-        return of("tech1-server");
     }
 
     @JsonValue

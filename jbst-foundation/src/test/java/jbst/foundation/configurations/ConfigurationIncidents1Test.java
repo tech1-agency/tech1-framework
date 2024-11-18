@@ -39,7 +39,7 @@ class ConfigurationIncidents1Test {
         @Bean
         ApplicationFrameworkProperties applicationFrameworkProperties() {
             var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.testsHardcoded());
+            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.hardcoded());
             return applicationFrameworkProperties;
         }
     }

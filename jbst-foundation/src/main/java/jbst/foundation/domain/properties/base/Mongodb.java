@@ -28,8 +28,8 @@ public class Mongodb extends AbstractPropertyConfigs {
     @NonMandatoryProperty
     private Password password;
 
-    public static Mongodb testsHardcoded() {
-        return Mongodb.noSecurity("127.0.0.1", 27017, "tech1_framework_server");
+    public static Mongodb hardcoded() {
+        return Mongodb.noSecurity("127.0.0.1", 27017, "jbst_dev");
     }
 
     public static Mongodb random() {

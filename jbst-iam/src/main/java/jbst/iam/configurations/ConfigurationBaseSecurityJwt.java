@@ -3,7 +3,7 @@ package jbst.iam.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.filters.jwt.JwtTokensFilter;
@@ -95,7 +95,7 @@ public class ConfigurationBaseSecurityJwt {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
             if (this.applicationFrameworkProperties.getServerConfigs().isSpringdocEnabled()) {
-                web.ignoring().requestMatchers(JbsConstants.Swagger.ENDPOINTS.toArray(new String[0]));
+                web.ignoring().requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0]));
             }
             this.abstractJbstSecurityJwtConfigurer.configure(web);
         };

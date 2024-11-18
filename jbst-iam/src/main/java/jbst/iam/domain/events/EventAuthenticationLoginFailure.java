@@ -14,8 +14,8 @@ public record EventAuthenticationLoginFailure(
 
     public static EventAuthenticationLoginFailure testsHardcoded() {
         return new EventAuthenticationLoginFailure(
-                Username.testsHardcoded(),
-                Password.testsHardcoded(),
+                Username.hardcoded(),
+                Password.hardcoded(),
                 IPAddress.testsHardcoded(),
                 UserAgentHeader.testsHardcoded()
         );

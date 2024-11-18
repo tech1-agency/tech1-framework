@@ -20,8 +20,8 @@ public class IncidentConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryToggleProperty
     private RemoteServer remoteServer;
 
-    public static IncidentConfigs testsHardcoded() {
-        return new IncidentConfigs(true, RemoteServer.testsHardcoded());
+    public static IncidentConfigs hardcoded() {
+        return new IncidentConfigs(true, RemoteServer.hardcoded());
     }
 
     public static IncidentConfigs random() {
@@ -29,7 +29,7 @@ public class IncidentConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     public static IncidentConfigs enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static IncidentConfigs disabled() {

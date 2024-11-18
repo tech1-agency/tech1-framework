@@ -21,7 +21,7 @@ public class UtilitiesConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final UserAgentConfigs userAgentConfigs;
 
-    public static UtilitiesConfigs testsHardcoded() {
+    public static UtilitiesConfigs hardcoded() {
         return new UtilitiesConfigs(
                 GeoLocationsConfigs.disabled(),
                 GeoCountryFlagsConfigs.enabled(),

@@ -11,7 +11,7 @@ class DefaultUserTest {
     @Test
     void getEmailNullTest() {
         // Arrange
-        var defaultUsers = SecurityJwtConfigs.testsHardcoded().getEssenceConfigs().getDefaultUsers();
+        var defaultUsers = SecurityJwtConfigs.hardcoded().getEssenceConfigs().getDefaultUsers();
 
         // Act
         var email = defaultUsers.getUsers().get(0).getEmailOrNull();

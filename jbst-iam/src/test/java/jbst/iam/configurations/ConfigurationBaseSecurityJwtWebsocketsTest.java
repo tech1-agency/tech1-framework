@@ -53,7 +53,7 @@ class ConfigurationBaseSecurityJwtWebsocketsTest {
                             )
                     )
             );
-            properties.setSecurityJwtWebsocketsConfigs(SecurityJwtWebsocketsConfigs.testsHardcoded());
+            properties.setSecurityJwtWebsocketsConfigs(SecurityJwtWebsocketsConfigs.hardcoded());
             return properties;
         }
 

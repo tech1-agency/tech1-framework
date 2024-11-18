@@ -97,7 +97,7 @@ class WssMessagingTemplateImplTest {
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        when(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(SecurityJwtWebsocketsConfigs.testsHardcoded());
+        when(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(SecurityJwtWebsocketsConfigs.hardcoded());
         var username = Username.random();
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -120,11 +120,11 @@ class WssMessagingTemplateImplTest {
         // Assert
         when(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(
                 new SecurityJwtWebsocketsConfigs(
-                        CsrfConfigs.testsHardcoded(),
-                        StompEndpointRegistryConfigs.testsHardcoded(),
-                        MessageBrokerRegistryConfigs.testsHardcoded(),
+                        CsrfConfigs.hardcoded(),
+                        StompEndpointRegistryConfigs.hardcoded(),
+                        MessageBrokerRegistryConfigs.hardcoded(),
                         configs,
-                        WebsocketsFeaturesConfigs.testsHardcoded()
+                        WebsocketsFeaturesConfigs.hardcoded()
                 )
         );
         var username = Username.random();

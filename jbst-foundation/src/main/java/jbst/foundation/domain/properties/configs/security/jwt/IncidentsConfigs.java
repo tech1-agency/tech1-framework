@@ -26,7 +26,7 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
     @MandatoryMapProperty(propertyName = "typesConfigs", keySetClass = SecurityJwtIncidentType.class)
     private final Map<SecurityJwtIncidentType, Boolean> typesConfigs;
 
-    public static IncidentsConfigs testsHardcoded() {
+    public static IncidentsConfigs hardcoded() {
         return new IncidentsConfigs(
                 new EnumMap<>(
                         Map.of(

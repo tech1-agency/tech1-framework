@@ -4,7 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.tuples.Tuple2;
@@ -246,8 +246,8 @@ class EmailServiceImplTest {
         // Arrange
         var emailPlainAttachment = new EmailPlainAttachment(
                 Set.of(
-                        "test1@" + JbsConstants.Domains.HARDCODED,
-                        "test2@" + JbsConstants.Domains.HARDCODED
+                        "test1@" + JbstConstants.Domains.HARDCODED,
+                        "test2@" + JbstConstants.Domains.HARDCODED
                 ),
                 "subject1",
                 "message1",
@@ -268,8 +268,8 @@ class EmailServiceImplTest {
         verify(this.javaMailSender).createMimeMessage();
         verify(mimeMessage).setFrom(from);
         verify(mimeMessage).setSubject("subject1");
-        verify(mimeMessage).addRecipients(TO, "test1@" + JbsConstants.Domains.HARDCODED);
-        verify(mimeMessage).addRecipients(TO, "test2@" + JbsConstants.Domains.HARDCODED);
+        verify(mimeMessage).addRecipients(TO, "test1@" + JbstConstants.Domains.HARDCODED);
+        verify(mimeMessage).addRecipients(TO, "test2@" + JbstConstants.Domains.HARDCODED);
         var mimeMultipartAC = ArgumentCaptor.forClass(MimeMultipart.class);
         verify(mimeMessage).setContent(mimeMultipartAC.capture());
         var multipart = mimeMultipartAC.getValue();
@@ -324,7 +324,7 @@ class EmailServiceImplTest {
         );
         var emailHTML = new EmailHTML(
                 Set.of(
-                        "tests@" + JbsConstants.Domains.HARDCODED
+                        "tests@" + JbstConstants.Domains.HARDCODED
                 ),
                 "subject1",
                 "template1",
@@ -341,7 +341,7 @@ class EmailServiceImplTest {
 
         // Assert
         verify(mimeMessageHelper).setFrom(from);
-        verify(mimeMessageHelper).setTo(new String[] { "tests@" + JbsConstants.Domains.HARDCODED });
+        verify(mimeMessageHelper).setTo(new String[] { "tests@" + JbstConstants.Domains.HARDCODED });
         verify(mimeMessageHelper).setSubject("subject1");
         var html = """
                 <!DOCTYPE html>

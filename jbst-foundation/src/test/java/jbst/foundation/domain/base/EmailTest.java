@@ -1,7 +1,7 @@
 package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -58,6 +58,6 @@ class EmailTest extends AbstractSerializationDeserializationRunner {
 
         // Assert
         assertThat(actual.value()).hasSize(expected);
-        assertThat(actual.value().substring(randomLength)).isEqualTo("@" + JbsConstants.Domains.HARDCODED);
+        assertThat(actual.value().substring(randomLength)).isEqualTo("@" + JbstConstants.Domains.HARDCODED);
     }
 }

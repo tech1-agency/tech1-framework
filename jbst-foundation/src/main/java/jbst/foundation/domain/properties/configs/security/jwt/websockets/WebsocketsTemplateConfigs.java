@@ -17,7 +17,7 @@ public class WebsocketsTemplateConfigs extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
 
-    public static WebsocketsTemplateConfigs testsHardcoded() {
+    public static WebsocketsTemplateConfigs hardcoded() {
         return new WebsocketsTemplateConfigs(true);
     }
 
@@ -26,7 +26,7 @@ public class WebsocketsTemplateConfigs extends AbstractTogglePropertyConfigs {
     }
 
     public static WebsocketsTemplateConfigs enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static WebsocketsTemplateConfigs disabled() {

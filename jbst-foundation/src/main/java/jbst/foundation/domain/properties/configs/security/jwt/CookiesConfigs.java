@@ -1,6 +1,6 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
@@ -22,8 +22,8 @@ public class CookiesConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final TimeAmount jwtAccessTokenCookieCreationLatency;
 
-    public static CookiesConfigs testsHardcoded() {
-        return new CookiesConfigs(JbsConstants.Domains.HARDCODED, new TimeAmount(5L, SECONDS));
+    public static CookiesConfigs hardcoded() {
+        return new CookiesConfigs(JbstConstants.Domains.HARDCODED, new TimeAmount(5L, SECONDS));
     }
 
     public static CookiesConfigs random() {

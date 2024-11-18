@@ -13,7 +13,7 @@ class IncidentAuthenticationLoginFailureUsernamePasswordTest {
     void convertAuthenticationLoginFailureUsernamePasswordIncidentTest() {
         // Arrange
         var incident = new IncidentAuthenticationLoginFailureUsernamePassword(
-                UsernamePasswordCredentials.testsHardcoded(),
+                UsernamePasswordCredentials.hardcoded(),
                 UserRequestMetadata.valid()
         );
 

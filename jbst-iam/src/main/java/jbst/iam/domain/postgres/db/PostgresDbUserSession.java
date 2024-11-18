@@ -82,10 +82,10 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     }
 
     public static List<PostgresDbUserSession> dummies1() {
-        var session1 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt1", "rwt1");
-        var session2 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt2", "rwt2");
-        var session3 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt3", "rwt3");
-        var session4 = PostgresDbUserSession.random(Username.testsHardcoded().value(), "awt4", "rwt4");
+        var session1 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt1", "rwt1");
+        var session2 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt2", "rwt2");
+        var session3 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt3", "rwt3");
+        var session4 = PostgresDbUserSession.random(Username.hardcoded().value(), "awt4", "rwt4");
         var session5 = PostgresDbUserSession.random("user1", "atoken11", "rtoken11");
         var session6 = PostgresDbUserSession.random("user1", "atoken12", "rtoken12");
         var session7 = PostgresDbUserSession.random("sa", "atoken", "rtoken");
@@ -101,9 +101,9 @@ public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
     }
 
     public static List<PostgresDbUserSession> dummies2() {
-        var session1 = PostgresDbUserSession.random(Username.testsHardcoded(), "token1");
-        var session2 = PostgresDbUserSession.random(Username.testsHardcoded(), "token2");
-        var session3 = PostgresDbUserSession.random(Username.testsHardcoded(), "token3");
+        var session1 = PostgresDbUserSession.random(Username.hardcoded(), "token1");
+        var session2 = PostgresDbUserSession.random(Username.hardcoded(), "token2");
+        var session3 = PostgresDbUserSession.random(Username.hardcoded(), "token3");
         var session4 = PostgresDbUserSession.random(Username.of("admin"), "token4");
         return List.of(session1, session2, session3, session4);
     }

@@ -39,8 +39,8 @@ public class DefaultUser extends AbstractPropertyConfigs {
 
     public static DefaultUser testsHardcoded() {
         return new DefaultUser(
-                Username.testsHardcoded(),
-                Password.testsHardcoded(),
+                Username.hardcoded(),
+                Password.hardcoded(),
                 ZoneIdsConstants.UKRAINE,
                 Email.testsHardcoded().value(),
                 false,

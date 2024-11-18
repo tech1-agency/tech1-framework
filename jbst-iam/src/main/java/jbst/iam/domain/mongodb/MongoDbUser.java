@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import lombok.*;
@@ -82,7 +82,7 @@ public class MongoDbUser {
                 getSimpleGrantedAuthorities(authorities),
                 randomBoolean()
         );
-        user.setEmail(Email.of(username + "@" + JbsConstants.Domains.HARDCODED));
+        user.setEmail(Email.of(username + "@" + JbstConstants.Domains.HARDCODED));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
         user.setAttributes(
                 Map.of(

@@ -10,7 +10,7 @@ public record IncidentSystemResetServerStarted(
 
     public static IncidentSystemResetServerStarted testsHardcoded() {
         return new IncidentSystemResetServerStarted(
-                Username.testsHardcoded()
+                Username.hardcoded()
         );
     }
 

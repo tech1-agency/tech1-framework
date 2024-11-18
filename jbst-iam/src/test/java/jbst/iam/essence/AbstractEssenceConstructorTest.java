@@ -141,7 +141,7 @@ class AbstractEssenceConstructorTest {
     @MethodSource("addDefaultUsersPresentTest")
     void addDefaultUsersPresentTest(long count) {
         // Arrange
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
@@ -159,7 +159,7 @@ class AbstractEssenceConstructorTest {
     @MethodSource("addDefaultUsersPresentTest")
     void addDefaultUsersInvitationCodes(long count) {
         // Arrange
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.testsHardcoded());
+        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         var username = Username.of("admin12");
         when(this.invitationCodesRepository.countByOwner(username)).thenReturn(count);
 

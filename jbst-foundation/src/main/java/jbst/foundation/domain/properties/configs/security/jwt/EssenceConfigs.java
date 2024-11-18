@@ -19,10 +19,10 @@ public class EssenceConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final InvitationCodes invitationCodes;
 
-    public static EssenceConfigs testsHardcoded() {
+    public static EssenceConfigs hardcoded() {
         return new EssenceConfigs(
-                DefaultUsers.testsHardcoded(),
-                InvitationCodes.testsHardcoded()
+                DefaultUsers.hardcoded(),
+                InvitationCodes.hardcoded()
         );
     }
 

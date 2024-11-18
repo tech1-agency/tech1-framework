@@ -75,7 +75,7 @@ public record ResponseUserSession2(
         return of(
                 UserSessionId.testsHardcoded(),
                 TimestampUtility.getCurrentTimestamp(),
-                Username.testsHardcoded(),
+                Username.hardcoded(),
                 new RequestAccessToken(token),
                 new JwtAccessToken(token),
                 UserRequestMetadata.valid()
@@ -86,7 +86,7 @@ public record ResponseUserSession2(
         return of(
                 UserSessionId.random(),
                 TimestampUtility.getCurrentTimestamp() - TimeAmount.random().toMillis(),
-                Username.testsHardcoded(),
+                Username.hardcoded(),
                 RequestAccessToken.random(),
                 JwtAccessToken.random(),
                 UserRequestMetadata.testData()

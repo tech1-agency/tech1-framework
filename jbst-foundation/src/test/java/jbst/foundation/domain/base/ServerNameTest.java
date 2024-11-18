@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ServerNameTest extends AbstractSerializationDeserializationRunner {
-    private static final ServerName SERVER_NAME = ServerName.testsHardcoded();
+    private static final ServerName SERVER_NAME = ServerName.hardcoded();
 
     @Override
     protected String getFileName() {

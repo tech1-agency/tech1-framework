@@ -17,10 +17,10 @@ public class WebsocketsFeaturesConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private WebsocketsFeatureHardwareConfigs resetServerConfigs;
 
-    public static WebsocketsFeaturesConfigs testsHardcoded() {
+    public static WebsocketsFeaturesConfigs hardcoded() {
         return new WebsocketsFeaturesConfigs(
-                WebsocketsFeatureHardwareConfigs.testsHardcoded(),
-                WebsocketsFeatureHardwareConfigs.testsHardcoded()
+                WebsocketsFeatureHardwareConfigs.hardcoded(),
+                WebsocketsFeatureHardwareConfigs.hardcoded()
         );
     }
 

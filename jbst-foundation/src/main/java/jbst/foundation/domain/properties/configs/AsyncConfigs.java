@@ -24,8 +24,8 @@ public class AsyncConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final BigDecimal threadsMaxPoolPercentage;
 
-    public static AsyncConfigs testsHardcoded() {
-        return new AsyncConfigs("tech1-async", new BigDecimal("25"), BigDecimalConstants.ONE_HUNDRED);
+    public static AsyncConfigs hardcoded() {
+        return new AsyncConfigs("jbst-async", new BigDecimal("25"), BigDecimalConstants.ONE_HUNDRED);
     }
 
     public static AsyncConfigs random() {

@@ -130,8 +130,8 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         when(this.httpRequestUtils.isCachedEndpoint(request)).thenReturn(true);
         var payload = objectMapper.writeValueAsString(
                 Map.of(
-                        "username", Username.testsHardcoded().value(),
-                        "password", Password.testsHardcoded().value()
+                        "username", Username.hardcoded().value(),
+                        "password", Password.hardcoded().value()
                 )
         );
         when(this.httpRequestUtils.getCachedPayload(request)).thenReturn(payload);
@@ -152,8 +152,8 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
         verify(this.httpRequestUtils).getCachedPayload(request);
         var eventAC = ArgumentCaptor.forClass(EventAuthenticationLoginFailure.class);
         verify(this.securityJwtPublisher).publishAuthenticationLoginFailure(eventAC.capture());
-        assertThat(eventAC.getValue().username()).isEqualTo(Username.testsHardcoded());
-        assertThat(eventAC.getValue().password()).isEqualTo(Password.testsHardcoded());
+        assertThat(eventAC.getValue().username()).isEqualTo(Username.hardcoded());
+        assertThat(eventAC.getValue().password()).isEqualTo(Password.hardcoded());
         assertThat(eventAC.getValue().ipAddress()).isEqualTo(IPAddress.localhost());
 
     }

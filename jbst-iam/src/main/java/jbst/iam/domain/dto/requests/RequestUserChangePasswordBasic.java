@@ -9,8 +9,8 @@ public record RequestUserChangePasswordBasic(
 
     public static RequestUserChangePasswordBasic testsHardcoded() {
         return new RequestUserChangePasswordBasic(
-                Password.testsHardcoded(),
-                Password.testsHardcoded()
+                Password.hardcoded(),
+                Password.hardcoded()
         );
     }
 

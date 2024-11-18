@@ -35,7 +35,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final JwtToken refreshToken;
 
-    public static JwtTokensConfigs testsHardcoded() {
+    public static JwtTokensConfigs hardcoded() {
         return new JwtTokensConfigs(
                 "nbVwWebIpNnZ1rsNZFmkAQGiOZAijWtSt5X6FZx/qHA=",
                 JwtTokenStorageMethod.COOKIES,

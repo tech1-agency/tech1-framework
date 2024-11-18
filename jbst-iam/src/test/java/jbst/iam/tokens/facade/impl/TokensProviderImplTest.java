@@ -275,19 +275,19 @@ class TokensProviderImplTest {
     private void mockProperties(JwtTokenStorageMethod method) {
         when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(
                 new SecurityJwtConfigs(
-                        AuthoritiesConfigs.testsHardcoded(),
-                        CookiesConfigs.testsHardcoded(),
-                        EssenceConfigs.testsHardcoded(),
-                        IncidentsConfigs.testsHardcoded(),
+                        AuthoritiesConfigs.hardcoded(),
+                        CookiesConfigs.hardcoded(),
+                        EssenceConfigs.hardcoded(),
+                        IncidentsConfigs.hardcoded(),
                         new JwtTokensConfigs(
                                 "TECH1",
                                 method,
                                 new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
                                 new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")
                         ),
-                        LoggingConfigs.testsHardcoded(),
-                        SessionConfigs.testsHardcoded(),
-                        UsersEmailsConfigs.testsHardcoded()
+                        LoggingConfigs.hardcoded(),
+                        SessionConfigs.hardcoded(),
+                        UsersEmailsConfigs.hardcoded()
                 )
         );
     }

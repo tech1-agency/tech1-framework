@@ -15,9 +15,9 @@ public class MongodbSecurityJwtConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Mongodb mongodb;
 
-    public static MongodbSecurityJwtConfigs testsHardcoded() {
+    public static MongodbSecurityJwtConfigs hardcoded() {
         return new MongodbSecurityJwtConfigs(
-                Mongodb.testsHardcoded()
+                Mongodb.hardcoded()
         );
     }
 

@@ -159,24 +159,24 @@ class AbstractBaseUsersSessionsServiceTest {
 
     @Test
     void assertAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded())).thenReturn(TuplePresence.present(UserSession.randomPersistedSession()));
+        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(UserSession.randomPersistedSession()));
 
         // Act
-        this.componentUnderTest.assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded());
+        this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.testsHardcoded());
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded());
+        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.hardcoded());
     }
 
     @Test
     void assertAccessNoAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded())).thenReturn(TuplePresence.absent());
+        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.hardcoded())).thenReturn(TuplePresence.absent());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.testsHardcoded(), UserSessionId.testsHardcoded()));
+        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.testsHardcoded()));
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.testsHardcoded());
+        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.hardcoded());
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
                 .hasMessage(entityAccessDenied("Session", UserSessionId.testsHardcoded().value()));
@@ -394,7 +394,7 @@ class AbstractBaseUsersSessionsServiceTest {
     @Test
     void getExpiredSessionsTest() {
         // Arrange
-        var usernames = new HashSet<>(Set.of(Username.testsHardcoded()));
+        var usernames = new HashSet<>(Set.of(Username.hardcoded()));
         var sessionInvalidUserSession = UserSession.random(
                 Username.random(),
                 JwtAccessToken.random(),

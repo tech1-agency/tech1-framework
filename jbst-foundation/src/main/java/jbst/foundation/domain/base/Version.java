@@ -25,6 +25,10 @@ public record Version(@NotNull String value) {
         return new Version(value);
     }
 
+    public static Version hardcoded() {
+        return of("v1.1");
+    }
+
     public static Version random() {
         return of(randomString());
     }
@@ -44,10 +48,6 @@ public record Version(@NotNull String value) {
     @SuppressWarnings("unused")
     public static Version hyphen() {
         return of(StringConstants.HYPHEN);
-    }
-
-    public static Version testsHardcoded() {
-        return of("v1.61803398875");
     }
 
     @JsonValue

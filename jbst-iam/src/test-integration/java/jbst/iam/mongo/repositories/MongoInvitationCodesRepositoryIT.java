@@ -155,12 +155,12 @@ class MongoInvitationCodesRepositoryIT extends TestsConfigurationMongoRepositori
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
 
         // Act-Assert-3
-        this.invitationCodesRepository.saveAs(Username.testsHardcoded(), request);
+        this.invitationCodesRepository.saveAs(Username.hardcoded(), request);
         assertThat(this.invitationCodesRepository.count()).isEqualTo(8);
-        var ownedInvitationCodes = this.invitationCodesRepository.findByOwner(Username.testsHardcoded());
+        var ownedInvitationCodes = this.invitationCodesRepository.findByOwner(Username.hardcoded());
         assertThat(ownedInvitationCodes).hasSize(1);
         var ownedInvitationCode = ownedInvitationCodes.get(0);
-        assertThat(ownedInvitationCode.getOwner()).isEqualTo(Username.testsHardcoded());
+        assertThat(ownedInvitationCode.getOwner()).isEqualTo(Username.hardcoded());
         assertThat(ownedInvitationCode.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(request.authorities()));
         assertThat(ownedInvitationCode.getValue()).hasSize(40);
     }

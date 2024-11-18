@@ -18,7 +18,7 @@ public class StompEndpointRegistryConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String endpoint;
 
-    public static StompEndpointRegistryConfigs testsHardcoded() {
+    public static StompEndpointRegistryConfigs hardcoded() {
         return new StompEndpointRegistryConfigs("/endpoint");
     }
 

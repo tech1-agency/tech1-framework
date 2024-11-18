@@ -377,7 +377,7 @@ public class RandomUtility {
 
     public static Claims validClaims() {
         var claims = Jwts.claims();
-        claims.subject(Username.testsHardcoded().value());
+        claims.subject(Username.hardcoded().value());
         var timeAmount = new TimeAmount(1, ChronoUnit.HOURS);
         var expiration = convertLocalDateTime(LocalDateTime.now(UTC).plus(timeAmount.getAmount(), timeAmount.getUnit()), UTC);
         claims.issuedAt(new Date());
@@ -388,7 +388,7 @@ public class RandomUtility {
 
     public static Claims expiredClaims() {
         var claims = Jwts.claims();
-        claims.subject(Username.testsHardcoded().value());
+        claims.subject(Username.hardcoded().value());
         var currentTimestamp = getCurrentTimestamp();
         var issuedAt = new Date(currentTimestamp);
         var expiration = new Date(currentTimestamp - 1000);

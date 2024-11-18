@@ -52,8 +52,8 @@ class IncidentAuthenticationLoginFailureUsernameMaskedPasswordTest {
         // Arrange
         var incident = new IncidentAuthenticationLoginFailureUsernameMaskedPassword(
                 UsernamePasswordCredentials.mask5(
-                        Username.testsHardcoded(),
-                        Password.testsHardcoded()
+                        Username.hardcoded(),
+                        Password.hardcoded()
                 ),
                 UserRequestMetadata.valid()
         );

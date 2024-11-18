@@ -10,11 +10,11 @@ public record UsernamePasswordCredentials(
         return new UsernamePasswordCredentials(username, Password.of(MaskUtility.mask5(password.value())));
     }
 
-    public static UsernamePasswordCredentials random() {
-        return new UsernamePasswordCredentials(Username.random(), Password.random());
+    public static UsernamePasswordCredentials hardcoded() {
+        return new UsernamePasswordCredentials(Username.hardcoded(), Password.hardcoded());
     }
 
-    public static UsernamePasswordCredentials testsHardcoded() {
-        return new UsernamePasswordCredentials(Username.testsHardcoded(), Password.testsHardcoded());
+    public static UsernamePasswordCredentials random() {
+        return new UsernamePasswordCredentials(Username.random(), Password.random());
     }
 }

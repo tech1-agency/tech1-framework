@@ -22,9 +22,9 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Checkbox sessionRefreshed;
 
-    public static UsersEmailsConfigs testsHardcoded() {
+    public static UsersEmailsConfigs hardcoded() {
         return new UsersEmailsConfigs(
-                "[Tech1]",
+                "[jbst]",
                 Checkbox.enabled(),
                 Checkbox.enabled()
         );

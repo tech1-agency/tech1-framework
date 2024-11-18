@@ -20,8 +20,8 @@ public class MavenConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Version version;
 
-    public static MavenConfigs testsHardcoded() {
-        return new MavenConfigs("tech1.framework", "tech1-framework", Version.testsHardcoded());
+    public static MavenConfigs hardcoded() {
+        return new MavenConfigs("jbst", "jbst", Version.hardcoded());
     }
 
     @Override

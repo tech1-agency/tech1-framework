@@ -14,7 +14,7 @@ public class TestConfigurationPropertiesMocked {
     @Bean
     ApplicationFrameworkProperties applicationFrameworkProperties() {
         var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
-        when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(MvcConfigs.testsHardcoded());
+        when(applicationFrameworkProperties.getMvcConfigs()).thenReturn(MvcConfigs.hardcoded());
         return applicationFrameworkProperties;
     }
 }

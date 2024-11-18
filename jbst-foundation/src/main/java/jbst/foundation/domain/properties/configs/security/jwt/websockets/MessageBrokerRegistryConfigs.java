@@ -23,7 +23,7 @@ public class MessageBrokerRegistryConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final String userDestinationPrefix;
 
-    public static MessageBrokerRegistryConfigs testsHardcoded() {
+    public static MessageBrokerRegistryConfigs hardcoded() {
         return new MessageBrokerRegistryConfigs("/app", "/queue", "/user");
     }
 

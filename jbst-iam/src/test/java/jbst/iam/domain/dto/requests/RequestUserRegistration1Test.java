@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RequestUserRegistration1Test extends AbstractSerializationDeserializationRunner {
     private static final RequestUserRegistration1 REQUEST = new RequestUserRegistration1(
-            Username.testsHardcoded(),
+            Username.hardcoded(),
             Password.of("password123"),
             Password.of("password123"),
             ZoneIdsConstants.UKRAINE,

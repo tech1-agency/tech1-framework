@@ -19,7 +19,7 @@ public class SessionConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Cron enableSessionsMetadataRenewCron;
 
-    public static SessionConfigs testsHardcoded() {
+    public static SessionConfigs hardcoded() {
         return new SessionConfigs(
                 Cron.enabled("*/30 * * * * *", ZoneIdsConstants.UKRAINE.getId()),
                 Cron.enabled("*/15 * * * * *", ZoneIdsConstants.UKRAINE.getId())

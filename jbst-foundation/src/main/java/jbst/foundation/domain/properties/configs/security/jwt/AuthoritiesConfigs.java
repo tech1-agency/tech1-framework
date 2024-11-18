@@ -25,7 +25,7 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
     private final Set<Authority> authorities;
 
-    public static AuthoritiesConfigs testsHardcoded() {
+    public static AuthoritiesConfigs hardcoded() {
         return new AuthoritiesConfigs(
                 "jbst.foundation",
                 Set.of(

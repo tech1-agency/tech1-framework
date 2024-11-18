@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsernamePasswordCredentialsTest extends AbstractSerializationDeserializationRunner {
-    private static final UsernamePasswordCredentials CREDENTIALS = UsernamePasswordCredentials.testsHardcoded();
+    private static final UsernamePasswordCredentials CREDENTIALS = UsernamePasswordCredentials.hardcoded();
 
     @Override
     protected String getFileName() {
@@ -43,8 +43,8 @@ class UsernamePasswordCredentialsTest extends AbstractSerializationDeserializati
 
         // Assert
         assertThat(actual).isEqualTo(CREDENTIALS);
-        assertThat(actual.username()).isEqualTo(Username.testsHardcoded());
-        assertThat(actual.password()).isEqualTo(Password.testsHardcoded());
+        assertThat(actual.username()).isEqualTo(Username.hardcoded());
+        assertThat(actual.password()).isEqualTo(Password.hardcoded());
     }
 
     @RepeatedTest(TestsJunitConstants.SMALL_ITERATIONS_COUNT)

@@ -8,7 +8,7 @@ import java.util.List;
 import static com.diogonunes.jcolor.Attribute.*;
 
 @UtilityClass
-public class JbsConstants {
+public class JbstConstants {
 
     public static class Domains {
         public static final String HARDCODED = "yyluchkiv.com";

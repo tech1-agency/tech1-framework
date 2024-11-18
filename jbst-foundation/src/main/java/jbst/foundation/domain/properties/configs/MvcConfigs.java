@@ -23,10 +23,10 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryToggleProperty
     private CorsConfigs corsConfigs;
 
-    public static MvcConfigs testsHardcoded() {
+    public static MvcConfigs hardcoded() {
         return new MvcConfigs(
                 true,
-                "/framework/security",
+                "/jbst/security",
                 CorsConfigs.testsHardcoded()
         );
     }
@@ -40,7 +40,7 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
     }
 
     public static MvcConfigs enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static MvcConfigs disabled() {

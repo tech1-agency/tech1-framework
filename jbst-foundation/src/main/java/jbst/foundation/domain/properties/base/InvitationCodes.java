@@ -16,7 +16,7 @@ public class InvitationCodes extends AbstractTogglePropertyConfigs {
     @MandatoryProperty
     private final boolean enabled;
 
-    public static InvitationCodes testsHardcoded() {
+    public static InvitationCodes hardcoded() {
         return new InvitationCodes(true);
     }
 
@@ -25,7 +25,7 @@ public class InvitationCodes extends AbstractTogglePropertyConfigs {
     }
 
     public static InvitationCodes enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static InvitationCodes disabled() {

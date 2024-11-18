@@ -21,7 +21,7 @@ public class WebsocketsFeatureHardwareConfigs extends AbstractTogglePropertyConf
     @MandatoryToggleProperty
     private String userDestination;
 
-    public static WebsocketsFeatureHardwareConfigs testsHardcoded() {
+    public static WebsocketsFeatureHardwareConfigs hardcoded() {
         return new WebsocketsFeatureHardwareConfigs(true, "/accounts");
     }
 
@@ -30,7 +30,7 @@ public class WebsocketsFeatureHardwareConfigs extends AbstractTogglePropertyConf
     }
 
     public static WebsocketsFeatureHardwareConfigs enabled() {
-        return testsHardcoded();
+        return hardcoded();
     }
 
     public static WebsocketsFeatureHardwareConfigs disabled() {

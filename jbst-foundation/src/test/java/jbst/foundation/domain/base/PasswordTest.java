@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PasswordTest extends AbstractSerializationDeserializationRunner {
-    private static final Password PASSWORD = Password.testsHardcoded();
+    private static final Password PASSWORD = Password.hardcoded();
 
     @Override
     protected String getFileName() {

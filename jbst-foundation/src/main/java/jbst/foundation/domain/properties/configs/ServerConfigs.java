@@ -23,8 +23,8 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private String webclientURL;
 
-    public static ServerConfigs testsHardcoded() {
-        return new ServerConfigs(ServerName.testsHardcoded(), true, "http://127.0.0.1:3000");
+    public static ServerConfigs hardcoded() {
+        return new ServerConfigs(ServerName.hardcoded(), true, "http://127.0.0.1:3000");
     }
 
     public static ServerConfigs random() {

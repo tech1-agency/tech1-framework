@@ -82,7 +82,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
     @Test
     void saveTest() throws Exception {
         // Arrange
-        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.testsHardcoded());
+        when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
         var request = RequestNewInvitationCodeParams.testsHardcoded();
 
         // Act
@@ -96,7 +96,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
         verify(this.baseInvitationCodesRequestsValidator).validateCreateNewInvitationCode(request);
-        verify(this.baseInvitationCodesService).save(Username.testsHardcoded(), request);
+        verify(this.baseInvitationCodesService).save(Username.hardcoded(), request);
     }
 
     @Test

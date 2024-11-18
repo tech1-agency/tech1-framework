@@ -34,7 +34,7 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
 
     default List<ResponseInvitation> findResponseCodesByOwner(Username owner) {
         return this.findByOwner(owner).stream()
-                .map(PostgresDbInvitation::responseInvitationCode)
+                .map(PostgresDbInvitation::responseInvitation)
                 .collect(Collectors.toList());
     }
 
@@ -45,7 +45,7 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
 
     default List<ResponseInvitation> findUnused() {
         return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
-                .map(PostgresDbInvitation::responseInvitationCode)
+                .map(PostgresDbInvitation::responseInvitation)
                 .collect(Collectors.toList());
     }
 

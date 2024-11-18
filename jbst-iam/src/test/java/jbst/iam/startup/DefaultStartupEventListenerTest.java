@@ -127,7 +127,7 @@ class DefaultStartupEventListenerTest {
             verify(this.essenceConstructor).addDefaultUsers();
         }
         if (isInvitationCodesEnabled) {
-            verify(this.essenceConstructor).addDefaultUsersInvitationCodes();
+            verify(this.essenceConstructor).addDefaultUsersInvitations();
         }
         reset(
                 this.essenceConstructor,

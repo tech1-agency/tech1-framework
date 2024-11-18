@@ -31,14 +31,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ConfigurationPostgresRepositories {
 
     // Repositories
-    private final PostgresInvitationsRepository invitationCodeRepository;
+    private final PostgresInvitationsRepository invitationsRepository;
     private final PostgresUsersRepository userRepository;
     private final PostgresUsersSessionsRepository userSessionRepository;
 
     @Bean
     public JbstPostgresRepositories jbstPostgresRepositories() {
         return new JbstPostgresRepositories(
-                this.invitationCodeRepository,
+                this.invitationsRepository,
                 this.userRepository,
                 this.userSessionRepository
         );

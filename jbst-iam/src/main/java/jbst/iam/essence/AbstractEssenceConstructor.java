@@ -37,7 +37,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         }
     }
 
-    public void addDefaultUsersInvitationCodes() {
+    public void addDefaultUsersInvitations() {
         var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
         assertTrueOrThrow(

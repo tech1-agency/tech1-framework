@@ -129,12 +129,12 @@ class AbstractBaseInvitationsServiceTest {
     @Test
     void deleteByIdTest() {
         // Arrange
-        var invitationCodeId = InvitationId.random();
+        var invitationId = InvitationId.random();
 
         // Act
-        this.componentUnderTest.deleteById(invitationCodeId);
+        this.componentUnderTest.deleteById(invitationId);
 
         // Assert
-        verify(this.invitationsRepository).delete(invitationCodeId);
+        verify(this.invitationsRepository).delete(invitationId);
     }
 }

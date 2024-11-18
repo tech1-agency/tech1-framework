@@ -40,7 +40,7 @@ class MongoBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        MongoInvitationsRepository invitationCodeRepository() {
+        MongoInvitationsRepository invitationsRepository() {
             return mock(MongoInvitationsRepository.class);
         }
 
@@ -52,7 +52,7 @@ class MongoBaseEssenceConstructorTest {
         @Bean
         EssenceConstructor essenceConstructor() {
             return new MongoBaseEssenceConstructor(
-                    this.invitationCodeRepository(),
+                    this.invitationsRepository(),
                     this.userRepository(),
                     this.jbstProperties
             );

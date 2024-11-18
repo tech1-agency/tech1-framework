@@ -103,16 +103,16 @@ class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
     void deleteByIdTest() throws Exception {
         // Arrange
         var username= entity(Username.class);
-        var invitationCodeId = entity(InvitationId.class);
+        var invitationId = entity(InvitationId.class);
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act
-        this.mvc.perform(delete("/invitations/" + invitationCodeId))
+        this.mvc.perform(delete("/invitations/" + invitationId))
                 .andExpect(status().isOk());
 
         // Assert
         verify(this.currentSessionAssistant).getCurrentUsername();
-        verify(this.baseInvitationsRequestsValidator).validateDeleteById(username, invitationCodeId);
-        verify(this.baseInvitationsService).deleteById(invitationCodeId);
+        verify(this.baseInvitationsRequestsValidator).validateDeleteById(username, invitationId);
+        verify(this.baseInvitationsService).deleteById(invitationId);
     }
 }

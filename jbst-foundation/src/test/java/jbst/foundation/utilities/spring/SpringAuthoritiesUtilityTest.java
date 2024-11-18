@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 import static jbst.foundation.domain.base.AbstractAuthority.*;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.TWICE;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationsAuthoritiesAsField;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringAuthoritiesUtilityTest {
 
-    private static Stream<Arguments> getResponseInvitationCodeAuthoritiesAsFieldArgs() {
+    private static Stream<Arguments> getResponseInvitationsAuthoritiesAsFieldArgs() {
         return Stream.of(
                 Arguments.of(null, "—"),
                 Arguments.of(Set.of(), "—"),
@@ -64,10 +64,10 @@ class SpringAuthoritiesUtilityTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getResponseInvitationCodeAuthoritiesAsFieldArgs")
-    void getResponseInvitationCodeAuthoritiesAsFieldTest(Set<SimpleGrantedAuthority> authorities, String expected) {
+    @MethodSource("getResponseInvitationsAuthoritiesAsFieldArgs")
+    void getResponseInvitationsAuthoritiesAsFieldTest(Set<SimpleGrantedAuthority> authorities, String expected) {
         // Act
-        var actual = getResponseInvitationCodeAuthoritiesAsField(authorities);
+        var actual = getResponseInvitationsAuthoritiesAsField(authorities);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

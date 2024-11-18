@@ -111,18 +111,18 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
     void deletionIntegrationTests() {
         // Arrange
         var saved = this.invitationsRepository.saveAll(MongoDbInvitation.dummies1());
-        var notExistentInvitationCodeId = entity(InvitationId.class);
-        var existentInvitationCodeId = saved.get(0).invitationId();
+        var notExistentInvitationId = entity(InvitationId.class);
+        var existentInvitationId = saved.get(0).invitationId();
 
         // Act-Assert-0
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
-        this.invitationsRepository.delete(notExistentInvitationCodeId);
+        this.invitationsRepository.delete(notExistentInvitationId);
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        this.invitationsRepository.delete(existentInvitationCodeId);
+        this.invitationsRepository.delete(existentInvitationId);
         assertThat(this.invitationsRepository.count()).isEqualTo(5);
 
         // Act-Assert-1
@@ -148,20 +148,20 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         assertThat(this.invitationsRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
-        var existentInvitationCodeId = this.invitationsRepository.saveAs(Invitation.random());
+        var existentInvitationId = this.invitationsRepository.saveAs(Invitation.random());
         assertThat(this.invitationsRepository.count()).isEqualTo(7);
-        var notExistentInvitationCodeId = entity(InvitationId.class);
-        assertThat(this.invitationsRepository.isPresent(existentInvitationCodeId).present()).isTrue();
-        assertThat(this.invitationsRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
+        var notExistentInvitationId = entity(InvitationId.class);
+        assertThat(this.invitationsRepository.isPresent(existentInvitationId).present()).isTrue();
+        assertThat(this.invitationsRepository.isPresent(notExistentInvitationId).present()).isFalse();
 
         // Act-Assert-3
         this.invitationsRepository.saveAs(Username.hardcoded(), request);
         assertThat(this.invitationsRepository.count()).isEqualTo(8);
-        var ownedInvitationCodes = this.invitationsRepository.findByOwner(Username.hardcoded());
-        assertThat(ownedInvitationCodes).hasSize(1);
-        var ownedInvitationCode = ownedInvitationCodes.get(0);
-        assertThat(ownedInvitationCode.getOwner()).isEqualTo(Username.hardcoded());
-        assertThat(ownedInvitationCode.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(request.authorities()));
-        assertThat(ownedInvitationCode.getValue()).hasSize(40);
+        var ownedInvitations = this.invitationsRepository.findByOwner(Username.hardcoded());
+        assertThat(ownedInvitations).hasSize(1);
+        var ownedInvitation = ownedInvitations.get(0);
+        assertThat(ownedInvitation.getOwner()).isEqualTo(Username.hardcoded());
+        assertThat(ownedInvitation.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(request.authorities()));
+        assertThat(ownedInvitation.getValue()).hasSize(40);
     }
 }

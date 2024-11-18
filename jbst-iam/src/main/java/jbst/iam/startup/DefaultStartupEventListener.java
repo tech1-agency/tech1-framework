@@ -35,7 +35,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
         var invitationCodes = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
         LOGGER.info("{} Essence feature 'invitations' — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitationCodes.isEnabled()));
         if (invitationCodes.isEnabled()) {
-            this.essenceConstructor.addDefaultUsersInvitationCodes();
+            this.essenceConstructor.addDefaultUsersInvitations();
         }
 
         LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED.formatAnsi());

@@ -143,7 +143,7 @@ public class ConfigurationBaseSecurityJwt {
                 authorizeHttpRequests
                         .requestMatchers(GET, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_READ)
                         .requestMatchers(POST, basePathPrefix + "/invitations").hasAuthority(INVITATIONS_WRITE)
-                        .requestMatchers(DELETE, basePathPrefix + "/invitations/{invitationCodeId}").hasAuthority(INVITATIONS_WRITE);
+                        .requestMatchers(DELETE, basePathPrefix + "/invitations/{invitationId}").hasAuthority(INVITATIONS_WRITE);
             } else {
                 authorizeHttpRequests.requestMatchers(basePathPrefix + "/invitations/**").denyAll();
             }

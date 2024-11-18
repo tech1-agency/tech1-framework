@@ -31,7 +31,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
 
     default List<ResponseInvitation> findResponseCodesByOwner(Username owner) {
         return this.findByOwner(owner).stream()
-                .map(MongoDbInvitation::responseInvitationCode)
+                .map(MongoDbInvitation::responseInvitation)
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
 
     default List<ResponseInvitation> findUnused() {
         return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
-                .map(MongoDbInvitation::responseInvitationCode)
+                .map(MongoDbInvitation::responseInvitation)
                 .collect(Collectors.toList());
     }
 

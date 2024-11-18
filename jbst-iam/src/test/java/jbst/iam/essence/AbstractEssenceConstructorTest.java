@@ -57,7 +57,7 @@ class AbstractEssenceConstructorTest {
         }
 
         @Bean
-        InvitationsRepository invitationCodesRepository() {
+        InvitationsRepository invitationsRepository() {
             return mock(InvitationsRepository.class);
         }
 
@@ -74,7 +74,7 @@ class AbstractEssenceConstructorTest {
         @Bean("abstractEssenceConstructor")
         AbstractEssenceConstructor abstractEssenceConstructor() {
             return new AbstractEssenceConstructor(
-                    this.invitationCodesRepository(),
+                    this.invitationsRepository(),
                     this.usersRepository(),
                     this.jbstProperties()
             ) {
@@ -157,14 +157,14 @@ class AbstractEssenceConstructorTest {
 
     @ParameterizedTest
     @MethodSource("addDefaultUsersPresentTest")
-    void addDefaultUsersInvitationCodes(long count) {
+    void addDefaultUsersInvitations(long count) {
         // Arrange
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         var username = Username.of("admin12");
         when(this.invitationsRepository.countByOwner(username)).thenReturn(count);
 
         // Act
-        this.componentUnderTest.addDefaultUsersInvitationCodes();
+        this.componentUnderTest.addDefaultUsersInvitations();
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();

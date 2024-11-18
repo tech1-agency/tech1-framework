@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationsAuthoritiesAsField;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
@@ -77,41 +77,41 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     }
 
     public static List<PostgresDbInvitation> dummies1() {
-        var invitationCode1 = PostgresDbInvitation.admin("user1");
-        var invitationCode2 = PostgresDbInvitation.admin("user1");
-        var invitationCode3 = PostgresDbInvitation.admin("user2");
-        var invitationCode4 = PostgresDbInvitation.admin("user2");
-        var invitationCode5 = PostgresDbInvitation.admin("user2");
-        var invitationCode6 = PostgresDbInvitation.admin("user3");
+        var invitation1 = PostgresDbInvitation.admin("user1");
+        var invitation2 = PostgresDbInvitation.admin("user1");
+        var invitation3 = PostgresDbInvitation.admin("user2");
+        var invitation4 = PostgresDbInvitation.admin("user2");
+        var invitation5 = PostgresDbInvitation.admin("user2");
+        var invitation6 = PostgresDbInvitation.admin("user3");
 
-        invitationCode4.setInvited(Username.of("superadmin"));
+        invitation4.setInvited(Username.of("superadmin"));
 
         return List.of(
-                invitationCode1,
-                invitationCode2,
-                invitationCode3,
-                invitationCode4,
-                invitationCode5,
-                invitationCode6
+                invitation1,
+                invitation2,
+                invitation3,
+                invitation4,
+                invitation5,
+                invitation6
         );
     }
 
     public static List<PostgresDbInvitation> dummies2() {
-        var invitationCode1 = PostgresDbInvitation.admin("owner22", "value22");
-        var invitationCode2 = PostgresDbInvitation.admin("owner22", "abc");
-        var invitationCode3 = PostgresDbInvitation.admin("owner22", "value44");
-        var invitationCode4 = PostgresDbInvitation.admin("owner11", "value222");
-        var invitationCode5 = PostgresDbInvitation.admin("owner11", "value111");
-        var invitationCode6 = PostgresDbInvitation.admin("owner33", "value123", "invited1");
-        var invitationCode7 = PostgresDbInvitation.admin("owner34", "value234", "invited2");
+        var invitation1 = PostgresDbInvitation.admin("owner22", "value22");
+        var invitation2 = PostgresDbInvitation.admin("owner22", "abc");
+        var invitation3 = PostgresDbInvitation.admin("owner22", "value44");
+        var invitation4 = PostgresDbInvitation.admin("owner11", "value222");
+        var invitation5 = PostgresDbInvitation.admin("owner11", "value111");
+        var invitation6 = PostgresDbInvitation.admin("owner33", "value123", "invited1");
+        var invitation7 = PostgresDbInvitation.admin("owner34", "value234", "invited2");
         return List.of(
-                invitationCode1,
-                invitationCode2,
-                invitationCode3,
-                invitationCode4,
-                invitationCode5,
-                invitationCode6,
-                invitationCode7
+                invitation1,
+                invitation2,
+                invitation3,
+                invitation4,
+                invitation5,
+                invitation6,
+                invitation7
         );
     }
 
@@ -135,11 +135,11 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public ResponseInvitation responseInvitationCode() {
+    public ResponseInvitation responseInvitation() {
         return ResponseInvitation.of(
                 this.invitationId(),
                 this.owner,
-                getResponseInvitationCodeAuthoritiesAsField(this.authorities),
+                getResponseInvitationsAuthoritiesAsField(this.authorities),
                 this.value,
                 this.invited
         );

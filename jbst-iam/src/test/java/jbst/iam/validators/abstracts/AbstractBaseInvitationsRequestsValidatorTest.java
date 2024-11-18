@@ -61,7 +61,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        BaseInvitationsRequestsValidator baseInvitationCodesRequestsValidator() {
+        BaseInvitationsRequestsValidator baseInvitationsRequestsValidator() {
             return new AbstractBaseInvitationsRequestsValidator(
                     this.invitationsRepository,
                     this.jbstProperties
@@ -93,17 +93,17 @@ class AbstractBaseInvitationsRequestsValidatorTest {
     void validateDeleteByIdNotFoundTest() {
         // Arrange
         var username = Username.random();
-        var invitationCodeId = InvitationId.random();
-        when(this.invitationsRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.absent());
+        var invitationId = InvitationId.random();
+        when(this.invitationsRepository.isPresent(invitationId)).thenReturn(TuplePresence.absent());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationCodeId));
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateDeleteById(username, invitationId));
 
         // Assert
         assertThat(throwable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(entityNotFound("Invitation code", invitationCodeId.value()));
-        verify(this.invitationsRepository).isPresent(invitationCodeId);
+                .hasMessage(entityNotFound("Invitation code", invitationId.value()));
+        verify(this.invitationsRepository).isPresent(invitationId);
     }
 
     @Test

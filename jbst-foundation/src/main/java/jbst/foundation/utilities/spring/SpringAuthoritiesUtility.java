@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.spring;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -29,11 +30,11 @@ public class SpringAuthoritiesUtility {
         return getSimpleGrantedAuthorities(Stream.of(authorities));
     }
 
-    public static String getResponseInvitationCodeAuthoritiesAsField(Set<SimpleGrantedAuthority> authorities) {
+    public static String getResponseInvitationsAuthoritiesAsField(Set<SimpleGrantedAuthority> authorities) {
         if (!isEmpty(authorities)) {
             return authorities.stream().map(SimpleGrantedAuthority::getAuthority).sorted().collect(Collectors.joining(", "));
         } else {
-            return "—";
+            return JbstConstants.Symbols.DASH;
         }
     }
 }

@@ -48,7 +48,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
 
         @Bean
-        BaseRegistrationRequestsValidator baseInvitationCodesRequestsValidator() {
+        BaseRegistrationRequestsValidator baseInvitationRequestsValidator() {
             return new AbstractBaseRegistrationRequestsValidator(
                     this.securityJwtPublisher,
                     this.securityJwtIncidentPublisher,

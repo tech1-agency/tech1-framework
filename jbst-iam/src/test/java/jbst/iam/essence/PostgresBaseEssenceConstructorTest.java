@@ -40,7 +40,7 @@ class PostgresBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        PostgresInvitationsRepository invitationCodeRepository() {
+        PostgresInvitationsRepository invitationsRepository() {
             return mock(PostgresInvitationsRepository.class);
         }
 
@@ -52,14 +52,14 @@ class PostgresBaseEssenceConstructorTest {
         @Bean
         EssenceConstructor essenceConstructor() {
             return new PostgresBaseEssenceConstructor(
-                    this.invitationCodeRepository(),
+                    this.invitationsRepository(),
                     this.userRepository(),
                     this.jbstProperties
             );
         }
     }
 
-    private final PostgresInvitationsRepository invitationCodesRepository;
+    private final PostgresInvitationsRepository invitationsRepository;
     private final PostgresUsersRepository usersRepository;
 
     private final EssenceConstructor componentUnderTest;
@@ -67,7 +67,7 @@ class PostgresBaseEssenceConstructorTest {
     @BeforeEach
     void beforeEach() {
         reset(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -75,7 +75,7 @@ class PostgresBaseEssenceConstructorTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.invitationCodesRepository,
+                this.invitationsRepository,
                 this.usersRepository
         );
     }
@@ -99,7 +99,7 @@ class PostgresBaseEssenceConstructorTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    void saveInvitationCodesTest() {
+    void saveInvitationsTest() {
         // Arrange
         var defaultUser = entity(DefaultUser.class);
         var authorities = set345(SimpleGrantedAuthority.class);
@@ -109,7 +109,7 @@ class PostgresBaseEssenceConstructorTest {
 
         // Assert
         var userAC = ArgumentCaptor.forClass(List.class);
-        verify(this.invitationCodesRepository).saveAll(userAC.capture());
+        verify(this.invitationsRepository).saveAll(userAC.capture());
         assertThat(userAC.getValue()).hasSize(10);
     }
 }

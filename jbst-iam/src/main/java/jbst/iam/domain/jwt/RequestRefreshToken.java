@@ -1,6 +1,7 @@
 package jbst.iam.domain.jwt;
 
-import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
+import jbst.foundation.domain.constants.JbstConstants;
+
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record RequestRefreshToken(String value) {
@@ -14,7 +15,7 @@ public record RequestRefreshToken(String value) {
 
     @SuppressWarnings("unused")
     public static RequestRefreshToken unknown() {
-        return new RequestRefreshToken(UNKNOWN);
+        return new RequestRefreshToken(JbstConstants.Strings.UNKNOWN);
     }
 
     public JwtRefreshToken getJwtRefreshToken() {

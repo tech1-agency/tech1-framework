@@ -1,6 +1,7 @@
 package jbst.foundation.domain.geo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.StringConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
@@ -55,7 +56,7 @@ public class GeoLocation {
         if (nonNull(countryCode)) {
             this.countryCode = countryCode;
         } else {
-            this.countryCode = StringConstants.UNKNOWN;
+            this.countryCode = JbstConstants.Strings.UNKNOWN;
         }
         if (nonNull(countryFlag)) {
             this.countryFlag = countryFlag;
@@ -66,7 +67,7 @@ public class GeoLocation {
             this.country = country.trim();
             this.city = nonNull(city) ? city.trim() : null;
         } else {
-            this.country = StringConstants.UNKNOWN;
+            this.country = JbstConstants.Strings.UNKNOWN;
             this.city = null;
         }
         this.exceptionDetails = exceptionDetails;
@@ -78,10 +79,10 @@ public class GeoLocation {
     ) {
         return new GeoLocation(
                 getIpAddrOrUnknown(ipAddress),
-                StringConstants.UNKNOWN,
-                StringConstants.UNKNOWN,
+                JbstConstants.Strings.UNKNOWN,
+                JbstConstants.Strings.UNKNOWN,
                 TestsFlagsConstants.UNKNOWN,
-                StringConstants.UNKNOWN,
+                JbstConstants.Strings.UNKNOWN,
                 exceptionDetails
         );
     }
@@ -158,13 +159,13 @@ public class GeoLocation {
         if (countryPresent) {
             return countryFlagPrefix + this.country + ", " + this.city;
         }
-        return TestsFlagsConstants.UNKNOWN + " " + StringConstants.UNKNOWN;
+        return TestsFlagsConstants.UNKNOWN + " " + JbstConstants.Strings.UNKNOWN;
     }
 
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
     public static String getIpAddrOrUnknown(IPAddress ipAddress) {
-        return nonNull(ipAddress) ? ipAddress.value() : StringConstants.UNKNOWN;
+        return nonNull(ipAddress) ? ipAddress.value() : JbstConstants.Strings.UNKNOWN;
     }
 }

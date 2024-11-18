@@ -2,9 +2,9 @@ package jbst.iam.domain.identifiers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record InvitationCodeId(@NotNull String value) {
@@ -24,7 +24,7 @@ public record InvitationCodeId(@NotNull String value) {
 
     @SuppressWarnings("unused")
     public static InvitationCodeId unknown() {
-        return of(UNKNOWN);
+        return of(JbstConstants.Strings.UNKNOWN);
     }
 
     @JsonValue

@@ -1,6 +1,7 @@
 package jbst.iam.domain.jwt;
 
-import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
+import jbst.foundation.domain.constants.JbstConstants;
+
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record RequestAccessToken(String value) {
@@ -14,7 +15,7 @@ public record RequestAccessToken(String value) {
 
     @SuppressWarnings("unused")
     public static RequestAccessToken unknown() {
-        return new RequestAccessToken(UNKNOWN);
+        return new RequestAccessToken(JbstConstants.Strings.UNKNOWN);
     }
 
     public JwtAccessToken getJwtAccessToken() {

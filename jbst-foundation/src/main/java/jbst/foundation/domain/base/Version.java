@@ -52,7 +52,7 @@ public record Version(@NotNull String value) {
     }
 
     public static Version unknown() {
-        return of(StringConstants.UNKNOWN);
+        return of(JbstConstants.Strings.UNKNOWN);
     }
 
     public static Version dash() {

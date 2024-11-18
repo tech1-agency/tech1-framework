@@ -2,13 +2,13 @@ package jbst.iam.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record JwtAccessToken(@NotNull String value) {
@@ -28,7 +28,7 @@ public record JwtAccessToken(@NotNull String value) {
 
     @SuppressWarnings("unused")
     public static JwtAccessToken unknown() {
-        return of(UNKNOWN);
+        return of(JbstConstants.Strings.UNKNOWN);
     }
 
     public static Set<JwtAccessToken> accessTokens(String... tokens) {

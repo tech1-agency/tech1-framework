@@ -1,6 +1,6 @@
 package jbst.foundation.domain.geo;
 
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
@@ -90,8 +90,8 @@ class GeoLocationTest extends AbstractFolderSerializationRunner {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getIpAddr()).isNotNull();
-        assertThat(actual.getCountry()).isEqualTo(StringConstants.UNKNOWN);
-        assertThat(actual.getCity()).isEqualTo(StringConstants.UNKNOWN);
+        assertThat(actual.getCountry()).isEqualTo(JbstConstants.Strings.UNKNOWN);
+        assertThat(actual.getCity()).isEqualTo(JbstConstants.Strings.UNKNOWN);
         assertThat(actual.getExceptionDetails()).isEqualTo("Location is unknown");
         assertThat(actual.getWhere()).isEqualTo("🏴‍ Unknown, Unknown");
     }

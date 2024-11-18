@@ -7,7 +7,6 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 import jbst.foundation.utilities.http.HttpRequestFieldsUtility;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +35,7 @@ public record Email(@NotNull String value) {
     }
 
     public static Email unknown() {
-        return of(StringConstants.UNKNOWN + "@" + JbstConstants.Domains.HARDCODED);
+        return of(JbstConstants.Strings.UNKNOWN + "@" + JbstConstants.Domains.HARDCODED);
     }
 
     @JsonValue

@@ -7,7 +7,6 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -46,7 +45,7 @@ public record Username(@NotNull String value) {
     }
 
     public static Username unknown() {
-        return of(StringConstants.UNKNOWN);
+        return of(JbstConstants.Strings.UNKNOWN);
     }
 
     public static Username dash() {

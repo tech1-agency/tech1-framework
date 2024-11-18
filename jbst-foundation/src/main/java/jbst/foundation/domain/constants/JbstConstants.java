@@ -82,6 +82,10 @@ public class JbstConstants {
         public static final String ACCOUNT = "ACCOUNT";
         public static final String SUM = "SUM";
         public static final String TOTAL = "TOTAL";
+
+        public static final String UNKNOWN = "Unknown";
+
+        public static final String OPS = "[Ops]";
     }
 
     public static class Swagger {

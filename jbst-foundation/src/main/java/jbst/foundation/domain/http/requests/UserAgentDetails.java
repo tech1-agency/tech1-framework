@@ -1,5 +1,6 @@
 package jbst.foundation.domain.http.requests;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.StringConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,9 +31,9 @@ public class UserAgentDetails {
             String deviceType,
             String exceptionDetails
     ) {
-        this.browser = nonNull(browser) ? browser: StringConstants.UNKNOWN;
-        this.platform = nonNull(platform) ? platform: StringConstants.UNKNOWN;
-        this.deviceType = nonNull(deviceType) ? deviceType: StringConstants.UNKNOWN;
+        this.browser = nonNull(browser) ? browser: JbstConstants.Strings.UNKNOWN;
+        this.platform = nonNull(platform) ? platform: JbstConstants.Strings.UNKNOWN;
+        this.deviceType = nonNull(deviceType) ? deviceType: JbstConstants.Strings.UNKNOWN;
         this.exceptionDetails = exceptionDetails;
     }
 
@@ -40,9 +41,9 @@ public class UserAgentDetails {
             String exceptionDetails
     ) {
         return new UserAgentDetails(
-                StringConstants.UNKNOWN,
-                StringConstants.UNKNOWN,
-                StringConstants.UNKNOWN,
+                JbstConstants.Strings.UNKNOWN,
+                JbstConstants.Strings.UNKNOWN,
+                JbstConstants.Strings.UNKNOWN,
                 exceptionDetails
         );
     }

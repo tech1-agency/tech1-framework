@@ -1,9 +1,9 @@
 package jbst.foundation.domain.http.requests;
 
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -62,9 +62,9 @@ class UserAgentDetailsTest extends AbstractFolderSerializationRunner {
 
         // Assert
         assertThat(actual).isNotNull();
-        assertThat(actual.getBrowser()).isEqualTo(StringConstants.UNKNOWN);
-        assertThat(actual.getPlatform()).isEqualTo(StringConstants.UNKNOWN);
-        assertThat(actual.getDeviceType()).isEqualTo(StringConstants.UNKNOWN);
+        assertThat(actual.getBrowser()).isEqualTo(JbstConstants.Strings.UNKNOWN);
+        assertThat(actual.getPlatform()).isEqualTo(JbstConstants.Strings.UNKNOWN);
+        assertThat(actual.getDeviceType()).isEqualTo(JbstConstants.Strings.UNKNOWN);
         assertThat(actual.getExceptionDetails()).isEqualTo("User agent details are unknown");
         assertThat(actual.getWhat()).isEqualTo("Unknown, Unknown on Unknown");
     }

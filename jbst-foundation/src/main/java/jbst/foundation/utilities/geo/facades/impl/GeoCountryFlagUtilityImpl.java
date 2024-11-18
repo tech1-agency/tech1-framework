@@ -2,6 +2,7 @@ package jbst.foundation.utilities.geo.facades.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.geo.GeoCountryFlag;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -19,7 +20,6 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
@@ -98,7 +98,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             return GeoCountryFlag.unknown().emoji();
         }
         if (isNull(searchKey)) {
-            searchKey = UNKNOWN.toLowerCase();
+            searchKey = JbstConstants.Strings.UNKNOWN.toLowerCase();
         }
         return mappedBy.getOrDefault(searchKey.toLowerCase(), GeoCountryFlag.unknown()).emoji();
     }

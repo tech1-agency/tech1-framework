@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,6 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static jbst.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
-import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -169,7 +169,7 @@ public class Incident {
         if (nonNull(attribute)) {
             return attribute.toString();
         } else {
-            return UNKNOWN;
+            return JbstConstants.Strings.UNKNOWN;
         }
     }
 
@@ -179,7 +179,7 @@ public class Incident {
         if (nonNull(attribute)) {
             return Username.of(attribute.toString());
         } else {
-            return Username.of(UNKNOWN);
+            return Username.unknown();
         }
     }
 }

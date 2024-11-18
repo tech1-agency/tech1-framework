@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -117,8 +117,8 @@ public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
 
     @JsonIgnore
     @Transient
-    public InvitationCodeId invitationCodeId() {
-        return new InvitationCodeId(this.id);
+    public InvitationId invitationCodeId() {
+        return new InvitationId(this.id);
     }
 
     @JsonIgnore

@@ -2,7 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -129,7 +129,7 @@ class AbstractBaseInvitationCodesServiceTest {
     @Test
     void deleteByIdTest() {
         // Arrange
-        var invitationCodeId = InvitationCodeId.random();
+        var invitationCodeId = InvitationId.random();
 
         // Act
         this.componentUnderTest.deleteById(invitationCodeId);

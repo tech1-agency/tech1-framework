@@ -1,7 +1,7 @@
 package jbst.iam.validators.abtracts;
 
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import lombok.AccessLevel;
@@ -33,13 +33,13 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
     }
 
     @Override
-    public void validateDeleteById(Username username, InvitationCodeId invitationCodeId) {
-        var tuplePresence = this.invitationCodesRepository.isPresent(invitationCodeId);
+    public void validateDeleteById(Username username, InvitationId invitationId) {
+        var tuplePresence = this.invitationCodesRepository.isPresent(invitationId);
         if (!tuplePresence.present()) {
-            throw new IllegalArgumentException(entityNotFound("Invitation code", invitationCodeId.value()));
+            throw new IllegalArgumentException(entityNotFound("Invitation code", invitationId.value()));
         }
         if (!username.equals(tuplePresence.value().owner())) {
-            throw new AccessDeniedException(entityAccessDenied("Invitation code", invitationCodeId.value()));
+            throw new AccessDeniedException(entityAccessDenied("Invitation code", invitationId.value()));
         }
     }
 }

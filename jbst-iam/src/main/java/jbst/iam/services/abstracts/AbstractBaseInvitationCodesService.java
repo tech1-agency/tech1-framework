@@ -3,7 +3,7 @@ package jbst.iam.services.abstracts;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
 import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.services.BaseInvitationCodesService;
 import lombok.AccessLevel;
@@ -35,7 +35,7 @@ public abstract class AbstractBaseInvitationCodesService implements BaseInvitati
     }
 
     @Override
-    public void deleteById(InvitationCodeId invitationCodeId) {
-        this.invitationCodesRepository.delete(invitationCodeId);
+    public void deleteById(InvitationId invitationId) {
+        this.invitationCodesRepository.delete(invitationId);
     }
 }

@@ -6,7 +6,7 @@ import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.services.BaseInvitationCodesService;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -47,12 +47,12 @@ public class BaseSecurityInvitationCodesResource {
         this.baseInvitationCodesService.save(owner, request);
     }
 
-    @DeleteMapping("/{invitationCodeId}")
+    @DeleteMapping("/{invitationId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable InvitationCodeId invitationCodeId) {
+    public void deleteById(@PathVariable InvitationId invitationId) {
         var username = this.currentSessionAssistant.getCurrentUsername();
-        this.baseInvitationCodesRequestsValidator.validateDeleteById(username, invitationCodeId);
-        this.baseInvitationCodesService.deleteById(invitationCodeId);
+        this.baseInvitationCodesRequestsValidator.validateDeleteById(username, invitationId);
+        this.baseInvitationCodesService.deleteById(invitationId);
     }
 }
 

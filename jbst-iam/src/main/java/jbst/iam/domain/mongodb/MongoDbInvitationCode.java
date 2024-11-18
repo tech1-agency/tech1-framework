@@ -3,7 +3,7 @@ package jbst.iam.domain.mongodb;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -107,8 +107,8 @@ public class MongoDbInvitationCode {
 
     @JsonIgnore
     @Transient
-    public InvitationCodeId invitationCodeId() {
-        return new InvitationCodeId(this.id);
+    public InvitationId invitationCodeId() {
+        return new InvitationId(this.id);
     }
 
     @JsonIgnore

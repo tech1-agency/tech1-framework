@@ -3,7 +3,7 @@ package jbst.iam.mongo.repositories;
 import jbst.iam.configurations.ConfigurationMongoRepositories;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.mongodb.MongoDbInvitationCode;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
 import jbst.iam.mongo.configs.TestsConfigurationMongoRepositoriesRunner;
@@ -56,7 +56,7 @@ class MongoInvitationCodesRepositoryIT extends TestsConfigurationMongoRepositori
         // Arrange
         var saved = this.invitationCodesRepository.saveAll(MongoDbInvitationCode.dummies1());
 
-        var notExistentInvitationCodeId = entity(InvitationCodeId.class);
+        var notExistentInvitationCodeId = entity(InvitationId.class);
         var notExistentInvitationCode = randomStringLetterOrNumbersOnly(InvitationCode.DEFAULT_INVITATION_CODE_LENGTH);
 
         var savedInvitationCode = saved.get(0);
@@ -111,7 +111,7 @@ class MongoInvitationCodesRepositoryIT extends TestsConfigurationMongoRepositori
     void deletionIntegrationTests() {
         // Arrange
         var saved = this.invitationCodesRepository.saveAll(MongoDbInvitationCode.dummies1());
-        var notExistentInvitationCodeId = entity(InvitationCodeId.class);
+        var notExistentInvitationCodeId = entity(InvitationId.class);
         var existentInvitationCodeId = saved.get(0).invitationCodeId();
 
         // Act-Assert-0
@@ -150,7 +150,7 @@ class MongoInvitationCodesRepositoryIT extends TestsConfigurationMongoRepositori
         // Act-Assert-2
         var existentInvitationCodeId = this.invitationCodesRepository.saveAs(InvitationCode.random());
         assertThat(this.invitationCodesRepository.count()).isEqualTo(7);
-        var notExistentInvitationCodeId = entity(InvitationCodeId.class);
+        var notExistentInvitationCodeId = entity(InvitationId.class);
         assertThat(this.invitationCodesRepository.isPresent(existentInvitationCodeId).present()).isTrue();
         assertThat(this.invitationCodesRepository.isPresent(notExistentInvitationCodeId).present()).isFalse();
 

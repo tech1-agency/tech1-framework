@@ -5,7 +5,7 @@ import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
 import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.services.BaseInvitationCodesService;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
@@ -103,7 +103,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
     void deleteByIdTest() throws Exception {
         // Arrange
         var username= entity(Username.class);
-        var invitationCodeId = entity(InvitationCodeId.class);
+        var invitationCodeId = entity(InvitationId.class);
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act

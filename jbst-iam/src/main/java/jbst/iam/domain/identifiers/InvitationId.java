@@ -7,23 +7,23 @@ import org.jetbrains.annotations.NotNull;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
-public record InvitationCodeId(@NotNull String value) {
+public record InvitationId(@NotNull String value) {
 
     @JsonCreator
-    public static InvitationCodeId of(String value) {
-        return new InvitationCodeId(value);
+    public static InvitationId of(String value) {
+        return new InvitationId(value);
     }
 
-    public static InvitationCodeId hardcoded() {
+    public static InvitationId hardcoded() {
         return of("5EFCB2583361E1C7071E");
     }
 
-    public static InvitationCodeId random() {
-        return new InvitationCodeId(randomString());
+    public static InvitationId random() {
+        return new InvitationId(randomString());
     }
 
     @SuppressWarnings("unused")
-    public static InvitationCodeId unknown() {
+    public static InvitationId unknown() {
         return of(JbstConstants.Strings.UNKNOWN);
     }
 

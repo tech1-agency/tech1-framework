@@ -3,7 +3,7 @@ package jbst.iam.repositories.postgres;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
 import jbst.foundation.domain.base.Username;
@@ -26,8 +26,8 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<InvitationCode> isPresent(InvitationCodeId invitationCodeId) {
-        return this.findById(invitationCodeId.value())
+    default TuplePresence<InvitationCode> isPresent(InvitationId invitationId) {
+        return this.findById(invitationId.value())
                 .map(entity -> present(entity.invitationCode()))
                 .orElseGet(TuplePresence::absent);
     }
@@ -51,19 +51,19 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
 
     long countByOwner(Username username);
 
-    default void delete(InvitationCodeId invitationCodeId) {
-        var tuplePresence = this.isPresent(invitationCodeId);
+    default void delete(InvitationId invitationId) {
+        var tuplePresence = this.isPresent(invitationId);
         if (tuplePresence.present()) {
-            this.deleteById(invitationCodeId.value());
+            this.deleteById(invitationId.value());
         }
     }
 
-    default InvitationCodeId saveAs(InvitationCode invitationCode) {
+    default InvitationId saveAs(InvitationCode invitationCode) {
         var entity = this.save(new PostgresDbInvitationCode(invitationCode));
         return entity.invitationCodeId();
     }
 
-    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams request) {
+    default InvitationId saveAs(Username owner, RequestNewInvitationCodeParams request) {
         var invitationCode = new PostgresDbInvitationCode(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())

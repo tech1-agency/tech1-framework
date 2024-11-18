@@ -3,7 +3,7 @@ package jbst.iam.repositories.mongodb;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.domain.mongodb.MongoDbInvitationCode;
 import jbst.foundation.domain.base.Username;
@@ -23,8 +23,8 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<InvitationCode> isPresent(InvitationCodeId invitationCodeId) {
-        return this.findById(invitationCodeId.value())
+    default TuplePresence<InvitationCode> isPresent(InvitationId invitationId) {
+        return this.findById(invitationId.value())
                 .map(entity -> present(entity.invitationCode()))
                 .orElseGet(TuplePresence::absent);
     }
@@ -48,16 +48,16 @@ public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbI
 
     long countByOwner(Username username);
 
-    default void delete(InvitationCodeId invitationCodeId) {
-        this.deleteById(invitationCodeId.value());
+    default void delete(InvitationId invitationId) {
+        this.deleteById(invitationId.value());
     }
 
-    default InvitationCodeId saveAs(InvitationCode invitationCode) {
+    default InvitationId saveAs(InvitationCode invitationCode) {
         var entity = this.save(new MongoDbInvitationCode(invitationCode));
         return entity.invitationCodeId();
     }
 
-    default InvitationCodeId saveAs(Username owner, RequestNewInvitationCodeParams request) {
+    default InvitationId saveAs(Username owner, RequestNewInvitationCodeParams request) {
         var invitationCode = new MongoDbInvitationCode(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())

@@ -1,7 +1,7 @@
 package jbst.iam.domain.dto.responses;
 
 import jbst.foundation.domain.base.Username;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 
 import java.util.Comparator;
 
@@ -10,7 +10,7 @@ import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 public record ResponseInvitationCode(
-        InvitationCodeId id,
+        InvitationId id,
         Username owner,
         String authorities,
         String value,
@@ -20,7 +20,7 @@ public record ResponseInvitationCode(
     public static final Comparator<ResponseInvitationCode> INVITATION_CODE = comparing(ResponseInvitationCode::usage).thenComparing(ResponseInvitationCode::value);
 
     public static ResponseInvitationCode of(
-            InvitationCodeId id,
+            InvitationId id,
             Username owner,
             String authorities,
             String value,
@@ -38,7 +38,7 @@ public record ResponseInvitationCode(
 
     public static ResponseInvitationCode random(Username owner) {
         return ResponseInvitationCode.of(
-                InvitationCodeId.random(),
+                InvitationId.random(),
                 owner,
                 "admin",
                 randomStringLetterOrNumbersOnly(40),
@@ -48,7 +48,7 @@ public record ResponseInvitationCode(
 
     public static ResponseInvitationCode random(Username owner, Username invited) {
         return ResponseInvitationCode.of(
-                InvitationCodeId.random(),
+                InvitationId.random(),
                 owner,
                 "admin",
                 randomStringLetterOrNumbersOnly(40),

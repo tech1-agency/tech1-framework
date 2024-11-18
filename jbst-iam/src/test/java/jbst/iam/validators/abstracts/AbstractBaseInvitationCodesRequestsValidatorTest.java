@@ -6,7 +6,7 @@ import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.identifiers.InvitationCodeId;
+import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
@@ -93,7 +93,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     void validateDeleteByIdNotFoundTest() {
         // Arrange
         var username = Username.random();
-        var invitationCodeId = InvitationCodeId.random();
+        var invitationCodeId = InvitationId.random();
         when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.absent());
 
         // Act
@@ -110,7 +110,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     void validateDeleteByIdAccessDeniedTest() {
         // Arrange
         var username = Username.random();
-        var invitationCodeId = InvitationCodeId.random();
+        var invitationCodeId = InvitationId.random();
         var invitationCode = InvitationCode.random();
         when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(invitationCode));
 
@@ -127,7 +127,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     @Test
     void validateDeleteByIdOkTest() {
         // Arrange
-        var invitationCodeId = InvitationCodeId.random();
+        var invitationCodeId = InvitationId.random();
         var invitationCode = InvitationCode.random();
         when(this.invitationCodesRepository.isPresent(invitationCodeId)).thenReturn(TuplePresence.present(invitationCode));
 

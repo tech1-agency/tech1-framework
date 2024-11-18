@@ -6,7 +6,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -34,12 +34,12 @@ public record ServerName(@NotNull String value) {
     }
 
     public static ServerName dash() {
-        return of(StringConstants.DASH);
+        return of(JbstConstants.Symbols.DASH);
     }
 
     @SuppressWarnings("unused")
     public static ServerName hyphen() {
-        return of(StringConstants.HYPHEN);
+        return of(JbstConstants.Symbols.HYPHEN);
     }
 
     @JsonValue

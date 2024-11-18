@@ -6,7 +6,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 import jbst.foundation.domain.exceptions.random.IllegalEnumException;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import lombok.experimental.UtilityClass;
@@ -170,7 +169,7 @@ public class RandomUtility {
     }
 
     public static String randomString() {
-        return UUID.randomUUID().toString().replace("-", StringConstants.EMPTY);
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
     public static String randomStringLetterOrNumbersOnly(int size) {

@@ -2,6 +2,7 @@ package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.StringConstants;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,12 +37,12 @@ public record ObjectId(@NotNull String value) {
     }
 
     public static ObjectId dash() {
-        return of(StringConstants.DASH);
+        return of(JbstConstants.Symbols.DASH);
     }
 
     @SuppressWarnings("unused")
     public static ObjectId hyphen() {
-        return of(StringConstants.HYPHEN);
+        return of(JbstConstants.Symbols.HYPHEN);
     }
 
     @JsonValue

@@ -4,13 +4,6 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class StringConstants {
-    public static final String COMMA = ",";
-    public static final String DASH = "—";
-    public static final String EMPTY = "";
-    public static final String HYPHEN = "-";
-    public static final String SEMICOLON = ";";
-    public static final String SLASH = "/";
-
     public static final String COMMA_COLLECTORS = ", ";
 
     public static final String UNDEFINED = "[?]";

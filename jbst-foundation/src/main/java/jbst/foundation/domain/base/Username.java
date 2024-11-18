@@ -6,6 +6,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.StringConstants;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,12 +50,12 @@ public record Username(@NotNull String value) {
     }
 
     public static Username dash() {
-        return of(StringConstants.DASH);
+        return of(JbstConstants.Symbols.DASH);
     }
 
     @SuppressWarnings("unused")
     public static Username hyphen() {
-        return of(StringConstants.HYPHEN);
+        return of(JbstConstants.Symbols.HYPHEN);
     }
 
     public static List<String> asStrings(Set<Username> usernames) {

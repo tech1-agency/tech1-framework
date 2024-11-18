@@ -95,7 +95,7 @@ public class GeoLocation {
                 StringConstants.UNDEFINED,
                 TestsFlagsConstants.UNKNOWN,
                 StringConstants.UNDEFINED,
-                StringConstants.EMPTY
+                ""
         );
     }
 
@@ -112,7 +112,7 @@ public class GeoLocation {
                 countryCode,
                 countryFlag,
                 city,
-                StringConstants.EMPTY
+                ""
         );
     }
 
@@ -151,7 +151,7 @@ public class GeoLocation {
     public String getWhere() {
         var countryPresent = hasLength(this.country);
         var cityPresent = hasLength(this.city);
-        var countryFlagPrefix = hasLength(this.countryFlag) ? this.countryFlag + " " : StringConstants.EMPTY;
+        var countryFlagPrefix = hasLength(this.countryFlag) ? this.countryFlag + " " : "";
         if (countryPresent && !cityPresent) {
             return countryFlagPrefix + this.country;
         }

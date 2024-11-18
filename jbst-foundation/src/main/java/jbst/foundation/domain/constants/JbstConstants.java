@@ -20,11 +20,13 @@ public class JbstConstants {
         public static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
     }
 
+    @SuppressWarnings("unused")
     public class BigIntegers {
         public static final BigInteger MINUS_ONE = BigInteger.valueOf(-1);
         public static final BigInteger ONE_HUNDRED = BigInteger.valueOf(100);
     }
 
+    @SuppressWarnings("unused")
     public class DateTimeFormatters {
         public static final DateTimeFormatter DTF10 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.SSS");
         public static final DateTimeFormatter DTF11 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -88,6 +90,15 @@ public class JbstConstants {
                 "/swagger-ui.html",
                 "/swagger-ui/**"
         );
+    }
+
+    public static class Symbols {
+        public static final String COMMA = ",";
+        public static final String DASH = "—";
+        public static final String EMPTY = "";
+        public static final String HYPHEN = "-";
+        public static final String SEMICOLON = ";";
+        public static final String SLASH = "/";
     }
 
     public static class ZoneIds {

@@ -2,7 +2,7 @@ package jbst.foundation.utilities.http;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import lombok.experimental.UtilityClass;
 
@@ -22,7 +22,7 @@ public class HttpCookieUtility {
             int maxAge
     ) {
         var cookie = new Cookie(cookieKey, cookieValue);
-        cookie.setPath(StringConstants.SLASH);
+        cookie.setPath(JbstConstants.Symbols.SLASH);
         cookie.setDomain(domain);
         cookie.setHttpOnly(httpOnly);
         cookie.setMaxAge(maxAge);

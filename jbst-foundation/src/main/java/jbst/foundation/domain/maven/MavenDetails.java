@@ -1,6 +1,7 @@
 package jbst.foundation.domain.maven;
 
 import jbst.foundation.domain.base.Version;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.StringConstants;
 
 public record MavenDetails(
@@ -18,6 +19,6 @@ public record MavenDetails(
     }
 
     public static MavenDetails dash() {
-        return new MavenDetails(StringConstants.DASH, StringConstants.DASH, Version.dash());
+        return new MavenDetails(JbstConstants.Symbols.DASH, JbstConstants.Symbols.DASH, Version.dash());
     }
 }

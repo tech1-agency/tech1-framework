@@ -1,8 +1,7 @@
 package jbst.foundation.feigns.domain.spring.actuator.info.git;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import static jbst.foundation.domain.constants.StringConstants.DASH;
+import jbst.foundation.domain.constants.JbstConstants;
 
 public record SpringBootActuatorInfoCommit(
         @JsonProperty("id") String id,
@@ -18,8 +17,8 @@ public record SpringBootActuatorInfoCommit(
 
     public static SpringBootActuatorInfoCommit dash() {
         return new SpringBootActuatorInfoCommit(
-                DASH,
-                DASH
+                JbstConstants.Symbols.DASH,
+                JbstConstants.Symbols.DASH
         );
     }
 }

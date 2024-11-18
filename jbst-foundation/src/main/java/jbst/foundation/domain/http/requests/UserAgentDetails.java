@@ -52,7 +52,7 @@ public class UserAgentDetails {
                 StringConstants.UNDEFINED,
                 StringConstants.UNDEFINED,
                 StringConstants.UNDEFINED,
-                StringConstants.EMPTY
+                ""
         );
     }
 
@@ -65,7 +65,7 @@ public class UserAgentDetails {
                 browser,
                 platform,
                 deviceType,
-                StringConstants.EMPTY
+                ""
         );
     }
 

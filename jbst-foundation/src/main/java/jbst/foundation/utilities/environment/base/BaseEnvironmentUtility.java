@@ -1,6 +1,6 @@
 package jbst.foundation.utilities.environment.base;
 
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class BaseEnvironmentUtility implements EnvironmentUtility {
     public String getOneActiveProfileOrDash() {
         var activeProfiles = new ArrayList<>(List.of(this.environment.getActiveProfiles()));
         if (isEmpty(activeProfiles) || activeProfiles.size() > 1) {
-            return StringConstants.DASH;
+            return JbstConstants.Symbols.DASH;
         } else {
             return activeProfiles.get(0);
         }

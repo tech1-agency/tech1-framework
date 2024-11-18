@@ -6,6 +6,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.constants.StringConstants;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,12 +56,12 @@ public record Version(@NotNull String value) {
     }
 
     public static Version dash() {
-        return of(StringConstants.DASH);
+        return of(JbstConstants.Symbols.DASH);
     }
 
     @SuppressWarnings("unused")
     public static Version hyphen() {
-        return of(StringConstants.HYPHEN);
+        return of(JbstConstants.Symbols.HYPHEN);
     }
 
     @JsonValue

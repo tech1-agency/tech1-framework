@@ -1,6 +1,5 @@
 package jbst.foundation.domain.tuples;
 
-import jbst.foundation.domain.constants.StringConstants;
 import lombok.Data;
 
 // Lombok
@@ -12,7 +11,7 @@ public class TupleExceptionDetails {
     public static TupleExceptionDetails ok() {
         return new TupleExceptionDetails(
                 true,
-                StringConstants.EMPTY
+                ""
         );
     }
 

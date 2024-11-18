@@ -3,13 +3,13 @@ package jbst.foundation.feigns.domain.spring.actuator.info;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jbst.foundation.domain.base.Version;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.maven.MavenDetails;
 import jbst.foundation.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
 
 import java.util.ArrayList;
 
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.constants.StringConstants.DASH;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 /**
@@ -38,7 +38,7 @@ public record SpringBootActuatorInfo(
         return new SpringBootActuatorInfo(
                 SpringBootActuatorInfoGit.dash(),
                 null,
-                DASH,
+                JbstConstants.Symbols.DASH,
                 MavenDetails.dash()
         );
     }
@@ -54,13 +54,13 @@ public record SpringBootActuatorInfo(
         } else if (!isEmpty(this.activeProfiles)) {
             return this.activeProfiles.get(0);
         } else {
-            return DASH;
+            return JbstConstants.Symbols.DASH;
         }
     }
 
     @JsonIgnore
     public boolean isProfileDash() {
-        return DASH.equals(this.getProfileOrDash());
+        return JbstConstants.Symbols.DASH.equals(this.getProfileOrDash());
     }
 
     @JsonIgnore

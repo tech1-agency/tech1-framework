@@ -6,7 +6,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -35,12 +35,12 @@ public record Password(@NotNull String value) {
     }
 
     public static Password dash() {
-        return of(StringConstants.DASH);
+        return of(JbstConstants.Symbols.DASH);
     }
 
     @SuppressWarnings("unused")
     public static Password hyphen() {
-        return of(StringConstants.HYPHEN);
+        return of(JbstConstants.Symbols.HYPHEN);
     }
 
     public void assertEqualsOrThrow(Password password) {

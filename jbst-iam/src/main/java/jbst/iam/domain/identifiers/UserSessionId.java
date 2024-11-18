@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.constants.JbstConstants;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.domain.constants.StringConstants.UNDEFINED;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record UserSessionId(@NotNull String value) {
@@ -16,7 +15,7 @@ public record UserSessionId(@NotNull String value) {
     }
 
     public static UserSessionId undefined() {
-        return new UserSessionId(UNDEFINED);
+        return new UserSessionId(JbstConstants.Strings.UNDEFINED);
     }
 
     public static UserSessionId random() {

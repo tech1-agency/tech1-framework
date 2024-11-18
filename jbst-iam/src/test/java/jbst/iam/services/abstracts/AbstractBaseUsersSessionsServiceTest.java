@@ -1,6 +1,18 @@
 package jbst.iam.services.abstracts;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
+import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.tuples.TupleToggle;
+import jbst.foundation.utils.UserMetadataUtils;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataAdd;
 import jbst.iam.domain.events.EventSessionUserRequestMetadataRenew;
@@ -31,28 +43,12 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
-import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
-import jbst.foundation.domain.tuples.TuplePresence;
-import jbst.foundation.domain.tuples.TupleToggle;
-import jbst.foundation.utils.UserMetadataUtils;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static jbst.iam.domain.db.UserSession.randomPersistedSession;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.mockito.Mockito.*;
-import static jbst.foundation.domain.constants.StringConstants.UNDEFINED;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
@@ -60,6 +56,10 @@ import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.iam.domain.db.UserSession.randomPersistedSession;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
@@ -215,7 +215,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(whereTuple3.b()).isEqualTo(TestsFlagsConstants.UNKNOWN);
         assertThat(whereTuple3.c()).isEqualTo("Processing. Please wait...");
         var whatTuple2 = requestMetadata.getWhatTuple2();
-        assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.a()).isEqualTo(JbstConstants.Strings.UNDEFINED);
         assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.id()).isNotNull();
         var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);
@@ -261,7 +261,7 @@ class AbstractBaseUsersSessionsServiceTest {
         assertThat(whereTuple3.b()).isEqualTo(TestsFlagsConstants.UNKNOWN);
         assertThat(whereTuple3.c()).isEqualTo("Processing. Please wait...");
         var whatTuple2 = requestMetadata.getWhatTuple2();
-        assertThat(whatTuple2.a()).isEqualTo(UNDEFINED);
+        assertThat(whatTuple2.a()).isEqualTo(JbstConstants.Strings.UNDEFINED);
         assertThat(whatTuple2.b()).isEqualTo("—");
         assertThat(actualDbUserSession.id()).isNotNull();
         var eventAC = ArgumentCaptor.forClass(EventSessionUserRequestMetadataAdd.class);

@@ -7,7 +7,6 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -48,7 +47,7 @@ public record Version(@NotNull String value) {
     }
 
     public static Version undefined() {
-        return of(StringConstants.UNDEFINED);
+        return of(JbstConstants.Strings.UNDEFINED);
     }
 
     public static Version unknown() {

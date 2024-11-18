@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
-import static jbst.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -92,7 +91,7 @@ public class Incident {
         }
 
         if (!isEmpty(params)) {
-            this.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(COMMA_COLLECTORS)));
+            this.add(IncidentAttributes.Keys.PARAMS, params.stream().map(Object::toString).collect(Collectors.joining(JbstConstants.Symbols.COLLECTORS_COMMA_SPACE)));
         }
     }
 

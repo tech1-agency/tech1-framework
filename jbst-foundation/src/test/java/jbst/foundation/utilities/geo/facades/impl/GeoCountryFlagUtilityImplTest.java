@@ -21,7 +21,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.constants.StringConstants.UNDEFINED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
@@ -36,7 +35,7 @@ class GeoCountryFlagUtilityImplTest {
                 Arguments.of("Portugal", "PT", TestsFlagsConstants.PORTUGAL),
                 Arguments.of("United States", "US", TestsFlagsConstants.USA),
                 Arguments.of(JbstConstants.Strings.UNKNOWN, JbstConstants.Strings.UNKNOWN, TestsFlagsConstants.UNKNOWN),
-                Arguments.of(UNDEFINED, UNDEFINED, TestsFlagsConstants.UNKNOWN)
+                Arguments.of(JbstConstants.Strings.UNDEFINED, JbstConstants.Strings.UNDEFINED, TestsFlagsConstants.UNKNOWN)
         );
     }
 

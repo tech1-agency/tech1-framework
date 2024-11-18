@@ -1,6 +1,6 @@
 package jbst.foundation.domain.tests.io;
 
-import jbst.foundation.domain.constants.StringConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
@@ -24,6 +24,6 @@ public class TestsIOUtils {
         }
         var file = new File(resource.getFile());
         var lines = readAllLines(Paths.get(file.getAbsolutePath()), defaultCharset());
-        return String.join(StringConstants.NEWLINE, lines);
+        return String.join(JbstConstants.Symbols.NEWLINE, lines);
     }
 }

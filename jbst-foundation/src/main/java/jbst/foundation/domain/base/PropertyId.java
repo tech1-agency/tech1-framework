@@ -3,7 +3,6 @@ package jbst.foundation.domain.base;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 import org.jetbrains.annotations.NotNull;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -23,7 +22,7 @@ public record PropertyId(@NotNull String value) {
     }
 
     public static PropertyId undefined() {
-        return of(StringConstants.UNDEFINED);
+        return of(JbstConstants.Strings.UNDEFINED);
     }
 
     public static PropertyId dash() {

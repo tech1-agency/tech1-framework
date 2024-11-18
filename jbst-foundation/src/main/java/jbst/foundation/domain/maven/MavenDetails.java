@@ -2,7 +2,6 @@ package jbst.foundation.domain.maven;
 
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 
 public record MavenDetails(
         String groupId,
@@ -15,7 +14,7 @@ public record MavenDetails(
     }
 
     public static MavenDetails undefined() {
-        return new MavenDetails(StringConstants.UNDEFINED, StringConstants.UNDEFINED, Version.undefined());
+        return new MavenDetails(JbstConstants.Strings.UNDEFINED, JbstConstants.Strings.UNDEFINED, Version.undefined());
     }
 
     public static MavenDetails dash() {

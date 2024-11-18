@@ -1,11 +1,11 @@
 package jbst.foundation.utilities.strings;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static jbst.foundation.domain.constants.StringConstants.UNDEFINED;
 
 @UtilityClass
 public class StringUtility {
@@ -24,7 +24,7 @@ public class StringUtility {
 
     public static String getShortenValueOrUndefined(String value, int maxLength) {
         if (isNull(value)) {
-            return UNDEFINED;
+            return JbstConstants.Strings.UNDEFINED;
         }
         if (value.length() <= 3) {
             return value;

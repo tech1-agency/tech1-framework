@@ -1,7 +1,6 @@
 package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.constants.StringConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -50,9 +49,9 @@ public class UserAgentDetails {
 
     public static UserAgentDetails processing() {
         return new UserAgentDetails(
-                StringConstants.UNDEFINED,
-                StringConstants.UNDEFINED,
-                StringConstants.UNDEFINED,
+                JbstConstants.Strings.UNDEFINED,
+                JbstConstants.Strings.UNDEFINED,
+                JbstConstants.Strings.UNDEFINED,
                 ""
         );
     }

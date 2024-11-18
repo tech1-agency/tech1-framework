@@ -1,5 +1,6 @@
 package jbst.foundation.utilities.collections;
 
+import jbst.foundation.domain.constants.JbstConstants;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -10,7 +11,6 @@ import java.util.stream.Collectors;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static jbst.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static org.springframework.util.CollectionUtils.*;
 
 @UtilityClass
@@ -95,6 +95,6 @@ public class CollectionUtility {
     }
 
     public static String baseJoiningRaw(Collection<?> collection) {
-        return collection.stream().map(Object::toString).sorted().collect(Collectors.joining(COMMA_COLLECTORS));
+        return collection.stream().map(Object::toString).sorted().collect(Collectors.joining(JbstConstants.Symbols.COLLECTORS_COMMA_SPACE));
     }
 }

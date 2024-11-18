@@ -1,2 +1,2 @@
-### Changelog [v3.0.12]
+### Changelog [v1.1]
 — TBD

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 
 // Swagger
-@Tag(name = "[jbst] UsersSessions API")
+@Tag(name = "[jbst] Sessions API")
 // Spring
 @Slf4j
 @AbstractJbstBaseSecurityResource

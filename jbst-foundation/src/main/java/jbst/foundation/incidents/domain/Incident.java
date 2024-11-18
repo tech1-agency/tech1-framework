@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
@@ -126,12 +125,12 @@ public class Incident {
     }
 
     public void print() {
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(FRAMEWORK_INCIDENT_PREFIX + " IncidentType: `{}`", this.getType());
         this.attributes.entrySet().stream()
                 .filter(entry -> !IncidentAttributes.Keys.TYPE.equals(entry.getKey()))
                 .forEach(entry -> LOGGER.info(entry.getKey() + " — " + entry.getValue()));
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 
     public void setType(String type) {

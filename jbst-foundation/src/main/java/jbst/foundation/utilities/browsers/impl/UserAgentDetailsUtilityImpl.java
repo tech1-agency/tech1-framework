@@ -4,6 +4,7 @@ import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
@@ -35,7 +35,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var userAgentConfigs = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs();
         LOGGER.info("{} User agent — {}", FRAMEWORK_UTILITIES_PREFIX, Toggle.of(userAgentConfigs.isEnabled()));
         if (userAgentConfigs.isEnabled()) {
@@ -59,7 +59,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
             configuredFlag = false;
             exceptionMessageOrNull = contactDevelopmentTeam("User agent configuration failure");
         }
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         this.userAgentParser = userAgentParserOrNull;
         this.configured = configuredFlag;
         this.exceptionMessage = exceptionMessageOrNull;

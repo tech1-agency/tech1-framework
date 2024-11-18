@@ -1,16 +1,16 @@
 package jbst.iam.startup;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.enums.Toggle;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.essence.AbstractEssenceConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.enums.Toggle;
-import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 
 @Slf4j
 @Service
@@ -25,7 +25,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
 
     @Override
     public void onStartup() {
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(STARTUP_MESSAGE, Status.STARTED);
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
@@ -41,6 +41,6 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
         }
 
         LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED);
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 }

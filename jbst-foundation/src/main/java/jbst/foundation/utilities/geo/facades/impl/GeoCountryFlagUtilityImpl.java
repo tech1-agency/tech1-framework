@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
@@ -38,7 +37,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             JbstProperties jbstProperties
     ) {
         this.jbstProperties = jbstProperties;
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
         var geoCountryFlagsConfigs = this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
         LOGGER.info("{} Geo country flags {} json — {}", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
         if (geoCountryFlagsConfigs.isEnabled()) {
@@ -71,7 +70,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
             this.mappedByCountryName = new HashMap<>();
             this.mappedByCountryCode = new HashMap<>();
         }
-        LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
+        LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 
     @Override

@@ -118,6 +118,8 @@ public class JbstConstants {
 
     @SuppressWarnings("unused")
     public static class Symbols {
+        public static final String LINE_SEPARATOR_INTERPUNCT = "··································································································";
+
         public static final String COMMA = ",";
         public static final String DASH = "—";
         public static final String EMPTY = "";

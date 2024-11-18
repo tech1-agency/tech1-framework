@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum EnumValue2 implements EnumValue<String> {
     JBST("jbst"),
-    FRAMEWORK("Framework"),
+    TESTS("Tests"),
     UNKNOWN("Unknown");
 
     private final String value;

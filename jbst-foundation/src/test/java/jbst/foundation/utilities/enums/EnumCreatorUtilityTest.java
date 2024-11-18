@@ -23,33 +23,33 @@ class EnumCreatorUtilityTest {
                 Arguments.of("JBst", false, EnumValue1.JBST, null),
                 Arguments.of("jbst", false, EnumValue1.JBST, null),
                 Arguments.of("jbST", false, EnumValue1.JBST, null),
-                Arguments.of("Framework", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("framework", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("fraMEwork", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("jbst2", true, null, "Options: `[Framework, jbst]`. Unexpected: `[jbst2]`"),
-                Arguments.of("Server", true, null, "Options: `[Framework, jbst]`. Unexpected: `[Server]`"),
-                Arguments.of(null, true, null, "Options: `[Framework, jbst]`. Unexpected: `[null]`")
+                Arguments.of("Tests", false, EnumValue1.TESTS, null),
+                Arguments.of("TestS", false, EnumValue1.TESTS, null),
+                Arguments.of("TeSTs", false, EnumValue1.TESTS, null),
+                Arguments.of("jbst2", true, null, "Options: `[Tests, jbst]`. Unexpected: `[jbst2]`"),
+                Arguments.of("Server", true, null, "Options: `[Tests, jbst]`. Unexpected: `[Server]`"),
+                Arguments.of(null, true, null, "Options: `[Tests, jbst]`. Unexpected: `[null]`")
         );
     }
 
     private static Stream<Arguments> findEnumByNameOrThrowArgs() {
         return Stream.of(
                 Arguments.of("jbst", false, EnumValue1.JBST, null),
-                Arguments.of("jbST", true, null, "Options: `[Framework, jbst]`. Unexpected: `[jbST]`"),
-                Arguments.of("JBst", true, null, "Options: `[Framework, jbst]`. Unexpected: `[JBst]`"),
-                Arguments.of("FRAMEWORK", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("framework", true, null, "Options: `[Framework, jbst]`. Unexpected: `[framework]`"),
-                Arguments.of("fraMEwork", true, null, "Options: `[Framework, jbst]`. Unexpected: `[fraMEwork]`"),
-                Arguments.of("jbst2", true, null, "Options: `[Framework, jbst]`. Unexpected: `[jbst2]`"),
-                Arguments.of("Server", true, null, "Options: `[Framework, jbst]`. Unexpected: `[Server]`"),
-                Arguments.of(null, true, null, "Options: `[Framework, jbst]`. Unexpected: `[null]`")
+                Arguments.of("jbST", true, null, "Options: `[Tests, jbst]`. Unexpected: `[jbST]`"),
+                Arguments.of("JBst", true, null, "Options: `[Tests, jbst]`. Unexpected: `[JBst]`"),
+                Arguments.of("Tests", false, EnumValue1.TESTS, null),
+                Arguments.of("TestS", true, null, "Options: `[Tests, jbst]`. Unexpected: `[TestS]`"),
+                Arguments.of("TesTs", true, null, "Options: `[Tests, jbst]`. Unexpected: `[TesTs]`"),
+                Arguments.of("jbst2", true, null, "Options: `[Tests, jbst]`. Unexpected: `[jbst2]`"),
+                Arguments.of("Server", true, null, "Options: `[Tests, jbst]`. Unexpected: `[Server]`"),
+                Arguments.of(null, true, null, "Options: `[Tests, jbst]`. Unexpected: `[null]`")
         );
     }
 
     private static Stream<Arguments> findEnumByValueOrUnknownArgs() {
         return Stream.of(
                 Arguments.of("jbst", EnumValue2.JBST),
-                Arguments.of("Framework", EnumValue2.FRAMEWORK),
+                Arguments.of("Tests", EnumValue2.TESTS),
                 Arguments.of("123", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),
                 Arguments.of(null, EnumValue2.UNKNOWN)
@@ -59,7 +59,7 @@ class EnumCreatorUtilityTest {
     private static Stream<Arguments> findEnumByValueIgnoreCaseOrUnknownArgs() {
         return Stream.of(
                 Arguments.of("JBST", EnumValue2.JBST),
-                Arguments.of("framework", EnumValue2.FRAMEWORK),
+                Arguments.of("tests", EnumValue2.TESTS),
                 Arguments.of("TTT", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),
                 Arguments.of(null, EnumValue2.UNKNOWN)
@@ -83,7 +83,7 @@ class EnumCreatorUtilityTest {
     private static Stream<Arguments> findEnumByNameOrUnknownArgs() {
         return Stream.of(
                 Arguments.of("JBST", EnumValue2.JBST),
-                Arguments.of("FRAMEWORK", EnumValue2.FRAMEWORK),
+                Arguments.of("TESTS", EnumValue2.TESTS),
                 Arguments.of("123", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),
                 Arguments.of(null, EnumValue2.UNKNOWN)

@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum EnumValue1 implements EnumValue<String> {
     JBST("jbst"),
-    FRAMEWORK("Framework");
+    TESTS("Tests");
 
     private final String value;
 

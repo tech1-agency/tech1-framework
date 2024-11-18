@@ -55,8 +55,7 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
     // PRIVATE METHODS
     // =================================================================================================================
     private boolean isEndpoint(HttpServletRequest request, String requestMapping) {
-        var frameworkBasePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
-        var requestURI = this.contextPath + frameworkBasePathPrefix + requestMapping;
+        var requestURI = this.contextPath + this.jbstProperties.getMvcConfigs().getBasePathPrefix() + requestMapping;
         return requestURI.equals(request.getRequestURI());
     }
 }

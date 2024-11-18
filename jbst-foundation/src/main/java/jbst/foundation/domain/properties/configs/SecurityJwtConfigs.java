@@ -123,7 +123,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         var authorityClass = authorityClasses.iterator().next();
         Set<String> actualAuthorities = new HashSet<>();
         var abstractAuthorityClass = AbstractAuthority.class;
-        var frameworkAuthorities = Stream.of(abstractAuthorityClass.getDeclaredFields())
+        var jbstAuthorities = Stream.of(abstractAuthorityClass.getDeclaredFields())
                 .map(field -> {
                     try {
                         return field.get(abstractAuthorityClass).toString();
@@ -136,7 +136,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         var serverAuthorities = Stream.of(authorityClass.getEnumConstants())
                 .map(AbstractAuthority::getValue)
                 .collect(Collectors.toSet());
-        actualAuthorities.addAll(frameworkAuthorities);
+        actualAuthorities.addAll(jbstAuthorities);
         actualAuthorities.addAll(serverAuthorities);
         assertTrueOrThrow(
                 expectedAuthorities.equals(actualAuthorities),

@@ -1,12 +1,12 @@
 package jbst.iam.postgres.repositories;
 
-import jbst.iam.configurations.ApplicationPostgresRepositories;
+import jbst.iam.configurations.ConfigurationPostgresRepositories;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -33,12 +33,12 @@ import static tech1.framework.foundation.utilities.random.RandomUtility.randomSt
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ApplicationPostgresRepositories.class
+                ConfigurationPostgresRepositories.class
         }
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresInvitationCodesRepositoryIT extends TestsApplicationPostgresRepositoriesRunner {
+class PostgresInvitationCodesRepositoryIT extends TestsConfigurationPostgresRepositoriesRunner {
 
     private final PostgresInvitationCodesRepository invitationCodesRepository;
 

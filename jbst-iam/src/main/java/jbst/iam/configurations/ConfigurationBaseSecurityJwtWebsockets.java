@@ -35,18 +35,18 @@ import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperti
 @Slf4j
 @Configuration
 @Import({
-        ApplicationBaseSecurityJwt.class
+        ConfigurationBaseSecurityJwt.class
 })
 @ComponentScan({
-        "tech1.framework.iam.events.subscribers.websockets",
-        "tech1.framework.iam.handshakes",
-        "tech1.framework.iam.resources.websockets",
-        "tech1.framework.iam.tasks.hardware",
-        "tech1.framework.iam.template",
+        "jbst.iam.events.subscribers.websockets",
+        "jbst.iam.handshakes",
+        "jbst.iam.resources.websockets",
+        "jbst.iam.tasks.hardware",
+        "jbst.iam.template",
 })
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwtWebsockets extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class ConfigurationBaseSecurityJwtWebsockets extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     // Handshakes
     private final CsrfInterceptorHandshake csrfInterceptorHandshake;

@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 
 @Configuration
-public class ApplicationBaseSecurityJwtMvc extends ApplicationMVC {
+public class ConfigurationBaseSecurityJwtMvc extends ApplicationMVC {
 
     @Autowired
-    public ApplicationBaseSecurityJwtMvc(ApplicationFrameworkProperties applicationFrameworkProperties) {
+    public ConfigurationBaseSecurityJwtMvc(ApplicationFrameworkProperties applicationFrameworkProperties) {
         super(applicationFrameworkProperties);
     }
 

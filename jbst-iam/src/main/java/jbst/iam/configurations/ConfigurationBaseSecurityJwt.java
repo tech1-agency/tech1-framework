@@ -1,6 +1,10 @@
 package jbst.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.iam.assistants.userdetails.JwtUserDetailsService;
+import jbst.iam.filters.jwt.JwtTokensFilter;
+import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
+import jbst.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,10 +27,6 @@ import tech1.framework.foundation.configurations.*;
 import tech1.framework.foundation.domain.base.PropertyId;
 import tech1.framework.foundation.domain.constants.JbsConstants;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.iam.assistants.userdetails.JwtUserDetailsService;
-import jbst.iam.filters.jwt.JwtTokensFilter;
-import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
-import jbst.iam.handlers.exceptions.JwtAuthenticationEntryPointExceptionHandler;
 
 import static org.springframework.http.HttpMethod.*;
 import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
@@ -34,17 +34,17 @@ import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "tech1.framework.iam.crons",
-        "tech1.framework.iam.events.publishers.base",
-        "tech1.framework.iam.events.publishers.impl",
-        "tech1.framework.iam.events.subscribers.base",
-        "tech1.framework.iam.events.subscribers.impl",
-        "tech1.framework.iam.handlers.exceptions",
-        "tech1.framework.iam.resources.base",
-        "tech1.framework.iam.services.base",
-        "tech1.framework.iam.tokens",
-        "tech1.framework.iam.utils",
-        "tech1.framework.iam.validators.base"
+        "jbst.iam.crons",
+        "jbst.iam.events.publishers.base",
+        "jbst.iam.events.publishers.impl",
+        "jbst.iam.events.subscribers.base",
+        "jbst.iam.events.subscribers.impl",
+        "jbst.iam.handlers.exceptions",
+        "jbst.iam.resources.base",
+        "jbst.iam.services.base",
+        "jbst.iam.tokens",
+        "jbst.iam.utils",
+        "jbst.iam.validators.base"
         // -------------------------------------------------------------------------------------------------------------
 })
 @EnableWebSecurity
@@ -53,14 +53,14 @@ import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
         ApplicationUserMetadata.class,
         ApplicationSpringBootServer.class,
         ApplicationJasypt.class,
-        ApplicationBaseSecurityJwtMvc.class,
-        ApplicationBaseSecurityJwtFilters.class,
-        ApplicationBaseSecurityJwtPasswords.class,
+        ConfigurationBaseSecurityJwtMvc.class,
+        ConfigurationBaseSecurityJwtFilters.class,
+        ConfigurationBaseSecurityJwtPasswords.class,
         ApplicationIncidents.class,
         ApplicationEmails.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwt {
+public class ConfigurationBaseSecurityJwt {
 
     // Assistants
     private final JwtUserDetailsService jwtUserDetailsService;
@@ -72,7 +72,7 @@ public class ApplicationBaseSecurityJwt {
     private final JwtAuthenticationEntryPointExceptionHandler jwtAuthenticationEntryPointExceptionHandler;
     private final JwtAccessDeniedExceptionHandler jwtAccessDeniedExceptionHandler;
     // Configurer
-    private final AbstractApplicationSecurityJwtConfigurer abstractApplicationSecurityJwtConfigurer;
+    private final AbstractJbstSecurityJwtConfigurer abstractJbstSecurityJwtConfigurer;
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
@@ -99,7 +99,7 @@ public class ApplicationBaseSecurityJwt {
             if (this.applicationFrameworkProperties.getServerConfigs().isSpringdocEnabled()) {
                 web.ignoring().requestMatchers(JbsConstants.Swagger.ENDPOINTS.toArray(new String[0]));
             }
-            this.abstractApplicationSecurityJwtConfigurer.configure(web);
+            this.abstractJbstSecurityJwtConfigurer.configure(web);
         };
     }
 
@@ -126,7 +126,7 @@ public class ApplicationBaseSecurityJwt {
                 );
 
         // WARNING: order is important, configurer must have possibility to override matchers below
-        this.abstractApplicationSecurityJwtConfigurer.configure(http);
+        this.abstractJbstSecurityJwtConfigurer.configure(http);
 
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests

@@ -1,10 +1,5 @@
 package jbst.iam.configurations;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.iam.essence.PostgresBaseEssenceConstructor;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
@@ -14,16 +9,21 @@ import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
 import jbst.iam.sessions.PostgresSessionRegistry;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
 @Configuration
 @ComponentScan({
-        "tech1.framework.iam.services.postgres",
-        "tech1.framework.iam.validators.postgres",
+        "jbst.iam.services.postgres",
+        "jbst.iam.validators.postgres",
 })
 @Import({
-        ApplicationPostgresRepositories.class
+        ConfigurationPostgresRepositories.class
 })
-public class ApplicationPostgres {
+public class ConfigurationPostgres {
 
     @Bean
     PostgresUserDetailsAssistant postgresUserDetailsAssistant(

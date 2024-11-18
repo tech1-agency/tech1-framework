@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationBaseSecurityJwtWebsocketsTest {
+class ConfigurationBaseSecurityJwtWebsocketsTest {
 
     @Configuration
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -68,8 +68,8 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
         }
 
         @Bean
-        ApplicationBaseSecurityJwtWebsockets applicationBaseSecurityJwtWebsockets() {
-            return new ApplicationBaseSecurityJwtWebsockets(
+        ConfigurationBaseSecurityJwtWebsockets applicationBaseSecurityJwtWebsockets() {
+            return new ConfigurationBaseSecurityJwtWebsockets(
                     this.csrfInterceptorHandshake(),
                     this.securityHandshakeHandler(),
                     this.applicationFrameworkProperties()
@@ -87,7 +87,7 @@ class ApplicationBaseSecurityJwtWebsocketsTest {
     private final CsrfInterceptorHandshake csrfInterceptorHandshake;
     private final SecurityHandshakeHandler securityHandshakeHandler;
 
-    private final ApplicationBaseSecurityJwtWebsockets componentUnderTest;
+    private final ConfigurationBaseSecurityJwtWebsockets componentUnderTest;
 
     @Test
     void beansTests() {

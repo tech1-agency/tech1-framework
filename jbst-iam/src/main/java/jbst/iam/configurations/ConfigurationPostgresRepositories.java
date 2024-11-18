@@ -1,5 +1,9 @@
 package jbst.iam.configurations;
 
+import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
+import jbst.iam.repositories.postgres.Tech1PostgresRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -10,17 +14,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import jbst.iam.repositories.postgres.Tech1PostgresRepositories;
 
 @Configuration
 @EntityScan({
         "tech1.framework.iam.domain.postgres"
 })
 @EnableJpaRepositories({
-        "tech1.framework.iam.repositories.postgres"
+        "jbst.iam.repositories.postgres"
 })
 @EnableTransactionManagement
 @EnableAutoConfiguration(exclude = {
@@ -28,7 +28,7 @@ import jbst.iam.repositories.postgres.Tech1PostgresRepositories;
         MongoDataAutoConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationPostgresRepositories {
+public class ConfigurationPostgresRepositories {
 
     // Repositories
     private final PostgresInvitationCodesRepository invitationCodeRepository;

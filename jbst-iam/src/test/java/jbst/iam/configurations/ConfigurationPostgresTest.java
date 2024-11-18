@@ -1,8 +1,5 @@
 package jbst.iam.configurations;
 
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
-import jbst.iam.repositories.postgres.PostgresUsersRepository;
-import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,12 +17,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationPostgresRepositoriesTest {
+class ConfigurationPostgresTest {
 
     @Configuration
     @Import({
@@ -35,31 +31,12 @@ class ApplicationPostgresRepositoriesTest {
     static class ContextConfiguration {
 
         @Bean
-        PostgresInvitationCodesRepository invitationCodeRepository() {
-            return mock(PostgresInvitationCodesRepository.class);
-        }
-
-        @Bean
-        PostgresUsersRepository usersRepository() {
-            return mock(PostgresUsersRepository.class);
-        }
-
-        @Bean
-        PostgresUsersSessionsRepository usersSessionsRepository() {
-            return mock(PostgresUsersSessionsRepository.class);
-        }
-
-        @Bean
-        ApplicationPostgresRepositories applicationPostgresRepositories() {
-            return new ApplicationPostgresRepositories(
-                    this.invitationCodeRepository(),
-                    this.usersRepository(),
-                    this.usersSessionsRepository()
-            );
+        ConfigurationPostgres applicationMongodb() {
+            return new ConfigurationPostgres();
         }
     }
 
-    private final ApplicationPostgresRepositories componentUnderTest;
+    private final ConfigurationPostgres componentUnderTest;
 
     @Test
     void beansTests() {
@@ -69,8 +46,6 @@ class ApplicationPostgresRepositoriesTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods)
-                .hasSize(10)
-                .contains("tech1PostgresRepositories");
+        assertThat(methods).hasSize(9);
     }
 }

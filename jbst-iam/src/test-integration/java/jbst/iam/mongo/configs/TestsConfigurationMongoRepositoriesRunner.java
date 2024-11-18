@@ -20,7 +20,7 @@ import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperti
         ApplicationFrameworkProperties.class
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class TestsApplicationMongoRepositoriesRunner {
+public abstract class TestsConfigurationMongoRepositoriesRunner {
 
     @AfterEach
     void afterEach() {

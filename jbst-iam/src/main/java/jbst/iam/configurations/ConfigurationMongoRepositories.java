@@ -4,6 +4,10 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import jbst.iam.repositories.mongodb.Tech1MongoRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,17 +25,13 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
-import jbst.iam.repositories.mongodb.Tech1MongoRepositories;
 
 @Configuration
 @EntityScan({
         "tech1.framework.iam.domain.mongo"
 })
 @EnableMongoRepositories(
-        basePackages = "tech1.framework.iam.repositories",
+        basePackages = "jbst.iam.repositories",
         mongoTemplateRef = "tech1MongoTemplate"
 )
 @EnableAutoConfiguration(exclude = {
@@ -40,7 +40,7 @@ import jbst.iam.repositories.mongodb.Tech1MongoRepositories;
         HibernateJpaAutoConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationMongoRepositories {
+public class ConfigurationMongoRepositories {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

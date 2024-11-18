@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan({
         // -------------------------------------------------------------------------------------------------------------
-        "tech1.framework.iam.filters.jwt",
-        "tech1.framework.iam.filters.logging"
+        "jbst.iam.filters.jwt",
+        "jbst.iam.filters.logging"
         // -------------------------------------------------------------------------------------------------------------
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationBaseSecurityJwtFilters {
+public class ConfigurationBaseSecurityJwtFilters {
 
 }

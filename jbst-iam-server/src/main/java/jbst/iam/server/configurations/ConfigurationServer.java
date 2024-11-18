@@ -1,8 +1,8 @@
 package jbst.iam.server.configurations;
 
 import jakarta.annotation.PostConstruct;
-import jbst.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
-import jbst.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
+import jbst.iam.configurations.AbstractJbstSecurityJwtConfigurer;
+import jbst.iam.configurations.ConfigurationBaseSecurityJwtWebsockets;
 import jbst.iam.server.base.properties.ApplicationProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ import static org.springframework.http.HttpMethod.GET;
         // -------------------------------------------------------------------------------------------------------------
 })
 @Import({
-        ApplicationBaseSecurityJwtWebsockets.class
+        ConfigurationBaseSecurityJwtWebsockets.class
 })
 @EnableConfigurationProperties({
         ApplicationProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationServer implements AbstractApplicationSecurityJwtConfigurer {
+public class ConfigurationServer implements AbstractJbstSecurityJwtConfigurer {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

@@ -1,5 +1,8 @@
 package jbst.iam.configurations;
 
+import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,11 +21,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class ApplicationMongoTest {
+class ConfigurationMongoRepositoriesTest {
 
     @Configuration
     @Import({
@@ -30,17 +34,33 @@ class ApplicationMongoTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
+
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        ApplicationMongo applicationMongodb() {
-            return new ApplicationMongo(
+        MongoInvitationCodesRepository invitationCodeRepository() {
+            return mock(MongoInvitationCodesRepository.class);
+        }
+
+        @Bean
+        MongoUsersRepository usersRepository() {
+            return mock(MongoUsersRepository.class);
+        }
+
+        @Bean
+        MongoUsersSessionsRepository usersSessionsRepository() {
+            return mock(MongoUsersSessionsRepository.class);
+        }
+
+        @Bean
+        ConfigurationMongoRepositories applicationMongoRepositories() {
+            return new ConfigurationMongoRepositories(
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final ApplicationMongo componentUnderTest;
+    private final ConfigurationMongoRepositories componentUnderTest;
 
     @Test
     void beansTests() {
@@ -50,6 +70,14 @@ class ApplicationMongoTest {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).hasSize(10);
+        assertThat(methods)
+                .hasSize(13)
+                .contains("tech1MongoRepositories")
+                .contains("tech1MongoClient")
+                .contains("tech1MongoDatabaseFactory")
+                .contains("tech1MongoTemplate");
+        assertThat(this.componentUnderTest.tech1MongoClient()).isNotNull();
+        assertThat(this.componentUnderTest.tech1MongoDatabaseFactory()).isNotNull();
+        assertThat(this.componentUnderTest.tech1MongoTemplate()).isNotNull();
     }
 }

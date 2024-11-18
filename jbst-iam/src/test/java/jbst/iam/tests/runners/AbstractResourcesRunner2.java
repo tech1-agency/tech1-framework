@@ -1,6 +1,6 @@
 package jbst.iam.tests.runners;
 
-import jbst.iam.configurations.ApplicationBaseSecurityJwtMvc;
+import jbst.iam.configurations.ConfigurationBaseSecurityJwtMvc;
 import jbst.iam.tests.contexts.TestsApplicationPropertiesMocked;
 import jbst.iam.tests.contexts.TestsApplicationResourcesContext;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        ApplicationBaseSecurityJwtMvc.class,
+        ConfigurationBaseSecurityJwtMvc.class,
         TestsApplicationPropertiesMocked.class,
         TestsApplicationResourcesContext.class
 })

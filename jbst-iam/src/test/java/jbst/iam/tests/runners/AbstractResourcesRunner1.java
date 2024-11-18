@@ -1,6 +1,6 @@
 package jbst.iam.tests.runners;
 
-import jbst.iam.configurations.ApplicationBaseSecurityJwtMvc;
+import jbst.iam.configurations.ConfigurationBaseSecurityJwtMvc;
 import jbst.iam.tests.contexts.TestsApplicationResourcesContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +13,7 @@ import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperti
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        ApplicationBaseSecurityJwtMvc.class,
+        ConfigurationBaseSecurityJwtMvc.class,
         ApplicationFrameworkPropertiesTestsHardcodedContext.class,
         TestsApplicationResourcesContext.class
 })

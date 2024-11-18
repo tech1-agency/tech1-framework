@@ -1,12 +1,12 @@
 package jbst.iam.postgres.repositories;
 
-import jbst.iam.configurations.ApplicationPostgresRepositories;
+import jbst.iam.configurations.ConfigurationPostgresRepositories;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
-import jbst.iam.postgres.configs.TestsApplicationPostgresRepositoriesRunner;
+import jbst.iam.postgres.configs.TestsConfigurationPostgresRepositoriesRunner;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -41,12 +41,12 @@ import static tech1.framework.foundation.utilities.random.RandomUtility.randomEl
 @SpringBootTest(
         webEnvironment = NONE,
         classes = {
-                ApplicationPostgresRepositories.class
+                ConfigurationPostgresRepositories.class
         }
 )
 @AutoConfigureDataJpa
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PostgresUsersRepositoryIT extends TestsApplicationPostgresRepositoriesRunner {
+class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRunner {
 
     private final PostgresUsersRepository usersRepository;
 

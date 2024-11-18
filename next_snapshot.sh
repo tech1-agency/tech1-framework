@@ -6,6 +6,13 @@ CHANGELOG_PATH="CHANGELOG.md"
 DOCKER_COMPOSE_MONGODB_PATH="docker/docker-compose.mongodb.yml"
 DOCKER_COMPOSE_POSTGRES_PATH="docker/docker-compose.postgres.yml"
 
+MAJOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')
+MINOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $2}')
+CURRENT_RELEASE_CHANGELOG_VERSION="$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER"
+((MINOR_VERSION_NUMBER++))
+NEXT_RELEASE_CHANGELOG_VERSION="[v$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER]"
+NEXT_SNAPSHOT_DOCKER_VERSION="'$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER-SNAPSHOT'"
+
 echo "================================================================================================================="
 echo "$PREFIX Maven versions started"
 
@@ -24,14 +31,6 @@ echo "==========================================================================
 
 echo "================================================================================================================="
 echo "$PREFIX GitHub Action, DOCKER_VERSION started"
-
-MAJOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $1}')
-MINOR_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $2}')
-PATCH_VERSION_NUMBER=$(grep "DOCKER_VERSION:" "$GITHUB_ACTION_MAIN_WORKFLOW" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk -F '[.-]' '{print $3}')
-CURRENT_RELEASE_CHANGELOG_VERSION="$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER.$PATCH_VERSION_NUMBER"
-((PATCH_VERSION_NUMBER++))
-NEXT_RELEASE_CHANGELOG_VERSION="[v$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER.$PATCH_VERSION_NUMBER]"
-NEXT_SNAPSHOT_DOCKER_VERSION="'$MAJOR_VERSION_NUMBER.$MINOR_VERSION_NUMBER.$PATCH_VERSION_NUMBER-SNAPSHOT'"
 
 sed -i '' "s/DOCKER_VERSION: .*/DOCKER_VERSION: $NEXT_SNAPSHOT_DOCKER_VERSION/" "$GITHUB_ACTION_MAIN_WORKFLOW"
 

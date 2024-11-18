@@ -6,18 +6,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>tech1.framework</groupId>
-        <artifactId>tech1-framework</artifactId>
-        <version>3.0.12-SNAPSHOT</version>
+        <groupId>jbst</groupId>
+        <artifactId>jbst</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>tech1-framework-iam</artifactId>
+    <artifactId>jbst-iam</artifactId>
 
     <dependencies>
         <!-- Tech1: Framework -->
         <dependency>
-            <groupId>tech1.framework</groupId>
-            <artifactId>tech1-framework-foundation</artifactId>
+            <groupId>jbst</groupId>
+            <artifactId>jbst-foundation</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>

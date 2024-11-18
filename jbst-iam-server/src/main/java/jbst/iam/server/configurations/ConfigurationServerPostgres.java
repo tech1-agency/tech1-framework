@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import tech1.framework.iam.configurations.ApplicationPostgres;
+import jbst.iam.configurations.ApplicationPostgres;
 
 @Profile("postgres")
 @Configuration

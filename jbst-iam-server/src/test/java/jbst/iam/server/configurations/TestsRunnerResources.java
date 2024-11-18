@@ -9,7 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import tech1.framework.iam.handlers.exceptions.ResourceExceptionHandler;
+import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })

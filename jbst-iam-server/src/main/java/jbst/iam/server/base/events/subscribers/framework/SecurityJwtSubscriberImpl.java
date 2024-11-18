@@ -1,11 +1,11 @@
 package jbst.iam.server.base.events.subscribers.framework;
 
 import tech1.framework.foundation.utils.UserMetadataUtils;
-import tech1.framework.iam.domain.events.EventAuthenticationLogin;
-import tech1.framework.iam.events.publishers.SecurityJwtIncidentPublisher;
-import tech1.framework.iam.events.subscribers.base.BaseSecurityJwtSubscriber;
-import tech1.framework.iam.services.BaseUsersSessionsService;
-import tech1.framework.iam.services.UsersEmailsService;
+import jbst.iam.domain.events.EventAuthenticationLogin;
+import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
+import jbst.iam.events.subscribers.base.BaseSecurityJwtSubscriber;
+import jbst.iam.services.BaseUsersSessionsService;
+import jbst.iam.services.UsersEmailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

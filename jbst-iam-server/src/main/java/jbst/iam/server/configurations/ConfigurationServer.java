@@ -11,8 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import tech1.framework.foundation.domain.base.PropertyId;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
-import tech1.framework.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
+import jbst.iam.configurations.AbstractApplicationSecurityJwtConfigurer;
+import jbst.iam.configurations.ApplicationBaseSecurityJwtWebsockets;
 import jbst.iam.server.base.properties.ApplicationProperties;
 
 import static org.springframework.http.HttpMethod.GET;

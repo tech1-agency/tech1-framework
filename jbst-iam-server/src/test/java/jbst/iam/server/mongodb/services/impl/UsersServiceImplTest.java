@@ -1,7 +1,7 @@
 package jbst.iam.server.mongodb.services.impl;
 
-import tech1.framework.iam.domain.mongodb.MongoDbUser;
-import tech1.framework.iam.repositories.mongodb.MongoUsersRepository;
+import jbst.iam.domain.mongodb.MongoDbUser;
+import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.server.base.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

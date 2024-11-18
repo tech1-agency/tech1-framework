@@ -2,8 +2,8 @@ package jbst.iam.server.base.startup;
 
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.iam.essence.AbstractEssenceConstructor;
-import tech1.framework.iam.startup.DefaultStartupEventListener;
+import jbst.iam.essence.AbstractEssenceConstructor;
+import jbst.iam.startup.DefaultStartupEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

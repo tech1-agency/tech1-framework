@@ -61,11 +61,12 @@ jbst:
   security-jwt-configs:
     authorities-configs:
       authorities:
-        - value: superadmin
-        - value: user
-        - value: admin
-        - value: invitationCode:read
-        - value: invitationCode:write
+        - value: "superadmin"
+        - value: "invitationCode:read"
+        - value: "invitationCode:write"
+        - value: "prometheus:read"
+        - value: "user"
+        - value: "admin"
       package-name: jbst.iam.server.base.domain.enums
     cookies-configs:
       jwt-access-token-cookie-creation-latency:

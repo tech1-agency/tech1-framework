@@ -4,7 +4,7 @@ services:
     restart: always
     container_name: jbst-postgres
     ports:
-      - "5432:5432"
+      - "3004:5432"
     networks:
       - jbst-network
     environment:

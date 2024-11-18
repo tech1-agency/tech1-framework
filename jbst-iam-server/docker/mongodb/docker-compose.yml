@@ -4,7 +4,7 @@ services:
     restart: always
     container_name: jbst-mongodb
     ports:
-      - "27017:27017"
+      - "3004:27017"
     networks:
       - jbst-network
     volumes:

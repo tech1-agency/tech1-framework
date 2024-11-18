@@ -1,8 +1,7 @@
-package jbst.iam.server.base.tests.runners;
+package jbst.iam.server.configurations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jbst.iam.server.base.tests.contexts.ApplicationResourcesContext;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,9 +14,9 @@ import tech1.framework.iam.handlers.exceptions.ResourceExceptionHandler;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(classes = {
-        ApplicationResourcesContext.class
+        TestsConfigurationResources.class
 })
-public abstract class ApplicationResourceRunner {
+public abstract class TestsRunnerResources {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 

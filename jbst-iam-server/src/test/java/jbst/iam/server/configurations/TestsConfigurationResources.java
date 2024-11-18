@@ -1,4 +1,4 @@
-package jbst.iam.server.base.tests.contexts;
+package jbst.iam.server.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
         "jbst.iam.server.base.resources"
 })
 @EnableWebMvc
-public class ApplicationResourcesContext {
+public class TestsConfigurationResources {
 
     // Services
     @Bean

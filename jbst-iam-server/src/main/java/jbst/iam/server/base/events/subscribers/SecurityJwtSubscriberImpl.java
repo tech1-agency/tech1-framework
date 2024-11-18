@@ -1,4 +1,4 @@
-package jbst.iam.server.base.events.subscribers.framework;
+package jbst.iam.server.base.events.subscribers;
 
 import jbst.iam.domain.events.EventAuthenticationLogin;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;

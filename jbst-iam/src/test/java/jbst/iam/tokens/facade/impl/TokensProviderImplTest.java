@@ -280,7 +280,7 @@ class TokensProviderImplTest {
                         EssenceConfigs.hardcoded(),
                         IncidentsConfigs.hardcoded(),
                         new JwtTokensConfigs(
-                                "TECH1",
+                                "JBST",
                                 method,
                                 new JwtToken(new TimeAmount(30L, SECONDS), "ajwt", "T-AJWT"),
                                 new JwtToken(new TimeAmount(12L, HOURS), "rjwt", "T-RJWT")

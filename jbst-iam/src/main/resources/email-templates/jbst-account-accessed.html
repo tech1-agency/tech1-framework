@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+      .href-blue {
+          color: #007ee6;
+          text-decoration: none;
+      }
+      .main-table {
+          font-family:Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          color: #444444;
+          width: 550px;
+          padding: 40px;
+          border: 1px #dceaf4 solid;
+          border-radius: 4px;
+      }
+      .main-table-tr {
+          padding-bottom: 20px;
+      }
+      .main-table-left-column {
+          padding-right: 40px;
+          vertical-align: top;
+          padding-bottom: 10px;
+      }
+      .main-table-right-column {
+          padding-bottom: 10px;
+      }
+      .details-table {
+          background: #e8f2fb;
+          border-radius: 4px;
+          color: #444444;
+          padding: 20px;
+          width: 100%;
+      }
+      .best-regards-section {
+          padding-bottom: 10px;
+          color: #444444
+      }
+      .copyright {
+          font-family: Gotham,'Helvetica Neue', Helvetica, Arial, sans-serif;
+          color: #a8b9c6;
+          width: 550px;
+          margin: 0;
+          padding: 10px 0;
+          font-size: 11px;
+          text-align: end;
+      }
+  </style>
+</head>
+<body>
+<center>
+  <table cellpadding="0" cellspacing="0" class="main-table">
+    <tr>
+      <td class="main-table-tr" th:text="'Hi @' + ${'__${username}__'} + ','"></td>
+    </tr>
+    <tr>
+      <td class="main-table-tr">
+        We noticed <a target="_blank" th:href="${webclientURL}" class="href-blue">your account</a> was accessed. Access method: <b th:text="${accessMethod}"></b>
+      </td>
+    </tr>
+    <tr>
+      <td class="main-table-tr">
+        <table class="details-table">
+          <tr>
+            <td>
+              <table cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="main-table-left-column">Where:</td>
+                  <td class="main-table-right-column"><b th:text="${where}"></b></td>
+                </tr>
+                <tr>
+                  <td class="main-table-left-column">What:</td>
+                  <td class="main-table-right-column"><b th:text="${what}"></b></td>
+                </tr>
+                <tr>
+                  <td style="vertical-align: top">IP Address:</td>
+                  <td><b th:text="${ipAddress}"></b></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="best-regards-section">Best Regards, tech1.agency</td>
+    </tr>
+  </table>
+  <p class="copyright" th:text="'© ' + ${'__${year}__'} + ' tech1.agency'"></p>
+</center>
+</body>
+</html>

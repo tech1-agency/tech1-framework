@@ -1,0 +1,5 @@
+#file: noinspection SpringBootApplicationYaml
+# jbst
+jbst:
+  server-configs:
+    name: server-on-mongodb

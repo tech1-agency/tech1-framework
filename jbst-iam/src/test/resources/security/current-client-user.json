@@ -1,0 +1,12 @@
+{
+  "username" : "jbst",
+  "email" : "tests@yyluchkiv.com",
+  "name" : "JBST",
+  "zoneId" : "Europe/Kyiv",
+  "passwordChangeRequired" : false,
+  "authorities" : [ "admin", "user" ],
+  "attributes" : {
+    "key1" : "value1",
+    "key2" : 2
+  }
+}

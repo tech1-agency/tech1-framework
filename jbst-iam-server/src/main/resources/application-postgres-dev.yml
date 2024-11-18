@@ -1,0 +1,9 @@
+#file: noinspection SpringBootApplicationYaml
+# Spring PostgreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:3004/jbst_dev
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true

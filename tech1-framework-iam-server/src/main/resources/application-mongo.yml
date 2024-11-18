@@ -1,5 +1,0 @@
-#file: noinspection SpringBootApplicationYaml
-# Tech1 Framework
-tech1:
-  server-configs:
-    name: tech1-framework-iam-server-mongodb

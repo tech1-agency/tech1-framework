@@ -1,0 +1,15 @@
+{
+  "git": {
+    "branch": "dev",
+    "commit": {
+      "id": "1234567",
+      "time": "01.01.2024 15:00:00"
+    }
+  },
+  "activeProfile": "dev",
+  "maven": {
+    "groupId": "jbst",
+    "artifactId": "jbst",
+    "version": "v1.1"
+  }
+}

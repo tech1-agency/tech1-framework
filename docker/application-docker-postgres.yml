@@ -5,14 +5,14 @@ logging:
 # Spring PostgreSQL
 spring:
   datasource:
-    url: jdbc:postgresql://t1f-iam-postgres:5432/tech1_iam_server
+    url: jdbc:postgresql://jbst-postgres:5432/jbst_dev
     username: postgres
     password: postgres
   jpa:
     show-sql: true
 
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   server-configs:
     springdoc-enabled: true
     webclient-url: http://localhost:3000
@@ -53,7 +53,7 @@ tech1:
         REGISTER1: true
         REGISTER1_FAILURE: true
     jwt-tokens-configs:
-      secret-key: ENC(A5a6VT1rcBPWriVKS0P5qhOuGNZP4R/5Anm17/WMUlgWF9xgdw1Wo5CzvercEHpQoL+7Px2W1MI=)
+      secret-key: ENC(GbnDNQVCspqW74HYwR6XePbdG6dmo7l/rIPe+hL7uHSnj+5kkUQsj0ZPegUGytLpx/5pdLO7vdQ=)
       storage-method: COOKIES
       access-token:
         expiration:
@@ -82,12 +82,12 @@ tech1:
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
             password-change-required: false
-            authorities: [ "admin", "invitationCode:write" ]
+            authorities: [ "admin", "invitations:write" ]
           - username: superadmin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
             password-change-required: false
-            authorities: [ "superadmin", "invitationCode:read", "invitationCode:write" ]
-      invitation-codes:
+            authorities: [ "superadmin", "invitations:read", "invitations:write" ]
+      invitations:
         enabled: true
 

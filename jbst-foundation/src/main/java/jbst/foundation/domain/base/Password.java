@@ -27,7 +27,7 @@ public record Password(@NotNull String value) {
     }
 
     public static Password hardcoded() {
-        return of("PasswordTH/jbst");
+        return of("PasswordTH1/jbst");
     }
 
     public static Password random() {

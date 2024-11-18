@@ -98,7 +98,7 @@ class MongoUsersSessionsRepositoryIT extends TestsConfigurationMongoRepositories
         assertThat(sessionsTable.inactiveSessions().get(0).who().value()).isEqualTo("jbst");
         assertThat(sessionsTable.inactiveSessions().get(1).who().value()).isEqualTo("jbst");
         assertThat(sessionsTable.inactiveSessions().get(2).who().value()).isEqualTo("jbst");
-        assertThat(sessionsTable.inactiveSessions().get(3).who().value()).isEqualTo("jbst");
+        assertThat(sessionsTable.inactiveSessions().get(3).who().value()).isEqualTo("user1");
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.hardcoded(), Username.of("sa")))).hasSize(5);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.hardcoded(), Username.of("user1")))).hasSize(6);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.of("user1"), Username.of("sa")))).hasSize(3);

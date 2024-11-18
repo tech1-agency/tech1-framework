@@ -80,7 +80,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
             );
         }
         LOGGER.info(
-                "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
+                "{} JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
                 JbstConstants.Logs.PREFIX_PROPERTIES,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),

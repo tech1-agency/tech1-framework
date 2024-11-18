@@ -1,5 +1,5 @@
 # jbst
-jbst — java17 bootstrapping tools
+jbst — java17 bootstrapping (mostly spring) tools
 
 ### Tests
 `mvn test` executes only unit tests  

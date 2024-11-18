@@ -4,8 +4,8 @@ import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.dto.responses.ResponseInvitationCode;
 import jbst.iam.domain.identifiers.InvitationCodeId;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 

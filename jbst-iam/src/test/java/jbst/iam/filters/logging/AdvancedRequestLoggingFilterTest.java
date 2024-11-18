@@ -17,11 +17,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import tech1.framework.foundation.domain.http.cache.CachedBodyServletInputStream;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import tech1.framework.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.http.cache.CachedBodyServletInputStream;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.LoggingConfigs;
 
 import java.io.IOException;
 

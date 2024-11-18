@@ -6,8 +6,8 @@ import jbst.iam.domain.dto.responses.ResponseInvitationCode;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.domain.mongodb.MongoDbInvitationCode;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
 public interface MongoInvitationCodesRepository extends MongoRepository<MongoDbInvitationCode, String>, InvitationCodesRepository {

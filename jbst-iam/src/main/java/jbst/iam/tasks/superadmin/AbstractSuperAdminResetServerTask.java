@@ -3,12 +3,12 @@ package jbst.iam.tasks.superadmin;
 import jbst.iam.domain.jwt.JwtUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
-import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
-import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
-import static tech1.framework.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.Status.STARTED;
 
 @Slf4j
 @AllArgsConstructor

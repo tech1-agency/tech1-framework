@@ -1,21 +1,21 @@
 package jbst.iam.domain.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.iam.domain.identifiers.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
 
 import java.time.ZoneId;
 import java.util.*;
 
-import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
-import static tech1.framework.foundation.utilities.random.RandomUtility.*;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.base.AbstractAuthority.*;
+import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 public record JwtUser(
         UserId id,

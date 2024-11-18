@@ -3,10 +3,10 @@ package jbst.iam.events.subscribers.websockets;
 import jbst.iam.tasks.hardware.HardwareBackPressureTimerTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
-import tech1.framework.foundation.services.hardware.subscribers.base.BaseHardwareMonitoringSubscriber;
+import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
+import jbst.foundation.services.hardware.subscribers.base.BaseHardwareMonitoringSubscriber;
 
 @Slf4j
 @Component

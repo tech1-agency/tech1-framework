@@ -9,8 +9,8 @@ import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.repositories.UsersSessionsRepository;
 import jbst.iam.domain.mongodb.MongoDbUserSession;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.iam.domain.dto.responses.ResponseUserSession2.*;
 
 public interface MongoUsersSessionsRepository extends MongoRepository<MongoDbUserSession, String>, UsersSessionsRepository {

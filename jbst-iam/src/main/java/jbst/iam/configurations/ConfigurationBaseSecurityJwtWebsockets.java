@@ -14,8 +14,8 @@ import org.springframework.security.config.annotation.web.messaging.MessageSecur
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>

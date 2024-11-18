@@ -22,9 +22,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.IPAddress;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,8 +33,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.domain.exceptions.ExceptionEntityType.ERROR;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.exceptions.ExceptionEntityType.ERROR;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

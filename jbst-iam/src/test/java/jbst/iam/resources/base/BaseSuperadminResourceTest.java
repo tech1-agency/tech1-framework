@@ -17,7 +17,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
@@ -25,8 +25,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class BaseSuperadminResourceTest extends TestRunnerResources1 {

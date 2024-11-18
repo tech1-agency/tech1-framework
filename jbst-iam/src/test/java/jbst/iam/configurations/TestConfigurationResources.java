@@ -15,8 +15,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.utilities.environment.EnvironmentUtility;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.utilities.environment.EnvironmentUtility;
 
 import static org.mockito.Mockito.mock;
 

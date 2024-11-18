@@ -21,17 +21,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.EntityUtility.list345;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

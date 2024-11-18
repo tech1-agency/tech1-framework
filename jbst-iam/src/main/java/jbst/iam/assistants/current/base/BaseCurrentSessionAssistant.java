@@ -15,10 +15,10 @@ import jbst.iam.utils.SecurityPrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.HashMap;
 import java.util.Set;

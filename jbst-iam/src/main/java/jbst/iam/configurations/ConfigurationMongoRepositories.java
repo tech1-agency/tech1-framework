@@ -24,7 +24,7 @@ import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
 @Configuration
 @EntityScan({

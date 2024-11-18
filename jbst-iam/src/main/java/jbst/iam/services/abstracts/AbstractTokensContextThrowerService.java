@@ -1,5 +1,6 @@
 package jbst.iam.services.abstracts;
 
+import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.jwt.JwtAccessToken;
@@ -12,8 +13,7 @@ import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
-import tech1.framework.foundation.domain.tuples.Tuple2;
+import jbst.foundation.domain.tuples.Tuple2;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTokensContextThrowerService implements TokensContextThrowerService {

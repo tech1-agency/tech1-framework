@@ -3,13 +3,13 @@ package jbst.iam.domain.db;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Username;
 
 import java.util.Set;
 
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static tech1.framework.foundation.domain.base.AbstractAuthority.SUPERADMIN;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.base.AbstractAuthority.SUPERADMIN;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record InvitationCode(
         InvitationCodeId id,

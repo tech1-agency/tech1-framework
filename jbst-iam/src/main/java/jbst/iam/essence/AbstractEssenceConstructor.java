@@ -5,12 +5,12 @@ import jbst.iam.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
-import static tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

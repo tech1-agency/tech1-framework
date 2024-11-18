@@ -9,15 +9,15 @@ import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
 
 import java.util.List;
 import java.util.Set;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 // Lombok
 @NoArgsConstructor

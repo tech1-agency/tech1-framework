@@ -2,6 +2,7 @@ package jbst.iam.services.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.domain.dto.responses.ResponseRefreshTokens;
 import jbst.iam.domain.jwt.*;
@@ -22,15 +23,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
-import tech1.framework.foundation.domain.tuples.Tuple2;
+import jbst.foundation.domain.tuples.Tuple2;
 
 import static jbst.iam.domain.db.UserSession.randomPersistedSession;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static tech1.framework.foundation.utilities.random.RandomUtility.validClaims;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.validClaims;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

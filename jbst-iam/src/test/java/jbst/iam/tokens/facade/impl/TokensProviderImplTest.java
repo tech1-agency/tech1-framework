@@ -2,6 +2,7 @@ package jbst.iam.tokens.facade.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.properties.configs.security.jwt.*;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.tokens.facade.TokensProvider;
@@ -21,22 +22,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.JwtToken;
-import tech1.framework.foundation.domain.properties.base.JwtTokenStorageMethod;
-import tech1.framework.foundation.domain.properties.base.TimeAmount;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import tech1.framework.foundation.domain.properties.configs.security.jwt.*;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.base.JwtToken;
+import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
+import jbst.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 
 import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

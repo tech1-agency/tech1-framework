@@ -2,8 +2,8 @@ package jbst.iam.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.configs.MvcConfigs;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.configs.MvcConfigs;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringsAsList;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsList;
 
 public record RequestNewInvitationCodeParams(
         @NotEmpty Set<String> authorities

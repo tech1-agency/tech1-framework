@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.jetbrains.annotations.NotNull;
 
-import static tech1.framework.foundation.domain.constants.StringConstants.UNKNOWN;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 public record InvitationCodeId(@NotNull String value) {
 

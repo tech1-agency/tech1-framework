@@ -1,6 +1,6 @@
 package jbst.iam.domain.dto.requests;
 
-import tech1.framework.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Password;
 
 public record RequestUserChangePasswordBasic(
         @Password.ValidPasswordCamelCaseLettersAndNumbers(min = 8, max = 20) Password newPassword,

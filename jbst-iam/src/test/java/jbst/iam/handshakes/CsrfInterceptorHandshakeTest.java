@@ -20,8 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.socket.WebSocketHandler;
-import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import tech1.framework.foundation.utilities.random.EntityUtility;
+import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import jbst.foundation.utilities.random.EntityUtility;
 
 import java.util.HashMap;
 import java.util.Map;

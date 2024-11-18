@@ -2,15 +2,15 @@ package jbst.iam.domain.mongodb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
 
 class MongoDbUserTest {
 

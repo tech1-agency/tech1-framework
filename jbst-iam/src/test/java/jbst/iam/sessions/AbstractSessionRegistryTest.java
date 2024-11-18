@@ -28,15 +28,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.geo.GeoLocation;
-import tech1.framework.foundation.domain.http.requests.UserAgentDetails;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.tuples.Tuple2;
-import tech1.framework.foundation.domain.tuples.Tuple3;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.http.requests.UserAgentDetails;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.domain.tuples.Tuple3;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +46,13 @@ import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.domain.http.requests.UserRequestMetadata.processed;
-import static tech1.framework.foundation.domain.tuples.TuplePresence.absent;
-import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.http.requests.UserRequestMetadata.processed;
+import static jbst.foundation.domain.tuples.TuplePresence.absent;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.reflections.ReflectionUtility.setPrivateFieldOfSuperClass;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

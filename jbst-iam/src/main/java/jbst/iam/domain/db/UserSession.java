@@ -3,12 +3,12 @@ package jbst.iam.domain.db;
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomBoolean;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 public record UserSession(
         boolean persisted,

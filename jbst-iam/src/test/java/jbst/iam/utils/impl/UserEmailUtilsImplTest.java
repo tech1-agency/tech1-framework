@@ -14,22 +14,22 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import tech1.framework.foundation.utilities.time.LocalDateTimeUtility;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.utilities.time.LocalDateTimeUtility;
 
 import java.time.ZoneOffset;
 
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.domain.constants.DatetimeConstants.DTF11;
-import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomEnum;
-import static tech1.framework.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
-import static tech1.framework.foundation.utilities.time.LocalDateUtility.now;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.constants.DatetimeConstants.DTF11;
+import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
+import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
+import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
+import static jbst.foundation.utilities.time.LocalDateUtility.now;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

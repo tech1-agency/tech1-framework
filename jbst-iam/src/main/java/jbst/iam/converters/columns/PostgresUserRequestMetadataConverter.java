@@ -3,10 +3,10 @@ package jbst.iam.converters.columns;
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.Converter;
 import lombok.SneakyThrows;
-import tech1.framework.foundation.domain.enums.Status;
-import tech1.framework.foundation.domain.geo.GeoLocation;
-import tech1.framework.foundation.domain.http.requests.UserAgentDetails;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.http.requests.UserAgentDetails;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.HashMap;
 import java.util.Map;

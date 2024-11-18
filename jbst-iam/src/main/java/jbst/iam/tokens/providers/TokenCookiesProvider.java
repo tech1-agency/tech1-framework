@@ -2,6 +2,11 @@ package jbst.iam.tokens.providers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
@@ -12,14 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Service;
-import tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
-import static tech1.framework.foundation.utilities.http.HttpCookieUtility.*;
-import static tech1.framework.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
+import static jbst.foundation.utilities.http.HttpCookieUtility.*;
+import static jbst.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOverflow;
 
 @Slf4j
 @Service
@@ -37,7 +37,7 @@ public class TokenCookiesProvider implements TokenProvider {
         var jwtAccessTokenCookieCreationLatency = securityJwtConfigs.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
         var maxAge = accessTokenConfiguration.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
 
-        var cookie =  createCookie(
+        var cookie = createCookie(
                 accessTokenConfiguration.getCookieKey(),
                 jwtAccessToken.value(),
                 securityJwtConfigs.getCookiesConfigs().getDomain(),

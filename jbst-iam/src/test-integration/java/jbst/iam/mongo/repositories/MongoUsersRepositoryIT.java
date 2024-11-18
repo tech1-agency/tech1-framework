@@ -16,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.JbsConstants;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;
@@ -29,9 +29,9 @@ import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAs
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomElement;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.RandomUtility.randomElement;
 
 @ExtendWith({
         MongoBeforeAllCallback.class

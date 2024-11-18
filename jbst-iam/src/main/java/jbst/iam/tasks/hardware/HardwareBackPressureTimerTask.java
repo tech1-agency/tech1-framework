@@ -3,11 +3,11 @@ package jbst.iam.tasks.hardware;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.template.WssMessagingTemplate;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.concurrent.AbstractInfiniteTimerTask;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.time.SchedulerConfiguration;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.time.SchedulerConfiguration;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.concurrent.TimeUnit;
 

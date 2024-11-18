@@ -1,6 +1,6 @@
 package jbst.iam.tests.domain.enums;
 
-import tech1.framework.foundation.domain.base.AbstractAuthority;
+import jbst.foundation.domain.base.AbstractAuthority;
 
 public enum TestAuthority implements AbstractAuthority {
     USER("user"),

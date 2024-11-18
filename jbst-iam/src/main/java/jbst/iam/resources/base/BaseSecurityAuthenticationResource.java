@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
@@ -24,11 +25,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 import static java.util.Objects.nonNull;
-import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
-import static tech1.framework.foundation.domain.enums.Status.STARTED;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.Status.STARTED;
 
 // Swagger
 @Tag(name = "[jbst] Authentication API")

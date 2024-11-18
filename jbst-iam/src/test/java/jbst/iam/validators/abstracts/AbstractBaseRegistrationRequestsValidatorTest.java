@@ -23,9 +23,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility;
+import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;

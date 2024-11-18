@@ -18,12 +18,12 @@ import jbst.iam.utils.SecurityJwtTokenUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.tuples.Tuple3;
-import tech1.framework.foundation.domain.tuples.TupleToggle;
-import tech1.framework.foundation.utils.UserMetadataUtils;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.tuples.Tuple3;
+import jbst.foundation.domain.tuples.TupleToggle;
+import jbst.foundation.utils.UserMetadataUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,10 +32,10 @@ import java.util.Set;
 
 import static jbst.iam.domain.db.UserSession.ofNotPersisted;
 import static jbst.iam.domain.db.UserSession.ofPersisted;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.isPast;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersSessionsService implements BaseUsersSessionsService {

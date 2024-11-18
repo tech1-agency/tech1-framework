@@ -30,11 +30,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenExpiredException;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
-import tech1.framework.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenDbNotFoundException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenExpiredException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenInvalidException;
+import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 
 import java.util.stream.Stream;
 

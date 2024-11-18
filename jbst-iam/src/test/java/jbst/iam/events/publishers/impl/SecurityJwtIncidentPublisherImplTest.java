@@ -1,5 +1,14 @@
 package jbst.iam.events.publishers.impl;
 
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
+import jbst.foundation.incidents.domain.authetication.*;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -14,22 +23,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtConfigs;
-import tech1.framework.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
-import tech1.framework.foundation.incidents.domain.authetication.*;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.domain.properties.base.SecurityJwtIncidentType.*;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

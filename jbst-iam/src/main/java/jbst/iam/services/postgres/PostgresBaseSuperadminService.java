@@ -8,7 +8,7 @@ import jbst.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 @Slf4j
 @Service

@@ -2,9 +2,9 @@ package jbst.iam.domain.sessions;
 
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtRefreshToken;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.tuples.Tuple3;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.tuples.Tuple3;
 
 import java.util.List;
 import java.util.Set;

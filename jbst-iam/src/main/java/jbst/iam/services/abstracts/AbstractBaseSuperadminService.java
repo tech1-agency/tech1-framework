@@ -11,10 +11,10 @@ import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tasks.superadmin.AbstractSuperAdminResetServerTask;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
-import tech1.framework.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
+import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.List;
 

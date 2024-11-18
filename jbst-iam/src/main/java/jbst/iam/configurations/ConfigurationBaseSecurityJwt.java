@@ -1,6 +1,10 @@
 package jbst.iam.configurations;
 
 import jakarta.annotation.PostConstruct;
+import jbst.foundation.configurations.*;
+import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.filters.jwt.JwtTokensFilter;
 import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
@@ -23,13 +27,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tech1.framework.foundation.configurations.*;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.constants.JbsConstants;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 
+import static jbst.foundation.domain.base.AbstractAuthority.*;
 import static org.springframework.http.HttpMethod.*;
-import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
 
 @Configuration
 @ComponentScan({

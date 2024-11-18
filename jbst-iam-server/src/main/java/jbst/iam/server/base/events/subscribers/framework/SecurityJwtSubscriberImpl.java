@@ -8,7 +8,7 @@ import jbst.iam.services.UsersEmailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.utils.UserMetadataUtils;
+import jbst.foundation.utils.UserMetadataUtils;
 
 @Slf4j
 @Component

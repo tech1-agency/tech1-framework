@@ -1,5 +1,9 @@
 package jbst.iam.sessions;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
 import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.domain.events.EventAuthenticationLogin;
 import jbst.iam.domain.events.EventAuthenticationLogout;
@@ -16,16 +20,12 @@ import jbst.iam.services.BaseUsersSessionsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutFull;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogoutMin;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
+import static jbst.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

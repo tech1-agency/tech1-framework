@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import tech1.framework.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Password;
 
 @AllArgsConstructor
 public abstract class AbstractBaseUsersService implements BaseUsersService {

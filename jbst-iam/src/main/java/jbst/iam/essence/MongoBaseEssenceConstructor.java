@@ -5,14 +5,14 @@ import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
 

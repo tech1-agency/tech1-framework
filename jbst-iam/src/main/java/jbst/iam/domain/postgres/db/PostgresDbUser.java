@@ -3,17 +3,17 @@ package jbst.iam.domain.postgres.db;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.converters.columns.*;
 import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.JbsConstants;
-import tech1.framework.foundation.domain.converters.columns.*;
 
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -22,10 +22,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.domain.base.AbstractAuthority.*;
+import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.springframework.util.StringUtils.capitalize;
-import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
-import static tech1.framework.foundation.utilities.random.RandomUtility.*;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok

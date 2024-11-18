@@ -1,10 +1,13 @@
 package jbst.iam.validators.abstracts;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -21,21 +24,18 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.base.AbstractAuthority.*;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static tech1.framework.foundation.domain.base.AbstractAuthority.*;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

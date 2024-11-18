@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
-import static tech1.framework.foundation.domain.constants.LogsConstants.SERVER_CONTAINER_1;
-import static tech1.framework.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.constants.LogsConstants.SERVER_CONTAINER_1;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = {

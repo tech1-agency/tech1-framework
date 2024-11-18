@@ -9,12 +9,12 @@ import jbst.iam.repositories.UsersRepository;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 
 import static java.util.Objects.nonNull;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseRegistrationRequestsValidator implements BaseRegistrationRequestsValidator {

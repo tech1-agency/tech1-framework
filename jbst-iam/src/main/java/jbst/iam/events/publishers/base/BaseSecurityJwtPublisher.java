@@ -1,5 +1,6 @@
 package jbst.iam.events.publishers.base;
 
+import jbst.foundation.domain.pubsub.AbstractEventPublisher;
 import jbst.iam.domain.events.*;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.pubsub.AbstractEventPublisher;
 
-import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
+import static jbst.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @Component

@@ -14,12 +14,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
-import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.exceptions.ExceptionEntity;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
 
 import java.io.IOException;
 
-import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
+import static jbst.foundation.utilities.http.HttpServletRequestUtility.getClientIpAddr;
 
 @Slf4j
 @Component

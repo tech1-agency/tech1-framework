@@ -6,8 +6,8 @@ import jbst.iam.domain.dto.responses.ResponseUserSessionsTable;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.security.CurrentClientUser;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 
 public interface CurrentSessionAssistant {
     Username getCurrentUsername();

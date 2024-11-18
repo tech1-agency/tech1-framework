@@ -1,7 +1,7 @@
 package jbst.iam.repositories.postgres;
 
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.iam.domain.dto.responses.ResponseUserSession2.*;
 
 @SuppressWarnings("JpaQlInspection")

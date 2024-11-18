@@ -1,16 +1,16 @@
 package jbst.iam.domain.events;
 
 import org.junit.jupiter.api.Test;
-import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
-import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
 
 class WebsocketEventTest extends AbstractFolderSerializationRunner {
 

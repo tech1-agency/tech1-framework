@@ -22,19 +22,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.configs.HardwareMonitoringConfigs;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.configs.HardwareMonitoringConfigs;
+import jbst.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

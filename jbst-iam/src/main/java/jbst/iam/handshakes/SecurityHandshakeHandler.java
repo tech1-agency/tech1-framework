@@ -1,5 +1,6 @@
 package jbst.iam.handshakes;
 
+import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.services.TokensService;
 import jbst.iam.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
 
 import java.security.Principal;
 import java.util.Map;

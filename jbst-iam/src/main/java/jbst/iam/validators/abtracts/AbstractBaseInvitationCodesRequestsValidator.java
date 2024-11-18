@@ -7,13 +7,13 @@ import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
-import static tech1.framework.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static tech1.framework.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAccessDenied;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesRequestsValidator implements BaseInvitationCodesRequestsValidator {

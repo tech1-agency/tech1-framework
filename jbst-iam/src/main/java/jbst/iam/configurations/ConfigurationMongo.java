@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
 @Configuration
 @ComponentScan({

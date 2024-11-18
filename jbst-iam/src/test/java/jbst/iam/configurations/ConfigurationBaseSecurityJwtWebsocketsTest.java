@@ -15,10 +15,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.StompWebSocketEndpointRegistration;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.configs.MvcConfigs;
-import tech1.framework.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
-import tech1.framework.foundation.domain.properties.configs.mvc.CorsConfigs;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.configs.MvcConfigs;
+import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
+import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;

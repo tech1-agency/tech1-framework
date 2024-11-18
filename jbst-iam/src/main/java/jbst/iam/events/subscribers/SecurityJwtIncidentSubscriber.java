@@ -1,11 +1,11 @@
 package jbst.iam.events.subscribers;
 
+import jbst.foundation.incidents.domain.authetication.*;
 import org.springframework.context.event.EventListener;
-import tech1.framework.foundation.incidents.domain.authetication.*;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 
 public interface SecurityJwtIncidentSubscriber {
     @EventListener

@@ -3,8 +3,8 @@ package jbst.iam.domain.dto.requests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.tests.runners.AbstractSerializationDeserializationRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

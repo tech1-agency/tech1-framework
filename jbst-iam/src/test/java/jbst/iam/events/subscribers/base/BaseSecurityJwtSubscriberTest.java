@@ -19,21 +19,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.base.UsernamePasswordCredentials;
-import tech1.framework.foundation.domain.http.requests.IPAddress;
-import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
-import tech1.framework.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import tech1.framework.foundation.utils.UserMetadataUtils;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.base.UsernamePasswordCredentials;
+import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogin;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
+import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
+import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.utils.UserMetadataUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

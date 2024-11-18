@@ -12,12 +12,12 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
 import java.io.IOException;
 
-import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isMultipartRequest;
+import static jbst.foundation.utilities.http.HttpServletRequestUtility.isMultipartRequest;
 
 @Slf4j
 @Component

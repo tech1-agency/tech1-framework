@@ -1,8 +1,8 @@
 package jbst.iam.utils;
 
 import jbst.iam.domain.enums.AccountAccessMethod;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.Map;
 

@@ -1,9 +1,9 @@
 package jbst.iam.domain.events;
 
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.IPAddress;
-import tech1.framework.foundation.domain.http.requests.UserAgentHeader;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.http.requests.UserAgentHeader;
 
 public record EventAuthenticationLoginFailure(
         Username username,

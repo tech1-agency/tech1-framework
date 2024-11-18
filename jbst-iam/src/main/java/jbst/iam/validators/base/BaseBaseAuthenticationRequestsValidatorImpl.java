@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static tech1.framework.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 
 @Slf4j
 @Component

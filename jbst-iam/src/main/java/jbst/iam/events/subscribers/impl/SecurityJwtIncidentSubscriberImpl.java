@@ -1,19 +1,19 @@
 package jbst.iam.events.subscribers.impl;
 
+import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
+import jbst.foundation.incidents.domain.authetication.*;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
+import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
+import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.feigns.clients.IncidentClient;
 import jbst.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech1.framework.foundation.domain.pubsub.AbstractEventSubscriber;
-import tech1.framework.foundation.incidents.domain.authetication.*;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1;
-import tech1.framework.foundation.incidents.domain.registration.IncidentRegistration1Failure;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionExpired;
-import tech1.framework.foundation.incidents.domain.session.IncidentSessionRefreshed;
-import tech1.framework.foundation.incidents.feigns.clients.IncidentClient;
 
-import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.*;
+import static jbst.foundation.domain.constants.FrameworkLogsConstants.*;
 
 @Slf4j
 @Service

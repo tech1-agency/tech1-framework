@@ -1,9 +1,9 @@
 package jbst.iam.domain.functions;
 
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.tuples.Tuple3;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.tuples.Tuple3;
 
 public record FunctionSessionRefreshedEmail(
         Username username,

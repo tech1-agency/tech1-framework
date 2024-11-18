@@ -5,14 +5,14 @@ import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.base.DefaultUser;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
 public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 

@@ -1,12 +1,12 @@
 package jbst.iam.services;
 
+import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.JwtTokenValidatedClaims;
 import jbst.iam.domain.jwt.JwtUser;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
-import tech1.framework.foundation.domain.tuples.Tuple2;
+import jbst.foundation.domain.tuples.Tuple2;
 
 public interface TokensContextThrowerService {
     JwtTokenValidatedClaims verifyValidityOrThrow(JwtAccessToken accessToken) throws AccessTokenInvalidException;

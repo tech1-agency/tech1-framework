@@ -3,12 +3,12 @@ package jbst.iam.domain.dto.responses;
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.time.TimeAgo;
-import tech1.framework.foundation.domain.time.TimeAmount;
-import tech1.framework.foundation.domain.tuples.TupleExceptionDetails;
-import tech1.framework.foundation.utilities.time.TimestampUtility;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.time.TimeAgo;
+import jbst.foundation.domain.time.TimeAmount;
+import jbst.foundation.domain.tuples.TupleExceptionDetails;
+import jbst.foundation.utilities.time.TimestampUtility;
 
 import java.util.Comparator;
 

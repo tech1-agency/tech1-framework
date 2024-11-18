@@ -1,5 +1,6 @@
 package jbst.iam.handlers.exceptions;
 
+import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.configurations.TestConfigurationHandlers;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -15,17 +16,16 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.exceptions.authentication.RegistrationException;
-import tech1.framework.foundation.domain.exceptions.cookies.CookieNotFoundException;
-import tech1.framework.foundation.domain.exceptions.tokens.*;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.domain.exceptions.ExceptionEntityType.ERROR;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.domain.exceptions.ExceptionEntityType.ERROR;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

@@ -6,15 +6,15 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.Set;
 
-import static tech1.framework.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
-import static tech1.framework.foundation.domain.enums.Status.FAILURE;
-import static tech1.framework.foundation.utilities.concurrent.SleepUtility.sleepMilliseconds;
+import static jbst.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
+import static jbst.foundation.domain.enums.Status.FAILURE;
+import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMilliseconds;
 
 @Slf4j
 @Getter

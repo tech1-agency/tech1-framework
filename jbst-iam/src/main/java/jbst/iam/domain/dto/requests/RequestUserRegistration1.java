@@ -3,14 +3,14 @@ package jbst.iam.domain.dto.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
 
 import java.time.ZoneId;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static tech1.framework.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
 
 public record RequestUserRegistration1(
         @Username.ValidUsername Username username,

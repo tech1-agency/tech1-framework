@@ -6,23 +6,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tech1.framework.foundation.domain.base.AbstractAuthority;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.constants.JbsConstants;
-import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
-import tech1.framework.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
+import jbst.foundation.domain.base.AbstractAuthority;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.constants.ZoneIdsConstants;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static tech1.framework.foundation.domain.tests.io.TestsIOUtils.readFile;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static tech1.framework.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
+import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
+import static jbst.foundation.domain.tests.io.TestsIOUtils.readFile;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.utilities.reflections.ReflectionUtility.setPrivateField;
 
 class CurrentClientUserTest extends AbstractFolderSerializationRunner {
 

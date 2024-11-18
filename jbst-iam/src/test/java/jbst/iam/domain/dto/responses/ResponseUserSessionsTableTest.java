@@ -4,20 +4,20 @@ import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import org.junit.jupiter.api.Test;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.geo.GeoLocation;
-import tech1.framework.foundation.domain.http.requests.IPAddress;
-import tech1.framework.foundation.domain.http.requests.UserAgentDetails;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.geo.GeoLocation;
+import jbst.foundation.domain.http.requests.IPAddress;
+import jbst.foundation.domain.http.requests.UserAgentDetails;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants.UK;
-import static tech1.framework.foundation.domain.tests.constants.TestsFlagsConstants.USA;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.UK;
+import static jbst.foundation.domain.tests.constants.TestsFlagsConstants.USA;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 class ResponseUserSessionsTableTest {
 

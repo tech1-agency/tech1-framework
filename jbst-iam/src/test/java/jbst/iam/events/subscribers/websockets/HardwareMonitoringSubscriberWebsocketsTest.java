@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
-import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
-import tech1.framework.foundation.services.hardware.store.HardwareMonitoringStore;
+import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import static org.mockito.Mockito.*;
 

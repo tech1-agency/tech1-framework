@@ -9,11 +9,11 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasLength;
-import static tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
-import static tech1.framework.foundation.domain.constants.StringConstants.SEMICOLON;
+import static jbst.foundation.domain.constants.StringConstants.EMPTY;
+import static jbst.foundation.domain.constants.StringConstants.SEMICOLON;
 
 @Converter
 public class PostgresSetOfSimpleGrantedAuthoritiesConverter implements AttributeConverter<Set<SimpleGrantedAuthority>, String> {

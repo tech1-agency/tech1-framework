@@ -3,7 +3,7 @@ package jbst.iam.tests.converters.mongodb;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.domain.mongodb.MongoDbUserSession;
 import lombok.experimental.UtilityClass;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Username;
 
 import java.util.List;
 import java.util.stream.Collectors;

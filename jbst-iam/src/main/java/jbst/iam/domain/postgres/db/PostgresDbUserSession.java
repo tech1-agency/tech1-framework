@@ -13,9 +13,9 @@ import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable1;
 import lombok.*;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
 
 import java.util.List;
 

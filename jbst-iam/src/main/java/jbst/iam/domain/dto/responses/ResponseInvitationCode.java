@@ -1,14 +1,14 @@
 package jbst.iam.domain.dto.responses;
 
 import jbst.iam.domain.identifiers.InvitationCodeId;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Username;
 
 import java.util.Comparator;
 
 import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
-import static tech1.framework.foundation.domain.constants.StringConstants.EMPTY;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.domain.constants.StringConstants.EMPTY;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
 public record ResponseInvitationCode(
         InvitationCodeId id,

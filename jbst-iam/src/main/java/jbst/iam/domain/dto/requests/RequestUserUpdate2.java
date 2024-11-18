@@ -2,11 +2,11 @@ package jbst.iam.domain.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import tech1.framework.foundation.domain.constants.ZoneIdsConstants;
+import jbst.foundation.domain.constants.ZoneIdsConstants;
 
 import java.time.ZoneId;
 
-import static tech1.framework.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
+import static jbst.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
 
 public record RequestUserUpdate2(
         @Schema(type = "string") @NotNull ZoneId zoneId,

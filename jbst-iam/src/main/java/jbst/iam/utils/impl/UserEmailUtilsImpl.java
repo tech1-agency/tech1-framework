@@ -6,17 +6,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.http.requests.UserRequestMetadata;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.time.ZoneOffset.UTC;
-import static tech1.framework.foundation.domain.constants.DatetimeConstants.DTF11;
-import static tech1.framework.foundation.utilities.time.LocalDateUtility.now;
+import static jbst.foundation.domain.constants.DatetimeConstants.DTF11;
+import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

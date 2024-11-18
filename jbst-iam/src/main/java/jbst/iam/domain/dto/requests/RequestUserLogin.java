@@ -1,7 +1,7 @@
 package jbst.iam.domain.dto.requests;
 
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
 
 public record RequestUserLogin(
         @Username.ValidUsername Username username,

@@ -2,9 +2,9 @@ package jbst.iam.template;
 
 import jbst.iam.domain.events.WebsocketEvent;
 import org.springframework.scheduling.annotation.Async;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import tech1.framework.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 
 import java.util.Set;
 

@@ -6,10 +6,10 @@ import jbst.iam.repositories.UsersRepository;
 import jbst.iam.validators.BaseUsersValidator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Username;
 
 import static java.util.Objects.nonNull;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityAlreadyUsed;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersValidator implements BaseUsersValidator {

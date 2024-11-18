@@ -6,10 +6,10 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.converters.columns.PostgresUsernameConverter;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
 
-import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
+import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @Getter
 @Setter

@@ -1,6 +1,6 @@
 package jbst.iam.domain.postgres.projections;
 
-import tech1.framework.foundation.domain.base.Username;
+import jbst.foundation.domain.base.Username;
 
 public interface PostgresDbUserProjection1 {
     String getUsername();

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.exceptions.ExceptionEntity;
+import jbst.foundation.domain.exceptions.ExceptionEntity;
 
 import java.io.IOException;
 

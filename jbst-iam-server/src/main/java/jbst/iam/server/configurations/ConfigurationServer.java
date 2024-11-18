@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import tech1.framework.foundation.domain.base.PropertyId;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
 import static org.springframework.http.HttpMethod.GET;
 

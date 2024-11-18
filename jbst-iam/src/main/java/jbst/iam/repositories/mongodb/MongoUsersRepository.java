@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import tech1.framework.foundation.domain.base.Email;
-import tech1.framework.foundation.domain.base.Password;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.tuples.TuplePresence;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;
@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 import static jbst.iam.constants.SecurityJwtConstants.SUPERADMIN;
-import static tech1.framework.foundation.domain.tuples.TuplePresence.present;
-import static tech1.framework.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
+import static jbst.foundation.domain.tuples.TuplePresence.present;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 public interface MongoUsersRepository extends MongoRepository<MongoDbUser, String>, UsersRepository {
     // ================================================================================================================

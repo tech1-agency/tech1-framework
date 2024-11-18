@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import tech1.framework.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 
-import static tech1.framework.foundation.utilities.http.HttpServletRequestUtility.isPOST;
+import static jbst.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 
 @Slf4j
 @Component

@@ -8,7 +8,7 @@ import jbst.iam.services.BaseRegistrationService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import tech1.framework.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Password;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseRegistrationService implements BaseRegistrationService {

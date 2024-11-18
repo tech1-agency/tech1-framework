@@ -22,10 +22,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.base.Username;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
-import tech1.framework.foundation.domain.properties.base.TimeAmount;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.domain.properties.base.TimeAmount;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,12 +38,12 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.*;
 import static java.util.Objects.nonNull;
 import static java.util.TimeZone.getTimeZone;
-import static tech1.framework.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static org.assertj.core.api.Assertions.assertThat;
-import static tech1.framework.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
-import static tech1.framework.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomZoneId;
-import static tech1.framework.foundation.utilities.time.DateUtility.convertLocalDateTime;
+import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
+import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 
 @Slf4j
 @ExtendWith({ SpringExtension.class })

@@ -6,6 +6,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.handlers.ErrorHandlerPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ApplicationEventMulticaster;
@@ -15,10 +16,14 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationEventsIncidents {
 
     // Exceptions
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final ErrorHandlerPublisher errorHandlerPublisher;
     // Properties
     private final JbstProperties jbstProperties;

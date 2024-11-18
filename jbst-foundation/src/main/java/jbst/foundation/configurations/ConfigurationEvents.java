@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ApplicationEventMulticaster;
@@ -15,6 +16,9 @@ import org.springframework.scheduling.support.TaskUtils;
 import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationEvents {
 

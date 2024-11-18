@@ -23,15 +23,20 @@ import jbst.foundation.utils.UserMetadataUtils;
 import jbst.foundation.utils.impl.UserMetadataUtilsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationUserMetadata {
 
     // Resources
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final ResourceLoader resourceLoader;
     // Properties
     private final JbstProperties jbstProperties;

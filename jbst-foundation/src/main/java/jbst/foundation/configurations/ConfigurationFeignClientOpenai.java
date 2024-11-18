@@ -8,12 +8,10 @@ import jbst.foundation.feigns.clients.openai.clients.OpenaiClient;
 import jbst.foundation.feigns.clients.openai.clients.impl.OpenaiClientImpl;
 import jbst.foundation.feigns.clients.openai.definions.OpenaiDefinition;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationFeignClientOpenai {

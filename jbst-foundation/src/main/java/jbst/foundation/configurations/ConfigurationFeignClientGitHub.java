@@ -8,12 +8,10 @@ import jbst.foundation.feigns.clients.github.clients.GithubClient;
 import jbst.foundation.feigns.clients.github.clients.impl.GithubClientImpl;
 import jbst.foundation.feigns.clients.github.definitions.GithubDefinition;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationFeignClientGitHub {

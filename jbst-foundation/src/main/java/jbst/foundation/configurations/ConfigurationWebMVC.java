@@ -6,6 +6,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import static java.util.Objects.nonNull;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @EnableWebMvc
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationWebMVC implements WebMvcConfigurer {

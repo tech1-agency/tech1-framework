@@ -9,9 +9,9 @@ import jbst.foundation.services.emails.services.impl.EmailServiceSlf4j;
 import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,8 +22,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 import java.nio.charset.StandardCharsets;
 
-@Slf4j
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationEmails {
 

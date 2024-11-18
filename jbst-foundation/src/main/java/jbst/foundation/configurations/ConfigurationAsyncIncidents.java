@@ -8,6 +8,7 @@ import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -19,13 +20,18 @@ import java.util.concurrent.Executor;
 import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCores;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @EnableAsync
 @EnableScheduling
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationAsyncIncidents implements AsyncConfigurer {
 
     // Exceptions
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final AsyncUncaughtExceptionHandlerPublisher asyncUncaughtExceptionHandlerPublisher;
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final RejectedExecutionHandlerPublisher rejectedExecutionHandlerPublisher;
     // Properties
     private final JbstProperties jbstProperties;

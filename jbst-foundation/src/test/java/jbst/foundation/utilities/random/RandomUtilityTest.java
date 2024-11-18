@@ -1,7 +1,7 @@
 package jbst.foundation.utilities.random;
 
 import feign.Request;
-import jbst.foundation.domain.constants.BigIntegerConstants;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.random.IllegalEnumException;
 import jbst.foundation.domain.tests.enums.EnumOneValueUnderTests;
 import jbst.foundation.domain.tests.enums.EnumUnderTests;
@@ -318,8 +318,8 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE))
-                .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(BigIntegerConstants.MINUS_ONE));
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(JbstConstants.BigIntegers.MINUS_ONE))
+                .isLessThanOrEqualTo(BigInteger.valueOf(lowerBound).multiply(JbstConstants.BigIntegers.MINUS_ONE));
     }
 
     @RepeatedTest(RANDOM_ITERATIONS_COUNT)
@@ -333,7 +333,7 @@ class RandomUtilityTest {
 
         // Assert
         assertThat(actual)
-                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(BigIntegerConstants.MINUS_ONE))
+                .isGreaterThanOrEqualTo(BigInteger.valueOf(upperBound).multiply(JbstConstants.BigIntegers.MINUS_ONE))
                 .isLessThanOrEqualTo(BigInteger.valueOf(upperBound));
     }
 

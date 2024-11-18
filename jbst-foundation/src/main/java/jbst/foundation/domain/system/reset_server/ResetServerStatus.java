@@ -1,7 +1,6 @@
 package jbst.foundation.domain.system.reset_server;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jbst.foundation.domain.constants.DatetimeConstants;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,6 +8,7 @@ import lombok.ToString;
 
 import java.time.ZoneId;
 
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -66,7 +66,7 @@ public class ResetServerStatus {
         this.state = ResetServerState.READY;
         this.stage = this.stagesCount;
         this.percentage = TuplePercentage.progressTuplePercentage(this.stage, this.stagesCount);
-        var time = convertTimestamp(getCurrentTimestamp(), zoneId).format(DatetimeConstants.DTF11);
+        var time = convertTimestamp(getCurrentTimestamp(), zoneId).format(DTF11);
         this.description = "Successfully completed at " + time;
     }
 }

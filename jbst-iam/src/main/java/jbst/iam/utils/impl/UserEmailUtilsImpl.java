@@ -1,21 +1,21 @@
 package jbst.iam.utils.impl;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.JbstProperties;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.time.ZoneOffset.UTC;
-import static jbst.foundation.domain.constants.DatetimeConstants.DTF11;
+import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
 
 @Component

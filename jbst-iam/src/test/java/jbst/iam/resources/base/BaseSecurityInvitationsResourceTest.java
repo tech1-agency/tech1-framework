@@ -2,9 +2,9 @@
 package jbst.iam.resources.base;
 
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
+import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.services.BaseInvitationCodesService;
 import jbst.iam.configurations.TestRunnerResources1;
@@ -27,7 +27,7 @@ import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
+class BaseSecurityInvitationsResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
@@ -39,7 +39,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
     private final JbstProperties jbstProperties;
 
     // Resource
-    private final BaseSecurityInvitationCodesResource componentUnderTest;
+    private final BaseSecurityInvitationsResource componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
@@ -65,11 +65,11 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(ResponseInvitation.class);
-        var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
+        var responseInvitationCodes = new ResponseInvitations(authorities, invitationCodes);
         when(this.baseInvitationCodesService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
-        this.mvc.perform(get("/invitationCodes"))
+        this.mvc.perform(get("/invitations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authorities", hasSize(5)))
                 .andExpect(jsonPath("$.invitationCodes", hasSize(invitationCodes.size())));
@@ -83,11 +83,11 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
     void saveTest() throws Exception {
         // Arrange
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
-        var request = RequestNewInvitationCodeParams.hardcoded();
+        var request = RequestNewInvitationParams.hardcoded();
 
         // Act
         this.mvc.perform(
-                post("/invitationCodes")
+                post("/invitations")
                         .content(this.objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -107,7 +107,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(username);
 
         // Act
-        this.mvc.perform(delete("/invitationCodes/" + invitationCodeId))
+        this.mvc.perform(delete("/invitations/" + invitationCodeId))
                 .andExpect(status().isOk());
 
         // Assert

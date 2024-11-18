@@ -42,7 +42,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getInvitationCodes().isEnabled(),
-                invalidAttribute("essenceConfigs.invitationCodes.enabled == true")
+                invalidAttribute("essenceConfigs.invitations.enabled == true")
         );
         var authorities = getSimpleGrantedAuthorities(securityJwtConfigs.getAuthoritiesConfigs().getAvailableAuthorities());
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {

@@ -1,7 +1,7 @@
 package jbst.iam.repositories.mongodb;
 
 import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
@@ -57,7 +57,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
         return entity.invitationCodeId();
     }
 
-    default InvitationId saveAs(Username owner, RequestNewInvitationCodeParams request) {
+    default InvitationId saveAs(Username owner, RequestNewInvitationParams request) {
         var invitationCode = new MongoDbInvitation(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())

@@ -1,8 +1,8 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
-import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
+import jbst.iam.domain.dto.responses.ResponseInvitations;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.services.BaseInvitationCodesService;
@@ -20,17 +20,17 @@ public abstract class AbstractBaseInvitationCodesService implements BaseInvitati
     protected final JbstProperties jbstProperties;
 
     @Override
-    public ResponseInvitationCodes findByOwner(Username owner) {
+    public ResponseInvitations findByOwner(Username owner) {
         var invitationCodes = this.invitationCodesRepository.findResponseCodesByOwner(owner);
         invitationCodes.sort(ResponseInvitation.INVITATION);
-        return new ResponseInvitationCodes(
+        return new ResponseInvitations(
                 this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
                 invitationCodes
         );
     }
 
     @Override
-    public void save(Username owner, RequestNewInvitationCodeParams request) {
+    public void save(Username owner, RequestNewInvitationParams request) {
         this.invitationCodesRepository.saveAs(owner, request);
     }
 

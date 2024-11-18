@@ -2,7 +2,7 @@ package jbst.iam.postgres.repositories;
 
 import jbst.iam.configurations.ConfigurationPostgresRepositories;
 import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
@@ -140,7 +140,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
     void saveIntegrationTests() {
         // Arrange
         var saved = this.invitationCodesRepository.saveAll(PostgresDbInvitation.dummies1());
-        var request = RequestNewInvitationCodeParams.random();
+        var request = RequestNewInvitationParams.random();
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);

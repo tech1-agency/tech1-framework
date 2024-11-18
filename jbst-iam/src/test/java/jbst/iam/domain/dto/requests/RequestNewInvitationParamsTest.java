@@ -9,8 +9,8 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestNewInvitationCodeParamsTest extends AbstractSerializationDeserializationRunner {
-    private static final RequestNewInvitationCodeParams REQUEST = new RequestNewInvitationCodeParams(
+class RequestNewInvitationParamsTest extends AbstractSerializationDeserializationRunner {
+    private static final RequestNewInvitationParams REQUEST = new RequestNewInvitationParams(
             Set.of("admin", "user")
     );
 
@@ -31,7 +31,7 @@ class RequestNewInvitationCodeParamsTest extends AbstractSerializationDeserializ
     void deserializeTest() {
         // Arrange
         var json = this.readFile();
-        var typeReference = new TypeReference<RequestNewInvitationCodeParams>() {};
+        var typeReference = new TypeReference<RequestNewInvitationParams>() {};
 
         // Act
         var actual = OBJECT_MAPPER.readValue(json, typeReference);

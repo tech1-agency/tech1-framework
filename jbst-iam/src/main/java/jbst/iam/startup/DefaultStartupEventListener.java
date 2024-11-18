@@ -33,7 +33,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
         }
 
         var invitationCodes = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes();
-        LOGGER.info("{} Essence invitationCodes — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitationCodes.isEnabled()));
+        LOGGER.info("{} Essence invitations — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitationCodes.isEnabled()));
         if (invitationCodes.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitationCodes();
         }

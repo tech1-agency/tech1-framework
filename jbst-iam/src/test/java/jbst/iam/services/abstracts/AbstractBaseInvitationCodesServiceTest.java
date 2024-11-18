@@ -1,6 +1,6 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
@@ -92,7 +92,7 @@ class AbstractBaseInvitationCodesServiceTest {
 
         // Assert
         verify(this.invitationCodesRepository).findResponseCodesByOwner(owner);
-        assertThat(responseInvitationCodes.invitationCodes().stream()
+        assertThat(responseInvitationCodes.invitations().stream()
                         .limit(3)
                         .map(ResponseInvitation::value)
                         .collect(Collectors.toSet())
@@ -101,7 +101,7 @@ class AbstractBaseInvitationCodesServiceTest {
                 invitationCode4.value(),
                 invitationCode6.value()
         );
-        assertThat(responseInvitationCodes.invitationCodes().stream()
+        assertThat(responseInvitationCodes.invitations().stream()
                 .skip(3)
                 .map(ResponseInvitation::value)
                 .collect(Collectors.toSet())
@@ -117,7 +117,7 @@ class AbstractBaseInvitationCodesServiceTest {
     void saveTest() {
         // Arrange
         var username = Username.random();
-        var request = RequestNewInvitationCodeParams.random();
+        var request = RequestNewInvitationParams.random();
 
         // Act
         this.componentUnderTest.save(username, request);

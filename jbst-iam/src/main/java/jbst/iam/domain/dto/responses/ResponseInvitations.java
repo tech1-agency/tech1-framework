@@ -3,8 +3,8 @@ package jbst.iam.domain.dto.responses;
 import java.util.List;
 import java.util.Set;
 
-public record ResponseInvitationCodes(
+public record ResponseInvitations(
         Set<String> authorities,
-        List<ResponseInvitation> invitationCodes
+        List<ResponseInvitation> invitations
 ) {
 }

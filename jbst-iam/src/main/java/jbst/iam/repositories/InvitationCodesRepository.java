@@ -1,7 +1,7 @@
 package jbst.iam.repositories;
 
 import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.foundation.domain.base.Username;
@@ -17,5 +17,5 @@ public interface InvitationCodesRepository {
     long countByOwner(Username username);
     void delete(InvitationId invitationId);
     InvitationId saveAs(Invitation invitation);
-    InvitationId saveAs(Username owner, RequestNewInvitationCodeParams request);
+    InvitationId saveAs(Username owner, RequestNewInvitationParams request);
 }

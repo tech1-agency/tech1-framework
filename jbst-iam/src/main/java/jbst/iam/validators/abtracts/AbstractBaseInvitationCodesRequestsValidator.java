@@ -1,6 +1,6 @@
 package jbst.iam.validators.abtracts;
 
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
@@ -24,7 +24,7 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
     protected final JbstProperties jbstProperties;
 
     @Override
-    public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams request) {
+    public void validateCreateNewInvitationCode(RequestNewInvitationParams request) {
         var availableAuthorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         assertTrueOrThrow(
                 availableAuthorities.containsAll(request.authorities()),

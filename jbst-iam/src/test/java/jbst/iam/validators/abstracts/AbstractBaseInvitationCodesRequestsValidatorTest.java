@@ -5,7 +5,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
@@ -44,10 +44,10 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationCodeTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATIONS_READ, "invitationCode:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of()), null),
-                Arguments.of(new RequestNewInvitationCodeParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)
+                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "invitationCode:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
+                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
+                Arguments.of(new RequestNewInvitationParams(Set.of()), null),
+                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)
         );
     }
 
@@ -75,7 +75,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateCreateNewInvitationCodeTest")
-    void validateCreateNewInvitationCodeTest(RequestNewInvitationCodeParams request, String exceptionMessage) {
+    void validateCreateNewInvitationCodeTest(RequestNewInvitationParams request, String exceptionMessage) {
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateCreateNewInvitationCode(request));
 

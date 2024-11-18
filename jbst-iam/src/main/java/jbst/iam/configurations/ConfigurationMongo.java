@@ -12,6 +12,7 @@ import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
 import jbst.iam.sessions.MongoSessionRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,9 @@ import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @ComponentScan({
         "jbst.iam.services.mongodb",
         "jbst.iam.validators.mongodb",
@@ -60,6 +64,7 @@ public class ConfigurationMongo {
         );
     }
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     MongoSessionRegistry mongoSessionRegistry(
             SecurityJwtPublisher securityJwtPublisher,

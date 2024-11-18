@@ -2,7 +2,7 @@ package jbst.iam.mongo.repositories;
 
 import jbst.iam.configurations.ConfigurationMongoRepositories;
 import jbst.iam.domain.db.Invitation;
-import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
+import jbst.iam.domain.dto.requests.RequestNewInvitationParams;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.iam.mongo.configs.MongoBeforeAllCallback;
@@ -138,7 +138,7 @@ class MongoInvitationsRepositoryIT extends TestsConfigurationMongoRepositoriesRu
     void saveIntegrationTests() {
         // Arrange
         var saved = this.invitationCodesRepository.saveAll(MongoDbInvitation.dummies1());
-        var request = RequestNewInvitationCodeParams.random();
+        var request = RequestNewInvitationParams.random();
 
         // Act-Assert-0
         assertThat(this.invitationCodesRepository.count()).isEqualTo(6);

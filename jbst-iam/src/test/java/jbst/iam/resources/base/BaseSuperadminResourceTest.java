@@ -103,7 +103,7 @@ class BaseSuperadminResourceTest extends TestRunnerResources1 {
         when(this.baseSuperadminService.findUnused()).thenReturn(codes);
 
         // Act
-        this.mvc.perform(get("/superadmin/invitationCodes/unused"))
+        this.mvc.perform(get("/superadmin/invitations/unused"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(codes.size())))
                 .andExpect(jsonPath("$.[0].id", notNullValue()))

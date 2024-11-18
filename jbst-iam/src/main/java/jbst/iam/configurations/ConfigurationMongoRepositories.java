@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
@@ -27,6 +28,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import jbst.foundation.domain.properties.JbstProperties;
 
 @Configuration
+@EnableConfigurationProperties({
+        JbstProperties.class
+})
 @EntityScan({
         "jbst.iam.domain.mongo"
 })

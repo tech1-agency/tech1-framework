@@ -1,8 +1,8 @@
 package jbst.iam.essence;
 
-import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
+import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -17,11 +17,11 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
-    protected final PostgresInvitationCodesRepository postgresInvitationCodesRepository;
+    protected final PostgresInvitationsRepository postgresInvitationsRepository;
     protected final PostgresUsersRepository postgresUsersRepository;
 
     public PostgresBaseEssenceConstructor(
-            PostgresInvitationCodesRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationCodesRepository,
             PostgresUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
@@ -30,7 +30,7 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                 usersRepository,
                 jbstProperties
         );
-        this.postgresInvitationCodesRepository = invitationCodesRepository;
+        this.postgresInvitationsRepository = invitationCodesRepository;
         this.postgresUsersRepository = usersRepository;
     }
 
@@ -58,12 +58,12 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
     public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
         var dbInvitationCodes = IntStream.range(0, 10)
                 .mapToObj(i ->
-                        new PostgresDbInvitationCode(
+                        new PostgresDbInvitation(
                                 defaultUser.getUsername(),
                                 authorities
                         )
                 )
                 .toList();
-        this.postgresInvitationCodesRepository.saveAll(dbInvitationCodes);
+        this.postgresInvitationsRepository.saveAll(dbInvitationCodes);
     }
 }

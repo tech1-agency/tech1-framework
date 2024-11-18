@@ -3,7 +3,7 @@ package jbst.iam.essence;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -40,8 +40,8 @@ class MongoBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        MongoInvitationCodesRepository invitationCodeRepository() {
-            return mock(MongoInvitationCodesRepository.class);
+        MongoInvitationsRepository invitationCodeRepository() {
+            return mock(MongoInvitationsRepository.class);
         }
 
         @Bean
@@ -59,7 +59,7 @@ class MongoBaseEssenceConstructorTest {
         }
     }
 
-    private final MongoInvitationCodesRepository invitationCodesRepository;
+    private final MongoInvitationsRepository invitationCodesRepository;
     private final MongoUsersRepository usersRepository;
 
     private final EssenceConstructor componentUnderTest;

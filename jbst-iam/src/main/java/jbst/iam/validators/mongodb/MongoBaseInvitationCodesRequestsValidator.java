@@ -1,6 +1,6 @@
 package jbst.iam.validators.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -9,7 +9,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 public class MongoBaseInvitationCodesRequestsValidator extends AbstractBaseInvitationCodesRequestsValidator {
 
     public MongoBaseInvitationCodesRequestsValidator(
-            MongoInvitationCodesRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationCodesRepository,
             JbstProperties jbstProperties
     ) {
         super(

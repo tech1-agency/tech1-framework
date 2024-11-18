@@ -1,6 +1,6 @@
 package jbst.iam.repositories.mongodb;
 
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -58,12 +58,12 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, InvitationCode invitationCode) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation) {
         var user = new MongoDbUser(
                 requestUserRegistration1.username(),
                 password,
                 requestUserRegistration1.zoneId(),
-                invitationCode.authorities(),
+                invitation.authorities(),
                 false
         );
         var entity = this.save(user);

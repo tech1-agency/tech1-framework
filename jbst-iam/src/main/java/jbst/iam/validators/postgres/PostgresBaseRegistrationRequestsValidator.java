@@ -2,7 +2,7 @@ package jbst.iam.validators.postgres;
 
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class PostgresBaseRegistrationRequestsValidator extends AbstractBaseRegis
     public PostgresBaseRegistrationRequestsValidator(
             SecurityJwtPublisher securityJwtPublisher,
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,
-            PostgresInvitationCodesRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationCodesRepository,
             PostgresUsersRepository usersRepository
     ) {
         super(

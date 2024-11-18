@@ -3,7 +3,7 @@ package jbst.iam.essence;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.base.DefaultUser;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -40,8 +40,8 @@ class PostgresBaseEssenceConstructorTest {
         private final JbstProperties jbstProperties;
 
         @Bean
-        PostgresInvitationCodesRepository invitationCodeRepository() {
-            return mock(PostgresInvitationCodesRepository.class);
+        PostgresInvitationsRepository invitationCodeRepository() {
+            return mock(PostgresInvitationsRepository.class);
         }
 
         @Bean
@@ -59,7 +59,7 @@ class PostgresBaseEssenceConstructorTest {
         }
     }
 
-    private final PostgresInvitationCodesRepository invitationCodesRepository;
+    private final PostgresInvitationsRepository invitationCodesRepository;
     private final PostgresUsersRepository usersRepository;
 
     private final EssenceConstructor componentUnderTest;

@@ -1,8 +1,8 @@
 package jbst.iam.essence;
 
-import jbst.iam.domain.mongodb.MongoDbInvitationCode;
+import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.iam.domain.mongodb.MongoDbUser;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -17,11 +17,11 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
 
     // Repositories
-    protected final MongoInvitationCodesRepository mongoInvitationCodesRepository;
+    protected final MongoInvitationsRepository mongoInvitationsRepository;
     protected final MongoUsersRepository mongoUsersRepository;
 
     public MongoBaseEssenceConstructor(
-            MongoInvitationCodesRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationCodesRepository,
             MongoUsersRepository usersRepository,
             JbstProperties jbstProperties
     ) {
@@ -30,7 +30,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                 usersRepository,
                 jbstProperties
         );
-        this.mongoInvitationCodesRepository = invitationCodesRepository;
+        this.mongoInvitationsRepository = invitationCodesRepository;
         this.mongoUsersRepository = usersRepository;
     }
 
@@ -58,12 +58,12 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
     public void saveInvitationCodes(DefaultUser defaultUser, Set<SimpleGrantedAuthority> authorities) {
         var dbInvitationCodes = IntStream.range(0, 10)
                 .mapToObj(i ->
-                        new MongoDbInvitationCode(
+                        new MongoDbInvitation(
                                 defaultUser.getUsername(),
                                 authorities
                         )
                 )
                 .toList();
-        this.mongoInvitationCodesRepository.saveAll(dbInvitationCodes);
+        this.mongoInvitationsRepository.saveAll(dbInvitationCodes);
     }
 }

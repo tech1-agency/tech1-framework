@@ -1,6 +1,6 @@
 package jbst.iam.services;
 
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
@@ -21,7 +21,7 @@ public interface BaseSuperadminService {
     // Invitation Codes
     // =================================================================================================================
 
-    List<ResponseInvitationCode> findUnused();
+    List<ResponseInvitation> findUnused();
 
     // =================================================================================================================
     // Users Sessions

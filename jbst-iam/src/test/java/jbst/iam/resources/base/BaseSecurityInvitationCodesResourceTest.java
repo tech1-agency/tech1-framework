@@ -3,7 +3,7 @@ package jbst.iam.resources.base;
 
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.services.BaseInvitationCodesService;
@@ -64,14 +64,14 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
         var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
         var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
-        var invitationCodes = list345(ResponseInvitationCode.class);
+        var invitationCodes = list345(ResponseInvitation.class);
         var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
         when(this.baseInvitationCodesService.findByOwner(owner)).thenReturn(responseInvitationCodes);
 
         // Act
         this.mvc.perform(get("/invitationCodes"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.authorities", hasSize(4)))
+                .andExpect(jsonPath("$.authorities", hasSize(5)))
                 .andExpect(jsonPath("$.invitationCodes", hasSize(invitationCodes.size())));
 
         // Assert

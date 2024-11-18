@@ -2,7 +2,7 @@ package jbst.iam.configurations;
 
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import org.springframework.context.annotation.Bean;
@@ -45,8 +45,8 @@ public class TestConfigurationPostgresValidators {
     // Repositories
     // =================================================================================================================
     @Bean
-    PostgresInvitationCodesRepository invitationCodeRepository() {
-        return mock(PostgresInvitationCodesRepository.class);
+    PostgresInvitationsRepository invitationCodeRepository() {
+        return mock(PostgresInvitationsRepository.class);
     }
 
     @Bean

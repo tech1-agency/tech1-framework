@@ -1,6 +1,6 @@
 package jbst.iam.services.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import jbst.iam.services.abstracts.AbstractBaseSuperadminService;
 import jbst.iam.sessions.SessionRegistry;
@@ -18,7 +18,7 @@ public class MongoBaseSuperadminService extends AbstractBaseSuperadminService {
     public MongoBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
-            MongoInvitationCodesRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationCodesRepository,
             MongoUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {

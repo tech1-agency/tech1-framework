@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.services.BaseSuperadminService;
@@ -58,7 +58,7 @@ public class BaseSuperadminResource {
     // =================================================================================================================
 
     @GetMapping("/invitationCodes/unused")
-    public List<ResponseInvitationCode> getUnusedInvitationCodes() {
+    public List<ResponseInvitation> getUnusedInvitationCodes() {
         return this.baseSuperadminService.findUnused();
     }
 

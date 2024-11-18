@@ -2,7 +2,7 @@ package jbst.iam.resources.base;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.dto.responses.ResponseUserSession2;
 import jbst.iam.domain.identifiers.UserSessionId;
@@ -99,7 +99,7 @@ class BaseSuperadminResourceTest extends TestRunnerResources1 {
     @Test
     void getUnusedInvitationCodesTest() throws Exception {
         // Arrange
-        var codes = list345(ResponseInvitationCode.class);
+        var codes = list345(ResponseInvitation.class);
         when(this.baseSuperadminService.findUnused()).thenReturn(codes);
 
         // Act

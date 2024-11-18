@@ -1,7 +1,7 @@
 package jbst.iam.services.postgres;
 
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.services.abstracts.AbstractBaseRegistrationService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class PostgresBaseRegistrationService extends AbstractBaseRegistrationSer
 
     @Autowired
     public PostgresBaseRegistrationService(
-            PostgresInvitationCodesRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationCodesRepository,
             PostgresUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {

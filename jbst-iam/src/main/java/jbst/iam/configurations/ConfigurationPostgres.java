@@ -4,7 +4,7 @@ import jbst.iam.assistants.userdetails.PostgresUserDetailsAssistant;
 import jbst.iam.essence.PostgresBaseEssenceConstructor;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.postgres.PostgresBaseUsersSessionsService;
@@ -36,12 +36,12 @@ public class ConfigurationPostgres {
 
     @Bean
     PostgresBaseEssenceConstructor postgresBaseEssenceConstructor(
-            PostgresInvitationCodesRepository postgresInvitationCodesRepository,
+            PostgresInvitationsRepository postgresInvitationsRepository,
             PostgresUsersRepository postgresUsersRepository,
             JbstProperties jbstProperties
     ) {
         return new PostgresBaseEssenceConstructor(
-                postgresInvitationCodesRepository,
+                postgresInvitationsRepository,
                 postgresUsersRepository,
                 jbstProperties
         );

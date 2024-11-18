@@ -1,6 +1,6 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -29,8 +29,8 @@ class PostgresBaseRegistrationServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        PostgresInvitationCodesRepository invitationCodeRepository() {
-            return mock(PostgresInvitationCodesRepository.class);
+        PostgresInvitationsRepository invitationCodeRepository() {
+            return mock(PostgresInvitationsRepository.class);
         }
 
         @Bean
@@ -53,7 +53,7 @@ class PostgresBaseRegistrationServiceTest {
         }
     }
 
-    private final PostgresInvitationCodesRepository invitationCodesRepository;
+    private final PostgresInvitationsRepository invitationCodesRepository;
     private final PostgresUsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

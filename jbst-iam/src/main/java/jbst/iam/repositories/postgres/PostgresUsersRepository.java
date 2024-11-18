@@ -1,6 +1,6 @@
 package jbst.iam.repositories.postgres;
 
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -27,7 +27,7 @@ import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
 
-@SuppressWarnings("JpaQlInspection")
+@SuppressWarnings({"JpaQlInspection", "SqlNoDataSourceInspection"})
 public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, String>, UsersRepository {
     // ================================================================================================================
     // Any
@@ -62,12 +62,12 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
         return entity.userId();
     }
 
-    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, InvitationCode invitationCode) {
+    default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation) {
         var user = new PostgresDbUser(
                 requestUserRegistration1.username(),
                 password,
                 requestUserRegistration1.zoneId(),
-                invitationCode.authorities(),
+                invitation.authorities(),
                 false
         );
         var entity = this.save(user);

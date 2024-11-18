@@ -1,6 +1,6 @@
 package jbst.iam.validators.abstracts;
 
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.events.EventRegistration1Failure;
 import jbst.iam.domain.jwt.JwtUser;
@@ -120,7 +120,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
-        var invitationCode = InvitationCode.random();
+        var invitationCode = Invitation.random();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
         when(this.invitationCodesRepository.findByValueAsAny(request.invitationCode())).thenReturn(invitationCode);
 
@@ -192,7 +192,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
-        when(this.invitationCodesRepository.findByValueAsAny(request.invitationCode())).thenReturn(InvitationCode.randomNoInvited());
+        when(this.invitationCodesRepository.findByValueAsAny(request.invitationCode())).thenReturn(Invitation.randomNoInvited());
 
         // Act
         this.componentUnderTest.validateRegistrationRequest1(request);

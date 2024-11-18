@@ -1,70 +1,64 @@
-package jbst.iam.repositories.postgres;
+package jbst.iam.repositories.mongodb;
 
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.domain.postgres.db.PostgresDbInvitationCode;
+import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static jbst.iam.domain.db.InvitationCode.INVITATION_CODES_UNUSED;
+import static jbst.iam.domain.db.Invitation.INVITATION_CODES_UNUSED;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static jbst.foundation.domain.tuples.TuplePresence.present;
 import static java.util.Objects.nonNull;
 
-@SuppressWarnings("JpaQlInspection")
-public interface PostgresInvitationCodesRepository extends JpaRepository<PostgresDbInvitationCode, String>, InvitationCodesRepository {
+public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvitation, String>, InvitationCodesRepository {
     // ================================================================================================================
     // Any
     // ================================================================================================================
-    default TuplePresence<InvitationCode> isPresent(InvitationId invitationId) {
+    default TuplePresence<Invitation> isPresent(InvitationId invitationId) {
         return this.findById(invitationId.value())
                 .map(entity -> present(entity.invitationCode()))
                 .orElseGet(TuplePresence::absent);
     }
 
-    default List<ResponseInvitationCode> findResponseCodesByOwner(Username owner) {
+    default List<ResponseInvitation> findResponseCodesByOwner(Username owner) {
         return this.findByOwner(owner).stream()
-                .map(PostgresDbInvitationCode::responseInvitationCode)
+                .map(MongoDbInvitation::responseInvitationCode)
                 .collect(Collectors.toList());
     }
 
-    default InvitationCode findByValueAsAny(String value) {
+    default Invitation findByValueAsAny(String value) {
         var invitationCode = this.findByValue(value);
         return nonNull(invitationCode) ? invitationCode.invitationCode() : null;
     }
 
-    default List<ResponseInvitationCode> findUnused() {
+    default List<ResponseInvitation> findUnused() {
         return this.findByInvitedIsNull(INVITATION_CODES_UNUSED).stream()
-                .map(PostgresDbInvitationCode::responseInvitationCode)
+                .map(MongoDbInvitation::responseInvitationCode)
                 .collect(Collectors.toList());
     }
 
     long countByOwner(Username username);
 
     default void delete(InvitationId invitationId) {
-        var tuplePresence = this.isPresent(invitationId);
-        if (tuplePresence.present()) {
-            this.deleteById(invitationId.value());
-        }
+        this.deleteById(invitationId.value());
     }
 
-    default InvitationId saveAs(InvitationCode invitationCode) {
-        var entity = this.save(new PostgresDbInvitationCode(invitationCode));
+    default InvitationId saveAs(Invitation invitation) {
+        var entity = this.save(new MongoDbInvitation(invitation));
         return entity.invitationCodeId();
     }
 
     default InvitationId saveAs(Username owner, RequestNewInvitationCodeParams request) {
-        var invitationCode = new PostgresDbInvitationCode(
+        var invitationCode = new MongoDbInvitation(
                 owner,
                 getSimpleGrantedAuthorities(request.authorities())
         );
@@ -75,18 +69,13 @@ public interface PostgresInvitationCodesRepository extends JpaRepository<Postgre
     // ================================================================================================================
     // Spring Data
     // ================================================================================================================
-    List<PostgresDbInvitationCode> findByOwner(Username username);
-    List<PostgresDbInvitationCode> findByInvitedIsNull();
-    List<PostgresDbInvitationCode> findByInvitedIsNull(Sort sort);
-    List<PostgresDbInvitationCode> findByInvitedIsNotNull();
-    List<PostgresDbInvitationCode> findByInvitedIsNotNull(Sort sort);
-    PostgresDbInvitationCode findByValue(String value);
+    List<MongoDbInvitation> findByOwner(Username username);
+    List<MongoDbInvitation> findByInvitedIsNull();
+    List<MongoDbInvitation> findByInvitedIsNull(Sort sort);
+    List<MongoDbInvitation> findByInvitedIsNotNull();
+    List<MongoDbInvitation> findByInvitedIsNotNull(Sort sort);
+    MongoDbInvitation findByValue(String value);
 
-    @Transactional
-    @Modifying
     void deleteByInvitedIsNull();
-
-    @Transactional
-    @Modifying
     void deleteByInvitedIsNotNull();
 }

@@ -1,6 +1,6 @@
 package jbst.iam.services.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.services.abstracts.AbstractBaseRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ public class MongoBaseRegistrationService extends AbstractBaseRegistrationServic
 
     @Autowired
     public MongoBaseRegistrationService(
-            MongoInvitationCodesRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationCodesRepository,
             MongoUsersRepository usersRepository,
             BCryptPasswordEncoder bCryptPasswordEncoder
     ) {

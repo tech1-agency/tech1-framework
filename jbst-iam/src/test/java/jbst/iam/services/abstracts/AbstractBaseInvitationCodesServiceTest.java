@@ -1,7 +1,7 @@
 package jbst.iam.services.abstracts;
 
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.identifiers.InvitationId;
 import jbst.iam.repositories.InvitationCodesRepository;
 import lombok.RequiredArgsConstructor;
@@ -77,12 +77,12 @@ class AbstractBaseInvitationCodesServiceTest {
         // Arrange
         var owner = Username.random();
 
-        var invitationCode1 = ResponseInvitationCode.random(owner, Username.of("user2"));
-        var invitationCode2 = ResponseInvitationCode.random(owner, Username.of("user1"));
-        var invitationCode3 = ResponseInvitationCode.random(owner);
-        var invitationCode4 = ResponseInvitationCode.random(owner);
-        var invitationCode5 = ResponseInvitationCode.random(owner, Username.of("user5"));
-        var invitationCode6 = ResponseInvitationCode.random(owner);
+        var invitationCode1 = ResponseInvitation.random(owner, Username.of("user2"));
+        var invitationCode2 = ResponseInvitation.random(owner, Username.of("user1"));
+        var invitationCode3 = ResponseInvitation.random(owner);
+        var invitationCode4 = ResponseInvitation.random(owner);
+        var invitationCode5 = ResponseInvitation.random(owner, Username.of("user5"));
+        var invitationCode6 = ResponseInvitation.random(owner);
 
         var invitationCodes = asList(invitationCode1, invitationCode2, invitationCode3, invitationCode4, invitationCode5, invitationCode6);
         when(this.invitationCodesRepository.findResponseCodesByOwner(owner)).thenReturn(invitationCodes);
@@ -94,7 +94,7 @@ class AbstractBaseInvitationCodesServiceTest {
         verify(this.invitationCodesRepository).findResponseCodesByOwner(owner);
         assertThat(responseInvitationCodes.invitationCodes().stream()
                         .limit(3)
-                        .map(ResponseInvitationCode::value)
+                        .map(ResponseInvitation::value)
                         .collect(Collectors.toSet())
         ).containsExactlyInAnyOrder(
                 invitationCode3.value(),
@@ -103,7 +103,7 @@ class AbstractBaseInvitationCodesServiceTest {
         );
         assertThat(responseInvitationCodes.invitationCodes().stream()
                 .skip(3)
-                .map(ResponseInvitationCode::value)
+                .map(ResponseInvitation::value)
                 .collect(Collectors.toSet())
         ).containsExactlyInAnyOrder(
                 invitationCode1.value(),

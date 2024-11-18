@@ -4,7 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import jbst.iam.repositories.mongodb.JbstMongoRepositories;
@@ -47,12 +47,12 @@ public class ConfigurationMongoRepositories {
 
     @Bean
     public JbstMongoRepositories jbstMongoRepositories(
-            MongoInvitationCodesRepository mongoInvitationCodesRepository,
+            MongoInvitationsRepository mongoInvitationsRepository,
             MongoUsersRepository mongoUsersRepository,
             MongoUsersSessionsRepository userSessionRepository
     ) {
         return new JbstMongoRepositories(
-                mongoInvitationCodesRepository,
+                mongoInvitationsRepository,
                 mongoUsersRepository,
                 userSessionRepository
         );

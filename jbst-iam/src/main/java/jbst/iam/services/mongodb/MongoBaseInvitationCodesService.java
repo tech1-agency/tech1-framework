@@ -1,6 +1,6 @@
 package jbst.iam.services.mongodb;
 
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.services.abstracts.AbstractBaseInvitationCodesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ public class MongoBaseInvitationCodesService extends AbstractBaseInvitationCodes
 
     @Autowired
     public MongoBaseInvitationCodesService(
-            MongoInvitationCodesRepository invitationCodesRepository,
+            MongoInvitationsRepository invitationCodesRepository,
             JbstProperties jbstProperties
     ) {
         super(

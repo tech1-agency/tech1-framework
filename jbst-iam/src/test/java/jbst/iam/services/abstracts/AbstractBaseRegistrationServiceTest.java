@@ -1,6 +1,6 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
@@ -92,12 +92,12 @@ class AbstractBaseRegistrationServiceTest {
                 randomZoneId(),
                 randomString()
         );
-        var invitationCode = entity(InvitationCode.class);
+        var invitationCode = entity(Invitation.class);
         when(this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode())).thenReturn(invitationCode);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
-        var invitationCodeAC1 = ArgumentCaptor.forClass(InvitationCode.class);
-        var invitationCodeAC2 = ArgumentCaptor.forClass(InvitationCode.class);
+        var invitationCodeAC1 = ArgumentCaptor.forClass(Invitation.class);
+        var invitationCodeAC2 = ArgumentCaptor.forClass(Invitation.class);
 
         // Act
         this.componentUnderTest.register1(requestUserRegistration1);

@@ -1,6 +1,6 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import jbst.iam.services.abstracts.AbstractBaseSuperadminService;
 import jbst.iam.sessions.SessionRegistry;
@@ -18,7 +18,7 @@ public class PostgresBaseSuperadminService extends AbstractBaseSuperadminService
     public PostgresBaseSuperadminService(
             IncidentPublisher incidentPublisher,
             SessionRegistry sessionRegistry,
-            PostgresInvitationCodesRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationCodesRepository,
             PostgresUsersSessionsRepository usersSessionsRepository,
             AbstractSuperAdminResetServerTask abstractSuperAdminResetServerTask
     ) {

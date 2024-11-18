@@ -5,6 +5,6 @@ import java.util.Set;
 
 public record ResponseInvitationCodes(
         Set<String> authorities,
-        List<ResponseInvitationCode> invitationCodes
+        List<ResponseInvitation> invitationCodes
 ) {
 }

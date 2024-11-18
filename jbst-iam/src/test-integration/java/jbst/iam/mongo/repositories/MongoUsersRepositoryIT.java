@@ -1,7 +1,7 @@
 package jbst.iam.mongo.repositories;
 
 import jbst.iam.configurations.ConfigurationMongoRepositories;
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -170,7 +170,7 @@ class MongoUsersRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
         // Act-Assert-1
-        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), InvitationCode.random());
+        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), Invitation.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
     }

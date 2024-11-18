@@ -5,7 +5,7 @@ import jbst.iam.assistants.userdetails.MongoUserDetailsAssistant;
 import jbst.iam.essence.MongoBaseEssenceConstructor;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
+import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
 import jbst.iam.services.mongodb.MongoBaseUsersSessionsService;
@@ -49,12 +49,12 @@ public class ConfigurationMongo {
 
     @Bean
     MongoBaseEssenceConstructor mongoBaseEssenceConstructor(
-            MongoInvitationCodesRepository mongoInvitationCodesRepository,
+            MongoInvitationsRepository mongoInvitationsRepository,
             MongoUsersRepository mongoUsersRepository,
             JbstProperties jbstProperties
     ) {
         return new MongoBaseEssenceConstructor(
-                mongoInvitationCodesRepository,
+                mongoInvitationsRepository,
                 mongoUsersRepository,
                 jbstProperties
         );

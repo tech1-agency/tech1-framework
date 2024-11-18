@@ -20,7 +20,7 @@ CREATE TABLE "jbst_users_sessions" (
     "metadata" varchar(65535) NOT NULL
 );
 
-CREATE TABLE "jbst_invitation_codes" (
+CREATE TABLE "jbst_invitations" (
     "id" varchar(36),
     "owner" varchar(255) NOT NULL,
     "authorities" varchar(1024) NOT NULL,

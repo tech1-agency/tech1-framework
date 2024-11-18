@@ -9,7 +9,7 @@ import static java.util.Comparator.comparing;
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
-public record ResponseInvitationCode(
+public record ResponseInvitation(
         InvitationId id,
         Username owner,
         String authorities,
@@ -17,16 +17,16 @@ public record ResponseInvitationCode(
         String invited,
         String usage
 ) {
-    public static final Comparator<ResponseInvitationCode> INVITATION_CODE = comparing(ResponseInvitationCode::usage).thenComparing(ResponseInvitationCode::value);
+    public static final Comparator<ResponseInvitation> INVITATION = comparing(ResponseInvitation::usage).thenComparing(ResponseInvitation::value);
 
-    public static ResponseInvitationCode of(
+    public static ResponseInvitation of(
             InvitationId id,
             Username owner,
             String authorities,
             String value,
             Username invited
     ) {
-        return new ResponseInvitationCode(
+        return new ResponseInvitation(
                 id,
                 owner,
                 authorities,
@@ -36,8 +36,8 @@ public record ResponseInvitationCode(
         );
     }
 
-    public static ResponseInvitationCode random(Username owner) {
-        return ResponseInvitationCode.of(
+    public static ResponseInvitation random(Username owner) {
+        return ResponseInvitation.of(
                 InvitationId.random(),
                 owner,
                 "admin",
@@ -46,8 +46,8 @@ public record ResponseInvitationCode(
         );
     }
 
-    public static ResponseInvitationCode random(Username owner, Username invited) {
-        return ResponseInvitationCode.of(
+    public static ResponseInvitation random(Username owner, Username invited) {
+        return ResponseInvitation.of(
                 InvitationId.random(),
                 owner,
                 "admin",

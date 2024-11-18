@@ -1,6 +1,6 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.db.InvitationCode;
+import jbst.iam.domain.db.Invitation;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
@@ -23,7 +23,7 @@ public abstract class AbstractBaseRegistrationService implements BaseRegistratio
     public void register1(RequestUserRegistration1 requestUserRegistration1) {
         var invitationCode = this.invitationCodesRepository.findByValueAsAny(requestUserRegistration1.invitationCode());
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value());
-        invitationCode = new InvitationCode(
+        invitationCode = new Invitation(
                 invitationCode.id(),
                 invitationCode.owner(),
                 invitationCode.authorities(),

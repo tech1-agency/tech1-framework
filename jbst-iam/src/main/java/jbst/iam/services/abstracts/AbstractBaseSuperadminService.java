@@ -1,6 +1,6 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
@@ -52,7 +52,7 @@ public abstract class AbstractBaseSuperadminService implements BaseSuperadminSer
     // Invitation Codes
     // =================================================================================================================
     @Override
-    public List<ResponseInvitationCode> findUnused() {
+    public List<ResponseInvitation> findUnused() {
         return this.invitationCodesRepository.findUnused();
     }
 

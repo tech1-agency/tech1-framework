@@ -30,10 +30,11 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
                 "jbst.foundation",
                 Set.of(
                         new Authority(AbstractAuthority.SUPERADMIN),
-                        new Authority("admin"),
-                        new Authority("user"),
                         new Authority(AbstractAuthority.INVITATIONS_READ),
-                        new Authority(AbstractAuthority.INVITATIONS_WRITE)
+                        new Authority(AbstractAuthority.INVITATIONS_WRITE),
+                        new Authority(AbstractAuthority.PROMETHEUS_READ),
+                        new Authority("admin"),
+                        new Authority("user")
                 )
         );
     }

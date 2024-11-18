@@ -1,6 +1,6 @@
 package jbst.iam.services.abstracts;
 
-import jbst.iam.domain.dto.responses.ResponseInvitationCode;
+import jbst.iam.domain.dto.responses.ResponseInvitation;
 import jbst.iam.domain.dto.responses.ResponseSuperadminSessionsTable;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtUser;
@@ -156,7 +156,7 @@ class AbstractBaseSuperadminServiceTest {
     @Test
     void findUnusedTest() {
         // Arrange
-        var invitationCodes = list345(ResponseInvitationCode.class);
+        var invitationCodes = list345(ResponseInvitation.class);
         when(this.invitationCodesRepository.findUnused()).thenReturn(invitationCodes);
 
         // Act

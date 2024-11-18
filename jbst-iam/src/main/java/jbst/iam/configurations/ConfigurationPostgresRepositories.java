@@ -1,7 +1,7 @@
 package jbst.iam.configurations;
 
 import jbst.iam.repositories.postgres.JbstPostgresRepositories;
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ConfigurationPostgresRepositories {
 
     // Repositories
-    private final PostgresInvitationCodesRepository invitationCodeRepository;
+    private final PostgresInvitationsRepository invitationCodeRepository;
     private final PostgresUsersRepository userRepository;
     private final PostgresUsersSessionsRepository userSessionRepository;
 

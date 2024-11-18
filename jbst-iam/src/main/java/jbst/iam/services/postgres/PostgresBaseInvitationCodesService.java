@@ -1,6 +1,6 @@
 package jbst.iam.services.postgres;
 
-import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
 import jbst.iam.services.abstracts.AbstractBaseInvitationCodesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class PostgresBaseInvitationCodesService extends AbstractBaseInvitationCo
 
     @Autowired
     public PostgresBaseInvitationCodesService(
-            PostgresInvitationCodesRepository invitationCodesRepository,
+            PostgresInvitationsRepository invitationCodesRepository,
             JbstProperties jbstProperties
     ) {
         super(

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 
 import java.lang.reflect.Method;
@@ -30,12 +30,12 @@ class ConfigurationMongoTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         ConfigurationMongo applicationMongodb() {
             return new ConfigurationMongo(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }

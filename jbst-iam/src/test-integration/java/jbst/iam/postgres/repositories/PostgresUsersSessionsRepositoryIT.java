@@ -92,14 +92,14 @@ class PostgresUsersSessionsRepositoryIT extends TestsConfigurationPostgresReposi
         assertThat(sessionsTable.activeSessions().get(0).current()).isTrue();
         assertThat(sessionsTable.activeSessions().get(0).who().value()).isEqualTo("sa");
         assertThat(sessionsTable.activeSessions().get(1).current()).isFalse();
-        assertThat(sessionsTable.activeSessions().get(1).who().value()).isEqualTo("tech1");
+        assertThat(sessionsTable.activeSessions().get(1).who().value()).isEqualTo("jbst");
         assertThat(sessionsTable.activeSessions().get(2).current()).isFalse();
         assertThat(sessionsTable.activeSessions().get(2).who().value()).isEqualTo("user1");
         assertThat(sessionsTable.inactiveSessions()).hasSize(4);
         sessionsTable.inactiveSessions().forEach(inactiveSession -> assertThat(inactiveSession.current()).isFalse());
-        assertThat(sessionsTable.inactiveSessions().get(0).who().value()).isEqualTo("tech1");
-        assertThat(sessionsTable.inactiveSessions().get(1).who().value()).isEqualTo("tech1");
-        assertThat(sessionsTable.inactiveSessions().get(2).who().value()).isEqualTo("tech1");
+        assertThat(sessionsTable.inactiveSessions().get(0).who().value()).isEqualTo("jbst");
+        assertThat(sessionsTable.inactiveSessions().get(1).who().value()).isEqualTo("jbst");
+        assertThat(sessionsTable.inactiveSessions().get(2).who().value()).isEqualTo("jbst");
         assertThat(sessionsTable.inactiveSessions().get(3).who().value()).isEqualTo("user1");
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.hardcoded(), Username.of("sa")))).hasSize(5);
         assertThat(this.usersSessionsRepository.findByUsernameInAsAny(Set.of(Username.hardcoded(), Username.of("user1")))).hasSize(6);

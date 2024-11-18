@@ -4,7 +4,7 @@ import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.template.WssMessagingTemplate;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.concurrent.AbstractInfiniteTimerTask;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.time.SchedulerConfiguration;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
@@ -29,7 +29,7 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
             WssMessagingTemplate wssMessagingTemplate,
             HardwareMonitoringStore hardwareMonitoringStore,
             IncidentPublisher incidentPublisher,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         super(
                 new SchedulerConfiguration(60L, 60L, TimeUnit.SECONDS)
@@ -39,7 +39,7 @@ public class HardwareBackPressureTimerTask extends AbstractInfiniteTimerTask {
         this.hardwareMonitoringStore = hardwareMonitoringStore;
         this.incidentPublisher = incidentPublisher;
 
-        var hardwareConfigs = applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
+        var hardwareConfigs = jbstProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
         boolean hardwareConfigsEnabled = hardwareConfigs.isEnabled();
         if (hardwareConfigsEnabled) {
             this.start();

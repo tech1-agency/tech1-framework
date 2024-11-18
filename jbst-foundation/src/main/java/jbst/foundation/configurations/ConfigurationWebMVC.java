@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ import static java.util.Objects.nonNull;
 public class ConfigurationWebMVC implements WebMvcConfigurer {
 
     // Properties
-    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
+    protected final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getMvcConfigs().assertProperties(new PropertyId("mvcConfigs"));
+        this.jbstProperties.getMvcConfigs().assertProperties(new PropertyId("mvcConfigs"));
     }
 
     @Override
     public void addCorsMappings(@NotNull CorsRegistry corsRegistry) {
-        var mvcConfigs = this.applicationFrameworkProperties.getMvcConfigs();
+        var mvcConfigs = this.jbstProperties.getMvcConfigs();
         if (mvcConfigs.isEnabled()) {
             var corsConfigs = mvcConfigs.getCorsConfigs();
 

@@ -22,8 +22,8 @@ springdoc:
   swagger-ui:
     tags-sorter: "alpha"
 
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   maven-configs:
     group-id: @project.groupId@
     artifact-id: @project.artifactId@
@@ -103,8 +103,8 @@ tech1:
         enabled: true
         user-destination: "/accounts"
 
-# Tech1 Server
-tech1-server:
+# jbst server
+jbst-server:
   server-configs:
     target-attribute1: "value1"
     target-attribute2: 10

@@ -71,6 +71,6 @@ class ConfigurationPostgresRepositoriesTest {
         // Assert
         assertThat(methods)
                 .hasSize(10)
-                .contains("tech1PostgresRepositories");
+                .contains("jbstPostgresRepositories");
     }
 }

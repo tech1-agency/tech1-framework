@@ -27,20 +27,20 @@ jobs:
 
       # Delete packages - package-type: container
 
-      - name: Delete Container Package Untagged Versions [tech1-framework-iam-server]
+      - name: Delete Container Package Untagged Versions [jbst-iam-server]
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'tech1-framework-iam-server'
+          package-name: 'jbst-iam-server'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           delete-only-untagged-versions: true
 
-      - name: Delete Container Package [tech1-framework-iam-server]
+      - name: Delete Container Package [jbst-iam-server]
         uses: actions/delete-package-versions@v5
         with:
           owner: ${{ env.PACKAGE_OWNER }}
-          package-name: 'tech1-framework-iam-server'
+          package-name: 'jbst-iam-server'
           package-type: 'container'
           token: ${{ secrets.GITHUB_TOKEN }}
           min-versions-to-keep: ${{ env.CONTAINER_MIN_VERSION_TO_KEEP }}

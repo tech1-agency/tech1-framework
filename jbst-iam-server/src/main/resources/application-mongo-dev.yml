@@ -1,6 +1,6 @@
 #file: noinspection SpringBootApplicationYaml
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   mongodb-security-jwt-configs:
     mongodb:
       host: 127.0.0.1

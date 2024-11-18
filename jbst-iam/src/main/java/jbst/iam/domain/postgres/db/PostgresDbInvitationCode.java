@@ -29,7 +29,7 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 @Entity
 @Table(name = PostgresDbInvitationCode.PG_TABLE_NAME)
 public class PostgresDbInvitationCode extends PostgresDbAbstractPersistable0 {
-    public static final String PG_TABLE_NAME = "tech1_invitation_codes";
+    public static final String PG_TABLE_NAME = "jbst_invitation_codes";
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)

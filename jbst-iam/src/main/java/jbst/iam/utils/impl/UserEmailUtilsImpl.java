@@ -8,7 +8,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,12 +25,12 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     // Resources
     private final ResourceLoader resourceLoader;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public String getSubject(String eventName) {
-        var prefix = this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
-        var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
+        var prefix = this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
+        var serverConfigs = this.jbstProperties.getServerConfigs();
         var server = "\"" + serverConfigs.getName() + "\"";
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
         return prefix + " " + eventName + " on " + server + " — " + time;
@@ -67,7 +67,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         variables.put("where", geoLocation.getWhere());
         variables.put("what", userAgentDetails.getWhat());
         variables.put("ipAddress", geoLocation.getIpAddr());
-        variables.put("webclientURL", this.applicationFrameworkProperties.getServerConfigs().getWebclientURL());
+        variables.put("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL());
         return variables;
     }
 

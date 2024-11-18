@@ -5,7 +5,7 @@ import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
     public PostgresBaseEssenceConstructor(
             PostgresInvitationCodesRepository invitationCodesRepository,
             PostgresUsersRepository usersRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         super(
                 invitationCodesRepository,
                 usersRepository,
-                applicationFrameworkProperties
+                jbstProperties
         );
         this.postgresInvitationCodesRepository = invitationCodesRepository;
         this.postgresUsersRepository = usersRepository;

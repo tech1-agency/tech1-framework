@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.geo.GeoCountryFlag;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ResourceLoader;
@@ -31,15 +31,15 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     private final Map<String, GeoCountryFlag> mappedByCountryCode;
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     public GeoCountryFlagUtilityImpl(
             ResourceLoader resourceLoader,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        this.jbstProperties = jbstProperties;
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        var geoCountryFlagsConfigs = this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
+        var geoCountryFlagsConfigs = this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
         LOGGER.info("{} Geo country flags {} json — {}", FRAMEWORK_UTILITIES_PREFIX, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
         if (geoCountryFlagsConfigs.isEnabled()) {
             try {
@@ -94,7 +94,7 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     // PRIVATE METHODS
     // =================================================================================================================
     private String getEmoji(Map<String, GeoCountryFlag> mappedBy, String searchKey) {
-        if (!this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs().isEnabled()) {
+        if (!this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs().isEnabled()) {
             return GeoCountryFlag.unknown().emoji();
         }
         if (isNull(searchKey)) {

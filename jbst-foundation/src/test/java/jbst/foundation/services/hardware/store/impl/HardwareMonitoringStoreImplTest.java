@@ -10,7 +10,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -39,17 +39,17 @@ class HardwareMonitoringStoreImplTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         HardwareMonitoringStore hardwareMonitoringStore() {
             return new HardwareMonitoringStoreImpl(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }
 
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final HardwareMonitoringStore componentUnderTest;
 
@@ -57,7 +57,7 @@ class HardwareMonitoringStoreImplTest {
     void integrationTest() {
         // Arrange
         var thresholdsConfigs = new HardwareMonitoringThresholds(
-                this.applicationFrameworkProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
+                this.jbstProperties.getHardwareMonitoringConfigs().getThresholdsConfigs()
         );
 
         // [0]
@@ -82,7 +82,7 @@ class HardwareMonitoringStoreImplTest {
 
         // [3]
         var event3 = new EventLastHardwareMonitoringDatapoint(
-                Version.of("tech1-framework vTEST"),
+                Version.of("jbst vTEST"),
                 new HardwareMonitoringDatapoint(
                         GlobalMemory.hardcoded(),
                         CpuMemory.hardcoded(),
@@ -95,7 +95,7 @@ class HardwareMonitoringStoreImplTest {
 
         var widget2 = this.componentUnderTest.getHardwareMonitoringWidget();
 
-        assertThat(widget2.version().value()).isEqualTo("tech1-framework vTEST");
+        assertThat(widget2.version().value()).isEqualTo("jbst vTEST");
         assertThat(widget2.datapoint().isAnyProblem()).isFalse();
         assertThat(widget2.datapoint().isAnyPresent()).isTrue();
         var mappedRows = widget2.datapoint().getRows().stream()

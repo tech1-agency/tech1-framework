@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Checkbox;
 import jbst.foundation.domain.tuples.Tuple3;
 import jbst.foundation.services.emails.domain.EmailHTML;
@@ -30,13 +30,13 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     // Utilities
     private final UserEmailUtils userEmailUtils;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void executeAuthenticationLogin(FunctionAuthenticationLoginEmail function) {
         this.executeBy(
                 function.getTuple3(),
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin(),
+                this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin(),
                 this.userEmailUtils.getAuthenticationLoginTemplateName(),
                 AccountAccessMethod.USERNAME_PASSWORD
         );
@@ -46,7 +46,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     public void executeSessionRefreshed(FunctionSessionRefreshedEmail function) {
         this.executeBy(
                 function.getTuple3(),
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed(),
+                this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed(),
                 this.userEmailUtils.getSessionRefreshedTemplateName(),
                 AccountAccessMethod.SECURITY_TOKEN
         );

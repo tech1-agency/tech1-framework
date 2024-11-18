@@ -5,7 +5,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMultipart;
 import jakarta.mail.util.ByteArrayDataSource;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.domain.EmailPlainAttachment;
 import jbst.foundation.services.emails.services.EmailService;
@@ -33,11 +33,11 @@ public class EmailServiceImpl implements EmailService {
     // Utilities
     private final EmailUtility emailUtility;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void sendPlain(String[] to, String subject, String message) {
-        var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
+        var emailConfigs = this.jbstProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {
             var mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(emailConfigs.getFrom());
@@ -60,7 +60,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendPlainAttachment(EmailPlainAttachment emailPlainAttachment) {
-        var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
+        var emailConfigs = this.jbstProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {
             try {
                 var message = this.javaMailSender.createMimeMessage();
@@ -92,7 +92,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendHTML(EmailHTML emailHTML) {
-        var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
+        var emailConfigs = this.jbstProperties.getEmailConfigs();
         if (emailConfigs.isEnabled()) {
             try {
                 var tuple2 = this.emailUtility.getMimeMessageTuple2();

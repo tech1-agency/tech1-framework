@@ -17,7 +17,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.configs.security.jwt.JwtTokensConfigs;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -38,17 +38,17 @@ class TokenHeadersProviderTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         TokenHeadersProvider tokenHeadersProvider() {
             return new TokenHeadersProvider(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }
 
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final TokenHeadersProvider componentUnderTest;
 
@@ -83,7 +83,7 @@ class TokenHeadersProviderTest {
     @Test
     void readCsrfToken() throws CsrfTokenNotFoundException {
         // Arrange
-        var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
         var header = randomString();
         var request = mock(HttpServletRequest.class);
         when(request.getParameter(csrfConfigs.getTokenKey())).thenReturn(header);
@@ -256,6 +256,6 @@ class TokenHeadersProviderTest {
     // PRIVATE METHODS
     // =================================================================================================================
     private JwtTokensConfigs jwtTokensConfigs() {
-        return this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
+        return this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
     }
 }

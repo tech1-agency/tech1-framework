@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +28,16 @@ public class ConfigurationAsyncIncidents implements AsyncConfigurer {
     private final AsyncUncaughtExceptionHandlerPublisher asyncUncaughtExceptionHandlerPublisher;
     private final RejectedExecutionHandlerPublisher rejectedExecutionHandlerPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
+        this.jbstProperties.getAsyncConfigs().assertProperties(new PropertyId("asyncConfigs"));
     }
 
     @Override
     public Executor getAsyncExecutor() {
-        var asyncConfigs = this.applicationFrameworkProperties.getAsyncConfigs();
+        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
         var taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setThreadNamePrefix(asyncConfigs.getThreadNamePrefix());
         taskExecutor.setCorePoolSize(getNumOfCores(asyncConfigs.asThreadsCorePoolTuplePercentage()));

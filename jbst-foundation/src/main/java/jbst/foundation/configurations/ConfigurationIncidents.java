@@ -7,7 +7,7 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.incidents.events.publishers.impl.IncidentPublisherImpl;
 import jbst.foundation.incidents.events.subscribers.IncidentSubscriber;
@@ -37,17 +37,17 @@ public class ConfigurationIncidents {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getIncidentConfigs().assertProperties(new PropertyId("incidentConfigs"));
+        this.jbstProperties.getIncidentConfigs().assertProperties(new PropertyId("incidentConfigs"));
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.incident-configs.enabled", havingValue = "true")
+    @ConditionalOnProperty(value = "jbst.incident-configs.enabled", havingValue = "true")
     IncidentClientDefinition incidentClientDefinition() {
-        var incidentServer = this.applicationFrameworkProperties.getIncidentConfigs().getRemoteServer();
+        var incidentServer = this.jbstProperties.getIncidentConfigs().getRemoteServer();
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
@@ -62,7 +62,7 @@ public class ConfigurationIncidents {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "tech1.incident-configs.enabled", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(value = "jbst.incident-configs.enabled", havingValue = "false", matchIfMissing = true)
     IncidentClientDefinition incidentClientDefinitionSlf4j() {
         return new IncidentClientDefinitionSlf4j();
     }

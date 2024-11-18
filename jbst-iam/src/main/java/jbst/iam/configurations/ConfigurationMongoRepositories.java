@@ -7,7 +7,7 @@ import com.mongodb.client.MongoClients;
 import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
-import jbst.iam.repositories.mongodb.Tech1MongoRepositories;
+import jbst.iam.repositories.mongodb.JbstMongoRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,15 +24,15 @@ import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 @Configuration
 @EntityScan({
-        "tech1.framework.iam.domain.mongo"
+        "jbst.iam.domain.mongo"
 })
 @EnableMongoRepositories(
         basePackages = "jbst.iam.repositories",
-        mongoTemplateRef = "tech1MongoTemplate"
+        mongoTemplateRef = "jbstMongoTemplate"
 )
 @EnableAutoConfiguration(exclude = {
         DataSourceAutoConfiguration.class,
@@ -43,15 +43,15 @@ import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 public class ConfigurationMongoRepositories {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Bean
-    public Tech1MongoRepositories tech1MongoRepositories(
+    public JbstMongoRepositories jbstMongoRepositories(
             MongoInvitationCodesRepository mongoInvitationCodesRepository,
             MongoUsersRepository mongoUsersRepository,
             MongoUsersSessionsRepository userSessionRepository
     ) {
-        return new Tech1MongoRepositories(
+        return new JbstMongoRepositories(
                 mongoInvitationCodesRepository,
                 mongoUsersRepository,
                 userSessionRepository
@@ -59,8 +59,8 @@ public class ConfigurationMongoRepositories {
     }
 
     @Bean
-    public MongoClient tech1MongoClient() {
-        var mongodb = this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().getMongodb();
+    public MongoClient jbstMongoClient() {
+        var mongodb = this.jbstProperties.getMongodbSecurityJwtConfigs().getMongodb();
         var connectionString = new ConnectionString(mongodb.connectionString());
         var mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
@@ -69,19 +69,19 @@ public class ConfigurationMongoRepositories {
     }
 
     @Bean
-    public MongoDatabaseFactory tech1MongoDatabaseFactory() {
+    public MongoDatabaseFactory jbstMongoDatabaseFactory() {
         return new SimpleMongoClientDatabaseFactory(
-                this.tech1MongoClient(),
-                this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().getMongodb().getDatabase()
+                this.jbstMongoClient(),
+                this.jbstProperties.getMongodbSecurityJwtConfigs().getMongodb().getDatabase()
         );
     }
 
     @Bean
-    public MongoTemplate tech1MongoTemplate() {
-        var dbRefResolver = new DefaultDbRefResolver(this.tech1MongoDatabaseFactory());
+    public MongoTemplate jbstMongoTemplate() {
+        var dbRefResolver = new DefaultDbRefResolver(this.jbstMongoDatabaseFactory());
         var mongoConverter = new MappingMongoConverter(dbRefResolver, new MongoMappingContext());
         return new MongoTemplate(
-                this.tech1MongoDatabaseFactory(),
+                this.jbstMongoDatabaseFactory(),
                 mongoConverter
         );
     }

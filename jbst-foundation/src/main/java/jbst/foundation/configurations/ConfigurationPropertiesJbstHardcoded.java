@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class ConfigurationPropertiesJbstHardcoded {
 
     @Bean
-    public ApplicationFrameworkProperties applicationFrameworkProperties() {
-        return ApplicationFrameworkProperties.hardcoded();
+    public JbstProperties applicationFrameworkProperties() {
+        return JbstProperties.hardcoded();
     }
 }

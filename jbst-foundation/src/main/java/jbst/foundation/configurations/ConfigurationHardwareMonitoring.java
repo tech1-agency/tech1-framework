@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.hardware.publishers.HardwareMonitoringPublisher;
 import jbst.foundation.services.hardware.publishers.impl.HardwareMonitoringPublisherImpl;
 import jbst.foundation.services.hardware.resources.HardwareMonitoringResource;
@@ -21,17 +21,17 @@ public class ConfigurationHardwareMonitoring {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getHardwareMonitoringConfigs().assertProperties(new PropertyId("hardwareMonitoringConfigs"));
+        this.jbstProperties.getHardwareMonitoringConfigs().assertProperties(new PropertyId("hardwareMonitoringConfigs"));
     }
 
     @Bean
     HardwareMonitoringStore hardwareMonitoringStore() {
         return new HardwareMonitoringStoreImpl(
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 

@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,16 +19,16 @@ import static jbst.foundation.utilities.processors.ProcessorsUtility.getNumOfCor
 public class ConfigurationEvents {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getEventsConfigs().assertProperties(new PropertyId("eventsConfigs"));
+        this.jbstProperties.getEventsConfigs().assertProperties(new PropertyId("eventsConfigs"));
     }
 
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        var eventsConfigs = this.applicationFrameworkProperties.getEventsConfigs();
+        var eventsConfigs = this.jbstProperties.getEventsConfigs();
         var taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setThreadNamePrefix(eventsConfigs.getThreadNamePrefix());
         taskExecutor.setCorePoolSize(getNumOfCores(eventsConfigs.asThreadsCorePoolTuplePercentage()));

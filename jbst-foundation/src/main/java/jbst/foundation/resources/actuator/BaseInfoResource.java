@@ -1,6 +1,6 @@
 package jbst.foundation.resources.actuator;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ public class BaseInfoResource implements InfoContributor {
     // Utilities
     private final EnvironmentUtility environmentUtility;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void contribute(Info.Builder builder) {
         Map<String, Object> details = new HashMap<>();
         details.put("activeProfile", this.environmentUtility.getOneActiveProfileOrDash());
-        details.put("maven", this.applicationFrameworkProperties.getMavenConfigs().asMavenDetails());
+        details.put("maven", this.jbstProperties.getMavenConfigs().asMavenDetails());
         builder.withDetails(details);
     }
 }

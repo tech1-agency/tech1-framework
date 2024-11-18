@@ -1,6 +1,6 @@
 package jbst.foundation.incidents.events.publishers.impl;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
@@ -35,8 +35,8 @@ class IncidentPublisherImplTest {
         }
 
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -50,7 +50,7 @@ class IncidentPublisherImplTest {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final IncidentPublisher componentUnderTest;
 
@@ -58,7 +58,7 @@ class IncidentPublisherImplTest {
     void beforeEach() {
         reset(
                 this.applicationEventPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -66,7 +66,7 @@ class IncidentPublisherImplTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -109,7 +109,7 @@ class IncidentPublisherImplTest {
     @Test
     void publishThrowableIncidentTest() {
         // Arrange
-        var incident = new Incident(new Throwable("tech1"));
+        var incident = new Incident(new Throwable("jbst"));
 
         // Act
         this.componentUnderTest.publishIncident(incident);

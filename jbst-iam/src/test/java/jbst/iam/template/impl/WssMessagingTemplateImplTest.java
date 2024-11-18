@@ -21,7 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
@@ -46,8 +46,8 @@ class WssMessagingTemplateImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -72,7 +72,7 @@ class WssMessagingTemplateImplTest {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final IncidentPublisher incidentPublisher;
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final WssMessagingTemplate componentUnderTest;
 
@@ -81,7 +81,7 @@ class WssMessagingTemplateImplTest {
         reset(
                 this.simpMessagingTemplate,
                 this.incidentPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -90,14 +90,14 @@ class WssMessagingTemplateImplTest {
         verifyNoMoreInteractions(
                 this.simpMessagingTemplate,
                 this.incidentPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
     @Test
     void convertAndSendToUserThrowExceptionTest() {
         // Assert
-        when(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(SecurityJwtWebsocketsConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(SecurityJwtWebsocketsConfigs.hardcoded());
         var username = Username.random();
         var websocketEvent = mock(WebsocketEvent.class);
         var ex = new MessagingException(randomString());
@@ -108,7 +108,7 @@ class WssMessagingTemplateImplTest {
         this.componentUnderTest.sendEventToUser(username, destination, websocketEvent);
 
         // Assert
-        verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtWebsocketsConfigs();
+        verify(this.jbstProperties, times(2)).getSecurityJwtWebsocketsConfigs();
         verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
         verify(this.incidentPublisher).publishThrowable(ex);
         verifyNoMoreInteractions(this.simpMessagingTemplate);
@@ -118,7 +118,7 @@ class WssMessagingTemplateImplTest {
     @MethodSource("convertAndSendToUserTestArgs")
     void convertAndSendToUserTest(WebsocketsTemplateConfigs configs, boolean expectedSend) {
         // Assert
-        when(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(
+        when(this.jbstProperties.getSecurityJwtWebsocketsConfigs()).thenReturn(
                 new SecurityJwtWebsocketsConfigs(
                         CsrfConfigs.hardcoded(),
                         StompEndpointRegistryConfigs.hardcoded(),
@@ -136,11 +136,11 @@ class WssMessagingTemplateImplTest {
 
         // Assert
         if (expectedSend) {
-            verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtWebsocketsConfigs();
+            verify(this.jbstProperties, times(2)).getSecurityJwtWebsocketsConfigs();
             verify(this.simpMessagingTemplate).convertAndSendToUser(username.value(), "/queue" + destination, websocketEvent);
             verifyNoMoreInteractions(this.simpMessagingTemplate);
         } else {
-            verify(this.applicationFrameworkProperties).getSecurityJwtWebsocketsConfigs();
+            verify(this.jbstProperties).getSecurityJwtWebsocketsConfigs();
         }
     }
 }

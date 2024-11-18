@@ -1,6 +1,6 @@
 package jbst.iam.repositories.mongodb;
 
-public record Tech1MongoRepositories(
+public record JbstMongoRepositories(
         MongoInvitationCodesRepository invitationCodeRepository,
         MongoUsersRepository userRepository,
         MongoUsersSessionsRepository userSessionRepository

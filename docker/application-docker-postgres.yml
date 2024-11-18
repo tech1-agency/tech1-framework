@@ -11,8 +11,8 @@ spring:
   jpa:
     show-sql: true
 
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   server-configs:
     springdoc-enabled: true
     webclient-url: http://localhost:3000

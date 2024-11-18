@@ -1,7 +1,7 @@
 package jbst.iam.validators.abstracts;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.InvitationCode;
@@ -58,13 +58,13 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         private final InvitationCodesRepository invitationCodesRepository;
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator() {
             return new AbstractBaseInvitationCodesRequestsValidator(
                     this.invitationCodesRepository,
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             ) {};
         }
     }

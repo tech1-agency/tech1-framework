@@ -17,7 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 @Configuration
 @ComponentScan({
@@ -31,11 +31,11 @@ import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 public class ConfigurationMongo {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getMongodbSecurityJwtConfigs().assertProperties(new PropertyId("mongodbSecurityJwtConfigs"));
+        this.jbstProperties.getMongodbSecurityJwtConfigs().assertProperties(new PropertyId("mongodbSecurityJwtConfigs"));
     }
 
     @Bean
@@ -51,12 +51,12 @@ public class ConfigurationMongo {
     MongoBaseEssenceConstructor mongoBaseEssenceConstructor(
             MongoInvitationCodesRepository mongoInvitationCodesRepository,
             MongoUsersRepository mongoUsersRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         return new MongoBaseEssenceConstructor(
                 mongoInvitationCodesRepository,
                 mongoUsersRepository,
-                applicationFrameworkProperties
+                jbstProperties
         );
     }
 

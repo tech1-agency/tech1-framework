@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 
@@ -45,8 +45,8 @@ class AbstractEssenceConstructorTest {
     static class ContextConfiguration {
 
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -96,7 +96,7 @@ class AbstractEssenceConstructorTest {
     private final InvitationCodesRepository invitationCodesRepository;
     private final UsersRepository usersRepository;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
     // Mock
     private final AbstractMockService abstractMockService;
 
@@ -106,13 +106,13 @@ class AbstractEssenceConstructorTest {
     AbstractEssenceConstructorTest(
             InvitationCodesRepository invitationCodesRepository,
             UsersRepository usersRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties,
+            JbstProperties jbstProperties,
             AbstractMockService abstractMockService,
             @Qualifier("abstractEssenceConstructor") AbstractEssenceConstructor componentUnderTest
     ) {
         this.invitationCodesRepository = invitationCodesRepository;
         this.usersRepository = usersRepository;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        this.jbstProperties = jbstProperties;
         this.abstractMockService = abstractMockService;
         this.componentUnderTest = componentUnderTest;
     }
@@ -122,7 +122,7 @@ class AbstractEssenceConstructorTest {
         reset(
                 this.invitationCodesRepository,
                 this.usersRepository,
-                this.applicationFrameworkProperties,
+                this.jbstProperties,
                 this.abstractMockService
         );
     }
@@ -132,7 +132,7 @@ class AbstractEssenceConstructorTest {
         verifyNoMoreInteractions(
                 this.invitationCodesRepository,
                 this.usersRepository,
-                this.applicationFrameworkProperties,
+                this.jbstProperties,
                 this.abstractMockService
         );
     }
@@ -141,14 +141,14 @@ class AbstractEssenceConstructorTest {
     @MethodSource("addDefaultUsersPresentTest")
     void addDefaultUsersPresentTest(long count) {
         // Arrange
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.usersRepository.count()).thenReturn(count);
 
         // Act
         this.componentUnderTest.addDefaultUsers();
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.usersRepository).count();
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();
@@ -159,7 +159,7 @@ class AbstractEssenceConstructorTest {
     @MethodSource("addDefaultUsersPresentTest")
     void addDefaultUsersInvitationCodes(long count) {
         // Arrange
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         var username = Username.of("admin12");
         when(this.invitationCodesRepository.countByOwner(username)).thenReturn(count);
 
@@ -167,7 +167,7 @@ class AbstractEssenceConstructorTest {
         this.componentUnderTest.addDefaultUsersInvitationCodes();
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.invitationCodesRepository).countByOwner(username);
         if (count == 0) {
             verify(this.abstractMockService).executeInheritedMethod();

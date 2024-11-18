@@ -16,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 
@@ -43,13 +43,13 @@ class UserEmailUtilsImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         private final ResourceLoader resourceLoader;
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         UserEmailUtils userEmailUtility() {
             return new UserEmailUtilsImpl(
                     this.resourceLoader,
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }

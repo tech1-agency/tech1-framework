@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +51,7 @@ class ConfigurationAsyncIncidentsTest {
     private final AsyncUncaughtExceptionHandlerPublisher asyncUncaughtExceptionHandlerPublisher;
     private final RejectedExecutionHandlerPublisher rejectedExecutionHandlerPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final ConfigurationAsyncIncidents componentUnderTest;
 
@@ -87,7 +87,7 @@ class ConfigurationAsyncIncidentsTest {
     @Test
     void getAsyncExecutorTest() {
         // Arrange
-        var asyncConfigs = this.applicationFrameworkProperties.getAsyncConfigs();
+        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
 
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();

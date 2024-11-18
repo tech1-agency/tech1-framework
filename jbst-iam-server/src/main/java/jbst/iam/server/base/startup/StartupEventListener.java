@@ -5,7 +5,7 @@ import jbst.iam.startup.DefaultStartupEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import static jbst.foundation.domain.constants.LogsConstants.SERVER_STARTUP_LISTENER_1;
@@ -22,11 +22,11 @@ public class StartupEventListener extends DefaultStartupEventListener {
     public StartupEventListener(
             AbstractEssenceConstructor essenceConstructor,
             IncidentPublisher incidentPublisher,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         super(
                 essenceConstructor,
-                applicationFrameworkProperties
+                jbstProperties
         );
         this.incidentPublisher = incidentPublisher;
     }
@@ -35,8 +35,8 @@ public class StartupEventListener extends DefaultStartupEventListener {
     public void onStartup() {
         try {
             super.onStartup();
-            var serverConfigs = this.applicationFrameworkProperties.getServerConfigs();
-            var mavenDetails = this.applicationFrameworkProperties.getMavenConfigs().asMavenDetails();
+            var serverConfigs = this.jbstProperties.getServerConfigs();
+            var mavenDetails = this.jbstProperties.getMavenConfigs().asMavenDetails();
             LOGGER.info(SERVER_STARTUP_LISTENER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);

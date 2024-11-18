@@ -35,7 +35,7 @@ import static org.springframework.util.StringUtils.capitalize;
 // Mongodb
 @Document(collection = MongoDbUser.MONGO_TABLE_NAME)
 public class MongoDbUser {
-    public static final String MONGO_TABLE_NAME = "tech1_users";
+    public static final String MONGO_TABLE_NAME = "jbst_users";
 
     @Id
     private String id;

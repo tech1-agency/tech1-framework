@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 /**
  * <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html">Documentation #1</a>
@@ -52,11 +52,11 @@ public class ConfigurationBaseSecurityJwtWebsockets extends AbstractSecurityWebS
     private final CsrfInterceptorHandshake csrfInterceptorHandshake;
     private final SecurityHandshakeHandler securityHandshakeHandler;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().assertProperties(new PropertyId("securityJwtWebsocketsConfigs"));
+        this.jbstProperties.getSecurityJwtWebsocketsConfigs().assertProperties(new PropertyId("securityJwtWebsocketsConfigs"));
     }
 
     // =================================================================================================================
@@ -64,8 +64,8 @@ public class ConfigurationBaseSecurityJwtWebsockets extends AbstractSecurityWebS
     // =================================================================================================================
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getStompConfigs().getEndpoint())
-                .setAllowedOrigins(this.applicationFrameworkProperties.getMvcConfigs().getCorsConfigs().getAllowedOrigins())
+        registry.addEndpoint(this.jbstProperties.getSecurityJwtWebsocketsConfigs().getStompConfigs().getEndpoint())
+                .setAllowedOrigins(this.jbstProperties.getMvcConfigs().getCorsConfigs().getAllowedOrigins())
                 .setHandshakeHandler(this.securityHandshakeHandler)
                 .addInterceptors(this.csrfInterceptorHandshake)
                 .withSockJS();
@@ -78,7 +78,7 @@ public class ConfigurationBaseSecurityJwtWebsockets extends AbstractSecurityWebS
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        var broker = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
+        var broker = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
         registry.setApplicationDestinationPrefixes(broker.getApplicationDestinationPrefix());
         registry.enableSimpleBroker(broker.getSimpleDestination());
         registry.setUserDestinationPrefix(broker.getUserDestinationPrefix());

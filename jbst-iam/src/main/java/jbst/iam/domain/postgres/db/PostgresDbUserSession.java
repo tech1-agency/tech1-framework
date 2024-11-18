@@ -33,7 +33,7 @@ import static jbst.iam.domain.db.UserSession.ofPersisted;
 @Entity
 @Table(name = PostgresDbUserSession.PG_TABLE_NAME)
 public class PostgresDbUserSession extends PostgresDbAbstractPersistable1 {
-    public static final String PG_TABLE_NAME = "tech1_users_sessions";
+    public static final String PG_TABLE_NAME = "jbst_users_sessions";
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false)

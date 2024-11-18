@@ -352,9 +352,9 @@
             <id>github</id>
             <distributionManagement>
                 <repository>
-                    <id>github-tech1-framework</id>
+                    <id>github-jbst</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/tech1-agency/tech1-framework/packages</url>
+                    <url>https://maven.pkg.github.com/tech1-agency/jbst/packages</url>
                 </repository>
             </distributionManagement>
         </profile>

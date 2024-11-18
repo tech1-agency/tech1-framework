@@ -10,7 +10,7 @@ class IncidentRegistration1Test {
     @Test
     void convertRegister1IncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
+        var username = Username.hardcoded();
         var incident = new IncidentRegistration1(
                 username
         );
@@ -21,7 +21,7 @@ class IncidentRegistration1Test {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(2)
                 .containsOnlyKeys("incidentType", "username")

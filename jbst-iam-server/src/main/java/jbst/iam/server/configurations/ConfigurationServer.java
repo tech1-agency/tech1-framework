@@ -3,7 +3,7 @@ package jbst.iam.server.configurations;
 import jakarta.annotation.PostConstruct;
 import jbst.iam.configurations.AbstractJbstSecurityJwtConfigurer;
 import jbst.iam.configurations.ConfigurationBaseSecurityJwtWebsockets;
-import jbst.iam.server.base.properties.ApplicationProperties;
+import jbst.iam.server.base.properties.ServerProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static org.springframework.http.HttpMethod.GET;
 
@@ -29,23 +29,23 @@ import static org.springframework.http.HttpMethod.GET;
         ConfigurationBaseSecurityJwtWebsockets.class
 })
 @EnableConfigurationProperties({
-        ApplicationProperties.class
+        ServerProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationServer implements AbstractJbstSecurityJwtConfigurer {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
-    private final ApplicationProperties applicationProperties;
+    private final JbstProperties jbstProperties;
+    private final ServerProperties serverProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.serverProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
     }
 
     @Override
     public void configure(WebSecurity web) {
-        var endpoint = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getStompConfigs().getEndpoint();
+        var endpoint = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getStompConfigs().getEndpoint();
         web.ignoring().requestMatchers(endpoint + "/**");
     }
 

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
@@ -36,7 +36,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
     // Validators
     private final BaseInvitationCodesRequestsValidator baseInvitationCodesRequestsValidator;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     // Resource
     private final BaseSecurityInvitationCodesResource componentUnderTest;
@@ -63,7 +63,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
         // Arrange
         var owner = Username.random();
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(owner);
-        var authorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
+        var authorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         var invitationCodes = list345(ResponseInvitationCode.class);
         var responseInvitationCodes = new ResponseInvitationCodes(authorities, invitationCodes);
         when(this.baseInvitationCodesService.findByOwner(owner)).thenReturn(responseInvitationCodes);

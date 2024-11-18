@@ -36,7 +36,7 @@ import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
@@ -95,7 +95,7 @@ class AbstractBaseUsersSessionsServiceTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         SecurityJwtPublisher securityJwtPublisher() {
@@ -110,7 +110,7 @@ class AbstractBaseUsersSessionsServiceTest {
         @Bean
         public SecurityJwtTokenUtils securityJwtTokenUtils() {
             return new SecurityJwtTokenUtilsImpl(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
 

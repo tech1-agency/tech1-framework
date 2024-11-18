@@ -11,7 +11,7 @@ class IncidentRegistration1FailureTest {
     @Test
     void convertRegister1FailureIncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
+        var username = Username.hardcoded();
         var exception = randomString();
         var invitationCode = randomString();
         var incident = IncidentRegistration1Failure.of(
@@ -26,7 +26,7 @@ class IncidentRegistration1FailureTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Register1 Failure");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(5)
                 .containsOnlyKeys("incidentType", "username", "exception", "invitationCode", "invitationCodeOwner")

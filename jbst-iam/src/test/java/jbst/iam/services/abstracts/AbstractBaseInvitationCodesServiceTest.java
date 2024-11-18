@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 
 import java.util.stream.Collectors;
@@ -37,7 +37,7 @@ class AbstractBaseInvitationCodesServiceTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         InvitationCodesRepository invitationCodesRepository() {
@@ -48,13 +48,13 @@ class AbstractBaseInvitationCodesServiceTest {
         AbstractBaseInvitationCodesService abstractBaseInvitationCodesService() {
             return new AbstractBaseInvitationCodesService(
                     this.invitationCodesRepository(),
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             ) {};
         }
     }
 
     private final InvitationCodesRepository invitationCodesRepository;
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final AbstractBaseInvitationCodesService componentUnderTest;
 
@@ -110,7 +110,7 @@ class AbstractBaseInvitationCodesServiceTest {
                 invitationCode2.value(),
                 invitationCode5.value()
         );
-        assertThat(responseInvitationCodes.authorities()).isEqualTo(this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
+        assertThat(responseInvitationCodes.authorities()).isEqualTo(this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities());
     }
 
     @Test

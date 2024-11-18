@@ -2,7 +2,7 @@ package jbst.foundation.configurations;
 
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.resources.actuator.BaseInfoResource;
 import jbst.foundation.utilities.environment.EnvironmentUtility;
 import jbst.foundation.utilities.environment.base.BaseEnvironmentUtility;
@@ -19,12 +19,12 @@ public class ConfigurationSpringBootServer {
     // Environment
     private final Environment environment;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
-        this.applicationFrameworkProperties.getMavenConfigs().assertProperties(new PropertyId("mavenConfigs"));
+        this.jbstProperties.getServerConfigs().assertProperties(new PropertyId("serverConfigs"));
+        this.jbstProperties.getMavenConfigs().assertProperties(new PropertyId("mavenConfigs"));
     }
 
     @Bean
@@ -38,7 +38,7 @@ public class ConfigurationSpringBootServer {
     public BaseInfoResource baseInfoResource() {
         return new BaseInfoResource(
                 this.environmentUtility(),
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 }

@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
@@ -21,11 +21,11 @@ public abstract class AbstractBaseInvitationCodesRequestsValidator implements Ba
     // Repositories
     protected final InvitationCodesRepository invitationCodesRepository;
     // Properties
-    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
+    protected final JbstProperties jbstProperties;
 
     @Override
     public void validateCreateNewInvitationCode(RequestNewInvitationCodeParams request) {
-        var availableAuthorities = this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
+        var availableAuthorities = this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities();
         assertTrueOrThrow(
                 availableAuthorities.containsAll(request.authorities()),
                 "Authorities must contains: [%s]".formatted(baseJoiningRaw(availableAuthorities))

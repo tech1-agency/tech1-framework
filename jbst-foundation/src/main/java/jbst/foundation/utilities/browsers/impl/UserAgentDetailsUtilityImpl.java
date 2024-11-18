@@ -7,7 +7,7 @@ import com.blueconic.browscap.UserAgentService;
 import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,15 +28,15 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
     private final String exceptionMessage;
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
-    public UserAgentDetailsUtilityImpl(ApplicationFrameworkProperties applicationFrameworkProperties) {
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
+    public UserAgentDetailsUtilityImpl(JbstProperties jbstProperties) {
+        this.jbstProperties = jbstProperties;
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        var userAgentConfigs = this.applicationFrameworkProperties.getUtilitiesConfigs().getUserAgentConfigs();
+        var userAgentConfigs = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs();
         LOGGER.info("{} User agent — {}", FRAMEWORK_UTILITIES_PREFIX, Toggle.of(userAgentConfigs.isEnabled()));
         if (userAgentConfigs.isEnabled()) {
             try {
@@ -67,7 +67,7 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
 
     @Override
     public UserAgentDetails getUserAgentDetails(UserAgentHeader userAgentHeader) {
-        if (!this.applicationFrameworkProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled() || !this.configured) {
+        if (!this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled() || !this.configured) {
             return UserAgentDetails.unknown(this.exceptionMessage);
         }
         var capabilities = this.userAgentParser.parse(userAgentHeader.getValue());

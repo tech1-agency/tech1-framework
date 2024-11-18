@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.JwtToken;
 import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
@@ -53,8 +53,8 @@ class TokensProviderImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean("tokensCookiesProvider")
@@ -79,7 +79,7 @@ class TokensProviderImplTest {
 
     private final TokenCookiesProvider tokensCookiesProvider;
     private final TokenHeadersProvider tokensHeadersProvider;
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final TokensProvider componentUnderTest;
 
@@ -87,12 +87,12 @@ class TokensProviderImplTest {
     public TokensProviderImplTest(
             @Qualifier("tokensCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
             @Qualifier("tokensHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
-            ApplicationFrameworkProperties applicationFrameworkProperties,
+            JbstProperties jbstProperties,
             TokensProvider tokensProvider
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
         this.tokensHeadersProvider = tokensHeadersProvider;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        this.jbstProperties = jbstProperties;
         this.componentUnderTest = tokensProvider;
     }
 
@@ -101,17 +101,17 @@ class TokensProviderImplTest {
         reset(
                 this.tokensCookiesProvider,
                 this.tokensHeadersProvider,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
     @AfterEach
     void afterEach() {
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verifyNoMoreInteractions(
                 this.tokensCookiesProvider,
                 this.tokensHeadersProvider,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -273,7 +273,7 @@ class TokensProviderImplTest {
     // PRIVATE METHODS
     // =================================================================================================================
     private void mockProperties(JwtTokenStorageMethod method) {
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(
                 new SecurityJwtConfigs(
                         AuthoritiesConfigs.hardcoded(),
                         CookiesConfigs.hardcoded(),

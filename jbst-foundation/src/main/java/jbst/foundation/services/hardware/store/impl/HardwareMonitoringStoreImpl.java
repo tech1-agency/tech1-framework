@@ -2,7 +2,7 @@ package jbst.foundation.services.hardware.store.impl;
 
 import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final Deque<EventLastHardwareMonitoringDatapoint> datapoints = new ConcurrentLinkedDeque<>();
 
@@ -24,7 +24,7 @@ public class HardwareMonitoringStoreImpl implements HardwareMonitoringStore {
     public HardwareMonitoringWidget getHardwareMonitoringWidget() {
         return HardwareMonitoringWidget.of(
                 this.getLastOrUnknownEvent(),
-                this.applicationFrameworkProperties.getHardwareMonitoringConfigs()
+                this.jbstProperties.getHardwareMonitoringConfigs()
         );
     }
 

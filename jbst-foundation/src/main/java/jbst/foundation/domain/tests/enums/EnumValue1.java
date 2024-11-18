@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum EnumValue1 implements EnumValue<String> {
-    TECH1("Tech1"),
+    JBST("jbst"),
     FRAMEWORK("Framework");
 
     private final String value;

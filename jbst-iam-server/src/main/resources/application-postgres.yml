@@ -10,7 +10,7 @@ spring:
   liquibase:
     change-log: classpath:postgres/changelog.yml
 
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   server-configs:
     name: tech1-framework-iam-server-postgres

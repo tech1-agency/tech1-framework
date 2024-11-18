@@ -25,8 +25,8 @@ class HttpServletRequestUtilityTest {
                 Arguments.of("https://localhost", "https://localhost"),
                 Arguments.of("http://localhost:8080", "http://localhost:8080"),
                 Arguments.of("https://localhost:8080", "https://localhost:8080"),
-                Arguments.of("https://www.tech1.agency", "https://www.tech1.agency"),
-                Arguments.of("www.tech1.agency", "www.tech1.agency"),
+                Arguments.of("https://www.yyluchkiv.com", "https://www.yyluchkiv.com"),
+                Arguments.of("www.yyluchkiv.com", "www.yyluchkiv.com"),
                 Arguments.of("http://localhost:8080?attr1=value", "http://localhost:8080"),
                 Arguments.of("http://localhost:8080?attr1=value&attr2=value2", "http://localhost:8080")
         );

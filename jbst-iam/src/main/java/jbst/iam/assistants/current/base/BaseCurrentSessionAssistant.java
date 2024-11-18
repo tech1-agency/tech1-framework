@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
     // Utilities
     protected final SecurityPrincipalUtils securityPrincipalUtils;
     // Properties
-    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
+    protected final JbstProperties jbstProperties;
 
     @Override
     public Username getCurrentUsername() {
@@ -58,7 +58,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
         var user = this.getCurrentJwtUser();
 
         var attributes = nonNull(user.attributes()) ? user.attributes() : new HashMap<String, Object>();
-        if (this.applicationFrameworkProperties.getHardwareMonitoringConfigs().isEnabled()) {
+        if (this.jbstProperties.getHardwareMonitoringConfigs().isEnabled()) {
             attributes.put(HARDWARE, this.hardwareMonitoringStore.getHardwareMonitoringWidget());
         }
 

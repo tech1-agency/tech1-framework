@@ -1,6 +1,6 @@
 package jbst.iam.events.publishers.impl;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.pubsub.AbstractEventPublisher;
 import jbst.foundation.incidents.domain.authetication.*;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
@@ -25,11 +25,11 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void publishAuthenticationLogin(IncidentAuthenticationLogin incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -39,7 +39,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishAuthenticationLoginFailureUsernamePassword(IncidentAuthenticationLoginFailureUsernamePassword incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.credentials().username());
             this.applicationEventPublisher.publishEvent(incident);
         }
@@ -47,7 +47,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishAuthenticationLoginFailureUsernameMaskedPassword(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.credentials().username());
             this.applicationEventPublisher.publishEvent(incident);
         }
@@ -55,7 +55,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishAuthenticationLogoutMin(IncidentAuthenticationLogoutMin incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT_MIN)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT_MIN)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -65,7 +65,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishAuthenticationLogoutFull(IncidentAuthenticationLogoutFull incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(AUTHENTICATION_LOGOUT)) {
             LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -75,7 +75,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishRegistration1(IncidentRegistration1 incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER1)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER1)) {
             LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -85,7 +85,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishRegistration1Failure(IncidentRegistration1Failure incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER1_FAILURE)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(REGISTER1_FAILURE)) {
             LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -95,7 +95,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishSessionRefreshed(IncidentSessionRefreshed incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(SESSION_REFRESHED)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(SESSION_REFRESHED)) {
             LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {
@@ -105,7 +105,7 @@ public class SecurityJwtIncidentPublisherImpl extends AbstractEventPublisher imp
 
     @Override
     public void publishSessionExpired(IncidentSessionExpired incident) {
-        if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(SESSION_EXPIRED)) {
+        if (this.jbstProperties.getSecurityJwtConfigs().getIncidentsConfigs().isEnabled(SESSION_EXPIRED)) {
             LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incident.username());
             this.applicationEventPublisher.publishEvent(incident);
         } else {

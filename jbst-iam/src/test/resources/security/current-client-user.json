@@ -1,7 +1,7 @@
 {
-  "username" : "tech1",
-  "email" : "tech1@yyluchkiv.com",
-  "name" : "Tech1",
+  "username" : "jbst",
+  "email" : "tests@yyluchkiv.com",
+  "name" : "JBST",
   "zoneId" : "Europe/Kyiv",
   "passwordChangeRequired" : false,
   "authorities" : [ "admin", "user" ],

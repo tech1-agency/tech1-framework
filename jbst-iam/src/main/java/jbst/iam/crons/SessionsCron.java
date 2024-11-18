@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import jbst.foundation.domain.crons.AbstractBaseCron;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 @Slf4j
@@ -23,7 +23,7 @@ public class SessionsCron extends AbstractBaseCron {
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void processException(Exception ex) {
@@ -31,12 +31,12 @@ public class SessionsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${tech1.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.expression}",
-            zone = "${tech1.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.zone-id}"
+            cron = "${jbst.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.expression}",
+            zone = "${jbst.security-jwt-configs.session-configs.clean-sessions-by-expired-refresh-tokens-cron.zone-id}"
     )
     public void cleanByExpiredRefreshTokens() {
         this.executeCron(
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
+                this.jbstProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
                 () -> {
                     var usernames = this.sessionRegistry.getActiveSessionsUsernames();
                     LOGGER.info("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: `{}`", usernames.size());
@@ -46,12 +46,12 @@ public class SessionsCron extends AbstractBaseCron {
     }
 
     @Scheduled(
-            cron = "${tech1.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.expression}",
-            zone = "${tech1.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.zone-id}"
+            cron = "${jbst.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.expression}",
+            zone = "${jbst.security-jwt-configs.session-configs.enable-sessions-metadata-renew-cron.zone-id}"
     )
     public void enableSessionsMetadataRenew() {
         this.executeCron(
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
+                this.jbstProperties.getSecurityJwtConfigs().getSessionConfigs().getEnableSessionsMetadataRenewCron().isEnabled(),
                 this.baseUsersSessionsService::enableUserRequestMetadataRenewCron
         );
     }

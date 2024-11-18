@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ class ConfigurationWebMVC1Test {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            var applicationFrameworkProperties = mock(JbstProperties.class);
             var mvcConfigs = new MvcConfigs(
                     false,
                     "/jbst/security",

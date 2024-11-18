@@ -5,7 +5,7 @@ import jbst.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 @Slf4j
 @Component
@@ -14,11 +14,11 @@ public class PostgresBaseInvitationCodesRequestsValidator extends AbstractBaseIn
     @Autowired
     public PostgresBaseInvitationCodesRequestsValidator(
             PostgresInvitationCodesRepository invitationCodesRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         super(
                 invitationCodesRepository,
-                applicationFrameworkProperties
+                jbstProperties
         );
     }
 }

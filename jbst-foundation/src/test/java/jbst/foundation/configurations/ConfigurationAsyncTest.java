@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class ConfigurationAsyncTest {
 
     }
 
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final ConfigurationAsync componentUnderTest;
 
@@ -55,7 +55,7 @@ class ConfigurationAsyncTest {
     @Test
     void getAsyncExecutorTest() {
         // Arrange
-        var asyncConfigs = this.applicationFrameworkProperties.getAsyncConfigs();
+        var asyncConfigs = this.jbstProperties.getAsyncConfigs();
 
         // Act
         var actual = this.componentUnderTest.getAsyncExecutor();

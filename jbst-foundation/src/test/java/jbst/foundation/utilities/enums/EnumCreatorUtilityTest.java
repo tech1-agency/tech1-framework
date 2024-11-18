@@ -20,13 +20,13 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByValueIgnoreCaseOrThrowArgs() {
         return Stream.of(
-                Arguments.of("Tech1", false, EnumValue1.TECH1, null),
-                Arguments.of("tech1", false, EnumValue1.TECH1, null),
-                Arguments.of("TECh1", false, EnumValue1.TECH1, null),
+                Arguments.of("JBst", false, EnumValue1.JBST, null),
+                Arguments.of("jbst", false, EnumValue1.JBST, null),
+                Arguments.of("jbST", false, EnumValue1.JBST, null),
                 Arguments.of("Framework", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("framework", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("fraMEwork", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("Tech2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Tech2]`"),
+                Arguments.of("jbst2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[jbst2]`"),
                 Arguments.of("Server", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Server]`"),
                 Arguments.of(null, true, null, "Options: `[Framework, Tech1]`. Unexpected: `[null]`")
         );
@@ -34,13 +34,13 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByNameOrThrowArgs() {
         return Stream.of(
-                Arguments.of("TECH1", false, EnumValue1.TECH1, null),
-                Arguments.of("tech1", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[tech1]`"),
-                Arguments.of("TECh1", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[TECh1]`"),
+                Arguments.of("jbst", false, EnumValue1.JBST, null),
+                Arguments.of("jbST", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[jbST]`"),
+                Arguments.of("JBst", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[JBst]`"),
                 Arguments.of("FRAMEWORK", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("framework", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[framework]`"),
                 Arguments.of("fraMEwork", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[fraMEwork]`"),
-                Arguments.of("Tech2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Tech2]`"),
+                Arguments.of("jbst2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[jbst2]`"),
                 Arguments.of("Server", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Server]`"),
                 Arguments.of(null, true, null, "Options: `[Framework, Tech1]`. Unexpected: `[null]`")
         );
@@ -48,7 +48,7 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByValueOrUnknownArgs() {
         return Stream.of(
-                Arguments.of("Tech1", EnumValue2.TECH1),
+                Arguments.of("jbst", EnumValue2.JBST),
                 Arguments.of("Framework", EnumValue2.FRAMEWORK),
                 Arguments.of("123", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),
@@ -58,7 +58,7 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByValueIgnoreCaseOrUnknownArgs() {
         return Stream.of(
-                Arguments.of("tech1", EnumValue2.TECH1),
+                Arguments.of("JBST", EnumValue2.JBST),
                 Arguments.of("framework", EnumValue2.FRAMEWORK),
                 Arguments.of("TTT", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),
@@ -82,7 +82,7 @@ class EnumCreatorUtilityTest {
 
     private static Stream<Arguments> findEnumByNameOrUnknownArgs() {
         return Stream.of(
-                Arguments.of("TECH1", EnumValue2.TECH1),
+                Arguments.of("JBST", EnumValue2.JBST),
                 Arguments.of("FRAMEWORK", EnumValue2.FRAMEWORK),
                 Arguments.of("123", EnumValue2.UNKNOWN),
                 Arguments.of(randomString(), EnumValue2.UNKNOWN),

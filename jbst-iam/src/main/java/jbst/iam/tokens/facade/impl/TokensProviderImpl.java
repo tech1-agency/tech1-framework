@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 @Slf4j
 @Service
@@ -27,17 +27,17 @@ public class TokensProviderImpl implements TokensProvider {
     private final TokenCookiesProvider tokensCookiesProvider;
     private final TokenHeadersProvider tokensHeadersProvider;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Autowired
     public TokensProviderImpl(
             @Qualifier("tokenCookiesProvider") TokenCookiesProvider tokensCookiesProvider,
             @Qualifier("tokenHeadersProvider") TokenHeadersProvider tokensHeadersProvider,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         this.tokensCookiesProvider = tokensCookiesProvider;
         this.tokensHeadersProvider = tokensHeadersProvider;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        this.jbstProperties = jbstProperties;
     }
 
     @Override
@@ -116,6 +116,6 @@ public class TokensProviderImpl implements TokensProvider {
     // PRIVATE METHODS
     // =================================================================================================================
     public boolean isCookiesProviderEnabled() {
-        return this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getStorageMethod().isCookies();
+        return this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getStorageMethod().isCookies();
     }
 }

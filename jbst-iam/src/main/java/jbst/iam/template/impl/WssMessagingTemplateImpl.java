@@ -9,7 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableView;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.system.reset_server.ResetServerStatus;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
@@ -27,7 +27,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void sendEventToUser(Username username, String destination, WebsocketEvent event) {
@@ -40,7 +40,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
 
     @Override
     public void sendHardwareMonitoring(Set<Username> usernames, HardwareMonitoringDatapointTableView tableView) {
-        var hardwareConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
+        var hardwareConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getHardwareConfigs();
         if (!hardwareConfigs.isEnabled()) {
             return;
         }
@@ -49,7 +49,7 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
 
     @Override
     public void sendResetServerStatus(Set<Username> usernames, ResetServerStatus status) {
-        var resetServerConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getResetServerConfigs();
+        var resetServerConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getFeaturesConfigs().getResetServerConfigs();
         if (!resetServerConfigs.isEnabled()) {
             return;
         }
@@ -60,10 +60,10 @@ public class WssMessagingTemplateImpl implements WssMessagingTemplate {
     // PRIVATE METHODS
     // =================================================================================================================
     private void sendObjectToUser(Username username, String destination, Object data) {
-        if (!this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getTemplateConfigs().isEnabled()) {
+        if (!this.jbstProperties.getSecurityJwtWebsocketsConfigs().getTemplateConfigs().isEnabled()) {
             return;
         }
-        var brokerConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
+        var brokerConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getBrokerConfigs();
         try {
             this.messagingTemplate.convertAndSendToUser(
                     username.value(),

@@ -22,7 +22,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 
 import java.util.stream.Collectors;
@@ -58,17 +58,17 @@ class TokenCookiesProviderTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         TokenCookiesProvider tokensCookiesProvider() {
             return new TokenCookiesProvider(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }
 
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final TokenCookiesProvider componentUnderTest;
 
@@ -78,8 +78,8 @@ class TokenCookiesProviderTest {
         var jwtAccessToken = JwtAccessToken.random();
         var response = mock(HttpServletResponse.class);
 
-        var cookiesConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs();
-        var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+        var cookiesConfigs = this.jbstProperties.getSecurityJwtConfigs().getCookiesConfigs();
+        var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var maxAge = accessToken.getExpiration().getTimeAmount().toSeconds() - cookiesConfigs.getJwtAccessTokenCookieCreationLatency().getTimeAmount().toSeconds();
 
         // Act
@@ -103,8 +103,8 @@ class TokenCookiesProviderTest {
         var refreshAccessToken = JwtRefreshToken.random();
         var response = mock(HttpServletResponse.class);
 
-        var cookiesConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs();
-        var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var cookiesConfigs = this.jbstProperties.getSecurityJwtConfigs().getCookiesConfigs();
+        var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
         this.componentUnderTest.createResponseRefreshToken(refreshAccessToken, response);
@@ -124,7 +124,7 @@ class TokenCookiesProviderTest {
     @Test
     void readCsrfToken() throws CsrfTokenNotFoundException {
         // Arrange
-        var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
         var cookie = mock(Cookie.class);
         var cookieValue = randomString();
         when(cookie.getName()).thenReturn(csrfConfigs.getTokenKey());
@@ -164,7 +164,7 @@ class TokenCookiesProviderTest {
     @MethodSource("readRequestAccessTokenArgs")
     void readRequestAccessToken(boolean rest, boolean websocket) throws AccessTokenNotFoundException {
         // Arrange
-        var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+        var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn(accessToken.getCookieKey());
         var request = mock(HttpServletRequest.class);
@@ -205,7 +205,7 @@ class TokenCookiesProviderTest {
     @MethodSource("readRequestRefreshTokenArgs")
     void readRequestRefreshToken(boolean rest, boolean websocket) throws RefreshTokenNotFoundException {
         // Arrange
-        var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn(refreshToken.getCookieKey());
         var request = mock(HttpServletRequest.class);
@@ -245,9 +245,9 @@ class TokenCookiesProviderTest {
     void clearTokens() {
         // Arrange
         var response = mock(HttpServletResponse.class);
-        var domain = this.applicationFrameworkProperties.getSecurityJwtConfigs().getCookiesConfigs().getDomain();
-        var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
-        var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var domain = this.jbstProperties.getSecurityJwtConfigs().getCookiesConfigs().getDomain();
+        var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+        var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
 
         // Act
         this.componentUnderTest.clearTokens(response);

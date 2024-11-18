@@ -8,7 +8,7 @@ public class PostgresContainerV11 extends PostgreSQLContainer<PostgresContainerV
     private static final String POSTGRES_DATABASE_NAME = "integration-tests-db";
     private static final String POSTGRES_USERNAME = "sa";
     private static final String POSTGRES_PASSWORD = "sa";
-    public static final String POSTGRES_INIT_SQL = "database/v001_tech1_framework_schema.sql";
+    public static final String POSTGRES_INIT_SQL = "database/v001_jbst_schema.sql";
 
     public static PostgresContainerV11 container = new PostgresContainerV11()
             .withDatabaseName(POSTGRES_DATABASE_NAME)

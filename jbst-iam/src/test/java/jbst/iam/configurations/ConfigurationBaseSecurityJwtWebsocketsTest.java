@@ -15,7 +15,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.StompWebSocketEndpointRegistration;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
 import jbst.foundation.domain.properties.configs.SecurityJwtWebsocketsConfigs;
 import jbst.foundation.domain.properties.configs.mvc.CorsConfigs;
@@ -37,8 +37,8 @@ class ConfigurationBaseSecurityJwtWebsocketsTest {
     static class ContextConfiguration {
 
         @Bean
-        public ApplicationFrameworkProperties applicationFrameworkProperties() {
-            var properties = new ApplicationFrameworkProperties();
+        public JbstProperties applicationFrameworkProperties() {
+            var properties = new JbstProperties();
             properties.setMvcConfigs(
                     new MvcConfigs(
                             true,

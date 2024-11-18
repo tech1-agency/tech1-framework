@@ -1,5 +1,7 @@
 package jbst.iam.configurations;
 
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
@@ -13,8 +15,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ class ConfigurationMongoRepositoriesTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
 
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         MongoInvitationCodesRepository invitationCodeRepository() {
@@ -55,7 +55,7 @@ class ConfigurationMongoRepositoriesTest {
         @Bean
         ConfigurationMongoRepositories applicationMongoRepositories() {
             return new ConfigurationMongoRepositories(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }
@@ -72,12 +72,12 @@ class ConfigurationMongoRepositoriesTest {
         // Assert
         assertThat(methods)
                 .hasSize(13)
-                .contains("tech1MongoRepositories")
-                .contains("tech1MongoClient")
-                .contains("tech1MongoDatabaseFactory")
-                .contains("tech1MongoTemplate");
-        assertThat(this.componentUnderTest.tech1MongoClient()).isNotNull();
-        assertThat(this.componentUnderTest.tech1MongoDatabaseFactory()).isNotNull();
-        assertThat(this.componentUnderTest.tech1MongoTemplate()).isNotNull();
+                .contains("jbstMongoRepositories")
+                .contains("jbstMongoClient")
+                .contains("jbstMongoDatabaseFactory")
+                .contains("jbstMongoTemplate");
+        assertThat(this.componentUnderTest.jbstMongoClient()).isNotNull();
+        assertThat(this.componentUnderTest.jbstMongoDatabaseFactory()).isNotNull();
+        assertThat(this.componentUnderTest.jbstMongoTemplate()).isNotNull();
     }
 }

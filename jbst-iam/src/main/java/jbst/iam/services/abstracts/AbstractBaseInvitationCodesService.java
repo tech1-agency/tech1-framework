@@ -9,7 +9,7 @@ import jbst.iam.services.BaseInvitationCodesService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseInvitationCodesService implements BaseInvitationCodesService {
@@ -17,14 +17,14 @@ public abstract class AbstractBaseInvitationCodesService implements BaseInvitati
     // Repositories
     protected final InvitationCodesRepository invitationCodesRepository;
     // Properties
-    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
+    protected final JbstProperties jbstProperties;
 
     @Override
     public ResponseInvitationCodes findByOwner(Username owner) {
         var invitationCodes = this.invitationCodesRepository.findResponseCodesByOwner(owner);
         invitationCodes.sort(ResponseInvitationCode.INVITATION_CODE);
         return new ResponseInvitationCodes(
-                this.applicationFrameworkProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
+                this.jbstProperties.getSecurityJwtConfigs().getAuthoritiesConfigs().getAvailableAuthorities(),
                 invitationCodes
         );
     }

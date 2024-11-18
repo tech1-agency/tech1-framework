@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 // Swagger
 @OpenAPIDefinition(
         info = @Info(
-                title = "${tech1.server-configs.name}",
-                version = "${tech1.maven-configs.version}"
+                title = "${jbst.server-configs.name}",
+                version = "${jbst.maven-configs.version}"
         )
 )
 // Spring

@@ -5,7 +5,7 @@ import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
 import jbst.iam.repositories.mongodb.MongoUsersRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.DefaultUser;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
     public MongoBaseEssenceConstructor(
             MongoInvitationCodesRepository invitationCodesRepository,
             MongoUsersRepository usersRepository,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         super(
                 invitationCodesRepository,
                 usersRepository,
-                applicationFrameworkProperties
+                jbstProperties
         );
         this.mongoInvitationCodesRepository = invitationCodesRepository;
         this.mongoUsersRepository = usersRepository;

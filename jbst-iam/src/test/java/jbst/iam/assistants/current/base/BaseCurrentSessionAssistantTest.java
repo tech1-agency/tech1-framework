@@ -25,7 +25,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringWidget;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.HardwareMonitoringConfigs;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
@@ -69,8 +69,8 @@ class BaseCurrentSessionAssistantTest {
         }
 
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -91,7 +91,7 @@ class BaseCurrentSessionAssistantTest {
     private final HardwareMonitoringStore hardwareMonitoringStore;
     private final TokensProvider tokensProvider;
     private final SecurityPrincipalUtils securityPrincipalUtils;
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final CurrentSessionAssistant componentUnderTest;
 
@@ -103,7 +103,7 @@ class BaseCurrentSessionAssistantTest {
                 this.hardwareMonitoringStore,
                 this.tokensProvider,
                 this.securityPrincipalUtils,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -115,7 +115,7 @@ class BaseCurrentSessionAssistantTest {
                 this.hardwareMonitoringStore,
                 this.tokensProvider,
                 this.securityPrincipalUtils,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -154,7 +154,7 @@ class BaseCurrentSessionAssistantTest {
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
-        when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.hardcoded());
+        when(this.jbstProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.hardcoded());
 
         // Act
         var currentClientUser = this.componentUnderTest.getCurrentClientUser();
@@ -162,7 +162,7 @@ class BaseCurrentSessionAssistantTest {
         // Assert
         verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
         verify(this.hardwareMonitoringStore).getHardwareMonitoringWidget();
-        verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
+        verify(this.jbstProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(user.getUsername()));
         assertThat(currentClientUser.getEmail()).isEqualTo(user.email());
         assertThat(currentClientUser.getName()).isEqualTo(user.name());
@@ -178,14 +178,14 @@ class BaseCurrentSessionAssistantTest {
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);
-        when(this.applicationFrameworkProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
+        when(this.jbstProperties.getHardwareMonitoringConfigs()).thenReturn(HardwareMonitoringConfigs.disabled());
 
         // Act
         var currentClientUser = this.componentUnderTest.getCurrentClientUser();
 
         // Assert
         verify(this.securityPrincipalUtils).getAuthenticatedJwtUser();
-        verify(this.applicationFrameworkProperties).getHardwareMonitoringConfigs();
+        verify(this.jbstProperties).getHardwareMonitoringConfigs();
         assertThat(currentClientUser.getUsername()).isEqualTo(Username.of(user.getUsername()));
         assertThat(currentClientUser.getEmail()).isEqualTo(user.email());
         assertThat(currentClientUser.getName()).isEqualTo(user.name());

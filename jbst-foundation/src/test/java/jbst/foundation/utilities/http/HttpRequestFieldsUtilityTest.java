@@ -30,7 +30,7 @@ class HttpRequestFieldsUtilityTest {
         return Stream.of(
                 Arguments.of("info", false),
                 Arguments.of("info@", false),
-                Arguments.of("info@tech1", false),
+                Arguments.of("info@jbst", false),
                 Arguments.of("info@" + JbstConstants.Domains.HARDCODED, true),
                 Arguments.of("petro.petrenko@gmail.com", true),
                 Arguments.of("john78@proton.com", true)

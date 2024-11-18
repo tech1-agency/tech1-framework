@@ -6,7 +6,7 @@ import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.domain.jwt.JwtAccessToken;
 import jbst.iam.domain.jwt.JwtRefreshToken;
 import jbst.iam.domain.jwt.RequestAccessToken;
@@ -28,11 +28,11 @@ import static jbst.foundation.utilities.numbers.LongUtility.toIntExactOrZeroOnOv
 public class TokenCookiesProvider implements TokenProvider {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
+        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var accessTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
         var jwtAccessTokenCookieCreationLatency = securityJwtConfigs.getCookiesConfigs().getJwtAccessTokenCookieCreationLatency();
         var maxAge = accessTokenConfiguration.getExpiration().getTimeAmount().toSeconds() - jwtAccessTokenCookieCreationLatency.getTimeAmount().toSeconds();
@@ -50,7 +50,7 @@ public class TokenCookiesProvider implements TokenProvider {
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
+        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var refreshTokenConfiguration = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();
 
         var cookie = createCookie(
@@ -67,7 +67,7 @@ public class TokenCookiesProvider implements TokenProvider {
     @Override
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
         try {
-            var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+            var csrfConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
             // WARNING: security concerns? based on https://github.com/sockjs/sockjs-node#authorisation
             // GitHub issue: https://github.com/sockjs/sockjs-client/issues/196
             var csrfCookie = readCookie(request, csrfConfigs.getTokenKey());
@@ -80,7 +80,7 @@ public class TokenCookiesProvider implements TokenProvider {
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
         try {
-            var accessToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+            var accessToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
             var cookie = readCookie(request, accessToken.getCookieKey());
             return new RequestAccessToken(cookie);
         } catch (CookieNotFoundException ex) {
@@ -96,7 +96,7 @@ public class TokenCookiesProvider implements TokenProvider {
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
         try {
-            var refreshToken = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+            var refreshToken = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
             var cookie = readCookie(request, refreshToken.getCookieKey());
             return new RequestRefreshToken(cookie);
         } catch (CookieNotFoundException ex) {
@@ -111,7 +111,7 @@ public class TokenCookiesProvider implements TokenProvider {
 
     @Override
     public void clearTokens(HttpServletResponse response) {
-        var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
+        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var cookiesConfigs = securityJwtConfigs.getCookiesConfigs();
         var accessToken = securityJwtConfigs.getJwtTokensConfigs().getAccessToken();
         var refreshToken = securityJwtConfigs.getJwtTokensConfigs().getRefreshToken();

@@ -20,7 +20,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
@@ -50,8 +50,8 @@ class BaseUsersEmailsServiceTest {
         }
 
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -69,7 +69,7 @@ class BaseUsersEmailsServiceTest {
     // Utilities
     private final UserEmailUtils userEmailUtils;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final UsersEmailsService componentUnderTest;
 
@@ -78,7 +78,7 @@ class BaseUsersEmailsServiceTest {
         reset(
                 this.emailService,
                 this.userEmailUtils,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -87,7 +87,7 @@ class BaseUsersEmailsServiceTest {
         verifyNoMoreInteractions(
                 this.emailService,
                 this.userEmailUtils,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -99,13 +99,13 @@ class BaseUsersEmailsServiceTest {
                 null,
                 UserRequestMetadata.random()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
@@ -117,13 +117,13 @@ class BaseUsersEmailsServiceTest {
                 null,
                 UserRequestMetadata.random()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
@@ -135,13 +135,13 @@ class BaseUsersEmailsServiceTest {
                 Email.random(),
                 UserRequestMetadata.random()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
@@ -162,7 +162,7 @@ class BaseUsersEmailsServiceTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.userEmailUtils.getAuthenticationLoginTemplateName()).thenReturn("jbst-account-accessed");
         when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
@@ -175,7 +175,7 @@ class BaseUsersEmailsServiceTest {
         this.componentUnderTest.executeAuthenticationLogin(function);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
         verify(this.userEmailUtils).getSubject("Account Accessed");
         verify(this.userEmailUtils).getAuthenticationLoginOrSessionRefreshedVariables(
@@ -210,7 +210,7 @@ class BaseUsersEmailsServiceTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
         when(this.userEmailUtils.getSessionRefreshedTemplateName()).thenReturn("jbst-account-accessed");
         when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
         when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
@@ -223,7 +223,7 @@ class BaseUsersEmailsServiceTest {
         this.componentUnderTest.executeSessionRefreshed(function);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.userEmailUtils).getSessionRefreshedTemplateName();
         verify(this.userEmailUtils).getSubject("Account Accessed");
         verify(this.userEmailUtils).getAuthenticationLoginOrSessionRefreshedVariables(

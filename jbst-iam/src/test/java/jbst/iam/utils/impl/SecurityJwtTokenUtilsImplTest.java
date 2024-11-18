@@ -23,7 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.base.TimeAmount;
 
@@ -121,17 +121,17 @@ class SecurityJwtTokenUtilsImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         // Properties
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         SecurityJwtTokenUtils securityJwtTokenUtility() {
             return new SecurityJwtTokenUtilsImpl(
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }
 
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final SecurityJwtTokenUtils componentUnderTest;
 
@@ -159,7 +159,7 @@ class SecurityJwtTokenUtilsImplTest {
         var validatedClaims = this.componentUnderTest.validate(accessToken);
         assertThat(validatedClaims.username()).isEqualTo(username);
         var zoneId = creationParams.zoneId();
-        var timeAmount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getExpiration();
+        var timeAmount = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId
@@ -181,7 +181,7 @@ class SecurityJwtTokenUtilsImplTest {
         var validatedClaims = this.componentUnderTest.validate(refreshToken);
         assertThat(validatedClaims.username()).isEqualTo(expectedUsername);
         var zoneId = creationParams.zoneId();
-        var timeAmount = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getExpiration();
+        var timeAmount = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getExpiration();
         var expiration = convertLocalDateTime(
                 LocalDateTime.now(zoneId).plus(timeAmount.getAmount(), timeAmount.getUnit()),
                 zoneId

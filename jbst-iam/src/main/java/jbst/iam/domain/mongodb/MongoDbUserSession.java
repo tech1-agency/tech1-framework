@@ -30,7 +30,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestam
 // Mongodb
 @Document(collection = MongoDbUserSession.MONGO_TABLE_NAME)
 public class MongoDbUserSession {
-    public static final String MONGO_TABLE_NAME = "tech1_users_sessions";
+    public static final String MONGO_TABLE_NAME = "jbst_users_sessions";
 
     @Id
     private String id;

@@ -9,11 +9,11 @@ import org.springframework.core.PriorityOrdered;
 
 @Slf4j
 @ConfigurationProperties(
-        prefix = "tech1",
+        prefix = "jbst",
         ignoreUnknownFields = false
 )
 @Data
-public class ApplicationFrameworkProperties implements PriorityOrdered {
+public class JbstProperties implements PriorityOrdered {
     private ServerConfigs serverConfigs;
     private MavenConfigs mavenConfigs;
     private UtilitiesConfigs utilitiesConfigs;
@@ -28,8 +28,8 @@ public class ApplicationFrameworkProperties implements PriorityOrdered {
     private SecurityJwtWebsocketsConfigs securityJwtWebsocketsConfigs;
     private MongodbSecurityJwtConfigs mongodbSecurityJwtConfigs;
 
-    public static ApplicationFrameworkProperties hardcoded() {
-        var properties = new ApplicationFrameworkProperties();
+    public static JbstProperties hardcoded() {
+        var properties = new JbstProperties();
         properties.setMavenConfigs(MavenConfigs.hardcoded());
         properties.setServerConfigs(ServerConfigs.hardcoded());
         properties.setUtilitiesConfigs(UtilitiesConfigs.hardcoded());

@@ -26,7 +26,7 @@ class NotificationTest extends AbstractObjectMapperRunner {
     @MethodSource("serializeTest")
     void serialize(Function<String, Notification> fnc, String fileName) {
         // Arrange
-        var message = "tech1";
+        var message = "jbst";
 
         // Act
         var json = this.writeValueAsString(fnc.apply(message));

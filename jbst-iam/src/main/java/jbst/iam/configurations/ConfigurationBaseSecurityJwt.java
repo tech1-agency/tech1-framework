@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jbst.foundation.configurations.*;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
 import jbst.iam.filters.jwt.JwtTokensFilter;
 import jbst.iam.handlers.exceptions.JwtAccessDeniedExceptionHandler;
@@ -72,11 +72,11 @@ public class ConfigurationBaseSecurityJwt {
     // Configurer
     private final AbstractJbstSecurityJwtConfigurer abstractJbstSecurityJwtConfigurer;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
+        this.jbstProperties.getSecurityJwtConfigs().assertProperties(new PropertyId("securityJwtConfigs"));
     }
 
     @Autowired
@@ -94,7 +94,7 @@ public class ConfigurationBaseSecurityJwt {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
-            if (this.applicationFrameworkProperties.getServerConfigs().isSpringdocEnabled()) {
+            if (this.jbstProperties.getServerConfigs().isSpringdocEnabled()) {
                 web.ignoring().requestMatchers(JbstConstants.Swagger.ENDPOINTS.toArray(new String[0]));
             }
             this.abstractJbstSecurityJwtConfigurer.configure(web);
@@ -103,7 +103,7 @@ public class ConfigurationBaseSecurityJwt {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getBasePathPrefix();
+        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
 
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -137,7 +137,7 @@ public class ConfigurationBaseSecurityJwt {
                     .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated();
 
-            if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
+            if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes().isEnabled()) {
                 authorizeHttpRequests
                         .requestMatchers(GET, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_READ)
                         .requestMatchers(POST, basePathPrefix + "/invitationCode").hasAuthority(INVITATION_CODE_WRITE)

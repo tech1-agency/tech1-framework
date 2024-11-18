@@ -38,7 +38,7 @@ import static org.springframework.util.StringUtils.capitalize;
 @Entity
 @Table(name = PostgresDbUser.PG_TABLE_NAME)
 public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
-    public static final String PG_TABLE_NAME = "tech1_users";
+    public static final String PG_TABLE_NAME = "jbst_users";
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)

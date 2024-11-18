@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 @EnableAutoConfiguration(exclude = {
         DataSourceAutoConfiguration.class,
@@ -17,7 +17,7 @@ import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
         HibernateJpaAutoConfiguration.class
 })
 @EnableConfigurationProperties(
-        ApplicationFrameworkProperties.class
+        JbstProperties.class
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class TestsConfigurationMongoRepositoriesRunner {

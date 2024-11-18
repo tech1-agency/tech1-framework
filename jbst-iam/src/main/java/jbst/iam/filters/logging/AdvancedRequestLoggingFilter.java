@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
     private final HttpRequestUtils httpRequestUtils;
     private final SecurityPrincipalUtils securityPrincipalUtils;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @SuppressWarnings({"LoggingSimilarMessage", "StringConcatenationArgumentToLogCall"})
     @Override
@@ -43,7 +43,7 @@ public class AdvancedRequestLoggingFilter extends OncePerRequestFilter {
             var cachedRequest = new CachedBodyHttpServletRequest(request);
             this.httpRequestUtils.cachePayload(cachedRequest);
 
-            if (this.applicationFrameworkProperties.getSecurityJwtConfigs().getLoggingConfigs().isAdvancedRequestLoggingEnabled()) {
+            if (this.jbstProperties.getSecurityJwtConfigs().getLoggingConfigs().isAdvancedRequestLoggingEnabled()) {
                 LOGGER.info("============================================================================================");
                 LOGGER.info("Method: (@" + cachedRequest.getMethod() + ", " + cachedRequest.getServletPath() + ")");
                 LOGGER.info("Current User: " + this.securityPrincipalUtils.getAuthenticatedUsernameOrUnexpected());

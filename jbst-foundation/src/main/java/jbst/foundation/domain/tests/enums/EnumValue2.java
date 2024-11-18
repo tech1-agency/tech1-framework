@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum EnumValue2 implements EnumValue<String> {
-    TECH1("Tech1"),
+    JBST("jbst"),
     FRAMEWORK("Framework"),
     UNKNOWN("Unknown");
 

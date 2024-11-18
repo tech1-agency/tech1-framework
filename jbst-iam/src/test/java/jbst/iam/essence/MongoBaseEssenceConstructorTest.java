@@ -1,6 +1,6 @@
 package jbst.iam.essence;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
@@ -37,7 +37,7 @@ class MongoBaseEssenceConstructorTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         MongoInvitationCodesRepository invitationCodeRepository() {
@@ -54,7 +54,7 @@ class MongoBaseEssenceConstructorTest {
             return new MongoBaseEssenceConstructor(
                     this.invitationCodeRepository(),
                     this.userRepository(),
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }

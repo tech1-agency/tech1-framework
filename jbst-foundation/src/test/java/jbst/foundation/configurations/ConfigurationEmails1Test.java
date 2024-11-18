@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = "tech1.emailConfigs.enabled=true"
+        properties = "jbst.email-configs.enabled=true"
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class ConfigurationEmails1Test {
@@ -36,7 +36,7 @@ class ConfigurationEmails1Test {
 
     }
 
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final ConfigurationEmails componentUnderTest;
 
@@ -64,7 +64,7 @@ class ConfigurationEmails1Test {
         var javaMailSender = (JavaMailSenderImpl) this.componentUnderTest.javaMailSender();
 
         // Assert
-        var emailConfigs = this.applicationFrameworkProperties.getEmailConfigs();
+        var emailConfigs = this.jbstProperties.getEmailConfigs();
         assertThat(javaMailSender.getHost()).isEqualTo(emailConfigs.getHost());
         assertThat(javaMailSender.getPort()).isEqualTo(emailConfigs.getPort());
         assertThat(javaMailSender.getUsername()).isEqualTo(emailConfigs.getUsername().value());

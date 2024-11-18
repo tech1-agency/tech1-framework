@@ -10,7 +10,7 @@ on:
 env:
   MAVEN_DEPLOYMENT_ENABLED: 'false'
   DOCKER_REGISTRY: ghcr.io
-  DOCKER_IAM_SERVER_IMAGE: tech1-agency/tech1-framework-iam-server
+  DOCKER_IAM_SERVER_IMAGE: tech1-agency/jbst-iam-server
   DOCKER_VERSION: '1.0-SNAPSHOT'
   DOCKER_PUSH_ENABLED: 'false'
 
@@ -38,7 +38,7 @@ jobs:
         with:
           servers: |
             [{
-                "id": "github-tech1-framework",
+                "id": "github-jbst",
                 "username": "${{ vars.USERNAME_MAVEN_PACKAGES }}",
                 "password": "${{ secrets.TOKEN_MAVEN_PACKAGES }}"
             }]
@@ -58,7 +58,7 @@ jobs:
       - name: Docker [iam-server]
         if: env.DOCKER_PUSH_ENABLED == 'true'
         run: |
-          cd tech1-framework-iam-server
+          cd jbst-iam-server
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IAM_SERVER_IMAGE }}:${{ env.DOCKER_VERSION }}
 

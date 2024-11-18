@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import static jbst.foundation.utilities.reflections.ReflectionUtility.getGetters;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ApplicationFrameworkPropertiesTest {
+class JbstPropertiesTest {
 
     @Test
     void applicationFrameworkPropertiesTest() {

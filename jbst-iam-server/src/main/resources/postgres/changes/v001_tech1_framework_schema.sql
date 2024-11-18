@@ -1,7 +1,7 @@
 -- =================================================================================================================
--- TECH1 FRAMEWORK
+-- jbst
 -- =================================================================================================================
-CREATE TABLE "tech1_users" (
+CREATE TABLE "jbst_users" (
     "id" varchar(36) PRIMARY KEY,
     "username" varchar(255) NOT NULL,
     "password" varchar(255) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE "tech1_users" (
     "attributes" varchar(65535)
 );
 
-CREATE TABLE "tech1_users_sessions" (
+CREATE TABLE "jbst_users_sessions" (
     "id" varchar(36) PRIMARY KEY,
     "created_at" int8 NOT NULL,
     "updated_at" int8 NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE "tech1_users_sessions" (
     "metadata_renew_manually" bool NOT NULL
 );
 
-CREATE TABLE "tech1_invitation_codes" (
+CREATE TABLE "jbst_invitation_codes" (
     "id" varchar(36),
     "owner" varchar(255) NOT NULL,
     "authorities" varchar(1024) NOT NULL,

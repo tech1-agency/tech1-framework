@@ -1,6 +1,6 @@
 package jbst.iam.events.publishers.impl;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
@@ -45,8 +45,8 @@ class SecurityJwtIncidentPublisherImplTest {
         }
 
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -61,7 +61,7 @@ class SecurityJwtIncidentPublisherImplTest {
     // Spring Publisher
     private final ApplicationEventPublisher applicationEventPublisher;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final SecurityJwtIncidentPublisher componentUnderTest;
 
@@ -69,7 +69,7 @@ class SecurityJwtIncidentPublisherImplTest {
     void beforeEach() {
         reset(
                 this.applicationEventPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -77,7 +77,7 @@ class SecurityJwtIncidentPublisherImplTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.applicationEventPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -85,28 +85,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishAuthenticationLoginDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishAuthenticationLoginEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLogin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogin(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -114,28 +114,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishAuthenticationLoginFailureUsernamePasswordDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishAuthenticationLoginFailureUsernamePasswordEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLoginFailureUsernamePassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernamePassword(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -143,28 +143,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishAuthenticationLoginFailureUsernameMaskedPasswordDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishAuthenticationLoginFailureUsernameMaskedPasswordEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLoginFailureUsernameMaskedPassword.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLoginFailureUsernameMaskedPassword(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -172,28 +172,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishAuthenticationLogoutMinDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT_MIN, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishAuthenticationLogoutMinEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT_MIN, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLogoutMin.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutMin(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -201,28 +201,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishAuthenticationLogoutFullDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishAuthenticationLogoutFullEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(AUTHENTICATION_LOGOUT, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentAuthenticationLogoutFull.class);
 
         // Act
         this.componentUnderTest.publishAuthenticationLogoutFull(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -230,28 +230,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishSessionRefreshedDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_REFRESHED, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishSessionRefreshedEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_REFRESHED, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentSessionRefreshed.class);
 
         // Act
         this.componentUnderTest.publishSessionRefreshed(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -259,28 +259,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishSessionExpiredDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_EXPIRED, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishSessionExpiredEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(SESSION_EXPIRED, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentSessionExpired.class);
 
         // Act
         this.componentUnderTest.publishSessionExpired(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -288,28 +288,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishRegistration1DisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishRegistration1EnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentRegistration1.class);
 
         // Act
         this.componentUnderTest.publishRegistration1(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 
@@ -317,28 +317,28 @@ class SecurityJwtIncidentPublisherImplTest {
     void publishRegistration1FailureDisabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1_FAILURE, false);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
     }
 
     @Test
     void publishRegistration1FailureEnabledTest() {
         // Arrange
         var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER1_FAILURE, true);
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
         var incident = entity(IncidentRegistration1Failure.class);
 
         // Act
         this.componentUnderTest.publishRegistration1Failure(incident);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
     }
 

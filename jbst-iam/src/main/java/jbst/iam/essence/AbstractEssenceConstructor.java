@@ -5,7 +5,7 @@ import jbst.iam.repositories.UsersRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
@@ -20,10 +20,10 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
     protected final InvitationCodesRepository invitationCodesRepository;
     protected final UsersRepository usersRepository;
     // Properties
-    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
+    protected final JbstProperties jbstProperties;
 
     public void addDefaultUsers() {
-        var essenceConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs();
+        var essenceConfigs = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getDefaultUsers().isEnabled(),
                 invalidAttribute("essenceConfigs.defaultUsers.enabled == true")
@@ -38,7 +38,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
     }
 
     public void addDefaultUsersInvitationCodes() {
-        var securityJwtConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs();
+        var securityJwtConfigs = this.jbstProperties.getSecurityJwtConfigs();
         var essenceConfigs = securityJwtConfigs.getEssenceConfigs();
         assertTrueOrThrow(
                 essenceConfigs.getInvitationCodes().isEnabled(),

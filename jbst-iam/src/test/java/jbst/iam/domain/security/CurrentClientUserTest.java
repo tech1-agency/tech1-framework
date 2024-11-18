@@ -63,9 +63,9 @@ class CurrentClientUserTest extends AbstractFolderSerializationRunner {
     void serializeTest() {
         // Arrange
         var currentClientUser = new CurrentClientUser(
-                Username.of("tech1"),
-                Email.of("tech1@" + JbstConstants.Domains.HARDCODED),
-                "Tech1",
+                Username.hardcoded(),
+                Email.of("tests@" + JbstConstants.Domains.HARDCODED),
+                "JBST",
                 ZoneIdsConstants.UKRAINE,
                 false,
                 Set.of(

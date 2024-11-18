@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Cron;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.SessionConfigs;
@@ -59,8 +59,8 @@ class SessionsCronTest {
         }
 
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -77,7 +77,7 @@ class SessionsCronTest {
     private final SessionRegistry sessionRegistry;
     private final BaseUsersSessionsService baseUsersSessionsService;
     private final IncidentPublisher incidentPublisher;
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final SessionsCron componentUnderTest;
 
@@ -87,7 +87,7 @@ class SessionsCronTest {
                 this.sessionRegistry,
                 this.baseUsersSessionsService,
                 this.incidentPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -97,7 +97,7 @@ class SessionsCronTest {
                 this.sessionRegistry,
                 this.baseUsersSessionsService,
                 this.incidentPublisher,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -121,13 +121,13 @@ class SessionsCronTest {
         if (cron.isEnabled()) {
             when(this.sessionRegistry.getActiveSessionsUsernames()).thenReturn(usernames);
         }
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(new SessionConfigs(cron, Cron.random())));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(new SessionConfigs(cron, Cron.random())));
 
         // Act
         this.componentUnderTest.cleanByExpiredRefreshTokens();
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         if (cron.isEnabled()) {
             verify(this.sessionRegistry).getActiveSessionsUsernames();
             verify(this.sessionRegistry).cleanByExpiredRefreshTokens(usernames);
@@ -137,13 +137,13 @@ class SessionsCronTest {
     @ParameterizedTest
     @MethodSource("cronArgs")
     void enableSessionsMetadataRenewTest(Cron cron) {
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(new SessionConfigs(Cron.random(), cron)));
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.of(new SessionConfigs(Cron.random(), cron)));
 
         // Act
         this.componentUnderTest.enableSessionsMetadataRenew();
 
         // Assert
-        verify(this.applicationFrameworkProperties).getSecurityJwtConfigs();
+        verify(this.jbstProperties).getSecurityJwtConfigs();
         if (cron.isEnabled()) {
             verify(this.baseUsersSessionsService).enableUserRequestMetadataRenewCron();
         }

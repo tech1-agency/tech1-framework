@@ -1,7 +1,7 @@
 package jbst.foundation.resources.actuator;
 
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -35,7 +35,7 @@ class BaseInfoResourceTest {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         EnvironmentUtility environmentUtility() {
@@ -46,7 +46,7 @@ class BaseInfoResourceTest {
         BaseInfoResource baseInfoResource() {
             return new BaseInfoResource(
                     this.environmentUtility(),
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }
@@ -54,7 +54,7 @@ class BaseInfoResourceTest {
     // Utilities
     private final EnvironmentUtility environmentUtility;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final BaseInfoResource componentUnderTest;
 
@@ -91,6 +91,6 @@ class BaseInfoResourceTest {
         assertThat(details)
                 .hasSize(2)
                 .containsEntry("activeProfile", activeProfile)
-                .containsEntry("maven", this.applicationFrameworkProperties.getMavenConfigs().asMavenDetails());
+                .containsEntry("maven", this.jbstProperties.getMavenConfigs().asMavenDetails());
     }
 }

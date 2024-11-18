@@ -7,7 +7,7 @@ import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import jakarta.annotation.PostConstruct;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
 import jbst.foundation.utilities.browsers.impl.UserAgentDetailsUtilityImpl;
 import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
@@ -34,11 +34,11 @@ public class ConfigurationUserMetadata {
     // Resources
     private final ResourceLoader resourceLoader;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @PostConstruct
     public void init() {
-        this.applicationFrameworkProperties.getUtilitiesConfigs().assertProperties(new PropertyId("utilitiesConfigs"));
+        this.jbstProperties.getUtilitiesConfigs().assertProperties(new PropertyId("utilitiesConfigs"));
     }
 
     @Bean
@@ -54,7 +54,7 @@ public class ConfigurationUserMetadata {
     @Bean
     UserAgentDetailsUtility userAgentDetailsUtility() {
         return new UserAgentDetailsUtilityImpl(
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -62,7 +62,7 @@ public class ConfigurationUserMetadata {
     GeoCountryFlagUtility geoCountryFlagUtility() {
         return new GeoCountryFlagUtilityImpl(
                 this.resourceLoader,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -79,7 +79,7 @@ public class ConfigurationUserMetadata {
         return new MindMaxGeoLocationUtilityImpl(
                 this.resourceLoader,
                 this.geoCountryFlagUtility(),
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 

@@ -3,8 +3,8 @@
 logging:
   config: classpath:logback-console.xml
 
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   email-configs:
     enabled: false
   server-configs:

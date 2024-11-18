@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.IncidentConfigs;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
@@ -37,29 +37,29 @@ class ConfigurationIncidents2Test {
     })
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            var applicationFrameworkProperties = mock(JbstProperties.class);
             when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.disabled());
             return applicationFrameworkProperties;
         }
     }
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final ConfigurationIncidents componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 

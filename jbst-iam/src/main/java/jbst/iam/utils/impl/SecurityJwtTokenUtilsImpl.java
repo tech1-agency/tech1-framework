@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.TimeAmount;
 
 import javax.crypto.SecretKey;
@@ -28,16 +28,16 @@ import static jbst.foundation.utilities.time.DateUtility.convertLocalDateTime;
 public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
     // Values
     private final SecretKey secretKey;
 
     @Autowired
     public SecurityJwtTokenUtilsImpl(
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
-        var jwtTokensConfigs = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
+        this.jbstProperties = jbstProperties;
+        var jwtTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs();
         jwtTokensConfigs.assertProperties(new PropertyId("securityJwtConfigs.jwtTokensConfigs"));
         // WARNING: consider using Base64 encoded key in properties, and decode it here
         // https://www.baeldung.com/spring-security-sign-jwt-token#1-using-key-instance
@@ -46,14 +46,14 @@ public class SecurityJwtTokenUtilsImpl implements SecurityJwtTokenUtils {
 
     @Override
     public JwtAccessToken createJwtAccessToken(JwtTokenCreationParams creationParams) {
-        var accessTokenConfiguration = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
+        var accessTokenConfiguration = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken();
         var jwtToken = this.createJwtToken(creationParams, accessTokenConfiguration.getExpiration());
         return new JwtAccessToken(jwtToken);
     }
 
     @Override
     public JwtRefreshToken createJwtRefreshToken(JwtTokenCreationParams creationParams) {
-        var refreshTokenConfiguration = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
+        var refreshTokenConfiguration = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken();
         var jwtToken = this.createJwtToken(creationParams, refreshTokenConfiguration.getExpiration());
         return new JwtRefreshToken(jwtToken);
     }

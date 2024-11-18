@@ -7,11 +7,11 @@ import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 
 @ConfigurationProperties(
-        prefix = "tech1-server",
+        prefix = "jbst-server",
         ignoreUnknownFields = false
 )
 @Data
-public class ApplicationProperties implements PriorityOrdered {
+public class ServerProperties implements PriorityOrdered {
     private ServerConfigs serverConfigs;
 
     @Override

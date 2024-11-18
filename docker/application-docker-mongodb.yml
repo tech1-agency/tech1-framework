@@ -2,8 +2,8 @@
 logging:
   config: classpath:logback-console.xml
 
-# Tech1 Framework
-tech1:
+# jbst
+jbst:
   server-configs:
     springdoc-enabled: true
     webclient-url: http://localhost:3000
@@ -85,4 +85,4 @@ tech1:
     mongodb:
       host: t1f-iam-mongodb
       port: 27017
-      database: tech1_iam_server
+      database: jbst_dev

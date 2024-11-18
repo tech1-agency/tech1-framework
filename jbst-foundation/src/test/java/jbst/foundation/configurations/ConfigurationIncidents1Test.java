@@ -1,6 +1,6 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.IncidentConfigs;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = "tech1.incident-configs.enabled=true"
+        properties = "jbst.incident-configs.enabled=true"
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class ConfigurationIncidents1Test {
@@ -37,29 +37,29 @@ class ConfigurationIncidents1Test {
     })
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            var applicationFrameworkProperties = mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            var applicationFrameworkProperties = mock(JbstProperties.class);
             when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.hardcoded());
             return applicationFrameworkProperties;
         }
     }
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final ConfigurationIncidents componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 

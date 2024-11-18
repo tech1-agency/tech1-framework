@@ -15,7 +15,7 @@ class IncidentSessionRefreshedTest {
     @Test
     void convertSessionRefreshedIncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
+        var username = Username.hardcoded();
         var incident = new IncidentSessionRefreshed(
                 username,
                 UserRequestMetadata.processed(
@@ -30,7 +30,7 @@ class IncidentSessionRefreshedTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Session Refreshed");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static java.util.Objects.nonNull;
 
@@ -26,23 +26,23 @@ import static java.util.Objects.nonNull;
 public class TokenHeadersProvider implements TokenProvider {
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Override
     public void createResponseAccessToken(JwtAccessToken jwtAccessToken, HttpServletResponse response) {
-        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         response.addHeader(headerKey, jwtAccessToken.value());
     }
 
     @Override
     public void createResponseRefreshToken(JwtRefreshToken jwtRefreshToken, HttpServletResponse response) {
-        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         response.addHeader(headerKey, jwtRefreshToken.value());
     }
 
     @Override
     public DefaultCsrfToken readCsrfToken(HttpServletRequest request) throws CsrfTokenNotFoundException {
-        var csrfConfigs = this.applicationFrameworkProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
+        var csrfConfigs = this.jbstProperties.getSecurityJwtWebsocketsConfigs().getCsrfConfigs();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(csrfConfigs.getTokenKey());
         if (nonNull(header)) {
@@ -54,7 +54,7 @@ public class TokenHeadersProvider implements TokenProvider {
 
     @Override
     public RequestAccessToken readRequestAccessToken(HttpServletRequest request) throws AccessTokenNotFoundException {
-        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         var header = request.getHeader(headerKey);
         if (nonNull(header)) {
             return new RequestAccessToken(header);
@@ -65,7 +65,7 @@ public class TokenHeadersProvider implements TokenProvider {
 
     @Override
     public RequestAccessToken readRequestAccessTokenOnWebsocketHandshake(HttpServletRequest request) throws AccessTokenNotFoundException {
-        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getAccessToken().getHeaderKey();
         // WARNING: development workaround to read request query parameters instead of request headers
         var header = request.getParameter(headerKey);
         if (nonNull(header)) {
@@ -77,7 +77,7 @@ public class TokenHeadersProvider implements TokenProvider {
 
     @Override
     public RequestRefreshToken readRequestRefreshToken(HttpServletRequest request) throws RefreshTokenNotFoundException {
-        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = request.getHeader(headerKey);
         if (nonNull(header)) {
             return new RequestRefreshToken(header);
@@ -88,7 +88,7 @@ public class TokenHeadersProvider implements TokenProvider {
 
     @Override
     public RequestRefreshToken readRequestRefreshTokenOnWebsocketHandshake(HttpServletRequest request) throws RefreshTokenNotFoundException {
-        var headerKey = this.applicationFrameworkProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
+        var headerKey = this.jbstProperties.getSecurityJwtConfigs().getJwtTokensConfigs().getRefreshToken().getHeaderKey();
         var header = request.getParameter(headerKey);
         if (nonNull(header)) {
             return new RequestRefreshToken(header);

@@ -1,7 +1,7 @@
 package jbst.foundation.utilities.geo.facades.impl;
 
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.RequiredArgsConstructor;
@@ -47,13 +47,13 @@ class GeoCountryFlagUtilityImplTest {
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
         private final ResourceLoader resourceLoader;
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
+        private final JbstProperties jbstProperties;
 
         @Bean
         GeoCountryFlagUtility geoCountryFlagUtility() {
             return new GeoCountryFlagUtilityImpl(
                     this.resourceLoader,
-                    this.applicationFrameworkProperties
+                    this.jbstProperties
             );
         }
     }

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.base.Authority;
 import jbst.foundation.domain.properties.base.DefaultUsers;
 import jbst.foundation.domain.properties.base.InvitationCodes;
@@ -47,8 +47,8 @@ class DefaultStartupEventListenerTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -68,7 +68,7 @@ class DefaultStartupEventListenerTest {
     }
 
     private final AbstractEssenceConstructor essenceConstructor;
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final DefaultStartupEventListener componentUnderTest;
 
@@ -76,7 +76,7 @@ class DefaultStartupEventListenerTest {
     void beforeEach() {
         reset(
                 this.essenceConstructor,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -84,7 +84,7 @@ class DefaultStartupEventListenerTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.essenceConstructor,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -94,7 +94,7 @@ class DefaultStartupEventListenerTest {
         // Arrange
         SecurityJwtConfigs securityJwtConfigs = new SecurityJwtConfigs(
                 new AuthoritiesConfigs(
-                        "tech1",
+                        "jbst",
                         Set.of(
                                 new Authority("admin"),
                                 new Authority("user")
@@ -116,13 +116,13 @@ class DefaultStartupEventListenerTest {
                 null,
                 null
         );
-        when(this.applicationFrameworkProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
 
         // Act
         this.componentUnderTest.onStartup();
 
         // Assert
-        verify(this.applicationFrameworkProperties, times(2)).getSecurityJwtConfigs();
+        verify(this.jbstProperties, times(2)).getSecurityJwtConfigs();
         if (isDefaultUsersEnabled) {
             verify(this.essenceConstructor).addDefaultUsers();
         }
@@ -131,7 +131,7 @@ class DefaultStartupEventListenerTest {
         }
         reset(
                 this.essenceConstructor,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 }

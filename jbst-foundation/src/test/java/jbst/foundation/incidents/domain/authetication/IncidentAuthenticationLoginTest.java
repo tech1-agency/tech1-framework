@@ -15,7 +15,7 @@ class IncidentAuthenticationLoginTest {
     @Test
     void convertAuthenticationLoginIncidentExceptionTest() {
         // Arrange
-        var username = Username.of("tech1");
+        var username = Username.hardcoded();
         var incident = new IncidentAuthenticationLogin(
                 username,
                 UserRequestMetadata.processed(
@@ -30,7 +30,7 @@ class IncidentAuthenticationLoginTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(8)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where", "exception")
@@ -47,7 +47,7 @@ class IncidentAuthenticationLoginTest {
     @Test
     void convertAuthenticationLoginIncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
+        var username = Username.hardcoded();
         var incident = new IncidentAuthenticationLogin(
                 username,
                 UserRequestMetadata.processing(new IPAddress("127.0.0.1"))
@@ -59,7 +59,7 @@ class IncidentAuthenticationLoginTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Login");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")

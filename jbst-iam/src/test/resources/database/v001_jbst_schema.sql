@@ -1,7 +1,7 @@
 -- =================================================================================================================
--- TECH1 FRAMEWORK
+-- jbst
 -- =================================================================================================================
-CREATE TABLE "tech1_users" (
+CREATE TABLE "jbst_users" (
     "id" varchar(36) PRIMARY KEY,
     "username" varchar(255) NOT NULL,
     "password" varchar(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE "tech1_users" (
     "attributes" varchar(65535)
 );
 
-CREATE TABLE "tech1_users_sessions" (
+CREATE TABLE "jbst_users_sessions" (
     "id" varchar(36) PRIMARY KEY,
     "username" varchar(255) NOT NULL,
     "access_token" varchar(4096) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE "tech1_users_sessions" (
     "metadata" varchar(65535) NOT NULL
 );
 
-CREATE TABLE "tech1_invitation_codes" (
+CREATE TABLE "jbst_invitation_codes" (
     "id" varchar(36),
     "owner" varchar(255) NOT NULL,
     "authorities" varchar(1024) NOT NULL,

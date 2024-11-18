@@ -5,7 +5,7 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import jbst.foundation.utilities.geo.functions.mindmax.MindMaxGeoLocationUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -29,17 +29,17 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     // Utilities
     private final GeoCountryFlagUtility geoCountryFlagUtility;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     public MindMaxGeoLocationUtilityImpl(
             ResourceLoader resourceLoader,
             GeoCountryFlagUtility geoCountryFlagUtility,
-            ApplicationFrameworkProperties applicationFrameworkProperties
+            JbstProperties jbstProperties
     ) {
         this.geoCountryFlagUtility = geoCountryFlagUtility;
-        this.applicationFrameworkProperties = applicationFrameworkProperties;
+        this.jbstProperties = jbstProperties;
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
-        var geoLocationsConfigs = applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs();
+        var geoLocationsConfigs = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs();
         LOGGER.info("{} Geo location {} database — {}", FRAMEWORK_UTILITIES_PREFIX, GEO_DATABASE_NAME, Toggle.of(geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()));
         if (geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()) {
             try {
@@ -60,7 +60,7 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
 
     @Override
     public GeoLocation getGeoLocation(IPAddress ipAddress) {
-        if (!this.applicationFrameworkProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
+        if (!this.jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled()) {
             return GeoLocation.unknown(ipAddress, contactDevelopmentTeam("Geo configurations failure"));
         }
         try {

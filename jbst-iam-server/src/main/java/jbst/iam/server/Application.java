@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.domain.constants.LogsConstants.SERVER_CONTAINER_1;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
@@ -15,14 +15,14 @@ import static jbst.foundation.domain.enums.Status.COMPLETED;
         "jbst.iam.server.configurations"
 })
 @EnableConfigurationProperties({
-        ApplicationFrameworkProperties.class
+        JbstProperties.class
 })
 public class Application {
 
     public static void main(String[] args) {
         var springApplication = new SpringApplication(Application.class);
         var applicationContext = springApplication.run(args);
-        var applicationFrameworkProperties = applicationContext.getBean(ApplicationFrameworkProperties.class);
+        var applicationFrameworkProperties = applicationContext.getBean(JbstProperties.class);
         var serverConfigs = applicationFrameworkProperties.getServerConfigs();
         var mavenDetails = applicationFrameworkProperties.getMavenConfigs().asMavenDetails();
         LOGGER.info(SERVER_CONTAINER_1, serverConfigs.getName(), mavenDetails.version(), COMPLETED);

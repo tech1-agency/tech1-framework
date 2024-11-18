@@ -1,9 +1,9 @@
 package jbst.iam.configurations;
 
+import jbst.iam.repositories.postgres.JbstPostgresRepositories;
 import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
-import jbst.iam.repositories.postgres.Tech1PostgresRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -36,8 +36,8 @@ public class ConfigurationPostgresRepositories {
     private final PostgresUsersSessionsRepository userSessionRepository;
 
     @Bean
-    public Tech1PostgresRepositories tech1PostgresRepositories() {
-        return new Tech1PostgresRepositories(
+    public JbstPostgresRepositories jbstPostgresRepositories() {
+        return new JbstPostgresRepositories(
                 this.invitationCodeRepository,
                 this.userRepository,
                 this.userSessionRepository

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 
@@ -16,10 +16,10 @@ import static jbst.foundation.utilities.http.HttpServletRequestUtility.isPOST;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class HttpRequestUtilsImpl implements HttpRequestUtils {
-    protected static final String CACHED_PAYLOAD_ATTRIBUTE = "tech1-security-jwt-cached-payload-attribute";
+    protected static final String CACHED_PAYLOAD_ATTRIBUTE = "jbst-security-jwt-cached-payload-attribute";
 
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -55,7 +55,7 @@ public class HttpRequestUtilsImpl implements HttpRequestUtils {
     // PRIVATE METHODS
     // =================================================================================================================
     private boolean isEndpoint(HttpServletRequest request, String requestMapping) {
-        var frameworkBasePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getBasePathPrefix();
+        var frameworkBasePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
         var requestURI = this.contextPath + frameworkBasePathPrefix + requestMapping;
         return requestURI.equals(request.getRequestURI());
     }

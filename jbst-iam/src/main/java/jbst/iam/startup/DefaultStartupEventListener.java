@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.enums.Toggle;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_B2B_SECURITY_JWT_PREFIX;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
@@ -21,20 +21,20 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
     // Properties
-    protected final ApplicationFrameworkProperties applicationFrameworkProperties;
+    protected final JbstProperties jbstProperties;
 
     @Override
     public void onStartup() {
         LOGGER.info(LINE_SEPARATOR_INTERPUNCT);
         LOGGER.info(STARTUP_MESSAGE, Status.STARTED);
 
-        var defaultUsers = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
+        var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
         LOGGER.info("{} Essence defaultUsers — {}", FRAMEWORK_B2B_SECURITY_JWT_PREFIX, Toggle.of(defaultUsers.isEnabled()));
         if (defaultUsers.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
         }
 
-        var invitationCodes = this.applicationFrameworkProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes();
+        var invitationCodes = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitationCodes();
         LOGGER.info("{} Essence invitationCodes — {}", FRAMEWORK_B2B_SECURITY_JWT_PREFIX, Toggle.of(invitationCodes.isEnabled()));
         if (invitationCodes.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitationCodes();

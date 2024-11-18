@@ -5,7 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.services.emails.domain.EmailHTML;
@@ -51,8 +51,8 @@ class EmailServiceImplTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        ApplicationFrameworkProperties applicationFrameworkProperties() {
-            return mock(ApplicationFrameworkProperties.class);
+        JbstProperties applicationFrameworkProperties() {
+            return mock(JbstProperties.class);
         }
 
         @Bean
@@ -98,7 +98,7 @@ class EmailServiceImplTest {
     // Utilities
     private final EmailUtility emailUtility;
     // Properties
-    private final ApplicationFrameworkProperties applicationFrameworkProperties;
+    private final JbstProperties jbstProperties;
 
     private final EmailService componentUnderTest;
 
@@ -107,7 +107,7 @@ class EmailServiceImplTest {
         reset(
                 this.javaMailSender,
                 this.emailUtility,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -116,7 +116,7 @@ class EmailServiceImplTest {
         verifyNoMoreInteractions(
                 this.javaMailSender,
                 this.emailUtility,
-                this.applicationFrameworkProperties
+                this.jbstProperties
         );
     }
 
@@ -127,13 +127,13 @@ class EmailServiceImplTest {
         var subject = randomString();
         var message = randomString();
         var emailConfigs = EmailConfigs.disabled();
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
         this.componentUnderTest.sendPlain(new String[] { to }, subject, message);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
     }
 
     @Test
@@ -144,13 +144,13 @@ class EmailServiceImplTest {
         var subject = randomString();
         var message = randomString();
         var emailConfigs = EmailConfigs.enabled(from);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
         this.componentUnderTest.sendPlain(new String[] { to }, subject, message);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(this.javaMailSender).send(mailMessageAC.capture());
         var simpleMailMessage = mailMessageAC.getValue();
@@ -168,13 +168,13 @@ class EmailServiceImplTest {
         var subject = randomString();
         var message = randomString();
         var emailConfigs = EmailConfigs.enabled(from);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
         this.componentUnderTest.sendPlain(List.of(to), subject, message);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(this.javaMailSender).send(mailMessageAC.capture());
         var simpleMailMessage = mailMessageAC.getValue();
@@ -192,13 +192,13 @@ class EmailServiceImplTest {
         var subject = randomString();
         var message = randomString();
         var emailConfigs = EmailConfigs.enabled(from);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
         this.componentUnderTest.sendPlain(Set.of(to), subject, message);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         var mailMessageAC = ArgumentCaptor.forClass(SimpleMailMessage.class);
         verify(this.javaMailSender).send(mailMessageAC.capture());
         var simpleMailMessage = mailMessageAC.getValue();
@@ -213,13 +213,13 @@ class EmailServiceImplTest {
         // Arrange
         var emailPlainAttachment = entity(EmailPlainAttachment.class);
         var emailConfigs = EmailConfigs.disabled();
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
         this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
     }
 
     @Test
@@ -230,14 +230,14 @@ class EmailServiceImplTest {
         var emailConfigs = EmailConfigs.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
         doThrow(new MessagingException()).when(mimeMessage).setFrom(from);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // Act
         this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         verify(this.javaMailSender).createMimeMessage();
     }
 
@@ -257,14 +257,14 @@ class EmailServiceImplTest {
         var from = Email.random().value();
         var emailConfigs = EmailConfigs.enabled(from);
         var mimeMessage = mock(MimeMessage.class);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         when(this.javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         // Act
         this.componentUnderTest.sendPlainAttachment(emailPlainAttachment);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         verify(this.javaMailSender).createMimeMessage();
         verify(mimeMessage).setFrom(from);
         verify(mimeMessage).setSubject("subject1");
@@ -288,13 +288,13 @@ class EmailServiceImplTest {
         // Arrange
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = EmailConfigs.disabled();
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
     }
 
     @Test
@@ -303,14 +303,14 @@ class EmailServiceImplTest {
         var from = Email.random().value();
         var emailHTML = entity(EmailHTML.class);
         var emailConfigs = EmailConfigs.enabled(from);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         when(this.emailUtility.getMimeMessageTuple2()).thenThrow(new MessagingException());
 
         // Act
         this.componentUnderTest.sendHTML(emailHTML);
 
         // Assert
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         verify(this.emailUtility).getMimeMessageTuple2();
     }
 
@@ -331,7 +331,7 @@ class EmailServiceImplTest {
                 templateVariables
         );
         var emailConfigs = EmailConfigs.enabled(from);
-        when(this.applicationFrameworkProperties.getEmailConfigs()).thenReturn(emailConfigs);
+        when(this.jbstProperties.getEmailConfigs()).thenReturn(emailConfigs);
         var message = mock(MimeMessage.class);
         var mimeMessageHelper = mock(MimeMessageHelper.class);
         when(this.emailUtility.getMimeMessageTuple2()).thenReturn(new Tuple2<>(message, mimeMessageHelper));
@@ -360,7 +360,7 @@ class EmailServiceImplTest {
                 </html>
                 """;
         verify(mimeMessageHelper).setText(html, true);
-        verify(this.applicationFrameworkProperties).getEmailConfigs();
+        verify(this.jbstProperties).getEmailConfigs();
         verify(this.emailUtility).getMimeMessageTuple2();
         verify(this.javaMailSender).send(any(MimeMessage.class));
         verifyNoMoreInteractions(

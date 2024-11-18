@@ -27,7 +27,7 @@ import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpl
 // Mongodb
 @Document(collection = MongoDbInvitationCode.MONGO_TABLE_NAME)
 public class MongoDbInvitationCode {
-    public static final String MONGO_TABLE_NAME = "tech1_invitation_codes";
+    public static final String MONGO_TABLE_NAME = "jbst_invitation_codes";
 
     @Id
     private String id;

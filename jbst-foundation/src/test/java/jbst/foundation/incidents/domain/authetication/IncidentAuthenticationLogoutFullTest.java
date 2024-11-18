@@ -15,7 +15,7 @@ class IncidentAuthenticationLogoutFullTest {
     @Test
     void convertAuthenticationLogoutFullIncidentTest() {
         // Arrange
-        var username = Username.of("tech1");
+        var username = Username.hardcoded();
         var incident = new IncidentAuthenticationLogoutFull(
                 username,
                 UserRequestMetadata.processed(
@@ -30,7 +30,7 @@ class IncidentAuthenticationLogoutFullTest {
         // Assert
         assertThat(actual).isNotNull();
         assertThat(actual.getType()).isEqualTo("Authentication Logout");
-        assertThat(actual.getUsername().value()).isEqualTo("tech1");
+        assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(7)
                 .containsOnlyKeys("incidentType", "username", "browser", "countryFlag", "ipAddress", "what", "where")

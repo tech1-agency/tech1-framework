@@ -5,7 +5,7 @@ import jbst.iam.domain.events.EventRegistration1;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.services.BaseRegistrationService;
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityRegistrationResourceTest extends AbstractResourcesRunner1 {
+class BaseSecurityRegistrationResourceTest extends TestRunnerResources1 {
 
     // Services
     private final BaseRegistrationService baseRegistrationService;

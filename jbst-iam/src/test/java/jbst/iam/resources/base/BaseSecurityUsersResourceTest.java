@@ -6,7 +6,7 @@ import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityUsersResourceTest extends AbstractResourcesRunner1 {
+class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
 
     // Services
     private final BaseUsersService baseUsersService;

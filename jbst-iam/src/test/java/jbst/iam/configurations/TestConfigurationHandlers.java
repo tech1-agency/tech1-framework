@@ -1,4 +1,4 @@
-package jbst.iam.tests.contexts;
+package jbst.iam.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
@@ -12,9 +12,9 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan({
-        "tech1.framework.iam.handlers"
+        "jbst.iam.handlers"
 })
-public class TestsApplicationHandlersContext {
+public class TestConfigurationHandlers {
 
     @Bean
     SecurityJwtPublisher securityJwtPublisher() {

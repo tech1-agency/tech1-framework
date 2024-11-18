@@ -4,7 +4,7 @@ import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
-import jbst.iam.tests.contexts.TestsApplicationValidatorsContext;
+import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.validators.BaseUsersValidator;
 import jbst.iam.validators.abtracts.AbstractBaseUsersValidator;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ class AbstractBaseUsersValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            TestConfigurationValidators.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

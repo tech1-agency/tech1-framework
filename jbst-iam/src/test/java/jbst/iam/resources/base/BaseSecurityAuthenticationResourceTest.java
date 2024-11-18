@@ -14,7 +14,7 @@ import jbst.iam.domain.sessions.Session;
 import jbst.iam.services.BaseUsersSessionsService;
 import jbst.iam.services.TokensService;
 import jbst.iam.sessions.SessionRegistry;
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
 import jbst.iam.validators.BaseAuthenticationRequestsValidator;
@@ -46,7 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityAuthenticationResourceTest extends AbstractResourcesRunner1 {
+class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
 
     private static Stream<Arguments> refreshTokenThrowCookieUnauthorizedExceptionsTest() {
         return Stream.of(

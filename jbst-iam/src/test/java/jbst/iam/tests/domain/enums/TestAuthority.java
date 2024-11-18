@@ -5,8 +5,8 @@ import tech1.framework.foundation.domain.base.AbstractAuthority;
 public enum TestAuthority implements AbstractAuthority {
     USER("user"),
     ADMIN("admin"),
-    INVITATION_CODE_READ("invitationCode:read"),
-    INVITATION_CODE_WRITE("invitationCode:write");
+    INVITATIONS_READ("invitations:read"),
+    INVITATIONS_WRITE("invitations:write");
 
     private final String value;
 

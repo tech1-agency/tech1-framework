@@ -1,4 +1,4 @@
-package jbst.iam.tests.contexts;
+package jbst.iam.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Configuration
-public class TestsApplicationPropertiesMocked {
+public class TestConfigurationPropertiesMocked {
 
     @Bean
     ApplicationFrameworkProperties applicationFrameworkProperties() {

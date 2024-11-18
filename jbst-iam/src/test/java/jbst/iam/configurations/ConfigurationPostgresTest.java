@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TestConfigurationPostgres {
+class ConfigurationPostgresTest {
 
     @Configuration
     @Import({

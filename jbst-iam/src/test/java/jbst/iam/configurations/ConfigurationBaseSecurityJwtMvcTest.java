@@ -1,11 +1,11 @@
 package jbst.iam.configurations;
 
-import jbst.iam.repositories.mongodb.MongoInvitationCodesRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
+import jbst.iam.tests.classes.ClassAnnotatedAbstractFrameworkBaseSecurityResource;
+import jbst.iam.tests.classes.ClassNotAnnotatedAbstractFrameworkBaseSecurityResource;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,54 +13,41 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 
 import java.lang.reflect.Method;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TestConfigurationMongoRepositories {
+class ConfigurationBaseSecurityJwtMvcTest {
 
     @Configuration
-    @Import({
+    @Import(
             ApplicationFrameworkPropertiesTestsHardcodedContext.class
-    })
+    )
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        MongoInvitationCodesRepository invitationCodeRepository() {
-            return mock(MongoInvitationCodesRepository.class);
-        }
-
-        @Bean
-        MongoUsersRepository usersRepository() {
-            return mock(MongoUsersRepository.class);
-        }
-
-        @Bean
-        MongoUsersSessionsRepository usersSessionsRepository() {
-            return mock(MongoUsersSessionsRepository.class);
-        }
-
-        @Bean
-        ConfigurationMongoRepositories applicationMongoRepositories() {
-            return new ConfigurationMongoRepositories(
+        ConfigurationBaseSecurityJwtMvc applicationMVC() {
+            return new ConfigurationBaseSecurityJwtMvc(
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final ConfigurationMongoRepositories componentUnderTest;
+    private final ConfigurationBaseSecurityJwtMvc componentUnderTest;
 
     @Test
     void beansTests() {
@@ -71,13 +58,27 @@ class TestConfigurationMongoRepositories {
 
         // Assert
         assertThat(methods)
-                .hasSize(13)
-                .contains("tech1MongoRepositories")
-                .contains("tech1MongoClient")
-                .contains("tech1MongoDatabaseFactory")
-                .contains("tech1MongoTemplate");
-        assertThat(this.componentUnderTest.tech1MongoClient()).isNotNull();
-        assertThat(this.componentUnderTest.tech1MongoDatabaseFactory()).isNotNull();
-        assertThat(this.componentUnderTest.tech1MongoTemplate()).isNotNull();
+                .hasSize(28)
+                .contains("addCorsMappings")
+                .contains("configurePathMatch");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void configurePathMatchTest() {
+        // Arrange
+        var configurer = mock(PathMatchConfigurer.class);
+
+        // Act
+        this.componentUnderTest.configurePathMatch(configurer);
+
+        // Assert
+        var prefixAC = ArgumentCaptor.forClass(String.class);
+        var predicateAC = ArgumentCaptor.forClass(Predicate.class);
+        verify(configurer).addPathPrefix(prefixAC.capture(), predicateAC.capture());
+        assertThat(prefixAC.getValue()).isEqualTo("/framework/security");
+        Predicate<Class<?>> predicate = predicateAC.getValue();
+        assertThat(predicate.test(ClassAnnotatedAbstractFrameworkBaseSecurityResource.class)).isTrue();
+        assertThat(predicate.test(ClassNotAnnotatedAbstractFrameworkBaseSecurityResource.class)).isFalse();
     }
 }

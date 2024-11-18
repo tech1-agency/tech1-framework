@@ -1,4 +1,4 @@
-package jbst.iam.tests.contexts;
+package jbst.iam.configurations;
 
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.assistants.userdetails.JwtUserDetailsService;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
         "jbst.iam.resources",
 })
 @EnableWebMvc
-public class TestsApplicationResourcesContext {
+public class TestConfigurationResources {
 
     @Bean
     ResourceExceptionHandler resourceExceptionHandler() {

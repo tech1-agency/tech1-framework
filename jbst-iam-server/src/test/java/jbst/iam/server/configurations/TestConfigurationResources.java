@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
         "jbst.iam.server.base.resources"
 })
 @EnableWebMvc
-public class TestsConfigurationResources {
+public class TestConfigurationResources {
 
     // Services
     @Bean

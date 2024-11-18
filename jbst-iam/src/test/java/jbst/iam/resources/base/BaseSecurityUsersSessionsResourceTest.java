@@ -9,7 +9,7 @@ import jbst.iam.domain.identifiers.UserSessionId;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.domain.security.CurrentClientUser;
 import jbst.iam.services.BaseUsersSessionsService;
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.validators.BaseUsersSessionsRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityUsersSessionsResourceTest extends AbstractResourcesRunner1 {
+class BaseSecurityUsersSessionsResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

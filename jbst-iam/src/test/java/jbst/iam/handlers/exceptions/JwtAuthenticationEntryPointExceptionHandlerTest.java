@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jbst.iam.domain.events.EventAuthenticationLoginFailure;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
-import jbst.iam.tests.contexts.TestsApplicationHandlersContext;
+import jbst.iam.configurations.TestConfigurationHandlers;
 import jbst.iam.utils.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -43,7 +43,7 @@ class JwtAuthenticationEntryPointExceptionHandlerTest {
 
     @Configuration
     @Import({
-            TestsApplicationHandlersContext.class
+            TestConfigurationHandlers.class
     })
     static class ContextConfiguration {
 

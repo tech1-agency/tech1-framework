@@ -14,9 +14,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class, MockitoExtension.class })
 @ContextConfiguration(classes = {
-        TestsConfigurationResources.class
+        TestConfigurationResources.class
 })
-public abstract class TestsRunnerResources {
+public abstract class TestRunnerResources {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -29,6 +29,7 @@ public abstract class TestsRunnerResources {
                 .build();
     }
 
+    @SuppressWarnings("unused")
     protected String getContent(Object value) throws JsonProcessingException {
         return this.objectMapper.writeValueAsString(value);
     }

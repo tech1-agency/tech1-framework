@@ -1,11 +1,12 @@
-package jbst.iam.tests.contexts;
+package jbst.iam.configurations;
 
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
-import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.repositories.UsersRepository;
-import jbst.iam.repositories.UsersSessionsRepository;
+import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
@@ -14,10 +15,13 @@ import tech1.framework.foundation.incidents.events.publishers.IncidentPublisher;
 import static org.mockito.Mockito.mock;
 
 @Configuration
+@ComponentScan({
+        "jbst.iam.validators.postgres"
+})
 @Import({
         ApplicationFrameworkPropertiesTestsHardcodedContext.class
 })
-public class TestsApplicationValidatorsContext {
+public class TestConfigurationPostgresValidators {
 
     // =================================================================================================================
     // Publishers
@@ -41,17 +45,17 @@ public class TestsApplicationValidatorsContext {
     // Repositories
     // =================================================================================================================
     @Bean
-    InvitationCodesRepository invitationCodeRepository() {
-        return mock(InvitationCodesRepository.class);
+    PostgresInvitationCodesRepository invitationCodeRepository() {
+        return mock(PostgresInvitationCodesRepository.class);
     }
 
     @Bean
-    UsersRepository userRepository() {
-        return mock(UsersRepository.class);
+    PostgresUsersRepository userRepository() {
+        return mock(PostgresUsersRepository.class);
     }
 
     @Bean
-    UsersSessionsRepository userSessionRepository() {
-        return mock(UsersSessionsRepository.class);
+    PostgresUsersSessionsRepository userSessionRepository() {
+        return mock(PostgresUsersSessionsRepository.class);
     }
 }

@@ -7,7 +7,7 @@ import jbst.iam.domain.dto.responses.ResponseInvitationCode;
 import jbst.iam.domain.dto.responses.ResponseInvitationCodes;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.services.BaseInvitationCodesService;
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +27,7 @@ import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSecurityInvitationCodesResourceTest extends AbstractResourcesRunner1 {
+class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

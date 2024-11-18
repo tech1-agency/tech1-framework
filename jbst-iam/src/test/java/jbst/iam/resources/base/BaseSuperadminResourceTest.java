@@ -10,7 +10,7 @@ import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.jwt.RequestAccessToken;
 import jbst.iam.services.BaseSuperadminService;
 import jbst.iam.services.BaseUsersSessionsService;
-import jbst.iam.tests.runners.AbstractResourcesRunner1;
+import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.tokens.facade.TokensProvider;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +29,7 @@ import static tech1.framework.foundation.utilities.random.EntityUtility.entity;
 import static tech1.framework.foundation.utilities.random.EntityUtility.list345;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BaseSuperadminResourceTest extends AbstractResourcesRunner1 {
+class BaseSuperadminResourceTest extends TestRunnerResources1 {
 
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;

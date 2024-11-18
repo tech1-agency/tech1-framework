@@ -1,7 +1,7 @@
 package jbst.iam.server.base.resources;
 
 import jbst.iam.server.base.services.UsersService;
-import jbst.iam.server.configurations.TestsRunnerResources;
+import jbst.iam.server.configurations.TestRunnerResources;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class UsersResourceTest extends TestsRunnerResources {
+class UsersResourceTest extends TestRunnerResources {
 
     // Services
     private final UsersService usersService;

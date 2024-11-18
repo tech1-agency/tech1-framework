@@ -8,7 +8,7 @@ import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.repositories.InvitationCodesRepository;
 import jbst.iam.repositories.UsersRepository;
-import jbst.iam.tests.contexts.TestsApplicationValidatorsContext;
+import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.validators.BaseRegistrationRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseRegistrationRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            TestConfigurationValidators.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

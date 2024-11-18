@@ -1,6 +1,6 @@
 package jbst.iam.handlers.exceptions;
 
-import jbst.iam.tests.contexts.TestsApplicationHandlersContext;
+import jbst.iam.configurations.TestConfigurationHandlers;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class ResourceExceptionHandlerTest {
 
     @Configuration
     @Import({
-            TestsApplicationHandlersContext.class
+            TestConfigurationHandlers.class
     })
     static class ContextConfiguration {
 

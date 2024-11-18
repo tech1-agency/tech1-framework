@@ -1,5 +1,8 @@
 package jbst.iam.configurations;
 
+import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
+import jbst.iam.repositories.postgres.PostgresUsersRepository;
+import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +13,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import tech1.framework.foundation.domain.properties.ApplicationFrameworkProperties;
 import tech1.framework.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 
 import java.lang.reflect.Method;
@@ -18,11 +20,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TestConfigurationMongo {
+class ConfigurationPostgresRepositoriesTest {
 
     @Configuration
     @Import({
@@ -30,17 +33,33 @@ class TestConfigurationMongo {
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {
-        private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        ConfigurationMongo applicationMongodb() {
-            return new ConfigurationMongo(
-                    this.applicationFrameworkProperties
+        PostgresInvitationCodesRepository invitationCodeRepository() {
+            return mock(PostgresInvitationCodesRepository.class);
+        }
+
+        @Bean
+        PostgresUsersRepository usersRepository() {
+            return mock(PostgresUsersRepository.class);
+        }
+
+        @Bean
+        PostgresUsersSessionsRepository usersSessionsRepository() {
+            return mock(PostgresUsersSessionsRepository.class);
+        }
+
+        @Bean
+        ConfigurationPostgresRepositories applicationPostgresRepositories() {
+            return new ConfigurationPostgresRepositories(
+                    this.invitationCodeRepository(),
+                    this.usersRepository(),
+                    this.usersSessionsRepository()
             );
         }
     }
 
-    private final ConfigurationMongo componentUnderTest;
+    private final ConfigurationPostgresRepositories componentUnderTest;
 
     @Test
     void beansTests() {
@@ -50,6 +69,8 @@ class TestConfigurationMongo {
                 .collect(Collectors.toList());
 
         // Assert
-        assertThat(methods).hasSize(10);
+        assertThat(methods)
+                .hasSize(10)
+                .contains("tech1PostgresRepositories");
     }
 }

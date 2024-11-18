@@ -4,7 +4,7 @@ import jbst.iam.domain.db.InvitationCode;
 import jbst.iam.domain.dto.requests.RequestNewInvitationCodeParams;
 import jbst.iam.domain.identifiers.InvitationCodeId;
 import jbst.iam.repositories.InvitationCodesRepository;
-import jbst.iam.tests.contexts.TestsApplicationValidatorsContext;
+import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.validators.BaseInvitationCodesRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseInvitationCodesRequestsValidator;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +53,7 @@ class AbstractBaseInvitationCodesRequestsValidatorTest {
 
     @Configuration
     @Import({
-            TestsApplicationValidatorsContext.class
+            TestConfigurationValidators.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

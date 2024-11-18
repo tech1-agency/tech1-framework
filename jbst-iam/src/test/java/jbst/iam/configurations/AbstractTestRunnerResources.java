@@ -1,4 +1,4 @@
-package jbst.iam.tests.runners;
+package jbst.iam.configurations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +8,7 @@ import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public abstract class AbstractResourcesRunner {
+public abstract class AbstractTestRunnerResources {
 
     protected final ObjectMapper objectMapper = JsonMapper.builder()
         .addModule(new JavaTimeModule())
@@ -23,6 +23,7 @@ public abstract class AbstractResourcesRunner {
                 .build();
     }
 
+    @SuppressWarnings("unused")
     protected String getContent(Object value) throws JsonProcessingException {
         return this.objectMapper.writeValueAsString(value);
     }

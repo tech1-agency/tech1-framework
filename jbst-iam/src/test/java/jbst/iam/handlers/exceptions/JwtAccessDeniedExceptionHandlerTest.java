@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jbst.iam.tests.contexts.TestsApplicationHandlersContext;
+import jbst.iam.configurations.TestConfigurationHandlers;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class JwtAccessDeniedExceptionHandlerTest {
 
     @Configuration
     @Import({
-            TestsApplicationHandlersContext.class
+            TestConfigurationHandlers.class
     })
     static class ContextConfiguration {
 

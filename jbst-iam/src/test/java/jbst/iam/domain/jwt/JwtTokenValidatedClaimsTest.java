@@ -6,7 +6,7 @@ import tech1.framework.foundation.domain.base.Username;
 
 import java.util.Set;
 
-import static jbst.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
+import static jbst.iam.tests.random.ClaimsRandomUtility.validClaims;
 import static org.assertj.core.api.Assertions.assertThat;
 import static tech1.framework.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;

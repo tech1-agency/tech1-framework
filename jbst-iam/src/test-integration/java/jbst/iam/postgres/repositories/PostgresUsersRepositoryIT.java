@@ -27,7 +27,6 @@ import java.util.Set;
 
 import static jbst.iam.domain.jwt.JwtUser.randomSuperadmin;
 import static jbst.iam.tests.converters.postgres.PostgresUserConverter.toUsernamesAsStrings1;
-import static jbst.iam.tests.utilities.BaseSecurityJwtJunitUtility.toUsernamesAsStrings0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
@@ -109,11 +108,11 @@ class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRu
                 .hasSize(3)
                 .containsExactlyInAnyOrder("admin1", "user1", "user2");
 
-        assertThat(toUsernamesAsStrings0(this.usersRepository.findSuperadminsUsernames()))
+        assertThat(Username.asStrings(this.usersRepository.findSuperadminsUsernames()))
                 .hasSize(3)
                 .containsExactlyInAnyOrder("sa1", "sa2", "sa3");
 
-        assertThat(toUsernamesAsStrings0(this.usersRepository.findNotSuperadminsUsernames()))
+        assertThat(Username.asStrings(this.usersRepository.findNotSuperadminsUsernames()))
                 .hasSize(3)
                 .containsExactlyInAnyOrder("admin1", "user1", "user2");
 

@@ -17,7 +17,7 @@ import static tech1.framework.foundation.utilities.time.DateUtility.convertLocal
 import static tech1.framework.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
 
 @UtilityClass
-public class BaseSecurityJwtRandomUtility {
+public class ClaimsRandomUtility {
 
     public static Claims validClaims() {
         var claims = Jwts.claims();

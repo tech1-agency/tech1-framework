@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EntityScan({
-        "tech1.framework.iam.domain.postgres"
+        "jbst.iam.domain.postgres"
 })
 @EnableJpaRepositories({
         "jbst.iam.repositories.postgres"

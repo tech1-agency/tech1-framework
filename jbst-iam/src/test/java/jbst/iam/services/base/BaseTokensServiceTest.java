@@ -26,7 +26,7 @@ import tech1.framework.foundation.domain.exceptions.tokens.*;
 import tech1.framework.foundation.domain.tuples.Tuple2;
 
 import static jbst.iam.domain.db.UserSession.randomPersistedSession;
-import static jbst.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
+import static jbst.iam.tests.random.ClaimsRandomUtility.validClaims;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static tech1.framework.foundation.utilities.random.EntityUtility.entity;

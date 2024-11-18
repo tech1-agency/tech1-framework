@@ -29,8 +29,8 @@ import java.util.stream.Stream;
 
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.invalid;
 import static jbst.iam.domain.jwt.JwtTokenValidatedClaims.valid;
-import static jbst.iam.tests.random.BaseSecurityJwtRandomUtility.expiredClaims;
-import static jbst.iam.tests.random.BaseSecurityJwtRandomUtility.validClaims;
+import static jbst.iam.tests.random.ClaimsRandomUtility.expiredClaims;
+import static jbst.iam.tests.random.ClaimsRandomUtility.validClaims;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.*;

@@ -2,21 +2,24 @@ package tech1.framework.foundation.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import tech1.framework.foundation.domain.constants.StringConstants;
-import org.jetbrains.annotations.NotNull;
-
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import org.jetbrains.annotations.NotNull;
+import tech1.framework.foundation.domain.constants.StringConstants;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.nonNull;
 import static org.springframework.util.StringUtils.hasLength;
+import static tech1.framework.foundation.utilities.random.RandomUtility.randomString;
 
 public record Username(@NotNull String value) {
 
@@ -55,6 +58,18 @@ public record Username(@NotNull String value) {
 
     public static Username testsHardcoded() {
         return of("tech1");
+    }
+
+    public static List<String> asStrings(Set<Username> usernames) {
+        return usernames.stream()
+                .map(Username::value)
+                .collect(Collectors.toList());
+    }
+
+    public static List<String> asStrings(List<Username> usernames) {
+        return usernames.stream()
+                .map(Username::value)
+                .collect(Collectors.toList());
     }
 
     @JsonValue

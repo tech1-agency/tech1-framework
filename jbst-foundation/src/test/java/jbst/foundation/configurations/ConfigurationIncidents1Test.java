@@ -1,17 +1,12 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.configs.IncidentConfigs;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinitionSlf4j;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -21,12 +16,16 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
 
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = "jbst.incident-configs.enabled=true"
+        properties = {
+                "jbst.incident-configs.enabled=true",
+                "jbst.incident-configs.remote-server.baseURL=localhost",
+                "jbst.incident-configs.remote-server.credentials.username=jbst",
+                "jbst.incident-configs.remote-server.credentials.password=jbst"
+        }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class ConfigurationIncidents1Test {
@@ -36,32 +35,10 @@ class ConfigurationIncidents1Test {
             ConfigurationIncidents.class
     })
     static class ContextConfiguration {
-        @Bean
-        JbstProperties applicationFrameworkProperties() {
-            var applicationFrameworkProperties = mock(JbstProperties.class);
-            when(applicationFrameworkProperties.getIncidentConfigs()).thenReturn(IncidentConfigs.hardcoded());
-            return applicationFrameworkProperties;
-        }
-    }
 
-    // Properties
-    private final JbstProperties jbstProperties;
+    }
 
     private final ConfigurationIncidents componentUnderTest;
-
-    @BeforeEach
-    void beforeEach() {
-        reset(
-                this.jbstProperties
-        );
-    }
-
-    @AfterEach
-    void afterEach() {
-        verifyNoMoreInteractions(
-                this.jbstProperties
-        );
-    }
 
     @Test
     void beansTests() {

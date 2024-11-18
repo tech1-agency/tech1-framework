@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class ConfigurationPropertiesJbstHardcoded {
 
     @Bean
-    public JbstProperties applicationFrameworkProperties() {
+    public JbstProperties jbstProperties() {
         return JbstProperties.hardcoded();
     }
 }

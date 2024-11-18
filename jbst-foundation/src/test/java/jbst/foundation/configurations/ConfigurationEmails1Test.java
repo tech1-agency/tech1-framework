@@ -22,14 +22,20 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.NONE,
-        properties = "jbst.email-configs.enabled=true"
+        properties = {
+                "jbst.email-configs.enabled=true",
+                "jbst.email-configs.host=smtp.gmail.com",
+                "jbst.email-configs.port=587",
+                "jbst.email-configs.from=jbst",
+                "jbst.email-configs.username=jbst",
+                "jbst.email-configs.password=jbst"
+        }
 )
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class ConfigurationEmails1Test {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
             ConfigurationEmails.class
     })
     static class ContextConfiguration {

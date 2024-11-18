@@ -11,19 +11,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JbstPropertiesTest {
 
     @Test
-    void applicationFrameworkPropertiesTest() {
+    void jbstPropertiesTest() {
         // Arrange
-        var context = new ConfigurationPropertiesJbstHardcoded();
-        var applicationFrameworkProperties = context.applicationFrameworkProperties();
+        var jbstProperties = new ConfigurationPropertiesJbstHardcoded().jbstProperties();
 
         // Act
-        var getters = getGetters(applicationFrameworkProperties);
+        var getters = getGetters(jbstProperties);
 
         // Assert
         assertThat(getters).hasSize(14);
         getters.forEach(getter -> {
             try {
-                var propertiesConfigs = getter.invoke(applicationFrameworkProperties);
+                var propertiesConfigs = getter.invoke(jbstProperties);
                 assertThat(propertiesConfigs).isNotNull();
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);

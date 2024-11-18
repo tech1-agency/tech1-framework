@@ -26,23 +26,23 @@ class EnumCreatorUtilityTest {
                 Arguments.of("Framework", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("framework", false, EnumValue1.FRAMEWORK, null),
                 Arguments.of("fraMEwork", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("jbst2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[jbst2]`"),
-                Arguments.of("Server", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Server]`"),
-                Arguments.of(null, true, null, "Options: `[Framework, Tech1]`. Unexpected: `[null]`")
+                Arguments.of("jbst2", true, null, "Options: `[Framework, jbst]`. Unexpected: `[jbst2]`"),
+                Arguments.of("Server", true, null, "Options: `[Framework, jbst]`. Unexpected: `[Server]`"),
+                Arguments.of(null, true, null, "Options: `[Framework, jbst]`. Unexpected: `[null]`")
         );
     }
 
     private static Stream<Arguments> findEnumByNameOrThrowArgs() {
         return Stream.of(
                 Arguments.of("jbst", false, EnumValue1.JBST, null),
-                Arguments.of("jbST", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[jbST]`"),
-                Arguments.of("JBst", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[JBst]`"),
+                Arguments.of("jbST", true, null, "Options: `[Framework, jbst]`. Unexpected: `[jbST]`"),
+                Arguments.of("JBst", true, null, "Options: `[Framework, jbst]`. Unexpected: `[JBst]`"),
                 Arguments.of("FRAMEWORK", false, EnumValue1.FRAMEWORK, null),
-                Arguments.of("framework", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[framework]`"),
-                Arguments.of("fraMEwork", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[fraMEwork]`"),
-                Arguments.of("jbst2", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[jbst2]`"),
-                Arguments.of("Server", true, null, "Options: `[Framework, Tech1]`. Unexpected: `[Server]`"),
-                Arguments.of(null, true, null, "Options: `[Framework, Tech1]`. Unexpected: `[null]`")
+                Arguments.of("framework", true, null, "Options: `[Framework, jbst]`. Unexpected: `[framework]`"),
+                Arguments.of("fraMEwork", true, null, "Options: `[Framework, jbst]`. Unexpected: `[fraMEwork]`"),
+                Arguments.of("jbst2", true, null, "Options: `[Framework, jbst]`. Unexpected: `[jbst2]`"),
+                Arguments.of("Server", true, null, "Options: `[Framework, jbst]`. Unexpected: `[Server]`"),
+                Arguments.of(null, true, null, "Options: `[Framework, jbst]`. Unexpected: `[null]`")
         );
     }
 

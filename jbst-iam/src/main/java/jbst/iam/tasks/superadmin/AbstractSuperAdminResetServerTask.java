@@ -1,12 +1,12 @@
 package jbst.iam.tasks.superadmin;
 
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.domain.jwt.JwtUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
 import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.domain.enums.Status.STARTED;
 
@@ -23,7 +23,7 @@ public abstract class AbstractSuperAdminResetServerTask {
         if (this.getStatus().getState().isResetting()) {
             return;
         }
-        LOGGER.info(SERVER_RESET_SERVER_TASK, initiator.username(), STARTED);
+        LOGGER.info(JbstConstants.Logs.TASK_RESET_SERVER, initiator.username(), STARTED);
 
         try {
             this.resetOnServer(initiator);
@@ -31,6 +31,6 @@ public abstract class AbstractSuperAdminResetServerTask {
             this.incidentPublisher.publishThrowable(ex);
         }
 
-        LOGGER.info(SERVER_RESET_SERVER_TASK, initiator.username(), COMPLETED);
+        LOGGER.info(JbstConstants.Logs.TASK_RESET_SERVER, initiator.username(), COMPLETED);
     }
 }

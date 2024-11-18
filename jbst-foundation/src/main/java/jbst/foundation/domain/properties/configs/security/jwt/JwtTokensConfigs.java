@@ -17,7 +17,6 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_PROPERTIES;
 import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
@@ -83,7 +82,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
         }
         LOGGER.info(
                 "{}, JWT tokens are stored using {} keys: accessTokenKey = \"{}\", refreshTokenKey \"{}\"",
-                PREFIX_PROPERTIES,
+                JbstConstants.Logs.PREFIX_PROPERTIES,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),
                 this.refreshToken.getKey(this.storageMethod)

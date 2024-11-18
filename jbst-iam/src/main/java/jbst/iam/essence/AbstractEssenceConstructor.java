@@ -29,11 +29,11 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 invalidAttribute("essenceConfigs.defaultUsers.enabled == true")
         );
         if (this.usersRepository.count() == 0L) {
-            LOGGER.info(JbstConstants.Logs.FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence `defaultUsers`. No users in database. Establish database structure");
             var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
-            LOGGER.info(JbstConstants.Logs.FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", usersCount);
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence `defaultUsers` is completed. Saved dbRecords: `{}`", usersCount);
         } else {
-            LOGGER.info(JbstConstants.Logs.FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Users are already saved in database. Please double check");
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence `defaultUsers`. Users are already saved in database. Please double check");
         }
     }
 
@@ -48,10 +48,10 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
             if (this.invitationCodesRepository.countByOwner(username) == 0L) {
-                LOGGER.info(JbstConstants.Logs.FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. No invitation codes in database. Username: `{}`", username);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence `defaultUsers`. No invitation codes in database. Username: `{}`", username);
                 this.saveInvitationCodes(defaultUser, authorities);
             } else {
-                LOGGER.info(JbstConstants.Logs.FRAMEWORK_B2B_SECURITY_JWT_PREFIX + " Essence `defaultUsers`. Invitation codes are already saved in database. Username: `{}`", username);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence `defaultUsers`. Invitation codes are already saved in database. Username: `{}`", username);
             }
         });
     }

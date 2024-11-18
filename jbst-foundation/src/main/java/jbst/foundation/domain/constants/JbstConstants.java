@@ -96,6 +96,11 @@ public class JbstConstants {
         public static final String INCIDENT_SESSION_REFRESHED = PREFIX_INCIDENTS + " `{}` - /refreshToken. Username: `{}`";
         public static final String INCIDENT_SESSION_EXPIRED = PREFIX_INCIDENTS + " `{}` - session expired. Username: `{}`";
         public static final String INCIDENT_SYSTEM_RESET_SERVER = PREFIX_INCIDENTS + " `{}` - system reset server. Username: `{}`. Status: `{}`";
+
+        // =================================================================================================================
+        // Tasks
+        // =================================================================================================================
+        public static final String TASK_RESET_SERVER = PREFIX_OPEN + "tasks] Reset Server Initiator: `{}`. Status: `{}`";
     }
 
     public static class MemoryUnits {

@@ -1,18 +1,18 @@
 package jbst.iam.tasks.superadmin;
 
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.system.reset_server.ResetServerStatus;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.template.WssMessagingTemplate;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.system.reset_server.ResetServerStatus;
-import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import java.util.Set;
 
-import static jbst.foundation.domain.constants.FrameworkLogsConstants.SERVER_RESET_SERVER_TASK;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.utilities.concurrent.SleepUtility.sleepMilliseconds;
 
@@ -57,7 +57,7 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
             // WARNING: any exceptions should NOT be expected behaviour, method required ASAP fix
             this.status.setFailureDescription(ex);
             this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
-            LOGGER.error(SERVER_RESET_SERVER_TASK, username, FAILURE);
+            LOGGER.error(JbstConstants.Logs.TASK_RESET_SERVER, username, FAILURE);
             this.incidentPublisher.publishThrowable(ex);
         }
     }
@@ -65,7 +65,7 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
     private void computeAndSendResetServerProgress(Set<Username> usernames, String description) {
         this.status.nextStage(description);
         this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
-        LOGGER.info(SERVER_RESET_SERVER_TASK, description, this.status.getPercentage().percentage() + "%");
+        LOGGER.info(JbstConstants.Logs.TASK_RESET_SERVER, description, this.status.getPercentage().percentage() + "%");
         sleepMilliseconds(1000);
     }
 }

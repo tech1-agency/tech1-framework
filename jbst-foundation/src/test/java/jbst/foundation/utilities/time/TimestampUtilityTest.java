@@ -8,14 +8,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static java.time.ZoneOffset.UTC;
+import static java.time.temporal.ChronoUnit.*;
 import static jbst.foundation.domain.constants.ZoneIdsConstants.POLAND;
 import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.RANDOM_ITERATIONS_COUNT;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.SMALL_ITERATIONS_COUNT;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.convertTimestamp;
 import static jbst.foundation.utilities.time.TimestampUtility.*;
-import static java.time.ZoneOffset.UTC;
-import static java.time.temporal.ChronoUnit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampUtilityTest {

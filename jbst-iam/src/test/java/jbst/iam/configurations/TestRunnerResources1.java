@@ -11,7 +11,7 @@ import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        ConfigurationBaseSecurityJwtMvc.class,
+        ConfigurationBaseSecurityJwtWebMvc.class,
         ConfigurationPropertiesJbstHardcoded.class,
         TestConfigurationResources.class
 })

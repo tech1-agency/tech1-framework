@@ -13,8 +13,8 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

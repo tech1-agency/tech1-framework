@@ -1,16 +1,16 @@
 package jbst.foundation.utilities.http;
 
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.constants.JbsConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.constants.JbsConstants;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static jbst.foundation.utilities.http.HttpRequestFieldsUtility.containsCamelCaseLettersAndNumbers;
 import static jbst.foundation.utilities.http.HttpRequestFieldsUtility.isEmail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpRequestFieldsUtilityTest {
 

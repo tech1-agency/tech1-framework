@@ -2,10 +2,10 @@ package jbst.foundation.domain.hardware.memories;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jbst.foundation.domain.hardware.bytes.ByteSize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import jbst.foundation.domain.hardware.bytes.ByteSize;
 
 import static jbst.foundation.domain.constants.JbsConstants.MemoryUnits.BYTES_IN_MEGABYTE;
 import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;

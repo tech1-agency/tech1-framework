@@ -1,8 +1,8 @@
 package jbst.foundation.domain.system.reset_server;
 
 import jbst.foundation.domain.constants.ZoneIdsConstants;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.TuplePercentage;
 import org.junit.jupiter.api.Test;
 

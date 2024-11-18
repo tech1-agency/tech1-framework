@@ -1,8 +1,8 @@
 package jbst.foundation.domain.properties.configs;
 
+import jbst.foundation.domain.constants.BigDecimalConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.tuples.TuplePercentage;
-import jbst.foundation.domain.constants.BigDecimalConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

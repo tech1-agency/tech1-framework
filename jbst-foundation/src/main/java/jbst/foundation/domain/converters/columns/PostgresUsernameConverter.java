@@ -1,9 +1,8 @@
 package jbst.foundation.domain.converters.columns;
 
-import jbst.foundation.domain.base.Username;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import jbst.foundation.domain.base.Username;
 
 import static java.util.Objects.nonNull;
 

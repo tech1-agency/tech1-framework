@@ -9,9 +9,9 @@ import lombok.Getter;
 
 import java.util.List;
 
+import static java.util.concurrent.TimeUnit.*;
 import static jbst.foundation.utilities.strings.StringUtility.isNullOrBlank;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
-import static java.util.concurrent.TimeUnit.*;
 
 // Lombok
 @Getter
@@ -58,6 +58,7 @@ public class TimeAgo {
         return new TimeAgo(timestamp);
     }
 
+    @SuppressWarnings("unused")
     public static TimeAgo justNow() {
         return new TimeAgo(TimestampUtility.getCurrentTimestamp());
     }

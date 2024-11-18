@@ -1,15 +1,15 @@
 package jbst.foundation.utilities.http;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.constants.StringConstants;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import lombok.experimental.UtilityClass;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 
 @UtilityClass
 public class HttpCookieUtility {

@@ -1,8 +1,8 @@
 package jbst.foundation.domain.asserts;
 
 import jbst.foundation.domain.base.PropertyId;
-import jbst.foundation.domain.constants.ZoneIdsConstants;
 import jbst.foundation.domain.constants.BigDecimalConstants;
+import jbst.foundation.domain.constants.ZoneIdsConstants;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Objects.isNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 

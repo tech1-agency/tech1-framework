@@ -16,12 +16,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_UTILITIES_PREFIX;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
-import static java.util.Objects.isNull;
 
 @Slf4j
 public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {

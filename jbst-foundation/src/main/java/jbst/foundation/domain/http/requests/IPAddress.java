@@ -2,8 +2,8 @@ package jbst.foundation.domain.http.requests;
 
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomIPv4;
 
 public record IPAddress(@NotNull String value) {
 

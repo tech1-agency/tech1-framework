@@ -1,10 +1,10 @@
 package jbst.foundation.incidents.events.publishers.impl;
 
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerCompleted;
 import jbst.foundation.incidents.domain.system.IncidentSystemResetServerStarted;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

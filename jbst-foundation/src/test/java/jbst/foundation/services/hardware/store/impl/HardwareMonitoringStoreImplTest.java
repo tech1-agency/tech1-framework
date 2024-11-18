@@ -1,5 +1,6 @@
 package jbst.foundation.services.hardware.store.impl;
 
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
@@ -9,9 +10,8 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringDatapointTableRow;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
-import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

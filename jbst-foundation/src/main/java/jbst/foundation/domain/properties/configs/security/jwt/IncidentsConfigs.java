@@ -13,9 +13,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.util.EnumMap;
 import java.util.Map;
 
+import static java.lang.Boolean.TRUE;
 import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
 import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
-import static java.lang.Boolean.TRUE;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

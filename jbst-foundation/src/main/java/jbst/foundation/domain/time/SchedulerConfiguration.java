@@ -2,9 +2,10 @@ package jbst.foundation.domain.time;
 
 import java.util.concurrent.TimeUnit;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 import static java.util.concurrent.TimeUnit.*;
+import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 
+@SuppressWarnings("unused")
 public record SchedulerConfiguration(
         long initialDelay,
         long delay,

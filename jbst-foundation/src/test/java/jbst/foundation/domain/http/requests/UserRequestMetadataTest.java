@@ -2,9 +2,9 @@ package jbst.foundation.domain.http.requests;
 
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;

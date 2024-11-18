@@ -1,7 +1,7 @@
 package jbst.foundation.resources.actuator;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
 import jbst.foundation.utilities.environment.EnvironmentUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;

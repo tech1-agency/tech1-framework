@@ -13,16 +13,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
-import static jbst.foundation.domain.constants.ZoneIdsConstants.POLAND;
-import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
-import static jbst.foundation.utilities.time.LocalDateTimeUtility.*;
 import static java.time.Month.DECEMBER;
 import static java.time.ZoneOffset.UTC;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static java.util.TimeZone.getTimeZone;
+import static jbst.foundation.domain.constants.ZoneIdsConstants.POLAND;
+import static jbst.foundation.domain.constants.ZoneIdsConstants.UKRAINE;
+import static jbst.foundation.domain.tests.constants.TestsDTFsConstants.DEFAULT_DATE_FORMAT_PATTERN;
+import static jbst.foundation.utilities.time.LocalDateTimeUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateTimeUtilityImplTest {

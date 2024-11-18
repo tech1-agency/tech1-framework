@@ -1,15 +1,14 @@
 package jbst.foundation.utilities.http;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.http.requests.IPAddress;
 import lombok.experimental.UtilityClass;
-
-import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 
-import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
-import static jbst.foundation.utilities.strings.StringUtility.hasLength;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
+import static jbst.foundation.utilities.strings.StringUtility.hasLength;
 
 @UtilityClass
 public class HttpServletRequestUtility {

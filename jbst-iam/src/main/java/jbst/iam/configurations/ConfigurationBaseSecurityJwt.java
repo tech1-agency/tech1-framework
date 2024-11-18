@@ -47,15 +47,15 @@ import static org.springframework.http.HttpMethod.*;
 })
 @EnableWebSecurity
 @Import({
-        ApplicationHardwareMonitoring.class,
-        ApplicationUserMetadata.class,
-        ApplicationSpringBootServer.class,
-        ApplicationJasypt.class,
-        ConfigurationBaseSecurityJwtMvc.class,
+        ConfigurationHardwareMonitoring.class,
+        ConfigurationUserMetadata.class,
+        ConfigurationSpringBootServer.class,
+        ConfigurationJasypt.class,
+        ConfigurationBaseSecurityJwtWebMvc.class,
         ConfigurationBaseSecurityJwtFilters.class,
         ConfigurationBaseSecurityJwtPasswords.class,
-        ApplicationIncidents.class,
-        ApplicationEmails.class
+        ConfigurationIncidents.class,
+        ConfigurationEmails.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ConfigurationBaseSecurityJwt {

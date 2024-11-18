@@ -15,9 +15,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.time.ZoneId;
 import java.util.Set;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringsAsSet;
-import static java.util.Objects.nonNull;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

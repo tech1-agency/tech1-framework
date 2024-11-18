@@ -1,7 +1,9 @@
 package jbst.foundation.domain.properties.utilities;
 
+import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.comparators.ReflectionsComparators;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryToggleProperty;
@@ -10,8 +12,6 @@ import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.base.AbstractTogglePropertyConfigs;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.foundation.domain.reflections.ReflectionProperty;
-import jbst.foundation.domain.asserts.Asserts;
-import jbst.foundation.domain.comparators.ReflectionsComparators;
 import jbst.foundation.utilities.enums.EnumUtility;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

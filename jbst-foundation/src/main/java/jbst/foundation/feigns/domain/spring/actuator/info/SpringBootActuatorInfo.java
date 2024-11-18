@@ -8,8 +8,8 @@ import jbst.foundation.feigns.domain.spring.actuator.info.git.SpringBootActuator
 
 import java.util.ArrayList;
 
-import static jbst.foundation.domain.constants.StringConstants.DASH;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.StringConstants.DASH;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 /**
@@ -72,6 +72,7 @@ public record SpringBootActuatorInfo(
         }
     }
 
+    @SuppressWarnings("unused")
     @JsonIgnore
     public SpringBootActuatorInfoGit getGitOrDash() {
         if (nonNull(this.git)) {

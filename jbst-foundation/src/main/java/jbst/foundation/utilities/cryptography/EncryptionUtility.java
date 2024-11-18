@@ -13,8 +13,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
 
 @UtilityClass
 public class EncryptionUtility {

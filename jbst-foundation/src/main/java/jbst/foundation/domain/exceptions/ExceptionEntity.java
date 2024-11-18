@@ -1,5 +1,6 @@
 package jbst.foundation.domain.exceptions;
 
+import jakarta.validation.constraints.NotNull;
 import jbst.foundation.domain.tuples.Tuple2;
 import jbst.foundation.utilities.strings.StringUtility;
 import lombok.EqualsAndHashCode;
@@ -7,7 +8,6 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import jakarta.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;

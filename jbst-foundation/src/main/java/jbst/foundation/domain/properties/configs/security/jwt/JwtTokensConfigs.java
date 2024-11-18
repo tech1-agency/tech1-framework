@@ -1,24 +1,24 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.constants.FrameworkLogsConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.JwtToken;
 import jbst.foundation.domain.properties.base.JwtTokenStorageMethod;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
-import jbst.foundation.domain.asserts.Asserts;
-import jbst.foundation.domain.constants.FrameworkLogsConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
+import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 @Slf4j
 // Lombok (property-based)

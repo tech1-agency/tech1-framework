@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static jbst.foundation.domain.base.AbstractAuthority.*;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.TWICE;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getResponseInvitationCodeAuthoritiesAsField;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringAuthoritiesUtilityTest {
 

@@ -1,13 +1,13 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import jbst.foundation.domain.constants.JbsConstants;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.TimeAmount;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;

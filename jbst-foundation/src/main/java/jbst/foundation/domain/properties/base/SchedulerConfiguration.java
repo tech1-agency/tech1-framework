@@ -8,9 +8,9 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.concurrent.TimeUnit;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static jbst.foundation.utilities.random.RandomUtility.randomLongGreaterThanZeroByBounds;
 import static jbst.foundation.utilities.random.RandomUtility.randomTimeUnit;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -36,6 +36,7 @@ public class SchedulerConfiguration extends AbstractPropertyConfigs {
         );
     }
 
+    @SuppressWarnings("unused")
     public jbst.foundation.domain.time.SchedulerConfiguration getSchedulerConfiguration() {
         return new jbst.foundation.domain.time.SchedulerConfiguration(
                 this.initialDelay,

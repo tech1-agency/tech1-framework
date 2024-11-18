@@ -1,17 +1,17 @@
 package jbst.foundation.utilities.http;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.stream.Stream;
 
+import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getBaseURL;
 import static jbst.foundation.utilities.http.HttpServletRequestUtility.getFullURL;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.mock;

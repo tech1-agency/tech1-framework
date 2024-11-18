@@ -1,9 +1,9 @@
 package jbst.foundation.domain.properties.configs.security.jwt;
 
+import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.base.Authority;
-import jbst.foundation.domain.base.AbstractAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +27,7 @@ public class AuthoritiesConfigs extends AbstractPropertyConfigs {
 
     public static AuthoritiesConfigs testsHardcoded() {
         return new AuthoritiesConfigs(
-                "tech1",
+                "jbst.foundation",
                 Set.of(
                         new Authority(AbstractAuthority.SUPERADMIN),
                         new Authority("admin"),

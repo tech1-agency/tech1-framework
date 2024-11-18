@@ -1,11 +1,10 @@
 package jbst.foundation.domain.http.requests;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.constants.StringConstants;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import static java.util.Objects.isNull;
 

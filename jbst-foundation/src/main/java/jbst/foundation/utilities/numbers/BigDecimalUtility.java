@@ -6,10 +6,10 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
-import static jbst.foundation.domain.constants.BigDecimalConstants.ONE_HUNDRED;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
+import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.constants.BigDecimalConstants.ONE_HUNDRED;
 
 @UtilityClass
 public class BigDecimalUtility {

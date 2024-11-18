@@ -1,16 +1,16 @@
 package jbst.foundation.domain.properties.utilities;
 
 import jbst.foundation.domain.base.PropertyId;
+import jbst.foundation.domain.comparators.ReflectionsComparators;
+import jbst.foundation.domain.constants.FrameworkLogsConstants;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
 import jbst.foundation.domain.reflections.ReflectionProperty;
-import jbst.foundation.domain.comparators.ReflectionsComparators;
-import jbst.foundation.domain.constants.FrameworkLogsConstants;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import static jbst.foundation.utilities.reflections.ReflectionUtility.getProperties;
 import static java.util.Objects.isNull;
+import static jbst.foundation.utilities.reflections.ReflectionUtility.getProperties;
 
 @Slf4j
 @UtilityClass

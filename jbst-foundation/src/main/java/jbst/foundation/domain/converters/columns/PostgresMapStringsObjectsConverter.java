@@ -2,10 +2,10 @@ package jbst.foundation.domain.converters.columns;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import lombok.SneakyThrows;
+
 import java.util.Map;
 
 @Converter

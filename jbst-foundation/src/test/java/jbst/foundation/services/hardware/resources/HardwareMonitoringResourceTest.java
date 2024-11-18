@@ -1,11 +1,11 @@
 package jbst.foundation.services.hardware.resources;
 
+import jbst.foundation.configurations.TestRunnerResources;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.events.hardware.EventLastHardwareMonitoringDatapoint;
 import jbst.foundation.domain.hardware.memories.CpuMemory;
 import jbst.foundation.domain.hardware.memories.SystemMemories;
 import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringMetadata;
-import jbst.foundation.tests.runners.ApplicationResourceRunner;
 import jbst.foundation.services.hardware.publishers.HardwareMonitoringPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class HardwareMonitoringResourceTest extends ApplicationResourceRunner {
+class HardwareMonitoringResourceTest extends TestRunnerResources {
 
     private final HardwareMonitoringPublisher hardwareMonitoringPublisher;
 

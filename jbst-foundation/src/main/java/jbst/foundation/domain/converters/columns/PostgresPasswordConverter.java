@@ -1,9 +1,8 @@
 package jbst.foundation.domain.converters.columns;
 
-import jbst.foundation.domain.base.Password;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import jbst.foundation.domain.base.Password;
 
 @Converter
 public class PostgresPasswordConverter implements AttributeConverter<Password, String> {

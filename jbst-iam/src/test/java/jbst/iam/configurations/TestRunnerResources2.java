@@ -11,7 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
-        ConfigurationBaseSecurityJwtMvc.class,
+        ConfigurationBaseSecurityJwtWebMvc.class,
         TestConfigurationPropertiesMocked.class,
         TestConfigurationResources.class
 })

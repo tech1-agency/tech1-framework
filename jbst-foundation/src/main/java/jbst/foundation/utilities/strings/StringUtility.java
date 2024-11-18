@@ -3,9 +3,9 @@ package jbst.foundation.utilities.strings;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
-import static jbst.foundation.domain.constants.StringConstants.UNDEFINED;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.StringConstants.UNDEFINED;
 
 @UtilityClass
 public class StringUtility {

@@ -1,10 +1,10 @@
 package jbst.foundation.domain.geo;
 
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.constants.StringConstants;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.tests.constants.TestsJunitConstants;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

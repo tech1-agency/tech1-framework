@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
 
-import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
 import static java.time.ZoneId.getAvailableZoneIds;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasLength;
 
@@ -50,6 +50,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void assertNonBlankOrThrow(String object) {
         assertNonBlankOrThrow(object, null);
     }
@@ -68,6 +69,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void assertHasLengthOrThrow(String object) {
         assertHasLengthOrThrow(object, null);
     }
@@ -101,6 +103,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void assertFalseOrThrow(boolean condition) {
         assertFalseOrThrow(condition, null);
     }
@@ -243,6 +246,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void assertFirstValueLesserOrThrow(BigDecimal value1, BigDecimal value2) {
         assertFirstValueLesserOrThrow(value1, value2, null);
     }
@@ -258,6 +262,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void assertFirstValueLesserOrEqualOrThrow(BigDecimal value1, BigDecimal value2) {
         assertFirstValueLesserOrEqualOrThrow(value1, value2, null);
     }
@@ -306,6 +311,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static <T> void assertNonEmptyOrThrow(Collection<T> collection) {
         assertNonEmptyOrThrow(collection, null);
     }
@@ -321,6 +327,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static <K, V> void assertNonEmptyOrThrow(Map<K, V> map) {
         assertNonEmptyOrThrow(map, null);
     }
@@ -369,6 +376,7 @@ public class Asserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static <T> T requireNonNullOrThrow(T object) {
         return requireNonNullOrThrow(object, null);
     }

@@ -1,5 +1,7 @@
 package jbst.foundation.utilities.http;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility;
 import lombok.extern.slf4j.Slf4j;
@@ -9,8 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.stream.Stream;
 
 import static jbst.foundation.utilities.http.HttpCookieUtility.*;

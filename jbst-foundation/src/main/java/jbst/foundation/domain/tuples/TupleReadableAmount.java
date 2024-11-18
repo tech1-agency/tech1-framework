@@ -8,8 +8,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 import static java.math.BigDecimal.ZERO;
+import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 
 @Data
 public class TupleReadableAmount {
@@ -42,6 +42,7 @@ public class TupleReadableAmount {
         this(value, true, true, scale);
     }
 
+    @SuppressWarnings("unused")
     public TupleReadableAmount(List<TupleReadableAmount> amounts, int scale) {
         this(
                 amounts.stream().map(TupleReadableAmount::getValue).reduce(scale(ZERO, scale), BigDecimal::add),

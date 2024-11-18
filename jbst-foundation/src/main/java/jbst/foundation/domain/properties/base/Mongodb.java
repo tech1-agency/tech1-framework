@@ -9,8 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.*;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.RandomUtility.*;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

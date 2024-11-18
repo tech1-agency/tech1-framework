@@ -3,6 +3,15 @@ package jbst.foundation.services.emails.services.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.constants.JbsConstants;
+import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
+import jbst.foundation.domain.properties.configs.EmailConfigs;
+import jbst.foundation.domain.tuples.Tuple2;
+import jbst.foundation.services.emails.domain.EmailHTML;
+import jbst.foundation.services.emails.domain.EmailPlainAttachment;
+import jbst.foundation.services.emails.services.EmailService;
+import jbst.foundation.services.emails.utilities.EmailUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,15 +30,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.constants.JbsConstants;
-import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.configs.EmailConfigs;
-import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.foundation.services.emails.domain.EmailPlainAttachment;
-import jbst.foundation.services.emails.services.EmailService;
-import jbst.foundation.services.emails.utilities.EmailUtility;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -38,10 +38,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static jakarta.mail.Message.RecipientType.TO;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

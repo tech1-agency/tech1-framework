@@ -18,14 +18,14 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.FRAMEWORK_INCIDENT_PREFIX;
 import static jbst.foundation.domain.constants.FrameworkLogsConstants.LINE_SEPARATOR_INTERPUNCT;
 import static jbst.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static jbst.foundation.domain.constants.StringConstants.UNKNOWN;
+import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
 import static jbst.foundation.utilities.exceptions.TraceUtility.getTrace;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static jbst.foundation.incidents.domain.IncidentAttributes.Keys.*;
-import static java.util.Objects.nonNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Slf4j

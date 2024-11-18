@@ -4,9 +4,9 @@ import jbst.foundation.domain.constants.BigDecimalConstants;
 
 import java.math.BigDecimal;
 
+import static java.math.BigDecimal.ZERO;
 import static jbst.foundation.utilities.numbers.RoundingUtility.divideOrZero;
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
-import static java.math.BigDecimal.ZERO;
 
 public record TuplePercentage(
         BigDecimal value,

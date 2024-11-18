@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static jbst.foundation.utilities.random.RandomUtility.randomMethod;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentTest {
 
@@ -75,7 +75,7 @@ class IncidentTest {
     @Test
     void convertThrowableIncident1Test() {
         // Arrange
-        var throwable = new NullPointerException("Tech1");
+        var throwable = new NullPointerException("jbst");
 
         // Act
         var actual = new Incident(throwable);
@@ -88,16 +88,16 @@ class IncidentTest {
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace");
         assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
         assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
-        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).contains("at tech1.framework.foundation.incidents.domain.IncidentTest.convertThrowableIncident1Test");
+        assertThat(actual.getAttributes()).containsEntry("message", "jbst");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: jbst");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at jbst.foundation.incidents.domain.IncidentTest.convertThrowableIncident1Test");
     }
 
     @Test
     void convertThrowableIncident2Test() {
         // Arrange
         var object = new Object();
-        var throwable = new NullPointerException("Tech1");
+        var throwable = new NullPointerException("jbst");
         var method = randomMethod();
         var params = List.of(object, "param1", 1L);
 
@@ -112,10 +112,10 @@ class IncidentTest {
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "method", "params");
         assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
         assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
-        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes()).containsEntry("message", "jbst");
         assertThat(actual.getAttributes()).containsEntry("params", object + ", param1, 1");
-        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).contains("at tech1.framework.foundation.incidents.domain.IncidentTest.convertThrowableIncident2Test");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: jbst");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at jbst.foundation.incidents.domain.IncidentTest.convertThrowableIncident2Test");
         assertThat(actual.getAttributes().get("method").toString()).contains("protected void java.lang.Object.finalize() throws java.lang.Throwable");
     }
 
@@ -123,7 +123,7 @@ class IncidentTest {
     void convertThrowableIncident3Test() {
         // Arrange
         var object = new Object();
-        var throwable = new NullPointerException("Tech1");
+        var throwable = new NullPointerException("jbst");
         var attributes = Map.of("key1", object);
 
         // Act
@@ -137,9 +137,9 @@ class IncidentTest {
         assertThat(actual.getAttributes()).containsOnlyKeys("incidentType", "exception", "message", "trace", "key1");
         assertThat(actual.getAttributes()).containsEntry("incidentType", "Throwable");
         assertThat(actual.getAttributes()).containsEntry("exception", NullPointerException.class);
-        assertThat(actual.getAttributes()).containsEntry("message", "Tech1");
+        assertThat(actual.getAttributes()).containsEntry("message", "jbst");
         assertThat(actual.getAttributes()).containsEntry("key1", object);
-        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: Tech1");
-        assertThat(actual.getAttributes().get("trace").toString()).contains("at tech1.framework.foundation.incidents.domain.IncidentTest.convertThrowableIncident3Test");
+        assertThat(actual.getAttributes().get("trace").toString()).startsWith("java.lang.NullPointerException: jbst");
+        assertThat(actual.getAttributes().get("trace").toString()).contains("at jbst.foundation.incidents.domain.IncidentTest.convertThrowableIncident3Test");
     }
 }

@@ -1,9 +1,9 @@
 package jbst.foundation.incidents.feigns.clients.impl;
 
 import feign.FeignException;
+import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.feigns.clients.IncidentClient;
 import jbst.foundation.incidents.feigns.definitions.IncidentClientDefinition;
-import jbst.foundation.incidents.domain.Incident;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

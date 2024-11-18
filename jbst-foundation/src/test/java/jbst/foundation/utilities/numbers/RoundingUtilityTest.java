@@ -7,10 +7,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
-import static jbst.foundation.utilities.numbers.RoundingUtility.*;
 import static java.math.BigDecimal.TEN;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
+import static jbst.foundation.utilities.numbers.RoundingUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

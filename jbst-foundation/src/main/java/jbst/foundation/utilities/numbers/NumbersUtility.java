@@ -4,11 +4,11 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 
+import static java.math.BigDecimal.ZERO;
+import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.numbers.BigDecimalUtility.*;
 import static jbst.foundation.utilities.numbers.RoundingUtility.divide;
 import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
-import static java.math.BigDecimal.ZERO;
-import static java.util.Objects.isNull;
 
 @UtilityClass
 public class NumbersUtility {

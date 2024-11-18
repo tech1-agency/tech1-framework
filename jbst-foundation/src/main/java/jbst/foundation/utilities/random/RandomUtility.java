@@ -4,12 +4,12 @@ import feign.FeignException;
 import feign.Request;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.experimental.UtilityClass;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.BigDecimalConstants;
 import jbst.foundation.domain.constants.StringConstants;
 import jbst.foundation.domain.exceptions.random.IllegalEnumException;
 import jbst.foundation.domain.properties.base.TimeAmount;
+import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;

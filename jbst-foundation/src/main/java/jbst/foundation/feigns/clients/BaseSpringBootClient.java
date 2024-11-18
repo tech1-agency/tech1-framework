@@ -9,8 +9,8 @@ import jbst.foundation.feigns.domain.spring.actuator.info.SpringBootActuatorInfo
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import static jbst.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.constants.LogsConstants.SERVER_OFFLINE;
 
 @Slf4j
 @AllArgsConstructor

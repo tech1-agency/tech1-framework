@@ -1,19 +1,19 @@
 package jbst.foundation.domain.properties.base;
 
+import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.asserts.ConsoleAsserts;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
-import jbst.foundation.domain.asserts.Asserts;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))

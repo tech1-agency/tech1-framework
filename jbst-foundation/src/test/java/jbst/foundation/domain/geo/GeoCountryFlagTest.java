@@ -1,7 +1,7 @@
 package jbst.foundation.domain.geo;
 
-import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tests.io.TestsIOUtils;
+import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

@@ -7,9 +7,9 @@ import jbst.foundation.domain.constants.DatetimeConstants;
 
 import java.io.IOException;
 
+import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.parse;
-import static java.time.ZoneOffset.UTC;
 
 public class DatetimeTimestampUTCDTF21Deserializer extends JsonDeserializer<Long> {
 

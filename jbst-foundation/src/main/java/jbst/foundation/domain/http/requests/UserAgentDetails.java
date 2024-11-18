@@ -7,9 +7,9 @@ import lombok.ToString;
 
 import java.util.List;
 
+import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
-import static java.util.Objects.nonNull;
 
 // Lombok
 @Getter

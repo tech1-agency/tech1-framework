@@ -6,8 +6,8 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
-import org.jetbrains.annotations.NotNull;
 import jbst.foundation.domain.constants.StringConstants;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -18,8 +18,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
-import static org.springframework.util.StringUtils.hasLength;
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static org.springframework.util.StringUtils.hasLength;
 
 public record Username(@NotNull String value) {
 
@@ -52,6 +52,7 @@ public record Username(@NotNull String value) {
         return of(StringConstants.DASH);
     }
 
+    @SuppressWarnings("unused")
     public static Username hyphen() {
         return of(StringConstants.HYPHEN);
     }

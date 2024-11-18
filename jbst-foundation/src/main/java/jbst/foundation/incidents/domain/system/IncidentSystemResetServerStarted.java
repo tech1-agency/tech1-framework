@@ -1,8 +1,8 @@
 package jbst.foundation.incidents.domain.system;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.incidents.domain.Incident;
 import jbst.foundation.incidents.domain.AbstractIncident;
+import jbst.foundation.incidents.domain.Incident;
 
 public record IncidentSystemResetServerStarted(
         Username username

@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import static com.diogonunes.jcolor.Attribute.RED_TEXT;
+import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.collections.CollectionUtility.baseJoiningRaw;
 import static jbst.foundation.utilities.exceptions.ExceptionConsoleUtility.invalidProperty;
-import static java.util.Objects.isNull;
 import static org.apache.commons.collections4.SetUtils.disjunction;
 
 @UtilityClass
@@ -42,6 +42,7 @@ public class ConsoleAsserts {
         assertNonNullOrThrow(reflectionProperty.getPropertyValue(), reflectionProperty.getTreePropertyId());
     }
 
+    @SuppressWarnings("unused")
     public static <T> void assertContainsAllOrThrow(Collection<T> options, Collection<T> required, PropertyId propertyId) {
         if (!options.containsAll(required)) {
             throw new IllegalArgumentException(
@@ -55,6 +56,7 @@ public class ConsoleAsserts {
         }
     }
 
+    @SuppressWarnings("unused")
     public static <T> void assertEqualsOrThrow(Collection<T> options, Collection<T> required, PropertyId propertyId) {
         if (!options.equals(required)) {
             throw new IllegalArgumentException(

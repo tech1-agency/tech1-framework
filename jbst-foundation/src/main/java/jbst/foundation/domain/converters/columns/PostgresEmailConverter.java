@@ -1,9 +1,8 @@
 package jbst.foundation.domain.converters.columns;
 
-import jbst.foundation.domain.base.Email;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import jbst.foundation.domain.base.Email;
 
 import static java.util.Objects.nonNull;
 

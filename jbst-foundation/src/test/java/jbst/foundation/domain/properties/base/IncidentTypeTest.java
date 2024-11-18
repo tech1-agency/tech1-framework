@@ -1,9 +1,9 @@
 package jbst.foundation.domain.properties.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import jbst.foundation.domain.tests.io.TestsIOUtils;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
 import jbst.foundation.domain.tuples.Tuple1;
-import jbst.foundation.domain.tests.io.TestsIOUtils;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

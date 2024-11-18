@@ -2,20 +2,20 @@ package jbst.foundation.domain.base;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jbst.foundation.domain.constants.StringConstants;
-import org.jetbrains.annotations.NotNull;
-
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import jbst.foundation.domain.constants.StringConstants;
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.springframework.util.StringUtils.hasLength;
 
 public record Version(@NotNull String value) {
@@ -41,6 +41,7 @@ public record Version(@NotNull String value) {
         return of(StringConstants.DASH);
     }
 
+    @SuppressWarnings("unused")
     public static Version hyphen() {
         return of(StringConstants.HYPHEN);
     }

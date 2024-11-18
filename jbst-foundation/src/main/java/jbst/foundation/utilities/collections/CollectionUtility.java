@@ -7,10 +7,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
-import static jbst.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.constants.StringConstants.COMMA_COLLECTORS;
 import static org.springframework.util.CollectionUtils.*;
 
 @UtilityClass

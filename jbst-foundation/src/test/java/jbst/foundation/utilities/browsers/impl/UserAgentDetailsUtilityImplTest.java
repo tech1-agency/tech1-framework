@@ -1,8 +1,9 @@
 package jbst.foundation.utilities.browsers.impl;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.stream.Stream;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;

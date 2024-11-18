@@ -40,14 +40,14 @@ class ConfigurationBaseSecurityJwtMvcTest {
         private final ApplicationFrameworkProperties applicationFrameworkProperties;
 
         @Bean
-        ConfigurationBaseSecurityJwtMvc applicationMVC() {
-            return new ConfigurationBaseSecurityJwtMvc(
+        ConfigurationBaseSecurityJwtWebMvc applicationMVC() {
+            return new ConfigurationBaseSecurityJwtWebMvc(
                     this.applicationFrameworkProperties
             );
         }
     }
 
-    private final ConfigurationBaseSecurityJwtMvc componentUnderTest;
+    private final ConfigurationBaseSecurityJwtWebMvc componentUnderTest;
 
     @Test
     void beansTests() {

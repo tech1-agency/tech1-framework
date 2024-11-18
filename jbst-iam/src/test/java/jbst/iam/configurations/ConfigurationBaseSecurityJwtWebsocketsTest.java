@@ -42,7 +42,7 @@ class ConfigurationBaseSecurityJwtWebsocketsTest {
             properties.setMvcConfigs(
                     new MvcConfigs(
                             true,
-                            "/framework/security",
+                            "/jbst/security",
                             new CorsConfigs(
                                     "/api/**",
                                     new String[] { "http://localhost:1234" },

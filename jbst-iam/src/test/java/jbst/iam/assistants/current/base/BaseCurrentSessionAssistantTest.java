@@ -150,7 +150,7 @@ class BaseCurrentSessionAssistantTest {
     @Test
     void getCurrentClientUserTest() {
         // Arrange
-        var user = JwtUser.testsHardcoded();
+        var user = JwtUser.hardcoded();
         when(this.securityPrincipalUtils.getAuthenticatedJwtUser()).thenReturn(user);
         var hardwareMonitoringWidget = entity(HardwareMonitoringWidget.class);
         when(this.hardwareMonitoringStore.getHardwareMonitoringWidget()).thenReturn(hardwareMonitoringWidget);

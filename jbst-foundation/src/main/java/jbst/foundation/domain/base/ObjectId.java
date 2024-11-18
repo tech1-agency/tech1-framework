@@ -23,6 +23,10 @@ public record ObjectId(@NotNull String value) {
         return new ObjectId(value.toString());
     }
 
+    public static ObjectId hardcoded() {
+        return of("14411F887FF0758B05B3");
+    }
+
     public static ObjectId random() {
         return of(randomString());
     }
@@ -35,12 +39,9 @@ public record ObjectId(@NotNull String value) {
         return of(StringConstants.DASH);
     }
 
+    @SuppressWarnings("unused")
     public static ObjectId hyphen() {
         return of(StringConstants.HYPHEN);
-    }
-
-    public static ObjectId testsHardcoded() {
-        return of("14411F887FF0758B05B3");
     }
 
     @JsonValue

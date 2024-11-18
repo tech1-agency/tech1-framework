@@ -57,7 +57,7 @@ class BaseSecurityRegistrationResourceTest extends TestRunnerResources1 {
     @Test
     void register1() throws Exception {
         // Arrange
-        var requestUserRegistration1 = RequestUserRegistration1.testsHardcoded();
+        var requestUserRegistration1 = RequestUserRegistration1.hardcoded();
 
         // Act
         this.mvc.perform(

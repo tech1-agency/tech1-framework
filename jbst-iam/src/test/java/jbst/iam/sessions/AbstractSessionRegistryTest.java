@@ -242,7 +242,7 @@ class AbstractSessionRegistryTest {
 
         // Assert
         assertThat(this.componentUnderTest.getActiveSessionsUsernames()).hasSize(1);
-        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("tech1"));
+        assertThat(this.componentUnderTest.getActiveSessionsUsernamesIdentifiers()).isEqualTo(Set.of("jbst"));
         verify(this.securityJwtPublisher, times(3)).publishSessionRefreshed(any(EventSessionRefreshed.class));
     }
 

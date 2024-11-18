@@ -38,23 +38,23 @@ class HttpRequestUtilsImplTest {
 
     private static Stream<Arguments> authenticationLoginEndpointCases() {
         return Stream.of(
-                Arguments.of("GET", "/api/framework/security/authentication/login", false),
-                Arguments.of("PUT", "/api/framework/security/authentication/login", false),
-                Arguments.of("POST", "/api/framework/security/authentication/login", true),
-                Arguments.of("GET", "/api/framework/security/authentication/login1", false),
-                Arguments.of("PUT", "/api/framework/security/authentication/login1", false),
-                Arguments.of("POST", "/api/framework/security/authentication/login1", false)
+                Arguments.of("GET", "/api/jbst/security/authentication/login", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/login1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/login1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/login1", false)
         );
     }
 
     private static Stream<Arguments> authenticationRefreshTokenEndpointCases() {
         return Stream.of(
-                Arguments.of("GET", "/api/framework/security/authentication/refreshToken", false),
-                Arguments.of("PUT", "/api/framework/security/authentication/refreshToken", false),
-                Arguments.of("POST", "/api/framework/security/authentication/refreshToken", true),
-                Arguments.of("GET", "/api/framework/security/authentication/refreshToken1", false),
-                Arguments.of("PUT", "/api/framework/security/authentication/refreshToken1", false),
-                Arguments.of("POST", "/api/framework/security/authentication/refreshToken1", false)
+                Arguments.of("GET", "/api/jbst/security/authentication/refreshToken", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/refreshToken", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/refreshToken", true),
+                Arguments.of("GET", "/api/jbst/security/authentication/refreshToken1", false),
+                Arguments.of("PUT", "/api/jbst/security/authentication/refreshToken1", false),
+                Arguments.of("POST", "/api/jbst/security/authentication/refreshToken1", false)
         );
     }
 
@@ -111,7 +111,7 @@ class HttpRequestUtilsImplTest {
         var cachedRequest = mock(CachedBodyHttpServletRequest.class);
         when(cachedRequest.getMethod()).thenReturn("POST");
         when(cachedRequest.getCachedPayload()).thenReturn(CachedPayload.testsHardcoded());
-        when(cachedRequest.getRequestURI()).thenReturn("/api/framework/security/authentication/login");
+        when(cachedRequest.getRequestURI()).thenReturn("/api/jbst/security/authentication/login");
 
         // Act
         this.componentUnderTest.cachePayload(cachedRequest);

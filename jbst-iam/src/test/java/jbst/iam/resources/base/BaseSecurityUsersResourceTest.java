@@ -54,8 +54,8 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     @Test
     void update1() throws Exception {
         // Arrange
-        var request = RequestUserUpdate1.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserUpdate1.hardcoded();
+        var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -75,8 +75,8 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     @Test
     void update2() throws Exception {
         // Arrange
-        var request = RequestUserUpdate2.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserUpdate2.hardcoded();
+        var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -95,8 +95,8 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     @Test
     void changePasswordRequired() throws Exception {
         // Arrange
-        var request = RequestUserChangePasswordBasic.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserChangePasswordBasic.hardcoded();
+        var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act
@@ -116,8 +116,8 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     @Test
     void changePassword1() throws Exception {
         // Arrange
-        var request = RequestUserChangePasswordBasic.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserChangePasswordBasic.hardcoded();
+        var user = JwtUser.hardcoded();
         when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
 
         // Act

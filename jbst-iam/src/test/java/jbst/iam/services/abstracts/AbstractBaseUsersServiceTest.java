@@ -71,8 +71,8 @@ class AbstractBaseUsersServiceTest {
     @Test
     void updateUser1() {
         // Arrange
-        var request = RequestUserUpdate1.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserUpdate1.hardcoded();
+        var user = JwtUser.hardcoded();
         var userAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
@@ -90,8 +90,8 @@ class AbstractBaseUsersServiceTest {
     @Test
     void updateUser2() {
         // Arrange
-        var request = RequestUserUpdate2.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserUpdate2.hardcoded();
+        var user = JwtUser.hardcoded();
         var userAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act
@@ -108,7 +108,7 @@ class AbstractBaseUsersServiceTest {
     @RepeatedTest(FIVE_TIMES)
     void changePasswordRequired() {
         // Arrange
-        var request = RequestUserChangePasswordBasic.testsHardcoded();
+        var request = RequestUserChangePasswordBasic.hardcoded();
         var user = JwtUser.random();
         var userAC = ArgumentCaptor.forClass(JwtUser.class);
 
@@ -131,8 +131,8 @@ class AbstractBaseUsersServiceTest {
     @RepeatedTest(FIVE_TIMES)
     void changePassword1() {
         // Arrange
-        var request = RequestUserChangePasswordBasic.testsHardcoded();
-        var user = JwtUser.testsHardcoded();
+        var request = RequestUserChangePasswordBasic.hardcoded();
+        var user = JwtUser.hardcoded();
         var userAC = ArgumentCaptor.forClass(JwtUser.class);
 
         // Act

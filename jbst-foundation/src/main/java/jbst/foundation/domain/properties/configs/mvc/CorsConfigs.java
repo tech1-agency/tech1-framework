@@ -31,7 +31,7 @@ public class CorsConfigs extends AbstractPropertyConfigs {
     @NonMandatoryProperty
     private String[] exposedHeaders;
 
-    public static CorsConfigs testsHardcoded() {
+    public static CorsConfigs hardcoded() {
         return new CorsConfigs(
                 "/api/**",
                 new String[] { "http://localhost:8080", "http://localhost:8081" },

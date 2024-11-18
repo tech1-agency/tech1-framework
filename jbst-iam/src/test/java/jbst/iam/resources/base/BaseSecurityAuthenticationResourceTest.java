@@ -114,7 +114,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
         var request = RequestUserLogin.testsHardcoded();
         var username = request.username();
         var password = request.password();
-        var user = JwtUser.testsHardcoded();
+        var user = JwtUser.hardcoded();
         when(this.jwtUserDetailsService.loadUserByUsername(username.value())).thenReturn(user);
         var accessToken = JwtAccessToken.random();
         var refreshToken = JwtRefreshToken.random();

@@ -49,7 +49,7 @@ class HardwareMonitoringResourceTest extends TestRunnerResources {
         // Arrange
         var hardwareMonitoringMetadata = new HardwareMonitoringMetadata(
                 Version.unknown(),
-                SystemMemories.testsHardcoded()
+                SystemMemories.hardcoded()
         );
 
         // Act
@@ -71,6 +71,6 @@ class HardwareMonitoringResourceTest extends TestRunnerResources {
         assertThat(event.last().getGlobal().b().percentage()).isEqualTo(new BigDecimal("60.5"));
         assertThat(event.last().getGlobal().c().value()).isEqualTo(new BigDecimal("1.00"));
         assertThat(event.last().getGlobal().c().percentage()).isEqualTo(new BigDecimal("64.2"));
-        assertThat(event.last().getCpu()).isEqualTo(CpuMemory.testsHardcoded().getValue());
+        assertThat(event.last().getCpu()).isEqualTo(CpuMemory.hardcoded().getValue());
     }
 }

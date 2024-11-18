@@ -22,17 +22,17 @@ public record Timestamp(long value) {
         return new Timestamp(value);
     }
 
+    // Wednesday, April 3, 2024 10:36:10 AM
+    public static Timestamp hardcoded() {
+        return of(1712140570L);
+    }
+
     public static Timestamp random() {
         return of(randomLongGreaterThanZero());
     }
 
     public static Timestamp unknown() {
         return of(-1L);
-    }
-
-    // Wednesday, April 3, 2024 10:36:10 AM
-    public static Timestamp testsHardcoded() {
-        return of(1712140570L);
     }
 
     @JsonValue

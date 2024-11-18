@@ -84,9 +84,9 @@ class HardwareMonitoringStoreImplTest {
         var event3 = new EventLastHardwareMonitoringDatapoint(
                 Version.of("tech1-framework vTEST"),
                 new HardwareMonitoringDatapoint(
-                        GlobalMemory.testsHardcoded(),
-                        CpuMemory.testsHardcoded(),
-                        HeapMemory.testsHardcoded()
+                        GlobalMemory.hardcoded(),
+                        CpuMemory.hardcoded(),
+                        HeapMemory.hardcoded()
                 )
         );
         this.componentUnderTest.storeEvent(event3);

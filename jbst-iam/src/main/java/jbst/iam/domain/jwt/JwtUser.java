@@ -64,6 +64,32 @@ public record JwtUser(
         return true;
     }
 
+    public static JwtUser hardcoded() {
+        return hardcoded(
+                getSimpleGrantedAuthorities("user")
+        );
+    }
+
+    public static JwtUser hardcoded(Set<SimpleGrantedAuthority> authorities) {
+        return new JwtUser(
+                UserId.hardcoded(),
+                Username.hardcoded(),
+                Password.hardcoded(),
+                ZoneIdsConstants.UKRAINE,
+                authorities,
+                Email.hardcoded(),
+                "",
+                false,
+                new HashMap<>()
+        );
+    }
+
+    public static JwtUser hardcoded(Map<String, Object> attributes) {
+        var user = JwtUser.hardcoded();
+        user.attributes().putAll(attributes);
+        return user;
+    }
+
     public static JwtUser random() {
         return new JwtUser(
                 UserId.random(),
@@ -97,32 +123,6 @@ public record JwtUser(
                 false,
                 new HashMap<>()
         );
-    }
-
-    public static JwtUser testsHardcoded() {
-        return testsHardcoded(
-                getSimpleGrantedAuthorities("user")
-        );
-    }
-
-    public static JwtUser testsHardcoded(Set<SimpleGrantedAuthority> authorities) {
-        return new JwtUser(
-                UserId.testsHardcoded(),
-                Username.hardcoded(),
-                Password.hardcoded(),
-                ZoneIdsConstants.UKRAINE,
-                authorities,
-                Email.hardcoded(),
-                "",
-                false,
-                new HashMap<>()
-        );
-    }
-
-    public static JwtUser testsHardcoded(Map<String, Object> attributes) {
-        var user = JwtUser.testsHardcoded();
-        user.attributes().putAll(attributes);
-        return user;
     }
 
     @JsonIgnore

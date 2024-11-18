@@ -122,7 +122,7 @@ class AbstractBaseUsersValidatorTest {
     void validateUserUpdateRequest1EmailValidTwoUsersTest() {
         // Arrange
         var username = Username.random();
-        var user = JwtUser.testsHardcoded();
+        var user = JwtUser.hardcoded();
         when(this.usersRepository.findByEmailAsJwtUserOrNull(user.email())).thenReturn(user);
         var requestUserUpdate1 = new RequestUserUpdate1(randomZoneId(), user.email(), randomString());
 

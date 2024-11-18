@@ -5,10 +5,10 @@ public record SystemMemories(
         CpuMemory cpu
 ) {
 
-    public static SystemMemories testsHardcoded() {
+    public static SystemMemories hardcoded() {
         return new SystemMemories(
-                GlobalMemory.testsHardcoded(),
-                CpuMemory.testsHardcoded()
+                GlobalMemory.hardcoded(),
+                CpuMemory.hardcoded()
         );
     }
 }

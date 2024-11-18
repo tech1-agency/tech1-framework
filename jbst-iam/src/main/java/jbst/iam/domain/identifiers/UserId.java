@@ -14,6 +14,10 @@ public record UserId(@NotNull String value) {
         return new UserId(value);
     }
 
+    public static UserId hardcoded() {
+        return of("72667893848372913475");
+    }
+
     public static UserId random() {
         return new UserId(randomString());
     }
@@ -21,10 +25,6 @@ public record UserId(@NotNull String value) {
     @SuppressWarnings("unused")
     public static UserId unknown() {
         return of(UNKNOWN);
-    }
-
-    public static UserId testsHardcoded() {
-        return of("72667893848372913475");
     }
 
     @JsonValue

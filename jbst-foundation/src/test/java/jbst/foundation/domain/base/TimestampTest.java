@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimestampTest extends AbstractSerializationDeserializationRunner {
-    private static final Timestamp TIMESTAMP = Timestamp.testsHardcoded();
+    private static final Timestamp TIMESTAMP = Timestamp.hardcoded();
 
     @Override
     protected String getFileName() {

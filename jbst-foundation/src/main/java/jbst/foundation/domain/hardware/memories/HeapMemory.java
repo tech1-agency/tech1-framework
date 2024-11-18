@@ -43,21 +43,21 @@ public class HeapMemory {
         );
     }
 
+    public static HeapMemory hardcoded() {
+        return new HeapMemory(
+                1073741824L,
+                573741824L,
+                1073741824L,
+                1073741824L
+        );
+    }
+
     public static HeapMemory random() {
         return new HeapMemory(
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE
-        );
-    }
-
-    public static HeapMemory testsHardcoded() {
-        return new HeapMemory(
-                1073741824L,
-                573741824L,
-                1073741824L,
-                1073741824L
         );
     }
 }

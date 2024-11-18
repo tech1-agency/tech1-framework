@@ -103,7 +103,7 @@ public class ConfigurationBaseSecurityJwt {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getFrameworkBasePathPrefix();
+        var basePathPrefix = this.applicationFrameworkProperties.getMvcConfigs().getBasePathPrefix();
 
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)

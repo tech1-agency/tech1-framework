@@ -13,10 +13,10 @@ public record RequestUserUpdate2(
         String name
 ) {
 
-    public static RequestUserUpdate2 testsHardcoded() {
+    public static RequestUserUpdate2 hardcoded() {
         return new RequestUserUpdate2(
                 ZoneIdsConstants.UKRAINE,
-                "Tech1 Ops"
+                "jbst"
         );
     }
 

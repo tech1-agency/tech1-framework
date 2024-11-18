@@ -19,7 +19,7 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
     @MandatoryProperty
     private final boolean enabled;
     @MandatoryToggleProperty
-    private String frameworkBasePathPrefix;
+    private String basePathPrefix;
     @MandatoryToggleProperty
     private CorsConfigs corsConfigs;
 
@@ -27,7 +27,7 @@ public class MvcConfigs extends AbstractTogglePropertiesConfigs {
         return new MvcConfigs(
                 true,
                 "/jbst/security",
-                CorsConfigs.testsHardcoded()
+                CorsConfigs.hardcoded()
         );
     }
 

@@ -76,7 +76,7 @@ class ConfigurationBaseSecurityJwtMvcTest {
         var prefixAC = ArgumentCaptor.forClass(String.class);
         var predicateAC = ArgumentCaptor.forClass(Predicate.class);
         verify(configurer).addPathPrefix(prefixAC.capture(), predicateAC.capture());
-        assertThat(prefixAC.getValue()).isEqualTo("/framework/security");
+        assertThat(prefixAC.getValue()).isEqualTo("/jbst/security");
         Predicate<Class<?>> predicate = predicateAC.getValue();
         assertThat(predicate.test(ClassAnnotatedAbstractFrameworkBaseSecurityResource.class)).isTrue();
         assertThat(predicate.test(ClassNotAnnotatedAbstractFrameworkBaseSecurityResource.class)).isFalse();

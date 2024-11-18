@@ -170,7 +170,7 @@ class MongoUsersRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
         // Act-Assert-1
-        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.testsHardcoded(), Password.random(), InvitationCode.random());
+        var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), InvitationCode.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
     }

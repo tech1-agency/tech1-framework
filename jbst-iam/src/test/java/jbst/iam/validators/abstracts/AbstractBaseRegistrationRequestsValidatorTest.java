@@ -88,8 +88,8 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1UsernameAlreadyUsedTest() {
         // Arrange
-        var request = RequestUserRegistration1.testsHardcoded();
-        when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(JwtUser.testsHardcoded());
+        var request = RequestUserRegistration1.hardcoded();
+        when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(JwtUser.hardcoded());
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
@@ -119,7 +119,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1InvitationCodeAlreadyUsedTest() {
         // Arrange
-        var request = RequestUserRegistration1.testsHardcoded();
+        var request = RequestUserRegistration1.hardcoded();
         var invitationCode = InvitationCode.random();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
         when(this.invitationCodesRepository.findByValueAsAny(request.invitationCode())).thenReturn(invitationCode);
@@ -155,7 +155,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1NoInvitationCodeTest() {
         // Arrange
-        var request = RequestUserRegistration1.testsHardcoded();
+        var request = RequestUserRegistration1.hardcoded();
         var username = request.username();
         var invitationCode = request.invitationCode();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(null);
@@ -190,7 +190,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
     @Test
     void validateRegistrationRequest1InvitationCodePresentTest() throws RegistrationException {
         // Arrange
-        var request = RequestUserRegistration1.testsHardcoded();
+        var request = RequestUserRegistration1.hardcoded();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
         when(this.invitationCodesRepository.findByValueAsAny(request.invitationCode())).thenReturn(InvitationCode.randomNoInvited());
 

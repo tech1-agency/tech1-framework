@@ -20,7 +20,7 @@ public record RequestUserRegistration1(
         @NotBlank String invitationCode
 ) {
 
-    public static RequestUserRegistration1 testsHardcoded() {
+    public static RequestUserRegistration1 hardcoded() {
         return new RequestUserRegistration1(
                 Username.of("registration11"),
                 Password.hardcoded(),

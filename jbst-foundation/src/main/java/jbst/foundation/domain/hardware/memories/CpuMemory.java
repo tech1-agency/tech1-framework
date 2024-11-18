@@ -12,6 +12,7 @@ import static jbst.foundation.utilities.numbers.RoundingUtility.scale;
 import static jbst.foundation.utilities.random.RandomUtility.randomBigDecimalByBounds;
 
 // Lombok
+@SuppressWarnings("ALL")
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -20,9 +21,7 @@ public class CpuMemory {
     private final BigDecimal value;
 
     @JsonCreator
-    public CpuMemory(
-            BigDecimal value
-    ) {
+    public CpuMemory(BigDecimal value) {
         this.value = scale(value, 2);
     }
 
@@ -32,15 +31,15 @@ public class CpuMemory {
         );
     }
 
-    public static CpuMemory random() {
+    public static CpuMemory hardcoded() {
         return new CpuMemory(
-                randomBigDecimalByBounds(1, 50)
+                new BigDecimal("1.234")
         );
     }
 
-    public static CpuMemory testsHardcoded() {
+    public static CpuMemory random() {
         return new CpuMemory(
-                new BigDecimal("1.234")
+                randomBigDecimalByBounds(1, 50)
         );
     }
 }

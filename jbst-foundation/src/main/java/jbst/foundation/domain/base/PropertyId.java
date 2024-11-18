@@ -13,6 +13,10 @@ public record PropertyId(@NotNull String value) {
         return new PropertyId(value);
     }
 
+    public static PropertyId hardcoded() {
+        return of("A0814EF707DAF2FDE2D4");
+    }
+
     public static PropertyId random() {
         return of(randomString());
     }
@@ -25,12 +29,9 @@ public record PropertyId(@NotNull String value) {
         return of(StringConstants.DASH);
     }
 
+    @SuppressWarnings("unused")
     public static PropertyId hyphen() {
         return of(StringConstants.HYPHEN);
-    }
-
-    public static PropertyId testsHardcoded() {
-        return of("A0814EF707DAF2FDE2D4");
     }
 
     @JsonValue

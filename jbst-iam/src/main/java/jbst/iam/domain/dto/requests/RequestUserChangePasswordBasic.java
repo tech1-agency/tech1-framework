@@ -7,7 +7,7 @@ public record RequestUserChangePasswordBasic(
         @Password.ValidPasswordNotBlank Password confirmPassword
 ) {
 
-    public static RequestUserChangePasswordBasic testsHardcoded() {
+    public static RequestUserChangePasswordBasic hardcoded() {
         return new RequestUserChangePasswordBasic(
                 Password.hardcoded(),
                 Password.hardcoded()

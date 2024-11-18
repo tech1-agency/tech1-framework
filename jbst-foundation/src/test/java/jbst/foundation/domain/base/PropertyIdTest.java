@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PropertyIdTest extends AbstractSerializationDeserializationRunner {
-    private static final PropertyId PROPERTY_ID = PropertyId.testsHardcoded();
+    private static final PropertyId PROPERTY_ID = PropertyId.hardcoded();
 
     @Override
     protected String getFileName() {

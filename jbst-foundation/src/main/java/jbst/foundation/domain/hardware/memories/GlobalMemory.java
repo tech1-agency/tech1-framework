@@ -51,6 +51,17 @@ public class GlobalMemory {
         );
     }
 
+    public static GlobalMemory hardcoded() {
+        return new GlobalMemory(
+                1073741824L,
+                1973741824L,
+                1073741824L,
+                1773741824L,
+                1073741824L,
+                1673741824L
+        );
+    }
+
     public static GlobalMemory random() {
         return new GlobalMemory(
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
@@ -59,17 +70,6 @@ public class GlobalMemory {
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE,
                 randomLongGreaterThanZeroByBounds(10, 500) * BYTES_IN_MEGABYTE
-        );
-    }
-
-    public static GlobalMemory testsHardcoded() {
-        return new GlobalMemory(
-                1073741824L,
-                1973741824L,
-                1073741824L,
-                1773741824L,
-                1073741824L,
-                1673741824L
         );
     }
 }

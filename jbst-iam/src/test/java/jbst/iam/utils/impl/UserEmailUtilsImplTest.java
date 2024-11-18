@@ -63,9 +63,9 @@ class UserEmailUtilsImplTest {
 
         // Assert
         assertThat(subject)
-                .startsWith("[Tech1] Authentication Login on \"tech1-server\" — ")
+                .startsWith("[Tech1] Authentication Login on \"jbst-server\" — ")
                 .endsWith(" (UTC)");
-        subject = subject.replace("[Tech1] Authentication Login on \"tech1-server\" — ", "");
+        subject = subject.replace("[Tech1] Authentication Login on \"jbst-server\" — ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);

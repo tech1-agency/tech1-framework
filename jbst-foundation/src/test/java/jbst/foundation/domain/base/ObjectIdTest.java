@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ObjectIdTest extends AbstractSerializationDeserializationRunner {
-    private static final ObjectId OBJECT_ID = ObjectId.testsHardcoded();
+    private static final ObjectId OBJECT_ID = ObjectId.hardcoded();
 
     @Override
     protected String getFileName() {

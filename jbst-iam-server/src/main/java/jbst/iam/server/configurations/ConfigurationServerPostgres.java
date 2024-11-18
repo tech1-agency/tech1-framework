@@ -4,15 +4,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import tech1.framework.iam.configurations.ApplicationMongo;
+import tech1.framework.iam.configurations.ApplicationPostgres;
 
-@Profile("mongodb")
+@Profile("postgres")
 @Configuration
 @Import({
-        ApplicationMongo.class
+        ApplicationPostgres.class
 })
 @ComponentScan({
-        "tech1.framework.iam.server.mongodb"
+        "jbst.iam.server.postgres"
 })
-public class ApplicationMongoServer {
+public class ConfigurationServerPostgres {
 }

@@ -32,7 +32,7 @@ import static org.springframework.http.HttpMethod.GET;
         ApplicationProperties.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ApplicationIamServer implements AbstractApplicationSecurityJwtConfigurer {
+public class ConfigurationServer implements AbstractApplicationSecurityJwtConfigurer {
 
     // Properties
     private final ApplicationFrameworkProperties applicationFrameworkProperties;

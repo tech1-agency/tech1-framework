@@ -62,8 +62,8 @@ jbst:
     authorities-configs:
       authorities:
         - value: "superadmin"
-        - value: "invitationCode:read"
-        - value: "invitationCode:write"
+        - value: "invitations:read"
+        - value: "invitations:write"
         - value: "prometheus:read"
         - value: "user"
         - value: "admin"

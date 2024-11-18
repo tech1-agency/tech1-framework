@@ -82,12 +82,12 @@ jbst:
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
             password-change-required: false
-            authorities: [ "admin", "invitationCode:write" ]
+            authorities: [ "admin", "invitations:write" ]
           - username: superadmin11
             password: "$2a$11$qzm4DlVWEssSavOV0Qf0JOzxQZPIlwl8ja5KlQmBn2QtK7G7bSx3C"
             zone-id: "Europe/Kyiv"
             password-change-required: false
-            authorities: [ "superadmin", "invitationCode:read", "invitationCode:write" ]
+            authorities: [ "superadmin", "invitations:read", "invitations:write" ]
       invitation-codes:
         enabled: true
 

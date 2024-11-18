@@ -26,7 +26,7 @@ class SpringAuthoritiesUtilityTest {
                         new SimpleGrantedAuthority(INVITATION_CODE_READ),
                         new SimpleGrantedAuthority(SUPERADMIN),
                         new SimpleGrantedAuthority(INVITATION_CODE_WRITE)),
-                        "invitationCode:read, invitationCode:write, superadmin"
+                        "invitations:read, invitations:write, superadmin"
                 )
         );
     }

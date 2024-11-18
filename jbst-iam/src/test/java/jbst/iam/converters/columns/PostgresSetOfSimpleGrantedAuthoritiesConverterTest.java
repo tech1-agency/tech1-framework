@@ -31,7 +31,7 @@ class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
                 Arguments.of(null, ""),
                 Arguments.of(Set.of(), ""),
                 Arguments.of(Set.of(SUPERADMIN), "superadmin"),
-                Arguments.of(Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)), "invitationCode:read;invitationCode:write")
+                Arguments.of(Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)), "invitations:read;invitations:write")
         );
     }
 
@@ -40,7 +40,7 @@ class PostgresSetOfSimpleGrantedAuthoritiesConverterTest {
                 Arguments.of(null, Set.of()),
                 Arguments.of("", Set.of()),
                 Arguments.of("superadmin", Set.of(SUPERADMIN)),
-                Arguments.of("invitationCode:read;invitationCode:write", Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)))
+                Arguments.of("invitations:read;invitations:write", Set.of(new SimpleGrantedAuthority(INVITATION_CODE_READ), new SimpleGrantedAuthority(INVITATION_CODE_WRITE)))
         );
     }
 

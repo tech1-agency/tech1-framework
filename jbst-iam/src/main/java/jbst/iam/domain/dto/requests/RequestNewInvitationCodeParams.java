@@ -12,7 +12,7 @@ public record RequestNewInvitationCodeParams(
 ) {
 
     public static RequestNewInvitationCodeParams hardcoded() {
-        return new RequestNewInvitationCodeParams(new HashSet<>(Set.of("invitationCode:read", "invitationCode:write")));
+        return new RequestNewInvitationCodeParams(new HashSet<>(Set.of("invitations:read", "invitations:write")));
     }
 
     public static RequestNewInvitationCodeParams random() {

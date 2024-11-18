@@ -12,7 +12,7 @@ public record EventAuthenticationLoginFailure(
         UserAgentHeader userAgentHeader
 ) {
 
-    public static EventAuthenticationLoginFailure testsHardcoded() {
+    public static EventAuthenticationLoginFailure hardcoded() {
         return new EventAuthenticationLoginFailure(
                 Username.hardcoded(),
                 Password.hardcoded(),

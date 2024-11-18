@@ -118,7 +118,7 @@ class BaseSecurityJwtSubscriberTest {
     @Test
     void onAuthenticationLoginFailureTest() {
         // Arrange
-        var event = EventAuthenticationLoginFailure.testsHardcoded();
+        var event = EventAuthenticationLoginFailure.hardcoded();
         when(this.userMetadataUtils.getUserRequestMetadataProcessed(event.ipAddress(), event.userAgentHeader())).thenReturn(UserRequestMetadata.valid());
 
         // Act

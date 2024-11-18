@@ -7,7 +7,7 @@ public record RequestUserLogin(
         @Username.ValidUsername Username username,
         @Password.ValidPasswordNotBlank Password password
 ) {
-    public static RequestUserLogin testsHardcoded() {
+    public static RequestUserLogin hardcoded() {
         return new RequestUserLogin(Username.hardcoded(), Password.hardcoded());
     }
 

@@ -111,7 +111,7 @@ class BaseSecurityAuthenticationResourceTest extends TestRunnerResources1 {
     @Test
     void loginTest() throws Exception {
         // Arrange
-        var request = RequestUserLogin.testsHardcoded();
+        var request = RequestUserLogin.hardcoded();
         var username = request.username();
         var password = request.password();
         var user = JwtUser.hardcoded();

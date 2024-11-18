@@ -32,7 +32,7 @@ public record ResponseUserSessionsTable(
 
     public static ResponseUserSessionsTable random() {
         var sessions = new ArrayList<ResponseUserSession2>();
-        sessions.add(ResponseUserSession2.testsHardcodedCurrent());
+        sessions.add(ResponseUserSession2.hardcodedCurrent());
         IntStream.range(0, 100).forEach(element -> sessions.add(ResponseUserSession2.random()));
         return of(sessions);
     }

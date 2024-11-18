@@ -18,6 +18,10 @@ public record JwtAccessToken(@NotNull String value) {
         return new JwtAccessToken(value);
     }
 
+    public static JwtAccessToken hardcoded() {
+        return of("D9F4AF096BEE11C93D84");
+    }
+
     public static JwtAccessToken random() {
         return new JwtAccessToken(randomString());
     }
@@ -25,10 +29,6 @@ public record JwtAccessToken(@NotNull String value) {
     @SuppressWarnings("unused")
     public static JwtAccessToken unknown() {
         return of(UNKNOWN);
-    }
-
-    public static JwtAccessToken testsHardcoded() {
-        return of("D9F4AF096BEE11C93D84");
     }
 
     public static Set<JwtAccessToken> accessTokens(String... tokens) {

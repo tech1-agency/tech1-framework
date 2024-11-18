@@ -28,7 +28,7 @@ public record UserSessionId(@NotNull String value) {
         return of(UNKNOWN);
     }
 
-    public static UserSessionId testsHardcoded() {
+    public static UserSessionId hardcoded() {
         return of("8DE052C55BD26A1A6F0E");
     }
 

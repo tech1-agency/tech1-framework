@@ -14,6 +14,10 @@ public record InvitationCodeId(@NotNull String value) {
         return new InvitationCodeId(value);
     }
 
+    public static InvitationCodeId hardcoded() {
+        return of("5EFCB2583361E1C7071E");
+    }
+
     public static InvitationCodeId random() {
         return new InvitationCodeId(randomString());
     }
@@ -21,10 +25,6 @@ public record InvitationCodeId(@NotNull String value) {
     @SuppressWarnings("unused")
     public static InvitationCodeId unknown() {
         return of(UNKNOWN);
-    }
-
-    public static InvitationCodeId testsHardcoded() {
-        return of("5EFCB2583361E1C7071E");
     }
 
     @JsonValue

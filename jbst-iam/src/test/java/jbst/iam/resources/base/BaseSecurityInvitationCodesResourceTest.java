@@ -83,7 +83,7 @@ class BaseSecurityInvitationCodesResourceTest extends TestRunnerResources1 {
     void saveTest() throws Exception {
         // Arrange
         when(this.currentSessionAssistant.getCurrentUsername()).thenReturn(Username.hardcoded());
-        var request = RequestNewInvitationCodeParams.testsHardcoded();
+        var request = RequestNewInvitationCodeParams.hardcoded();
 
         // Act
         this.mvc.perform(

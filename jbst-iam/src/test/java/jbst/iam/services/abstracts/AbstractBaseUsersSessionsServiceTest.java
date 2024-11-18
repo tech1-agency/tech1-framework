@@ -159,27 +159,27 @@ class AbstractBaseUsersSessionsServiceTest {
 
     @Test
     void assertAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(UserSession.randomPersistedSession()));
+        when(this.usersSessionsRepository.isPresent(UserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.present(UserSession.randomPersistedSession()));
 
         // Act
-        this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.testsHardcoded());
+        this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.hardcoded());
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.hardcoded());
+        verify(this.usersSessionsRepository).isPresent(UserSessionId.hardcoded(), Username.hardcoded());
     }
 
     @Test
     void assertAccessNoAccess() {
-        when(this.usersSessionsRepository.isPresent(UserSessionId.testsHardcoded(), Username.hardcoded())).thenReturn(TuplePresence.absent());
+        when(this.usersSessionsRepository.isPresent(UserSessionId.hardcoded(), Username.hardcoded())).thenReturn(TuplePresence.absent());
 
         // Act
-        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.testsHardcoded()));
+        var throwable = catchThrowable(() -> this.componentUnderTest.assertAccess(Username.hardcoded(), UserSessionId.hardcoded()));
 
         // Assert
-        verify(this.usersSessionsRepository).isPresent(UserSessionId.testsHardcoded(), Username.hardcoded());
+        verify(this.usersSessionsRepository).isPresent(UserSessionId.hardcoded(), Username.hardcoded());
         assertThat(throwable)
                 .isInstanceOf(AccessDeniedException.class)
-                .hasMessage(entityAccessDenied("Session", UserSessionId.testsHardcoded().value()));
+                .hasMessage(entityAccessDenied("Session", UserSessionId.hardcoded().value()));
     }
 
     @Test

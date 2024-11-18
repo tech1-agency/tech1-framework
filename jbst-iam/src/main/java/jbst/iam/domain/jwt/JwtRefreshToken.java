@@ -18,6 +18,10 @@ public record JwtRefreshToken(@NotNull String value) {
         return new JwtRefreshToken(value);
     }
 
+    public static JwtRefreshToken hardcoded() {
+        return of("B7C50972C873270CD7B2");
+    }
+
     public static JwtRefreshToken random() {
         return new JwtRefreshToken(randomString());
     }
@@ -25,10 +29,6 @@ public record JwtRefreshToken(@NotNull String value) {
     @SuppressWarnings("unused")
     public static JwtRefreshToken unknown() {
         return of(UNKNOWN);
-    }
-
-    public static JwtRefreshToken testsHardcoded() {
-        return of("B7C50972C873270CD7B2");
     }
 
     @SuppressWarnings("unused")

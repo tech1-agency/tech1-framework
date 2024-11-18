@@ -70,10 +70,10 @@ public record ResponseUserSession2(
         );
     }
 
-    public static ResponseUserSession2 testsHardcodedCurrent() {
+    public static ResponseUserSession2 hardcodedCurrent() {
         var token = "PFRL63OtcEKKy0hb7UjE";
         return of(
-                UserSessionId.testsHardcoded(),
+                UserSessionId.hardcoded(),
                 TimestampUtility.getCurrentTimestamp(),
                 Username.hardcoded(),
                 new RequestAccessToken(token),

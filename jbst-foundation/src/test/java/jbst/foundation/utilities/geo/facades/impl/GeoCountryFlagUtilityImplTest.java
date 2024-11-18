@@ -2,7 +2,7 @@ package jbst.foundation.utilities.geo.facades.impl;
 
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,7 +42,7 @@ class GeoCountryFlagUtilityImplTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

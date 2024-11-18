@@ -11,7 +11,7 @@ import jbst.foundation.domain.hardware.monitoring.HardwareMonitoringThresholds;
 import jbst.foundation.domain.hardware.monitoring.HardwareName;
 import jbst.foundation.services.hardware.store.HardwareMonitoringStore;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ class HardwareMonitoringStoreImplTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

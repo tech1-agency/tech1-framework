@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 
 import java.lang.reflect.Method;
 import java.util.function.Predicate;
@@ -33,7 +33,7 @@ class ConfigurationBaseSecurityJwtMvcTest {
 
     @Configuration
     @Import(
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     )
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

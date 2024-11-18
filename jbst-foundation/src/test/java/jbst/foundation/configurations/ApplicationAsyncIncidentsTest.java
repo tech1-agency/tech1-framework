@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import jbst.foundation.incidents.handlers.AsyncUncaughtExceptionHandlerPublisher;
 import jbst.foundation.incidents.handlers.RejectedExecutionHandlerPublisher;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,7 @@ class ApplicationAsyncIncidentsTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
+            ConfigurationPropertiesJbstHardcoded.class,
             ApplicationAsyncIncidents.class
     })
     static class ContextConfiguration {

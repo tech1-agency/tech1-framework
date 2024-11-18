@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ class ApplicationEmails1Test {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
+            ConfigurationPropertiesJbstHardcoded.class,
             ApplicationEmails.class
     })
     static class ContextConfiguration {

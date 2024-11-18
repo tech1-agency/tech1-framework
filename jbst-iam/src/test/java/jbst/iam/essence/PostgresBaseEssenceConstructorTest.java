@@ -1,7 +1,7 @@
 package jbst.iam.essence;
 
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.base.DefaultUser;
 import jbst.iam.repositories.postgres.PostgresInvitationCodesRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
@@ -33,7 +33,7 @@ class PostgresBaseEssenceConstructorTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

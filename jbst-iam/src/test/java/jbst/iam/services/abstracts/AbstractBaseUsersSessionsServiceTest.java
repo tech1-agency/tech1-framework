@@ -37,7 +37,7 @@ import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.tests.constants.TestsFlagsConstants;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.foundation.domain.tuples.TupleToggle;
@@ -91,7 +91,7 @@ class AbstractBaseUsersSessionsServiceTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

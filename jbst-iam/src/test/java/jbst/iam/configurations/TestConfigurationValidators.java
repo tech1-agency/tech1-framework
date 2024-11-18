@@ -8,14 +8,14 @@ import jbst.iam.repositories.UsersSessionsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 
 import static org.mockito.Mockito.mock;
 
 @Configuration
 @Import({
-        ApplicationFrameworkPropertiesTestsHardcodedContext.class
+        ConfigurationPropertiesJbstHardcoded.class
 })
 public class TestConfigurationValidators {
 

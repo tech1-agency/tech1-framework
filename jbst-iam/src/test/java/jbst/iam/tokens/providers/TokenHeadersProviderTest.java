@@ -18,7 +18,7 @@ import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.properties.configs.security.jwt.JwtTokensConfigs;
 import jbst.foundation.utilities.random.RandomUtility;
 
@@ -34,7 +34,7 @@ class TokenHeadersProviderTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

@@ -17,7 +17,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 
 import java.time.ZoneOffset;
@@ -38,7 +38,7 @@ class UserEmailUtilsImplTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

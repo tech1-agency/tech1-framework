@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,7 @@ class ApplicationJasyptTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
+            ConfigurationPropertiesJbstHardcoded.class,
             ApplicationJasypt.class
     })
     static class ContextConfiguration {

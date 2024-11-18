@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.domain.properties.ApplicationFrameworkProperties;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ class ApplicationAsyncTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
+            ConfigurationPropertiesJbstHardcoded.class,
             ApplicationAsync.class
     })
     static class ContextConfiguration {

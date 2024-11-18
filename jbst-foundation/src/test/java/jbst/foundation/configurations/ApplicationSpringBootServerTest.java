@@ -1,6 +1,5 @@
 package jbst.foundation.configurations;
 
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ class ApplicationSpringBootServerTest {
     @Configuration
     @Import({
             ApplicationSpringBootServer.class,
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class
+            ConfigurationPropertiesJbstHardcoded.class
     })
     static class ContextConfiguration {
         @Bean

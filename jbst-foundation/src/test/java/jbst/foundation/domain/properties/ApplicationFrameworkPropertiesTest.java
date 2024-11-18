@@ -1,5 +1,6 @@
 package jbst.foundation.domain.properties;
 
+import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +13,7 @@ class ApplicationFrameworkPropertiesTest {
     @Test
     void applicationFrameworkPropertiesTest() {
         // Arrange
-        var context = new ApplicationFrameworkPropertiesTestsHardcodedContext();
+        var context = new ConfigurationPropertiesJbstHardcoded();
         var applicationFrameworkProperties = context.applicationFrameworkProperties();
 
         // Act

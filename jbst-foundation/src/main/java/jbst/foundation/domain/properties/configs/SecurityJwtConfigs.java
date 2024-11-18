@@ -1,6 +1,5 @@
 package jbst.foundation.domain.properties.configs;
 
-import jbst.foundation.domain.asserts.Asserts;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
@@ -22,6 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
+import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
 
 // Lombok (property-based)
 @AllArgsConstructor(onConstructor = @__({@ConstructorBinding}))
@@ -114,12 +114,12 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();
         var defaultUsersAuthorities = this.essenceConfigs.getDefaultUsers().getDefaultUsersAuthorities();
         boolean containsAll = expectedAuthorities.containsAll(defaultUsersAuthorities);
-        Asserts.assertTrueOrThrow(containsAll, "Please verify `defaultUsers.users.authorities`. Configuration provide unauthorized authority");
+        assertTrueOrThrow(containsAll, "Please verify `defaultUsers.users.authorities`. Configuration provide unauthorized authority");
 
         // Requirements: availableAuthorities vs. required enum values
         var authorityClasses = this.getAbstractAuthorityClasses(this.authoritiesConfigs.getPackageName());
         int size = authorityClasses.size();
-        Asserts.assertTrueOrThrow(size == 1, "Please verify AbstractAuthority.class has only one sub enum. Found: `" + size + "`");
+        assertTrueOrThrow(size == 1, "Please verify AbstractAuthority.class has only one sub enum. Found: `" + size + "`");
         var authorityClass = authorityClasses.iterator().next();
         Set<String> actualAuthorities = new HashSet<>();
         var abstractAuthorityClass = AbstractAuthority.class;
@@ -138,7 +138,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                 .collect(Collectors.toSet());
         actualAuthorities.addAll(frameworkAuthorities);
         actualAuthorities.addAll(serverAuthorities);
-        Asserts.assertTrueOrThrow(
+        assertTrueOrThrow(
                 expectedAuthorities.equals(actualAuthorities),
                 "Please verify AbstractAuthority sub enum configuration. Expected: `" + expectedAuthorities + "`. Actual: `" + actualAuthorities + "`"
         );

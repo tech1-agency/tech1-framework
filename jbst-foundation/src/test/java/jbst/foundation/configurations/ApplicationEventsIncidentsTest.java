@@ -1,7 +1,6 @@
 package jbst.foundation.configurations;
 
 import jbst.foundation.incidents.handlers.ErrorHandlerPublisher;
-import jbst.foundation.domain.properties.ApplicationFrameworkPropertiesTestsHardcodedContext;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +29,7 @@ class ApplicationEventsIncidentsTest {
 
     @Configuration
     @Import({
-            ApplicationFrameworkPropertiesTestsHardcodedContext.class,
+            ConfigurationPropertiesJbstHardcoded.class,
             ApplicationEventsIncidents.class
     })
     static class ContextConfiguration {

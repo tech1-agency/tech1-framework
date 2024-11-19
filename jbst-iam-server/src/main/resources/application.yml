@@ -1,4 +1,5 @@
 #file: noinspection SpringBootApplicationYaml
+
 # Server
 server:
   servlet:

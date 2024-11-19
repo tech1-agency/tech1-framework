@@ -1,4 +1,5 @@
 #file: noinspection SpringBootApplicationYaml
+
 # Spring PostgreSQL
 spring:
   datasource:

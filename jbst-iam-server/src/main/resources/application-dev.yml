@@ -1,4 +1,5 @@
 #file: noinspection SpringBootApplicationYaml
+
 # Logging
 logging:
   config: classpath:logback-console.xml

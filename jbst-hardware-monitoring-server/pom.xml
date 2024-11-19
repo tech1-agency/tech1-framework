@@ -10,54 +10,66 @@
         <version>1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jbst-iam-server</artifactId>
+    <artifactId>jbst-hardware-monitoring-server</artifactId>
 
     <dependencies>
         <!-- jbst -->
         <dependency>
             <groupId>jbst</groupId>
-            <artifactId>jbst-iam</artifactId>
+            <artifactId>jbst-foundation</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- OSHI -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core-java11</artifactId>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>hms-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.mmdb</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>**/*.mmdb</include>
-                </includes>
             </resource>
         </resources>
         <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <!-- Copy Dependency: Lombok (Sonar Purposes) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <!-- Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <!-- Surefire -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
             <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${version.dependency.springframework.boot}</version>
             </plugin>
             <!-- maven <version></version> => `/actuator/info` endpoint -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>${version.plugin.resource}</version>
             </plugin>
             <!-- git => `actuator/info` endpoint -->
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
-                <version>${version.plugin.git.commit}</version>
             </plugin>
         </plugins>
     </build>

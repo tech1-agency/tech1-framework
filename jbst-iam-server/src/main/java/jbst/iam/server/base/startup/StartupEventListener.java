@@ -18,6 +18,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
     // Publishers
     private final IncidentPublisher incidentPublisher;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public StartupEventListener(
             AbstractEssenceConstructor essenceConstructor,
@@ -35,8 +36,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
     public void onStartup() {
         try {
             super.onStartup();
-            var serverConfigs = this.jbstProperties.getServerConfigs();
-            LOGGER.info(JbstConstants.Logs.getServerStartup(COMPLETED), serverConfigs.getName());
+            LOGGER.info(JbstConstants.Logs.getServerStartup(COMPLETED), this.jbstProperties.getServerConfigs().getName());
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

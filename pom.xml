@@ -43,6 +43,7 @@
         <module>jbst-iam</module>
         <!-- Servers -->
         <module>jbst-iam-server</module>
+        <module>jbst-hardware-monitoring-server</module>
     </modules>
 
     <properties>
@@ -66,6 +67,7 @@
         <version.dependency.jsonwebtoken>0.12.5</version.dependency.jsonwebtoken>
         <version.dependency.liquibase>4.24.0</version.dependency.liquibase>
         <version.dependency.lombok>1.18.26</version.dependency.lombok>
+        <version.dependency.oshi>6.4.1</version.dependency.oshi>
         <version.dependency.postresql.hibernate.utils>3.7.4</version.dependency.postresql.hibernate.utils>
         <version.dependency.springdoc.openapi>2.5.0</version.dependency.springdoc.openapi>
         <version.dependency.springframework.boot>3.2.5</version.dependency.springframework.boot>
@@ -196,6 +198,12 @@
                 <groupId>com.diogonunes</groupId>
                 <artifactId>JColor</artifactId>
                 <version>${version.dependency.jcolor}</version>
+            </dependency>
+            <!-- OSHI -->
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core-java11</artifactId>
+                <version>${version.dependency.oshi}</version>
             </dependency>
             <!-- Lombok -->
             <dependency>

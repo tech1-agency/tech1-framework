@@ -35,28 +35,28 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             request.username(),
-                            request.invitation(),
+                            request.code(),
                             message
                     )
             );
             this.securityJwtIncidentPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
                             request.username(),
-                            request.invitation(),
+                            request.code(),
                             message
                     )
             );
             throw new RegistrationException(message);
         }
 
-        var invitation = this.invitationsRepository.findByValueAsAny(request.invitation());
+        var invitation = this.invitationsRepository.findByCodeAsAny(request.code());
         if (nonNull(invitation)) {
             if (nonNull(invitation.invited())) {
-                var message = entityAlreadyUsed("Invitation", invitation.value());
+                var message = entityAlreadyUsed("Code", invitation.code());
                 this.securityJwtPublisher.publishRegistration1Failure(
                         new EventRegistration1Failure(
                                 request.username(),
-                                request.invitation(),
+                                request.code(),
                                 invitation.owner(),
                                 message
                         )
@@ -64,7 +64,7 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                 this.securityJwtIncidentPublisher.publishRegistration1Failure(
                         new IncidentRegistration1Failure(
                                 request.username(),
-                                request.invitation(),
+                                request.code(),
                                 invitation.owner(),
                                 message
                         )
@@ -72,18 +72,18 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
                 throw new RegistrationException(message);
             }
         } else {
-            var exception = entityNotFound("Invitation", request.invitation());
+            var exception = entityNotFound("Code", request.code());
             this.securityJwtPublisher.publishRegistration1Failure(
                     EventRegistration1Failure.of(
                             request.username(),
-                            request.invitation(),
+                            request.code(),
                             exception
                     )
             );
             this.securityJwtIncidentPublisher.publishRegistration1Failure(
                     IncidentRegistration1Failure.of(
                             request.username(),
-                            request.invitation(),
+                            request.code(),
                             exception
                     )
             );

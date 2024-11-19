@@ -17,7 +17,7 @@ public record RequestUserRegistration1(
         @Password.ValidPasswordCamelCaseLettersAndNumbers(min = 8, max = 20) Password password,
         @Password.ValidPasswordNotBlank Password confirmPassword,
         @Schema(type = "string") @NotNull ZoneId zoneId,
-        @NotBlank String invitation
+        @NotBlank String code
 ) {
 
     public static RequestUserRegistration1 hardcoded() {
@@ -40,7 +40,7 @@ public record RequestUserRegistration1(
                 this.password,
                 this.confirmPassword,
                 reworkUkraineZoneId(this.zoneId),
-                this.invitation
+                this.code
         );
     }
 }

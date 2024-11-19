@@ -13,10 +13,10 @@ class IncidentRegistration1FailureTest {
         // Arrange
         var username = Username.hardcoded();
         var exception = randomString();
-        var invitation = randomString();
+        var code = randomString();
         var incident = IncidentRegistration1Failure.of(
                 username,
-                invitation,
+                code,
                 exception
         );
 
@@ -29,11 +29,11 @@ class IncidentRegistration1FailureTest {
         assertThat(actual.getUsername().value()).isEqualTo("jbst");
         assertThat(actual.getAttributes())
                 .hasSize(5)
-                .containsOnlyKeys("incidentType", "username", "exception", "invitation", "invitationOwner")
+                .containsOnlyKeys("incidentType", "username", "exception", "invitationCode", "invitationOwner")
                 .containsEntry("incidentType", "Register1 Failure")
                 .containsEntry("username", username)
                 .containsEntry("exception", exception)
-                .containsEntry("invitation", invitation)
-                .containsEntry("invitationOwner", Username.of("—"));
+                .containsEntry("invitationCode", code)
+                .containsEntry("invitationOwner", Username.dash());
     }
 }

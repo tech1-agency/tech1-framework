@@ -44,7 +44,7 @@ class AbstractBaseInvitationsRequestsValidatorTest {
 
     private static Stream<Arguments> validateCreateNewInvitationTest() {
         return Stream.of(
-                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "invitation:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
+                Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, "code:send")), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
                 Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, SUPERADMIN)), "Authorities must contains: [admin, invitations:read, invitations:write, prometheus:read, user]"),
                 Arguments.of(new RequestNewInvitationParams(Set.of()), null),
                 Arguments.of(new RequestNewInvitationParams(Set.of(INVITATIONS_READ, INVITATIONS_WRITE)), null)

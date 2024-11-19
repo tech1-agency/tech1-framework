@@ -103,14 +103,14 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         request.username(),
-                        request.invitation(),
+                        request.code(),
                         exception
                 )
         );
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 IncidentRegistration1Failure.of(
                         request.username(),
-                        request.invitation(),
+                        request.code(),
                         exception
                 )
         );
@@ -122,22 +122,22 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         var request = RequestUserRegistration1.hardcoded();
         var invitation = Invitation.random();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
-        when(this.invitationsRepository.findByValueAsAny(request.invitation())).thenReturn(invitation);
+        when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(invitation);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Invitation", invitation.value());
+        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Code", invitation.code());
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(request.username());
-        verify(this.invitationsRepository).findByValueAsAny(request.invitation());
+        verify(this.invitationsRepository).findByCodeAsAny(request.code());
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 new EventRegistration1Failure(
                         request.username(),
-                        request.invitation(),
+                        request.code(),
                         invitation.owner(),
                         exception
                 )
@@ -145,7 +145,7 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         verify(this.securityJwtIncidentPublisher).publishRegistration1Failure(
                 new IncidentRegistration1Failure(
                         request.username(),
-                        request.invitation(),
+                        request.code(),
                         invitation.owner(),
                         exception
                 )
@@ -157,20 +157,20 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         var username = request.username();
-        var invitation = request.invitation();
+        var invitation = request.code();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(null);
-        when(this.invitationsRepository.findByValueAsAny(invitation)).thenReturn(null);
+        when(this.invitationsRepository.findByCodeAsAny(invitation)).thenReturn(null);
 
         // Act
         var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest1(request));
 
         // Assert
-        var exception = ExceptionsMessagesUtility.entityNotFound("Invitation", invitation);
+        var exception = ExceptionsMessagesUtility.entityNotFound("Code", invitation);
         assertThat(throwable)
                 .isInstanceOf(RegistrationException.class)
                 .hasMessage(exception);
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(username);
-        verify(this.invitationsRepository).findByValueAsAny(invitation);
+        verify(this.invitationsRepository).findByCodeAsAny(invitation);
         verify(this.securityJwtPublisher).publishRegistration1Failure(
                 EventRegistration1Failure.of(
                         username,
@@ -192,13 +192,13 @@ class AbstractBaseRegistrationRequestsValidatorTest {
         // Arrange
         var request = RequestUserRegistration1.hardcoded();
         when(this.usersRepository.findByUsernameAsJwtUserOrNull(request.username())).thenReturn(null);
-        when(this.invitationsRepository.findByValueAsAny(request.invitation())).thenReturn(Invitation.randomNoInvited());
+        when(this.invitationsRepository.findByCodeAsAny(request.code())).thenReturn(Invitation.randomNoInvited());
 
         // Act
         this.componentUnderTest.validateRegistrationRequest1(request);
 
         // Assert
         verify(this.usersRepository).findByUsernameAsJwtUserOrNull(request.username());
-        verify(this.invitationsRepository).findByValueAsAny(request.invitation());
+        verify(this.invitationsRepository).findByCodeAsAny(request.code());
     }
 }

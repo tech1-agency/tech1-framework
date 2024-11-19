@@ -50,7 +50,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
     @Test
     void findUnusedSortTest() {
         // Assert
-        assertThat(INVITATION_CODES_UNUSED).hasToString("owner: ASC,value: ASC");
+        assertThat(INVITATION_CODES_UNUSED).hasToString("owner: ASC,code: ASC");
     }
 
     @Test
@@ -63,7 +63,7 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
 
         var savedInvitation = saved.get(0);
         var existentInvitationId = savedInvitation.invitationId();
-        var existentInvitation = savedInvitation.getValue();
+        var existentInvitation = savedInvitation.getCode();
 
         // Act
         var count = this.invitationsRepository.count();
@@ -76,8 +76,8 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
         assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user2"))).hasSize(3);
         assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user3"))).hasSize(1);
         assertThat(this.invitationsRepository.findResponseCodesByOwner(Username.of("user5"))).isEmpty();
-        assertThat(this.invitationsRepository.findByValueAsAny(notExistentInvitation)).isNull();
-        assertThat(this.invitationsRepository.findByValueAsAny(existentInvitation)).isNotNull();
+        assertThat(this.invitationsRepository.findByCodeAsAny(notExistentInvitation)).isNull();
+        assertThat(this.invitationsRepository.findByCodeAsAny(existentInvitation)).isNotNull();
         assertThat(this.invitationsRepository.countByOwner(Username.of("user1"))).isEqualTo(2);
         assertThat(this.invitationsRepository.countByOwner(Username.of("user2"))).isEqualTo(3);
         assertThat(this.invitationsRepository.countByOwner(Username.of("user3"))).isEqualTo(1);
@@ -103,10 +103,10 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
         assertThat(unused.get(2).value()).isEqualTo("abc");
         assertThat(unused.get(3).value()).isEqualTo("value22");
         assertThat(unused.get(4).value()).isEqualTo("value44");
-        var codes = this.invitationsRepository.findByInvitedIsNotNull(Sort.by("value").descending());
+        var codes = this.invitationsRepository.findByInvitedIsNotNull(Sort.by("code").descending());
         assertThat(codes).hasSize(2);
-        assertThat(codes.get(0).getValue()).isEqualTo("value234");
-        assertThat(codes.get(1).getValue()).isEqualTo("value123");
+        assertThat(codes.get(0).getCode()).isEqualTo("value234");
+        assertThat(codes.get(1).getCode()).isEqualTo("value123");
     }
 
     @Test
@@ -164,6 +164,6 @@ class PostgresInvitationsRepositoryIT extends TestsConfigurationPostgresReposito
         var ownedInvitation = ownedInvitations.get(0);
         assertThat(ownedInvitation.getOwner()).isEqualTo(Username.hardcoded());
         assertThat(ownedInvitation.getAuthorities()).isEqualTo(getSimpleGrantedAuthorities(request.authorities()));
-        assertThat(ownedInvitation.getValue()).hasSize(40);
+        assertThat(ownedInvitation.getCode()).hasSize(40);
     }
 }

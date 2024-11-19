@@ -93,7 +93,7 @@ class AbstractBaseRegistrationServiceTest {
                 randomString()
         );
         var invitation = entity(Invitation.class);
-        when(this.invitationsRepository.findByValueAsAny(requestUserRegistration1.invitation())).thenReturn(invitation);
+        when(this.invitationsRepository.findByCodeAsAny(requestUserRegistration1.code())).thenReturn(invitation);
         var hashPassword = randomString();
         when(this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value())).thenReturn(hashPassword);
         var invitationAC1 = ArgumentCaptor.forClass(Invitation.class);
@@ -103,7 +103,7 @@ class AbstractBaseRegistrationServiceTest {
         this.componentUnderTest.register1(requestUserRegistration1);
 
         // Assert
-        verify(this.invitationsRepository).findByValueAsAny(requestUserRegistration1.invitation());
+        verify(this.invitationsRepository).findByCodeAsAny(requestUserRegistration1.code());
         verify(this.bCryptPasswordEncoder).encode(requestUserRegistration1.password().value());
         verify(this.usersRepository).saveAs(eq(requestUserRegistration1), eq(Password.of(hashPassword)), invitationAC1.capture());
         assertThat(invitationAC1.getValue().invited()).isEqualTo(requestUserRegistration1.username());

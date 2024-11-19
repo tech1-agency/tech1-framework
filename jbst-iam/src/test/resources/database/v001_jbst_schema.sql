@@ -24,7 +24,7 @@ CREATE TABLE "jbst_invitations" (
     "id" varchar(36),
     "owner" varchar(255) NOT NULL,
     "authorities" varchar(1024) NOT NULL,
-    "value" varchar(40) NOT NULL,
+    "code" varchar(40) NOT NULL,
     "invited" varchar
 );
 

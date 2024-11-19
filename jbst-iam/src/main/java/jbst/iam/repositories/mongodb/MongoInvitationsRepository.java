@@ -35,8 +35,8 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
                 .collect(Collectors.toList());
     }
 
-    default Invitation findByValueAsAny(String value) {
-        var invitation = this.findByValue(value);
+    default Invitation findByCodeAsAny(String code) {
+        var invitation = this.findByCode(code);
         return nonNull(invitation) ? invitation.invitation() : null;
     }
 
@@ -74,7 +74,7 @@ public interface MongoInvitationsRepository extends MongoRepository<MongoDbInvit
     List<MongoDbInvitation> findByInvitedIsNull(Sort sort);
     List<MongoDbInvitation> findByInvitedIsNotNull();
     List<MongoDbInvitation> findByInvitedIsNotNull(Sort sort);
-    MongoDbInvitation findByValue(String value);
+    MongoDbInvitation findByCode(String code);
 
     void deleteByInvitedIsNull();
     void deleteByInvitedIsNotNull();

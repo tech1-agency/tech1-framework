@@ -40,7 +40,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     private Set<SimpleGrantedAuthority> authorities;
 
     @Column(nullable = false)
-    private String value;
+    private String code;
 
     @Convert(converter = PostgresUsernameConverter.class)
     @Column
@@ -49,14 +49,14 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
     public PostgresDbInvitation(Username owner, Set<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
-        this.value = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
+        this.code = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
     }
 
     public PostgresDbInvitation(Invitation invitation) {
         this.id = invitation.id().value();
         this.owner = invitation.owner();
         this.authorities = invitation.authorities();
-        this.value = invitation.value();
+        this.code = invitation.code();
         this.invited = invitation.invited();
     }
 
@@ -66,7 +66,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
 
     public static PostgresDbInvitation admin(String owner, String value) {
         var invitation = admin(owner);
-        invitation.setValue(value);
+        invitation.setCode(value);
         return invitation;
     }
 
@@ -128,7 +128,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
                 this.invitationId(),
                 this.owner,
                 this.authorities,
-                this.value,
+                this.code,
                 this.invited
         );
     }
@@ -140,7 +140,7 @@ public class PostgresDbInvitation extends PostgresDbAbstractPersistable0 {
                 this.invitationId(),
                 this.owner,
                 getResponseInvitationsAuthoritiesAsField(this.authorities),
-                this.value,
+                this.code,
                 this.invited
         );
     }

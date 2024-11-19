@@ -15,12 +15,12 @@ public record Invitation(
         InvitationId id,
         Username owner,
         Set<SimpleGrantedAuthority> authorities,
-        String value,
+        String code,
         Username invited
 ) {
 
     public static final Sort INVITATION_CODES_UNUSED = Sort.by("owner").ascending()
-            .and(Sort.by("value").ascending());
+            .and(Sort.by("code").ascending());
 
     public static final int DEFAULT_INVITATION_CODE_LENGTH = 40;
 

@@ -12,7 +12,7 @@ import java.util.List;
 public interface InvitationsRepository {
     TuplePresence<Invitation> isPresent(InvitationId invitationId);
     List<ResponseInvitation> findResponseCodesByOwner(Username owner);
-    Invitation findByValueAsAny(String value);
+    Invitation findByCodeAsAny(String value);
     List<ResponseInvitation> findUnused();
     long countByOwner(Username username);
     void delete(InvitationId invitationId);

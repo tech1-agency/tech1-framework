@@ -33,20 +33,20 @@ public class MongoDbInvitation {
     private String id;
     private Username owner;
     private Set<SimpleGrantedAuthority> authorities;
-    private String value;
+    private String code;
     private Username invited;
 
     public MongoDbInvitation(Username owner, Set<SimpleGrantedAuthority> authorities) {
         this.owner = owner;
         this.authorities = authorities;
-        this.value = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
+        this.code = randomStringLetterOrNumbersOnly(Invitation.DEFAULT_INVITATION_CODE_LENGTH);
     }
 
     public MongoDbInvitation(Invitation invitation) {
         this.id = invitation.id().value();
         this.owner = invitation.owner();
         this.authorities = invitation.authorities();
-        this.value = invitation.value();
+        this.code = invitation.code();
         this.invited = invitation.invited();
     }
 
@@ -56,7 +56,7 @@ public class MongoDbInvitation {
 
     public static MongoDbInvitation admin(String owner, String value) {
         var invitation = admin(owner);
-        invitation.setValue(value);
+        invitation.setCode(value);
         return invitation;
     }
 
@@ -118,7 +118,7 @@ public class MongoDbInvitation {
                 this.invitationId(),
                 this.owner,
                 this.authorities,
-                this.value,
+                this.code,
                 this.invited
         );
     }
@@ -130,7 +130,7 @@ public class MongoDbInvitation {
                 this.invitationId(),
                 this.owner,
                 getResponseInvitationsAuthoritiesAsField(this.authorities),
-                this.value,
+                this.code,
                 this.invited
         );
     }

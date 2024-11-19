@@ -38,8 +38,8 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
                 .collect(Collectors.toList());
     }
 
-    default Invitation findByValueAsAny(String value) {
-        var invitation = this.findByValue(value);
+    default Invitation findByCodeAsAny(String code) {
+        var invitation = this.findByCode(code);
         return nonNull(invitation) ? invitation.invitation() : null;
     }
 
@@ -80,7 +80,7 @@ public interface PostgresInvitationsRepository extends JpaRepository<PostgresDbI
     List<PostgresDbInvitation> findByInvitedIsNull(Sort sort);
     List<PostgresDbInvitation> findByInvitedIsNotNull();
     List<PostgresDbInvitation> findByInvitedIsNotNull(Sort sort);
-    PostgresDbInvitation findByValue(String value);
+    PostgresDbInvitation findByCode(String value);
 
     @Transactional
     @Modifying

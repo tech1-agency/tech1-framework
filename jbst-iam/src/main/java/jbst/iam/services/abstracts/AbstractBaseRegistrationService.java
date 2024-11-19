@@ -21,13 +21,13 @@ public abstract class AbstractBaseRegistrationService implements BaseRegistratio
 
     @Override
     public void register1(RequestUserRegistration1 requestUserRegistration1) {
-        var invitation = this.invitationsRepository.findByValueAsAny(requestUserRegistration1.invitation());
+        var invitation = this.invitationsRepository.findByCodeAsAny(requestUserRegistration1.code());
         var hashPassword = this.bCryptPasswordEncoder.encode(requestUserRegistration1.password().value());
         invitation = new Invitation(
                 invitation.id(),
                 invitation.owner(),
                 invitation.authorities(),
-                invitation.value(),
+                invitation.code(),
                 requestUserRegistration1.username()
         );
         this.usersRepository.saveAs(requestUserRegistration1, Password.of(hashPassword), invitation);

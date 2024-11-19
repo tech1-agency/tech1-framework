@@ -1,2 +1,2 @@
-### Changelog [v1.2]
-— Modifications: Status/JbstConstants and ANSI mappings
+### Changelog [v1.3]
+— TBD

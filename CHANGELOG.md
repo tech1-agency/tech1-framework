@@ -1,4 +1,2 @@
-### Changelog [v1.1]
-— Modification: Invitation "value" → "code"
-— Migration: hardware-monitoring server
-
+### Changelog [v1.2]
+— TBD

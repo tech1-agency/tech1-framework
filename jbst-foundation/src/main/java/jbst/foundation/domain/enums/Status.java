@@ -12,30 +12,42 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter
 public enum Status {
-    // Major
-    STARTED("Started"),
-    COMPLETED("Completed"),
-    // Loading
-    FAILURE("Failure"),
-    SUCCESS("Success"),
-    // Progress
-    PROGRESS_20("Progress, 20%"),
-    PROGRESS_25("Progress, 25%"),
-    PROGRESS_33("Progress, 33%"),
-    PROGRESS_40("Progress, 40%"),
-    PROGRESS_50("Progress, 50%"),
-    PROGRESS_60("Progress, 60%"),
-    PROGRESS_66("Progress, 66%"),
-    PROGRESS_75("Progress, 75%"),
-    PROGRESS_80("Progress, 80%");
+    // MAIN
 
-    private static final Map<Status, AnsiFormat> MAPPINGS = Map.of(
-            // Major
-            STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT,
-            COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT,
-            // Loading
-            FAILURE, JbstConstants.JColor.RED_BOLD_TEXT,
-            SUCCESS, JbstConstants.JColor.GREEN_BOLD_TEXT
+    STARTED("STARTED"),
+    COMPLETED("COMPLETED"),
+
+    FAILURE("FAILURE"),
+    SUCCESS("SUCCESS"),
+
+    // PROGRESS
+
+    PROGRESS_20("PROGRESS: 20%"),
+    PROGRESS_25("PROGRESS: 25%"),
+    PROGRESS_33("PROGRESS: 33%"),
+    PROGRESS_40("PROGRESS: 40%"),
+    PROGRESS_50("PROGRESS: 50%"),
+    PROGRESS_60("PROGRESS:, 60%"),
+    PROGRESS_66("PROGRESS: 66%"),
+    PROGRESS_75("PROGRESS: 75%"),
+    PROGRESS_80("PROGRESS: 80%");
+
+    private static final Map<Status, AnsiFormat> MAPPINGS = Map.ofEntries(
+            // MAIN
+            Map.entry(STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT),
+            Map.entry(COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT),
+            Map.entry(FAILURE, JbstConstants.JColor.RED_BOLD_TEXT),
+            Map.entry(SUCCESS, JbstConstants.JColor.GREEN_BOLD_TEXT),
+            // PROGRESS
+            Map.entry(PROGRESS_20, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_25, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_33, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_40, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_50, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_60, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_66, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_75, JbstConstants.JColor.YELLOW_BOLD_TEXT),
+            Map.entry(PROGRESS_80, JbstConstants.JColor.YELLOW_BOLD_TEXT)
     );
 
     public static AnsiFormat getAnsiFormat(Status status) {

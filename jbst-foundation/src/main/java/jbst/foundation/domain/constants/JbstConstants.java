@@ -67,6 +67,7 @@ public class JbstConstants {
         public static final AnsiFormat BLUE_BOLD_TEXT = new AnsiFormat(BLUE_TEXT(), BOLD());
         public static final AnsiFormat GREEN_BOLD_TEXT = new AnsiFormat(GREEN_TEXT(), BOLD());
         public static final AnsiFormat RED_BOLD_TEXT = new AnsiFormat(RED_TEXT(), BOLD());
+        public static final AnsiFormat YELLOW_BOLD_TEXT = new AnsiFormat(YELLOW_TEXT(), BOLD());
     }
 
     public class Files {

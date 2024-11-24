@@ -1,5 +1,5 @@
 services:
-  mongodb:
+  jbst-mongodb:
     image: mongo:6.0.15
     restart: always
     container_name: jbst-mongodb
@@ -8,7 +8,7 @@ services:
     networks:
       - jbst-network
     volumes:
-      - mongodb_data:/data/db
+      - jbst_mongodb_data:/data/db
 
 networks:
   jbst-network:
@@ -16,4 +16,4 @@ networks:
     driver: bridge
 
 volumes:
-  mongodb_data:
+  jbst_mongodb_data:

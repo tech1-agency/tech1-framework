@@ -1,5 +1,5 @@
 services:
-  postgres:
+  jbst-postgres:
     image: postgres:14.3
     restart: always
     container_name: jbst-postgres
@@ -10,7 +10,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - jbst_postgres_data:/var/lib/postgresql/data
 
 networks:
   jbst-network:
@@ -18,4 +18,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  jbst_postgres_data:

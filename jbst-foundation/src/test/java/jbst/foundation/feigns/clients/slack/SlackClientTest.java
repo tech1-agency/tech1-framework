@@ -1,8 +1,7 @@
-package jbst.foundation.feigns.clients.telegram.clients.impl;
+package jbst.foundation.feigns.clients.slack;
 
-import jbst.foundation.configurations.ConfigurationFeignClientTelegram;
-import jbst.foundation.feigns.clients.telegram.clients.TelegramClient;
-import jbst.foundation.feigns.clients.telegram.domain.requests.TelegramMessageRequest;
+import jbst.foundation.configurations.ConfigurationFeignClientSlack;
+import jbst.foundation.feigns.clients.slack.domain.requests.SlackMessageRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -17,30 +16,30 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TelegramClientImplTest {
+class SlackClientTest {
 
     @Configuration
     @Import({
-            ConfigurationFeignClientTelegram.class
+            ConfigurationFeignClientSlack.class
     })
     static class TestConfiguration {
 
     }
 
-    private final TelegramClient telegramClient;
+    private final SlackClient slackClient;
 
     @Disabled
     @Test
     void sendMessage() {
         // Arrange
-        var message = new TelegramMessageRequest(
+        var message = new SlackMessageRequest(
                 "<?>",
-                "<?>",
-                "<@username> <b>test-V4</b>"
+                "#<?>",
+                "<@username> <b>V1</b>"
         );
 
         // Act
-        this.telegramClient.sendMessage(message);
+        this.slackClient.sendMessage(message);
 
         // Assert
         // no asserts

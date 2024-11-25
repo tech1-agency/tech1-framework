@@ -4,8 +4,8 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
-import jbst.foundation.feigns.clients.telegram.TelegramClient;
-import jbst.foundation.feigns.clients.telegram.TelegramDefinition;
+import jbst.foundation.feigns.clients.slack.SlackClient;
+import jbst.foundation.feigns.clients.slack.SlackDefinition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,19 +13,19 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ConfigurationFeignClientTelegram {
+public class ConfigurationFeignClientSlack {
 
     @Bean
-    TelegramDefinition telegramDefinition() {
+    SlackDefinition slackDefinition() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(TelegramDefinition.class, "https://api.telegram.org");
+                .target(SlackDefinition.class, "https://slack.com/api");
     }
 
     @Bean
-    TelegramClient telegramClient() {
-        return new TelegramClient(this.telegramDefinition());
+    SlackClient slackClient() {
+        return new SlackClient(this.slackDefinition());
     }
 }

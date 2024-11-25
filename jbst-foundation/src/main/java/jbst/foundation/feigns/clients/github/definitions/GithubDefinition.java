@@ -4,13 +4,14 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import jbst.foundation.feigns.clients.github.domain.responses.GithubRepoContentsResponse;
+import org.springframework.http.MediaType;
 
 public interface GithubDefinition {
     @RequestLine("GET /repos/{owner}/{repo}/contents/{path}")
     @Headers(
             {
                     "Authorization: token {token}",
-                    "Content-Type: application/json"
+                    "Content-Type: " + MediaType.APPLICATION_JSON_VALUE
             }
     )
     GithubRepoContentsResponse getContents(

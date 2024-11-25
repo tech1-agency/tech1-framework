@@ -1,4 +1,4 @@
-package jbst.foundation.feigns.clients.telegram.definitions;
+package jbst.foundation.feigns.clients.telegram;
 
 import feign.Headers;
 import feign.Param;
@@ -13,6 +13,6 @@ public interface TelegramDefinition {
     @Headers("Content-Type: " + MediaType.APPLICATION_JSON_VALUE)
     void sendMessage(
             @Param("token") String token,
-            @RequestBody Map<String, Object> body
+            @RequestBody Map<String, Object> requestBody
     );
 }

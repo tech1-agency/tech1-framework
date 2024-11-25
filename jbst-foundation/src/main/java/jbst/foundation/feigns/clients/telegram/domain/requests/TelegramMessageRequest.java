@@ -8,7 +8,7 @@ public record TelegramMessageRequest(
         String text
 ) {
 
-    public Map<String, Object> getReqBody() {
+    public Map<String, Object> getRequestBody() {
         return Map.of(
                 "chat_id", this.chatId,
                 "text", this.text,

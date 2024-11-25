@@ -39,7 +39,7 @@ public class SessionsCron extends AbstractBaseCron {
                 this.jbstProperties.getSecurityJwtConfigs().getSessionConfigs().getCleanSessionsByExpiredRefreshTokensCron().isEnabled(),
                 () -> {
                     var usernames = this.sessionRegistry.getActiveSessionsUsernames();
-                    LOGGER.info("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: `{}`", usernames.size());
+                    LOGGER.info("Sessions cleanup by expired JWT refresh tokens executed. Active sessions usernames count: {}", usernames.size());
                     this.sessionRegistry.cleanByExpiredRefreshTokens(usernames);
                 }
         );

@@ -39,7 +39,7 @@ public class CsrfInterceptorHandshake implements HandshakeInterceptor {
         } catch (CsrfTokenNotFoundException ex1) {
             return false;
         } catch (RuntimeException ex2) {
-            LOGGER.error("Please check websocket handshake configuration. Exception: `{}`", ex2.getMessage(), ex2);
+            LOGGER.error("Please check websocket handshake configuration. Exception: {}", ex2.getMessage(), ex2);
             return false;
         }
     }

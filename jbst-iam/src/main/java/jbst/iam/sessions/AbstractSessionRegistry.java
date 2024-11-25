@@ -25,13 +25,12 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_OPEN;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 
+@SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractSessionRegistry implements SessionRegistry {
-    private static final String SESSION_ACTION = PREFIX_OPEN + "sessions]: Username `{}`. Action: `session {}`";
-
     protected final Set<Session> sessions = ConcurrentHashMap.newKeySet();
 
     // Publishers
@@ -68,7 +67,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         var username = session.username();
         boolean added = this.sessions.add(session);
         if (added) {
-            LOGGER.debug(SESSION_ACTION, username, "registration");
+            LOGGER.debug(USER_ACTION, username, "Session Registration");
             this.securityJwtPublisher.publishAuthenticationLogin(new EventAuthenticationLogin(username));
         }
     }
@@ -79,14 +78,14 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         var newSession = new Session(username, newAccessToken, newRefreshToken);
         var added = this.sessions.add(newSession);
         if (added) {
-            LOGGER.debug(SESSION_ACTION, username, "renew");
+            LOGGER.debug(USER_ACTION, username, "Session Renew");
             this.securityJwtPublisher.publishSessionRefreshed(new EventSessionRefreshed(newSession));
         }
     }
 
     @Override
     public void logout(Username username, JwtAccessToken accessToken) {
-        LOGGER.debug(SESSION_ACTION, username, "deletion");
+        LOGGER.debug(USER_ACTION, username, "Session Deletion");
         var removed = this.sessions.removeIf(session -> session.accessToken().equals(accessToken));
         if (removed) {
             this.securityJwtPublisher.publishAuthenticationLogout(new EventAuthenticationLogout(username));
@@ -113,7 +112,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
             var refreshToken = tuple.b();
             var metadata = tuple.c();
 
-            LOGGER.debug(SESSION_ACTION, username, "expiration");
+            LOGGER.debug(USER_ACTION, username, "Session Expiration");
             var sessionOpt = this.sessions.stream()
                     .filter(session -> session.refreshToken().equals(refreshToken))
                     .findFirst();
@@ -127,7 +126,7 @@ public abstract class AbstractSessionRegistry implements SessionRegistry {
         });
 
         var deleted = this.usersSessionsRepository.delete(sessionsValidatedTuple2.expiredOrInvalidSessionIds());
-        LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: `{}`", deleted);
+        LOGGER.debug("JWT expired or invalid refresh tokens ids was successfully deleted. Count: {}", deleted);
     }
 
     @Override

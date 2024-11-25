@@ -17,7 +17,7 @@ import static jbst.foundation.utilities.reflections.ReflectionUtility.getPropert
 public class PropertiesPrinter {
 
     public static void printProperty(ReflectionProperty rf) {
-        LOGGER.debug(JbstConstants.Logs.PREFIX_PROPERTIES + " — {}", rf.getReadableValue());
+        LOGGER.debug(JbstConstants.Logs.PREFIX + " — {}", rf.getReadableValue());
     }
 
     public static void printMandatoryPropertiesConfigs(AbstractPropertiesConfigs propertiesConfigs, PropertyId propertyId) {

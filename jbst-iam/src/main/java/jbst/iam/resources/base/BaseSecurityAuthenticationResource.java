@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.exceptions.tokens.*;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
@@ -60,7 +61,7 @@ public class BaseSecurityAuthenticationResource {
     public CurrentClientUser login(@RequestBody @Valid RequestUserLogin request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         var username = request.username();
         var password = request.password();
-        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, STARTED);
+        LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Login Attempt", STARTED));
 
         var authenticationToken = new UsernamePasswordAuthenticationToken(username.value(), password.value());
         var authentication = this.authenticationManager.authenticate(authenticationToken);
@@ -77,7 +78,7 @@ public class BaseSecurityAuthenticationResource {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LOGGER.info("Login attempt. Username: `{}`. Status: `{}`", username, COMPLETED);
+        LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Login Attempt", COMPLETED));
 
         this.sessionRegistry.register(new Session(username, accessToken, refreshToken));
 
@@ -100,7 +101,7 @@ public class BaseSecurityAuthenticationResource {
                 if (nonNull(session)) {
                     session.invalidate();
                 }
-                LOGGER.info("Logout attempt completed successfully. Username: {}", username);
+                LOGGER.debug(JbstConstants.Logs.getUserProcess(username, "Logout Attempt", COMPLETED));
             }
         }
     }

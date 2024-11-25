@@ -82,8 +82,6 @@ public class JbstConstants {
         // Prefixes
         // =================================================================================================================
         public static final String PREFIX = "[jbst]";
-        public static final String PREFIX_OPEN = "[jbst, ";
-        public static final String PREFIX_PROPERTIES = PREFIX_OPEN + "properties]";
 
         // =================================================================================================================
         // Standard

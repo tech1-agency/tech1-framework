@@ -1,11 +1,10 @@
-package jbst.foundation.feigns.clients;
+package jbst.foundation.feigns.spring;
 
 import feign.Request;
 import feign.RetryableException;
 import jbst.foundation.domain.base.ServerName;
-import jbst.foundation.feigns.definitions.SpringBootClientFeign;
-import jbst.foundation.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
-import jbst.foundation.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorHealth;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,8 +43,8 @@ class TestSpringBootClientTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        SpringBootClientFeign springBootClientFeign() {
-            return mock(SpringBootClientFeign.class);
+        SpringBootDefinition springBootClientFeign() {
+            return mock(SpringBootDefinition.class);
         }
 
         @Bean
@@ -56,21 +55,21 @@ class TestSpringBootClientTest {
         }
     }
 
-    private final SpringBootClientFeign springBootClientFeign;
+    private final SpringBootDefinition definition;
 
     private final TestSpringBootClient componentUnderTest;
 
     @BeforeEach
     void beforeEach() {
         reset(
-                this.springBootClientFeign
+                this.definition
         );
     }
 
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.springBootClientFeign
+                this.definition
         );
     }
 
@@ -89,46 +88,46 @@ class TestSpringBootClientTest {
         var alive = this.componentUnderTest.isAlive();
 
         // Assert
-        verify(this.springBootClientFeign).info();
+        verify(this.definition).info();
         assertThat(alive).isFalse();
     }
 
     @Test
     void notAlive2Test() {
         // Arrange
-        when(this.springBootClientFeign.info()).thenThrow(RETRYABLE_EXCEPTION);
+        when(this.definition.info()).thenThrow(RETRYABLE_EXCEPTION);
 
         // Act
         var alive = this.componentUnderTest.isAlive();
 
         // Assert
-        verify(this.springBootClientFeign).info();
+        verify(this.definition).info();
         assertThat(alive).isFalse();
     }
 
     @Test
     void aliveTest() {
         // Arrange
-        when(this.springBootClientFeign.info()).thenReturn(SpringBootActuatorInfo.hardcoded());
+        when(this.definition.info()).thenReturn(SpringBootActuatorInfo.hardcoded());
 
         // Act
         var alive = this.componentUnderTest.isAlive();
 
         // Assert
-        verify(this.springBootClientFeign).info();
+        verify(this.definition).info();
         assertThat(alive).isTrue();
     }
 
     @Test
     void infoExceptionTest() {
         // Arrange
-        when(this.springBootClientFeign.info()).thenThrow(RETRYABLE_EXCEPTION);
+        when(this.definition.info()).thenThrow(RETRYABLE_EXCEPTION);
 
         // Act
         var info = this.componentUnderTest.info();
 
         // Assert
-        verify(this.springBootClientFeign).info();
+        verify(this.definition).info();
         assertThat(info).isEqualTo(SpringBootActuatorInfo.offline());
     }
 
@@ -138,7 +137,7 @@ class TestSpringBootClientTest {
         var info = this.componentUnderTest.info();
 
         // Assert
-        verify(this.springBootClientFeign).info();
+        verify(this.definition).info();
         assertThat(info).isNull();
     }
 
@@ -148,7 +147,7 @@ class TestSpringBootClientTest {
         var tuple2 = this.componentUnderTest.infoMappedByServerName();
 
         // Assert
-        verify(this.springBootClientFeign).info();
+        verify(this.definition).info();
         assertThat(tuple2.a()).isEqualTo(ServerName.hardcoded());
         assertThat(tuple2.b()).isNull();
     }
@@ -156,13 +155,13 @@ class TestSpringBootClientTest {
     @Test
     void healthExceptionTest() {
         // Arrange
-        when(this.springBootClientFeign.health()).thenThrow(RETRYABLE_EXCEPTION);
+        when(this.definition.health()).thenThrow(RETRYABLE_EXCEPTION);
 
         // Act
         var health = this.componentUnderTest.health();
 
         // Assert
-        verify(this.springBootClientFeign).health();
+        verify(this.definition).health();
         assertThat(health).isEqualTo(SpringBootActuatorHealth.unknown());
     }
 
@@ -172,7 +171,7 @@ class TestSpringBootClientTest {
         var health = this.componentUnderTest.health();
 
         // Assert
-        verify(this.springBootClientFeign).health();
+        verify(this.definition).health();
         assertThat(health).isNull();
     }
 
@@ -182,7 +181,7 @@ class TestSpringBootClientTest {
         var tuple2 = this.componentUnderTest.healthMappedByServerName();
 
         // Assert
-        verify(this.springBootClientFeign).health();
+        verify(this.definition).health();
         assertThat(tuple2.a()).isEqualTo(ServerName.hardcoded());
         assertThat(tuple2.b()).isNull();
     }

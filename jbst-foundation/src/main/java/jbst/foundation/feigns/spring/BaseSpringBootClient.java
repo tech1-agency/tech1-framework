@@ -1,12 +1,11 @@
-package jbst.foundation.feigns.clients;
+package jbst.foundation.feigns.spring;
 
 import feign.RetryableException;
 import jbst.foundation.domain.base.ServerName;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.tuples.Tuple2;
-import jbst.foundation.feigns.definitions.SpringBootClientFeign;
-import jbst.foundation.feigns.domain.spring.actuator.health.SpringBootActuatorHealth;
-import jbst.foundation.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorHealth;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +15,7 @@ import static java.util.Objects.nonNull;
 @AllArgsConstructor
 public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
 
-    protected final SpringBootClientFeign springBootClientFeign;
+    protected final SpringBootDefinition definition;
 
     @Override
     public boolean isAlive() {
@@ -27,7 +26,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
     @Override
     public SpringBootActuatorInfo info() {
         try {
-            return this.springBootClientFeign.info();
+            return this.definition.info();
         } catch (RetryableException ex) {
             LOGGER.error(JbstConstants.Logs.SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return SpringBootActuatorInfo.offline();
@@ -42,7 +41,7 @@ public abstract class BaseSpringBootClient implements AbstractSpringBootClient {
     @Override
     public SpringBootActuatorHealth health() {
         try {
-            return this.springBootClientFeign.health();
+            return this.definition.health();
         } catch (RetryableException ex) {
             LOGGER.error(JbstConstants.Logs.SERVER_OFFLINE, this.getServerName(), ex.getMessage());
             return SpringBootActuatorHealth.offline();

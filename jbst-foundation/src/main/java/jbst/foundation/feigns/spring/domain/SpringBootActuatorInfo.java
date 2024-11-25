@@ -1,11 +1,11 @@
-package jbst.foundation.feigns.domain.spring.actuator.info;
+package jbst.foundation.feigns.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.maven.MavenDetails;
-import jbst.foundation.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
 
 import java.util.ArrayList;
 
@@ -79,6 +79,46 @@ public record SpringBootActuatorInfo(
             return this.git;
         } else {
             return SpringBootActuatorInfoGit.dash();
+        }
+    }
+
+    public record SpringBootActuatorInfoCommit(
+            @JsonProperty("id") String id,
+            @JsonProperty("time") String time
+    ) {
+
+        public static SpringBootActuatorInfoCommit hardcoded() {
+            return new SpringBootActuatorInfoCommit(
+                    "1234567",
+                    "01.01.2024 15:00:00"
+            );
+        }
+
+        public static SpringBootActuatorInfoCommit dash() {
+            return new SpringBootActuatorInfoCommit(
+                    JbstConstants.Symbols.DASH,
+                    JbstConstants.Symbols.DASH
+            );
+        }
+    }
+
+    public record SpringBootActuatorInfoGit(
+            @JsonProperty("commit") SpringBootActuatorInfoCommit commit,
+            @JsonProperty("branch") String branch
+    ) {
+
+        public static SpringBootActuatorInfoGit hardcoded() {
+            return new SpringBootActuatorInfoGit(
+                    SpringBootActuatorInfoCommit.hardcoded(),
+                    "dev"
+            );
+        }
+
+        public static SpringBootActuatorInfoGit dash() {
+            return new SpringBootActuatorInfoGit(
+                    SpringBootActuatorInfoCommit.dash(),
+                    JbstConstants.Symbols.DASH
+            );
         }
     }
 }

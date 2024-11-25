@@ -3,8 +3,7 @@ package jbst.foundation.utilities.spring.actuator.info;
 import com.fasterxml.jackson.core.type.TypeReference;
 import jbst.foundation.domain.base.Version;
 import jbst.foundation.domain.tests.runners.AbstractFolderSerializationRunner;
-import jbst.foundation.feigns.domain.spring.actuator.info.SpringBootActuatorInfo;
-import jbst.foundation.feigns.domain.spring.actuator.info.git.SpringBootActuatorInfoGit;
+import jbst.foundation.feigns.spring.domain.SpringBootActuatorInfo;
 import lombok.SneakyThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,7 +29,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.dash(),
+                                SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 new ArrayList<>(),
                                 null,
                                 null
@@ -42,7 +41,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.dash(),
+                                SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 new ArrayList<>(List.of("dev", "prod")),
                                 null,
                                 null
@@ -54,7 +53,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.dash(),
+                                SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 null,
                                 "stage",
                                 null
@@ -66,7 +65,7 @@ class SpringBootActuatorInfoTest extends AbstractFolderSerializationRunner {
                 ),
                 Arguments.of(
                         new SpringBootActuatorInfo(
-                                SpringBootActuatorInfoGit.dash(),
+                                SpringBootActuatorInfo.SpringBootActuatorInfoGit.dash(),
                                 null,
                                 null,
                                 null

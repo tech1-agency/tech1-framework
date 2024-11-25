@@ -1,4 +1,4 @@
-package jbst.foundation.feigns.domain.spring.actuator.health;
+package jbst.foundation.feigns.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.boot.actuate.health.Status;

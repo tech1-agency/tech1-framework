@@ -5,6 +5,7 @@ import jbst.foundation.domain.properties.base.Authority;
 import jbst.foundation.domain.properties.base.DefaultUsers;
 import jbst.foundation.domain.properties.base.Invitations;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
+import jbst.foundation.domain.properties.configs.ServerConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.AuthoritiesConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.EssenceConfigs;
 import jbst.iam.essence.AbstractEssenceConstructor;
@@ -92,7 +93,7 @@ class DefaultStartupEventListenerTest {
     @MethodSource("onStartupTest")
     void onStartupTest(boolean isDefaultUsersEnabled, boolean invitationsEnabled) {
         // Arrange
-        SecurityJwtConfigs securityJwtConfigs = new SecurityJwtConfigs(
+        var securityJwtConfigs = new SecurityJwtConfigs(
                 new AuthoritiesConfigs(
                         "jbst",
                         Set.of(
@@ -116,6 +117,7 @@ class DefaultStartupEventListenerTest {
                 null,
                 null
         );
+        when(this.jbstProperties.getServerConfigs()).thenReturn(ServerConfigs.hardcoded());
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
 
         // Act

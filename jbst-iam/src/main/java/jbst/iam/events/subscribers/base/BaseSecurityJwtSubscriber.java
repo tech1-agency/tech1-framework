@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
 
+@SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implements SecurityJwtSubscriber {
@@ -34,12 +35,12 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
-        LOGGER.debug(EVENTS_AUTHENTICATION_LOGIN, this.getType(), event.username());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub] login");
     }
 
     @Override
     public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
-        LOGGER.debug(EVENTS_AUTHENTICATION_LOGIN_FAILURE, this.getType(), event.username());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub] login failure");
         var userRequestMetadata = this.userMetadataUtils.getUserRequestMetadataProcessed(
                 event.ipAddress(),
                 event.userAgentHeader()
@@ -66,32 +67,32 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onAuthenticationLogout(EventAuthenticationLogout event) {
-        LOGGER.debug(EVENTS_AUTHENTICATION_LOGOUT, this.getType(), event.username());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub] logout");
     }
 
     @Override
     public void onRegistration1(EventRegistration1 event) {
-        LOGGER.debug(EVENTS_REGISTER1, this.getType(), event.requestUserRegistration1().username());
+        LOGGER.debug(USER_ACTION, event.requestUserRegistration1().username(), "[sub] register1");
     }
 
     @Override
     public void onRegistration1Failure(EventRegistration1Failure event) {
-        LOGGER.debug(EVENTS_REGISTER1_FAILURE, this.getType(), event.username());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub] register1 failure");
     }
 
     @Override
     public void onSessionRefreshed(EventSessionRefreshed event) {
-        LOGGER.debug(EVENTS_SESSION_REFRESHED, this.getType(), event.session().username());
+        LOGGER.debug(USER_ACTION, event.session().username(), "[sub] session refreshed");
     }
 
     @Override
     public void onSessionExpired(EventSessionExpired event) {
-        LOGGER.debug(EVENTS_SESSION_EXPIRED, this.getType(), event.session().username());
+        LOGGER.debug(USER_ACTION, event.session().username(), "[sub] session expired");
     }
 
     @Override
     public void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
-        LOGGER.debug(EVENTS_SESSION_ADD_USER_REQUEST_METADATA, this.getType(), event.username());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub] session user request metadata add");
         var session = this.baseUsersSessionsService.saveUserRequestMetadata(event);
         var metadata = session.metadata();
         if (event.isAuthenticationLoginEndpoint()) {
@@ -128,7 +129,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
-        LOGGER.debug(EVENTS_SESSION_RENEW_USER_REQUEST_METADATA, this.getType(), event.username(), event.session().id());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub] session user request metadata renew, sessionId: " + event.session().id());
         this.baseUsersSessionsService.saveUserRequestMetadata(event);
     }
 }

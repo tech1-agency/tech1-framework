@@ -1,2 +1,2 @@
 ### Changelog [v1.4]
-— TBD
+— Modification: logs events/status simplification

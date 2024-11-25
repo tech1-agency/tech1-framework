@@ -23,7 +23,7 @@ public abstract class AbstractSuperAdminResetServerTask {
         if (this.getStatus().getState().isResetting()) {
             return;
         }
-        LOGGER.info(JbstConstants.Logs.TASK_RESET_SERVER, initiator.username(), STARTED);
+        LOGGER.info(JbstConstants.Logs.getUserProcess(initiator.username(), "Reset Server", STARTED));
 
         try {
             this.resetOnServer(initiator);
@@ -31,6 +31,6 @@ public abstract class AbstractSuperAdminResetServerTask {
             this.incidentPublisher.publishThrowable(ex);
         }
 
-        LOGGER.info(JbstConstants.Logs.TASK_RESET_SERVER, initiator.username(), COMPLETED);
+        LOGGER.info(JbstConstants.Logs.getUserProcess(initiator.username(), "Reset Server", COMPLETED));
     }
 }

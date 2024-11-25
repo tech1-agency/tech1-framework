@@ -57,7 +57,7 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
             // WARNING: any exceptions should NOT be expected behaviour, method required ASAP fix
             this.status.setFailureDescription(ex);
             this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
-            LOGGER.error(JbstConstants.Logs.TASK_RESET_SERVER, username, FAILURE);
+            LOGGER.info(JbstConstants.Logs.getUserProcess(initiator.username(), "Reset Server", FAILURE));
             this.incidentPublisher.publishThrowable(ex);
         }
     }
@@ -65,7 +65,6 @@ public class TestDataResetServerTask extends AbstractSuperAdminResetServerTask {
     private void computeAndSendResetServerProgress(Set<Username> usernames, String description) {
         this.status.nextStage(description);
         this.wssMessagingTemplate.sendResetServerStatus(usernames, this.status);
-        LOGGER.info(JbstConstants.Logs.TASK_RESET_SERVER, description, this.status.getPercentage().percentage() + "%");
         sleepMilliseconds(1000);
     }
 }

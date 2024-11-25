@@ -36,7 +36,7 @@ public class StartupEventListener extends DefaultStartupEventListener {
     public void onStartup() {
         try {
             super.onStartup();
-            LOGGER.info(JbstConstants.Logs.getServerStartup(COMPLETED), this.jbstProperties.getServerConfigs().getName());
+            LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         } catch (RuntimeException ex) {
             this.incidentPublisher.publishThrowable(ex);
         }

@@ -1,7 +1,9 @@
 package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.enums.Status;
+import jbst.foundation.domain.properties.configs.ServerConfigs;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -11,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.diogonunes.jcolor.Attribute.*;
+import static jbst.foundation.domain.constants.JbstConstants.JColor.BLACK_BOLD_TEXT;
 
 @UtilityClass
 public class JbstConstants {
@@ -86,18 +89,10 @@ public class JbstConstants {
         public static final String PREFIX_INCIDENTS = PREFIX_OPEN + "incidents]";
 
         // =================================================================================================================
-        // Events
+        // Standard
         // =================================================================================================================
-        public static final String EVENTS_AUTHENTICATION_LOGIN = PREFIX_EVENTS + " `{}` - /login. Username: `{}`";
-        public static final String EVENTS_AUTHENTICATION_LOGIN_FAILURE = PREFIX_EVENTS + " `{}` - login failure. Username: `{}`";
-        public static final String EVENTS_AUTHENTICATION_LOGOUT = PREFIX_EVENTS + " `{}`- /logout. Username: `{}`";
-        public static final String EVENTS_REGISTER1 = PREFIX_EVENTS + " `{}`- /register1. Username: `{}`";
-        public static final String EVENTS_REGISTER1_FAILURE = PREFIX_EVENTS + " `{}`- /register1 failure. Username: `{}`";
-        public static final String EVENTS_SESSION_REFRESHED = PREFIX_EVENTS + " `{}`- /refreshToken. Username: `{}`";
-        public static final String EVENTS_SESSION_EXPIRED = PREFIX_EVENTS + " `{}`- session expired. Username: `{}`";
-        public static final String EVENTS_SESSION_ADD_USER_REQUEST_METADATA = PREFIX_EVENTS + " `{}`- Session add user request metadata. Username: `{}`";
-        public static final String EVENTS_SESSION_RENEW_USER_REQUEST_METADATA = PREFIX_EVENTS + " `{}`- Session renew user request metadata. Username: `{}`. Session: `{}`";
-
+        public static final String SERVER_OFFLINE = BLACK_BOLD_TEXT.format("{}") + " is probably offline. Exception: {}";
+        public static final String USER_ACTION = "Username: " + BLACK_BOLD_TEXT.format("{}") + ". Action: " + BLACK_BOLD_TEXT.format("{}");
 
         // =================================================================================================================
         // Incidents
@@ -114,21 +109,25 @@ public class JbstConstants {
         public static final String INCIDENT_SYSTEM_RESET_SERVER = PREFIX_INCIDENTS + " `{}` - system reset server. Username: `{}`. Status: `{}`";
 
         // =================================================================================================================
-        // Tasks
-        // =================================================================================================================
-        public static final String TASK_RESET_SERVER = PREFIX_OPEN + "tasks] Reset Server Initiator: `{}`. Status: `{}`";
-
-        // =================================================================================================================
         // Server
         // =================================================================================================================
-        public static final String SERVER_OFFLINE = PREFIX + " `{}` is probably offline. Exception: `{}`";
-
-        public static String getServerContainer(Status status) {
-            return PREFIX + " " + JColor.BLACK_BOLD_TEXT.format("{}") + " container configuration. Status: " + status.formatAnsi();
+        public static String getServerContainer(ServerConfigs serverConfigs, Status status) {
+            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " container/server: " + status.formatAnsi();
         }
 
-        public static String getServerStartup(Status status) {
-            return PREFIX + " " + JColor.BLACK_BOLD_TEXT.format("{}") + " startup listener configuration. Status: " + status.formatAnsi();
+        public static String getServerStartup(ServerConfigs serverConfigs, Status status) {
+            return BLACK_BOLD_TEXT.format(serverConfigs.getName().value()) + " startup listener: " + status.formatAnsi();
+        }
+
+        public static String getServerProcess(String processId, Status status) {
+            return "ProcessId: " + BLACK_BOLD_TEXT.format(processId) + ": " + status.formatAnsi();
+        }
+
+        // =================================================================================================================
+        // User
+        // =================================================================================================================
+        public static String getUserProcess(Username username, String processId, Status status) {
+            return "User: " + username + ". ProcessId: " + BLACK_BOLD_TEXT.format(processId) + " " + status.formatAnsi();
         }
     }
 

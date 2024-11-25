@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static jbst.foundation.domain.enums.Status.COMPLETED;
+import static jbst.foundation.domain.enums.Status.STARTED;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,7 +25,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
     @Override
     public void onStartup() {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
-        LOGGER.info(JbstConstants.Logs.getServerStartup(Status.STARTED), this.jbstProperties.getServerConfigs().getName());
+        LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), STARTED));
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
         LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).formatAnsi());
@@ -36,7 +39,7 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
             this.essenceConstructor.addDefaultUsersInvitations();
         }
 
-        LOGGER.info(JbstConstants.Logs.getServerStartup(Status.COMPLETED), this.jbstProperties.getServerConfigs().getName());
+        LOGGER.info(JbstConstants.Logs.getServerStartup(this.jbstProperties.getServerConfigs(), COMPLETED));
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 }

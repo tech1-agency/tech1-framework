@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
 
+@SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -25,55 +26,55 @@ public class SecurityJwtIncidentSubscriberImpl extends AbstractEventSubscriber i
 
     @Override
     public void onEvent(IncidentAuthenticationLogin incident) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] login");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLoginFailureUsernamePassword incident) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.credentials().username());
+        LOGGER.debug(USER_ACTION, incident.credentials().username(), "[sub, incidents] login failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLoginFailureUsernameMaskedPassword incident) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGIN_FAILURE, this.getType(), incident.credentials().username());
+        LOGGER.debug(USER_ACTION, incident.credentials().username(), "[sub, incidents] login failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLogoutMin incident) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] logout");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentAuthenticationLogoutFull incident) {
-        LOGGER.debug(INCIDENT_AUTHENTICATION_LOGOUT, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] logout");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentRegistration1 incident) {
-        LOGGER.debug(INCIDENT_REGISTER1, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register1");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentRegistration1Failure incident) {
-        LOGGER.debug(INCIDENT_REGISTER1_FAILURE, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register1 failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentSessionRefreshed incident) {
-        LOGGER.debug(INCIDENT_SESSION_REFRESHED, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] session refreshed");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 
     @Override
     public void onEvent(IncidentSessionExpired incident) {
-        LOGGER.debug(INCIDENT_SESSION_EXPIRED, this.getType(), incident.username());
+        LOGGER.debug(USER_ACTION, incident.username(), "[pub, incidents] session expired");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 }

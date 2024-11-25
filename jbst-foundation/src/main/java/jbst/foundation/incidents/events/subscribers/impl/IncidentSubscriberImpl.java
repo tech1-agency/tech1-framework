@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.INCIDENT;
-
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IncidentSubscriberImpl extends AbstractEventSubscriber implements IncidentSubscriber {
@@ -31,7 +29,6 @@ public class IncidentSubscriberImpl extends AbstractEventSubscriber implements I
 
     @Override
     public void onEvent(Incident incident) {
-        LOGGER.debug(INCIDENT, this.getType(), incident.getType());
         this.incidentClient.registerIncident(incident);
     }
 }

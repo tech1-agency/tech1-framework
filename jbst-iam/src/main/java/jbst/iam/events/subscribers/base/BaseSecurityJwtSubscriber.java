@@ -35,12 +35,12 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[sub] login");
+        LOGGER.debug(USER_ACTION, event.username(), "[sub, events] login");
     }
 
     @Override
     public void onAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[sub] login failure");
+        LOGGER.debug(USER_ACTION, event.username(), "[sub, events] login failure");
         var userRequestMetadata = this.userMetadataUtils.getUserRequestMetadataProcessed(
                 event.ipAddress(),
                 event.userAgentHeader()
@@ -67,32 +67,32 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onAuthenticationLogout(EventAuthenticationLogout event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[sub] logout");
+        LOGGER.debug(USER_ACTION, event.username(), "[sub, events] logout");
     }
 
     @Override
     public void onRegistration1(EventRegistration1 event) {
-        LOGGER.debug(USER_ACTION, event.requestUserRegistration1().username(), "[sub] register1");
+        LOGGER.debug(USER_ACTION, event.requestUserRegistration1().username(), "[sub, events] register1");
     }
 
     @Override
     public void onRegistration1Failure(EventRegistration1Failure event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[sub] register1 failure");
+        LOGGER.debug(USER_ACTION, event.username(), "[sub, events] register1 failure");
     }
 
     @Override
     public void onSessionRefreshed(EventSessionRefreshed event) {
-        LOGGER.debug(USER_ACTION, event.session().username(), "[sub] session refreshed");
+        LOGGER.debug(USER_ACTION, event.session().username(), "[sub, events] session refreshed");
     }
 
     @Override
     public void onSessionExpired(EventSessionExpired event) {
-        LOGGER.debug(USER_ACTION, event.session().username(), "[sub] session expired");
+        LOGGER.debug(USER_ACTION, event.session().username(), "[sub, events] session expired");
     }
 
     @Override
     public void onSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[sub] session user request metadata add");
+        LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata add");
         var session = this.baseUsersSessionsService.saveUserRequestMetadata(event);
         var metadata = session.metadata();
         if (event.isAuthenticationLoginEndpoint()) {
@@ -129,7 +129,7 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[sub] session user request metadata renew, sessionId: " + event.session().id());
+        LOGGER.debug(USER_ACTION, event.username(), "[sub, events] session user request metadata renew, sessionId: " + event.session().id());
         this.baseUsersSessionsService.saveUserRequestMetadata(event);
     }
 }

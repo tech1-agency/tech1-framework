@@ -14,14 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.List;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_UTILITIES;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
 public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
-    private static final String CONFIGURATION_LOG = PREFIX_UTILITIES + " User agent — {}";
+    private static final String CONFIGURATION_LOG = PREFIX + " User agent — {}";
 
     private final UserAgentParser userAgentParser;
     private final boolean configured;

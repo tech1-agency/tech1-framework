@@ -18,13 +18,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_UTILITIES;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 
 @Slf4j
 public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
-    private static final String CONFIGURATION_LOG = PREFIX_UTILITIES + " Geo country flags geo-countries-flags.json — {}";
+    private static final String CONFIGURATION_LOG = PREFIX + " Geo country flags geo-countries-flags.json — {}";
 
     private final Map<String, GeoCountryFlag> mappedByCountryName;
     private final Map<String, GeoCountryFlag> mappedByCountryCode;

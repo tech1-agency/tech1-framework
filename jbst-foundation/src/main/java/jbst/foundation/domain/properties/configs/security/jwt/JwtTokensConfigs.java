@@ -81,7 +81,7 @@ public class JwtTokensConfigs extends AbstractPropertiesConfigs {
         }
         LOGGER.info(
                 "{} JWT tokens storage method — {}: \"{}\" and \"{}\"",
-                JbstConstants.Logs.PREFIX_PROPERTIES,
+                JbstConstants.Logs.PREFIX,
                 this.storageMethod,
                 this.accessToken.getKey(this.storageMethod),
                 this.refreshToken.getKey(this.storageMethod)

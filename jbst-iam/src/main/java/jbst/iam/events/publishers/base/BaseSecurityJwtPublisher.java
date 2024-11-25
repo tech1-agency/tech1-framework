@@ -22,55 +22,55 @@ public class BaseSecurityJwtPublisher extends AbstractEventPublisher implements 
 
     @Override
     public void publishAuthenticationLogin(EventAuthenticationLogin event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[pub] login");
+        LOGGER.debug(USER_ACTION, event.username(), "[pub, events] login");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishAuthenticationLoginFailure(EventAuthenticationLoginFailure event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[pub] login failure");
+        LOGGER.debug(USER_ACTION, event.username(), "[pub, events] login failure");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishAuthenticationLogout(EventAuthenticationLogout event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[pub] logout");
+        LOGGER.debug(USER_ACTION, event.username(), "[pub, events] logout");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishRegistration1(EventRegistration1 event) {
-        LOGGER.debug(USER_ACTION, event.requestUserRegistration1().username(), "[pub] register1");
+        LOGGER.debug(USER_ACTION, event.requestUserRegistration1().username(), "[pub, events] register1");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishRegistration1Failure(EventRegistration1Failure event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[pub] register1 failure");
+        LOGGER.debug(USER_ACTION, event.username(), "[pub, events] register1 failure");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishSessionRefreshed(EventSessionRefreshed event) {
-        LOGGER.debug(USER_ACTION, event.session().username(), "[pub] session refreshed");
+        LOGGER.debug(USER_ACTION, event.session().username(), "[pub, events] session refreshed");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishSessionExpired(EventSessionExpired event) {
-        LOGGER.debug(USER_ACTION, event.session().username(), "[pub] session expired");
+        LOGGER.debug(USER_ACTION, event.session().username(), "[pub, events] session expired");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishSessionUserRequestMetadataAdd(EventSessionUserRequestMetadataAdd event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[pub] session user request metadata add");
+        LOGGER.debug(USER_ACTION, event.username(), "[pub, events] session user request metadata add");
         this.applicationEventPublisher.publishEvent(event);
     }
 
     @Override
     public void publishSessionUserRequestMetadataRenew(EventSessionUserRequestMetadataRenew event) {
-        LOGGER.debug(USER_ACTION, event.username(), "[pub] session user request metadata renew, sessionId: " + event.session().id());
+        LOGGER.debug(USER_ACTION, event.username(), "[pub, events] session user request metadata renew, sessionId: " + event.session().id());
         this.applicationEventPublisher.publishEvent(event);
     }
 }

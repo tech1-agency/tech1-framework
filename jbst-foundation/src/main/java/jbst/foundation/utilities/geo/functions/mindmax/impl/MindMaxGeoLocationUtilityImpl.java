@@ -14,14 +14,14 @@ import org.springframework.core.io.ResourceLoader;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX_UTILITIES;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.PREFIX;
 import static jbst.foundation.domain.enums.Status.FAILURE;
 import static jbst.foundation.domain.enums.Status.SUCCESS;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
 
 @Slf4j
 public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility {
-    private static final String CONFIGURATION_LOG = PREFIX_UTILITIES + " Geo location database GeoLite2-City.mmdb — {}";
+    private static final String CONFIGURATION_LOG = PREFIX + " Geo location database GeoLite2-City.mmdb — {}";
 
     // Database
     private final DatabaseReader databaseReader;

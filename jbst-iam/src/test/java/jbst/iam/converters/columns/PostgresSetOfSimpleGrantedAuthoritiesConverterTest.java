@@ -16,10 +16,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static jbst.iam.constants.SecurityJwtConstants.SUPERADMIN;
-import static org.assertj.core.api.Assertions.assertThat;
 import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_READ;
 import static jbst.foundation.domain.base.AbstractAuthority.INVITATIONS_WRITE;
+import static jbst.foundation.domain.constants.JbstConstants.SpringAuthorities.SUPERADMIN;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)

@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 
 @WebAppConfiguration
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = {
         ConfigurationBaseSecurityJwtWebMvc.class,
-        ConfigurationPropertiesJbstHardcoded.class,
+        TestConfigurationPropertiesJbstHardcoded.class,
         TestConfigurationResources.class
 })
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

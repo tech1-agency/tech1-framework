@@ -24,7 +24,7 @@ class ConfigurationJasyptTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationJasypt.class
     })
     static class ContextConfiguration {

@@ -23,7 +23,7 @@ import jbst.foundation.domain.exceptions.tokens.AccessTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.CsrfTokenNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.RefreshTokenNotFoundException;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -54,7 +54,7 @@ class TokenCookiesProviderTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class
+            TestConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

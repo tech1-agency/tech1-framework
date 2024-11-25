@@ -19,7 +19,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.http.cache.CachedBodyHttpServletRequest;
 import jbst.foundation.domain.http.cache.CachedPayload;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 
 import java.util.stream.Stream;
 
@@ -60,7 +60,7 @@ class HttpRequestUtilsImplTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class
+            TestConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

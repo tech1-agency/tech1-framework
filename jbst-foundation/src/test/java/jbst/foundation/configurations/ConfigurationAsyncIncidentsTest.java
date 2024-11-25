@@ -32,7 +32,7 @@ class ConfigurationAsyncIncidentsTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationAsyncIncidents.class
     })
     static class ContextConfiguration {

@@ -1,6 +1,6 @@
 package jbst.hardware.monitoring.server.configurations;
 
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ class ConfigurationServerTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationServer.class
     })
     static class ContextConfiguration {

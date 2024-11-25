@@ -24,7 +24,7 @@ class ConfigurationEventsTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationEvents.class
     })
     static class ContextConfiguration {

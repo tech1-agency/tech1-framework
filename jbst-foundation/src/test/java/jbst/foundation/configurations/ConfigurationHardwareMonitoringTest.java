@@ -23,7 +23,7 @@ class ConfigurationHardwareMonitoringTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationHardwareMonitoring.class
     })
     static class ContextConfiguration {

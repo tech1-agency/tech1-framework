@@ -1,7 +1,7 @@
 package jbst.foundation.utilities.browsers.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jbst.foundation.configurations.ConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.browsers.UserAgentDetailsUtility;
@@ -42,7 +42,7 @@ class UserAgentDetailsUtilityImplTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class
+            TestConfigurationPropertiesJbstHardcoded.class
     })
     @RequiredArgsConstructor(onConstructor = @__(@Autowired))
     static class ContextConfiguration {

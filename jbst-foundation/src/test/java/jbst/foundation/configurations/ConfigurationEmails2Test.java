@@ -27,7 +27,7 @@ class ConfigurationEmails2Test {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationEmails.class
     })
     static class ContextConfiguration {

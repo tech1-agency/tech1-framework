@@ -29,7 +29,7 @@ class ConfigurationEventsIncidentsTest {
 
     @Configuration
     @Import({
-            ConfigurationPropertiesJbstHardcoded.class,
+            TestConfigurationPropertiesJbstHardcoded.class,
             ConfigurationEventsIncidents.class
     })
     static class ContextConfiguration {

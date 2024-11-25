@@ -1,10 +1,12 @@
 package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
+import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.configs.ServerConfigs;
 import lombok.experimental.UtilityClass;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -135,6 +137,13 @@ public class JbstConstants {
         public static final String USERNAME = "username";
         public static final String VALUE = "value";
         public static final String WEBSOCKET = "websocket";
+    }
+
+    @SuppressWarnings("unused")
+    public static class SpringAuthorities {
+        public static final SimpleGrantedAuthority SUPERADMIN = new SimpleGrantedAuthority(AbstractAuthority.SUPERADMIN);
+        public static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority("admin");
+        public static final SimpleGrantedAuthority USER = new SimpleGrantedAuthority("user");
     }
 
     @SuppressWarnings("unused")

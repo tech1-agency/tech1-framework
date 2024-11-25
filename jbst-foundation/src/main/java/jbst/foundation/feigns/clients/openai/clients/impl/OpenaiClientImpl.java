@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OpenaiClientImpl implements OpenaiClient {
 
     // Definitions
-    private final OpenaiDefinition openaiDefinition;
+    private final OpenaiDefinition definition;
 
     @Override
     public OpenaiCompletionsResponse getCompletions(String apiKey, OpenaiCompletionsRequest request) {
-        return this.openaiDefinition.completions(
+        return this.definition.completions(
                 apiKey,
                 request
         );

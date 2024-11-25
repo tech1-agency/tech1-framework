@@ -15,12 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class GithubClientImpl implements GithubClient {
 
     // Definitions
-    private final GithubDefinition githubDefinition;
+    private final GithubDefinition definition;
 
     @Override
     public GithubRepoContentsResponse getContents(GithubRepoContentsRequest request) {
         try {
-            return this.githubDefinition.getContents(
+            return this.definition.getContents(
                     request.token(),
                     request.owner(),
                     request.repo(),

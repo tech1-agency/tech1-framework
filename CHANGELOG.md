@@ -1,2 +1,2 @@
 ### Changelog [v1.3]
-— TBD
+— Addition: TelegramClient.sendMessage() + ConfigurationFeignClientTelegram

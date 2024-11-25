@@ -1,22 +1,20 @@
-package jbst.foundation.feigns.clients.openai.clients.impl;
+package jbst.foundation.feigns.clients.openai;
 
-import jbst.foundation.feigns.clients.openai.clients.OpenaiClient;
-import jbst.foundation.feigns.clients.openai.definions.OpenaiDefinition;
 import jbst.foundation.feigns.clients.openai.domain.requests.OpenaiCompletionsRequest;
 import jbst.foundation.feigns.clients.openai.domain.responses.OpenaiCompletionsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OpenaiClientImpl implements OpenaiClient {
+public class OpenaiClient {
 
     // Definitions
     private final OpenaiDefinition definition;
 
-    @Override
-    public OpenaiCompletionsResponse getCompletions(String apiKey, OpenaiCompletionsRequest request) {
+    public final OpenaiCompletionsResponse getCompletions(String apiKey, OpenaiCompletionsRequest request) {
         return this.definition.completions(
                 apiKey,
                 request

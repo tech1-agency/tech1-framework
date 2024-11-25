@@ -1,9 +1,7 @@
-package jbst.foundation.feigns.clients.github.clients.impl;
+package jbst.foundation.feigns.clients.github;
 
 import feign.RetryableException;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.feigns.clients.github.clients.GithubClient;
-import jbst.foundation.feigns.clients.github.definitions.GithubDefinition;
 import jbst.foundation.feigns.clients.github.domain.requests.GithubRepoContentsRequest;
 import jbst.foundation.feigns.clients.github.domain.responses.GithubRepoContentsResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class GithubClientImpl implements GithubClient {
+public class GithubClient {
 
     // Definitions
     private final GithubDefinition definition;
 
-    @Override
-    public GithubRepoContentsResponse getContents(GithubRepoContentsRequest request) {
+    public final GithubRepoContentsResponse getContents(GithubRepoContentsRequest request) {
         try {
             return this.definition.getContents(
                     request.token(),

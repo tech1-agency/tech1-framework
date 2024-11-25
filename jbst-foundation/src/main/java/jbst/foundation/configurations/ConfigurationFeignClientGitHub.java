@@ -4,9 +4,8 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
-import jbst.foundation.feigns.clients.github.clients.GithubClient;
-import jbst.foundation.feigns.clients.github.clients.impl.GithubClientImpl;
-import jbst.foundation.feigns.clients.github.definitions.GithubDefinition;
+import jbst.foundation.feigns.clients.github.GithubClient;
+import jbst.foundation.feigns.clients.github.GithubDefinition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +25,7 @@ public class ConfigurationFeignClientGitHub {
     }
 
     @Bean
-    GithubClient githubClient(GithubDefinition definition) {
-        return new GithubClientImpl(definition);
+    GithubClient githubClient() {
+        return new GithubClient(this.githubDefinition());
     }
 }

@@ -4,9 +4,8 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
-import jbst.foundation.feigns.clients.openai.clients.OpenaiClient;
-import jbst.foundation.feigns.clients.openai.clients.impl.OpenaiClientImpl;
-import jbst.foundation.feigns.clients.openai.definions.OpenaiDefinition;
+import jbst.foundation.feigns.clients.openai.OpenaiClient;
+import jbst.foundation.feigns.clients.openai.OpenaiDefinition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +25,7 @@ public class ConfigurationFeignClientOpenai {
     }
 
     @Bean
-    OpenaiClient openaiClient(OpenaiDefinition definition) {
-        return new OpenaiClientImpl(definition);
+    OpenaiClient openaiClient() {
+        return new OpenaiClient(this.openaiDefinition());
     }
 }

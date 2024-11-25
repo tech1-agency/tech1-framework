@@ -1,4 +1,4 @@
-package jbst.foundation.feigns.clients.github.definitions;
+package jbst.foundation.feigns.clients.github;
 
 import feign.Headers;
 import feign.Param;

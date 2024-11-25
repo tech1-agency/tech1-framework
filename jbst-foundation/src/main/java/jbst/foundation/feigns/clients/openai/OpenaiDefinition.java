@@ -1,4 +1,4 @@
-package jbst.foundation.feigns.clients.openai.definions;
+package jbst.foundation.feigns.clients.openai;
 
 import feign.Headers;
 import feign.Param;

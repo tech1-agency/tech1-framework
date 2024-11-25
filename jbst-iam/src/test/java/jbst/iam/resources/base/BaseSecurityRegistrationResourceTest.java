@@ -68,6 +68,7 @@ class BaseSecurityRegistrationResourceTest extends TestRunnerResources1 {
                 .andExpect(status().isOk());
 
         // Assert
+        requestUserRegistration1 = requestUserRegistration1.createReworkedUkraineZoneId();
         verify(this.baseRegistrationRequestsValidator).validateRegistrationRequest1(requestUserRegistration1);
         verify(this.baseRegistrationService).register1(requestUserRegistration1);
         verify(this.securityJwtPublisher).publishRegistration1(new EventRegistration1(requestUserRegistration1));

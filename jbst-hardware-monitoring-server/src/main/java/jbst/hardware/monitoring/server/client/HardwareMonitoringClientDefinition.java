@@ -1,4 +1,4 @@
-package jbst.hardware.monitoring.server.feigns.definitions;
+package jbst.hardware.monitoring.server.client;
 
 import feign.Headers;
 import feign.RequestLine;

@@ -1,7 +1,6 @@
 package jbst.iam.essence;
 
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
@@ -10,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static jbst.foundation.domain.asserts.Asserts.assertTrueOrThrow;
+import static jbst.foundation.domain.enums.Status.COMPLETED;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.invalidAttribute;
 import static jbst.foundation.utilities.spring.SpringAuthoritiesUtility.getSimpleGrantedAuthorities;
 
@@ -31,12 +31,11 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 invalidAttribute("essenceConfigs.defaultUsers.enabled == true")
         );
         if (this.usersRepository.count() == 0L) {
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — no users in database");
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — adding users to database");
             var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
             LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — saved users: {}", usersCount);
-        } else {
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — {}", Status.COMPLETED.formatAnsi());
         }
+        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — {}", COMPLETED.formatAnsi());
     }
 
     public void addDefaultUsersInvitations() {
@@ -50,11 +49,10 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations — no invitations on username: {}", username);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations — add invitations, username: {}", username);
                 this.saveInvitations(defaultUser, authorities);
-            } else {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations' — username: {} — {}", username, Status.COMPLETED.formatAnsi());
             }
         });
+        LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations' — {}", COMPLETED.formatAnsi());
     }
 }

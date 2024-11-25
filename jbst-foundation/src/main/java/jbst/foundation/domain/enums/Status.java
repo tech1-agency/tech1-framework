@@ -36,8 +36,8 @@ public enum Status {
 
     private static final Map<Status, AnsiFormat> MAPPINGS = Map.ofEntries(
             // MAIN
-            Map.entry(DISABLED, JbstConstants.JColor.RED_BOLD_TEXT),
-            Map.entry(ENABLED, JbstConstants.JColor.GREEN_BOLD_TEXT),
+            Map.entry(DISABLED, JbstConstants.JColor.BLACK_BOLD_TEXT),
+            Map.entry(ENABLED, JbstConstants.JColor.BLACK_BOLD_TEXT),
 
             Map.entry(STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT),
             Map.entry(COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT),

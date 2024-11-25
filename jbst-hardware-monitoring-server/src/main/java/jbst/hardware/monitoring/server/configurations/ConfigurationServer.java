@@ -10,7 +10,7 @@ import jbst.foundation.configurations.ConfigurationEvents;
 import jbst.foundation.configurations.ConfigurationSpringBootServer;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.hardware.monitoring.server.feigns.definitions.HardwareMonitoringClientDefinition;
+import jbst.hardware.monitoring.server.client.HardwareMonitoringClientDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

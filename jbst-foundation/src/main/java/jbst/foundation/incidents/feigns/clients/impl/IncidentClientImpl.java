@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static jbst.foundation.domain.constants.JbstConstants.Logs.SERVER_OFFLINE;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,11 +24,7 @@ public class IncidentClientImpl implements IncidentClient {
         try {
             this.incidentClientDefinition.registerIncident(incident);
         } catch (FeignException ex) {
-            LOGGER.error(
-                    "[Server]: `ops-incident-server` is probably offline. IncidentType: `{}`. Exception: `{}`",
-                    incident.getType(),
-                    ex.getMessage()
-            );
+            LOGGER.error(SERVER_OFFLINE, "incident-server", ex.getMessage());
         }
     }
 }

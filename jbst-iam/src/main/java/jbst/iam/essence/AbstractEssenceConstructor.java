@@ -1,6 +1,7 @@
 package jbst.iam.essence;
 
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
@@ -22,6 +23,7 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
     // Properties
     protected final JbstProperties jbstProperties;
 
+    @SuppressWarnings("LoggingSimilarMessage")
     public void addDefaultUsers() {
         var essenceConfigs = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs();
         assertTrueOrThrow(
@@ -29,11 +31,11 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
                 invalidAttribute("essenceConfigs.defaultUsers.enabled == true")
         );
         if (this.usersRepository.count() == 0L) {
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. No users in database. Establish database structure");
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — no users in database");
             var usersCount = this.saveDefaultUsers(essenceConfigs.getDefaultUsers().getUsers());
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users' is completed. Saved dbRecords: `{}`", usersCount);
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — saved users: {}", usersCount);
         } else {
-            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. Users are already saved in database. Please double check");
+            LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'default-users' — {}", Status.COMPLETED.formatAnsi());
         }
     }
 
@@ -48,10 +50,10 @@ public abstract class AbstractEssenceConstructor implements EssenceConstructor {
         essenceConfigs.getDefaultUsers().getUsers().forEach(defaultUser -> {
             var username = defaultUser.getUsername();
             if (this.invitationsRepository.countByOwner(username) == 0L) {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. No invitations in database. Username: `{}`", username);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations — no invitations on username: {}", username);
                 this.saveInvitations(defaultUser, authorities);
             } else {
-                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence feature 'default-users'. Invitations are already saved in database. Username: `{}`", username);
+                LOGGER.info(JbstConstants.Logs.PREFIX + " Essence 'invitations' — username: {} — {}", username, Status.COMPLETED.formatAnsi());
             }
         });
     }

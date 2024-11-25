@@ -13,6 +13,8 @@ import java.util.Map;
 @Getter
 public enum Status {
     // MAIN
+    ENABLED("ENABLED"),
+    DISABLED("DISABLED"),
 
     STARTED("STARTED"),
     COMPLETED("COMPLETED"),
@@ -27,15 +29,19 @@ public enum Status {
     PROGRESS_33("PROGRESS: 33%"),
     PROGRESS_40("PROGRESS: 40%"),
     PROGRESS_50("PROGRESS: 50%"),
-    PROGRESS_60("PROGRESS:, 60%"),
+    PROGRESS_60("PROGRESS: 60%"),
     PROGRESS_66("PROGRESS: 66%"),
     PROGRESS_75("PROGRESS: 75%"),
     PROGRESS_80("PROGRESS: 80%");
 
     private static final Map<Status, AnsiFormat> MAPPINGS = Map.ofEntries(
             // MAIN
+            Map.entry(DISABLED, JbstConstants.JColor.RED_BOLD_TEXT),
+            Map.entry(ENABLED, JbstConstants.JColor.GREEN_BOLD_TEXT),
+
             Map.entry(STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT),
             Map.entry(COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT),
+
             Map.entry(FAILURE, JbstConstants.JColor.RED_BOLD_TEXT),
             Map.entry(SUCCESS, JbstConstants.JColor.GREEN_BOLD_TEXT),
             // PROGRESS
@@ -49,6 +55,13 @@ public enum Status {
             Map.entry(PROGRESS_75, JbstConstants.JColor.YELLOW_BOLD_TEXT),
             Map.entry(PROGRESS_80, JbstConstants.JColor.YELLOW_BOLD_TEXT)
     );
+
+    public static Status of(boolean toggle) {
+        if (toggle) {
+            return Status.ENABLED;
+        }
+        return Status.DISABLED;
+    }
 
     public static AnsiFormat getAnsiFormat(Status status) {
         return MAPPINGS.getOrDefault(status, JbstConstants.JColor.BLACK_BOLD_TEXT);

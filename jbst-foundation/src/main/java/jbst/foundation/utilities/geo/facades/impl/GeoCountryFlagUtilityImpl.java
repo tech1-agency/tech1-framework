@@ -3,7 +3,7 @@ package jbst.foundation.utilities.geo.facades.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.Toggle;
+import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoCountryFlag;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.geo.facades.GeoCountryFlagUtility;
@@ -24,7 +24,7 @@ import static jbst.foundation.domain.enums.Status.SUCCESS;
 
 @Slf4j
 public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
-    private static final String COUNTRIES_FLAGS_JSON = "geo-countries-flags.json";
+    private static final String CONFIGURATION_LOG = PREFIX_UTILITIES + " Geo country flags geo-countries-flags.json — {}";
 
     private final Map<String, GeoCountryFlag> mappedByCountryName;
     private final Map<String, GeoCountryFlag> mappedByCountryCode;
@@ -38,10 +38,10 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
     ) {
         this.jbstProperties = jbstProperties;
         var geoCountryFlagsConfigs = this.jbstProperties.getUtilitiesConfigs().getGeoCountryFlagsConfigs();
-        LOGGER.info("{} Geo country flags {} json — {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, Toggle.of(geoCountryFlagsConfigs.isEnabled()));
+        LOGGER.info(CONFIGURATION_LOG, Status.of(geoCountryFlagsConfigs.isEnabled()).formatAnsi());
         if (geoCountryFlagsConfigs.isEnabled()) {
             try {
-                var resource = resourceLoader.getResource("classpath:" + COUNTRIES_FLAGS_JSON);
+                var resource = resourceLoader.getResource("classpath:geo-countries-flags.json");
                 var typeReference = new TypeReference<List<GeoCountryFlag>>() {};
                 var objectMapper = new ObjectMapper();
                 var geoCountryFlags = objectMapper.readValue(resource.getInputStream(), typeReference);
@@ -59,10 +59,10 @@ public class GeoCountryFlagUtilityImpl implements GeoCountryFlagUtility {
                                         Function.identity()
                                 )
                         );
-                LOGGER.info("{} Geo country flags {} json configuration status: {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, SUCCESS);
+                LOGGER.info(CONFIGURATION_LOG, SUCCESS.formatAnsi());
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error("{} Geo country flags {} json configuration status: {}", PREFIX_UTILITIES, COUNTRIES_FLAGS_JSON, FAILURE);
-                LOGGER.error("Please verify `{}` is present in classpath", COUNTRIES_FLAGS_JSON);
+                LOGGER.error(CONFIGURATION_LOG, FAILURE.formatAnsi());
+                LOGGER.error("Please make sure geo-countries-flags.json is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }
         } else {

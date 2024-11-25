@@ -2,7 +2,6 @@ package jbst.foundation.domain.constants;
 
 import com.diogonunes.jcolor.AnsiFormat;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.enums.Toggle;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -103,7 +102,7 @@ public class JbstConstants {
         // =================================================================================================================
         // Incidents
         // =================================================================================================================
-        public static final String INCIDENT_FEATURE_DISABLED = PREFIX_INCIDENTS + " `{}` feature is " + Toggle.DISABLED.getLowerCase();
+        public static final String INCIDENT_FEATURE_DISABLED = PREFIX_INCIDENTS + " `{}` feature is disabled";
         public static final String INCIDENT = PREFIX_INCIDENTS + " `{}`. incident type: `{}`";
         public static final String INCIDENT_AUTHENTICATION_LOGIN = PREFIX_INCIDENTS + " `{}` - /login. Username: `{}`";
         public static final String INCIDENT_AUTHENTICATION_LOGIN_FAILURE = PREFIX_INCIDENTS + " `{}` - /login failure. Username: `{}`";

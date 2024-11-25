@@ -2,7 +2,7 @@ package jbst.foundation.utilities.geo.functions.mindmax.impl;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import jbst.foundation.domain.enums.Toggle;
+import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.geo.GeoLocation;
 import jbst.foundation.domain.http.requests.IPAddress;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -21,7 +21,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.con
 
 @Slf4j
 public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility {
-    private static final String GEO_DATABASE_NAME = "GeoLite2-City.mmdb";
+    private static final String CONFIGURATION_LOG = PREFIX_UTILITIES + " Geo location database GeoLite2-City.mmdb — {}";
 
     // Database
     private final DatabaseReader databaseReader;
@@ -37,17 +37,17 @@ public class MindMaxGeoLocationUtilityImpl implements MindMaxGeoLocationUtility 
     ) {
         this.geoCountryFlagUtility = geoCountryFlagUtility;
         this.jbstProperties = jbstProperties;
-        var geoLocationsConfigs = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs();
-        LOGGER.info("{} Geo location {} database — {}", PREFIX_UTILITIES, GEO_DATABASE_NAME, Toggle.of(geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()));
-        if (geoLocationsConfigs.isGeoLiteCityDatabaseEnabled()) {
+        var enabled = jbstProperties.getUtilitiesConfigs().getGeoLocationsConfigs().isGeoLiteCityDatabaseEnabled();
+        LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
+        if (enabled) {
             try {
-                var resource = resourceLoader.getResource("classpath:" + GEO_DATABASE_NAME);
+                var resource = resourceLoader.getResource("classpath:GeoLite2-City.mmdb");
                 var inputStream = resource.getInputStream();
                 this.databaseReader = new DatabaseReader.Builder(inputStream).build();
-                LOGGER.info("{} Geo location {} database configuration status: {}", PREFIX_UTILITIES, GEO_DATABASE_NAME, SUCCESS);
+                LOGGER.info(CONFIGURATION_LOG, SUCCESS.formatAnsi());
             } catch (IOException | RuntimeException ex) {
-                LOGGER.error("{} Geo location {} database configuration status: {}", PREFIX_UTILITIES, GEO_DATABASE_NAME, FAILURE);
-                LOGGER.error("Please make sure {} database is in classpath", GEO_DATABASE_NAME);
+                LOGGER.error(CONFIGURATION_LOG, FAILURE.formatAnsi());
+                LOGGER.error("Please make sure GeoLite2-City.mmdb is in classpath");
                 throw new IllegalArgumentException(ex.getMessage());
             }
         } else {

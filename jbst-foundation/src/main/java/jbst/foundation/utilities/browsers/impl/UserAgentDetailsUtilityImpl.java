@@ -4,8 +4,7 @@ import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
-import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.enums.Toggle;
+import jbst.foundation.domain.enums.Status;
 import jbst.foundation.domain.http.requests.UserAgentDetails;
 import jbst.foundation.domain.http.requests.UserAgentHeader;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -22,6 +21,7 @@ import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.con
 
 @Slf4j
 public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
+    private static final String CONFIGURATION_LOG = PREFIX_UTILITIES + " User agent — {}";
 
     private final UserAgentParser userAgentParser;
     private final boolean configured;
@@ -35,9 +35,9 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
         UserAgentParser userAgentParserOrNull;
         boolean configuredFlag;
         String exceptionMessageOrNull;
-        var userAgentConfigs = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs();
-        LOGGER.info("{} User agent — {}", PREFIX_UTILITIES, Toggle.of(userAgentConfigs.isEnabled()));
-        if (userAgentConfigs.isEnabled()) {
+        var enabled = this.jbstProperties.getUtilitiesConfigs().getUserAgentConfigs().isEnabled();
+        LOGGER.info(CONFIGURATION_LOG, Status.of(enabled).formatAnsi());
+        if (enabled) {
             try {
                 userAgentParserOrNull = new UserAgentService().loadParser(
                         List.of(
@@ -48,9 +48,9 @@ public class UserAgentDetailsUtilityImpl implements UserAgentDetailsUtility {
                 );
                 configuredFlag = true;
                 exceptionMessageOrNull = null;
-                LOGGER.info("{} User agent configuration status: {}", PREFIX_UTILITIES, SUCCESS);
+                LOGGER.info(CONFIGURATION_LOG, SUCCESS);
             } catch (ParseException | IOException ex) {
-                LOGGER.error("{} User agent configuration status: {}", PREFIX_UTILITIES, FAILURE);
+                LOGGER.error(CONFIGURATION_LOG, FAILURE);
                 throw new IllegalArgumentException(ex);
             }
         } else {

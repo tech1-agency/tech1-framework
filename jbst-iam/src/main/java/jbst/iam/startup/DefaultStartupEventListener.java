@@ -2,7 +2,6 @@ package jbst.iam.startup;
 
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.enums.Status;
-import jbst.foundation.domain.enums.Toggle;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.iam.essence.AbstractEssenceConstructor;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultStartupEventListener implements BaseStartupEventListener {
-    private static final String STARTUP_MESSAGE = JbstConstants.Logs.PREFIX + " Startup event listener. Status: {}";
 
     // Essence
     protected final AbstractEssenceConstructor essenceConstructor;
@@ -24,21 +22,21 @@ public class DefaultStartupEventListener implements BaseStartupEventListener {
     @Override
     public void onStartup() {
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
-        LOGGER.info(STARTUP_MESSAGE, Status.STARTED.formatAnsi());
+        LOGGER.info(JbstConstants.Logs.getServerStartup(Status.STARTED), this.jbstProperties.getServerConfigs().getName());
 
         var defaultUsers = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getDefaultUsers();
-        LOGGER.info("{} Essence feature 'default-users' — {}", JbstConstants.Logs.PREFIX, Toggle.of(defaultUsers.isEnabled()));
+        LOGGER.info("{} Essence 'default-users' — {}", JbstConstants.Logs.PREFIX, Status.of(defaultUsers.isEnabled()).formatAnsi());
         if (defaultUsers.isEnabled()) {
             this.essenceConstructor.addDefaultUsers();
         }
 
         var invitations = this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations();
-        LOGGER.info("{} Essence feature 'invitations' — {}", JbstConstants.Logs.PREFIX, Toggle.of(invitations.isEnabled()));
+        LOGGER.info("{} Essence 'invitations' — {}", JbstConstants.Logs.PREFIX, Status.of(invitations.isEnabled()).formatAnsi());
         if (invitations.isEnabled()) {
             this.essenceConstructor.addDefaultUsersInvitations();
         }
 
-        LOGGER.info(STARTUP_MESSAGE, Status.COMPLETED.formatAnsi());
+        LOGGER.info(JbstConstants.Logs.getServerStartup(Status.COMPLETED), this.jbstProperties.getServerConfigs().getName());
         LOGGER.info(JbstConstants.Symbols.LINE_SEPARATOR_INTERPUNCT);
     }
 }

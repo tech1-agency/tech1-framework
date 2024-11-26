@@ -1,3 +1,2 @@
-### Changelog [v1.4]
-— Modification: logs events/status/incidents simplification
-— Addition: JbstConstants.SpringAuthorities
+### Changelog [v1.5]
+— TBD

@@ -186,6 +186,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
+                this.emailConfirmationRequired,
                 this.attributes
         );
     }

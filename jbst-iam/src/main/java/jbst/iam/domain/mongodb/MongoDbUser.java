@@ -162,6 +162,7 @@ public class MongoDbUser {
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
+                this.emailConfirmationRequired,
                 this.attributes
         );
     }

@@ -5,8 +5,8 @@
   "zoneId" : "Europe/Kyiv",
   "passwordChangeRequired" : false,
   "emailDetails" : {
-    "emailRequired" : false,
-    "emailConfirmed" : false
+    "required" : false,
+    "confirmed" : false
   },
   "authorities" : [ "admin", "user" ],
   "attributes" : {

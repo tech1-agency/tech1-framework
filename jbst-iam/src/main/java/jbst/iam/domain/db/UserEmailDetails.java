@@ -10,15 +10,15 @@ import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreate
 // WARNING: used in postgre as jsonb → use @Transient + @JsonIgnore
 @Data
 public class UserEmailDetails {
-    private final boolean emailRequired;
-    private final boolean emailConfirmed;
+    private final boolean required;
+    private final boolean confirmed;
 
     private UserEmailDetails(
-            boolean emailRequired,
-            boolean emailConfirmed
+            boolean required,
+            boolean confirmed
     ) {
-        this.emailRequired = emailRequired;
-        this.emailConfirmed = emailConfirmed;
+        this.required = required;
+        this.confirmed = confirmed;
     }
 
     public static UserEmailDetails unnecessary() {
@@ -45,8 +45,8 @@ public class UserEmailDetails {
     @Transient
     @JsonIgnore
     public boolean isEnabled() {
-        if (this.emailRequired) {
-            return this.emailConfirmed;
+        if (this.required) {
+            return this.confirmed;
         } else {
             return true;
         }

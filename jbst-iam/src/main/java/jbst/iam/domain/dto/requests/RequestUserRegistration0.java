@@ -9,6 +9,7 @@ import jbst.foundation.domain.base.Username;
 import java.time.ZoneId;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomZoneId;
+import static jbst.foundation.utilities.zones.ZonesUtility.reworkUkraineZoneId;
 
 public record RequestUserRegistration0(
         @Email.ValidEmail Email email,
@@ -30,6 +31,16 @@ public record RequestUserRegistration0(
 
     public void assertPasswordsOrThrow() {
         this.password.assertEqualsOrThrow(this.confirmPassword);
+    }
+
+    public RequestUserRegistration0 createReworkedUkraineZoneId() {
+        return new RequestUserRegistration0(
+                this.email,
+                this.username,
+                this.password,
+                this.confirmPassword,
+                reworkUkraineZoneId(this.zoneId)
+        );
     }
 
 }

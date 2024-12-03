@@ -9,13 +9,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
+import static java.util.Objects.nonNull;
+
 public interface PostgresUsersEmailsTokensRepository extends JpaRepository<PostgresDbUserEmailToken, String>, UsersEmailsTokensRepository {
 
     // ================================================================================================================
     // Any
     // ================================================================================================================
     default UserEmailToken findByValueAsAny(String value) {
-        return this.findByValue(value).asUserEmailToken();
+        var entity = this.findByValue(value);
+        return nonNull(entity) ? entity.asUserEmailToken() : null;
     }
 
     @Transactional

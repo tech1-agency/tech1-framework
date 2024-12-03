@@ -51,6 +51,20 @@ public class PostgresDbUserEmailToken extends PostgresDbAbstractPersistable0 {
         this.expiryTimestamp = expiryTimestamp;
     }
 
+    public PostgresDbUserEmailToken(UserEmailToken token) {
+        this.id = token.id().value();
+        this.email = token.email();
+        this.value = token.value();
+        this.type = token.type();
+        this.expiryTimestamp = token.expiryTimestamp();
+    }
+
+    @JsonIgnore
+    @Transient
+    public TokenId tokenId() {
+        return new TokenId(this.id);
+    }
+
     @JsonIgnore
     @Transient
     public UserEmailToken asUserEmailToken() {

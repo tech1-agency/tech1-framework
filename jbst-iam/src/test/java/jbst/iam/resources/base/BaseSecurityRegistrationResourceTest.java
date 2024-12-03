@@ -1,8 +1,11 @@
 package jbst.iam.resources.base;
 
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.iam.configurations.TestRunnerResources1;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.events.EventRegistration0;
 import jbst.iam.domain.events.EventRegistration1;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
@@ -52,6 +55,26 @@ class BaseSecurityRegistrationResourceTest extends TestRunnerResources1 {
                 this.securityJwtIncidentPublisher,
                 this.baseRegistrationRequestsValidator
         );
+    }
+
+    @Test
+    void register0() throws Exception {
+        // Arrange
+        var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
+
+        // Act
+        this.mvc.perform(
+                        post("/registration/register0")
+                                .content(this.objectMapper.writeValueAsString(requestUserRegistration0))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        // Assert
+        verify(this.baseRegistrationRequestsValidator).validateRegistrationRequest0(requestUserRegistration0);
+        verify(this.baseRegistrationService).register0(requestUserRegistration0);
+        verify(this.securityJwtPublisher).publishRegistration0(new EventRegistration0(requestUserRegistration0));
+        verify(this.securityJwtIncidentPublisher).publishRegistration0(new IncidentRegistration0(requestUserRegistration0.username()));
     }
 
     @Test

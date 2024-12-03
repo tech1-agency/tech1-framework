@@ -5,6 +5,8 @@ import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import jbst.foundation.incidents.domain.authetication.*;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -15,6 +17,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -282,6 +286,42 @@ class SecurityJwtIncidentPublisherImplTest {
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
         verify(this.applicationEventPublisher).publishEvent(incident);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { true, false })
+    void publishRegistration0Test(boolean enabled) {
+        // Arrange
+        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER0, enabled);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incident = entity(IncidentRegistration0.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration0(incident);
+
+        // Assert
+        verify(this.jbstProperties).getSecurityJwtConfigs();
+        if (enabled) {
+            verify(this.applicationEventPublisher).publishEvent(incident);
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { true, false })
+    void publishRegistration0FailureTest(boolean enabled) {
+        // Arrange
+        var securityJwtConfigs = randomSecurityJwtConfigs(REGISTER0_FAILURE, enabled);
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(securityJwtConfigs);
+        var incident = entity(IncidentRegistration0Failure.class);
+
+        // Act
+        this.componentUnderTest.publishRegistration0Failure(incident);
+
+        // Assert
+        verify(this.jbstProperties).getSecurityJwtConfigs();
+        if (enabled) {
+            verify(this.applicationEventPublisher).publishEvent(incident);
+        }
     }
 
     @Test

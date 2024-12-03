@@ -23,7 +23,7 @@ import org.springframework.data.annotation.Transient;
 @Entity
 @Table(name = PostgresDbUserEmailToken.PG_TABLE_NAME)
 public class PostgresDbUserEmailToken extends PostgresDbAbstractPersistable0 {
-    public static final String PG_TABLE_NAME = "jbst_user_email_tokens";
+    public static final String PG_TABLE_NAME = "jbst_users_emails_tokens";
 
     @Convert(converter = PostgresEmailConverter.class)
     @Column(nullable = false, updatable = false)

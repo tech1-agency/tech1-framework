@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 // Lombok
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 // Mongodb
 @Document(collection = MongoDbUserEmailToken.MONGO_TABLE_NAME)
 public class MongoDbUserEmailToken {
-    public static final String MONGO_TABLE_NAME = "jbst_user_email_tokens";
+    public static final String MONGO_TABLE_NAME = "jbst_users_emails_tokens";
 
     @Id
     private String id;

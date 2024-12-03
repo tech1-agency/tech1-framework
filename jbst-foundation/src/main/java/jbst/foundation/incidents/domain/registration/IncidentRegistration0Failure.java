@@ -2,7 +2,7 @@ package jbst.foundation.incidents.domain.registration;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
+import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.incidents.domain.AbstractIncident;
 import jbst.foundation.incidents.domain.Incident;
 
@@ -18,7 +18,7 @@ public record IncidentRegistration0Failure(
     @Override
     public Incident getPlainIncident() {
         var incident = new Incident(
-                SecurityJwtIncidentType.REGISTER0_FAILURE,
+                JbstIamIncidentType.REGISTER0_FAILURE,
                 this.username
         );
         incident.add(EMAIL, this.email);

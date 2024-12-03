@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
-import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j

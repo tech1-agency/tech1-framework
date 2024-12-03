@@ -1,7 +1,7 @@
 package jbst.iam.events.publishers.impl;
 
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
+import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.domain.properties.configs.security.jwt.IncidentsConfigs;
 import jbst.foundation.incidents.domain.authetication.*;
@@ -27,7 +27,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.mockito.Mockito.*;
 
@@ -345,8 +345,8 @@ class SecurityJwtIncidentPublisherImplTest {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private static SecurityJwtConfigs randomSecurityJwtConfigs(SecurityJwtIncidentType type, boolean enabled) {
-        var typesConfigs = Stream.of(SecurityJwtIncidentType.values())
+    private static SecurityJwtConfigs randomSecurityJwtConfigs(JbstIamIncidentType type, boolean enabled) {
+        var typesConfigs = Stream.of(JbstIamIncidentType.values())
                 .collect(Collectors.toMap(
                         entry -> entry,
                         entry -> type.equals(entry) && enabled

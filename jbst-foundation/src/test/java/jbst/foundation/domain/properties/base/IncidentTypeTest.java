@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.AUTHENTICATION_LOGIN;
-import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.REGISTER1;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.AUTHENTICATION_LOGIN;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.REGISTER1;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IncidentTypeTest extends AbstractFolderSerializationRunner {
@@ -31,7 +31,7 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
 
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void serialize(Tuple1<SecurityJwtIncidentType> tuple1, String fileName) {
+    void serialize(Tuple1<JbstIamIncidentType> tuple1, String fileName) {
         // Act
         var json = this.writeValueAsString(tuple1);
 
@@ -42,10 +42,10 @@ class IncidentTypeTest extends AbstractFolderSerializationRunner {
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("serializeTest")
-    void deserializeTest(Tuple1<SecurityJwtIncidentType> tuple1, String fileName) {
+    void deserializeTest(Tuple1<JbstIamIncidentType> tuple1, String fileName) {
         // Arrange
         var json = TestsIOUtils.readFile(this.getFolder(), fileName);
-        var typeReference = new TypeReference<Tuple1<SecurityJwtIncidentType>>() {};
+        var typeReference = new TypeReference<Tuple1<JbstIamIncidentType>>() {};
 
         // Act
         var tuple = OBJECT_MAPPER.readValue(json, typeReference);

@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static java.math.BigDecimal.ZERO;
 import static java.util.Map.entry;
-import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;

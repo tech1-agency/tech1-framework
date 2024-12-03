@@ -1,7 +1,7 @@
 package jbst.foundation.incidents.domain.registration;
 
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
+import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import jbst.foundation.incidents.domain.AbstractIncident;
 import jbst.foundation.incidents.domain.Incident;
 
@@ -12,7 +12,7 @@ public record IncidentRegistration0(
     @Override
     public Incident getPlainIncident() {
         return new Incident(
-                SecurityJwtIncidentType.REGISTER0,
+                JbstIamIncidentType.REGISTER0,
                 this.username
         );
     }

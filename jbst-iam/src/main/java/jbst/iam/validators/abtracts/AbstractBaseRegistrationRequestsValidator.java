@@ -32,9 +32,8 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
     @Override
     public void validateRegistrationRequest0(RequestUserRegistration0 request) throws RegistrationException {
         request.assertPasswordsOrThrow();
-        // TODO create method to check existence by only one sql request or replace findBy with existBy
-        var user = this.usersRepository.findByUsernameAsJwtUserOrNull(request.username());
-        if (nonNull(user)) {
+        var existsByUsername = this.usersRepository.existsByUsername(request.username());
+        if (existsByUsername) {
             var message = entityAlreadyUsed("Username", request.username().value());
             this.securityJwtPublisher.publishRegistration0Failure(
                     new EventRegistration0Failure(
@@ -52,8 +51,8 @@ public abstract class AbstractBaseRegistrationRequestsValidator implements BaseR
             );
             throw new RegistrationException(message);
         }
-        user = this.usersRepository.findByEmailAsJwtUserOrNull(request.email());
-        if (nonNull(user)) {
+        var existsByEmail = this.usersRepository.existsByEmail(request.email());
+        if (existsByEmail) {
             var message = entityAlreadyUsed("Email", request.email().value());
             this.securityJwtPublisher.publishRegistration0Failure(
                     new EventRegistration0Failure(

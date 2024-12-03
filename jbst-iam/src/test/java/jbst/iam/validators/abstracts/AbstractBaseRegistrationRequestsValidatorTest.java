@@ -1,7 +1,10 @@
 package jbst.iam.validators.abstracts;
 
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
+import jbst.iam.domain.events.EventRegistration0Failure;
 import jbst.iam.domain.events.EventRegistration1Failure;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
@@ -83,6 +86,85 @@ class AbstractBaseRegistrationRequestsValidatorTest {
                 this.invitationsRepository,
                 this.usersRepository
         );
+    }
+
+    @Test
+    void validateRegistrationRequest0UsernameAlreadyUsedTest() {
+        // Arrange
+        var request = RequestUserRegistration0.hardcoded();
+        when(this.usersRepository.existsByUsername(request.username())).thenReturn(true);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest0(request));
+
+        // Assert
+        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Username", request.username().value());
+        assertThat(throwable)
+                .isInstanceOf(RegistrationException.class)
+                .hasMessage(exception);
+        verify(this.usersRepository).existsByUsername(request.username());
+        verify(this.securityJwtPublisher).publishRegistration0Failure(
+                new EventRegistration0Failure(
+                        request.email(),
+                        request.username(),
+                        exception
+                )
+        );
+        verify(this.securityJwtIncidentPublisher).publishRegistration0Failure(
+                new IncidentRegistration0Failure(
+                        request.email(),
+                        request.username(),
+                        exception
+                )
+        );
+    }
+
+    @Test
+    void validateRegistrationRequest0EmailAlreadyUsedTest() {
+        // Arrange
+        var request = RequestUserRegistration0.hardcoded();
+        when(this.usersRepository.existsByUsername(request.username())).thenReturn(false);
+        when(this.usersRepository.existsByEmail(request.email())).thenReturn(true);
+
+        // Act
+        var throwable = catchThrowable(() -> this.componentUnderTest.validateRegistrationRequest0(request));
+
+        // Assert
+        var exception = ExceptionsMessagesUtility.entityAlreadyUsed("Email", request.email().value());
+        assertThat(throwable)
+                .isInstanceOf(RegistrationException.class)
+                .hasMessage(exception);
+        verify(this.usersRepository).existsByUsername(request.username());
+        verify(this.usersRepository).existsByEmail(request.email());
+        verify(this.securityJwtPublisher).publishRegistration0Failure(
+                new EventRegistration0Failure(
+                        request.email(),
+                        request.username(),
+                        exception
+                )
+        );
+        verify(this.securityJwtIncidentPublisher).publishRegistration0Failure(
+                new IncidentRegistration0Failure(
+                        request.email(),
+                        request.username(),
+                        exception
+                )
+        );
+    }
+
+    @Test
+    void validateRegistrationRequest0UsernameEmailFreeTest() throws RegistrationException {
+        // Arrange
+        var request = RequestUserRegistration0.hardcoded();
+        when(this.usersRepository.existsByUsername(request.username())).thenReturn(false);
+        when(this.usersRepository.existsByEmail(request.email())).thenReturn(false);
+
+        // Act
+        this.componentUnderTest.validateRegistrationRequest0(request);
+
+        // Assert
+        verify(this.usersRepository).existsByUsername(request.username());
+        verify(this.usersRepository).existsByEmail(request.email());
     }
 
     @Test

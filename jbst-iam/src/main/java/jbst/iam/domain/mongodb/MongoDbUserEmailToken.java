@@ -28,6 +28,32 @@ public class MongoDbUserEmailToken {
     private UserEmailTokenType type;
     private long expiryTimestamp;
 
+    public MongoDbUserEmailToken(
+            Email email,
+            String value,
+            UserEmailTokenType type,
+            long expiryTimestamp
+    ) {
+        this.email = email;
+        this.value = value;
+        this.type = type;
+        this.expiryTimestamp = expiryTimestamp;
+    }
+
+    public MongoDbUserEmailToken(UserEmailToken token) {
+        this.id = token.id().value();
+        this.email = token.email();
+        this.value = token.value();
+        this.type = token.type();
+        this.expiryTimestamp = token.expiryTimestamp();
+    }
+
+    @JsonIgnore
+    @Transient
+    public TokenId tokenId() {
+        return new TokenId(this.id);
+    }
+
     @JsonIgnore
     @Transient
     public UserEmailToken asUserEmailToken() {

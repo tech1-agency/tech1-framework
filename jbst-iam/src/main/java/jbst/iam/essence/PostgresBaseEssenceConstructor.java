@@ -1,5 +1,6 @@
 package jbst.iam.essence;
 
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.postgres.db.PostgresDbInvitation;
 import jbst.iam.domain.postgres.db.PostgresDbUser;
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
@@ -44,7 +45,8 @@ public class PostgresBaseEssenceConstructor extends AbstractEssenceConstructor {
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),
-                            defaultUser.isPasswordChangeRequired()
+                            defaultUser.isPasswordChangeRequired(),
+                            UserEmailDetails.unnecessary()
                     );
                     user.setEmail(defaultUser.getEmailOrNull());
                     return user;

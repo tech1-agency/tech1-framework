@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryMapProperty;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
 import jbst.foundation.domain.properties.base.AbstractPropertyConfigs;
-import jbst.foundation.domain.properties.base.SecurityJwtIncidentType;
+import jbst.foundation.domain.properties.base.JbstIamIncidentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import static java.lang.Boolean.TRUE;
-import static jbst.foundation.domain.properties.base.SecurityJwtIncidentType.*;
+import static jbst.foundation.domain.properties.base.JbstIamIncidentType.*;
 import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRandomBoolean;
 
 // Lombok (property-based)
@@ -23,29 +23,31 @@ import static jbst.foundation.utilities.random.RandomUtility.getEnumMapMappedRan
 @EqualsAndHashCode(callSuper = true)
 public class IncidentsConfigs extends AbstractPropertyConfigs {
     @MandatoryProperty
-    @MandatoryMapProperty(propertyName = "typesConfigs", keySetClass = SecurityJwtIncidentType.class)
-    private final Map<SecurityJwtIncidentType, Boolean> typesConfigs;
+    @MandatoryMapProperty(propertyName = "typesConfigs", keySetClass = JbstIamIncidentType.class)
+    private final Map<JbstIamIncidentType, Boolean> typesConfigs;
 
     public static IncidentsConfigs hardcoded() {
         return new IncidentsConfigs(
                 new EnumMap<>(
-                        Map.of(
-                                AUTHENTICATION_LOGIN, true,
-                                AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false,
-                                AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true,
-                                AUTHENTICATION_LOGOUT, false,
-                                AUTHENTICATION_LOGOUT_MIN, false,
-                                SESSION_REFRESHED, true,
-                                SESSION_EXPIRED, false,
-                                REGISTER1, true,
-                                REGISTER1_FAILURE, true
+                        Map.ofEntries(
+                                Map.entry(AUTHENTICATION_LOGIN, true),
+                                Map.entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_PASSWORD, false),
+                                Map.entry(AUTHENTICATION_LOGIN_FAILURE_USERNAME_MASKED_PASSWORD, true),
+                                Map.entry(AUTHENTICATION_LOGOUT, false),
+                                Map.entry(AUTHENTICATION_LOGOUT_MIN, false),
+                                Map.entry(SESSION_REFRESHED, true),
+                                Map.entry(SESSION_EXPIRED, false),
+                                Map.entry(REGISTER0, true),
+                                Map.entry(REGISTER0_FAILURE, true),
+                                Map.entry(REGISTER1, true),
+                                Map.entry(REGISTER1_FAILURE, true)
                         )
                 )
         );
     }
 
     public static IncidentsConfigs random() {
-        return new IncidentsConfigs(getEnumMapMappedRandomBoolean(SecurityJwtIncidentType.values()));
+        return new IncidentsConfigs(getEnumMapMappedRandomBoolean(JbstIamIncidentType.values()));
     }
 
     @Override
@@ -60,7 +62,7 @@ public class IncidentsConfigs extends AbstractPropertyConfigs {
         }
     }
 
-    public boolean isEnabled(SecurityJwtIncidentType type) {
+    public boolean isEnabled(JbstIamIncidentType type) {
         return TRUE.equals(this.typesConfigs.get(type));
     }
 }

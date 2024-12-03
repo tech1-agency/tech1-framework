@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -15,6 +16,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,13 +60,20 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
         return entity.userId();
     }
 
+    default UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password) {
+        var user = new MongoDbUser(
+                requestUserRegistration0,
+                password
+        );
+        var entity = this.save(user);
+        return entity.userId();
+    }
+
     default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation) {
         var user = new MongoDbUser(
-                requestUserRegistration1.username(),
+                requestUserRegistration1,
                 password,
-                requestUserRegistration1.zoneId(),
-                invitation.authorities(),
-                false
+                invitation
         );
         var entity = this.save(user);
         return entity.userId();

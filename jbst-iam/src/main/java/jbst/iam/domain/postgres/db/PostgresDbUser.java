@@ -1,6 +1,7 @@
 package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jbst.foundation.domain.base.Email;
@@ -9,17 +10,19 @@ import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.columns.*;
 import jbst.iam.converters.columns.PostgresSetOfSimpleGrantedAuthoritiesConverter;
+import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
+import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.base.AbstractAuthority.*;
@@ -67,16 +70,58 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
     @Column(name = "password_change_required", nullable = false)
     private boolean passwordChangeRequired;
 
+    @Type(JsonBinaryType.class)
+    @Column(name = "email_details", nullable = false)
+    private UserEmailDetails emailDetails;
+
     @Convert(converter = PostgresMapStringsObjectsConverter.class)
     @Column(length = 65535)
     private Map<String, Object> attributes;
 
-    public PostgresDbUser(Username username, Password password, ZoneId zoneId, Set<SimpleGrantedAuthority> authorities, boolean passwordChangeRequired) {
+    public PostgresDbUser(
+            Username username,
+            Password password,
+            ZoneId zoneId,
+            Set<SimpleGrantedAuthority> authorities,
+            boolean passwordChangeRequired,
+            UserEmailDetails emailDetails
+    ) {
         this.username = username;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
         this.passwordChangeRequired = passwordChangeRequired;
+        this.emailDetails = emailDetails;
+        this.attributes = new HashMap<>();
+    }
+
+    public PostgresDbUser(
+            RequestUserRegistration0 requestUserRegistration0,
+            Password password
+    ) {
+        this(
+                requestUserRegistration0.username(),
+                password,
+                requestUserRegistration0.zoneId(),
+                new HashSet<>(),
+                false,
+                UserEmailDetails.required()
+        );
+    }
+
+    public PostgresDbUser(
+            RequestUserRegistration1 requestUserRegistration1,
+            Password password,
+            Invitation invitation
+    ) {
+        this(
+                requestUserRegistration1.username(),
+                password,
+                requestUserRegistration1.zoneId(),
+                invitation.authorities(),
+                false,
+                UserEmailDetails.unnecessary()
+        );
     }
 
     public PostgresDbUser(JwtUser user) {
@@ -88,6 +133,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
         this.email = user.email();
         this.name = user.name();
         this.passwordChangeRequired = user.passwordChangeRequired();
+        this.emailDetails = user.emailDetails();
         this.attributes = user.attributes();
     }
 
@@ -97,7 +143,8 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
-                randomBoolean()
+                randomBoolean(),
+                UserEmailDetails.random()
         );
         user.setEmail(Email.of(username + "@" + JbstConstants.Domains.HARDCODED));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
@@ -157,6 +204,7 @@ public class PostgresDbUser extends PostgresDbAbstractPersistable0 {
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
+                this.emailDetails,
                 this.attributes
         );
     }

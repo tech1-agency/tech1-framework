@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.identifiers.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,6 +27,7 @@ public record JwtUser(
         Email email,
         String name,
         boolean passwordChangeRequired,
+        UserEmailDetails emailDetails,
         Map<String, Object> attributes
 ) implements UserDetails {
 
@@ -80,6 +82,7 @@ public record JwtUser(
                 Email.hardcoded(),
                 "",
                 false,
+                UserEmailDetails.confirmed(),
                 new HashMap<>()
         );
     }
@@ -102,6 +105,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 randomBoolean(),
+                UserEmailDetails.random(),
                 new HashMap<>(
                         Map.of(
                             randomString(), randomString(),
@@ -121,6 +125,7 @@ public record JwtUser(
                 Email.random(),
                 randomString(),
                 false,
+                UserEmailDetails.unnecessary(),
                 new HashMap<>()
         );
     }

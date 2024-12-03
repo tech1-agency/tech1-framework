@@ -68,6 +68,7 @@ public class BaseCurrentSessionAssistant implements CurrentSessionAssistant {
                 user.name(),
                 user.zoneId(),
                 user.passwordChangeRequired(),
+                user.emailDetails(),
                 user.authorities(),
                 attributes
         );

@@ -16,7 +16,6 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -83,7 +82,9 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
     // Spring Data
     // ================================================================================================================
     MongoDbUser findByEmail(Email email);
+    boolean existsByEmail(Email email);
     MongoDbUser findByUsername(Username username);
+    boolean existsByUsername(Username username);
     List<MongoDbUser> findByUsernameIn(Set<Username> usernames);
     List<MongoDbUser> findByUsernameIn(List<Username> usernames);
 

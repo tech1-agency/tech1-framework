@@ -75,6 +75,8 @@ class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRu
         assertThat(catchThrowable(() -> this.usersRepository.loadUserByUsername(Username.of("sa777"))))
                 .isInstanceOf(UsernameNotFoundException.class)
                 .hasMessageStartingWith(entityNotFound("Username", "sa777"));
+        assertThat(this.usersRepository.existsByUsername(Username.of("sa1"))).isTrue();
+        assertThat(this.usersRepository.existsByUsername(Username.of("sa777"))).isFalse();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("sa888"))).isNull();
         assertThat(this.usersRepository.findByEmailAsJwtUserOrNull(Email.of("sa3@" + JbstConstants.Domains.HARDCODED))).isNotNull();
@@ -82,6 +84,8 @@ class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRu
         assertThat(this.usersRepository.findByEmail(Email.of("sa1@" + JbstConstants.Domains.HARDCODED))).isNotNull();
         assertThat(this.usersRepository.findByEmail(Email.of("sa2@" + JbstConstants.Domains.HARDCODED))).isNotNull();
         assertThat(this.usersRepository.findByEmail(Email.of("sa4@" + JbstConstants.Domains.HARDCODED))).isNull();
+        assertThat(this.usersRepository.existsByEmail(Email.of("sa1@" + JbstConstants.Domains.HARDCODED))).isTrue();
+        assertThat(this.usersRepository.existsByEmail(Email.of("sa4@" + JbstConstants.Domains.HARDCODED))).isFalse();
         assertThat(this.usersRepository.findByUsername(Username.of("sa1"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa2"))).isNotNull();
         assertThat(this.usersRepository.findByUsername(Username.of("sa4"))).isNull();

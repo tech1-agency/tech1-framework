@@ -16,6 +16,8 @@ public interface UsersRepository {
     JwtUser loadUserByUsername(Username username) throws UsernameNotFoundException;
     JwtUser findByUsernameAsJwtUserOrNull(Username username);
     JwtUser findByEmailAsJwtUserOrNull(Email email);
+    boolean existsByUsername(Username username);
+    boolean existsByEmail(Email email);
     long count();
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);

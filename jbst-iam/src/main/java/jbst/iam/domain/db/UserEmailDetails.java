@@ -1,7 +1,13 @@
 package jbst.iam.domain.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import java.beans.Transient;
+
+import static jbst.foundation.utilities.random.RandomUtility.randomIntegerGreaterThanZeroByBounds;
+
+// WARNING: used in postgre as jsonb → use @Transient + @JsonIgnore
 @Data
 public class UserEmailDetails {
     private final boolean emailRequired;
@@ -27,6 +33,17 @@ public class UserEmailDetails {
         return new UserEmailDetails(true, true);
     }
 
+    public static UserEmailDetails random() {
+        var i = randomIntegerGreaterThanZeroByBounds(1, 2);
+        return switch (i) {
+            case 1 -> UserEmailDetails.unnecessary();
+            case 2 -> UserEmailDetails.required();
+            default -> UserEmailDetails.confirmed();
+        };
+    }
+
+    @Transient
+    @JsonIgnore
     public boolean isEnabled() {
         if (this.emailRequired) {
             return this.emailConfirmed;

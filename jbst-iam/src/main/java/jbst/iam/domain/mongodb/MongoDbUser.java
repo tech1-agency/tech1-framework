@@ -6,6 +6,10 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
+import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
 import lombok.*;
@@ -15,10 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.domain.base.AbstractAuthority.*;
@@ -47,7 +48,7 @@ public class MongoDbUser {
     private Email email;
     private String name;
     private boolean passwordChangeRequired;
-    private boolean emailConfirmationRequired;
+    private UserEmailDetails emailDetails;
     private Map<String, Object> attributes;
 
     public MongoDbUser(
@@ -55,33 +56,45 @@ public class MongoDbUser {
             Password password,
             ZoneId zoneId,
             Set<SimpleGrantedAuthority> authorities,
-            boolean passwordChangeRequired
+            boolean passwordChangeRequired,
+            UserEmailDetails emailDetails
     ) {
         this.username = username;
         this.password = password;
         this.zoneId = zoneId;
         this.authorities = authorities;
         this.passwordChangeRequired = passwordChangeRequired;
-        this.emailConfirmationRequired = false;
+        this.emailDetails = emailDetails;
         this.attributes = new HashMap<>();
     }
 
     public MongoDbUser(
-            Username username,
-            Password password,
-            ZoneId zoneId,
-            Email email,
-            Set<SimpleGrantedAuthority> authorities,
-            boolean passwordChangeRequired
+            RequestUserRegistration0 requestUserRegistration0,
+            Password password
     ) {
-        this.username = username;
-        this.password = password;
-        this.zoneId = zoneId;
-        this.email = email;
-        this.authorities = authorities;
-        this.passwordChangeRequired = passwordChangeRequired;
-        this.emailConfirmationRequired = true;
-        this.attributes = new HashMap<>();
+        this(
+                requestUserRegistration0.username(),
+                password,
+                requestUserRegistration0.zoneId(),
+                new HashSet<>(),
+                false,
+                UserEmailDetails.required()
+        );
+    }
+
+    public MongoDbUser(
+            RequestUserRegistration1 requestUserRegistration1,
+            Password password,
+            Invitation invitation
+    ) {
+        this(
+                requestUserRegistration1.username(),
+                password,
+                requestUserRegistration1.zoneId(),
+                invitation.authorities(),
+                false,
+                UserEmailDetails.unnecessary()
+        );
     }
 
     public MongoDbUser(JwtUser user) {
@@ -93,6 +106,7 @@ public class MongoDbUser {
         this.email = user.email();
         this.name = user.name();
         this.passwordChangeRequired = user.passwordChangeRequired();
+        this.emailDetails = user.emailDetails();
         this.attributes = user.attributes();
     }
 
@@ -106,7 +120,8 @@ public class MongoDbUser {
                 Password.random(),
                 randomZoneId(),
                 getSimpleGrantedAuthorities(authorities),
-                randomBoolean()
+                randomBoolean(),
+                UserEmailDetails.random()
         );
         user.setEmail(Email.of(username + "@" + JbstConstants.Domains.HARDCODED));
         user.setName(capitalize(randomString()) + " " + capitalize(randomString()));
@@ -162,7 +177,7 @@ public class MongoDbUser {
                 this.email,
                 this.name,
                 this.passwordChangeRequired,
-                this.emailConfirmationRequired,
+                this.emailDetails,
                 this.attributes
         );
     }

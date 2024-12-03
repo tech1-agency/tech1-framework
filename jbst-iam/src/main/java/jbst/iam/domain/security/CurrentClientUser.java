@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
+import jbst.iam.domain.db.UserEmailDetails;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -27,7 +28,7 @@ public class CurrentClientUser {
     @Schema(type = "string")
     private final ZoneId zoneId;
     private final boolean passwordChangeRequired;
-    private final boolean emailConfirmationRequired;
+    private final UserEmailDetails emailDetails;
     private final Set<String> authorities;
     private Map<String, Object> attributes;
 
@@ -38,7 +39,7 @@ public class CurrentClientUser {
                 randomString(),
                 randomZoneId(),
                 randomBoolean(),
-                randomBoolean(),
+                UserEmailDetails.random(),
                 new HashSet<>(),
                 new HashMap<>()
         );
@@ -50,7 +51,7 @@ public class CurrentClientUser {
             String name,
             ZoneId zoneId,
             boolean passwordChangeRequired,
-            boolean emailConfirmationRequired,
+            UserEmailDetails emailDetails,
             Set<SimpleGrantedAuthority> authorities,
             Map<String, Object> attributes
     ) {
@@ -59,7 +60,7 @@ public class CurrentClientUser {
         this.name = name;
         this.zoneId = zoneId;
         this.passwordChangeRequired = passwordChangeRequired;
-        this.emailConfirmationRequired = emailConfirmationRequired;
+        this.emailDetails = emailDetails;
         this.authorities = authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toSet());
         this.attributes = attributes;
     }

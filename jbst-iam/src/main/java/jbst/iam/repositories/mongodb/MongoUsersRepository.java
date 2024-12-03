@@ -62,12 +62,8 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
 
     default UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password) {
         var user = new MongoDbUser(
-                requestUserRegistration0.username(),
-                password,
-                requestUserRegistration0.zoneId(),
-                requestUserRegistration0.email(),
-                new HashSet<>(),
-                false
+                requestUserRegistration0,
+                password
         );
         var entity = this.save(user);
         return entity.userId();
@@ -75,11 +71,9 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
 
     default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation) {
         var user = new MongoDbUser(
-                requestUserRegistration1.username(),
+                requestUserRegistration1,
                 password,
-                requestUserRegistration1.zoneId(),
-                invitation.authorities(),
-                false
+                invitation
         );
         var entity = this.save(user);
         return entity.userId();

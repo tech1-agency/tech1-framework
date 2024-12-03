@@ -1,5 +1,6 @@
 package jbst.iam.essence;
 
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.mongodb.MongoDbInvitation;
 import jbst.iam.domain.mongodb.MongoDbUser;
 import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
@@ -44,7 +45,8 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),
-                            defaultUser.isPasswordChangeRequired()
+                            defaultUser.isPasswordChangeRequired(),
+                            UserEmailDetails.unnecessary()
                     );
                     user.setEmail(defaultUser.getEmailOrNull());
                     return user;

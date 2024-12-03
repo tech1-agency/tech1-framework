@@ -66,12 +66,8 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
 
     default UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password) {
         var user = new PostgresDbUser(
-                requestUserRegistration0.username(),
-                password,
-                requestUserRegistration0.zoneId(),
-                requestUserRegistration0.email(),
-                new HashSet<>(),
-                false
+                requestUserRegistration0,
+                password
         );
         var entity = this.save(user);
         return entity.userId();
@@ -79,11 +75,9 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
 
     default UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation) {
         var user = new PostgresDbUser(
-                requestUserRegistration1.username(),
+                requestUserRegistration1,
                 password,
-                requestUserRegistration1.zoneId(),
-                invitation.authorities(),
-                false
+                invitation
         );
         var entity = this.save(user);
         return entity.userId();

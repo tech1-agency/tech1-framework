@@ -1,5 +1,6 @@
 package jbst.iam.domain.mongodb;
 
+import jbst.iam.domain.db.UserEmailDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import jbst.foundation.domain.base.Password;
@@ -24,7 +25,8 @@ class MongoDbUserTest {
                 Set.of(
                         new SimpleGrantedAuthority("admin123")
                 ),
-                randomBoolean()
+                randomBoolean(),
+                UserEmailDetails.random()
         );
 
         // Act
@@ -44,7 +46,8 @@ class MongoDbUserTest {
                 Set.of(
                         new SimpleGrantedAuthority("admin123")
                 ),
-                randomBoolean()
+                randomBoolean(),
+                UserEmailDetails.random()
         );
         setPrivateField(user, "attributes", null);
 

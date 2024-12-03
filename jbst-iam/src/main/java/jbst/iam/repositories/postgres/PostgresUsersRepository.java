@@ -19,7 +19,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -87,7 +86,9 @@ public interface PostgresUsersRepository extends JpaRepository<PostgresDbUser, S
     // Spring Data
     // ================================================================================================================
     PostgresDbUser findByEmail(Email email);
+    boolean existsByEmail(Email email);
     PostgresDbUser findByUsername(Username username);
+    boolean existsByUsername(Username username);
     List<PostgresDbUser> findByUsernameIn(Set<Username> usernames);
     List<PostgresDbUser> findByUsernameIn(List<Username> usernames);
 

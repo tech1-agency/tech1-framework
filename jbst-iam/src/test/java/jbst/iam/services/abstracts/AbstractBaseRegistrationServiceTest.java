@@ -1,6 +1,8 @@
 package jbst.iam.services.abstracts;
 
+import jbst.foundation.domain.base.Email;
 import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.repositories.InvitationsRepository;
 import jbst.iam.repositories.UsersRepository;
@@ -80,6 +82,27 @@ class AbstractBaseRegistrationServiceTest {
                 this.usersRepository,
                 this.bCryptPasswordEncoder
         );
+    }
+
+    @Test
+    void register0Test() {
+        // Arrange
+        var requestUserRegistration0 = new RequestUserRegistration0(
+                Email.random(),
+                Username.random(),
+                Password.random(),
+                Password.random(),
+                randomZoneId()
+        );
+        var hashPassword = randomString();
+        when(this.bCryptPasswordEncoder.encode(requestUserRegistration0.password().value())).thenReturn(hashPassword);
+
+        // Act
+        this.componentUnderTest.register0(requestUserRegistration0);
+
+        // Assert
+        verify(this.bCryptPasswordEncoder).encode(requestUserRegistration0.password().value());
+        verify(this.usersRepository).saveAs(requestUserRegistration0, Password.of(hashPassword));
     }
 
     @Test

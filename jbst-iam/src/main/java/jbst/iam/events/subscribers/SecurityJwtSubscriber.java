@@ -11,6 +11,10 @@ public interface SecurityJwtSubscriber {
     @EventListener
     void onAuthenticationLogout(EventAuthenticationLogout event);
     @EventListener
+    void onRegistration0(EventRegistration0 event);
+    @EventListener
+    void onRegistration0Failure(EventRegistration0Failure event);
+    @EventListener
     void onRegistration1(EventRegistration1 event);
     @EventListener
     void onRegistration1Failure(EventRegistration1Failure event);

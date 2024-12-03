@@ -45,6 +45,7 @@ public class MongoBaseEssenceConstructor extends AbstractEssenceConstructor {
                             defaultUser.getPassword(),
                             defaultUser.getZoneId(),
                             getSimpleGrantedAuthorities(defaultUser.getAuthorities()),
+                            null,
                             defaultUser.isPasswordChangeRequired(),
                             UserEmailDetails.unnecessary()
                     );

@@ -159,6 +159,30 @@ class BaseSecurityJwtSubscriberTest {
     }
 
     @Test
+    void onRegistration0Test() {
+        // Arrange
+        var event = entity(EventRegistration0.class);
+
+        // Act
+        this.componentUnderTest.onRegistration0(event);
+
+        // Assert
+        assertThat(event).isNotNull();
+    }
+
+    @Test
+    void onRegistration0FailureTest() {
+        // Arrange
+        var event = entity(EventRegistration0Failure.class);
+
+        // Act
+        this.componentUnderTest.onRegistration0Failure(event);
+
+        // Assert
+        assertThat(event).isNotNull();
+    }
+
+    @Test
     void onRegistration1Test() {
         // Arrange
         var event = entity(EventRegistration1.class);

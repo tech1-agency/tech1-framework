@@ -2,6 +2,8 @@ package jbst.iam.events.subscribers.impl;
 
 import jbst.foundation.domain.pubsub.AbstractEventSubscriber;
 import jbst.foundation.incidents.domain.authetication.*;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1;
 import jbst.foundation.incidents.domain.registration.IncidentRegistration1Failure;
 import jbst.foundation.incidents.domain.session.IncidentSessionExpired;
@@ -51,6 +53,18 @@ public class SecurityJwtIncidentSubscriberImpl extends AbstractEventSubscriber i
     @Override
     public void onEvent(IncidentAuthenticationLogoutFull incident) {
         LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] logout");
+        this.incidentClient.registerIncident(incident.getPlainIncident());
+    }
+
+    @Override
+    public void onEvent(IncidentRegistration0 incident) {
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register0");
+        this.incidentClient.registerIncident(incident.getPlainIncident());
+    }
+
+    @Override
+    public void onEvent(IncidentRegistration0Failure incident) {
+        LOGGER.debug(USER_ACTION, incident.username(), "[sub, incidents] register0 failure");
         this.incidentClient.registerIncident(incident.getPlainIncident());
     }
 

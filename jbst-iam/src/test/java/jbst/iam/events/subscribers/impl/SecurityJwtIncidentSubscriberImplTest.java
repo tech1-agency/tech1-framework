@@ -1,6 +1,8 @@
 package jbst.iam.events.subscribers.impl;
 
 import jbst.foundation.incidents.domain.authetication.*;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0;
+import jbst.foundation.incidents.domain.registration.IncidentRegistration0Failure;
 import jbst.iam.events.subscribers.SecurityJwtIncidentSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -138,6 +140,30 @@ class SecurityJwtIncidentSubscriberImplTest {
     void onEventSessionExpiredIncidentTest() {
         // Arrange
         var incident = entity(IncidentSessionExpired.class);
+
+        // Act
+        this.componentUnderTest.onEvent(incident);
+
+        // Assert
+        verify(this.incidentClient).registerIncident(incident.getPlainIncident());
+    }
+
+    @Test
+    void onEventRegister0IncidentTest() {
+        // Arrange
+        var incident = entity(IncidentRegistration0.class);
+
+        // Act
+        this.componentUnderTest.onEvent(incident);
+
+        // Assert
+        verify(this.incidentClient).registerIncident(incident.getPlainIncident());
+    }
+
+    @Test
+    void onEventRegister0FailureIncidentTest() {
+        // Arrange
+        var incident = entity(IncidentRegistration0Failure.class);
 
         // Act
         this.componentUnderTest.onEvent(incident);

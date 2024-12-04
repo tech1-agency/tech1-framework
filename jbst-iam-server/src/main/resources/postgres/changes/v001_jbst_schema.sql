@@ -14,6 +14,14 @@ CREATE TABLE "jbst_users" (
     "attributes" varchar(65535)
 );
 
+CREATE TABLE "jbst_users_emails_tokens" (
+    "id" varchar(36) PRIMARY KEY,
+    "email" varchar(255) NOT NULL,
+    "value" varchar(36) NOT NULL,
+    "type" varchar(255) NOT NULL,
+    "expiry_timestamp" int8 NOT NULL
+);
+
 CREATE TABLE "jbst_users_sessions" (
     "id" varchar(36) PRIMARY KEY,
     "created_at" int8 NOT NULL,

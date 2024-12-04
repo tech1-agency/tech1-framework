@@ -19,7 +19,8 @@ CREATE TABLE "jbst_users_tokens" (
     "username" varchar(255) NOT NULL,
     "value" varchar(36) NOT NULL,
     "type" varchar(255) NOT NULL,
-    "expiry_timestamp" int8 NOT NULL
+    "expiry_timestamp" int8 NOT NULL,
+    "used" bool NOT NULL
 );
 
 CREATE TABLE "jbst_users_sessions" (

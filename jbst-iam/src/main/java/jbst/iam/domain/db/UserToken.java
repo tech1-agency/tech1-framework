@@ -12,7 +12,8 @@ public record UserToken(
         Username username,
         String value,
         UserTokenType type,
-        long expiryTimestamp
+        long expiryTimestamp,
+        boolean used
 ) {
 
     public static UserToken random() {
@@ -21,7 +22,8 @@ public record UserToken(
                 Username.random(),
                 RandomUtility.randomString(),
                 RandomUtility.randomEnum(UserTokenType.class),
-                RandomUtility.randomLongGreaterThanZero()
+                RandomUtility.randomLongGreaterThanZero(),
+                RandomUtility.randomBoolean()
         );
     }
 

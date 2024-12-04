@@ -37,17 +37,20 @@ public class MongoDbUserToken {
     private String value;
     private UserTokenType type;
     private long expiryTimestamp;
+    private boolean used;
 
     public MongoDbUserToken(
             @NotNull Username username,
             @NotNull String value,
             @NotNull UserTokenType type,
-            long expiryTimestamp
+            long expiryTimestamp,
+            boolean used
     ) {
         this.username = username;
         this.value = value;
         this.type = type;
         this.expiryTimestamp = expiryTimestamp;
+        this.used = used;
     }
 
     public MongoDbUserToken(RequestUserToken request) {
@@ -55,7 +58,8 @@ public class MongoDbUserToken {
                 request.username(),
                 randomStringLetterOrNumbersOnly(36),
                 request.type(),
-                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to()
+                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
+                false
         );
     }
 
@@ -65,42 +69,61 @@ public class MongoDbUserToken {
         this.value = token.value();
         this.type = token.type();
         this.expiryTimestamp = token.expiryTimestamp();
+        this.used = token.used();
     }
 
     public static MongoDbUserToken random(
             Username username,
-            long expiryTimestamp
+            long expiryTimestamp,
+            boolean used
     ) {
         return new MongoDbUserToken(
                 username,
                 randomString(),
                 randomEnum(UserTokenType.class),
-                expiryTimestamp
+                expiryTimestamp,
+                used
         );
     }
 
     public static List<MongoDbUserToken> dummies1() {
         var token1 = MongoDbUserToken.random(
                 Username.of("username1"),
-                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                false
         );
         var token2 = MongoDbUserToken.random(
                 Username.of("username2"),
-                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                false
         );
         var token3 = MongoDbUserToken.random(
                 Username.of("username3"),
-                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
+                false
         );
         var token4 = MongoDbUserToken.random(
                 Username.of("username4"),
-                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
+                false
+        );
+        var token5 = MongoDbUserToken.random(
+                Username.of("username5"),
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                true
+        );
+        var token6 = MongoDbUserToken.random(
+                Username.of("username6"),
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                true
         );
         return List.of(
                 token1,
                 token2,
                 token3,
-                token4
+                token4,
+                token5,
+                token6
         );
     }
 
@@ -118,7 +141,8 @@ public class MongoDbUserToken {
                 this.username,
                 this.value,
                 this.type,
-                this.expiryTimestamp
+                this.expiryTimestamp,
+                this.used
         );
     }
 }

@@ -49,16 +49,21 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     @Column(name = "expiry_timestamp", nullable = false, updatable = false)
     private long expiryTimestamp;
 
+    @Column(nullable = false)
+    private boolean used;
+
     public PostgresDbUserToken(
             @NotNull Username username,
             @NotNull String value,
             @NotNull UserTokenType type,
-            long expiryTimestamp
+            long expiryTimestamp,
+            boolean used
     ) {
         this.username = username;
         this.value = value;
         this.type = type;
         this.expiryTimestamp = expiryTimestamp;
+        this.used = used;
     }
 
     public PostgresDbUserToken(RequestUserToken request) {
@@ -66,7 +71,8 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
                 request.username(),
                 randomStringLetterOrNumbersOnly(36),
                 request.type(),
-                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to()
+                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
+                false
         );
     }
 
@@ -76,42 +82,61 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
         this.value = token.value();
         this.type = token.type();
         this.expiryTimestamp = token.expiryTimestamp();
+        this.used = token.used();
     }
 
     public static PostgresDbUserToken random(
             Username username,
-            long expiryTimestamp
+            long expiryTimestamp,
+            boolean used
     ) {
         return new PostgresDbUserToken(
                 username,
                 randomStringLetterOrNumbersOnly(36),
                 randomEnum(UserTokenType.class),
-                expiryTimestamp
+                expiryTimestamp,
+                used
         );
     }
 
     public static List<PostgresDbUserToken> dummies1() {
         var token1 = PostgresDbUserToken.random(
                 Username.of("username1"),
-                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                false
         );
         var token2 = PostgresDbUserToken.random(
                 Username.of("username2"),
-                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                false
         );
         var token3 = PostgresDbUserToken.random(
                 Username.of("username3"),
-                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
+                false
         );
         var token4 = PostgresDbUserToken.random(
                 Username.of("username4"),
-                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
+                false
+        );
+        var token5 = PostgresDbUserToken.random(
+                Username.of("username1"),
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                true
+        );
+        var token6 = PostgresDbUserToken.random(
+                Username.of("username2"),
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                true
         );
         return List.of(
                 token1,
                 token2,
                 token3,
-                token4
+                token4,
+                token5,
+                token6
         );
     }
 
@@ -129,7 +154,8 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
                 this.username,
                 this.value,
                 this.type,
-                this.expiryTimestamp
+                this.expiryTimestamp,
+                this.used
         );
     }
 }

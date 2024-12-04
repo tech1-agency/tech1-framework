@@ -125,5 +125,17 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         assertThat(this.usersTokensRepository.count()).isEqualTo(8);
         assertThat(this.usersTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(userEmailToken.value())).isNotNull();
+
+        // Act-Assert-4
+        var savedToken = saved.get(0);
+        assertThat(savedToken.isUsed()).isFalse();
+        savedToken.setUsed(true);
+        var tokenId = this.usersTokensRepository.saveAs(savedToken.asUserToken());
+        var updatedToken = this.usersTokensRepository.findById(tokenId.value());
+        assertThat(updatedToken).isNotEmpty();
+        assertThat(updatedToken.get().isUsed()).isTrue();
+        var updatedAnyToken = this.usersTokensRepository.findByValueAsAny(savedToken.getValue());
+        assertThat(updatedAnyToken).isNotNull();
+        assertThat(updatedAnyToken.used()).isTrue();
     }
 }

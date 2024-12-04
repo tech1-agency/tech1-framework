@@ -2,7 +2,7 @@ package jbst.iam.repositories.mongodb;
 
 public record JbstMongoRepositories(
         MongoInvitationsRepository invitationsRepository,
-        MongoUsersEmailsTokensRepository usersEmailsTokensRepository,
+        MongoUsersTokensRepository usersTokensRepository,
         MongoUsersRepository userRepository,
         MongoUsersSessionsRepository userSessionRepository
 ) {

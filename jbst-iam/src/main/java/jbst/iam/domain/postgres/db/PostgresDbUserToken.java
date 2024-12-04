@@ -1,47 +1,59 @@
-package jbst.iam.domain.mongodb;
+package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.converters.columns.PostgresEmailConverter;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.iam.domain.db.UserEmailToken;
-import jbst.iam.domain.dto.requests.RequestUserEmailToken;
-import jbst.iam.domain.enums.UserEmailTokenType;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserToken;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
+import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
 import lombok.*;
-import org.springframework.data.annotation.Id;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-// Mongodb
-@Document(collection = MongoDbUserEmailToken.MONGO_TABLE_NAME)
-public class MongoDbUserEmailToken {
-    public static final String MONGO_TABLE_NAME = "jbst_users_emails_tokens";
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+// JPA
+@Entity
+@Table(name = PostgresDbUserToken.PG_TABLE_NAME)
+public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
+    public static final String PG_TABLE_NAME = "jbst_users_emails_tokens";
 
-    @Id
-    private String id;
+    @Convert(converter = PostgresEmailConverter.class)
+    @Column(nullable = false, updatable = false)
     private Email email;
+
+    @Column(length = 36, nullable = false, updatable = false)
     private String value;
-    private UserEmailTokenType type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, updatable = false)
+    private UserTokenType type;
+
+    @Column(name = "expiry_timestamp", nullable = false, updatable = false)
     private long expiryTimestamp;
 
-    public MongoDbUserEmailToken(
-            Email email,
-            String value,
-            UserEmailTokenType type,
+    public PostgresDbUserToken(
+            @NotNull Email email,
+            @NotNull String value,
+            @NotNull UserTokenType type,
             long expiryTimestamp
     ) {
         this.email = email;
@@ -50,7 +62,7 @@ public class MongoDbUserEmailToken {
         this.expiryTimestamp = expiryTimestamp;
     }
 
-    public MongoDbUserEmailToken(RequestUserEmailToken request) {
+    public PostgresDbUserToken(RequestUserToken request) {
         this(
                 request.email(),
                 randomStringLetterOrNumbersOnly(36),
@@ -59,7 +71,7 @@ public class MongoDbUserEmailToken {
         );
     }
 
-    public MongoDbUserEmailToken(UserEmailToken token) {
+    public PostgresDbUserToken(UserToken token) {
         this.id = token.id().value();
         this.email = token.email();
         this.value = token.value();
@@ -67,32 +79,32 @@ public class MongoDbUserEmailToken {
         this.expiryTimestamp = token.expiryTimestamp();
     }
 
-    public static MongoDbUserEmailToken random(
+    public static PostgresDbUserToken random(
             Email email,
             long expiryTimestamp
     ) {
-        return new MongoDbUserEmailToken(
+        return new PostgresDbUserToken(
                 email,
-                randomString(),
-                randomEnum(UserEmailTokenType.class),
+                randomStringLetterOrNumbersOnly(36),
+                randomEnum(UserTokenType.class),
                 expiryTimestamp
         );
     }
 
-    public static List<MongoDbUserEmailToken> dummies1() {
-        var token1 = MongoDbUserEmailToken.random(
+    public static List<PostgresDbUserToken> dummies1() {
+        var token1 = PostgresDbUserToken.random(
                 Email.of("token1@" + JbstConstants.Domains.HARDCODED),
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
-        var token2 = MongoDbUserEmailToken.random(
+        var token2 = PostgresDbUserToken.random(
                 Email.of("token2@" + JbstConstants.Domains.HARDCODED),
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
-        var token3 = MongoDbUserEmailToken.random(
+        var token3 = PostgresDbUserToken.random(
                 Email.of("token3@" + JbstConstants.Domains.HARDCODED),
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
-        var token4 = MongoDbUserEmailToken.random(
+        var token4 = PostgresDbUserToken.random(
                 Email.of("token4@" + JbstConstants.Domains.HARDCODED),
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
@@ -112,8 +124,8 @@ public class MongoDbUserEmailToken {
 
     @JsonIgnore
     @Transient
-    public UserEmailToken asUserEmailToken() {
-        return new UserEmailToken(
+    public UserToken asUserToken() {
+        return new UserToken(
                 new TokenId(this.id),
                 this.email,
                 this.value,

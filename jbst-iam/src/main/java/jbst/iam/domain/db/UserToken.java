@@ -2,25 +2,25 @@ package jbst.iam.domain.db;
 
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.domain.enums.UserEmailTokenType;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
-public record UserEmailToken(
+public record UserToken(
         TokenId id,
         Email email,
         String value,
-        UserEmailTokenType type,
+        UserTokenType type,
         long expiryTimestamp
 ) {
 
-    public static UserEmailToken random() {
-        return new UserEmailToken(
+    public static UserToken random() {
+        return new UserToken(
                 TokenId.random(),
                 Email.random(),
                 RandomUtility.randomString(),
-                RandomUtility.randomEnum(UserEmailTokenType.class),
+                RandomUtility.randomEnum(UserTokenType.class),
                 RandomUtility.randomLongGreaterThanZero()
         );
     }

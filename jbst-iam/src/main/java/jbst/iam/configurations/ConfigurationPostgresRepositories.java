@@ -29,7 +29,7 @@ public class ConfigurationPostgresRepositories {
 
     // Repositories
     private final PostgresInvitationsRepository invitationsRepository;
-    private final PostgresUsersEmailsTokensRepository usersEmailsTokensRepository;
+    private final PostgresUsersTokensRepository usersTokensRepository;
     private final PostgresUsersRepository userRepository;
     private final PostgresUsersSessionsRepository userSessionRepository;
 
@@ -37,7 +37,7 @@ public class ConfigurationPostgresRepositories {
     public JbstPostgresRepositories jbstPostgresRepositories() {
         return new JbstPostgresRepositories(
                 this.invitationsRepository,
-                this.usersEmailsTokensRepository,
+                this.usersTokensRepository,
                 this.userRepository,
                 this.userSessionRepository
         );

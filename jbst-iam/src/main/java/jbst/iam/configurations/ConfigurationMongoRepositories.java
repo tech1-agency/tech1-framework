@@ -49,13 +49,13 @@ public class ConfigurationMongoRepositories {
     @Bean
     public JbstMongoRepositories jbstMongoRepositories(
             MongoInvitationsRepository invitationsRepository,
-            MongoUsersEmailsTokensRepository usersEmailsTokensRepository,
+            MongoUsersTokensRepository usersTokensRepository,
             MongoUsersRepository usersRepository,
             MongoUsersSessionsRepository userSessionRepository
     ) {
         return new JbstMongoRepositories(
                 invitationsRepository,
-                usersEmailsTokensRepository,
+                usersTokensRepository,
                 usersRepository,
                 userSessionRepository
         );

@@ -2,6 +2,7 @@ package jbst.iam.repositories.mongodb;
 
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.domain.db.UserEmailToken;
+import jbst.iam.domain.dto.requests.RequestUserEmailToken;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.mongodb.MongoDbUserEmailToken;
 import jbst.iam.repositories.UsersEmailsTokensRepository;
@@ -26,6 +27,15 @@ public interface MongoUsersEmailsTokensRepository extends MongoRepository<MongoD
     default TokenId saveAs(UserEmailToken token) {
         var entity = this.save(new MongoDbUserEmailToken(token));
         return entity.tokenId();
+    }
+
+    default UserEmailToken saveAs(RequestUserEmailToken request) {
+        var entity = this.save(
+                new MongoDbUserEmailToken(
+                        request
+                )
+        );
+        return entity.asUserEmailToken();
     }
 
     // ================================================================================================================

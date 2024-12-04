@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.domain.db.UserEmailToken;
+import jbst.iam.domain.dto.requests.RequestUserEmailToken;
 import jbst.iam.domain.enums.UserEmailTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import lombok.*;
@@ -16,8 +16,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
+import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 
 // Lombok
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,6 +50,15 @@ public class MongoDbUserEmailToken {
         this.expiryTimestamp = expiryTimestamp;
     }
 
+    public MongoDbUserEmailToken(RequestUserEmailToken request) {
+        this(
+                request.email(),
+                randomStringLetterOrNumbersOnly(36),
+                request.type(),
+                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to()
+        );
+    }
+
     public MongoDbUserEmailToken(UserEmailToken token) {
         this.id = token.id().value();
         this.email = token.email();
@@ -72,19 +82,19 @@ public class MongoDbUserEmailToken {
     public static List<MongoDbUserEmailToken> dummies1() {
         var token1 = MongoDbUserEmailToken.random(
                 Email.of("token1@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
         var token2 = MongoDbUserEmailToken.random(
                 Email.of("token2@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
         var token3 = MongoDbUserEmailToken.random(
                 Email.of("token3@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
         var token4 = MongoDbUserEmailToken.random(
                 Email.of("token4@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
         return List.of(
                 token1,

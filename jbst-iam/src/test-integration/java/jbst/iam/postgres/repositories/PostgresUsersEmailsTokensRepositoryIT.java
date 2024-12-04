@@ -3,6 +3,7 @@ package jbst.iam.postgres.repositories;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.configurations.ConfigurationPostgresRepositories;
 import jbst.iam.domain.db.UserEmailToken;
+import jbst.iam.domain.dto.requests.RequestUserEmailToken;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.postgres.db.PostgresDbUserEmailToken;
 import jbst.iam.postgres.configs.PostgresBeforeAllCallback;
@@ -109,5 +110,12 @@ class PostgresUsersEmailsTokensRepositoryIT extends TestsConfigurationPostgresRe
         var notExistentTokenId = entity(TokenId.class);
         assertThat(this.usersEmailsTokensRepository.findById(existentTokenId.value())).isNotEmpty();
         assertThat(this.usersEmailsTokensRepository.findById(notExistentTokenId.value())).isEmpty();
+
+        // Act-Assert-3
+        var requestUserEmailToken = RequestUserEmailToken.hardcoded();
+        var userEmailToken = this.usersEmailsTokensRepository.saveAs(requestUserEmailToken);
+        assertThat(this.usersEmailsTokensRepository.count()).isEqualTo(6);
+        assertThat(this.usersEmailsTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();
+        assertThat(this.usersEmailsTokensRepository.findByValueAsAny(userEmailToken.value())).isNotNull();
     }
 }

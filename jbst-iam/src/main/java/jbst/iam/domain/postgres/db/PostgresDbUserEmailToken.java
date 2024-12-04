@@ -6,8 +6,8 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.constants.JbstConstants;
 import jbst.foundation.domain.converters.columns.PostgresEmailConverter;
 import jbst.foundation.domain.time.TimeAmount;
-import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.domain.db.UserEmailToken;
+import jbst.iam.domain.dto.requests.RequestUserEmailToken;
 import jbst.iam.domain.enums.UserEmailTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.postgres.superclasses.PostgresDbAbstractPersistable0;
@@ -19,7 +19,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
+import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
+import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 // Lombok
@@ -60,6 +62,15 @@ public class PostgresDbUserEmailToken extends PostgresDbAbstractPersistable0 {
         this.expiryTimestamp = expiryTimestamp;
     }
 
+    public PostgresDbUserEmailToken(RequestUserEmailToken request) {
+        this(
+                request.email(),
+                randomStringLetterOrNumbersOnly(36),
+                request.type(),
+                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to()
+        );
+    }
+
     public PostgresDbUserEmailToken(UserEmailToken token) {
         this.id = token.id().value();
         this.email = token.email();
@@ -74,7 +85,7 @@ public class PostgresDbUserEmailToken extends PostgresDbAbstractPersistable0 {
     ) {
         return new PostgresDbUserEmailToken(
                 email,
-                randomString(),
+                randomStringLetterOrNumbersOnly(36),
                 randomEnum(UserEmailTokenType.class),
                 expiryTimestamp
         );
@@ -83,19 +94,19 @@ public class PostgresDbUserEmailToken extends PostgresDbAbstractPersistable0 {
     public static List<PostgresDbUserEmailToken> dummies1() {
         var token1 = PostgresDbUserEmailToken.random(
                 Email.of("token1@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
         var token2 = PostgresDbUserEmailToken.random(
                 Email.of("token2@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
+                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
         var token3 = PostgresDbUserEmailToken.random(
                 Email.of("token3@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
         var token4 = PostgresDbUserEmailToken.random(
                 Email.of("token4@" + JbstConstants.Domains.HARDCODED),
-                TimestampUtility.getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
         return List.of(
                 token1,

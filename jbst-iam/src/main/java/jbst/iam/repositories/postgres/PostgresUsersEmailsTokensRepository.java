@@ -2,6 +2,7 @@ package jbst.iam.repositories.postgres;
 
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.domain.db.UserEmailToken;
+import jbst.iam.domain.dto.requests.RequestUserEmailToken;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.postgres.db.PostgresDbUserEmailToken;
 import jbst.iam.repositories.UsersEmailsTokensRepository;
@@ -30,6 +31,15 @@ public interface PostgresUsersEmailsTokensRepository extends JpaRepository<Postg
     default TokenId saveAs(UserEmailToken token) {
         var entity = this.save(new PostgresDbUserEmailToken(token));
         return entity.tokenId();
+    }
+
+    default UserEmailToken saveAs(RequestUserEmailToken request) {
+        var entity = this.save(
+                new PostgresDbUserEmailToken(
+                        request
+                )
+        );
+        return entity.asUserEmailToken();
     }
 
     // ================================================================================================================

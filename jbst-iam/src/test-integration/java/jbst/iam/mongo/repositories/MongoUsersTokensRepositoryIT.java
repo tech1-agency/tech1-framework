@@ -54,22 +54,23 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         var savedExpiredToken = saved.get(3);
         var expiredTokenId = savedExpiredToken.tokenId();
         var expiredToken = savedExpiredToken.getValue();
+        var savedUsedToken = saved.get(5);
+        var usedTokenId = savedUsedToken.tokenId();
+        var usedToken = savedUsedToken.getValue();
 
         // Act
         var count = this.usersTokensRepository.count();
 
         // Assert
-        assertThat(count).isEqualTo(4);
+        assertThat(count).isEqualTo(6);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(existentToken)).isNotNull();
         assertThat(this.usersTokensRepository.findByValueAsAny(notExistentToken)).isNull();
         assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNotNull();
-        this.usersTokensRepository.cleanupExpired();
-        assertThat(this.usersTokensRepository.count()).isEqualTo(2);
-        assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isEmpty();
-        assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNull();
+        assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isNotEmpty();
+        assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNotNull();
     }
 
     @Test
@@ -79,15 +80,24 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         var savedExpiredToken = saved.get(3);
         var expiredTokenId = savedExpiredToken.tokenId();
         var expiredToken = savedExpiredToken.getValue();
+        var savedUsedToken = saved.get(5);
+        var usedTokenId = savedUsedToken.tokenId();
+        var usedToken = savedUsedToken.getValue();
 
         // Act-Assert-0
-        assertThat(this.usersTokensRepository.count()).isEqualTo(4);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
         this.usersTokensRepository.cleanupExpired();
-        assertThat(this.usersTokensRepository.count()).isEqualTo(2);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(4);
         assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNull();
+
+        // Act-Assert-2
+        this.usersTokensRepository.cleanupUsed();
+        assertThat(this.usersTokensRepository.count()).isEqualTo(2);
+        assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isEmpty();
+        assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNull();
     }
 
     @Test
@@ -96,15 +106,15 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         var saved = this.usersTokensRepository.saveAll(MongoDbUserToken.dummies1());
 
         // Act-Assert-0
-        assertThat(this.usersTokensRepository.count()).isEqualTo(4);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-1
         this.usersTokensRepository.saveAs(randomElement(saved).asUserToken());
-        assertThat(this.usersTokensRepository.count()).isEqualTo(4);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(6);
 
         // Act-Assert-2
         var existentTokenId = this.usersTokensRepository.saveAs(UserToken.random());
-        assertThat(this.usersTokensRepository.count()).isEqualTo(5);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(7);
         var notExistentTokenId = entity(TokenId.class);
         assertThat(this.usersTokensRepository.findById(existentTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findById(notExistentTokenId.value())).isEmpty();
@@ -112,7 +122,7 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         // Act-Assert-3
         var requestUserEmailToken = RequestUserToken.hardcoded();
         var userEmailToken = this.usersTokensRepository.saveAs(requestUserEmailToken);
-        assertThat(this.usersTokensRepository.count()).isEqualTo(6);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(8);
         assertThat(this.usersTokensRepository.findById(userEmailToken.id().value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(userEmailToken.value())).isNotNull();
     }

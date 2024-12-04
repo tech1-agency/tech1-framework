@@ -24,6 +24,10 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
         this.deleteAllByExpiryTimestampBefore(TimestampUtility.getCurrentTimestamp());
     }
 
+    default void cleanupUsed() {
+        this.deleteAllByUsedIsTrue();
+    }
+
     default TokenId saveAs(UserToken token) {
         var entity = this.save(new MongoDbUserToken(token));
         return entity.tokenId();
@@ -43,4 +47,5 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
     // ================================================================================================================
     MongoDbUserToken findByValue(String value);
     void deleteAllByExpiryTimestampBefore(long timestamp);
+    void deleteAllByUsedIsTrue();
 }

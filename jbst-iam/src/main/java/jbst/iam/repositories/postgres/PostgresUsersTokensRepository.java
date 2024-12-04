@@ -28,6 +28,12 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
         this.deleteAllByExpiryTimestampBefore(TimestampUtility.getCurrentTimestamp());
     }
 
+    @Transactional
+    @Modifying
+    default void cleanupUsed() {
+        this.deleteAllByUsedIsTrue();
+    }
+
     default TokenId saveAs(UserToken token) {
         var entity = this.save(new PostgresDbUserToken(token));
         return entity.tokenId();
@@ -47,4 +53,5 @@ public interface PostgresUsersTokensRepository extends JpaRepository<PostgresDbU
     // ================================================================================================================
     PostgresDbUserToken findByValue(String value);
     void deleteAllByExpiryTimestampBefore(long timestamp);
+    void deleteAllByUsedIsTrue();
 }

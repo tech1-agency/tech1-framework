@@ -2,9 +2,8 @@ package jbst.iam.domain.postgres.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.converters.columns.PostgresEmailConverter;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.converters.columns.PostgresUsernameConverter;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
@@ -36,9 +35,9 @@ import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public static final String PG_TABLE_NAME = "jbst_users_tokens";
 
-    @Convert(converter = PostgresEmailConverter.class)
+    @Convert(converter = PostgresUsernameConverter.class)
     @Column(nullable = false, updatable = false)
-    private Email email;
+    private Username username;
 
     @Column(length = 36, nullable = false, updatable = false)
     private String value;
@@ -51,12 +50,12 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     private long expiryTimestamp;
 
     public PostgresDbUserToken(
-            @NotNull Email email,
+            @NotNull Username username,
             @NotNull String value,
             @NotNull UserTokenType type,
             long expiryTimestamp
     ) {
-        this.email = email;
+        this.username = username;
         this.value = value;
         this.type = type;
         this.expiryTimestamp = expiryTimestamp;
@@ -64,7 +63,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUserToken(RequestUserToken request) {
         this(
-                request.email(),
+                request.username(),
                 randomStringLetterOrNumbersOnly(36),
                 request.type(),
                 getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to()
@@ -73,18 +72,18 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     public PostgresDbUserToken(UserToken token) {
         this.id = token.id().value();
-        this.email = token.email();
+        this.username = token.username();
         this.value = token.value();
         this.type = token.type();
         this.expiryTimestamp = token.expiryTimestamp();
     }
 
     public static PostgresDbUserToken random(
-            Email email,
+            Username username,
             long expiryTimestamp
     ) {
         return new PostgresDbUserToken(
-                email,
+                username,
                 randomStringLetterOrNumbersOnly(36),
                 randomEnum(UserTokenType.class),
                 expiryTimestamp
@@ -93,19 +92,19 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     public static List<PostgresDbUserToken> dummies1() {
         var token1 = PostgresDbUserToken.random(
-                Email.of("token1@" + JbstConstants.Domains.HARDCODED),
+                Username.of("username1"),
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
         var token2 = PostgresDbUserToken.random(
-                Email.of("token2@" + JbstConstants.Domains.HARDCODED),
+                Username.of("username2"),
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to()
         );
         var token3 = PostgresDbUserToken.random(
-                Email.of("token3@" + JbstConstants.Domains.HARDCODED),
+                Username.of("username3"),
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
         var token4 = PostgresDbUserToken.random(
-                Email.of("token4@" + JbstConstants.Domains.HARDCODED),
+                Username.of("username4"),
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from()
         );
         return List.of(
@@ -127,7 +126,7 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public UserToken asUserToken() {
         return new UserToken(
                 new TokenId(this.id),
-                this.email,
+                this.username,
                 this.value,
                 this.type,
                 this.expiryTimestamp

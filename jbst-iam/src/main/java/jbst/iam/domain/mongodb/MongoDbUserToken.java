@@ -29,7 +29,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 // Mongodb
 @Document(collection = MongoDbUserToken.MONGO_TABLE_NAME)
 public class MongoDbUserToken {
-    public static final String MONGO_TABLE_NAME = "jbst_users_emails_tokens";
+    public static final String MONGO_TABLE_NAME = "jbst_users_tokens";
 
     @Id
     private String id;

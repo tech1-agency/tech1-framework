@@ -34,7 +34,7 @@ import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 @Entity
 @Table(name = PostgresDbUserToken.PG_TABLE_NAME)
 public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
-    public static final String PG_TABLE_NAME = "jbst_users_emails_tokens";
+    public static final String PG_TABLE_NAME = "jbst_users_tokens";
 
     @Convert(converter = PostgresEmailConverter.class)
     @Column(nullable = false, updatable = false)

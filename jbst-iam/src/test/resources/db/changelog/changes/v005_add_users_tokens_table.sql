@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "jbst_users_emails_tokens"
+CREATE TABLE IF NOT EXISTS "jbst_users_tokens"
 (
     "id"               varchar(36) PRIMARY KEY,
     "email"            varchar(255) NOT NULL,

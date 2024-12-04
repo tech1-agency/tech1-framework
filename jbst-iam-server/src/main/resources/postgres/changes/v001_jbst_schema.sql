@@ -14,7 +14,7 @@ CREATE TABLE "jbst_users" (
     "attributes" varchar(65535)
 );
 
-CREATE TABLE "jbst_users_emails_tokens" (
+CREATE TABLE "jbst_users_tokens" (
     "id" varchar(36) PRIMARY KEY,
     "email" varchar(255) NOT NULL,
     "value" varchar(36) NOT NULL,

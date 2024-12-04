@@ -1,6 +1,7 @@
 package jbst.iam.configurations;
 
 import jbst.iam.repositories.postgres.PostgresInvitationsRepository;
+import jbst.iam.repositories.postgres.PostgresUsersTokensRepository;
 import jbst.iam.repositories.postgres.PostgresUsersRepository;
 import jbst.iam.repositories.postgres.PostgresUsersSessionsRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,11 @@ class ConfigurationPostgresRepositoriesTest {
         }
 
         @Bean
+        PostgresUsersTokensRepository usersTokensRepository() {
+            return mock(PostgresUsersTokensRepository.class);
+        }
+
+        @Bean
         PostgresUsersRepository usersRepository() {
             return mock(PostgresUsersRepository.class);
         }
@@ -53,6 +59,7 @@ class ConfigurationPostgresRepositoriesTest {
         ConfigurationPostgresRepositories applicationPostgresRepositories() {
             return new ConfigurationPostgresRepositories(
                     this.invitationsRepository(),
+                    this.usersTokensRepository(),
                     this.usersRepository(),
                     this.usersSessionsRepository()
             );

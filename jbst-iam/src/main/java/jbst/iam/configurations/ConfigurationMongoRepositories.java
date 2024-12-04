@@ -4,10 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import jbst.iam.repositories.mongodb.MongoInvitationsRepository;
-import jbst.iam.repositories.mongodb.MongoUsersRepository;
-import jbst.iam.repositories.mongodb.MongoUsersSessionsRepository;
-import jbst.iam.repositories.mongodb.JbstMongoRepositories;
+import jbst.iam.repositories.mongodb.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -51,13 +48,15 @@ public class ConfigurationMongoRepositories {
 
     @Bean
     public JbstMongoRepositories jbstMongoRepositories(
-            MongoInvitationsRepository mongoInvitationsRepository,
-            MongoUsersRepository mongoUsersRepository,
+            MongoInvitationsRepository invitationsRepository,
+            MongoUsersTokensRepository usersTokensRepository,
+            MongoUsersRepository usersRepository,
             MongoUsersSessionsRepository userSessionRepository
     ) {
         return new JbstMongoRepositories(
-                mongoInvitationsRepository,
-                mongoUsersRepository,
+                invitationsRepository,
+                usersTokensRepository,
+                usersRepository,
                 userSessionRepository
         );
     }

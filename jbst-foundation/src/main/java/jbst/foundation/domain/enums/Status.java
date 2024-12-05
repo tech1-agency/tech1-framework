@@ -16,6 +16,7 @@ public enum Status {
     ENABLED("ENABLED"),
     DISABLED("DISABLED"),
 
+    SCHEDULED("SCHEDULED"),
     STARTED("STARTED"),
     COMPLETED("COMPLETED"),
 
@@ -24,6 +25,7 @@ public enum Status {
 
     // PROGRESS
 
+    PROGRESS_0("PROGRESS: 0%"),
     PROGRESS_20("PROGRESS: 20%"),
     PROGRESS_25("PROGRESS: 25%"),
     PROGRESS_33("PROGRESS: 33%"),
@@ -39,12 +41,14 @@ public enum Status {
             Map.entry(DISABLED, JbstConstants.JColor.BLACK_BOLD_TEXT),
             Map.entry(ENABLED, JbstConstants.JColor.BLACK_BOLD_TEXT),
 
+            Map.entry(SCHEDULED, JbstConstants.JColor.BLUE_BOLD_TEXT),
             Map.entry(STARTED, JbstConstants.JColor.BLUE_BOLD_TEXT),
             Map.entry(COMPLETED, JbstConstants.JColor.GREEN_BOLD_TEXT),
 
             Map.entry(FAILURE, JbstConstants.JColor.RED_BOLD_TEXT),
             Map.entry(SUCCESS, JbstConstants.JColor.GREEN_BOLD_TEXT),
             // PROGRESS
+            Map.entry(PROGRESS_0, JbstConstants.JColor.YELLOW_BOLD_TEXT),
             Map.entry(PROGRESS_20, JbstConstants.JColor.YELLOW_BOLD_TEXT),
             Map.entry(PROGRESS_25, JbstConstants.JColor.YELLOW_BOLD_TEXT),
             Map.entry(PROGRESS_33, JbstConstants.JColor.YELLOW_BOLD_TEXT),

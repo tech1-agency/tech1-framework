@@ -61,6 +61,7 @@
         <version.dependency.common.codec>1.16.1</version.dependency.common.codec>
         <version.dependency.feign>12.3</version.dependency.feign>
         <version.dependency.geoip2>4.0.1</version.dependency.geoip2>
+        <version.dependency.guava>33.3.1-jre</version.dependency.guava>
         <version.dependency.jackson>2.15.4</version.dependency.jackson>
         <version.dependency.jasypt>3.0.5</version.dependency.jasypt>
         <version.dependency.jcolor>5.5.1</version.dependency.jcolor>
@@ -145,6 +146,12 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${version.dependency.liquibase}</version>
+            </dependency>
+            <!-- Guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.dependency.guava}</version>
             </dependency>
             <!-- HTTP Client: Feign-->
             <dependency>

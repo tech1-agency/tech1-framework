@@ -117,16 +117,15 @@ class AbstractBaseUsersTokensServiceTest {
         // Arrange
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
         when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
-        if (nonNull(userToken)) {
-            when(this.usersRepository.findByUsernameAsJwtUserOrNull(userToken.username())).thenReturn(jwtUser);
-        }
+        var username = nonNull(userToken) ? userToken.username() : null;
+        when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(jwtUser);
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.confirmEmail(token));
 
         // Assert
         verify(this.usersTokensRepository, tokensRepositoryInvocations).findByValueAsAny(token);
-        verify(this.usersRepository, usersRepositoryInvocations).findByUsernameAsJwtUserOrNull(any());
+        verify(this.usersRepository, usersRepositoryInvocations).findByUsernameAsJwtUserOrNull(username);
         if (nonNull(exception)) {
             assertThat(actual)
                     .isInstanceOf(UserEmailConfirmException.class)

@@ -5,3 +5,4 @@
 — Addition: JbstUnreachableCodeException
 — Addition: guava@33.3.1-jre
 — Modification: Status: SCHEDULED, PROGRESS 0%
+— Modification: non-mandatory property jbst.server-configs.webclient-email-confirm-redirect-path

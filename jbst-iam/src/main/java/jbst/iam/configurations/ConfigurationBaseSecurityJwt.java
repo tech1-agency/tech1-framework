@@ -135,6 +135,7 @@ public class ConfigurationBaseSecurityJwt {
                     .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                     .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/registration/register0").anonymous()
+                    .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").anonymous()
                     .requestMatchers(POST, basePathPrefix + "/registration/register1").anonymous()
                     .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()

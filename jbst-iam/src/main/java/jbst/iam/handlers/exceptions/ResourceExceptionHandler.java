@@ -1,5 +1,9 @@
 package jbst.iam.handlers.exceptions;
 
+import jbst.foundation.domain.exceptions.ExceptionEntity;
+import jbst.foundation.domain.exceptions.ExceptionEntityType;
+import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +17,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import jbst.foundation.domain.exceptions.ExceptionEntity;
-import jbst.foundation.domain.exceptions.ExceptionEntityType;
-import jbst.foundation.domain.exceptions.authentication.RegistrationException;
-import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 
 import static java.util.Objects.isNull;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.contactDevelopmentTeam;
@@ -52,6 +52,32 @@ public class ResourceExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({
+            UserTokenValidationException.class
+    })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionEntity> userEmailTokenValidationException(UserTokenValidationException ex) {
+        var response = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                contactDevelopmentTeam("Token Validation Failure"),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({
+            UserEmailConfirmException.class
+    })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionEntity> userEmailConfirmException(UserEmailConfirmException ex) {
+        var response = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                contactDevelopmentTeam("User Email Confirmation Failure"),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // =================================================================================================================

@@ -2,12 +2,16 @@ package jbst.iam.resources.base;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
+import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.services.BaseUsersService;
+import jbst.iam.services.BaseUsersTokensService;
+import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import jbst.iam.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +32,11 @@ public class BaseSecurityUsersResource {
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
+    private final BaseUsersTokensService baseUsersTokensService;
     private final BaseUsersService baseUsersService;
     // Validators
     private final BaseUsersValidator baseUsersValidator;
+    private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
 
     @PostMapping("/update1")
     @ResponseStatus(HttpStatus.OK)
@@ -63,5 +69,12 @@ public class BaseSecurityUsersResource {
         this.baseUsersValidator.validateUserChangePasswordRequestBasic(request);
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersService.changePassword1(user, request);
+    }
+
+    @GetMapping("/confirmEmail")
+    @ResponseStatus(HttpStatus.OK)
+    public void confirmEmail(@RequestParam("token") String token) throws UserTokenValidationException, UserEmailConfirmException {
+        this.baseUsersTokensRequestsValidator.validateEmailConfirmationToken(token);
+        this.baseUsersTokensService.confirmEmail(token);
     }
 }

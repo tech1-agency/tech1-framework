@@ -104,7 +104,7 @@ class UserEmailUtilsImplTest {
         // Arrange
         var username = Username.hardcoded();
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
-        var confirmationLink = "http://127.0.0.1:3002/api/tokens/email/confirm?token=" + token;
+        var confirmationLink = "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + token;
 
         // Act
         var actual = this.componentUnderTest.getConfirmEmailVariables(

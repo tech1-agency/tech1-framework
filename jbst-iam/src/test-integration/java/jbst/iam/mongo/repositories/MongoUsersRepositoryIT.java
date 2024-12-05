@@ -1,7 +1,14 @@
 package jbst.iam.mongo.repositories;
 
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.constants.JbstConstants;
+import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.configurations.ConfigurationMongoRepositories;
 import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.db.UserEmailDetails;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -16,22 +23,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.base.Password;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.constants.JbstConstants;
-import jbst.foundation.domain.tuples.TuplePresence;
 
 import java.util.List;
 import java.util.Set;
 
-import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings1;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 import static jbst.foundation.utilities.exceptions.ExceptionsMessagesUtility.entityNotFound;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
+import static jbst.iam.tests.converters.mongodb.MongoUserConverter.toUsernamesAsStrings1;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith({
         MongoBeforeAllCallback.class
@@ -173,9 +176,21 @@ class MongoUsersRepositoryIT extends TestsConfigurationMongoRepositoriesRunner {
         assertThat(this.usersRepository.isPresent(userId1).present()).isTrue();
         assertThat(this.usersRepository.isPresent(entity(UserId.class)).present()).isFalse();
 
-        // Act-Assert-1
+        // Act-Assert-3
         var userId2 = this.usersRepository.saveAs(RequestUserRegistration1.hardcoded(), Password.random(), Invitation.random());
         assertThat(this.usersRepository.count()).isEqualTo(8);
         assertThat(this.usersRepository.findByUsernameAsJwtUserOrNull(Username.of("registration11")).id()).isEqualTo(userId2);
+
+        // Act-Assert-4
+        var userId3 = this.usersRepository.saveAs(RequestUserRegistration0.hardcoded(), Password.random());
+        assertThat(this.usersRepository.count()).isEqualTo(9);
+        var user3 = this.usersRepository.findById(userId3.value()).orElse(null);
+        assertThat(user3).isNotNull();
+        assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.required());
+        this.usersRepository.confirmEmail(user3.getUsername());
+        user3 = this.usersRepository.findById(userId3.value()).orElse(null);
+        assertThat(user3).isNotNull();
+        assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.confirmed());
+        assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Username.random()));
     }
 }

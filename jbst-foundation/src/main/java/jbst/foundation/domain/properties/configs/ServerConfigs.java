@@ -57,7 +57,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     }
 
     public String getConfirmEmailURL(String token) {
-        return "%s/tokens/email/confirm?token=%s".formatted(
+        return "%s/jbst/security/tokens/email/confirm?token=%s".formatted(
                 this.serverURL,
                 token
         );

@@ -1,10 +1,16 @@
 package jbst.iam.domain.db;
 
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.domain.enums.UserTokenType;
+import jbst.iam.domain.functions.FunctionConfirmEmail;
 import jbst.iam.domain.identifiers.TokenId;
 
+import java.time.temporal.ChronoUnit;
+
+import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.utilities.time.TimestampUtility.isPast;
 
 public record UserToken(
@@ -15,6 +21,17 @@ public record UserToken(
         long expiryTimestamp,
         boolean used
 ) {
+
+    public static UserToken hardcoded() {
+        return new UserToken(
+                TokenId.hardcoded(),
+                Username.hardcoded(),
+                "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
+                UserTokenType.EMAIL_CONFIRMATION,
+                getFutureRange(new TimeAmount(24, ChronoUnit.HOURS)).to(),
+                false
+        );
+    }
 
     public static UserToken random() {
         return new UserToken(
@@ -42,4 +59,11 @@ public record UserToken(
         return isPast(this.expiryTimestamp);
     }
 
+    public FunctionConfirmEmail asFunctionConfirmEmail(Email email) {
+        return new FunctionConfirmEmail(
+                this.username,
+                email,
+                this.value
+        );
+    }
 }

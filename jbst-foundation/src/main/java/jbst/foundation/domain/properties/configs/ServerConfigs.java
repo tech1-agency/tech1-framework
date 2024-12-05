@@ -52,7 +52,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
         return this.springdocEnabled;
     }
 
-    public String getEmailConfirmRedirectUlr() {
+    public String getEmailConfirmRedirectURL() {
         return this.webclientURL + this.webclientEmailConfirmRedirectPath;
     }
 }

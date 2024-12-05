@@ -28,7 +28,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.time.temporal.ChronoUnit;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
@@ -48,64 +47,51 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
         return Stream.of(
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any())).thenReturn(null),
+                        null,
                         UserTokenValidationException.notFound()
                 ),
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any())).thenReturn(
-                                        new UserToken(
-                                                TokenId.random(),
-                                                Username.random(),
-                                                RandomUtility.randomStringLetterOrNumbersOnly(36),
-                                                UserTokenType.EMAIL_CONFIRMATION,
-                                                validTimestamp,
-                                                true
-                                        )
-                                ),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.EMAIL_CONFIRMATION,
+                                validTimestamp,
+                                true
+                        ),
                         UserTokenValidationException.used()
                 ),
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any())).thenReturn(
-                                        new UserToken(
-                                                TokenId.random(),
-                                                Username.random(),
-                                                RandomUtility.randomStringLetterOrNumbersOnly(36),
-                                                UserTokenType.EMAIL_CONFIRMATION,
-                                                expiredTimestamp,
-                                                false
-                                        )
-                                ),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.EMAIL_CONFIRMATION,
+                                expiredTimestamp,
+                                false
+                        ),
                         UserTokenValidationException.expired()
                 ),
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any())).thenReturn(
-                                        new UserToken(
-                                                TokenId.random(),
-                                                Username.random(),
-                                                RandomUtility.randomStringLetterOrNumbersOnly(36),
-                                                UserTokenType.PASSWORD_RESET,
-                                                validTimestamp,
-                                                false
-                                        )
-                                ),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                validTimestamp,
+                                false
+                        ),
                         UserTokenValidationException.invalidType()
                 ),
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any())).thenReturn(
-                                        new UserToken(
-                                                TokenId.random(),
-                                                Username.random(),
-                                                RandomUtility.randomStringLetterOrNumbersOnly(36),
-                                                UserTokenType.EMAIL_CONFIRMATION,
-                                                validTimestamp,
-                                                false
-                                        )
-                                ),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.EMAIL_CONFIRMATION,
+                                validTimestamp,
+                                false
+                        ),
                         null
                 )
         );
@@ -149,12 +135,12 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     @ParameterizedTest
     @MethodSource("validateEmailConfirmationTokenTest")
     void validateEmailConfirmationTokenTest(
-            Consumer<UsersTokensRepository> mockRepositoryConsumer,
+            UserToken userToken,
             UserTokenValidationException expected
     ) {
         // Arrange
-        mockRepositoryConsumer.accept(this.usersTokensRepository);
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validateEmailConfirmationToken(token));

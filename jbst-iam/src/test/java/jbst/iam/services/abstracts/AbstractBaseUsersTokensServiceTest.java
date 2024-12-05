@@ -2,6 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.utilities.random.RandomUtility;
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
@@ -21,7 +22,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
 
-@ExtendWith({SpringExtension.class})
+@ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class AbstractBaseUsersTokensServiceTest {
@@ -37,34 +37,22 @@ class AbstractBaseUsersTokensServiceTest {
     private static Stream<Arguments> confirmEmailTest() {
         return Stream.of(
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any()))
-                                        .thenReturn(null),
-                        (Consumer<UsersRepository>) mock ->
-                                when(mock.findByUsernameAsJwtUserOrNull(any()))
-                                        .thenReturn(null),
+                        null,
+                        null,
                         times(1),
                         times(0),
                         UserEmailConfirmException.tokenNotFound()
                 ),
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any()))
-                                        .thenReturn(UserToken.random()),
-                        (Consumer<UsersRepository>) mock ->
-                                when(mock.findByUsernameAsJwtUserOrNull(any()))
-                                        .thenReturn(null),
+                        UserToken.random(),
+                        null,
                         times(1),
                         times(1),
                         UserEmailConfirmException.userNotFound()
                 ),
                 Arguments.of(
-                        (Consumer<UsersTokensRepository>) mock ->
-                                when(mock.findByValueAsAny(any()))
-                                        .thenReturn(UserToken.random()),
-                        (Consumer<UsersRepository>) mock ->
-                                when(mock.findByUsernameAsJwtUserOrNull(any()))
-                                        .thenReturn(JwtUser.random()),
+                        UserToken.random(),
+                        JwtUser.random(),
                         times(1),
                         times(1),
                         null
@@ -91,8 +79,7 @@ class AbstractBaseUsersTokensServiceTest {
             return new AbstractBaseUsersTokensService(
                     this.usersTokensRepository(),
                     this.usersRepository()
-            ) {
-            };
+            ) {};
         }
     }
 
@@ -117,33 +104,36 @@ class AbstractBaseUsersTokensServiceTest {
         );
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @ParameterizedTest
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
-            Consumer<UsersTokensRepository> mockTokensRepositoryConsumer,
-            Consumer<UsersRepository> mockUsersRepositoryConsumer,
-            VerificationMode tokensRepositoryTimes,
-            VerificationMode usersRepositoryTimes,
+            UserToken userToken,
+            JwtUser jwtUser,
+            VerificationMode tokensRepositoryInvocations,
+            VerificationMode usersRepositoryInvocations,
             UserEmailConfirmException exception
     ) {
         // Arrange
-        mockTokensRepositoryConsumer.accept(this.usersTokensRepository);
-        mockUsersRepositoryConsumer.accept(this.usersRepository);
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
+        if (nonNull(userToken)) {
+            when(this.usersRepository.findByUsernameAsJwtUserOrNull(userToken.username())).thenReturn(jwtUser);
+        }
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.confirmEmail(token));
 
         // Assert
-        verify(this.usersTokensRepository, tokensRepositoryTimes).findByValueAsAny(token);
-        verify(this.usersRepository, usersRepositoryTimes).findByUsernameAsJwtUserOrNull(any());
+        verify(this.usersTokensRepository, tokensRepositoryInvocations).findByValueAsAny(token);
+        verify(this.usersRepository, usersRepositoryInvocations).findByUsernameAsJwtUserOrNull(any());
         if (nonNull(exception)) {
             assertThat(actual)
                     .isInstanceOf(UserEmailConfirmException.class)
                     .hasMessage(exception.getMessage());
         } else {
-            verify(this.usersRepository).saveAs(any());
-            verify(this.usersTokensRepository).saveAs(any(UserToken.class));
+            verify(this.usersRepository).saveAs(jwtUser.withEmailDetails(UserEmailDetails.confirmed()));
+            verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         }
     }
 

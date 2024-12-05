@@ -37,6 +37,14 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
+    public String getConfirmEmailTemplateName() {
+        return this.getServerOrFrameworkTemplateName(
+                "server-confirm-email",
+                "jbst-confirm-email"
+        );
+    }
+
+    @Override
     public String getAuthenticationLoginTemplateName() {
         return this.getServerOrFrameworkTemplateName(
                 "server-authentication-login",
@@ -50,6 +58,18 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 "server-session-refreshed",
                 "jbst-account-accessed"
         );
+    }
+
+    @Override
+    public Map<String, Object> getConfirmEmailVariables(
+            Username username,
+            String token
+    ) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("username", username.value());
+        variables.put("confirmationLink", this.jbstProperties.getServerConfigs().getConfirmEmailURL(token));
+        variables.put("year", now(UTC).getYear());
+        return variables;
     }
 
     @Override
@@ -74,7 +94,6 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    @SuppressWarnings("SameParameterValue")
     private String getServerOrFrameworkTemplateName(String serverTemplateName, String jbstTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : jbstTemplateName;

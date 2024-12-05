@@ -8,8 +8,13 @@ import java.util.Map;
 
 public interface UserEmailUtils {
     String getSubject(String eventName);
+    String getConfirmEmailTemplateName();
     String getAuthenticationLoginTemplateName();
     String getSessionRefreshedTemplateName();
+    Map<String, Object> getConfirmEmailVariables(
+            Username username,
+            String token
+    );
     Map<String, Object> getAuthenticationLoginOrSessionRefreshedVariables(
             Username username,
             UserRequestMetadata userRequestMetadata,

@@ -4,6 +4,7 @@ import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.utils.UserEmailUtils;
@@ -72,6 +73,15 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
+    void getConfirmEmailTemplateNameTest() {
+        // Act
+        var templateName = this.componentUnderTest.getConfirmEmailTemplateName();
+
+        // Assert
+        assertThat(templateName).isEqualTo("jbst-confirm-email");
+    }
+
+    @Test
     void getAuthenticationLoginTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getAuthenticationLoginTemplateName();
@@ -87,6 +97,28 @@ class UserEmailUtilsImplTest {
 
         // Assert
         assertThat(templateName).isEqualTo("jbst-account-accessed");
+    }
+
+    @Test
+    void getConfirmEmailVariablesTest() {
+        // Arrange
+        var username = Username.hardcoded();
+        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        var confirmationLink = "http://127.0.0.1:3002/api/tokens/email/confirm?token=" + token;
+
+        // Act
+        var actual = this.componentUnderTest.getConfirmEmailVariables(
+                username,
+                token
+        );
+
+        // Assert
+        assertThat(actual)
+                .hasSize(3)
+                .containsEntry("username", username.value())
+                .containsEntry("confirmationLink", confirmationLink)
+                .containsEntry("year", now(UTC).getYear());
+
     }
 
     @Test

@@ -54,32 +54,6 @@ public class ResourceExceptionHandler {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler({
-            UserTokenValidationException.class
-    })
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> userEmailTokenValidationException(UserTokenValidationException ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
-                contactDevelopmentTeam("Token Validation Failure"),
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler({
-            UserEmailConfirmException.class
-    })
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ExceptionEntity> userEmailConfirmException(UserEmailConfirmException ex) {
-        var response = new ExceptionEntity(
-                ExceptionEntityType.ERROR,
-                contactDevelopmentTeam("User Email Confirmation Failure"),
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     // =================================================================================================================
     // GROUPED EXCEPTIONS
     // =================================================================================================================

@@ -1,6 +1,5 @@
 package jbst.iam.resources.base;
 
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
@@ -8,8 +7,6 @@ import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.configurations.TestRunnerResources1;
-import jbst.iam.services.BaseUsersTokensService;
-import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import jbst.iam.validators.BaseUsersValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,12 +23,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
 
     // Services
-    private final BaseUsersTokensService baseUsersTokensService;
     private final BaseUsersService baseUsersService;
     // Assistants
     private final CurrentSessionAssistant currentSessionAssistant;
     // Validators
-    private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     private final BaseUsersValidator baseUsersValidator;
 
     // Resource
@@ -42,7 +36,6 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
-                this.baseUsersTokensService,
                 this.baseUsersService,
                 this.currentSessionAssistant,
                 this.baseUsersValidator
@@ -52,7 +45,6 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
-                this.baseUsersTokensService,
                 this.baseUsersService,
                 this.currentSessionAssistant,
                 this.baseUsersValidator
@@ -140,20 +132,5 @@ class BaseSecurityUsersResourceTest extends TestRunnerResources1 {
         verify(this.baseUsersValidator).validateUserChangePasswordRequestBasic(request);
         verify(this.currentSessionAssistant).getCurrentJwtUser();
         verify(this.baseUsersService).changePassword1(user, request);
-    }
-
-    @Test
-    void confirmEmailTest() throws Exception {
-        // Arrange
-        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
-
-        // Act
-        this.mvc.perform(
-                get("/users/confirmEmail?token=%s".formatted(token))
-        ).andExpect(status().isOk());
-
-        // Assert
-        verify(this.baseUsersTokensRequestsValidator).validateEmailConfirmationToken(token);
-        verify(this.baseUsersTokensService).confirmEmail(token);
     }
 }

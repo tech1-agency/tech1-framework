@@ -9,6 +9,7 @@ import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
+import jbst.iam.domain.functions.FunctionConfirmEmail;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -89,6 +90,37 @@ class BaseUsersEmailsServiceTest {
                 this.userEmailUtils,
                 this.jbstProperties
         );
+    }
+
+    @Test
+    void executeConfirmEmailTest() {
+        // Arrange
+        var function = FunctionConfirmEmail.hardcoded();
+        var subject = randomString();
+        var variables = Map.of(
+                randomString(), new Object(),
+                randomString(), new Object(),
+                randomString(), new Object()
+        );
+        when(this.userEmailUtils.getSubject("Confirm Email")).thenReturn(subject);
+        when(this.userEmailUtils.getConfirmEmailTemplateName()).thenReturn("jbst-confirm-email");
+        when(this.userEmailUtils.getConfirmEmailVariables(function.username(), function.token())).thenReturn(variables);
+
+        // Act
+        this.componentUnderTest.executeConfirmEmail(function);
+
+        // Assert
+        verify(this.userEmailUtils).getSubject("Confirm Email");
+        verify(this.userEmailUtils).getConfirmEmailTemplateName();
+        verify(this.userEmailUtils).getConfirmEmailVariables(function.username(), function.token());
+        var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        verify(this.emailService).sendHTML(emailHTMLAC.capture());
+        var emailHTML = emailHTMLAC.getValue();
+        assertThat(emailHTML.to()).hasSize(1);
+        assertThat(emailHTML.to()).containsOnly(function.email().value());
+        assertThat(emailHTML.subject()).isEqualTo(subject);
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-confirm-email");
+        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
     }
 
     @Test

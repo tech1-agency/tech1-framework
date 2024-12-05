@@ -27,6 +27,17 @@ public record UserToken(
         );
     }
 
+    public UserToken withUsed(boolean used) {
+        return new UserToken(
+                this.id,
+                this.username,
+                this.value,
+                this.type,
+                this.expiryTimestamp,
+                used
+        );
+    }
+
     public boolean isExpired() {
         return isPast(this.expiryTimestamp);
     }

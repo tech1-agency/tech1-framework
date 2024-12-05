@@ -57,6 +57,11 @@ public class TestConfigurationResources {
     }
 
     @Bean
+    BaseUsersTokensService usersTokensService() {
+        return mock(BaseUsersTokensService.class);
+    }
+
+    @Bean
     BaseInvitationsService invitationsService() {
         return mock(BaseInvitationsService.class);
     }
@@ -159,5 +164,10 @@ public class TestConfigurationResources {
     @Bean
     BaseUsersValidator userRequestsValidator() {
         return mock(BaseUsersValidator.class);
+    }
+
+    @Bean
+    BaseUsersTokensRequestsValidator tokensRequestsValidator() {
+        return mock(BaseUsersTokensRequestsValidator.class);
     }
 }

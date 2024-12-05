@@ -23,7 +23,7 @@
             font-size: 16px;
             font-weight: bold;
             text-align: center;
-            color: #ffffff;
+            color: #ffffff !important;
             background-color: #007ee6;
             border-radius: 4px;
             text-decoration: none;
@@ -44,7 +44,7 @@
     </style>
 </head>
 <body>
-<div>
+<center>
     <table class="main-table">
         <tr>
             <td class="main-table-tr" th:text="'Hi @' + ${'__${username}__'} + ','"></td>
@@ -68,7 +68,7 @@
             <td class="best-regards-section">Best Regards, tech1.agency</td>
         </tr>
     </table>
-    <p class="copyright" style="text-align: start" th:text="'© ' + ${'__${year}__'} + ' tech1.agency'"></p>
-</div>
+    <p class="copyright" style="text-align: end" th:text="'© ' + ${'__${year}__'} + ' tech1.agency'"></p>
+</center>
 </body>
 </html>

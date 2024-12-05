@@ -3,11 +3,13 @@ package jbst.iam.services.abstracts;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -113,6 +115,21 @@ class AbstractBaseUsersTokensServiceTest {
             verify(this.usersRepository).confirmEmail(username);
             verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         }
+    }
+
+    @Test
+    void saveAsTest() {
+        // Arrange
+        var request = RequestUserToken.hardcoded();
+        var userToken = UserToken.hardcoded();
+        when(this.usersTokensRepository.saveAs(request)).thenReturn(userToken);
+
+        // Act
+        var actual = this.componentUnderTest.saveAs(request);
+
+        // Assert
+        assertThat(actual).isEqualTo(userToken);
+        verify(this.usersTokensRepository).saveAs(request);
     }
 
 }

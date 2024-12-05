@@ -10,6 +10,7 @@ jbst:
     enabled: false
   server-configs:
     springdoc-enabled: true
+    server-url: http://localhost:3002/api
     webclient-url: http://localhost:3000
     webclient-email-confirm-redirect-path: /email-confirm
   utilities-configs:

@@ -21,6 +21,8 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     @MandatoryProperty
     private final Boolean springdocEnabled;
     @NonMandatoryProperty
+    private String serverURL;
+    @NonMandatoryProperty
     private String webclientURL;
     @NonMandatoryProperty
     private String webclientEmailConfirmRedirectPath;
@@ -29,6 +31,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
         return new ServerConfigs(
                 ServerName.hardcoded(),
                 true,
+                "http://127.0.0.1:3002/api",
                 "http://127.0.0.1:3000",
                 "/email-confirm"
         );
@@ -38,6 +41,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
         return new ServerConfigs(
                 ServerName.random(),
                 randomBoolean(),
+                randomString(),
                 randomString(),
                 randomString()
         );
@@ -50,6 +54,13 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
 
     public boolean isSpringdocEnabled() {
         return this.springdocEnabled;
+    }
+
+    public String getConfirmEmailURL(String token) {
+        return "%s/tokens/email/confirm?token=%s".formatted(
+                this.serverURL,
+                token
+        );
     }
 
     public String getEmailConfirmRedirectURL() {

@@ -5,6 +5,7 @@ import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.tuples.TuplePresence;
 import jbst.iam.domain.db.Invitation;
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.dto.requests.RequestUserRegistration1;
 import jbst.iam.domain.identifiers.UserId;
@@ -52,6 +53,14 @@ public interface MongoUsersRepository extends MongoRepository<MongoDbUser, Strin
     default JwtUser findByEmailAsJwtUserOrNull(Email email) {
         var user = this.findByEmail(email);
         return nonNull(user) ? user.asJwtUser() : null;
+    }
+
+    default void confirmEmail(Username username) {
+        var user = this.findByUsername(username);
+        if (nonNull(user)) {
+            user.setEmailDetails(UserEmailDetails.confirmed());
+            this.save(user);
+        }
     }
 
     default UserId saveAs(JwtUser user) {

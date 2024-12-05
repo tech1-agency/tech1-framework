@@ -143,20 +143,5 @@ public record JwtUser(
     public boolean hasAllAuthorities(Set<SimpleGrantedAuthority> authorities) {
         return this.authorities.containsAll(authorities);
     }
-
-    public JwtUser withEmailDetails(UserEmailDetails emailDetails) {
-        return new JwtUser(
-                this.id,
-                this.username,
-                this.password,
-                this.zoneId,
-                this.authorities,
-                this.email,
-                this.name,
-                this.passwordChangeRequired,
-                emailDetails,
-                this.attributes
-        );
-    }
 }
 

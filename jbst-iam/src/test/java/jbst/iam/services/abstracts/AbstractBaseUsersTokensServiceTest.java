@@ -2,9 +2,7 @@ package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.utilities.random.RandomUtility;
-import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.verification.VerificationMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,23 +35,10 @@ class AbstractBaseUsersTokensServiceTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        null,
-                        times(1),
-                        times(0),
                         UserEmailConfirmException.tokenNotFound()
                 ),
                 Arguments.of(
                         UserToken.random(),
-                        null,
-                        times(1),
-                        times(1),
-                        UserEmailConfirmException.userNotFound()
-                ),
-                Arguments.of(
-                        UserToken.random(),
-                        JwtUser.random(),
-                        times(1),
-                        times(1),
                         null
                 )
         );
@@ -109,29 +93,24 @@ class AbstractBaseUsersTokensServiceTest {
     @MethodSource("confirmEmailTest")
     void confirmEmailTest(
             UserToken userToken,
-            JwtUser jwtUser,
-            VerificationMode tokensRepositoryInvocations,
-            VerificationMode usersRepositoryInvocations,
             UserEmailConfirmException exception
     ) {
         // Arrange
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
         when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
         var username = nonNull(userToken) ? userToken.username() : null;
-        when(this.usersRepository.findByUsernameAsJwtUserOrNull(username)).thenReturn(jwtUser);
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.confirmEmail(token));
 
         // Assert
-        verify(this.usersTokensRepository, tokensRepositoryInvocations).findByValueAsAny(token);
-        verify(this.usersRepository, usersRepositoryInvocations).findByUsernameAsJwtUserOrNull(username);
+        verify(this.usersTokensRepository).findByValueAsAny(token);
         if (nonNull(exception)) {
             assertThat(actual)
                     .isInstanceOf(UserEmailConfirmException.class)
                     .hasMessage(exception.getMessage());
         } else {
-            verify(this.usersRepository).saveAs(jwtUser.withEmailDetails(UserEmailDetails.confirmed()));
+            verify(this.usersRepository).confirmEmail(username);
             verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         }
     }

@@ -10,8 +10,4 @@ public class UserEmailConfirmException extends Exception {
         return new UserEmailConfirmException("Token not found");
     }
 
-    public static UserEmailConfirmException userNotFound() {
-        return new UserEmailConfirmException("User not found");
-    }
-
 }

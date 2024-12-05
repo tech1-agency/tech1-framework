@@ -1,7 +1,6 @@
 package jbst.iam.services.abstracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
-import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.BaseUsersTokensService;
@@ -23,12 +22,7 @@ public class AbstractBaseUsersTokensService implements BaseUsersTokensService {
         if (isNull(userToken)) {
             throw UserEmailConfirmException.tokenNotFound();
         }
-        var user = this.usersRepository.findByUsernameAsJwtUserOrNull(userToken.username());
-        if (isNull(user)) {
-            throw UserEmailConfirmException.userNotFound();
-        }
-        user = user.withEmailDetails(UserEmailDetails.confirmed());
-        this.usersRepository.saveAs(user);
+        this.usersRepository.confirmEmail(userToken.username());
         userToken = userToken.withUsed(true);
         this.usersTokensRepository.saveAs(userToken);
     }

@@ -146,7 +146,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         var actual = catchThrowable(() -> this.componentUnderTest.validateEmailConfirmationToken(token));
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(any());
+        verify(this.usersTokensRepository).findByValueAsAny(token);
         if (nonNull(expected)) {
             assertThat(actual)
                     .isInstanceOf(UserTokenValidationException.class)

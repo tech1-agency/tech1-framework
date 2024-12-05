@@ -11,6 +11,7 @@ jbst:
   server-configs:
     springdoc-enabled: true
     webclient-url: http://localhost:3000
+    webclient-email-confirm-redirect-path: /email-confirm
   utilities-configs:
     geo-locations-configs:
       geo-lite-city-database-enabled: false

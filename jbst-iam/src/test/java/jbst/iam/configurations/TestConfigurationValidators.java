@@ -3,6 +3,7 @@ package jbst.iam.configurations;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.repositories.InvitationsRepository;
+import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.repositories.UsersRepository;
 import jbst.iam.repositories.UsersSessionsRepository;
 import org.springframework.context.annotation.Bean;
@@ -53,5 +54,10 @@ public class TestConfigurationValidators {
     @Bean
     UsersSessionsRepository userSessionRepository() {
         return mock(UsersSessionsRepository.class);
+    }
+
+    @Bean
+    UsersTokensRepository usersTokensRepository() {
+        return mock(UsersTokensRepository.class);
     }
 }

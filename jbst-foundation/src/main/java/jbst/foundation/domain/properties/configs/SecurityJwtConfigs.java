@@ -3,6 +3,7 @@ package jbst.foundation.domain.properties.configs;
 import jbst.foundation.domain.base.AbstractAuthority;
 import jbst.foundation.domain.base.PropertyId;
 import jbst.foundation.domain.properties.annotations.MandatoryProperty;
+import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.base.Checkbox;
 import jbst.foundation.domain.properties.configs.security.jwt.*;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
     private final SessionConfigs sessionConfigs;
     @MandatoryProperty
     private final UsersEmailsConfigs usersEmailsConfigs;
+    @NonMandatoryProperty
+    private final UsersTokensConfigs usersTokensConfigs;
 
     public static SecurityJwtConfigs hardcoded() {
         return new SecurityJwtConfigs(
@@ -54,7 +57,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                 JwtTokensConfigs.hardcoded(),
                 LoggingConfigs.hardcoded(),
                 SessionConfigs.hardcoded(),
-                UsersEmailsConfigs.hardcoded()
+                UsersEmailsConfigs.hardcoded(),
+                UsersTokensConfigs.hardcoded()
         );
     }
 
@@ -66,6 +70,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                 null,
                 null,
                 loggingConfigs,
+                null,
                 null,
                 null
         );
@@ -80,6 +85,7 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                 null,
                 null,
                 sessionConfigs,
+                null,
                 null
         );
     }
@@ -97,7 +103,8 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
                         "[jbst]",
                         Checkbox.disabled(),
                         Checkbox.disabled()
-                )
+                ),
+                null
         );
     }
 
@@ -113,12 +120,12 @@ public class SecurityJwtConfigs extends AbstractPropertiesConfigs {
         // Requirements: availableAuthorities vs. defaultUsersAuthorities
         var expectedAuthorities = this.authoritiesConfigs.getAllAuthoritiesValues();
         var defaultUsersAuthorities = this.essenceConfigs.getDefaultUsers().getDefaultUsersAuthorities();
-        boolean containsAll = expectedAuthorities.containsAll(defaultUsersAuthorities);
+        var containsAll = expectedAuthorities.containsAll(defaultUsersAuthorities);
         assertTrueOrThrow(containsAll, "Please verify `defaultUsers.users.authorities`. Configuration provide unauthorized authority");
 
         // Requirements: availableAuthorities vs. required enum values
         var authorityClasses = this.getAbstractAuthorityClasses(this.authoritiesConfigs.getPackageName());
-        int size = authorityClasses.size();
+        var size = authorityClasses.size();
         assertTrueOrThrow(size == 1, "Please verify AbstractAuthority.class has only one sub enum. Found: `" + size + "`");
         var authorityClass = authorityClasses.iterator().next();
         Set<String> actualAuthorities = new HashSet<>();

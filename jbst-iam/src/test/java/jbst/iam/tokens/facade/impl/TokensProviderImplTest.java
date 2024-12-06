@@ -287,7 +287,8 @@ class TokensProviderImplTest {
                         ),
                         LoggingConfigs.hardcoded(),
                         SessionConfigs.hardcoded(),
-                        UsersEmailsConfigs.hardcoded()
+                        UsersEmailsConfigs.hardcoded(),
+                        UsersTokensConfigs.hardcoded()
                 )
         );
     }

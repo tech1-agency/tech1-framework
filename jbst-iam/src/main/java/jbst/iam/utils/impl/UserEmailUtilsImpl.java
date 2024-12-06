@@ -65,9 +65,12 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
             Username username,
             String token
     ) {
+        var serverURL = this.jbstProperties.getServerConfigs().getServerURL();
+        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
+        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", username.value());
-        variables.put("confirmationLink", this.jbstProperties.getServerConfigs().getConfirmEmailURL(token));
+        variables.put("confirmationLink", usersTokensConfigs.getConfirmEmailURL(serverURL, basePathPrefix, token));
         variables.put("year", now(UTC).getYear());
         return variables;
     }

@@ -401,6 +401,7 @@ class SecurityJwtIncidentPublisherImplTest {
                 null,
                 null,
                 null,
+                null,
                 null
         );
     }

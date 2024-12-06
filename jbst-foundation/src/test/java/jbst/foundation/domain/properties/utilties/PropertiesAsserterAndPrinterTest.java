@@ -246,7 +246,8 @@ class PropertiesAsserterAndPrinterTest {
                 SecurityJwtConfigs.hardcoded().getJwtTokensConfigs(),
                 SecurityJwtConfigs.hardcoded().getLoggingConfigs(),
                 SecurityJwtConfigs.hardcoded().getSessionConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs()
+                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs(),
+                SecurityJwtConfigs.hardcoded().getUsersTokensConfigs()
         );
 
         // Act
@@ -281,7 +282,8 @@ class PropertiesAsserterAndPrinterTest {
                 SecurityJwtConfigs.hardcoded().getJwtTokensConfigs(),
                 SecurityJwtConfigs.hardcoded().getLoggingConfigs(),
                 SecurityJwtConfigs.hardcoded().getSessionConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs()
+                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs(),
+                SecurityJwtConfigs.hardcoded().getUsersTokensConfigs()
         );
 
         // Act
@@ -318,7 +320,8 @@ class PropertiesAsserterAndPrinterTest {
                 SecurityJwtConfigs.hardcoded().getJwtTokensConfigs(),
                 SecurityJwtConfigs.hardcoded().getLoggingConfigs(),
                 SecurityJwtConfigs.hardcoded().getSessionConfigs(),
-                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs()
+                SecurityJwtConfigs.hardcoded().getUsersEmailsConfigs(),
+                SecurityJwtConfigs.hardcoded().getUsersTokensConfigs()
         );
 
         // Act

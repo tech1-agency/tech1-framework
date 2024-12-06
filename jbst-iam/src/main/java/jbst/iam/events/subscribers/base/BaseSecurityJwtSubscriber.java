@@ -6,6 +6,7 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
 import jbst.iam.domain.events.*;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
@@ -13,12 +14,13 @@ import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.subscribers.SecurityJwtSubscriber;
 import jbst.iam.services.BaseUsersSessionsService;
+import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.UsersEmailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static jbst.foundation.domain.constants.JbstConstants.Logs.*;
+import static jbst.foundation.domain.constants.JbstConstants.Logs.USER_ACTION;
 
 @SuppressWarnings("LoggingSimilarMessage")
 @Slf4j
@@ -28,10 +30,13 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
     // Publishers
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
+    private final BaseUsersTokensService baseUsersTokensService;
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Utils
     private final UserMetadataUtils userMetadataUtils;
+    // Incidents
+    private final IncidentPublisher incidentPublisher;
 
     @Override
     public void onAuthenticationLogin(EventAuthenticationLogin event) {
@@ -72,7 +77,16 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
 
     @Override
     public void onRegistration0(EventRegistration0 event) {
-        LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[sub, events] register0");
+        try {
+            LOGGER.debug(USER_ACTION, event.requestUserRegistration0().username(), "[sub, events] register0");
+            var requestUserRegistration0 = event.requestUserRegistration0();
+            var requestUserToken = requestUserRegistration0.asRequestUserConfirmEmailToken();
+            var userToken = this.baseUsersTokensService.saveAs(requestUserToken);
+            var functionConfirmEmail = userToken.asFunctionConfirmEmail(requestUserRegistration0.email());
+            this.usersEmailsService.executeConfirmEmail(functionConfirmEmail);
+        } catch (RuntimeException ex) {
+            this.incidentPublisher.publishThrowable(ex);
+        }
     }
 
     @Override

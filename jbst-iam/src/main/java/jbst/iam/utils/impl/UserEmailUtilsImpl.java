@@ -7,6 +7,7 @@ import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     private final ResourceLoader resourceLoader;
     // Properties
     private final JbstProperties jbstProperties;
+    private final ServerProperties serverProperties;
 
     @Override
     public String getSubject(String eventName) {
@@ -34,6 +36,14 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         var server = "\"" + serverConfigs.getName() + "\"";
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
         return prefix + " " + eventName + " on " + server + " — " + time;
+    }
+
+    @Override
+    public String getConfirmEmailTemplateName() {
+        return this.getServerOrFrameworkTemplateName(
+                "server-confirm-email",
+                "jbst-confirm-email"
+        );
     }
 
     @Override
@@ -50,6 +60,22 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 "server-session-refreshed",
                 "jbst-account-accessed"
         );
+    }
+
+    @Override
+    public Map<String, Object> getConfirmEmailVariables(
+            Username username,
+            String token
+    ) {
+        var servletContextPath = this.serverProperties.getServlet().getContextPath();
+        var serverURL = this.jbstProperties.getServerConfigs().getServerContextPathURL(servletContextPath);
+        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
+        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("username", username.value());
+        variables.put("confirmationLink", usersTokensConfigs.getConfirmEmailURL(serverURL, basePathPrefix, token));
+        variables.put("year", now(UTC).getYear());
+        return variables;
     }
 
     @Override
@@ -74,7 +100,6 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    @SuppressWarnings("SameParameterValue")
     private String getServerOrFrameworkTemplateName(String serverTemplateName, String jbstTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : jbstTemplateName;

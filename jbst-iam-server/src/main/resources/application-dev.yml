@@ -10,8 +10,8 @@ jbst:
     enabled: false
   server-configs:
     springdoc-enabled: true
+    server-url: http://localhost:3002
     webclient-url: http://localhost:3000
-    webclient-email-confirm-redirect-path: /email-confirm
   utilities-configs:
     geo-locations-configs:
       geo-lite-city-database-enabled: false
@@ -86,3 +86,5 @@ jbst:
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
       invitations:
         enabled: true
+    users-tokens-configs:
+      webclient-email-confirm-redirect-path: /email-confirm

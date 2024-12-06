@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Confirm Email</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        .main-table {
+            font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #444444;
+            width: 550px;
+            padding: 40px;
+            border: 1px #dceaf4 solid;
+            border-radius: 4px;
+        }
+        .main-table-tr {
+            padding-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff !important;
+            background-color: #007ee6;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .best-regards-section {
+            padding-bottom: 10px;
+            color: #444444;
+        }
+        .copyright {
+            font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #a8b9c6;
+            width: 550px;
+            margin: 0;
+            padding: 10px 0;
+            font-size: 11px;
+            text-align: end;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <table class="main-table">
+        <tr>
+            <td class="main-table-tr" th:text="'Hi @' + ${'__${username}__'} + ','"></td>
+        </tr>
+        <tr>
+            <td class="main-table-tr">
+                We need to confirm your email address to complete your account setup. Please click the button below to verify your email.
+            </td>
+        </tr>
+        <tr>
+            <td class="main-table-tr" style="text-align: center;">
+                <a target="_blank" th:href="${confirmationLink}" class="button">Confirm Email</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="main-table-tr">
+                If you didn't request this email, you can safely ignore it.
+            </td>
+        </tr>
+        <tr>
+            <td class="best-regards-section">Best Regards, tech1.agency</td>
+        </tr>
+    </table>
+    <p class="copyright" th:text="'© ' + ${'__${year}__'} + ' tech1.agency'"></p>
+</center>
+</body>
+</html>

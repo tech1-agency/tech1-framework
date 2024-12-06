@@ -4,6 +4,7 @@ import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
+import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.utils.UserEmailUtils;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -46,10 +48,18 @@ class UserEmailUtilsImplTest {
         private final JbstProperties jbstProperties;
 
         @Bean
+        public ServerProperties serverProperties() {
+            var serverProperties = new ServerProperties();
+            serverProperties.getServlet().setContextPath("/api");
+            return serverProperties;
+        }
+
+        @Bean
         UserEmailUtils userEmailUtility() {
             return new UserEmailUtilsImpl(
                     this.resourceLoader,
-                    this.jbstProperties
+                    this.jbstProperties,
+                    this.serverProperties()
             );
         }
     }
@@ -72,6 +82,15 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
+    void getConfirmEmailTemplateNameTest() {
+        // Act
+        var templateName = this.componentUnderTest.getConfirmEmailTemplateName();
+
+        // Assert
+        assertThat(templateName).isEqualTo("jbst-confirm-email");
+    }
+
+    @Test
     void getAuthenticationLoginTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getAuthenticationLoginTemplateName();
@@ -87,6 +106,28 @@ class UserEmailUtilsImplTest {
 
         // Assert
         assertThat(templateName).isEqualTo("jbst-account-accessed");
+    }
+
+    @Test
+    void getConfirmEmailVariablesTest() {
+        // Arrange
+        var username = Username.hardcoded();
+        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        var confirmationLink = "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + token;
+
+        // Act
+        var actual = this.componentUnderTest.getConfirmEmailVariables(
+                username,
+                token
+        );
+
+        // Assert
+        assertThat(actual)
+                .hasSize(3)
+                .containsEntry("username", username.value())
+                .containsEntry("confirmationLink", confirmationLink)
+                .containsEntry("year", now(UTC).getYear());
+
     }
 
     @Test

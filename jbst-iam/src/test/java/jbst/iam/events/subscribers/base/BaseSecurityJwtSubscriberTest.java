@@ -1,24 +1,5 @@
 package jbst.iam.events.subscribers.base;
 
-import jbst.iam.domain.db.UserSession;
-import jbst.iam.domain.events.*;
-import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
-import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
-import jbst.iam.events.subscribers.SecurityJwtSubscriber;
-import jbst.iam.services.BaseUsersSessionsService;
-import jbst.iam.services.UsersEmailsService;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.base.UsernamePasswordCredentials;
@@ -29,22 +10,63 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernameMaskedPassword;
 import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLoginFailureUsernamePassword;
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
+import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
+import jbst.iam.domain.db.UserSession;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserRegistration0;
+import jbst.iam.domain.events.*;
+import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
+import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
+import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
+import jbst.iam.events.subscribers.SecurityJwtSubscriber;
+import jbst.iam.services.BaseUsersSessionsService;
+import jbst.iam.services.BaseUsersTokensService;
+import jbst.iam.services.UsersEmailsService;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.stream.Stream;
+
+import static java.util.Objects.nonNull;
+import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static jbst.foundation.utilities.random.EntityUtility.entity;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader= AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class BaseSecurityJwtSubscriberTest {
 
+    private static Stream<Arguments> onRegistration0Test() {
+        return Stream.of(
+                Arguments.of(new IllegalArgumentException()),
+                Arguments.of((Object) null)
+        );
+    }
+
     @Configuration
     static class ContextConfiguration {
         @Bean
         SecurityJwtIncidentPublisher securityJwtIncidentPublisher() {
             return mock(SecurityJwtIncidentPublisher.class);
+        }
+
+        @Bean
+        BaseUsersTokensService baseUsersTokensService() {
+            return mock(BaseUsersTokensService.class);
         }
 
         @Bean
@@ -63,12 +85,19 @@ class BaseSecurityJwtSubscriberTest {
         }
 
         @Bean
+        IncidentPublisher incidentPublisher() {
+            return mock(IncidentPublisher.class);
+        }
+
+        @Bean
         SecurityJwtSubscriber securityJwtSubscriber() {
             return new BaseSecurityJwtSubscriber(
                     this.securityJwtIncidentPublisher(),
+                    this.baseUsersTokensService(),
                     this.userEmailService(),
                     this.baseUsersSessionsService(),
-                    this.userMetadataUtils()
+                    this.userMetadataUtils(),
+                    this.incidentPublisher()
             );
         }
     }
@@ -76,10 +105,13 @@ class BaseSecurityJwtSubscriberTest {
     // Publishers
     private final SecurityJwtIncidentPublisher securityJwtIncidentPublisher;
     // Services
+    private final BaseUsersTokensService baseUsersTokensService;
     private final UsersEmailsService usersEmailsService;
     private final BaseUsersSessionsService baseUsersSessionsService;
     // Utils
     private final UserMetadataUtils userMetadataUtils;
+    // Incidents
+    private final IncidentPublisher incidentPublisher;
 
     private final SecurityJwtSubscriber componentUnderTest;
 
@@ -87,9 +119,11 @@ class BaseSecurityJwtSubscriberTest {
     void beforeEach() {
         reset(
                 this.securityJwtIncidentPublisher,
+                this.baseUsersTokensService,
                 this.usersEmailsService,
                 this.baseUsersSessionsService,
-                this.userMetadataUtils
+                this.userMetadataUtils,
+                this.incidentPublisher
         );
     }
 
@@ -97,9 +131,11 @@ class BaseSecurityJwtSubscriberTest {
     void afterEach() {
         verifyNoMoreInteractions(
                 this.securityJwtIncidentPublisher,
+                this.baseUsersTokensService,
                 this.usersEmailsService,
                 this.baseUsersSessionsService,
-                this.userMetadataUtils
+                this.userMetadataUtils,
+                this.incidentPublisher
         );
     }
 
@@ -158,16 +194,27 @@ class BaseSecurityJwtSubscriberTest {
         assertThat(event).isNotNull();
     }
 
-    @Test
-    void onRegistration0Test() {
+    @ParameterizedTest
+    @MethodSource("onRegistration0Test")
+    void onRegistration0Test(RuntimeException ex) {
         // Arrange
-        var event = entity(EventRegistration0.class);
+        var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
+        var event = new EventRegistration0(requestUserRegistration0);
+        var userToken = UserToken.hardcoded();
+        when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserConfirmEmailToken())).thenReturn(userToken);
+        var functionConfirmEmail = userToken.asFunctionConfirmEmail(requestUserRegistration0.email());
+        if (nonNull(ex)) {
+            doThrow(ex).when(this.usersEmailsService).executeConfirmEmail(functionConfirmEmail);
+        }
 
         // Act
         this.componentUnderTest.onRegistration0(event);
 
         // Assert
         assertThat(event).isNotNull();
+        verify(this.baseUsersTokensService).saveAs(requestUserRegistration0.asRequestUserConfirmEmailToken());
+        verify(this.usersEmailsService).executeConfirmEmail(functionConfirmEmail);
+        verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 
     @Test

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.iam.domain.enums.UserTokenType;
 
 import java.time.ZoneId;
 
@@ -43,4 +44,10 @@ public record RequestUserRegistration0(
         );
     }
 
+    public RequestUserToken asRequestUserConfirmEmailToken() {
+        return new RequestUserToken(
+                this.username,
+                UserTokenType.EMAIL_CONFIRMATION
+        );
+    }
 }

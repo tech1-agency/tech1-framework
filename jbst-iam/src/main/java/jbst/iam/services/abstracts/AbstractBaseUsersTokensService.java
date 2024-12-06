@@ -10,9 +10,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class AbstractBaseUsersTokensService implements BaseUsersTokensService {
+public abstract class AbstractBaseUsersTokensService implements BaseUsersTokensService {
 
     // Repositories
     private final UsersTokensRepository usersTokensRepository;
@@ -32,6 +33,16 @@ public class AbstractBaseUsersTokensService implements BaseUsersTokensService {
     @Override
     public UserToken saveAs(RequestUserToken request) {
         return this.usersTokensRepository.saveAs(request);
+    }
+
+    @Override
+    public UserToken getOrCreate(RequestUserToken request) {
+        var token = this.usersTokensRepository.findByUsernameValidOrNull(request.username(), request.type());
+        if (nonNull(token)) {
+            return token;
+        } else {
+            return this.usersTokensRepository.saveAs(request);
+        }
     }
 
 }

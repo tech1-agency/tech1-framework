@@ -13,6 +13,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -47,10 +48,18 @@ class UserEmailUtilsImplTest {
         private final JbstProperties jbstProperties;
 
         @Bean
+        public ServerProperties serverProperties() {
+            var serverProperties = new ServerProperties();
+            serverProperties.getServlet().setContextPath("/api");
+            return serverProperties;
+        }
+
+        @Bean
         UserEmailUtils userEmailUtility() {
             return new UserEmailUtilsImpl(
                     this.resourceLoader,
-                    this.jbstProperties
+                    this.jbstProperties,
+                    this.serverProperties()
             );
         }
     }

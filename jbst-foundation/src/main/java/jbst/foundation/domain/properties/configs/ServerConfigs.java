@@ -29,7 +29,7 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
         return new ServerConfigs(
                 ServerName.hardcoded(),
                 true,
-                "http://127.0.0.1:3002/api",
+                "http://127.0.0.1:3002",
                 "http://127.0.0.1:3000"
         );
     }
@@ -50,6 +50,10 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
 
     public boolean isSpringdocEnabled() {
         return this.springdocEnabled;
+    }
+
+    public String getServerContextPathURL(String contextPath) {
+        return this.serverURL + contextPath;
     }
 
 }

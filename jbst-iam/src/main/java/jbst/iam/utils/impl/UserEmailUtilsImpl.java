@@ -7,6 +7,7 @@ import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     private final ResourceLoader resourceLoader;
     // Properties
     private final JbstProperties jbstProperties;
+    private final ServerProperties serverProperties;
 
     @Override
     public String getSubject(String eventName) {
@@ -65,7 +67,8 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
             Username username,
             String token
     ) {
-        var serverURL = this.jbstProperties.getServerConfigs().getServerURL();
+        var servletContextPath = this.serverProperties.getServlet().getContextPath();
+        var serverURL = this.jbstProperties.getServerConfigs().getServerContextPathURL(servletContextPath);
         var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
         var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
         Map<String, Object> variables = new HashMap<>();

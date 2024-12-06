@@ -1,5 +1,6 @@
 package jbst.iam.mongo.repositories;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.configurations.ConfigurationMongoRepositories;
 import jbst.iam.domain.db.UserToken;
@@ -18,6 +19,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import static jbst.foundation.utilities.random.EntityUtility.entity;
 import static jbst.foundation.utilities.random.RandomUtility.randomElement;
+import static jbst.iam.domain.enums.UserTokenType.EMAIL_CONFIRMATION;
+import static jbst.iam.domain.enums.UserTokenType.PASSWORD_RESET;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
@@ -48,6 +51,8 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         var notExistentTokenId = entity(TokenId.class);
         var notExistentToken = RandomUtility.randomString();
 
+        var notExistentUsername = entity(Username.class);
+
         var savedToken = saved.get(0);
         var existentTokenId = savedToken.tokenId();
         var existentToken = savedToken.getValue();
@@ -71,6 +76,15 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNotNull();
         assertThat(this.usersTokensRepository.findById(usedTokenId.value())).isNotEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(usedToken)).isNotNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(notExistentUsername, EMAIL_CONFIRMATION)).isNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(notExistentUsername, PASSWORD_RESET)).isNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username1"), EMAIL_CONFIRMATION)).isNotNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username1"), PASSWORD_RESET)).isNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username2"), EMAIL_CONFIRMATION)).isNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username2"), PASSWORD_RESET)).isNotNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username3"), EMAIL_CONFIRMATION)).isNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username5"), EMAIL_CONFIRMATION)).isNull();
+        assertThat(this.usersTokensRepository.findByUsernameValidOrNull(Username.of("username6"),EMAIL_CONFIRMATION)).isNull();
     }
 
     @Test
@@ -89,7 +103,7 @@ class MongoUsersTokensRepositoryIT extends TestsConfigurationMongoRepositoriesRu
 
         // Act-Assert-1
         this.usersTokensRepository.cleanupExpired();
-        assertThat(this.usersTokensRepository.count()).isEqualTo(4);
+        assertThat(this.usersTokensRepository.count()).isEqualTo(3);
         assertThat(this.usersTokensRepository.findById(expiredTokenId.value())).isEmpty();
         assertThat(this.usersTokensRepository.findByValueAsAny(expiredToken)).isNull();
 

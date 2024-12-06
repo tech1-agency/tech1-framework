@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static jbst.foundation.utilities.random.RandomUtility.*;
+import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
 
@@ -74,13 +74,14 @@ public class MongoDbUserToken {
 
     public static MongoDbUserToken random(
             Username username,
+            UserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
         return new MongoDbUserToken(
                 username,
-                randomString(),
-                randomEnum(UserTokenType.class),
+                randomStringLetterOrNumbersOnly(36),
+                type,
                 expiryTimestamp,
                 used
         );
@@ -89,31 +90,37 @@ public class MongoDbUserToken {
     public static List<MongoDbUserToken> dummies1() {
         var token1 = MongoDbUserToken.random(
                 Username.of("username1"),
+                UserTokenType.EMAIL_CONFIRMATION,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 false
         );
         var token2 = MongoDbUserToken.random(
                 Username.of("username2"),
+                UserTokenType.PASSWORD_RESET,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 false
         );
         var token3 = MongoDbUserToken.random(
                 Username.of("username3"),
+                UserTokenType.EMAIL_CONFIRMATION,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 false
         );
         var token4 = MongoDbUserToken.random(
                 Username.of("username4"),
+                UserTokenType.PASSWORD_RESET,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 false
         );
         var token5 = MongoDbUserToken.random(
                 Username.of("username5"),
-                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                UserTokenType.EMAIL_CONFIRMATION,
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 true
         );
         var token6 = MongoDbUserToken.random(
                 Username.of("username6"),
+                UserTokenType.EMAIL_CONFIRMATION,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 true
         );

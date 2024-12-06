@@ -1,10 +1,13 @@
 package jbst.iam.repositories.mongodb;
 
+import jbst.foundation.domain.base.Username;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserToken;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.mongodb.MongoDbUserToken;
+import jbst.iam.domain.postgres.db.PostgresDbUserToken;
 import jbst.iam.repositories.UsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -17,6 +20,12 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
     // ================================================================================================================
     default UserToken findByValueAsAny(String value) {
         var entity = this.findByValue(value);
+        return nonNull(entity) ? entity.asUserToken() : null;
+    }
+
+    default UserToken findByUsernameValidOrNull(Username username, UserTokenType type) {
+        var currentTimestamp = TimestampUtility.getCurrentTimestamp();
+        var entity = this.findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(username, type, currentTimestamp);
         return nonNull(entity) ? entity.asUserToken() : null;
     }
 
@@ -46,6 +55,7 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
     // Spring Data
     // ================================================================================================================
     MongoDbUserToken findByValue(String value);
+    PostgresDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(Username username, UserTokenType type, long timestamp);
     void deleteAllByExpiryTimestampBefore(long timestamp);
     void deleteAllByUsedIsTrue();
 }

@@ -55,7 +55,11 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
     // Spring Data
     // ================================================================================================================
     MongoDbUserToken findByValue(String value);
-    PostgresDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(Username username, UserTokenType type, long timestamp);
+    PostgresDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+            Username username,
+            UserTokenType type,
+            long timestamp
+    );
     void deleteAllByExpiryTimestampBefore(long timestamp);
     void deleteAllByUsedIsTrue();
 }

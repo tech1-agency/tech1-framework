@@ -4,12 +4,18 @@ import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utilities.random.RandomUtility;
+import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.configurations.TestRunnerResources1;
+import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserToken;
+import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersTokensService;
+import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -22,6 +28,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.nonNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,8 +52,11 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         );
     }
 
+    // Assistants
+    private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
+    private final BaseUsersEmailsService baseUsersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents
@@ -59,7 +69,9 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     void beforeEach() {
         this.standaloneSetupByResourceUnderTest(this.componentUnderTest);
         reset(
+                this.currentSessionAssistant,
                 this.baseUsersTokensService,
+                this.baseUsersEmailsService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
         );
@@ -68,10 +80,33 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
+                this.currentSessionAssistant,
                 this.baseUsersTokensService,
+                this.baseUsersEmailsService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
         );
+    }
+
+    @Test
+    void executeConfirmEmail() throws Exception {
+        // Arrange
+        var user = JwtUser.hardcoded();
+        when(this.currentSessionAssistant.getCurrentJwtUser()).thenReturn(user);
+        var requestUserToken = RequestUserToken.emailConfirmation(user.username());
+        var userToken = UserToken.hardcoded();
+        when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
+
+        // Act
+        this.mvc.perform(
+                post("/tokens/email/confirm")
+        ).andExpect(status().isOk());
+
+        // Arrange
+        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.baseUsersTokensRequestsValidator).validateExecuteConfirmEmail(user);
+        verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
+        verify(this.baseUsersEmailsService).executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));
     }
 
     @ParameterizedTest

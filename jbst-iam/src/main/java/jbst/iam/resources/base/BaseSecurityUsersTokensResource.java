@@ -9,15 +9,16 @@ import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
+import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.services.BaseUsersTokensService;
+import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -31,14 +32,27 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BaseSecurityUsersTokensResource {
 
+    // Assistants
+    private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
+    private final BaseUsersEmailsService baseUsersEmailsService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents
     private final IncidentPublisher incidentPublisher;
     // Properties
     private final JbstProperties jbstProperties;
+
+    @PostMapping("/email/confirm")
+    @ResponseStatus(HttpStatus.OK)
+    public void executeConfirmEmail() {
+        var user = this.currentSessionAssistant.getCurrentJwtUser();
+        this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
+        var requestUserToken = RequestUserToken.emailConfirmation(user.username());
+        var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
+        this.baseUsersEmailsService.executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));
+    }
 
     @ApiResponse(responseCode = "302", content = @Content(schema = @Schema(implementation = String.class)))
     @GetMapping("/email/confirm")

@@ -17,7 +17,6 @@ import org.springframework.data.annotation.Transient;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 import static jbst.foundation.utilities.time.TimestampUtility.getFutureRange;
 import static jbst.foundation.utilities.time.TimestampUtility.getPastRange;
@@ -87,13 +86,14 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
 
     public static PostgresDbUserToken random(
             Username username,
+            UserTokenType type,
             long expiryTimestamp,
             boolean used
     ) {
         return new PostgresDbUserToken(
                 username,
                 randomStringLetterOrNumbersOnly(36),
-                randomEnum(UserTokenType.class),
+                type,
                 expiryTimestamp,
                 used
         );
@@ -102,31 +102,37 @@ public class PostgresDbUserToken extends PostgresDbAbstractPersistable0 {
     public static List<PostgresDbUserToken> dummies1() {
         var token1 = PostgresDbUserToken.random(
                 Username.of("username1"),
+                UserTokenType.EMAIL_CONFIRMATION,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 false
         );
         var token2 = PostgresDbUserToken.random(
                 Username.of("username2"),
+                UserTokenType.PASSWORD_RESET,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 false
         );
         var token3 = PostgresDbUserToken.random(
                 Username.of("username3"),
+                UserTokenType.EMAIL_CONFIRMATION,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 false
         );
         var token4 = PostgresDbUserToken.random(
                 Username.of("username4"),
+                UserTokenType.PASSWORD_RESET,
                 getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 false
         );
         var token5 = PostgresDbUserToken.random(
-                Username.of("username1"),
-                getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
+                Username.of("username5"),
+                UserTokenType.EMAIL_CONFIRMATION,
+                getPastRange(new TimeAmount(1, ChronoUnit.DAYS)).from(),
                 true
         );
         var token6 = PostgresDbUserToken.random(
-                Username.of("username2"),
+                Username.of("username6"),
+                UserTokenType.EMAIL_CONFIRMATION,
                 getFutureRange(new TimeAmount(1, ChronoUnit.DAYS)).to(),
                 true
         );

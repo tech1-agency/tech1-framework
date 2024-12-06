@@ -87,6 +87,24 @@ public record JwtUser(
         );
     }
 
+    public static JwtUser hardcoded(
+            Email email,
+            UserEmailDetails emailDetails
+    ) {
+        return new JwtUser(
+                UserId.hardcoded(),
+                Username.hardcoded(),
+                Password.hardcoded(),
+                UKRAINE,
+                new HashSet<>(),
+                email,
+                "",
+                false,
+                emailDetails,
+                new HashMap<>()
+        );
+    }
+
     public static JwtUser hardcoded(Map<String, Object> attributes) {
         var user = JwtUser.hardcoded();
         user.attributes().putAll(attributes);

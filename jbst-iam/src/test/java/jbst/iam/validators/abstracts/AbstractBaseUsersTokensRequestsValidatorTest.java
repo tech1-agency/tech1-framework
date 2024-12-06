@@ -1,14 +1,17 @@
 package jbst.iam.validators.abstracts;
 
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
+import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import jbst.iam.validators.abtracts.AbstractBaseUsersTokensRequestsValidator;
@@ -33,13 +36,41 @@ import java.util.stream.Stream;
 import static java.util.Objects.nonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class AbstractBaseUsersTokensRequestsValidatorTest {
+
+    private static Stream<Arguments> validateExecuteConfirmEmailTest() {
+        return Stream.of(
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
+                        null
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
+                        new IllegalArgumentException("User email already confirmed")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
+                        new IllegalArgumentException("User email already confirmed")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.required()),
+                        new IllegalArgumentException("User email is missing")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
+                        new IllegalArgumentException("User email already confirmed")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
+                        new IllegalArgumentException("User email already confirmed")
+                )
+        );
+    }
 
     private static Stream<Arguments> validateEmailConfirmationTokenTest() {
         var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
@@ -130,6 +161,21 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         verifyNoMoreInteractions(
                 this.usersTokensRepository
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("validateExecuteConfirmEmailTest")
+    void validateExecuteConfirmEmailTest(JwtUser user, IllegalArgumentException expected) {
+        // Act
+        var actual = catchThrowable(() -> this.componentUnderTest.validateExecuteConfirmEmail(user));
+
+        if (nonNull(expected)) {
+            assertThat(actual)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(expected.getMessage());
+        } else {
+            assertThat(actual).isNull();
+        }
     }
 
     @ParameterizedTest

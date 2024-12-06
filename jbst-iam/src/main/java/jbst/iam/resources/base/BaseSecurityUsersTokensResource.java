@@ -54,8 +54,8 @@ public class BaseSecurityUsersTokensResource {
     @ResponseStatus(HttpStatus.OK)
     public void executeConfirmEmail() throws TooManyRequestsException {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
-        this.executeConfirmEmailLimiter.acquire(user.username());
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
+        this.executeConfirmEmailLimiter.acquire(user.username());
         var requestUserToken = RequestUserToken.emailConfirmation(user.username());
         var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
         this.baseUsersEmailsService.executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));

@@ -7,7 +7,6 @@ import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.mongodb.MongoDbUserToken;
-import jbst.iam.domain.postgres.db.PostgresDbUserToken;
 import jbst.iam.repositories.UsersTokensRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -55,7 +54,7 @@ public interface MongoUsersTokensRepository extends MongoRepository<MongoDbUserT
     // Spring Data
     // ================================================================================================================
     MongoDbUserToken findByValue(String value);
-    PostgresDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
+    MongoDbUserToken findByUsernameAndTypeAndExpiryTimestampAfterAndUsedIsFalse(
             Username username,
             UserTokenType type,
             long timestamp

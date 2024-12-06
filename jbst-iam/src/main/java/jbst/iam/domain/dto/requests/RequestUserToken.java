@@ -8,6 +8,13 @@ public record RequestUserToken(
         UserTokenType type
 ) {
 
+    public static RequestUserToken emailConfirmation(Username username) {
+        return new RequestUserToken(
+                username,
+                UserTokenType.EMAIL_CONFIRMATION
+        );
+    }
+
     public static RequestUserToken hardcoded() {
         return new RequestUserToken(
                 Username.hardcoded(),

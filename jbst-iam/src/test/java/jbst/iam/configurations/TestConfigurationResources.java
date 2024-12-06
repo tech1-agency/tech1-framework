@@ -6,6 +6,7 @@ import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.publishers.SecurityJwtPublisher;
 import jbst.iam.handlers.exceptions.ResourceExceptionHandler;
 import jbst.iam.services.*;
+import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.sessions.SessionRegistry;
 import jbst.iam.tokens.facade.TokensProvider;
 import jbst.iam.utils.SecurityJwtTokenUtils;
@@ -59,6 +60,11 @@ public class TestConfigurationResources {
     @Bean
     BaseUsersTokensService usersTokensService() {
         return mock(BaseUsersTokensService.class);
+    }
+
+    @Bean
+    BaseUsersEmailsService usersEmailsService() {
+        return mock(BaseUsersEmailsService.class);
     }
 
     @Bean

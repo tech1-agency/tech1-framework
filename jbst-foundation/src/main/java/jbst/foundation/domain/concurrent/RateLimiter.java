@@ -2,17 +2,16 @@ package jbst.foundation.domain.concurrent;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import com.google.common.util.concurrent.RateLimiter;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 
 import java.time.Duration;
 
 @SuppressWarnings("UnstableApiUsage")
-public class RateLimiterCache<T> {
+public class RateLimiter<T> {
 
-    private final LoadingCache<T, RateLimiter> cache;
+    private final LoadingCache<T, com.google.common.util.concurrent.RateLimiter> cache;
 
-    public RateLimiterCache(
+    public RateLimiter(
             int requests,
             Duration duration,
             Duration cacheDuration
@@ -20,7 +19,7 @@ public class RateLimiterCache<T> {
         var permitsPerSecond = calculatePermitsPerSecond(requests, duration);
         this.cache = Caffeine.newBuilder()
                 .expireAfterWrite(cacheDuration)
-                .build(key -> RateLimiter.create(permitsPerSecond));
+                .build(key -> com.google.common.util.concurrent.RateLimiter.create(permitsPerSecond));
     }
 
     protected static double calculatePermitsPerSecond(int requests, Duration duration) {

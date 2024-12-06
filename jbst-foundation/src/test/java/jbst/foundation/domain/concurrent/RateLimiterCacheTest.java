@@ -57,7 +57,7 @@ class RateLimiterCacheTest {
     @MethodSource("calculatePermitsPerSecondTest")
     void calculatePermitsPerSecondTest(int requests, Duration duration, double permitsPerSecond) {
         // Act
-        var actual = RateLimiterCache.calculatePermitsPerSecond(requests, duration);
+        var actual = RateLimiter.calculatePermitsPerSecond(requests, duration);
 
         // Assert
         assertThat(actual).isEqualTo(permitsPerSecond);
@@ -67,7 +67,7 @@ class RateLimiterCacheTest {
     @MethodSource("tryAcquireTest")
     void tryAcquireTest(int requests, Duration duration, long timeout, boolean expected) {
         // Arrange
-        var componentUnderTest = new RateLimiterCache<String>(requests, duration, duration.multipliedBy(2));
+        var componentUnderTest = new RateLimiter<String>(requests, duration, duration.multipliedBy(2));
         var key = RandomUtility.randomString();
 
         // Act
@@ -83,7 +83,7 @@ class RateLimiterCacheTest {
     @MethodSource("acquireTest")
     void acquireTest(int requests, Duration duration, long timeout, boolean exceptionally) {
         // Arrange
-        var componentUnderTest = new RateLimiterCache<String>(requests, duration, duration.multipliedBy(2));
+        var componentUnderTest = new RateLimiter<String>(requests, duration, duration.multipliedBy(2));
         var key = RandomUtility.randomString();
 
         // Act

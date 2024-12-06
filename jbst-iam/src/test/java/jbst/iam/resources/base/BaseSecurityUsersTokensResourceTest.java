@@ -107,7 +107,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
 
         // Arrange
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
-        verify(this.baseUsersTokensRequestsValidator).validateExecuteConfirmEmail(user);
+        verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
         verify(this.baseUsersEmailsService).executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));
     }

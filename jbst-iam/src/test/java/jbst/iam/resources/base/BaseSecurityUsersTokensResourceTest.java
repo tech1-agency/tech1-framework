@@ -101,9 +101,12 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         this.mvc.perform(
                 post("/tokens/email/confirm")
         ).andExpect(status().isOk());
+        this.mvc.perform(
+                post("/tokens/email/confirm")
+        ).andExpect(status().isTooManyRequests());
 
         // Arrange
-        verify(this.currentSessionAssistant).getCurrentJwtUser();
+        verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
         verify(this.baseUsersTokensRequestsValidator).validateExecuteConfirmEmail(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
         verify(this.baseUsersEmailsService).executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));

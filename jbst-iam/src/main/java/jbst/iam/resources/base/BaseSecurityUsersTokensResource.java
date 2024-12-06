@@ -4,8 +4,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.concurrent.RateLimiterCache;
+import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.foundation.domain.factories.concurrent.RateLimiterCacheFactory;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
@@ -44,10 +48,13 @@ public class BaseSecurityUsersTokensResource {
     // Properties
     private final JbstProperties jbstProperties;
 
+    private final RateLimiterCache<Username> executeConfirmEmailLimiter = RateLimiterCacheFactory.executeConfirmEmail();
+
     @PostMapping("/email/confirm")
     @ResponseStatus(HttpStatus.OK)
-    public void executeConfirmEmail() {
+    public void executeConfirmEmail() throws TooManyRequestsException {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
+        this.executeConfirmEmailLimiter.acquire(user.username());
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         var requestUserToken = RequestUserToken.emailConfirmation(user.username());
         var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);

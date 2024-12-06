@@ -3,6 +3,7 @@ package jbst.iam.handlers.exceptions;
 import jbst.foundation.domain.exceptions.ExceptionEntity;
 import jbst.foundation.domain.exceptions.ExceptionEntityType;
 import jbst.foundation.domain.exceptions.authentication.RegistrationException;
+import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.cookies.CookieNotFoundException;
 import jbst.foundation.domain.exceptions.tokens.*;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,19 @@ public class ResourceExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ExceptionEntity> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({
+            TooManyRequestsException.class
+    })
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+    public ResponseEntity<ExceptionEntity> tooManyRequestsException(TooManyRequestsException ignoredEx) {
+        var response = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                "Too many requests, please wait",
+                "Too many requests, please wait"
+        );
+        return new ResponseEntity<>(response, HttpStatus.TOO_MANY_REQUESTS);
     }
 
     // =================================================================================================================

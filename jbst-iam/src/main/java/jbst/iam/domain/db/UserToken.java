@@ -6,6 +6,7 @@ import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.functions.FunctionConfirmEmail;
+import jbst.iam.domain.functions.FunctionResetPassword;
 import jbst.iam.domain.identifiers.TokenId;
 
 import java.time.temporal.ChronoUnit;
@@ -61,6 +62,14 @@ public record UserToken(
 
     public FunctionConfirmEmail asFunctionConfirmEmail(Email email) {
         return new FunctionConfirmEmail(
+                this.username,
+                email,
+                this.value
+        );
+    }
+
+    public FunctionResetPassword asFunctionResetPassword(Email email) {
+        return new FunctionResetPassword(
                 this.username,
                 email,
                 this.value

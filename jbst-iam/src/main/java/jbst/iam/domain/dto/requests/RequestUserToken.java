@@ -15,6 +15,13 @@ public record RequestUserToken(
         );
     }
 
+    public static RequestUserToken passwordReset(Username username) {
+        return new RequestUserToken(
+                username,
+                UserTokenType.PASSWORD_RESET
+        );
+    }
+
     public static RequestUserToken hardcoded() {
         return new RequestUserToken(
                 Username.hardcoded(),

@@ -6,7 +6,9 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.configurations.TestRunnerResources1;
+import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.jwt.JwtUser;
@@ -149,6 +151,30 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         if (nonNull(runtimeException)) {
             verify(this.incidentPublisher).publishThrowable(any());
         }
+    }
+
+    @Test
+    void executeResetPasswordTest() throws Exception {
+        // Arrange
+        var request = RequestUserEmail.hardcoded();
+        var user = JwtUser.hardcoded(request.email(), UserEmailDetails.confirmed());
+        when(this.baseUsersService.findByEmail(request.email())).thenReturn(user);
+        var requestUserToken = RequestUserToken.passwordReset(user.username());
+        var userToken = UserToken.hardcoded();
+        when(this.baseUsersTokensService.getOrCreate(requestUserToken)).thenReturn(userToken);
+
+        // Act
+        this.mvc.perform(
+                post("/tokens/password/reset")
+                        .content(this.objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+
+        // Assert
+        verify(this.baseUsersService).findByEmail(request.email());
+        verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
+        verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
+        verify(this.baseUsersEmailsService).executeResetPassword(userToken.asFunctionResetPassword(user.email()));
     }
 
     @Test

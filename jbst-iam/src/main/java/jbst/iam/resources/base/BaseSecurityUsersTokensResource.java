@@ -15,6 +15,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
+import jbst.iam.domain.dto.requests.RequestUserEmail;
 import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.services.BaseUsersService;
@@ -87,6 +88,17 @@ public class BaseSecurityUsersTokensResource {
             redirectAttributes.addAttribute("code", 0);
             return redirectView;
         }
+    }
+
+    @PostMapping("/password/reset")
+    @ResponseStatus(HttpStatus.OK)
+    public void executeResetPassword(@RequestBody @Valid RequestUserEmail request) {
+        var user = this.baseUsersService.findByEmail(request.email());
+        this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
+        var requestUserToken = RequestUserToken.passwordReset(user.username());
+        var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
+        var functionResetPassword = userToken.asFunctionResetPassword(user.email());
+        this.baseUsersEmailsService.executeResetPassword(functionResetPassword);
     }
 
     @PatchMapping("/password/reset")

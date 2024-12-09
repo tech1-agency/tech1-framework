@@ -7,8 +7,10 @@ import jbst.foundation.utilities.random.RandomUtility;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.jwt.JwtUser;
+import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
 import jbst.iam.services.base.BaseUsersEmailsService;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
@@ -21,6 +23,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.stubbing.Stubber;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -57,6 +60,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
     private final BaseUsersEmailsService baseUsersEmailsService;
+    private final BaseUsersService baseUsersService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
     // Incidents
@@ -72,6 +76,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.baseUsersTokensService,
                 this.baseUsersEmailsService,
+                this.baseUsersService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
         );
@@ -83,6 +88,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
                 this.currentSessionAssistant,
                 this.baseUsersTokensService,
                 this.baseUsersEmailsService,
+                this.baseUsersService,
                 this.baseUsersTokensRequestsValidator,
                 this.incidentPublisher
         );
@@ -144,6 +150,23 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         if (nonNull(runtimeException)) {
             verify(this.incidentPublisher).publishThrowable(any());
         }
+    }
+
+    @Test
+    void resetPasswordTest() throws Exception {
+        // Arrange
+        var request = RequestUserResetPassword.hardcoded();
+
+        // Act
+        this.mvc.perform(
+                post("/tokens/password/reset")
+                        .content(this.objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+
+        // Assert
+        verify(this.baseUsersTokensRequestsValidator).validatePasswordReset(request);
+        verify(this.baseUsersService).resetPassword(request);
     }
 
 }

@@ -3,6 +3,7 @@ package jbst.iam.validators.abstracts;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -134,7 +135,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        new IllegalArgumentException("User not found")
+                        ResetPasswordException.userNotFound()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
@@ -142,7 +143,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
-                        new IllegalArgumentException("User email is not confirmed")
+                        ResetPasswordException.emailNotConfirmed()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
@@ -150,15 +151,15 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
-                        new IllegalArgumentException("User email is missing")
+                        ResetPasswordException.emailMissing()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, UserEmailDetails.required()),
-                        new IllegalArgumentException("User email is missing")
+                        ResetPasswordException.emailMissing()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
-                        new IllegalArgumentException("User email is missing")
+                        ResetPasswordException.emailMissing()
                 )
         );
     }
@@ -310,13 +311,13 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateExecuteResetPasswordTest")
-    void validateExecuteResetPasswordTest(JwtUser user, IllegalArgumentException expected) {
+    void validateExecuteResetPasswordTest(JwtUser user, ResetPasswordException expected) {
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validateExecuteResetPassword(user));
 
         if (nonNull(expected)) {
             assertThat(actual)
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(ResetPasswordException.class)
                     .hasMessage(expected.getMessage());
         } else {
             assertThat(actual).isNull();

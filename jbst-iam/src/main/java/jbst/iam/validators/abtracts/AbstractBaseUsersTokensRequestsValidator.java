@@ -1,5 +1,6 @@
 package jbst.iam.validators.abtracts;
 
+import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.enums.UserTokenType;
@@ -30,10 +31,16 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     }
 
     @Override
-    public void validateExecuteResetPassword(JwtUser user) {
-        assertNonNullOrThrow(user, "User not found");
-        assertNonNullOrThrow(user.email(), "User email is missing");
-        assertTrueOrThrow(user.emailDetails().isEnabled(), "User email is not confirmed");
+    public void validateExecuteResetPassword(JwtUser user) throws ResetPasswordException {
+        if (isNull(user)) {
+            throw ResetPasswordException.userNotFound();
+        }
+        if (isNull(user.email())) {
+            throw ResetPasswordException.emailMissing();
+        }
+        if (!user.emailDetails().isEnabled()) {
+            throw ResetPasswordException.emailNotConfirmed();
+        }
     }
 
     @Override

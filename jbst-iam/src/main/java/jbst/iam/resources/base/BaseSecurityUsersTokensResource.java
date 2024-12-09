@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.concurrent.RateLimiter;
+import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
@@ -93,12 +94,16 @@ public class BaseSecurityUsersTokensResource {
     @PostMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
     public void executeResetPassword(@RequestBody @Valid RequestUserEmail request) {
-        var user = this.baseUsersService.findByEmail(request.email());
-        this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
-        var requestUserToken = RequestUserToken.passwordReset(user.username());
-        var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
-        var functionResetPassword = userToken.asFunctionResetPassword(user.email());
-        this.baseUsersEmailsService.executeResetPassword(functionResetPassword);
+        try {
+            var user = this.baseUsersService.findByEmail(request.email());
+            this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
+            var requestUserToken = RequestUserToken.passwordReset(user.username());
+            var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
+            var functionResetPassword = userToken.asFunctionResetPassword(user.email());
+            this.baseUsersEmailsService.executeResetPassword(functionResetPassword);
+        } catch (ResetPasswordException ex) {
+            // ignored
+        }
     }
 
     @PatchMapping("/password/reset")

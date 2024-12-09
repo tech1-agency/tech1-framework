@@ -130,6 +130,39 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         );
     }
 
+    private static Stream<Arguments> validateExecuteResetPasswordTest() {
+        return Stream.of(
+                Arguments.of(
+                        null,
+                        new IllegalArgumentException("User not found")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
+                        null
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
+                        new IllegalArgumentException("User email is not confirmed")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
+                        null
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
+                        new IllegalArgumentException("User email is missing")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.required()),
+                        new IllegalArgumentException("User email is missing")
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
+                        new IllegalArgumentException("User email is missing")
+                )
+        );
+    }
+
     private static Stream<Arguments> validatePasswordResetTest() {
         var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
         var expiredTimestamp = TimestampUtility.getPastRange(oneDay).from();
@@ -269,6 +302,21 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         if (nonNull(expected)) {
             assertThat(actual)
                     .isInstanceOf(UserTokenValidationException.class)
+                    .hasMessage(expected.getMessage());
+        } else {
+            assertThat(actual).isNull();
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("validateExecuteResetPasswordTest")
+    void validateExecuteResetPasswordTest(JwtUser user, IllegalArgumentException expected) {
+        // Act
+        var actual = catchThrowable(() -> this.componentUnderTest.validateExecuteResetPassword(user));
+
+        if (nonNull(expected)) {
+            assertThat(actual)
+                    .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(expected.getMessage());
         } else {
             assertThat(actual).isNull();

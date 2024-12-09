@@ -10,8 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.Asserts.*;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUsersTokensRequestsValidator {
@@ -28,6 +27,13 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     @Override
     public void validateEmailConfirmationToken(String token) throws UserTokenValidationException {
         this.validateToken(token, UserTokenType.EMAIL_CONFIRMATION);
+    }
+
+    @Override
+    public void validateExecuteResetPassword(JwtUser user) {
+        assertNonNullOrThrow(user, "User not found");
+        assertNonNullOrThrow(user.email(), "User email is missing");
+        assertTrueOrThrow(user.emailDetails().isEnabled(), "User email is not confirmed");
     }
 
     @Override

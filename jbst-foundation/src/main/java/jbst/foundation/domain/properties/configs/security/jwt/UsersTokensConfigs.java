@@ -34,7 +34,7 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
         return false;
     }
 
-    public String getConfirmEmailURL(
+    public String getEmailConfirmURL(
             String serverURL,
             String basePathPrefix,
             String token

@@ -194,5 +194,19 @@ class PostgresUsersRepositoryIT extends TestsConfigurationPostgresRepositoriesRu
         assertThat(user3).isNotNull();
         assertThat(user3.getEmailDetails()).isEqualTo(UserEmailDetails.confirmed());
         assertThatNoException().isThrownBy(() -> this.usersRepository.confirmEmail(Username.random()));
+
+        // Act-Assert-5
+        var savedPassword = Password.random();
+        var userId4 = this.usersRepository.saveAs(RequestUserRegistration0.random(), savedPassword);
+        assertThat(this.usersRepository.count()).isEqualTo(10);
+        var user4 = this.usersRepository.findById(userId4.value()).orElse(null);
+        assertThat(user4).isNotNull();
+        assertThat(user4.getPassword()).isEqualTo(savedPassword);
+        var newPassword = Password.random();
+        this.usersRepository.resetPassword(user4.getUsername(), newPassword);
+        user4 = this.usersRepository.findById(userId4.value()).orElse(null);
+        assertThat(user4).isNotNull();
+        assertThat(user4.getPassword()).isEqualTo(newPassword);
+        assertThatNoException().isThrownBy(() -> this.usersRepository.resetPassword(Username.random(), Password.random()));
     }
 }

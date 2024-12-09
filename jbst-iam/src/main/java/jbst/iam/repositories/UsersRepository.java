@@ -20,6 +20,7 @@ public interface UsersRepository {
     boolean existsByEmail(Email email);
     long count();
     void confirmEmail(Username username);
+    void resetPassword(Username username, Password password);
     UserId saveAs(JwtUser user);
     UserId saveAs(RequestUserRegistration0 requestUserRegistration0, Password password);
     UserId saveAs(RequestUserRegistration1 requestUserRegistration1, Password password, Invitation invitation);

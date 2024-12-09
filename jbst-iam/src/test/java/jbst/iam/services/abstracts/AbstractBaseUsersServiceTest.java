@@ -1,5 +1,6 @@
 package jbst.iam.services.abstracts;
 
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
@@ -79,6 +80,21 @@ class AbstractBaseUsersServiceTest {
                 this.usersTokensRepository,
                 this.usersRepository
         );
+    }
+
+    @Test
+    void findByEmailTest() {
+        // Arrange
+        var email = Email.hardcoded();
+        var user = JwtUser.hardcoded();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
+
+        // Act
+        var actual = this.componentUnderTest.findByEmail(email);
+
+        // Assert
+        assertThat(actual).isEqualTo(user);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
     @Test

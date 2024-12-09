@@ -1,5 +1,6 @@
 package jbst.iam.services.abstracts;
 
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
 import jbst.iam.domain.dto.requests.RequestUserResetPassword;
@@ -22,6 +23,11 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     private final UsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public JwtUser findByEmail(Email email) {
+        return this.usersRepository.findByEmailAsJwtUserOrNull(email);
+    }
 
     @Override
     public void updateUser1(JwtUser user, RequestUserUpdate1 request) {

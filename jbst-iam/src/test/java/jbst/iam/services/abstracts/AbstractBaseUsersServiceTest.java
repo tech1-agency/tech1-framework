@@ -178,6 +178,7 @@ class AbstractBaseUsersServiceTest {
         // Assert
         verify(this.usersTokensRepository).findByValueAsAny(request.token());
         verify(this.usersRepository).resetPassword(eq(userToken.username()), passwordAC.capture());
+        verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
         assertThat(
                 this.bCryptPasswordEncoder.matches(
                         request.newPassword().value(),

@@ -98,6 +98,8 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
         var userToken = this.usersTokensRepository.findByValueAsAny(request.token());
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
         this.usersRepository.resetPassword(userToken.username(), Password.of(hashPassword));
+        userToken = userToken.withUsed(true);
+        this.usersTokensRepository.saveAs(userToken);
     }
 
     // ================================================================================================================

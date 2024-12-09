@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
-class RateLimiterCacheTest {
+class RateLimiterTest {
 
     private static Stream<Arguments> calculatePermitsPerSecondTest() {
         return Stream.of(

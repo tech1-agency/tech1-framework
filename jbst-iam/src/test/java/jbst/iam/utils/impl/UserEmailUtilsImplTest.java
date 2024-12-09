@@ -91,6 +91,15 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
+    void getResetPasswordTemplateNameTest() {
+        // Act
+        var templateName = this.componentUnderTest.getResetPasswordTemplateName();
+
+        // Assert
+        assertThat(templateName).isEqualTo("jbst-reset-password");
+    }
+
+    @Test
     void getAuthenticationLoginTemplateNameTest() {
         // Act
         var templateName = this.componentUnderTest.getAuthenticationLoginTemplateName();
@@ -126,6 +135,28 @@ class UserEmailUtilsImplTest {
                 .hasSize(3)
                 .containsEntry("username", username.value())
                 .containsEntry("confirmationLink", confirmationLink)
+                .containsEntry("year", now(UTC).getYear());
+
+    }
+
+    @Test
+    void getResetPasswordVariablesTest() {
+        // Arrange
+        var username = Username.hardcoded();
+        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        var confirmationLink = "http://127.0.0.1:3000/password-reset?token=" + token;
+
+        // Act
+        var actual = this.componentUnderTest.getResetPasswordVariables(
+                username,
+                token
+        );
+
+        // Assert
+        assertThat(actual)
+                .hasSize(3)
+                .containsEntry("username", username.value())
+                .containsEntry("resetPasswordLink", confirmationLink)
                 .containsEntry("year", now(UTC).getYear());
 
     }

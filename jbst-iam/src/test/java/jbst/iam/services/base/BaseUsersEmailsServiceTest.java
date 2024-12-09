@@ -10,6 +10,7 @@ import jbst.foundation.services.emails.services.EmailService;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import jbst.iam.domain.functions.FunctionConfirmEmail;
+import jbst.iam.domain.functions.FunctionResetPassword;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -120,6 +121,37 @@ class BaseUsersEmailsServiceTest {
         assertThat(emailHTML.to()).containsOnly(function.email().value());
         assertThat(emailHTML.subject()).isEqualTo(subject);
         assertThat(emailHTML.templateName()).isEqualTo("jbst-confirm-email");
+        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
+    }
+
+    @Test
+    void executeResetPasswordTest() {
+        // Arrange
+        var function = FunctionResetPassword.hardcoded();
+        var subject = randomString();
+        var variables = Map.of(
+                randomString(), new Object(),
+                randomString(), new Object(),
+                randomString(), new Object()
+        );
+        when(this.userEmailUtils.getSubject("Reset Password")).thenReturn(subject);
+        when(this.userEmailUtils.getResetPasswordTemplateName()).thenReturn("jbst-reset-password");
+        when(this.userEmailUtils.getResetPasswordVariables(function.username(), function.token())).thenReturn(variables);
+
+        // Act
+        this.componentUnderTest.executeResetPassword(function);
+
+        // Assert
+        verify(this.userEmailUtils).getSubject("Reset Password");
+        verify(this.userEmailUtils).getResetPasswordTemplateName();
+        verify(this.userEmailUtils).getResetPasswordVariables(function.username(), function.token());
+        var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
+        verify(this.emailService).sendHTML(emailHTMLAC.capture());
+        var emailHTML = emailHTMLAC.getValue();
+        assertThat(emailHTML.to()).hasSize(1);
+        assertThat(emailHTML.to()).containsOnly(function.email().value());
+        assertThat(emailHTML.subject()).isEqualTo(subject);
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-reset-password");
         assertThat(emailHTML.templateVariables()).isEqualTo(variables);
     }
 

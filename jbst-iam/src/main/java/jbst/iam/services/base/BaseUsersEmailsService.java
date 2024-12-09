@@ -3,6 +3,7 @@ package jbst.iam.services.base;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import jbst.iam.domain.functions.FunctionConfirmEmail;
+import jbst.iam.domain.functions.FunctionResetPassword;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -41,6 +42,21 @@ public class BaseUsersEmailsService implements UsersEmailsService {
                         this.userEmailUtils.getSubject("Confirm Email"),
                         this.userEmailUtils.getConfirmEmailTemplateName(),
                         this.userEmailUtils.getConfirmEmailVariables(
+                                function.username(),
+                                function.token()
+                        )
+                )
+        );
+    }
+
+    @Override
+    public void executeResetPassword(FunctionResetPassword function) {
+        this.emailService.sendHTML(
+                new EmailHTML(
+                        Set.of(function.email().value()),
+                        this.userEmailUtils.getSubject("Reset Password"),
+                        this.userEmailUtils.getResetPasswordTemplateName(),
+                        this.userEmailUtils.getResetPasswordVariables(
                                 function.username(),
                                 function.token()
                         )

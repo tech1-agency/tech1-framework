@@ -2,6 +2,7 @@ package jbst.foundation.domain.properties.configs.security.jwt;
 
 import jbst.foundation.domain.properties.annotations.NonMandatoryProperty;
 import jbst.foundation.domain.properties.configs.AbstractPropertiesConfigs;
+import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,15 +17,19 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
     private String webclientEmailConfirmRedirectPath;
+    @NonMandatoryProperty
+    private String webclientResetPasswordPath;
 
     public static UsersTokensConfigs hardcoded() {
         return new UsersTokensConfigs(
-                "/email-confirm"
+                "/email-confirm",
+                "/password-reset"
         );
     }
 
     public static UsersTokensConfigs random() {
         return new UsersTokensConfigs(
+                randomString(),
                 randomString()
         );
     }
@@ -48,5 +53,9 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
 
     public String getEmailConfirmRedirectURL(String webclientURL) {
         return webclientURL + this.webclientEmailConfirmRedirectPath;
+    }
+
+    public String getPasswordResetURL(String webclientURL, String token) {
+        return "%s%s?token=%s".formatted(webclientURL, this.webclientResetPasswordPath, token);
     }
 }

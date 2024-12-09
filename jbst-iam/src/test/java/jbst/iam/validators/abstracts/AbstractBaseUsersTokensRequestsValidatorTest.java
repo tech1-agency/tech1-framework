@@ -128,6 +128,62 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         );
     }
 
+    private static Stream<Arguments> validatePasswordResetTokenTest() {
+        var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
+        var expiredTimestamp = TimestampUtility.getPastRange(oneDay).from();
+        var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
+        return Stream.of(
+                Arguments.of(
+                        null,
+                        UserTokenValidationException.notFound()
+                ),
+                Arguments.of(
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                validTimestamp,
+                                true
+                        ),
+                        UserTokenValidationException.used()
+                ),
+                Arguments.of(
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                expiredTimestamp,
+                                false
+                        ),
+                        UserTokenValidationException.expired()
+                ),
+                Arguments.of(
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.EMAIL_CONFIRMATION,
+                                validTimestamp,
+                                false
+                        ),
+                        UserTokenValidationException.invalidType()
+                ),
+                Arguments.of(
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                validTimestamp,
+                                false
+                        ),
+                        null
+                )
+        );
+    }
+
     @Configuration
     @Import({
             TestConfigurationValidators.class
@@ -190,6 +246,30 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
 
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validateEmailConfirmationToken(token));
+
+        // Assert
+        verify(this.usersTokensRepository).findByValueAsAny(token);
+        if (nonNull(expected)) {
+            assertThat(actual)
+                    .isInstanceOf(UserTokenValidationException.class)
+                    .hasMessage(expected.getMessage());
+        } else {
+            assertThat(actual).isNull();
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("validatePasswordResetTokenTest")
+    void validatePasswordResetTokenTest(
+            UserToken userToken,
+            UserTokenValidationException expected
+    ) {
+        // Arrange
+        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
+        when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
+
+        // Act
+        var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordResetToken(token));
 
         // Assert
         verify(this.usersTokensRepository).findByValueAsAny(token);

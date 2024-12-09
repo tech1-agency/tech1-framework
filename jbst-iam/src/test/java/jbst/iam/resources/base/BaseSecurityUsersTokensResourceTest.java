@@ -30,8 +30,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -159,7 +158,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
 
         // Act
         this.mvc.perform(
-                post("/tokens/password/reset")
+                patch("/tokens/password/reset")
                         .content(this.objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());

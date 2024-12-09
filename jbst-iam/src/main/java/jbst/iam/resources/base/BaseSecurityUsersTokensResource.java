@@ -89,7 +89,7 @@ public class BaseSecurityUsersTokensResource {
         }
     }
 
-    @PostMapping("/password/reset")
+    @PatchMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
     public void resetPassword(@RequestBody @Valid RequestUserResetPassword request) throws UserTokenValidationException {
         this.baseUsersTokensRequestsValidator.validatePasswordReset(request);

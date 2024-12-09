@@ -1,6 +1,7 @@
 package jbst.iam.validators.abtracts;
 
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -30,8 +31,9 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     }
 
     @Override
-    public void validatePasswordResetToken(String token) throws UserTokenValidationException {
-        this.validateToken(token, UserTokenType.PASSWORD_RESET);
+    public void validatePasswordReset(RequestUserResetPassword request) throws UserTokenValidationException {
+        request.assertPasswordsOrThrow();
+        this.validateToken(request.token(), UserTokenType.PASSWORD_RESET);
     }
 
     // =================================================================================================================

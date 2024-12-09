@@ -1,6 +1,7 @@
 package jbst.iam.validators.abstracts;
 
 import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
@@ -9,6 +10,7 @@ import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -128,16 +130,28 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         );
     }
 
-    private static Stream<Arguments> validatePasswordResetTokenTest() {
+    private static Stream<Arguments> validatePasswordResetTest() {
         var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
         var expiredTimestamp = TimestampUtility.getPastRange(oneDay).from();
         var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
         return Stream.of(
                 Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
                         null,
                         UserTokenValidationException.notFound()
                 ),
                 Arguments.of(
+                        new RequestUserResetPassword(
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                Password.of("655c0667533246a9afdb197466001934"),
+                                Password.of("e4f937b04d9f44519ed58346b9aa67ff")
+
+                        ),
+                        UserToken.hardcoded(),
+                        new IllegalArgumentException("Passwords must be same")
+                ),
+                Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -149,6 +163,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.used()
                 ),
                 Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -160,6 +175,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.expired()
                 ),
                 Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -171,6 +187,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.invalidType()
                 ),
                 Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -259,25 +276,28 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("validatePasswordResetTokenTest")
-    void validatePasswordResetTokenTest(
+    @MethodSource("validatePasswordResetTest")
+    void validatePasswordResetTest(
+            RequestUserResetPassword request,
             UserToken userToken,
-            UserTokenValidationException expected
+            Exception expected
     ) {
         // Arrange
-        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
-        when(this.usersTokensRepository.findByValueAsAny(token)).thenReturn(userToken);
+        var token = request.token();
+        when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
 
         // Act
-        var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordResetToken(token));
+        var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordReset(request));
 
         // Assert
-        verify(this.usersTokensRepository).findByValueAsAny(token);
-        if (nonNull(expected)) {
-            assertThat(actual)
-                    .isInstanceOf(UserTokenValidationException.class)
-                    .hasMessage(expected.getMessage());
+        if (expected instanceof UserTokenValidationException) {
+            verify(this.usersTokensRepository).findByValueAsAny(token);
+            assertThat(actual).hasMessage(expected.getMessage());
+        } else if (expected instanceof IllegalArgumentException) {
+            verify(this.usersTokensRepository, never()).findByValueAsAny(token);
+            assertThat(actual).hasMessage(expected.getMessage());
         } else {
+            verify(this.usersTokensRepository).findByValueAsAny(token);
             assertThat(actual).isNull();
         }
     }

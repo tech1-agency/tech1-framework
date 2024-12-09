@@ -29,6 +29,17 @@ public record RequestUserRegistration0(
         );
     }
 
+    public static RequestUserRegistration0 random() {
+        var password = Password.random();
+        return new RequestUserRegistration0(
+                Email.random(),
+                Username.random(),
+                password,
+                password,
+                randomZoneId()
+        );
+    }
+
     public void assertPasswordsOrThrow() {
         this.password.assertEqualsOrThrow(this.confirmPassword);
     }

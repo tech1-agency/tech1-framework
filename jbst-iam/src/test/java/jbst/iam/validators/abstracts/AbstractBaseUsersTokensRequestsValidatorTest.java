@@ -1,7 +1,9 @@
 package jbst.iam.validators.abstracts;
 
 import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
+import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -9,6 +11,7 @@ import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -128,6 +131,110 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         );
     }
 
+    private static Stream<Arguments> validateExecuteResetPasswordTest() {
+        return Stream.of(
+                Arguments.of(
+                        null,
+                        ResetPasswordException.userNotFound()
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
+                        null
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
+                        ResetPasswordException.emailNotConfirmed()
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
+                        null
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
+                        ResetPasswordException.emailMissing()
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.required()),
+                        ResetPasswordException.emailMissing()
+                ),
+                Arguments.of(
+                        JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
+                        ResetPasswordException.emailMissing()
+                )
+        );
+    }
+
+    private static Stream<Arguments> validatePasswordResetTest() {
+        var oneDay = new TimeAmount(24, ChronoUnit.HOURS);
+        var expiredTimestamp = TimestampUtility.getPastRange(oneDay).from();
+        var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
+        return Stream.of(
+                Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
+                        null,
+                        UserTokenValidationException.notFound()
+                ),
+                Arguments.of(
+                        new RequestUserResetPassword(
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                Password.of("655c0667533246a9afdb197466001934"),
+                                Password.of("e4f937b04d9f44519ed58346b9aa67ff")
+
+                        ),
+                        UserToken.hardcoded(),
+                        new IllegalArgumentException("Passwords must be same")
+                ),
+                Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                validTimestamp,
+                                true
+                        ),
+                        UserTokenValidationException.used()
+                ),
+                Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                expiredTimestamp,
+                                false
+                        ),
+                        UserTokenValidationException.expired()
+                ),
+                Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.EMAIL_CONFIRMATION,
+                                validTimestamp,
+                                false
+                        ),
+                        UserTokenValidationException.invalidType()
+                ),
+                Arguments.of(
+                        RequestUserResetPassword.hardcoded(),
+                        new UserToken(
+                                TokenId.random(),
+                                Username.random(),
+                                RandomUtility.randomStringLetterOrNumbersOnly(36),
+                                UserTokenType.PASSWORD_RESET,
+                                validTimestamp,
+                                false
+                        ),
+                        null
+                )
+        );
+    }
+
     @Configuration
     @Import({
             TestConfigurationValidators.class
@@ -198,6 +305,48 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                     .isInstanceOf(UserTokenValidationException.class)
                     .hasMessage(expected.getMessage());
         } else {
+            assertThat(actual).isNull();
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("validateExecuteResetPasswordTest")
+    void validateExecuteResetPasswordTest(JwtUser user, ResetPasswordException expected) {
+        // Act
+        var actual = catchThrowable(() -> this.componentUnderTest.validateExecuteResetPassword(user));
+
+        if (nonNull(expected)) {
+            assertThat(actual)
+                    .isInstanceOf(ResetPasswordException.class)
+                    .hasMessage(expected.getMessage());
+        } else {
+            assertThat(actual).isNull();
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("validatePasswordResetTest")
+    void validatePasswordResetTest(
+            RequestUserResetPassword request,
+            UserToken userToken,
+            Exception expected
+    ) {
+        // Arrange
+        var token = request.token();
+        when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
+
+        // Act
+        var actual = catchThrowable(() -> this.componentUnderTest.validatePasswordReset(request));
+
+        // Assert
+        if (expected instanceof UserTokenValidationException) {
+            verify(this.usersTokensRepository).findByValueAsAny(token);
+            assertThat(actual).hasMessage(expected.getMessage());
+        } else if (expected instanceof IllegalArgumentException) {
+            verify(this.usersTokensRepository, never()).findByValueAsAny(token);
+            assertThat(actual).hasMessage(expected.getMessage());
+        } else {
+            verify(this.usersTokensRepository).findByValueAsAny(token);
             assertThat(actual).isNull();
         }
     }

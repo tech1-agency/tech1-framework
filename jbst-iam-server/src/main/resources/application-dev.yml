@@ -88,3 +88,4 @@ jbst:
         enabled: true
     users-tokens-configs:
       webclient-email-confirm-redirect-path: /email-confirm
+      webclient-reset-password-path: /password-reset

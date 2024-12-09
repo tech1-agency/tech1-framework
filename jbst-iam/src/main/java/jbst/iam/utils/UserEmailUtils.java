@@ -9,9 +9,14 @@ import java.util.Map;
 public interface UserEmailUtils {
     String getSubject(String eventName);
     String getConfirmEmailTemplateName();
+    String getResetPasswordTemplateName();
     String getAuthenticationLoginTemplateName();
     String getSessionRefreshedTemplateName();
     Map<String, Object> getConfirmEmailVariables(
+            Username username,
+            String token
+    );
+    Map<String, Object> getResetPasswordVariables(
             Username username,
             String token
     );

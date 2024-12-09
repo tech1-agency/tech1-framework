@@ -1,10 +1,15 @@
 package jbst.iam.services.abstracts;
 
+import jbst.foundation.domain.base.Email;
+import jbst.foundation.domain.base.Password;
+import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
+import jbst.iam.repositories.UsersTokensRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +36,11 @@ class AbstractBaseUsersServiceTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
+        UsersTokensRepository usersTokensRepository() {
+            return mock(UsersTokensRepository.class);
+        }
+
+        @Bean
         UsersRepository userRepository() {
             return mock(UsersRepository.class);
         }
@@ -43,12 +53,14 @@ class AbstractBaseUsersServiceTest {
         @Bean
         AbstractBaseUsersService baseUserService() {
             return new AbstractBaseUsersService(
+                    this.usersTokensRepository(),
                     this.userRepository(),
                     this.bCryptPasswordEncoder()
             ) {};
         }
     }
 
+    private final UsersTokensRepository usersTokensRepository;
     private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -57,6 +69,7 @@ class AbstractBaseUsersServiceTest {
     @BeforeEach
     void beforeEach() {
         reset(
+                this.usersTokensRepository,
                 this.usersRepository
         );
     }
@@ -64,8 +77,24 @@ class AbstractBaseUsersServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(
+                this.usersTokensRepository,
                 this.usersRepository
         );
+    }
+
+    @Test
+    void findByEmailTest() {
+        // Arrange
+        var email = Email.hardcoded();
+        var user = JwtUser.hardcoded();
+        when(this.usersRepository.findByEmailAsJwtUserOrNull(email)).thenReturn(user);
+
+        // Act
+        var actual = this.componentUnderTest.findByEmail(email);
+
+        // Assert
+        assertThat(actual).isEqualTo(user);
+        verify(this.usersRepository).findByEmailAsJwtUserOrNull(email);
     }
 
     @Test
@@ -149,5 +178,28 @@ class AbstractBaseUsersServiceTest {
                 )
         ).isTrue();
         // no verifications on static SecurityContextHolder
+    }
+
+    @Test
+    void resetPasswordTest() {
+        // Arrange
+        var request = RequestUserResetPassword.hardcoded();
+        var userToken = UserToken.hardcoded();
+        when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
+        var passwordAC = ArgumentCaptor.forClass(Password.class);
+
+        // Act
+        this.componentUnderTest.resetPassword(request);
+
+        // Assert
+        verify(this.usersTokensRepository).findByValueAsAny(request.token());
+        verify(this.usersRepository).resetPassword(eq(userToken.username()), passwordAC.capture());
+        verify(this.usersTokensRepository).saveAs(userToken.withUsed(true));
+        assertThat(
+                this.bCryptPasswordEncoder.matches(
+                        request.newPassword().value(),
+                        passwordAC.getValue().value()
+                )
+        ).isTrue();
     }
 }

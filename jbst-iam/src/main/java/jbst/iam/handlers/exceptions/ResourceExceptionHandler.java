@@ -48,6 +48,19 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler({
+            UserTokenValidationException.class
+    })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ExceptionEntity> userEmailTokenValidationException(UserTokenValidationException ex) {
+        var response = new ExceptionEntity(
+                ExceptionEntityType.ERROR,
+                contactDevelopmentTeam("Token Validation Failure"),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({
             MethodArgumentNotValidException.class
     })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

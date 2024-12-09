@@ -1,6 +1,9 @@
 package jbst.iam.validators.abtracts;
 
+import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
@@ -8,8 +11,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import static java.util.Objects.isNull;
-import static jbst.foundation.domain.asserts.Asserts.assertFalseOrThrow;
-import static jbst.foundation.domain.asserts.Asserts.assertNonNullOrThrow;
+import static jbst.foundation.domain.asserts.Asserts.*;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUsersTokensRequestsValidator {
@@ -25,6 +27,32 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
 
     @Override
     public void validateEmailConfirmationToken(String token) throws UserTokenValidationException {
+        this.validateToken(token, UserTokenType.EMAIL_CONFIRMATION);
+    }
+
+    @Override
+    public void validateExecuteResetPassword(JwtUser user) throws ResetPasswordException {
+        if (isNull(user)) {
+            throw ResetPasswordException.userNotFound();
+        }
+        if (isNull(user.email())) {
+            throw ResetPasswordException.emailMissing();
+        }
+        if (!user.emailDetails().isEnabled()) {
+            throw ResetPasswordException.emailNotConfirmed();
+        }
+    }
+
+    @Override
+    public void validatePasswordReset(RequestUserResetPassword request) throws UserTokenValidationException {
+        request.assertPasswordsOrThrow();
+        this.validateToken(request.token(), UserTokenType.PASSWORD_RESET);
+    }
+
+    // =================================================================================================================
+    // PROTECTED METHODS
+    // =================================================================================================================
+    protected void validateToken(String token, UserTokenType type) throws UserTokenValidationException {
         var userToken = this.usersTokensRepository.findByValueAsAny(token);
         if (isNull(userToken)) {
             throw UserTokenValidationException.notFound();
@@ -35,9 +63,8 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
         if (userToken.isExpired()) {
             throw UserTokenValidationException.expired();
         }
-        if (!userToken.type().isEmailConfirmation()) {
+        if (!userToken.type().equals(type)) {
             throw UserTokenValidationException.invalidType();
         }
     }
-
 }

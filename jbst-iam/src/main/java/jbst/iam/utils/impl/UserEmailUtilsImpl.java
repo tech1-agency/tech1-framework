@@ -47,6 +47,14 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
+    public String getResetPasswordTemplateName() {
+        return this.getServerOrFrameworkTemplateName(
+                "server-reset-password",
+                "jbst-reset-password"
+        );
+    }
+
+    @Override
     public String getAuthenticationLoginTemplateName() {
         return this.getServerOrFrameworkTemplateName(
                 "server-authentication-login",
@@ -73,7 +81,18 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", username.value());
-        variables.put("confirmationLink", usersTokensConfigs.getConfirmEmailURL(serverURL, basePathPrefix, token));
+        variables.put("confirmationLink", usersTokensConfigs.getEmailConfirmURL(serverURL, basePathPrefix, token));
+        variables.put("year", now(UTC).getYear());
+        return variables;
+    }
+
+    @Override
+    public Map<String, Object> getResetPasswordVariables(Username username, String token) {
+        var webclientURL = this.jbstProperties.getServerConfigs().getWebclientURL();
+        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("username", username.value());
+        variables.put("resetPasswordLink", usersTokensConfigs.getPasswordResetURL(webclientURL, token));
         variables.put("year", now(UTC).getYear());
         return variables;
     }

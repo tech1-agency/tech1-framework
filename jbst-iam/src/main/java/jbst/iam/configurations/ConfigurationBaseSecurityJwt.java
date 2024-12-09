@@ -135,11 +135,12 @@ public class ConfigurationBaseSecurityJwt {
                     .requestMatchers(POST, basePathPrefix + "/authentication/refreshToken").permitAll()
                     .requestMatchers(GET, basePathPrefix + "/session/current").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/registration/register0").anonymous()
-                    .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").permitAll()
                     .requestMatchers(POST, basePathPrefix + "/registration/register1").anonymous()
                     .requestMatchers(POST, basePathPrefix + "/user/update1").authenticated()
                     .requestMatchers(POST, basePathPrefix + "/user/update2").authenticated()
-                    .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated();
+                    .requestMatchers(POST, basePathPrefix + "/user/changePassword1").authenticated()
+                    .requestMatchers(GET, basePathPrefix + "/tokens/email/confirm").permitAll()
+                    .requestMatchers(basePathPrefix + "/tokens/password/reset").anonymous();
 
             if (this.jbstProperties.getSecurityJwtConfigs().getEssenceConfigs().getInvitations().isEnabled()) {
                 authorizeHttpRequests

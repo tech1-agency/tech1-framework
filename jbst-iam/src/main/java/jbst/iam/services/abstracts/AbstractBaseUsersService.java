@@ -1,21 +1,24 @@
 package jbst.iam.services.abstracts;
 
+import jbst.foundation.domain.base.Password;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
+import jbst.iam.domain.dto.requests.RequestUserResetPassword;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersRepository;
+import jbst.iam.repositories.UsersTokensRepository;
 import jbst.iam.services.BaseUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import jbst.foundation.domain.base.Password;
 
 @AllArgsConstructor
 public abstract class AbstractBaseUsersService implements BaseUsersService {
 
     // Repository
+    private final UsersTokensRepository usersTokensRepository;
     private final UsersRepository usersRepository;
     // Password
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -88,6 +91,13 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
                 user.attributes()
         );
         this.saveAndReauthenticate(user);
+    }
+
+    @Override
+    public void resetPassword(RequestUserResetPassword request) {
+        var userToken = this.usersTokensRepository.findByValueAsAny(request.token());
+        var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
+        this.usersRepository.resetPassword(userToken.username(), Password.of(hashPassword));
     }
 
     // ================================================================================================================

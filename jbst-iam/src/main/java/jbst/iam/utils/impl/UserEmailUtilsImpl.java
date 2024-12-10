@@ -6,6 +6,7 @@ import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
+import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +62,21 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public String getPasswordResetTemplateName() {
-        return this.getServerOrFallbackJbstTemplateName(
-                "server-password-reset",
-                "jbst-password-reset"
+    public EmailHTML getPasswordResetHTML(FunctionPasswordReset function) {
+        var webclientURL = this.jbstProperties.getServerConfigs().getWebclientURL();
+        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("username", function.username().value());
+        variables.put("resetPasswordLink", usersTokensConfigs.getPasswordResetURL(webclientURL, function.token()));
+        variables.put("year", now(UTC).getYear());
+        return new EmailHTML(
+                Set.of(function.email().value()),
+                this.getSubject("Password Reset"),
+                this.getServerOrFallbackJbstTemplateName(
+                        "server-password-reset",
+                        "jbst-password-reset"
+                ),
+                variables
         );
     }
 
@@ -82,33 +94,6 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 "server-session-refreshed",
                 "jbst-account-accessed"
         );
-    }
-
-    @Override
-    public Map<String, Object> getEmailConfirmationVariables(
-            Username username,
-            String token
-    ) {
-        var servletContextPath = this.serverProperties.getServlet().getContextPath();
-        var serverURL = this.jbstProperties.getServerConfigs().getServerContextPathURL(servletContextPath);
-        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
-        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("username", username.value());
-        variables.put("confirmationLink", usersTokensConfigs.getEmailConfirmURL(serverURL, basePathPrefix, token));
-        variables.put("year", now(UTC).getYear());
-        return variables;
-    }
-
-    @Override
-    public Map<String, Object> getPasswordResetVariables(Username username, String token) {
-        var webclientURL = this.jbstProperties.getServerConfigs().getWebclientURL();
-        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("username", username.value());
-        variables.put("resetPasswordLink", usersTokensConfigs.getPasswordResetURL(webclientURL, token));
-        variables.put("year", now(UTC).getYear());
-        return variables;
     }
 
     @Override

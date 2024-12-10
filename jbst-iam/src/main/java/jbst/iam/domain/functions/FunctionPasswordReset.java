@@ -17,5 +17,4 @@ public record FunctionPasswordReset(
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw"
         );
     }
-
 }

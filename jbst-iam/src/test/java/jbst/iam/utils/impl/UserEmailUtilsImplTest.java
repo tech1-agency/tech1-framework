@@ -4,10 +4,10 @@ import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
-import jbst.foundation.utilities.random.RandomUtility;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
+import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.RepeatedTest;
@@ -104,12 +104,23 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
-    void getPasswordResetTemplateNameTest() {
+    void getPasswordResetHTML() {
+        // Arrange
+        var function = FunctionPasswordReset.hardcoded();
+        var confirmationLink = "http://127.0.0.1:3000/password-reset?token=" + function.token();
+
         // Act
-        var templateName = this.componentUnderTest.getPasswordResetTemplateName();
+        var emailHTML = this.componentUnderTest.getPasswordResetHTML(function);
 
         // Assert
-        assertThat(templateName).isEqualTo("jbst-password-reset");
+        assertThat(emailHTML.to()).isEqualTo(Set.of(function.email().value()));
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Password Reset at ");
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-password-reset");
+        assertThat(emailHTML.templateVariables())
+                .hasSize(3)
+                .containsEntry("username", function.username().value())
+                .containsEntry("resetPasswordLink", confirmationLink)
+                .containsEntry("year", now(UTC).getYear());
     }
 
     @Test
@@ -128,28 +139,6 @@ class UserEmailUtilsImplTest {
 
         // Assert
         assertThat(templateName).isEqualTo("jbst-account-accessed");
-    }
-
-    @Test
-    void getPasswordResetVariablesTest() {
-        // Arrange
-        var username = Username.hardcoded();
-        var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
-        var confirmationLink = "http://127.0.0.1:3000/password-reset?token=" + token;
-
-        // Act
-        var actual = this.componentUnderTest.getPasswordResetVariables(
-                username,
-                token
-        );
-
-        // Assert
-        assertThat(actual)
-                .hasSize(3)
-                .containsEntry("username", username.value())
-                .containsEntry("resetPasswordLink", confirmationLink)
-                .containsEntry("year", now(UTC).getYear());
-
     }
 
     @Test

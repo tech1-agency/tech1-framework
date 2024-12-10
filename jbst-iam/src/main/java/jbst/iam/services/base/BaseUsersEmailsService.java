@@ -42,17 +42,8 @@ public class BaseUsersEmailsService implements UsersEmailsService {
 
     @Override
     public void executePasswordReset(FunctionPasswordReset function) {
-        this.emailService.sendHTML(
-                new EmailHTML(
-                        Set.of(function.email().value()),
-                        this.userEmailUtils.getSubject("Password Reset"),
-                        this.userEmailUtils.getPasswordResetTemplateName(),
-                        this.userEmailUtils.getPasswordResetVariables(
-                                function.username(),
-                                function.token()
-                        )
-                )
-        );
+        var emailHTML = this.userEmailUtils.getPasswordResetHTML(function);
+        this.emailService.sendHTML(emailHTML);
     }
 
     @Override

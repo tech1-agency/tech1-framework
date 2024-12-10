@@ -9,4 +9,8 @@ public record EmailHTML(
         String templateName,
         Map<String, Object> templateVariables
 ) {
+
+    public static EmailHTML hardcoded() {
+        return new EmailHTML(Set.of(), "Account Accessed", "jbst-account-accessed", Map.of());
+    }
 }

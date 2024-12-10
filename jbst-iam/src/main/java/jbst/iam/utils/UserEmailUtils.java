@@ -1,21 +1,19 @@
 package jbst.iam.utils;
 
-import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
+import jbst.foundation.services.emails.domain.EmailHTML;
+import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.iam.domain.functions.FunctionEmailConfirmation;
 
 import java.util.Map;
 
 public interface UserEmailUtils {
     String getSubject(String eventName);
-    String getEmailConfirmationTemplateName();
+    EmailHTML getEmailConfirmationHTML(FunctionEmailConfirmation function);
     String getPasswordResetTemplateName();
     String getAuthenticationLoginTemplateName();
     String getSessionRefreshedTemplateName();
-    Map<String, Object> getEmailConfirmationVariables(
-            Username username,
-            String token
-    );
     Map<String, Object> getPasswordResetVariables(
             Username username,
             String token

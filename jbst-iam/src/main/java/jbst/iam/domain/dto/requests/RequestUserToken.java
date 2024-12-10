@@ -8,6 +8,13 @@ public record RequestUserToken(
         UserTokenType type
 ) {
 
+    public static RequestUserToken hardcoded() {
+        return new RequestUserToken(
+                Username.hardcoded(),
+                UserTokenType.EMAIL_CONFIRMATION
+        );
+    }
+
     public static RequestUserToken emailConfirmation(Username username) {
         return new RequestUserToken(
                 username,
@@ -21,12 +28,4 @@ public record RequestUserToken(
                 UserTokenType.PASSWORD_RESET
         );
     }
-
-    public static RequestUserToken hardcoded() {
-        return new RequestUserToken(
-                Username.hardcoded(),
-                UserTokenType.EMAIL_CONFIRMATION
-        );
-    }
-
 }

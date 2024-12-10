@@ -97,31 +97,14 @@ class BaseUsersEmailsServiceTest {
     void executeEmailConfirmationTest() {
         // Arrange
         var function = FunctionEmailConfirmation.hardcoded();
-        var subject = randomString();
-        var variables = Map.of(
-                randomString(), new Object(),
-                randomString(), new Object(),
-                randomString(), new Object()
-        );
-        when(this.userEmailUtils.getSubject("Email Confirmation")).thenReturn(subject);
-        when(this.userEmailUtils.getEmailConfirmationTemplateName()).thenReturn("jbst-email-confirmation");
-        when(this.userEmailUtils.getEmailConfirmationVariables(function.username(), function.token())).thenReturn(variables);
+        when(this.userEmailUtils.getEmailConfirmationHTML(function)).thenReturn(EmailHTML.hardcoded());
 
         // Act
         this.componentUnderTest.executeEmailConfirmation(function);
 
         // Assert
-        verify(this.userEmailUtils).getSubject("Email Confirmation");
-        verify(this.userEmailUtils).getEmailConfirmationTemplateName();
-        verify(this.userEmailUtils).getEmailConfirmationVariables(function.username(), function.token());
-        var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
-        verify(this.emailService).sendHTML(emailHTMLAC.capture());
-        var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.to()).hasSize(1);
-        assertThat(emailHTML.to()).containsOnly(function.email().value());
-        assertThat(emailHTML.subject()).isEqualTo(subject);
-        assertThat(emailHTML.templateName()).isEqualTo("jbst-email-confirmation");
-        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
+        verify(this.userEmailUtils).getEmailConfirmationHTML(function);
+        verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 
     @Test

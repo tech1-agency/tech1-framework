@@ -40,7 +40,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     @Override
     public String getConfirmEmailTemplateName() {
-        return this.getServerOrFrameworkTemplateName(
+        return this.getServerOrFallbackJbstTemplateName(
                 "server-confirm-email",
                 "jbst-confirm-email"
         );
@@ -48,7 +48,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     @Override
     public String getResetPasswordTemplateName() {
-        return this.getServerOrFrameworkTemplateName(
+        return this.getServerOrFallbackJbstTemplateName(
                 "server-reset-password",
                 "jbst-reset-password"
         );
@@ -56,7 +56,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     @Override
     public String getAuthenticationLoginTemplateName() {
-        return this.getServerOrFrameworkTemplateName(
+        return this.getServerOrFallbackJbstTemplateName(
                 "server-authentication-login",
                 "jbst-account-accessed"
         );
@@ -64,7 +64,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     @Override
     public String getSessionRefreshedTemplateName() {
-        return this.getServerOrFrameworkTemplateName(
+        return this.getServerOrFallbackJbstTemplateName(
                 "server-session-refreshed",
                 "jbst-account-accessed"
         );
@@ -119,7 +119,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     // =================================================================================================================
     // PRIVATE METHODS
     // =================================================================================================================
-    private String getServerOrFrameworkTemplateName(String serverTemplateName, String jbstTemplateName) {
+    private String getServerOrFallbackJbstTemplateName(String serverTemplateName, String jbstTemplateName) {
         var resource = this.resourceLoader.getResource("classpath:/email-templates/" + serverTemplateName + ".html");
         return resource.exists() ? serverTemplateName : jbstTemplateName;
     }

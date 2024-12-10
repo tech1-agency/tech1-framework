@@ -73,7 +73,7 @@ class UserEmailUtilsImplTest {
 
         // Assert
         assertThat(subject)
-                .startsWith("[jbst] Authentication Login on \"jbst-server\" — ")
+                .startsWith("[jbst.com] Authentication Login on \"jbst-server\" — ")
                 .endsWith(" (UTC)");
         subject = subject.replace("[jbst] Authentication Login on \"jbst-server\" — ", "");
         subject = subject.replace(" (UTC)", "");

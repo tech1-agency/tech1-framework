@@ -24,7 +24,7 @@ public class UsersEmailsConfigs extends AbstractPropertiesConfigs {
 
     public static UsersEmailsConfigs hardcoded() {
         return new UsersEmailsConfigs(
-                "[jbst]",
+                "[jbst.com]",
                 Checkbox.enabled(),
                 Checkbox.enabled()
         );

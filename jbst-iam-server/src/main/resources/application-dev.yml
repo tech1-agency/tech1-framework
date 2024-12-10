@@ -86,6 +86,8 @@ jbst:
             authorities: [ "superadmin", "invitations:read", "invitations:write" ]
       invitations:
         enabled: true
+    users-emails-configs:
+      subject-prefix: "[jbst.com]"
     users-tokens-configs:
       webclient-email-confirm-redirect-path: /email-confirm
       webclient-reset-password-path: /password-reset

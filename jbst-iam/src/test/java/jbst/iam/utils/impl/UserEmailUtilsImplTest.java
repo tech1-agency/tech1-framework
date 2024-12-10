@@ -82,21 +82,21 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
-    void getConfirmEmailTemplateNameTest() {
+    void getEmailConfirmationTemplateNameTest() {
         // Act
-        var templateName = this.componentUnderTest.getConfirmEmailTemplateName();
+        var templateName = this.componentUnderTest.getEmailConfirmationTemplateName();
 
         // Assert
-        assertThat(templateName).isEqualTo("jbst-confirm-email");
+        assertThat(templateName).isEqualTo("jbst-email-confirmation");
     }
 
     @Test
-    void getResetPasswordTemplateNameTest() {
+    void getPasswordResetTemplateNameTest() {
         // Act
-        var templateName = this.componentUnderTest.getResetPasswordTemplateName();
+        var templateName = this.componentUnderTest.getPasswordResetTemplateName();
 
         // Assert
-        assertThat(templateName).isEqualTo("jbst-reset-password");
+        assertThat(templateName).isEqualTo("jbst-password-reset");
     }
 
     @Test

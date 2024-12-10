@@ -37,18 +37,18 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public String getConfirmEmailTemplateName() {
+    public String getEmailConfirmationTemplateName() {
         return this.getServerOrFallbackJbstTemplateName(
-                "server-confirm-email",
-                "jbst-confirm-email"
+                "server-email-confirmation",
+                "jbst-email-confirmation"
         );
     }
 
     @Override
-    public String getResetPasswordTemplateName() {
+    public String getPasswordResetTemplateName() {
         return this.getServerOrFallbackJbstTemplateName(
-                "server-reset-password",
-                "jbst-reset-password"
+                "server-password-reset",
+                "jbst-password-reset"
         );
     }
 

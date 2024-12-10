@@ -103,16 +103,16 @@ class BaseUsersEmailsServiceTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.userEmailUtils.getSubject("Confirm Email")).thenReturn(subject);
-        when(this.userEmailUtils.getConfirmEmailTemplateName()).thenReturn("jbst-confirm-email");
+        when(this.userEmailUtils.getSubject("Email Confirmation")).thenReturn(subject);
+        when(this.userEmailUtils.getEmailConfirmationTemplateName()).thenReturn("jbst-email-confirmation");
         when(this.userEmailUtils.getConfirmEmailVariables(function.username(), function.token())).thenReturn(variables);
 
         // Act
         this.componentUnderTest.executeConfirmEmail(function);
 
         // Assert
-        verify(this.userEmailUtils).getSubject("Confirm Email");
-        verify(this.userEmailUtils).getConfirmEmailTemplateName();
+        verify(this.userEmailUtils).getSubject("Email Confirmation");
+        verify(this.userEmailUtils).getEmailConfirmationTemplateName();
         verify(this.userEmailUtils).getConfirmEmailVariables(function.username(), function.token());
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
@@ -120,7 +120,7 @@ class BaseUsersEmailsServiceTest {
         assertThat(emailHTML.to()).hasSize(1);
         assertThat(emailHTML.to()).containsOnly(function.email().value());
         assertThat(emailHTML.subject()).isEqualTo(subject);
-        assertThat(emailHTML.templateName()).isEqualTo("jbst-confirm-email");
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-email-confirmation");
         assertThat(emailHTML.templateVariables()).isEqualTo(variables);
     }
 
@@ -134,16 +134,16 @@ class BaseUsersEmailsServiceTest {
                 randomString(), new Object(),
                 randomString(), new Object()
         );
-        when(this.userEmailUtils.getSubject("Reset Password")).thenReturn(subject);
-        when(this.userEmailUtils.getResetPasswordTemplateName()).thenReturn("jbst-reset-password");
+        when(this.userEmailUtils.getSubject("Password Reset")).thenReturn(subject);
+        when(this.userEmailUtils.getPasswordResetTemplateName()).thenReturn("jbst-password-reset");
         when(this.userEmailUtils.getResetPasswordVariables(function.username(), function.token())).thenReturn(variables);
 
         // Act
         this.componentUnderTest.executeResetPassword(function);
 
         // Assert
-        verify(this.userEmailUtils).getSubject("Reset Password");
-        verify(this.userEmailUtils).getResetPasswordTemplateName();
+        verify(this.userEmailUtils).getSubject("Password Reset");
+        verify(this.userEmailUtils).getPasswordResetTemplateName();
         verify(this.userEmailUtils).getResetPasswordVariables(function.username(), function.token());
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
@@ -151,7 +151,7 @@ class BaseUsersEmailsServiceTest {
         assertThat(emailHTML.to()).hasSize(1);
         assertThat(emailHTML.to()).containsOnly(function.email().value());
         assertThat(emailHTML.subject()).isEqualTo(subject);
-        assertThat(emailHTML.templateName()).isEqualTo("jbst-reset-password");
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-password-reset");
         assertThat(emailHTML.templateVariables()).isEqualTo(variables);
     }
 

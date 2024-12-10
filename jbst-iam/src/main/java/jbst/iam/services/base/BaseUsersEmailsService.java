@@ -39,8 +39,8 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         this.emailService.sendHTML(
                 new EmailHTML(
                         Set.of(function.email().value()),
-                        this.userEmailUtils.getSubject("Confirm Email"),
-                        this.userEmailUtils.getConfirmEmailTemplateName(),
+                        this.userEmailUtils.getSubject("Email Confirmation"),
+                        this.userEmailUtils.getEmailConfirmationTemplateName(),
                         this.userEmailUtils.getConfirmEmailVariables(
                                 function.username(),
                                 function.token()
@@ -54,8 +54,8 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         this.emailService.sendHTML(
                 new EmailHTML(
                         Set.of(function.email().value()),
-                        this.userEmailUtils.getSubject("Reset Password"),
-                        this.userEmailUtils.getResetPasswordTemplateName(),
+                        this.userEmailUtils.getSubject("Password Reset"),
+                        this.userEmailUtils.getPasswordResetTemplateName(),
                         this.userEmailUtils.getResetPasswordVariables(
                                 function.username(),
                                 function.token()

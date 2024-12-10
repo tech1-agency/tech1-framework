@@ -118,14 +118,14 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
-    void getConfirmEmailVariablesTest() {
+    void getEmailConfirmationVariablesTest() {
         // Arrange
         var username = Username.hardcoded();
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
         var confirmationLink = "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + token;
 
         // Act
-        var actual = this.componentUnderTest.getConfirmEmailVariables(
+        var actual = this.componentUnderTest.getEmailConfirmationVariables(
                 username,
                 token
         );
@@ -140,14 +140,14 @@ class UserEmailUtilsImplTest {
     }
 
     @Test
-    void getResetPasswordVariablesTest() {
+    void getPasswordResetVariablesTest() {
         // Arrange
         var username = Username.hardcoded();
         var token = RandomUtility.randomStringLetterOrNumbersOnly(36);
         var confirmationLink = "http://127.0.0.1:3000/password-reset?token=" + token;
 
         // Act
-        var actual = this.componentUnderTest.getResetPasswordVariables(
+        var actual = this.componentUnderTest.getPasswordResetVariables(
                 username,
                 token
         );

@@ -69,7 +69,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public Map<String, Object> getConfirmEmailVariables(
+    public Map<String, Object> getEmailConfirmationVariables(
             Username username,
             String token
     ) {
@@ -85,7 +85,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
-    public Map<String, Object> getResetPasswordVariables(Username username, String token) {
+    public Map<String, Object> getPasswordResetVariables(Username username, String token) {
         var webclientURL = this.jbstProperties.getServerConfigs().getWebclientURL();
         var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
         Map<String, Object> variables = new HashMap<>();

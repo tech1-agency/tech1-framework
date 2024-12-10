@@ -12,11 +12,11 @@ public interface UserEmailUtils {
     String getPasswordResetTemplateName();
     String getAuthenticationLoginTemplateName();
     String getSessionRefreshedTemplateName();
-    Map<String, Object> getConfirmEmailVariables(
+    Map<String, Object> getEmailConfirmationVariables(
             Username username,
             String token
     );
-    Map<String, Object> getResetPasswordVariables(
+    Map<String, Object> getPasswordResetVariables(
             Username username,
             String token
     );

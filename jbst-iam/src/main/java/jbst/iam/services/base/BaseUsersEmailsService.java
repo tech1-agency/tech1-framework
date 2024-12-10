@@ -2,8 +2,8 @@ package jbst.iam.services.base;
 
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import jbst.iam.domain.functions.FunctionConfirmEmail;
-import jbst.iam.domain.functions.FunctionResetPassword;
+import jbst.iam.domain.functions.FunctionEmailConfirmation;
+import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -35,13 +35,13 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     private final JbstProperties jbstProperties;
 
     @Override
-    public void executeConfirmEmail(FunctionConfirmEmail function) {
+    public void executeEmailConfirmation(FunctionEmailConfirmation function) {
         this.emailService.sendHTML(
                 new EmailHTML(
                         Set.of(function.email().value()),
                         this.userEmailUtils.getSubject("Email Confirmation"),
                         this.userEmailUtils.getEmailConfirmationTemplateName(),
-                        this.userEmailUtils.getConfirmEmailVariables(
+                        this.userEmailUtils.getEmailConfirmationVariables(
                                 function.username(),
                                 function.token()
                         )
@@ -50,13 +50,13 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     }
 
     @Override
-    public void executeResetPassword(FunctionResetPassword function) {
+    public void executePasswordReset(FunctionPasswordReset function) {
         this.emailService.sendHTML(
                 new EmailHTML(
                         Set.of(function.email().value()),
                         this.userEmailUtils.getSubject("Password Reset"),
                         this.userEmailUtils.getPasswordResetTemplateName(),
-                        this.userEmailUtils.getResetPasswordVariables(
+                        this.userEmailUtils.getPasswordResetVariables(
                                 function.username(),
                                 function.token()
                         )

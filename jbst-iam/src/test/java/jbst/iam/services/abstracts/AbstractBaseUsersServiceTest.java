@@ -4,7 +4,7 @@ import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
@@ -183,7 +183,7 @@ class AbstractBaseUsersServiceTest {
     @Test
     void resetPasswordTest() {
         // Arrange
-        var request = RequestUserResetPassword.hardcoded();
+        var request = RequestUserPasswordReset.hardcoded();
         var userToken = UserToken.hardcoded();
         when(this.usersTokensRepository.findByValueAsAny(request.token())).thenReturn(userToken);
         var passwordAC = ArgumentCaptor.forClass(Password.class);

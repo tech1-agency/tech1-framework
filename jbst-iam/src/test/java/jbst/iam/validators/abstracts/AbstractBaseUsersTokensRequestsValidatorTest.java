@@ -3,7 +3,7 @@ package jbst.iam.validators.abstracts;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
+import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
 import jbst.foundation.domain.time.TimeAmount;
 import jbst.foundation.utilities.random.RandomUtility;
@@ -11,7 +11,7 @@ import jbst.foundation.utilities.time.TimestampUtility;
 import jbst.iam.configurations.TestConfigurationValidators;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
-import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.identifiers.TokenId;
 import jbst.iam.domain.jwt.JwtUser;
@@ -135,7 +135,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         return Stream.of(
                 Arguments.of(
                         null,
-                        ResetPasswordException.userNotFound()
+                        JbstPasswordResetException.userNotFound()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.unnecessary()),
@@ -143,7 +143,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.required()),
-                        ResetPasswordException.emailNotConfirmed()
+                        JbstPasswordResetException.emailNotConfirmed()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(Email.hardcoded(), UserEmailDetails.confirmed()),
@@ -151,15 +151,15 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, UserEmailDetails.unnecessary()),
-                        ResetPasswordException.emailMissing()
+                        JbstPasswordResetException.emailMissing()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, UserEmailDetails.required()),
-                        ResetPasswordException.emailMissing()
+                        JbstPasswordResetException.emailMissing()
                 ),
                 Arguments.of(
                         JwtUser.hardcoded(null, UserEmailDetails.confirmed()),
-                        ResetPasswordException.emailMissing()
+                        JbstPasswordResetException.emailMissing()
                 )
         );
     }
@@ -170,12 +170,12 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
         var validTimestamp = TimestampUtility.getFutureRange(oneDay).to();
         return Stream.of(
                 Arguments.of(
-                        RequestUserResetPassword.hardcoded(),
+                        RequestUserPasswordReset.hardcoded(),
                         null,
                         UserTokenValidationException.notFound()
                 ),
                 Arguments.of(
-                        new RequestUserResetPassword(
+                        new RequestUserPasswordReset(
                                 RandomUtility.randomStringLetterOrNumbersOnly(36),
                                 Password.of("655c0667533246a9afdb197466001934"),
                                 Password.of("e4f937b04d9f44519ed58346b9aa67ff")
@@ -185,7 +185,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         new IllegalArgumentException("Passwords must be same")
                 ),
                 Arguments.of(
-                        RequestUserResetPassword.hardcoded(),
+                        RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -197,7 +197,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.used()
                 ),
                 Arguments.of(
-                        RequestUserResetPassword.hardcoded(),
+                        RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -209,7 +209,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.expired()
                 ),
                 Arguments.of(
-                        RequestUserResetPassword.hardcoded(),
+                        RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -221,7 +221,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
                         UserTokenValidationException.invalidType()
                 ),
                 Arguments.of(
-                        RequestUserResetPassword.hardcoded(),
+                        RequestUserPasswordReset.hardcoded(),
                         new UserToken(
                                 TokenId.random(),
                                 Username.random(),
@@ -311,13 +311,13 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
 
     @ParameterizedTest
     @MethodSource("validateExecuteResetPasswordTest")
-    void validateExecuteResetPasswordTest(JwtUser user, ResetPasswordException expected) {
+    void validateExecuteResetPasswordTest(JwtUser user, JbstPasswordResetException expected) {
         // Act
         var actual = catchThrowable(() -> this.componentUnderTest.validateExecuteResetPassword(user));
 
         if (nonNull(expected)) {
             assertThat(actual)
-                    .isInstanceOf(ResetPasswordException.class)
+                    .isInstanceOf(JbstPasswordResetException.class)
                     .hasMessage(expected.getMessage());
         } else {
             assertThat(actual).isNull();
@@ -327,7 +327,7 @@ class AbstractBaseUsersTokensRequestsValidatorTest {
     @ParameterizedTest
     @MethodSource("validatePasswordResetTest")
     void validatePasswordResetTest(
-            RequestUserResetPassword request,
+            RequestUserPasswordReset request,
             UserToken userToken,
             Exception expected
     ) {

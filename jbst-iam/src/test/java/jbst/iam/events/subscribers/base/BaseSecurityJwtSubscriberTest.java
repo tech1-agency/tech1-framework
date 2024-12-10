@@ -201,10 +201,10 @@ class BaseSecurityJwtSubscriberTest {
         var requestUserRegistration0 = RequestUserRegistration0.hardcoded();
         var event = new EventRegistration0(requestUserRegistration0);
         var userToken = UserToken.hardcoded();
-        when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserConfirmEmailToken())).thenReturn(userToken);
-        var functionConfirmEmail = userToken.asFunctionConfirmEmail(requestUserRegistration0.email());
+        when(this.baseUsersTokensService.saveAs(requestUserRegistration0.asRequestUserEmailConfirmationToken())).thenReturn(userToken);
+        var functionConfirmEmail = userToken.asFunctionEmailConfirmation(requestUserRegistration0.email());
         if (nonNull(ex)) {
-            doThrow(ex).when(this.usersEmailsService).executeConfirmEmail(functionConfirmEmail);
+            doThrow(ex).when(this.usersEmailsService).executeEmailConfirmation(functionConfirmEmail);
         }
 
         // Act
@@ -212,8 +212,8 @@ class BaseSecurityJwtSubscriberTest {
 
         // Assert
         assertThat(event).isNotNull();
-        verify(this.baseUsersTokensService).saveAs(requestUserRegistration0.asRequestUserConfirmEmailToken());
-        verify(this.usersEmailsService).executeConfirmEmail(functionConfirmEmail);
+        verify(this.baseUsersTokensService).saveAs(requestUserRegistration0.asRequestUserEmailConfirmationToken());
+        verify(this.usersEmailsService).executeEmailConfirmation(functionConfirmEmail);
         verify(this.incidentPublisher, nonNull(ex) ? times(1) : times(0)).publishThrowable(ex);
     }
 

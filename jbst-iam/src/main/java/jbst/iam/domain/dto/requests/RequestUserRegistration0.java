@@ -54,7 +54,7 @@ public record RequestUserRegistration0(
         );
     }
 
-    public RequestUserToken asRequestUserConfirmEmailToken() {
+    public RequestUserToken asRequestUserEmailConfirmationToken() {
         return RequestUserToken.emailConfirmation(this.username);
     }
 }

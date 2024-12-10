@@ -3,7 +3,7 @@ package jbst.iam.services.abstracts;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.iam.domain.dto.requests.RequestUserChangePasswordBasic;
-import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserUpdate1;
 import jbst.iam.domain.dto.requests.RequestUserUpdate2;
 import jbst.iam.domain.jwt.JwtUser;
@@ -100,7 +100,7 @@ public abstract class AbstractBaseUsersService implements BaseUsersService {
     }
 
     @Override
-    public void resetPassword(RequestUserResetPassword request) {
+    public void resetPassword(RequestUserPasswordReset request) {
         var userToken = this.usersTokensRepository.findByValueAsAny(request.token());
         var hashPassword = this.bCryptPasswordEncoder.encode(request.newPassword().value());
         this.usersRepository.resetPassword(userToken.username(), Password.of(hashPassword));

@@ -15,13 +15,13 @@ import static jbst.foundation.utilities.random.RandomUtility.randomString;
 @EqualsAndHashCode(callSuper = true)
 public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     @NonMandatoryProperty
-    private String webclientEmailConfirmRedirectPath;
+    private String webclientEmailConfirmationRedirectPath;
     @NonMandatoryProperty
-    private String webclientResetPasswordPath;
+    private String webclientPasswordResetPath;
 
     public static UsersTokensConfigs hardcoded() {
         return new UsersTokensConfigs(
-                "/email-confirm",
+                "/email-confirmation",
                 "/password-reset"
         );
     }
@@ -51,10 +51,10 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     }
 
     public String getEmailConfirmRedirectURL(String webclientURL) {
-        return webclientURL + this.webclientEmailConfirmRedirectPath;
+        return webclientURL + this.webclientEmailConfirmationRedirectPath;
     }
 
     public String getPasswordResetURL(String webclientURL, String token) {
-        return "%s%s?token=%s".formatted(webclientURL, this.webclientResetPasswordPath, token);
+        return "%s%s?token=%s".formatted(webclientURL, this.webclientPasswordResetPath, token);
     }
 }

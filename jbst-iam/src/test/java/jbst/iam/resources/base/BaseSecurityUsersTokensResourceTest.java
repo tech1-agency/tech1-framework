@@ -9,7 +9,7 @@ import jbst.iam.configurations.TestRunnerResources1;
 import jbst.iam.domain.db.UserEmailDetails;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
-import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.services.BaseUsersService;
@@ -116,7 +116,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.currentSessionAssistant, times(2)).getCurrentJwtUser();
         verify(this.baseUsersTokensRequestsValidator, times(2)).validateExecuteConfirmEmail(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));
+        verify(this.baseUsersEmailsService).executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
     }
 
     @ParameterizedTest
@@ -135,7 +135,7 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         if (nonNull(runtimeException)) {
             doThrow(runtimeException).when(this.baseUsersTokensService).confirmEmail(token);
         }
-        var expectedLocation = "http://127.0.0.1:3000/email-confirm?code=" + code;
+        var expectedLocation = "http://127.0.0.1:3000/email-confirmation?code=" + code;
 
         // Act
         this.mvc.perform(
@@ -174,13 +174,13 @@ class BaseSecurityUsersTokensResourceTest extends TestRunnerResources1 {
         verify(this.baseUsersService).findByEmail(request.email());
         verify(this.baseUsersTokensRequestsValidator).validateExecuteResetPassword(user);
         verify(this.baseUsersTokensService).getOrCreate(requestUserToken);
-        verify(this.baseUsersEmailsService).executeResetPassword(userToken.asFunctionResetPassword(user.email()));
+        verify(this.baseUsersEmailsService).executePasswordReset(userToken.asFunctionPasswordReset(user.email()));
     }
 
     @Test
     void resetPasswordTest() throws Exception {
         // Arrange
-        var request = RequestUserResetPassword.hardcoded();
+        var request = RequestUserPasswordReset.hardcoded();
 
         // Act
         this.mvc.perform(

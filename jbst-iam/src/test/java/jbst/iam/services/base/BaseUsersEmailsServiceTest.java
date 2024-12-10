@@ -9,8 +9,8 @@ import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
 import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import jbst.iam.domain.functions.FunctionConfirmEmail;
-import jbst.iam.domain.functions.FunctionResetPassword;
+import jbst.iam.domain.functions.FunctionEmailConfirmation;
+import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
@@ -94,9 +94,9 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void executeConfirmEmailTest() {
+    void executeEmailConfirmationTest() {
         // Arrange
-        var function = FunctionConfirmEmail.hardcoded();
+        var function = FunctionEmailConfirmation.hardcoded();
         var subject = randomString();
         var variables = Map.of(
                 randomString(), new Object(),
@@ -105,15 +105,15 @@ class BaseUsersEmailsServiceTest {
         );
         when(this.userEmailUtils.getSubject("Email Confirmation")).thenReturn(subject);
         when(this.userEmailUtils.getEmailConfirmationTemplateName()).thenReturn("jbst-email-confirmation");
-        when(this.userEmailUtils.getConfirmEmailVariables(function.username(), function.token())).thenReturn(variables);
+        when(this.userEmailUtils.getEmailConfirmationVariables(function.username(), function.token())).thenReturn(variables);
 
         // Act
-        this.componentUnderTest.executeConfirmEmail(function);
+        this.componentUnderTest.executeEmailConfirmation(function);
 
         // Assert
         verify(this.userEmailUtils).getSubject("Email Confirmation");
         verify(this.userEmailUtils).getEmailConfirmationTemplateName();
-        verify(this.userEmailUtils).getConfirmEmailVariables(function.username(), function.token());
+        verify(this.userEmailUtils).getEmailConfirmationVariables(function.username(), function.token());
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
@@ -125,9 +125,9 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void executeResetPasswordTest() {
+    void executePasswordResetTest() {
         // Arrange
-        var function = FunctionResetPassword.hardcoded();
+        var function = FunctionPasswordReset.hardcoded();
         var subject = randomString();
         var variables = Map.of(
                 randomString(), new Object(),
@@ -136,15 +136,15 @@ class BaseUsersEmailsServiceTest {
         );
         when(this.userEmailUtils.getSubject("Password Reset")).thenReturn(subject);
         when(this.userEmailUtils.getPasswordResetTemplateName()).thenReturn("jbst-password-reset");
-        when(this.userEmailUtils.getResetPasswordVariables(function.username(), function.token())).thenReturn(variables);
+        when(this.userEmailUtils.getPasswordResetVariables(function.username(), function.token())).thenReturn(variables);
 
         // Act
-        this.componentUnderTest.executeResetPassword(function);
+        this.componentUnderTest.executePasswordReset(function);
 
         // Assert
         verify(this.userEmailUtils).getSubject("Password Reset");
         verify(this.userEmailUtils).getPasswordResetTemplateName();
-        verify(this.userEmailUtils).getResetPasswordVariables(function.username(), function.token());
+        verify(this.userEmailUtils).getPasswordResetVariables(function.username(), function.token());
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();

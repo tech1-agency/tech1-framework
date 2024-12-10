@@ -9,7 +9,7 @@ import java.time.Duration;
 @UtilityClass
 public class RateLimiterFactory {
 
-    public static RateLimiter<Username> executeConfirmEmail() {
+    public static RateLimiter<Username> executeEmailConfirmation() {
         return new RateLimiter<>(1, Duration.ofMinutes(1), Duration.ofHours(1));
     }
 

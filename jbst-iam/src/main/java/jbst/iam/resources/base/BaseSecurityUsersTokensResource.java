@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.concurrent.RateLimiter;
-import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
+import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.base.TooManyRequestsException;
 import jbst.foundation.domain.exceptions.tokens.UserEmailConfirmException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
@@ -17,7 +17,7 @@ import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.iam.annotations.AbstractJbstBaseSecurityResource;
 import jbst.iam.assistants.current.CurrentSessionAssistant;
 import jbst.iam.domain.dto.requests.RequestUserEmail;
-import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
@@ -54,17 +54,17 @@ public class BaseSecurityUsersTokensResource {
     // Properties
     private final JbstProperties jbstProperties;
 
-    private final RateLimiter<Username> executeConfirmEmailLimiter = RateLimiterFactory.executeConfirmEmail();
+    private final RateLimiter<Username> emailConfirmationRL = RateLimiterFactory.executeEmailConfirmation();
 
     @PostMapping("/email/confirm")
     @ResponseStatus(HttpStatus.OK)
     public void executeConfirmEmail() throws TooManyRequestsException {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
-        this.executeConfirmEmailLimiter.acquire(user.username());
+        this.emailConfirmationRL.acquire(user.username());
         var requestUserToken = RequestUserToken.emailConfirmation(user.username());
         var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
-        this.baseUsersEmailsService.executeConfirmEmail(userToken.asFunctionConfirmEmail(user.email()));
+        this.baseUsersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
     }
 
     @ApiResponse(responseCode = "302", content = @Content(schema = @Schema(implementation = String.class)))
@@ -99,16 +99,16 @@ public class BaseSecurityUsersTokensResource {
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
             var requestUserToken = RequestUserToken.passwordReset(user.username());
             var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
-            var functionResetPassword = userToken.asFunctionResetPassword(user.email());
-            this.baseUsersEmailsService.executeResetPassword(functionResetPassword);
-        } catch (ResetPasswordException ex) {
+            var functionResetPassword = userToken.asFunctionPasswordReset(user.email());
+            this.baseUsersEmailsService.executePasswordReset(functionResetPassword);
+        } catch (JbstPasswordResetException ex) {
             // ignored
         }
     }
 
     @PatchMapping("/password/reset")
     @ResponseStatus(HttpStatus.OK)
-    public void resetPassword(@RequestBody @Valid RequestUserResetPassword request) throws UserTokenValidationException {
+    public void resetPassword(@RequestBody @Valid RequestUserPasswordReset request) throws UserTokenValidationException {
         this.baseUsersTokensRequestsValidator.validatePasswordReset(request);
         this.baseUsersService.resetPassword(request);
     }

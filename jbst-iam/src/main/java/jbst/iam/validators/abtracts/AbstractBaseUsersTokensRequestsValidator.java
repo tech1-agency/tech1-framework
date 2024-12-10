@@ -1,8 +1,8 @@
 package jbst.iam.validators.abtracts;
 
-import jbst.foundation.domain.exceptions.authentication.ResetPasswordException;
+import jbst.foundation.domain.exceptions.authentication.JbstPasswordResetException;
 import jbst.foundation.domain.exceptions.tokens.UserTokenValidationException;
-import jbst.iam.domain.dto.requests.RequestUserResetPassword;
+import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.enums.UserTokenType;
 import jbst.iam.domain.jwt.JwtUser;
 import jbst.iam.repositories.UsersTokensRepository;
@@ -31,20 +31,20 @@ public abstract class AbstractBaseUsersTokensRequestsValidator implements BaseUs
     }
 
     @Override
-    public void validateExecuteResetPassword(JwtUser user) throws ResetPasswordException {
+    public void validateExecuteResetPassword(JwtUser user) throws JbstPasswordResetException {
         if (isNull(user)) {
-            throw ResetPasswordException.userNotFound();
+            throw JbstPasswordResetException.userNotFound();
         }
         if (isNull(user.email())) {
-            throw ResetPasswordException.emailMissing();
+            throw JbstPasswordResetException.emailMissing();
         }
         if (!user.emailDetails().isEnabled()) {
-            throw ResetPasswordException.emailNotConfirmed();
+            throw JbstPasswordResetException.emailNotConfirmed();
         }
     }
 
     @Override
-    public void validatePasswordReset(RequestUserResetPassword request) throws UserTokenValidationException {
+    public void validatePasswordReset(RequestUserPasswordReset request) throws UserTokenValidationException {
         request.assertPasswordsOrThrow();
         this.validateToken(request.token(), UserTokenType.PASSWORD_RESET);
     }

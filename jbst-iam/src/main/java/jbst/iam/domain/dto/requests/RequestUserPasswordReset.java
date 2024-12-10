@@ -6,22 +6,22 @@ import jbst.foundation.domain.base.Password;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomStringLetterOrNumbersOnly;
 
-public record RequestUserResetPassword(
+public record RequestUserPasswordReset(
         @NotNull @NotEmpty String token,
         @Password.ValidPasswordCamelCaseLettersAndNumbers(min = 8, max = 20) Password newPassword,
         @Password.ValidPasswordNotBlank Password confirmPassword
 ) {
 
-    public static RequestUserResetPassword hardcoded() {
-        return new RequestUserResetPassword(
+    public static RequestUserPasswordReset hardcoded() {
+        return new RequestUserPasswordReset(
                 "V2orWAWX4xlvam9V7u5aUqpgriM6qd8qRsgGyqNw",
                 Password.hardcoded(),
                 Password.hardcoded()
         );
     }
 
-    public static RequestUserResetPassword random() {
-        return new RequestUserResetPassword(
+    public static RequestUserPasswordReset random() {
+        return new RequestUserPasswordReset(
                 randomStringLetterOrNumbersOnly(36),
                 Password.random(),
                 Password.random()

@@ -32,10 +32,8 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     @Override
     public String getSubject(String eventName) {
         var prefix = this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
-        var serverConfigs = this.jbstProperties.getServerConfigs();
-        var server = "\"" + serverConfigs.getName() + "\"";
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
-        return prefix + " " + eventName + " on " + server + " — " + time;
+        return prefix + " " + eventName + " at " + time;
     }
 
     @Override

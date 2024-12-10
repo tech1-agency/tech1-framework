@@ -69,13 +69,13 @@ class UserEmailUtilsImplTest {
     @RepeatedTest(FIVE_TIMES)
     void getSubjectTest() {
         // Act
-        var subject = this.componentUnderTest.getSubject("Authentication Login");
+        var subject = this.componentUnderTest.getSubject("Account Accessed");
 
         // Assert
         assertThat(subject)
-                .startsWith("[jbst.com] Authentication Login on \"jbst-server\" — ")
+                .startsWith("[jbst.com] Account Accessed at ")
                 .endsWith(" (UTC)");
-        subject = subject.replace("[jbst.com] Authentication Login on \"jbst-server\" — ", "");
+        subject = subject.replace("[jbst.com] Account Accessed at ", "");
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);

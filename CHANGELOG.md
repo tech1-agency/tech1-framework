@@ -8,3 +8,4 @@
 — Modification: non-mandatory property jbst.server-configs.server-url
 — Modification: non-mandatory property jbst.security-jwt-configs.users-tokens-configs
 — Modification: users-emails-configs.subject-prefix is now server-depended
+— Modification: jbst-account-accessed override is now mandatory, jbst-*.html templates are only guides

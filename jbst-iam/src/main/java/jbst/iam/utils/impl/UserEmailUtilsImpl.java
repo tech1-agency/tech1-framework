@@ -81,7 +81,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 Map.ofEntries(
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
-                        Map.entry("confirmationLink", this.jbstProperties.getEmailConfirmURL(this.serverProperties, function.token()))
+                        Map.entry("emailConfirmationLink", this.jbstProperties.getEmailConfirmationLink(this.serverProperties, function.token()))
                 )
         );
     }
@@ -98,7 +98,7 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                 Map.ofEntries(
                         Map.entry("year", now(UTC).getYear()),
                         Map.entry("username", function.username().value()),
-                        Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetURL(function.token()))
+                        Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetLink(function.token()))
                 )
         );
     }

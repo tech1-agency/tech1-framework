@@ -72,7 +72,7 @@ public class BaseSecurityUsersTokensResource {
             RedirectAttributes redirectAttributes,
             @RequestParam("token") String token
     ) {
-        var redirectView = new RedirectView(this.jbstProperties.getEmailConfirmationRedirectURL());
+        var redirectView = new RedirectView(this.jbstProperties.getEmailConfirmationRedirectLink());
         try {
             this.baseUsersTokensRequestsValidator.validateEmailConfirmationToken(token);
             this.baseUsersTokensService.confirmEmail(token);
@@ -95,8 +95,7 @@ public class BaseSecurityUsersTokensResource {
             var user = this.baseUsersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
             var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.passwordReset(user.username()));
-            var functionResetPassword = userToken.asFunctionPasswordReset(user.email());
-            this.baseUsersEmailsService.executePasswordReset(functionResetPassword);
+            this.baseUsersEmailsService.executePasswordReset(userToken.asFunctionPasswordReset(user.email()));
         } catch (JbstPasswordResetException ex) {
             // ignored
         }

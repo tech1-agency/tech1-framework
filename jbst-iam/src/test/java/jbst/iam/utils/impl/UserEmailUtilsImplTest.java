@@ -107,10 +107,9 @@ class UserEmailUtilsImplTest {
     void getEmailConfirmationHTML() {
         // Arrange
         var function = FunctionEmailConfirmation.hardcoded();
-        var confirmationLink = "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + function.token();
 
         // Act
-        var emailHTML = this.componentUnderTest.getEmailConfirmationHTML(function);
+        var emailHTML = this.componentUnderTest.getEmailConfirmationHTML(FunctionEmailConfirmation.hardcoded());
 
         // Assert
         assertThat(emailHTML.to()).isEqualTo(Set.of(function.email().value()));
@@ -119,7 +118,7 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.templateVariables())
                 .hasSize(3)
                 .containsEntry("username", function.username().value())
-                .containsEntry("confirmationLink", confirmationLink)
+                .containsEntry("emailConfirmationLink", "http://127.0.0.1:3002/api/jbst/security/tokens/email/confirm?token=" + function.token())
                 .containsEntry("year", now(UTC).getYear());
     }
 
@@ -127,7 +126,6 @@ class UserEmailUtilsImplTest {
     void getPasswordResetHTML() {
         // Arrange
         var function = FunctionPasswordReset.hardcoded();
-        var confirmationLink = "http://127.0.0.1:3000/password-reset?token=" + function.token();
 
         // Act
         var emailHTML = this.componentUnderTest.getPasswordResetHTML(function);
@@ -139,7 +137,7 @@ class UserEmailUtilsImplTest {
         assertThat(emailHTML.templateVariables())
                 .hasSize(3)
                 .containsEntry("username", function.username().value())
-                .containsEntry("resetPasswordLink", confirmationLink)
+                .containsEntry("resetPasswordLink", "http://127.0.0.1:3000/password-reset?token=" + function.token())
                 .containsEntry("year", now(UTC).getYear());
     }
 }

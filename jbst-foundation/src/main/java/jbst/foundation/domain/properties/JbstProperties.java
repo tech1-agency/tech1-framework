@@ -56,14 +56,14 @@ public class JbstProperties implements PriorityOrdered {
     // ================================================================================================================
     // MERGED METHODS
     // ================================================================================================================
-    public String getEmailConfirmationRedirectURL() {
+    public String getEmailConfirmationRedirectLink() {
         return "%s%s".formatted(
                 this.serverConfigs.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
         );
     }
 
-    public String getEmailConfirmURL(@NotNull ServerProperties serverProperties, @NotNull String token) {
+    public String getEmailConfirmationLink(@NotNull ServerProperties serverProperties, @NotNull String token) {
         return "%s%s/tokens/email/confirm?token=%s".formatted(
                 this.serverConfigs.getServerURL() + serverProperties.getServlet().getContextPath(),
                 this.mvcConfigs.getBasePathPrefix(),
@@ -71,7 +71,7 @@ public class JbstProperties implements PriorityOrdered {
         );
     }
 
-    public String getPasswordResetURL(@NotNull String token) {
+    public String getPasswordResetLink(@NotNull String token) {
         return "%s%s?token=%s".formatted(
                 this.serverConfigs.getWebclientURL(),
                 this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),

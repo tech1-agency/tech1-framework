@@ -1,6 +1,7 @@
 package jbst.iam.utils.impl;
 
 import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -29,7 +30,6 @@ import java.util.Set;
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.domain.tests.constants.TestsJunitConstants.FIVE_TIMES;
-import static jbst.foundation.utilities.random.RandomUtility.randomEnum;
 import static jbst.foundation.utilities.time.LocalDateTimeUtility.getTimestamp;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
 import static jbst.foundation.utilities.time.TimestampUtility.getCurrentTimestamp;
@@ -81,6 +81,32 @@ class UserEmailUtilsImplTest {
         subject = subject.replace(" (UTC)", "");
         var timestamp = getTimestamp(LocalDateTimeUtility.parse(subject, DTF11), ZoneOffset.UTC);
         assertThat(getCurrentTimestamp() - timestamp).isBetween(0L, 2000L);
+    }
+
+    @Test
+    void getAccountAccessedHTML() {
+        // Arrange
+        var username = Username.hardcoded();
+        var accountAccessMethod = AccountAccessMethod.USERNAME_PASSWORD;
+
+        // Act
+        var emailHTML = this.componentUnderTest.getAccountAccessedHTML(
+                username,
+                Email.hardcoded(),
+                UserRequestMetadata.valid(),
+                accountAccessMethod
+        );
+
+        // Assert
+        assertThat(emailHTML.templateVariables())
+                .hasSize(7)
+                .containsEntry("year", now(UTC).getYear())
+                .containsEntry("username", username.value())
+                .containsEntry("accessMethod", accountAccessMethod.getValue())
+                .containsEntry("where", "🇺🇦 Ukraine, Lviv")
+                .containsEntry("what", "Chrome, macOS on Desktop")
+                .containsEntry("ipAddress", "127.0.0.1")
+                .containsEntry("webclientURL", "http://127.0.0.1:3000");
     }
 
     @Test
@@ -139,31 +165,5 @@ class UserEmailUtilsImplTest {
 
         // Assert
         assertThat(templateName).isEqualTo("jbst-account-accessed");
-    }
-
-    @Test
-    void getAuthenticationLoginOrSessionRefreshedVariablesTest() {
-        // Arrange
-        var username = Username.random();
-        var userRequestMetadata = UserRequestMetadata.valid();
-        var accountAccessMethod = randomEnum(AccountAccessMethod.class);
-
-        // Act
-        var variables = this.componentUnderTest.getAuthenticationLoginOrSessionRefreshedVariables(
-                username,
-                userRequestMetadata,
-                accountAccessMethod
-        );
-
-        // Assert
-        assertThat(variables)
-                .hasSize(7)
-                .containsEntry("year", now(UTC).getYear())
-                .containsEntry("username", username.value())
-                .containsEntry("accessMethod", accountAccessMethod.getValue())
-                .containsEntry("where", "🇺🇦 Ukraine, Lviv")
-                .containsEntry("what", "Chrome, macOS on Desktop")
-                .containsEntry("ipAddress", "127.0.0.1")
-                .containsEntry("webclientURL", "http://127.0.0.1:3000");
     }
 }

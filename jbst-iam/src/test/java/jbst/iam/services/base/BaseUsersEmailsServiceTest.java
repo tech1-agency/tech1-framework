@@ -19,7 +19,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,11 +26,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.Map;
-import java.util.Set;
-
-import static jbst.foundation.utilities.random.RandomUtility.randomString;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -150,40 +144,26 @@ class BaseUsersEmailsServiceTest {
                 email,
                 userRequestMetadata
         );
-        var subject = randomString();
-        var variables = Map.of(
-                randomString(), new Object(),
-                randomString(), new Object(),
-                randomString(), new Object()
-        );
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
-        when(this.userEmailUtils.getAuthenticationLoginTemplateName()).thenReturn("jbst-account-accessed");
-        when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
-        when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
+        when(this.userEmailUtils.getAccountAccessedHTML(
                 username,
+                email,
                 userRequestMetadata,
                 AccountAccessMethod.USERNAME_PASSWORD
-        )).thenReturn(variables);
+        )).thenReturn(EmailHTML.hardcoded());
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
-        verify(this.userEmailUtils).getSubject("Account Accessed");
-        verify(this.userEmailUtils).getAuthenticationLoginOrSessionRefreshedVariables(
+        verify(this.userEmailUtils).getAccountAccessedHTML(
                 username,
+                email,
                 userRequestMetadata,
                 AccountAccessMethod.USERNAME_PASSWORD
         );
-        var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
-        verify(this.emailService).sendHTML(emailHTMLAC.capture());
-        var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.to()).isEqualTo(Set.of(email.value()));
-        assertThat(emailHTML.subject()).isEqualTo(subject);
-        assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
-        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
+        verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 
     @Test
@@ -197,40 +177,25 @@ class BaseUsersEmailsServiceTest {
                 email,
                 userRequestMetadata
         );
-        var subject = randomString();
-        var variables = Map.of(
-                randomString(), new Object(),
-                randomString(), new Object(),
-                randomString(), new Object()
-        );
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
-        when(this.userEmailUtils.getSessionRefreshedTemplateName()).thenReturn("jbst-account-accessed");
-        when(this.userEmailUtils.getSubject("Account Accessed")).thenReturn(subject);
-        when(this.userEmailUtils.getAuthenticationLoginOrSessionRefreshedVariables(
+        when(this.userEmailUtils.getAccountAccessedHTML(
                 username,
+                email,
                 userRequestMetadata,
                 AccountAccessMethod.SECURITY_TOKEN
-        )).thenReturn(variables);
+        )).thenReturn(EmailHTML.hardcoded());
 
         // Act
         this.componentUnderTest.executeSessionRefreshed(function);
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getSessionRefreshedTemplateName();
-        verify(this.userEmailUtils).getSubject("Account Accessed");
-        verify(this.userEmailUtils).getAuthenticationLoginOrSessionRefreshedVariables(
+        verify(this.userEmailUtils).getAccountAccessedHTML(
                 username,
+                email,
                 userRequestMetadata,
                 AccountAccessMethod.SECURITY_TOKEN
         );
-        var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
-        verify(this.emailService).sendHTML(emailHTMLAC.capture());
-        var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.to()).hasSize(1);
-        assertThat(emailHTML.to().stream().iterator().next()).isEqualTo(email.value());
-        assertThat(emailHTML.subject()).isEqualTo(subject);
-        assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
-        assertThat(emailHTML.templateVariables()).isEqualTo(variables);
+        verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 }

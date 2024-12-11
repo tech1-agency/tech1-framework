@@ -1,5 +1,6 @@
 package jbst.iam.utils.impl;
 
+import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
@@ -9,6 +10,7 @@ import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.io.ResourceLoader;
@@ -17,11 +19,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
+import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -41,13 +43,39 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     }
 
     @Override
+    public EmailHTML getAccountAccessedHTML(
+            @NotNull Username username,
+            @NotNull Email to,
+            @NotNull UserRequestMetadata userRequestMetadata,
+            @NotNull AccountAccessMethod accountAccessMethod
+    ) {
+        var templateName = USERNAME_PASSWORD.equals(accountAccessMethod) ? this.getAuthenticationLoginTemplateName() : this.getSessionRefreshedTemplateName();
+        var geoLocation = userRequestMetadata.getGeoLocation();
+        var userAgentDetails = userRequestMetadata.getUserAgentDetails();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("year", now(UTC).getYear());
+        variables.put("username", username.value());
+        variables.put("accessMethod", accountAccessMethod.getValue());
+        variables.put("where", geoLocation.getWhere());
+        variables.put("what", userAgentDetails.getWhat());
+        variables.put("ipAddress", geoLocation.getIpAddr());
+        variables.put("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL());
+        return EmailHTML.of(
+                to,
+                this.getSubject("Account Accessed"),
+                templateName,
+                variables
+        );
+    }
+
+    @Override
     public EmailHTML getEmailConfirmationHTML(FunctionEmailConfirmation function) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", function.username().value());
         variables.put("confirmationLink", this.jbstProperties.getEmailConfirmURL(this.serverProperties, function.token()));
         variables.put("year", now(UTC).getYear());
-        return new EmailHTML(
-                Set.of(function.email().value()),
+        return EmailHTML.of(
+                function.email(),
                 this.getSubject("Email Confirmation"),
                 this.getServerOrFallbackJbstTemplateName(
                         "server-email-confirmation",
@@ -63,8 +91,8 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
         variables.put("username", function.username().value());
         variables.put("resetPasswordLink", this.jbstProperties.getPasswordResetURL(function.token()));
         variables.put("year", now(UTC).getYear());
-        return new EmailHTML(
-                Set.of(function.email().value()),
+        return EmailHTML.of(
+                function.email(),
                 this.getSubject("Password Reset"),
                 this.getServerOrFallbackJbstTemplateName(
                         "server-password-reset",

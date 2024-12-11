@@ -2,7 +2,6 @@ package jbst.iam.services.base;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
@@ -19,7 +18,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
 
     // Services
     private final EmailService emailService;
-    // Utilities
+    // Utils
     private final UserEmailUtils userEmailUtils;
     // Properties
     private final JbstProperties jbstProperties;
@@ -41,12 +40,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin().isEnabled()) {
             return;
         }
-        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(
-                function.username(),
-                function.email(),
-                function.requestMetadata(),
-                AccountAccessMethod.USERNAME_PASSWORD
-        );
+        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(function.getFunctionAccountAccessed());
         this.emailService.sendHTML(emailHTML);
     }
 
@@ -55,12 +49,7 @@ public class BaseUsersEmailsService implements UsersEmailsService {
         if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed().isEnabled()) {
             return;
         }
-        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(
-                function.username(),
-                function.email(),
-                function.requestMetadata(),
-                AccountAccessMethod.SECURITY_TOKEN
-        );
+        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(function.getFunctionAccountAccessed());
         this.emailService.sendHTML(emailHTML);
     }
 }

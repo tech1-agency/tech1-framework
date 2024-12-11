@@ -22,6 +22,6 @@ public record EmailHTML(
     }
 
     public static EmailHTML hardcoded() {
-        return new EmailHTML(Set.of(), "Account Accessed", "jbst-account-accessed", Map.of());
+        return EmailHTML.of(Email.hardcoded(), "Account Accessed", "jbst-account-accessed", Map.of());
     }
 }

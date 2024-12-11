@@ -3,10 +3,10 @@ package jbst.iam.utils.impl;
 import jbst.foundation.configurations.TestConfigurationPropertiesJbstHardcoded;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.utilities.time.LocalDateTimeUtility;
 import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
@@ -85,24 +85,18 @@ class UserEmailUtilsImplTest {
 
     @Test
     void getAccountAccessedHTML() {
-        // Arrange
-        var username = Username.hardcoded();
-        var accountAccessMethod = AccountAccessMethod.USERNAME_PASSWORD;
-
         // Act
-        var emailHTML = this.componentUnderTest.getAccountAccessedHTML(
-                username,
-                Email.hardcoded(),
-                UserRequestMetadata.valid(),
-                accountAccessMethod
-        );
+        var emailHTML = this.componentUnderTest.getAccountAccessedHTML(FunctionAccountAccessed.hardcoded());
 
         // Assert
+        assertThat(emailHTML.to()).isEqualTo(Set.of(Email.hardcoded().value()));
+        assertThat(emailHTML.subject()).startsWith("[jbst.com] Account Accessed at ");
+        assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables())
                 .hasSize(7)
                 .containsEntry("year", now(UTC).getYear())
-                .containsEntry("username", username.value())
-                .containsEntry("accessMethod", accountAccessMethod.getValue())
+                .containsEntry("username", Username.hardcoded().value())
+                .containsEntry("accessMethod", AccountAccessMethod.USERNAME_PASSWORD.getValue())
                 .containsEntry("where", "🇺🇦 Ukraine, Lviv")
                 .containsEntry("what", "Chrome, macOS on Desktop")
                 .containsEntry("ipAddress", "127.0.0.1")
@@ -147,23 +141,5 @@ class UserEmailUtilsImplTest {
                 .containsEntry("username", function.username().value())
                 .containsEntry("resetPasswordLink", confirmationLink)
                 .containsEntry("year", now(UTC).getYear());
-    }
-
-    @Test
-    void getAuthenticationLoginTemplateNameTest() {
-        // Act
-        var templateName = this.componentUnderTest.getAuthenticationLoginTemplateName();
-
-        // Assert
-        assertThat(templateName).isEqualTo("jbst-account-accessed");
-    }
-
-    @Test
-    void getSessionRefreshedTemplateNameTest() {
-        // Act
-        var templateName = this.componentUnderTest.getSessionRefreshedTemplateName();
-
-        // Assert
-        assertThat(templateName).isEqualTo("jbst-account-accessed");
     }
 }

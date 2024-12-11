@@ -1,17 +1,10 @@
 package jbst.iam.services.base;
 
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.SecurityJwtConfigs;
 import jbst.foundation.services.emails.domain.EmailHTML;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.iam.domain.enums.AccountAccessMethod;
-import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import jbst.iam.domain.functions.FunctionEmailConfirmation;
-import jbst.iam.domain.functions.FunctionPasswordReset;
-import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
+import jbst.iam.domain.functions.*;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +19,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import static jbst.iam.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({ SpringExtension.class })
@@ -89,7 +84,7 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void executeEmailConfirmationTest() {
+    void executeEmailConfirmation() {
         // Arrange
         var function = FunctionEmailConfirmation.hardcoded();
         when(this.userEmailUtils.getEmailConfirmationHTML(function)).thenReturn(EmailHTML.hardcoded());
@@ -103,7 +98,7 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void executePasswordResetTest() {
+    void executePasswordReset() {
         // Arrange
         var function = FunctionPasswordReset.hardcoded();
         when(this.userEmailUtils.getPasswordResetHTML(function)).thenReturn(EmailHTML.hardcoded());
@@ -117,13 +112,9 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void noExecutionNotNullEmailAndDisabledEmailTest() {
+    void executeAuthenticationLoginDisabled() {
         // Arrange
-        var function = new FunctionAuthenticationLoginEmail(
-                Username.random(),
-                Email.random(),
-                UserRequestMetadata.random()
-        );
+        var function = FunctionAuthenticationLoginEmail.hardcoded();
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
@@ -134,68 +125,45 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void executeAuthenticationLoginTest() {
+    void executeAuthenticationLogin() {
         // Arrange
-        var username = Username.random();
-        var email = Email.random();
-        var userRequestMetadata = UserRequestMetadata.random();
-        var function = new FunctionAuthenticationLoginEmail(
-                username,
-                email,
-                userRequestMetadata
-        );
         when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
-        when(this.userEmailUtils.getAccountAccessedHTML(
-                username,
-                email,
-                userRequestMetadata,
-                AccountAccessMethod.USERNAME_PASSWORD
-        )).thenReturn(EmailHTML.hardcoded());
+        when(this.userEmailUtils.getAccountAccessedHTML(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD))).thenReturn(EmailHTML.hardcoded());
 
         // Act
-        this.componentUnderTest.executeAuthenticationLogin(function);
+        this.componentUnderTest.executeAuthenticationLogin(FunctionAuthenticationLoginEmail.hardcoded());
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getAccountAccessedHTML(
-                username,
-                email,
-                userRequestMetadata,
-                AccountAccessMethod.USERNAME_PASSWORD
-        );
+        verify(this.userEmailUtils).getAccountAccessedHTML(FunctionAccountAccessed.hardcoded(USERNAME_PASSWORD));
         verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 
     @Test
-    void executeSessionRefreshedTest() {
+    void executeSessionRefreshedDisabled() {
         // Arrange
-        var username = Username.random();
-        var email = Email.random();
-        var userRequestMetadata = UserRequestMetadata.random();
-        var function = new FunctionSessionRefreshedEmail(
-                username,
-                email,
-                userRequestMetadata
-        );
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
-        when(this.userEmailUtils.getAccountAccessedHTML(
-                username,
-                email,
-                userRequestMetadata,
-                AccountAccessMethod.SECURITY_TOKEN
-        )).thenReturn(EmailHTML.hardcoded());
+        var function = FunctionSessionRefreshedEmail.hardcoded();
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
 
         // Act
         this.componentUnderTest.executeSessionRefreshed(function);
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getAccountAccessedHTML(
-                username,
-                email,
-                userRequestMetadata,
-                AccountAccessMethod.SECURITY_TOKEN
-        );
+    }
+
+    @Test
+    void executeSessionRefreshed() {
+        // Arrange
+        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
+        when(this.userEmailUtils.getAccountAccessedHTML(FunctionAccountAccessed.hardcoded(SECURITY_TOKEN))).thenReturn(EmailHTML.hardcoded());
+
+        // Act
+        this.componentUnderTest.executeSessionRefreshed(FunctionSessionRefreshedEmail.hardcoded());
+
+        // Assert
+        verify(this.jbstProperties).getSecurityJwtConfigs();
+        verify(this.userEmailUtils).getAccountAccessedHTML(FunctionAccountAccessed.hardcoded(SECURITY_TOKEN));
         verify(this.emailService).sendHTML(EmailHTML.hardcoded());
     }
 }

@@ -1,11 +1,8 @@
 package jbst.iam.utils.impl;
 
-import jbst.foundation.domain.base.Email;
-import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.domain.EmailHTML;
-import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
 import jbst.iam.utils.UserEmailUtils;
@@ -17,12 +14,12 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 import static java.time.ZoneOffset.UTC;
 import static jbst.foundation.domain.constants.JbstConstants.DateTimeFormatters.DTF11;
 import static jbst.foundation.utilities.time.LocalDateUtility.now;
+import static jbst.iam.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
 import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 
 @Component
@@ -36,44 +33,44 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
     private final ServerProperties serverProperties;
 
     @Override
-    public String getSubject(String eventName) {
+    public String getSubject(@NotNull String eventName) {
         var prefix = this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSubjectPrefix();
         var time = LocalDateTime.now(UTC).format(DTF11) + " (UTC)";
         return prefix + " " + eventName + " at " + time;
     }
 
     @Override
-    public EmailHTML getAccountAccessedHTML(
-            @NotNull Username username,
-            @NotNull Email to,
-            @NotNull UserRequestMetadata userRequestMetadata,
-            @NotNull AccountAccessMethod accountAccessMethod
-    ) {
-        var templateName = USERNAME_PASSWORD.equals(accountAccessMethod) ? this.getAuthenticationLoginTemplateName() : this.getSessionRefreshedTemplateName();
-        var geoLocation = userRequestMetadata.getGeoLocation();
-        var userAgentDetails = userRequestMetadata.getUserAgentDetails();
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("year", now(UTC).getYear());
-        variables.put("username", username.value());
-        variables.put("accessMethod", accountAccessMethod.getValue());
-        variables.put("where", geoLocation.getWhere());
-        variables.put("what", userAgentDetails.getWhat());
-        variables.put("ipAddress", geoLocation.getIpAddr());
-        variables.put("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL());
+    public EmailHTML getAccountAccessedHTML(@NotNull FunctionAccountAccessed function) {
+        var templateName = "jbst-account-accessed";
+        if (USERNAME_PASSWORD.equals(function.accountAccessMethod())) {
+            templateName = this.getServerOrFallbackJbstTemplateName(
+                    "server-authentication-login",
+                    "jbst-account-accessed"
+            );
+        } else if (SECURITY_TOKEN.equals(function.accountAccessMethod())) {
+            templateName = this.getServerOrFallbackJbstTemplateName(
+                    "server-session-refreshed",
+                    "jbst-account-accessed"
+            );
+        }
         return EmailHTML.of(
-                to,
+                function.to(),
                 this.getSubject("Account Accessed"),
                 templateName,
-                variables
+                Map.ofEntries(
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("username", function.username().value()),
+                        Map.entry("accessMethod", function.accountAccessMethod().getValue()),
+                        Map.entry("where", function.userRequestMetadata().getGeoLocation().getWhere()),
+                        Map.entry("what", function.userRequestMetadata().getUserAgentDetails().getWhat()),
+                        Map.entry("ipAddress", function.userRequestMetadata().getGeoLocation().getIpAddr()),
+                        Map.entry("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL())
+                )
         );
     }
 
     @Override
-    public EmailHTML getEmailConfirmationHTML(FunctionEmailConfirmation function) {
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("username", function.username().value());
-        variables.put("confirmationLink", this.jbstProperties.getEmailConfirmURL(this.serverProperties, function.token()));
-        variables.put("year", now(UTC).getYear());
+    public EmailHTML getEmailConfirmationHTML(@NotNull FunctionEmailConfirmation function) {
         return EmailHTML.of(
                 function.email(),
                 this.getSubject("Email Confirmation"),
@@ -81,16 +78,16 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                         "server-email-confirmation",
                         "jbst-email-confirmation"
                 ),
-                variables
+                Map.ofEntries(
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("username", function.username().value()),
+                        Map.entry("confirmationLink", this.jbstProperties.getEmailConfirmURL(this.serverProperties, function.token()))
+                )
         );
     }
 
     @Override
-    public EmailHTML getPasswordResetHTML(FunctionPasswordReset function) {
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("username", function.username().value());
-        variables.put("resetPasswordLink", this.jbstProperties.getPasswordResetURL(function.token()));
-        variables.put("year", now(UTC).getYear());
+    public EmailHTML getPasswordResetHTML(@NotNull FunctionPasswordReset function) {
         return EmailHTML.of(
                 function.email(),
                 this.getSubject("Password Reset"),
@@ -98,43 +95,12 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
                         "server-password-reset",
                         "jbst-password-reset"
                 ),
-                variables
+                Map.ofEntries(
+                        Map.entry("year", now(UTC).getYear()),
+                        Map.entry("username", function.username().value()),
+                        Map.entry("resetPasswordLink", this.jbstProperties.getPasswordResetURL(function.token()))
+                )
         );
-    }
-
-    @Override
-    public String getAuthenticationLoginTemplateName() {
-        return this.getServerOrFallbackJbstTemplateName(
-                "server-authentication-login",
-                "jbst-account-accessed"
-        );
-    }
-
-    @Override
-    public String getSessionRefreshedTemplateName() {
-        return this.getServerOrFallbackJbstTemplateName(
-                "server-session-refreshed",
-                "jbst-account-accessed"
-        );
-    }
-
-    @Override
-    public Map<String, Object> getAuthenticationLoginOrSessionRefreshedVariables(
-            Username username,
-            UserRequestMetadata userRequestMetadata,
-            AccountAccessMethod accountAccessMethod
-    ) {
-        var geoLocation = userRequestMetadata.getGeoLocation();
-        var userAgentDetails = userRequestMetadata.getUserAgentDetails();
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("year", now(UTC).getYear());
-        variables.put("username", username.value());
-        variables.put("accessMethod", accountAccessMethod.getValue());
-        variables.put("where", geoLocation.getWhere());
-        variables.put("what", userAgentDetails.getWhat());
-        variables.put("ipAddress", geoLocation.getIpAddr());
-        variables.put("webclientURL", this.jbstProperties.getServerConfigs().getWebclientURL());
-        return variables;
     }
 
     // =================================================================================================================

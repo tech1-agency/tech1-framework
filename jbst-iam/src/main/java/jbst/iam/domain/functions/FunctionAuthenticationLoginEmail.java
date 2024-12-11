@@ -3,18 +3,12 @@ package jbst.iam.domain.functions;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Username;
 import jbst.foundation.domain.http.requests.UserRequestMetadata;
-import jbst.foundation.domain.tuples.Tuple3;
+import org.jetbrains.annotations.NotNull;
 
 public record FunctionAuthenticationLoginEmail(
-        Username username,
-        Email email,
-        UserRequestMetadata requestMetadata
+        @NotNull Username username,
+        @NotNull Email email,
+        @NotNull UserRequestMetadata requestMetadata
 ) {
-    public Tuple3<Username, Email, UserRequestMetadata> getTuple3() {
-        return new Tuple3<>(
-                this.username,
-                this.email,
-                this.requestMetadata
-        );
-    }
+
 }

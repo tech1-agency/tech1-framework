@@ -28,6 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.Map;
+import java.util.Set;
 
 import static jbst.foundation.utilities.random.RandomUtility.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -122,42 +123,6 @@ class BaseUsersEmailsServiceTest {
     }
 
     @Test
-    void noExecutionNullEmailAndEnabledEmailTest() {
-        // Arrange
-        var function = new FunctionAuthenticationLoginEmail(
-                Username.random(),
-                null,
-                UserRequestMetadata.random()
-        );
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.hardcoded());
-
-        // Act
-        this.componentUnderTest.executeAuthenticationLogin(function);
-
-        // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
-    }
-
-    @Test
-    void noExecutionNullEmailAndDisabledEmailTest() {
-        // Arrange
-        var function = new FunctionAuthenticationLoginEmail(
-                Username.random(),
-                null,
-                UserRequestMetadata.random()
-        );
-        when(this.jbstProperties.getSecurityJwtConfigs()).thenReturn(SecurityJwtConfigs.disabledUsersEmailsConfigs());
-
-        // Act
-        this.componentUnderTest.executeAuthenticationLogin(function);
-
-        // Assert
-        verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
-    }
-
-    @Test
     void noExecutionNotNullEmailAndDisabledEmailTest() {
         // Arrange
         var function = new FunctionAuthenticationLoginEmail(
@@ -172,7 +137,6 @@ class BaseUsersEmailsServiceTest {
 
         // Assert
         verify(this.jbstProperties).getSecurityJwtConfigs();
-        verify(this.userEmailUtils).getAuthenticationLoginTemplateName();
     }
 
     @Test
@@ -216,8 +180,7 @@ class BaseUsersEmailsServiceTest {
         var emailHTMLAC = ArgumentCaptor.forClass(EmailHTML.class);
         verify(this.emailService).sendHTML(emailHTMLAC.capture());
         var emailHTML = emailHTMLAC.getValue();
-        assertThat(emailHTML.to()).hasSize(1);
-        assertThat(emailHTML.to().stream().iterator().next()).isEqualTo(email.value());
+        assertThat(emailHTML.to()).isEqualTo(Set.of(email.value()));
         assertThat(emailHTML.subject()).isEqualTo(subject);
         assertThat(emailHTML.templateName()).isEqualTo("jbst-account-accessed");
         assertThat(emailHTML.templateVariables()).isEqualTo(variables);

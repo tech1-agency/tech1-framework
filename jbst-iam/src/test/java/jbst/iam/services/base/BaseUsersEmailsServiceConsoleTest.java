@@ -16,6 +16,7 @@ import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
 import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
+import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
 import jbst.iam.utils.impl.UserEmailUtilsImpl;
@@ -65,8 +66,8 @@ class BaseUsersEmailsServiceConsoleTest {
                             "smtp.gmail.com",
                             587,
                             "jbst <?>",
-                            Username.of("<?>"),
-                            Password.of("<?>")
+                            Username.of("?"),
+                            Password.of("?")
                     )
             );
             return jbstProperties;
@@ -152,7 +153,7 @@ class BaseUsersEmailsServiceConsoleTest {
     private final UsersEmailsService componentUnderTest;
 
     private final Username username = Username.hardcoded();
-    private final Email email = Email.of("<?>");
+    private final Email email = Email.of("?");
 
     @Disabled
     @Test
@@ -200,6 +201,23 @@ class BaseUsersEmailsServiceConsoleTest {
 
         // Act
         this.componentUnderTest.executeAuthenticationLogin(function);
+
+        // Assert
+        // no asserts
+    }
+
+    @Disabled
+    @Test
+    void executeSessionRefreshed() {
+        // Arrange
+        var function = new FunctionSessionRefreshedEmail(
+                this.username,
+                this.email,
+                UserRequestMetadata.valid()
+        );
+
+        // Act
+        this.componentUnderTest.executeSessionRefreshed(function);
 
         // Assert
         // no asserts

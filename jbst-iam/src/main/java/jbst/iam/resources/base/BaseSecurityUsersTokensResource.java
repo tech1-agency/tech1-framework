@@ -62,8 +62,7 @@ public class BaseSecurityUsersTokensResource {
         var user = this.currentSessionAssistant.getCurrentJwtUser();
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.emailConfirmationRL.acquire(user.username());
-        var requestUserToken = RequestUserToken.emailConfirmation(user.username());
-        var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
+        var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.emailConfirmation(user.username()));
         this.baseUsersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
     }
 
@@ -95,8 +94,7 @@ public class BaseSecurityUsersTokensResource {
         try {
             var user = this.baseUsersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
-            var requestUserToken = RequestUserToken.passwordReset(user.username());
-            var userToken = this.baseUsersTokensService.getOrCreate(requestUserToken);
+            var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.passwordReset(user.username()));
             var functionResetPassword = userToken.asFunctionPasswordReset(user.email());
             this.baseUsersEmailsService.executePasswordReset(functionResetPassword);
         } catch (JbstPasswordResetException ex) {
@@ -110,5 +108,4 @@ public class BaseSecurityUsersTokensResource {
         this.baseUsersTokensRequestsValidator.validatePasswordReset(request);
         this.baseUsersService.resetPassword(request);
     }
-
 }

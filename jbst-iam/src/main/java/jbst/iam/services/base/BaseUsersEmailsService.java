@@ -2,10 +2,9 @@ package jbst.iam.services.base;
 
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.services.emails.services.EmailService;
-import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
+import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
-import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
 import lombok.RequiredArgsConstructor;
@@ -36,20 +35,20 @@ public class BaseUsersEmailsService implements UsersEmailsService {
     }
 
     @Override
-    public void executeAuthenticationLogin(FunctionAuthenticationLoginEmail function) {
+    public void executeAuthenticationLogin(FunctionAccountAccessed function) {
         if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getAuthenticationLogin().isEnabled()) {
             return;
         }
-        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(function.getFunctionAccountAccessed());
+        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(function);
         this.emailService.sendHTML(emailHTML);
     }
 
     @Override
-    public void executeSessionRefreshed(FunctionSessionRefreshedEmail function) {
+    public void executeSessionRefreshed(FunctionAccountAccessed function) {
         if (!this.jbstProperties.getSecurityJwtConfigs().getUsersEmailsConfigs().getSessionRefreshed().isEnabled()) {
             return;
         }
-        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(function.getFunctionAccountAccessed());
+        var emailHTML = this.userEmailUtils.getAccountAccessedHTML(function);
         this.emailService.sendHTML(emailHTML);
     }
 }

@@ -8,9 +8,9 @@ import jbst.foundation.incidents.domain.authetication.IncidentAuthenticationLogi
 import jbst.foundation.incidents.domain.session.IncidentSessionRefreshed;
 import jbst.foundation.incidents.events.publishers.IncidentPublisher;
 import jbst.foundation.utils.UserMetadataUtils;
+import jbst.iam.domain.enums.AccountAccessMethod;
 import jbst.iam.domain.events.*;
-import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
+import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.subscribers.SecurityJwtSubscriber;
 import jbst.iam.services.BaseUsersSessionsService;
@@ -121,10 +121,11 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         var metadata = session.metadata();
         if (event.isAuthenticationLoginEndpoint()) {
             this.usersEmailsService.executeAuthenticationLogin(
-                    new FunctionAuthenticationLoginEmail(
+                    new FunctionAccountAccessed(
                             event.username(),
                             event.email(),
-                            metadata
+                            metadata,
+                            AccountAccessMethod.USERNAME_PASSWORD
                     )
             );
             this.securityJwtIncidentPublisher.publishAuthenticationLogin(
@@ -136,10 +137,11 @@ public class BaseSecurityJwtSubscriber extends AbstractEventSubscriber implement
         }
         if (event.isAuthenticationRefreshTokenEndpoint()) {
             this.usersEmailsService.executeSessionRefreshed(
-                    new FunctionSessionRefreshedEmail(
+                    new FunctionAccountAccessed(
                             event.username(),
                             event.email(),
-                            metadata
+                            metadata,
+                            AccountAccessMethod.SECURITY_TOKEN
                     )
             );
             this.securityJwtIncidentPublisher.publishSessionRefreshed(

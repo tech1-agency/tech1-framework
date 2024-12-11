@@ -3,7 +3,6 @@ package jbst.iam.services.base;
 import jbst.foundation.domain.base.Email;
 import jbst.foundation.domain.base.Password;
 import jbst.foundation.domain.base.Username;
-import jbst.foundation.domain.http.requests.UserRequestMetadata;
 import jbst.foundation.domain.properties.JbstProperties;
 import jbst.foundation.domain.properties.configs.EmailConfigs;
 import jbst.foundation.domain.properties.configs.MvcConfigs;
@@ -13,10 +12,10 @@ import jbst.foundation.services.emails.services.EmailService;
 import jbst.foundation.services.emails.services.impl.EmailServiceImpl;
 import jbst.foundation.services.emails.utilities.EmailUtility;
 import jbst.foundation.services.emails.utilities.impl.EmailUtilityImpl;
-import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
+import jbst.iam.domain.enums.AccountAccessMethod;
+import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.domain.functions.FunctionEmailConfirmation;
 import jbst.iam.domain.functions.FunctionPasswordReset;
-import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
 import jbst.iam.services.UsersEmailsService;
 import jbst.iam.utils.UserEmailUtils;
 import jbst.iam.utils.impl.UserEmailUtilsImpl;
@@ -158,15 +157,14 @@ class BaseUsersEmailsServiceConsoleTest {
     @Disabled
     @Test
     void executeEmailConfirmation() {
-        // Arrange
-        var function = new FunctionEmailConfirmation(
-                this.username,
-                this.email,
-                randomStringLetterOrNumbersOnly(36)
-        );
-
         // Act
-        this.componentUnderTest.executeEmailConfirmation(function);
+        this.componentUnderTest.executeEmailConfirmation(
+                new FunctionEmailConfirmation(
+                        this.username,
+                        this.email,
+                        randomStringLetterOrNumbersOnly(36)
+                )
+        );
 
         // Assert
         // no asserts
@@ -175,15 +173,14 @@ class BaseUsersEmailsServiceConsoleTest {
     @Disabled
     @Test
     void executePasswordReset() {
-        // Arrange
-        var function = new FunctionPasswordReset(
-                this.username,
-                this.email,
-                randomStringLetterOrNumbersOnly(36)
-        );
-
         // Act
-        this.componentUnderTest.executePasswordReset(function);
+        this.componentUnderTest.executePasswordReset(
+                new FunctionPasswordReset(
+                        this.username,
+                        this.email,
+                        randomStringLetterOrNumbersOnly(36)
+                )
+        );
 
         // Assert
         // no asserts
@@ -192,15 +189,12 @@ class BaseUsersEmailsServiceConsoleTest {
     @Disabled
     @Test
     void executeAuthenticationLogin() {
-        // Arrange
-        var function = new FunctionAuthenticationLoginEmail(
-                this.username,
-                this.email,
-                UserRequestMetadata.valid()
-        );
-
         // Act
-        this.componentUnderTest.executeAuthenticationLogin(function);
+        this.componentUnderTest.executeAuthenticationLogin(
+                FunctionAccountAccessed.hardcoded(
+                        AccountAccessMethod.USERNAME_PASSWORD
+                )
+        );
 
         // Assert
         // no asserts
@@ -209,15 +203,12 @@ class BaseUsersEmailsServiceConsoleTest {
     @Disabled
     @Test
     void executeSessionRefreshed() {
-        // Arrange
-        var function = new FunctionSessionRefreshedEmail(
-                this.username,
-                this.email,
-                UserRequestMetadata.valid()
-        );
-
         // Act
-        this.componentUnderTest.executeSessionRefreshed(function);
+        this.componentUnderTest.executeAuthenticationLogin(
+                FunctionAccountAccessed.hardcoded(
+                        AccountAccessMethod.SECURITY_TOKEN
+                )
+        );
 
         // Assert
         // no asserts

@@ -16,8 +16,7 @@ import jbst.iam.domain.db.UserSession;
 import jbst.iam.domain.db.UserToken;
 import jbst.iam.domain.dto.requests.RequestUserRegistration0;
 import jbst.iam.domain.events.*;
-import jbst.iam.domain.functions.FunctionAuthenticationLoginEmail;
-import jbst.iam.domain.functions.FunctionSessionRefreshedEmail;
+import jbst.iam.domain.functions.FunctionAccountAccessed;
 import jbst.iam.events.publishers.SecurityJwtIncidentPublisher;
 import jbst.iam.events.subscribers.SecurityJwtSubscriber;
 import jbst.iam.services.BaseUsersSessionsService;
@@ -42,6 +41,8 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 import static jbst.foundation.utilities.random.EntityUtility.entity;
+import static jbst.iam.domain.enums.AccountAccessMethod.SECURITY_TOKEN;
+import static jbst.iam.domain.enums.AccountAccessMethod.USERNAME_PASSWORD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -317,7 +318,7 @@ class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-        verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAuthenticationLoginEmail(event.username(), event.email(), event.session().metadata()));
+        verify(this.usersEmailsService).executeAuthenticationLogin(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), USERNAME_PASSWORD));
         verify(this.securityJwtIncidentPublisher).publishAuthenticationLogin(new IncidentAuthenticationLogin(event.username(), event.session().metadata()));
     }
 
@@ -340,7 +341,7 @@ class BaseSecurityJwtSubscriberTest {
 
         // Assert
         verify(this.baseUsersSessionsService).saveUserRequestMetadata(event);
-        verify(this.usersEmailsService).executeSessionRefreshed(new FunctionSessionRefreshedEmail(event.username(), event.email(), event.session().metadata()));
+        verify(this.usersEmailsService).executeSessionRefreshed(new FunctionAccountAccessed(event.username(), event.email(), event.session().metadata(), SECURITY_TOKEN));
         verify(this.securityJwtIncidentPublisher).publishSessionRefreshed(new IncidentSessionRefreshed(event.username(), event.session().metadata()));
     }
 

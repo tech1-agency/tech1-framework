@@ -51,9 +51,4 @@ public class ServerConfigs extends AbstractPropertiesConfigs {
     public boolean isSpringdocEnabled() {
         return this.springdocEnabled;
     }
-
-    public String getServerContextPathURL(String contextPath) {
-        return this.serverURL + contextPath;
-    }
-
 }

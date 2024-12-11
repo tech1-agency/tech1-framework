@@ -42,13 +42,9 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     @Override
     public EmailHTML getEmailConfirmationHTML(FunctionEmailConfirmation function) {
-        var servletContextPath = this.serverProperties.getServlet().getContextPath();
-        var serverURL = this.jbstProperties.getServerConfigs().getServerContextPathURL(servletContextPath);
-        var basePathPrefix = this.jbstProperties.getMvcConfigs().getBasePathPrefix();
-        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", function.username().value());
-        variables.put("confirmationLink", usersTokensConfigs.getEmailConfirmURL(serverURL, basePathPrefix, function.token()));
+        variables.put("confirmationLink", this.jbstProperties.getEmailConfirmURL(this.serverProperties, function.token()));
         variables.put("year", now(UTC).getYear());
         return new EmailHTML(
                 Set.of(function.email().value()),
@@ -63,11 +59,9 @@ public class UserEmailUtilsImpl implements UserEmailUtils {
 
     @Override
     public EmailHTML getPasswordResetHTML(FunctionPasswordReset function) {
-        var webclientURL = this.jbstProperties.getServerConfigs().getWebclientURL();
-        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", function.username().value());
-        variables.put("resetPasswordLink", usersTokensConfigs.getPasswordResetURL(webclientURL, function.token()));
+        variables.put("resetPasswordLink", this.jbstProperties.getPasswordResetURL(function.token()));
         variables.put("year", now(UTC).getYear());
         return new EmailHTML(
                 Set.of(function.email().value()),

@@ -3,6 +3,8 @@ package jbst.foundation.domain.properties;
 import jbst.foundation.domain.properties.configs.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
@@ -55,6 +57,25 @@ public class JbstProperties implements PriorityOrdered {
     // MERGED METHODS
     // ================================================================================================================
     public String getEmailConfirmationRedirectURL() {
-        return this.serverConfigs.getWebclientURL() + this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath();
+        return "%s%s".formatted(
+                this.serverConfigs.getWebclientURL(),
+                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath()
+        );
+    }
+
+    public String getEmailConfirmURL(@NotNull ServerProperties serverProperties, @NotNull String token) {
+        return "%s%s/tokens/email/confirm?token=%s".formatted(
+                this.serverConfigs.getServerURL() + serverProperties.getServlet().getContextPath(),
+                this.mvcConfigs.getBasePathPrefix(),
+                token
+        );
+    }
+
+    public String getPasswordResetURL(@NotNull String token) {
+        return "%s%s?token=%s".formatted(
+                this.serverConfigs.getWebclientURL(),
+                this.securityJwtConfigs.getUsersTokensConfigs().getWebclientPasswordResetPath(),
+                token
+        );
     }
 }

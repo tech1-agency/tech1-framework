@@ -37,20 +37,4 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
     public boolean isParentPropertiesNode() {
         return false;
     }
-
-    public String getEmailConfirmURL(
-            String serverURL,
-            String basePathPrefix,
-            String token
-    ) {
-        return "%s%s/tokens/email/confirm?token=%s".formatted(
-                serverURL,
-                basePathPrefix,
-                token
-        );
-    }
-
-    public String getPasswordResetURL(String webclientURL, String token) {
-        return "%s%s?token=%s".formatted(webclientURL, this.webclientPasswordResetPath, token);
-    }
 }

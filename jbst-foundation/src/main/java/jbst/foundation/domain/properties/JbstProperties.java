@@ -50,4 +50,11 @@ public class JbstProperties implements PriorityOrdered {
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE;
     }
+
+    // ================================================================================================================
+    // MERGED METHODS
+    // ================================================================================================================
+    public String getEmailConfirmationRedirectURL() {
+        return this.serverConfigs.getWebclientURL() + this.securityJwtConfigs.getUsersTokensConfigs().getWebclientEmailConfirmationRedirectPath();
+    }
 }

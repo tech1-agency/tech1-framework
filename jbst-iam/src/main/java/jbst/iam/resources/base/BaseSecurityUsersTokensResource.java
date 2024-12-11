@@ -73,9 +73,7 @@ public class BaseSecurityUsersTokensResource {
             RedirectAttributes redirectAttributes,
             @RequestParam("token") String token
     ) {
-        var webclientURL = this.jbstProperties.getServerConfigs().getWebclientURL();
-        var usersTokensConfigs = this.jbstProperties.getSecurityJwtConfigs().getUsersTokensConfigs();
-        var redirectView = new RedirectView(usersTokensConfigs.getEmailConfirmRedirectURL(webclientURL));
+        var redirectView = new RedirectView(this.jbstProperties.getEmailConfirmationRedirectURL());
         try {
             this.baseUsersTokensRequestsValidator.validateEmailConfirmationToken(token);
             this.baseUsersTokensService.confirmEmail(token);

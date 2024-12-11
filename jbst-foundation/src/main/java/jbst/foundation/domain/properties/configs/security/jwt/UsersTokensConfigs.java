@@ -50,10 +50,6 @@ public class UsersTokensConfigs extends AbstractPropertiesConfigs {
         );
     }
 
-    public String getEmailConfirmRedirectURL(String webclientURL) {
-        return webclientURL + this.webclientEmailConfirmationRedirectPath;
-    }
-
     public String getPasswordResetURL(String webclientURL, String token) {
         return "%s%s?token=%s".formatted(webclientURL, this.webclientPasswordResetPath, token);
     }

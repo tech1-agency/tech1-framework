@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityJwtSubscriberImpl extends BaseSecurityJwtSubscriber {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public SecurityJwtSubscriberImpl(
             SecurityJwtIncidentPublisher securityJwtIncidentPublisher,

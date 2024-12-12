@@ -21,7 +21,7 @@ import jbst.iam.domain.dto.requests.RequestUserPasswordReset;
 import jbst.iam.domain.dto.requests.RequestUserToken;
 import jbst.iam.services.BaseUsersService;
 import jbst.iam.services.BaseUsersTokensService;
-import jbst.iam.services.base.BaseUsersEmailsService;
+import jbst.iam.services.UsersEmailsService;
 import jbst.iam.validators.BaseUsersTokensRequestsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class BaseSecurityUsersTokensResource {
     private final CurrentSessionAssistant currentSessionAssistant;
     // Services
     private final BaseUsersTokensService baseUsersTokensService;
-    private final BaseUsersEmailsService baseUsersEmailsService;
+    private final UsersEmailsService usersEmailsService;
     private final BaseUsersService baseUsersService;
     // Validators
     private final BaseUsersTokensRequestsValidator baseUsersTokensRequestsValidator;
@@ -63,7 +63,7 @@ public class BaseSecurityUsersTokensResource {
         this.baseUsersTokensRequestsValidator.validateExecuteConfirmEmail(user);
         this.emailConfirmationRL.acquire(user.username());
         var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.emailConfirmation(user.username()));
-        this.baseUsersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
+        this.usersEmailsService.executeEmailConfirmation(userToken.asFunctionEmailConfirmation(user.email()));
     }
 
     @ApiResponse(responseCode = "302", content = @Content(schema = @Schema(implementation = String.class)))
@@ -95,7 +95,7 @@ public class BaseSecurityUsersTokensResource {
             var user = this.baseUsersService.findByEmail(request.email());
             this.baseUsersTokensRequestsValidator.validateExecuteResetPassword(user);
             var userToken = this.baseUsersTokensService.getOrCreate(RequestUserToken.passwordReset(user.username()));
-            this.baseUsersEmailsService.executePasswordReset(userToken.asFunctionPasswordReset(user.email()));
+            this.usersEmailsService.executePasswordReset(userToken.asFunctionPasswordReset(user.email()));
         } catch (JbstPasswordResetException ex) {
             // ignored
         }

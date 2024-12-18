@@ -13,6 +13,7 @@ import static jbst.foundation.utilities.random.RandomUtility.randomBoolean;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class GeoLocationsConfigs extends AbstractPropertyConfigs {
+    // TODO [YYL] geoLiteCityDatabaseEnabled -> enabled, AbstractPropertyConfigs -> AbstractTogglePropertyConfigs
     @MandatoryProperty
     private final Boolean geoLiteCityDatabaseEnabled;
 
